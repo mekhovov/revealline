@@ -1,0 +1,197 @@
+{
+  "format": "SoloArtifactVerificationV2",
+  "status": "artifact-verified-native-partial-performance-pending",
+  "createdAt": "2026-10-16T18:08:19.548029+00:00",
+  "sourceRevision": "8c1af9d191224893bad9012f7638940a869d6096",
+  "version": "0.151.1",
+  "producer": {
+    "kind": "existing GitHub Actions package",
+    "workflowRun": 38939661031,
+    "artifactId": 12063174018,
+    "sourceRevision": "8c1af9d191224893bad9012f7638940a869d6096",
+    "node": "v22.13.1",
+    "platform": "Linux",
+    "localBuild": false,
+    "qualification": "development preview; qualification is separately measured, never inferred from CI packaging"
+  },
+  "acquisitionReceipt": {
+    "path": "/Volumes/alex/solo-performance-b1174522/evidence/ci-artifact-8c1af9d1-38939661031/acquisition.json",
+    "bytes": 8229,
+    "sha256": "92300da6fd1b31ff22e47cb849a2cf1c6087126ebe2b3d2e8a5fcd131d638660"
+  },
+  "ingestionReceipt": {
+    "path": ".cache/solo-followup/artifact-solo-final-8c1af9d1-ci-ram-v3/receipt.json",
+    "bytes": 35610,
+    "sha256": "eea3c0176028a906ef0418e1ea458040b573e5b0393420857846a911f8ab3b4d"
+  },
+  "durableIngestionReceipt": {
+    "path": "/Volumes/alex/solo-performance-b1174522/artifacts/8c1af9d1/0.151.1-ci-38939661031/orchestration-ci-successor-preview-receipt.json",
+    "bytes": 35610,
+    "sha256": "eea3c0176028a906ef0418e1ea458040b573e5b0393420857846a911f8ab3b4d"
+  },
+  "finalization": {
+    "path": "/Volumes/alex/solo-performance-b1174522/artifacts/8c1af9d1/0.151.1-ci-38939661031/successor-finalization.json",
+    "bytes": 1116,
+    "sha256": "b1e43cbdb75d71c8bd543a4c9651961e51b9b407020611edb503ed74888f0b41"
+  },
+  "payload": {
+    "files": 3501,
+    "bytes": 1072181784,
+    "manifestSHA256": "89aadd95407acb7acf7076694ea2995cbcb2171af9a070e729a60e0f65b1f967"
+  },
+  "zip": {
+    "members": 3502,
+    "bytes": 1073298095,
+    "sha256": "29a9113899be3b437628d72f888923a1abd483e7c15490b220a39cb874ca03ee"
+  },
+  "proofs": [
+    {
+      "path": "/Volumes/alex/solo-performance-b1174522/artifacts/8c1af9d1/0.151.1-ci-38939661031/proof-baseline-csp.json",
+      "bytes": 1173,
+      "sha256": "9000eea742149cf918a9035298cb42403a7d7312ac7e1be702aa827d548ebd36"
+    },
+    {
+      "path": "/Volumes/alex/solo-performance-b1174522/artifacts/8c1af9d1/0.151.1-ci-38939661031/proof-baseline-unchanged.json",
+      "bytes": 293,
+      "sha256": "d40d59f4090742d5e30b53cbd7aaef1eace34c5211f939a58c914c578ebfbd4d"
+    },
+    {
+      "path": "/Volumes/alex/solo-performance-b1174522/artifacts/8c1af9d1/0.151.1-ci-38939661031/proof-csp.json",
+      "bytes": 1174,
+      "sha256": "b3d3ad82aa91e73691fc295129885f000723a3f6d1e2cd3beef8e6ed7b038605"
+    },
+    {
+      "path": "/Volumes/alex/solo-performance-b1174522/artifacts/8c1af9d1/0.151.1-ci-38939661031/proof-old-rollback-full-readback.json",
+      "bytes": 1358,
+      "sha256": "f93d2b26b1411a44fa31a3b678cd2d7961b5a2ffbaece87368fd089d572374f5"
+    },
+    {
+      "path": "/Volumes/alex/solo-performance-b1174522/artifacts/8c1af9d1/0.151.1-ci-38939661031/proof-preservation.json",
+      "bytes": 1505,
+      "sha256": "8311759c4fe1d347d5010d1d3dc64cc7ac1c871faf58e924da2ac8504f91380c"
+    },
+    {
+      "path": "/Volumes/alex/solo-performance-b1174522/artifacts/8c1af9d1/0.151.1-ci-38939661031/proof-preview-csp.json",
+      "bytes": 1219,
+      "sha256": "950bccf7c3c60706d17f52026d52746be55573531a065850d8a94800aa0cc297"
+    },
+    {
+      "path": "/Volumes/alex/solo-performance-b1174522/artifacts/8c1af9d1/0.151.1-ci-38939661031/proof-preview-members.json",
+      "bytes": 1358,
+      "sha256": "5669f0a05935c5c9124499c434ab363a7a6d6de8c12ec3d89be9ff42fda4f132"
+    },
+    {
+      "path": "/Volumes/alex/solo-performance-b1174522/artifacts/8c1af9d1/0.151.1-ci-38939661031/proof-preview-verification.json",
+      "bytes": 31282,
+      "sha256": "48a6d2d58d50eafd2f3abd815e1aed16fa2ee660f0f14f0f1877a59dbef83baf"
+    },
+    {
+      "path": "/Volumes/alex/solo-performance-b1174522/artifacts/8c1af9d1/0.151.1-ci-38939661031/proof-source-verification.json",
+      "bytes": 30314,
+      "sha256": "8f2db2ace74c63ed65aa8c9339a50af7f1f0005212e60f76407cddb7e068c658"
+    },
+    {
+      "path": "/Volumes/alex/solo-performance-b1174522/artifacts/8c1af9d1/0.151.1-ci-38939661031/proof-zip-verification.json",
+      "bytes": 1129,
+      "sha256": "2f33d9170547556e797fc16f09100707fc74961e0920d206bca08756476676cc"
+    }
+  ],
+  "producerFocusedTests": {
+    "files": 55,
+    "tests": 542,
+    "pass": 542,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "tap": {
+      "path": "/Volumes/alex/solo-performance-b1174522/evidence/ci-artifact-8c1af9d1-38939661031/supporting/focused-tests.tap",
+      "bytes": 130354,
+      "sha256": "205d421e9bc17d6405b2fa5fb0e0ccfd3bec8a783229cb38171b2bbac89936be"
+    },
+    "scope": "Separate complete CI focused suite; not full repository coverage."
+  },
+  "sourceChecks": {
+    "receipt": {
+      "path": ".cache/solo-followup/final-source-checks-20261016T172605Z-8c1af9d1/receipt.json",
+      "bytes": 5540,
+      "sha256": "a88998ae5f94e622edab0c949ab1fc9f3c654e49cd14e01b19ad09b236889a01"
+    },
+    "lint": "passed",
+    "validation": "passed",
+    "formatting": "failed",
+    "formattingScope": "Eight files byte-identical to original main at exact8c1 source."
+  },
+  "baselineUnchanged": {
+    "status": "passed",
+    "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+    "manifestSHA256": "2a19dfb7227e5d528fe4f072d1eef9e753ac987396a8f5b8248247483814e8a8",
+    "verifiedMembers": 3495,
+    "inventorySHA256": "99aac15c2d2b04c6779a1af43f2baf568de157ecf89d534a6f2fd5c7fc291f81"
+  },
+  "rollback": {
+    "sourceRevision": "dbf61c518e9df3ed68b24f693686c9600405f3f2",
+    "archive": "/Volumes/alex/solo-performance-b1174522/artifacts/dbf61c51/0.151.1-ci-38923926418",
+    "fullReadback": "passed"
+  },
+  "localBuild": false,
+  "nativeObservations": [
+    {
+      "kind": "static-worker-and-paused-render",
+      "status": "passed",
+      "observations": 4,
+      "report": {
+        "path": "/Volumes/SoloPerf-RAM-solo-final-8c727777-ram-v4/evidence/native-core-8c1af9d1-attempt01/receipt.json",
+        "bytes": 45599,
+        "sha256": "3ac17ccb51e52b0b333e7695096bc62be688594e78efb77d3bdd2b995f72b824"
+      },
+      "scope": "Chrome155.0.8059.85 and desktopWebKit26.5; paused rendering/resize/explicitResume and staticworker correctness; excluded from timing."
+    },
+    {
+      "kind": "demo-public-handoff",
+      "status": "passed",
+      "counterWindows": 9,
+      "report": {
+        "path": "/Volumes/SoloPerf-RAM-solo-final-8c727777-ram-v4/evidence/demo-final-8c1af9d1-attempt01/report.json",
+        "bytes": 744467,
+        "sha256": "e71b137f908a28de7e96471aed26c26ee45e85c2e41c8f15d85c13e86916d1f7"
+      },
+      "scope": "Watching/pause/details/background/return/practice, public return-to-play and strict original/fresh same-engine replay; excluded from timing and heat claims."
+    },
+    {
+      "kind": "offline-installed-entry-restart",
+      "status": "failed",
+      "report": {
+        "path": "/Volumes/SoloPerf-RAM-solo-final-8c727777-ram-v4/evidence/offline-starter-8c1af9d1-attempt02/offline/report.json",
+        "bytes": 199031,
+        "sha256": "9d4d2b92973fad69b4602ea322d449d97aad9ebc32e61282c2dfa096443ea213"
+      },
+      "interpretation": {
+        "path": ".cache/solo-followup/native-offline-restart-diagnostic-01/interpretation.json",
+        "bytes": 6346,
+        "sha256": "2b1509e437e1f052f0167cc4fc82ff4c8d983a0e6a04f24cea0ce2325e831085"
+      },
+      "scope": "Original deployment CSP; public Starter readiness then full persistent-browser restart with server stopped. Manifest /app/ launch failed; worker saw zero launcher cache entries. No offline gameplay/replay or physical-PWA qualification. Cause unresolved."
+    }
+  ],
+  "limitations": [
+    "Package verification does not establish native correctness, timing, memory stability or heat reduction.",
+    "Historical failed and partial observations retain their exact source and are not overwritten.",
+    "Physical iPhone17Pro/iOS27.0.1 Safari regular-tab and installed-PWA, plus SteamDeckOLED Chrome default-cadence checks remain unobserved."
+  ],
+  "scope": "Existing successful CI package verified before browser use. No release/deployment or universal smoothness claim.",
+  "nativePreservation": {
+    "path": ".cache/solo-followup/native-8c1af9d1-preservation-01/receipt.json",
+    "bytes": 3028,
+    "sha256": "08e6dc9d3ddd4613eab2599afeec96227976680cfc5cc485ced7b8bf7b21f63c"
+  },
+  "nativeEvidenceArchive": {
+    "absolutePath": "/Volumes/alex/solo-performance-b1174522/evidence/native-final-8c1af9d1-preserved-01/evidence.tar.gz",
+    "bytes": 333457,
+    "sha256": "04e6b8d94bbd14926f1ee2756c53a6fd59931455629c480d37d71263fdeb9197"
+  },
+  "ownedDemoProfileRetirement": {
+    "path": ".cache/solo-followup/demo-profile-8c1-final-retirement/receipt.json",
+    "bytes": 1820,
+    "sha256": "4674ff1a2cf402ddc7e0bde1a0f725b9ec8cb49e96fc24ef982a149e95658389"
+  }
+}

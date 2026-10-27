@@ -1,0 +1,19 @@
+{
+  "events": [
+    {
+      "length": 96000,
+      "voice": false
+    },
+    {
+      "length": 26496,
+      "voice": true
+    },
+    {
+      "length": 7680,
+      "voice": false
+    }
+  ],
+  "peak": 0.0348099060356617,
+  "resumed": true,
+  "state": "running"
+}

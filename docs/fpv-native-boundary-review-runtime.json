@@ -1,0 +1,193 @@
+{
+  "format": "FpvNativeBoundaryReviewRuntime.v1",
+  "pass": true,
+  "startedAt": "2026-10-17T13:29:20.353Z",
+  "completedAt": "2026-10-17T13:37:27.905232+00:00",
+  "sourceRevisionAtCompletion": "dcad53bc676fda6cbd6ff227b5a1d52d2f36eece",
+  "scope": "Actual Electron desktop UI smoke using the separately labelled fixture with production World host, rates editor, Regional Advanced worker, renderer, native protocol and OS Save. Two clean processes share one fresh isolated profile.",
+  "desktopFixtureRuntimeVerified": true,
+  "nativeRuntimeVerified": false,
+  "iosRuntimeVerified": false,
+  "advancedScored": false,
+  "sourceBinding": {
+    "report": "docs/fpv-native-boundary-review-staging.json",
+    "sha256": "9c8330be853c73119ffc69d7d6ff1a64dde28a039bb2772afd7ef657646d5061",
+    "sourceHashCount": 209,
+    "sourceStable": true,
+    "description": "All 209 staging source pins rechecked after both native processes. Runtime source is identical to the earlier working-tree staging pins and the current committed runtime. Ordinary staging report is unchanged."
+  },
+  "environment": {
+    "platform": "darwin",
+    "architecture": "arm64",
+    "macOS": "26.7.1 (25G241)",
+    "electron": "44.3.0",
+    "chromium": "152.0.7977.78",
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) FPV/LINE/0.21.0 Chrome/152.0.7977.78 Electron/44.3.0 Safari/537.36",
+    "replayNode": "v22.22.2"
+  },
+  "fixture": {
+    "builder": "scripts/build-fpv-native-smoke.mjs",
+    "harness": "platforms/desktop/test/fpv-smoke-harness.mjs",
+    "source": "/private/tmp/fpv-boundary-review-native-fixture",
+    "stage": "/private/tmp/fpv-boundary-review-native-fixture-desktop",
+    "entry": "revealline://app/optional-practice/fpv-worlds/native-test-fixture.html?lang=en",
+    "profile": "/private/tmp/fpv-boundary-review-native-profile",
+    "qualification": "simulators-only-explicit-test-fixture",
+    "files": 187,
+    "bytes": 18350663,
+    "manifestSha256": "d4033a0e087456cf562b368c4c34c1a25b003121a794c2ca6c5c575cbef265d4",
+    "productionFilesCompared": 182,
+    "productionFilesUnchanged": 182,
+    "exception": "The launcher adds one labelled test link and four fixture-only files are added. All other 182 production inventory files are byte-identical, including both locked production access pages.",
+    "productionAccessPagesRemainLocked": true,
+    "productionAuthenticationExercised": false,
+    "credentialsUsed": false
+  },
+  "runnerProvenance": {
+    "scripts/build-fpv-native.mjs": "5199fa8260303a58f31c0ce830bfce11cb24ce6d7bbd73036f923221ad15de08",
+    "scripts/build-fpv-native-smoke.mjs": "3f9fe78a92b3ca67933ce12ee3b70cbe1681db03f848fc60319d3feb600fbab2",
+    "scripts/native-cli.mjs": "8f9b830dc30c884f9ed9d9e3ab1903428d4ea24b49118c71d1cbc0a1ee2ab3d1",
+    "platforms/desktop/test/fpv-smoke-harness.mjs": "6d882d572da4ee5941d176033d6bc61d96c1c0f551bac40aedc502729985ce58",
+    "platforms/desktop/main.mjs": "a89a54828ede8dfa2bc32dc60f4aa889eb8bb546bb8bb8451343c59c17750980",
+    "platforms/desktop/policy.mjs": "92ff61da8d8b74700157d9c77d0f179050a9c45ee9446cedfca3f85a6810cc75",
+    "platforms/desktop/resources.mjs": "3de16ace66c1c435e50865314f7b5f7222431e7c174b4b78f7b4eb24366a7cfe",
+    "platforms/desktop/package.json": "8bae8c18ce587ae1fb584fe03c0c15b8b6a9296e8e5f03c82e87c8c09fe81cb8",
+    "platforms/desktop/package-lock.json": "e8add4e03916f8f5ea8fd429bfc84ce7f00126794f0f65cb170078a11ac343a7"
+  },
+  "reproduction": {
+    "commands": [
+      "node docs/fpv-native-boundary-review/staging.mjs",
+      "node scripts/build-fpv-native-smoke.mjs --base /private/tmp/fpv-boundary-review-native-source --out /private/tmp/fpv-boundary-review-native-fixture",
+      "node scripts/native-cli.mjs stage --site /private/tmp/fpv-boundary-review-native-fixture --out /private/tmp/fpv-boundary-review-native-fixture-desktop --platform desktop",
+      "env -u ELECTRON_RUN_AS_NODE REVEALLINE_SITE_DIR=/private/tmp/fpv-boundary-review-native-fixture-desktop REVEALLINE_USER_DATA_DIR=/private/tmp/fpv-boundary-review-native-profile platforms/desktop/node_modules/.bin/electron platforms/desktop",
+      "node docs/fpv-native-boundary-review/verify.mjs"
+    ],
+    "prerequisites": [
+      "Existing Node 22.22.2 and Electron 44.3.0 dependencies; no installation.",
+      "Use fresh output/profile paths. Reopen the same isolated profile after normal Command-Q."
+    ],
+    "interaction": "Actual native UI via cua_repl; no CDP or DOM mutation. The saved verifier only rechecks exports/source pins and does not automate UI."
+  },
+  "observations": [
+    {
+      "check": "History restores explicit edit intent after a completed same-rate import preview",
+      "result": "Created Actual 670°/s profile, renamed/saved revision 1 with the same curve, previewed matching CLI patch, restored revision 0, and clicked Save import as new profile. UI rejected stale preview with Could not apply: Preview the import first. Saving restored draft created revision 2 without an import receipt."
+    },
+    {
+      "check": "New explicit import retains provenance independently",
+      "result": "Previewed and saved roll_srate 88 patch with Betaflight 2026.6.2 header and p_roll 80. New 880°/s profile retains source hash, draft baseline revision 2 and ignored PID entry. Player default remains restored 670°/s profile."
+    },
+    {
+      "check": "Regional native flight export and worker lifecycle",
+      "result": "Prepared fixture Regional world, explicitly switched to Advanced, armed and applied keyboard input, then paused at 26 mission ticks. Native OS Save exported recording and recovery. Returning to Legacy terminated the one worker; zero remained live."
+    },
+    {
+      "check": "Persistence after process reopen",
+      "result": "Both processes exited normally with code 0 and empty captured output. Reopened library is exactly equal at revision 5, including two historical revisions and imported provenance. WebLocks and IndexedDB succeeded, visit marker1\u21922; second fixture disposed cleanly.",
+      "librarySha256": "47e7ab556a12d1a5db504de0826f3d7294c1af0ffd088a1c00923d3d8b579ae4"
+    }
+  ],
+  "runtimeProcesses": [
+    {
+      "process": 1,
+      "exitCode": 0,
+      "capturedOutput": "",
+      "workerCounts": {
+        "created": 1,
+        "terminated": 1,
+        "live": 0
+      }
+    },
+    {
+      "process": 2,
+      "exitCode": 0,
+      "capturedOutput": "",
+      "workerCounts": {
+        "created": 0,
+        "terminated": 0,
+        "live": 0
+      }
+    }
+  ],
+  "recording": {
+    "format": "AdvancedRegionalRecording.v1",
+    "missionTicks": 26,
+    "frequency": 250,
+    "finalHash": "0b26acd5",
+    "verified": true,
+    "verificationScope": "complete",
+    "recoveryVerified": true,
+    "recoveryRestoredHash": "0b26acd5",
+    "scored": false,
+    "recordingArtifact": "docs/fpv-native-boundary-review/regional-recording.json",
+    "recoveryArtifact": "docs/fpv-native-boundary-review/regional-recovery.json",
+    "nativeOSSaveObserved": true,
+    "verificationRuntime": "Production Node implementation on the same macOS arm64 host"
+  },
+  "failures": [],
+  "verificationHarnessAttempts": [
+    {
+      "attempt": 1,
+      "result": "failed assertion in ad hoc report-only verifier after complete replay and recovery verification had passed",
+      "error": "AssertionError: expected restored.recording.finalHash to equal 0b26acd5, actual undefined. Snapshot recording intentionally does not contain finalHash.",
+      "impact": "No runtime failure or source change. Corrected assertion restores the verified snapshot into a disposable simulation and compares sim.stateHash()."
+    },
+    {
+      "attempt": 2,
+      "result": "passed",
+      "report": "docs/fpv-native-boundary-review/recording-verification.json",
+      "recoveryRestoredHash": "0b26acd5"
+    }
+  ],
+  "limitations": [
+    "One macOS arm64 Electron host and explicit test fixture, not signed distribution or general native platform qualification.",
+    "No iOS execution, physical radio/aircraft measurement, pilot feedback, other desktop OS or wider device/performance matrix.",
+    "Production authentication was preserved but not exercised; no credential used or saved.",
+    "This short 26-tick flight checks Regional export/recovery/lifecycle. It does not claim native 720-second boundary or dense maximum-duration qualification; separate browser and adapter evidence covers the duration boundary.",
+    "No new raw preset bundle/options UI claim or setup-duplication claim in this bounded native run.",
+    "Replay and recovery were verified in production Node on the same architecture; no new cross-architecture claim.",
+    "Advanced remains optional and unscored. Runtime frequency, limits and eligibility markers are unchanged."
+  ],
+  "artifacts": [
+    {
+      "path": "docs/fpv-native-boundary-review/first-session.json",
+      "bytes": 242446,
+      "sha256": "d5efbe152511b4798a6c87b918217111d40ea61426be7fd1848aa98b00a773f8"
+    },
+    {
+      "path": "docs/fpv-native-boundary-review/fixture-manifest.json",
+      "bytes": 33944,
+      "sha256": "d4033a0e087456cf562b368c4c34c1a25b003121a794c2ca6c5c575cbef265d4"
+    },
+    {
+      "path": "docs/fpv-native-boundary-review/fixture-metadata.json",
+      "bytes": 448,
+      "sha256": "25c844967802e2c078e6dcb2e30d431320f6f46729119a32c77826c7d7aff30b"
+    },
+    {
+      "path": "docs/fpv-native-boundary-review/recording-verification.json",
+      "bytes": 595,
+      "sha256": "8d551d98af5c16a48e2217267a491299ded9db85d1c8d4eb4cdb2545cd6a9603"
+    },
+    {
+      "path": "docs/fpv-native-boundary-review/regional-recording.json",
+      "bytes": 103961,
+      "sha256": "e4210657f4089c15d4398ae5ee4b0a47146131f94e269ff6574e5e7e4e124ffd"
+    },
+    {
+      "path": "docs/fpv-native-boundary-review/regional-recovery.json",
+      "bytes": 652563,
+      "sha256": "df7aadb1c0de582b6b90ac5b0b23d68e7ac27da0be3de6708adeb9bd32e444df"
+    },
+    {
+      "path": "docs/fpv-native-boundary-review/second-session.json",
+      "bytes": 15207,
+      "sha256": "4d7c45f18bdba7895699acdf60465420a3aaae97ded5b0b718246d7b96b51afb"
+    },
+    {
+      "path": "docs/fpv-native-boundary-review/verify.mjs",
+      "bytes": 3991,
+      "sha256": "6671e44405a8cd2ddcc4ac5dde13b0d889704f9b45b0a01ff4ede0bd347e5f26"
+    }
+  ]
+}

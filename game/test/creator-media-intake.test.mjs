@@ -344,3 +344,42 @@ test('renaming inputs changes suggestions but never byte-backed asset identities
   assert.equal(a.dependencies.stories[0].poster.sha256, b.dependencies.stories[0].poster.sha256);
   assert.notEqual(a.items[0].normalizedStem, b.items[0].normalizedStem);
 });
+
+test('intake separates stable selected-video identity from changing converted bytes', async () => {
+  const source = video('clip.mp4', 'same selected video'),
+    sourceHash = await hash(source.blob);
+  const outputHashes = [];
+  for (const conversion of ['first metadata', 'second metadata']) {
+    const f = factories(),
+      seen = [];
+    const prepared = await prepareCreatorMediaIntake([source], {
+      ...f,
+      prepareVideo: async () => new Blob([conversion]),
+      pairingFor: (identity) => {
+        seen.push(identity);
+        return null;
+      },
+      posterTimeFor: (identity) => {
+        seen.push(identity);
+        return 3.25;
+      },
+      playbackRangeFor: (identity) => {
+        seen.push(identity);
+        return { startSeconds: 1.5, endSeconds: 7.75 };
+      },
+    });
+    const item = prepared.items[0];
+    assert.deepEqual(item.errors, []);
+    assert.equal(item.sourceSha256, sourceHash);
+    assert.equal(item.assetSha256, await hash(new Blob([conversion])));
+    assert.notEqual(item.assetSha256, sourceHash);
+    assert.equal(seen.length, 3);
+    for (const identity of seen) {
+      assert.equal(identity.sourceSha256, sourceHash);
+      assert.equal(identity.assetSha256, item.assetSha256);
+    }
+    assert.equal(prepared.dependencies.stories[0].video.sha256, item.assetSha256);
+    outputHashes.push(item.assetSha256);
+  }
+  assert.notEqual(outputHashes[0], outputHashes[1]);
+});

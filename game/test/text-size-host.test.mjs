@@ -8,6 +8,7 @@ import { BACKUP_FORMAT } from '../backup.mjs';
 import { emptyPackLibrary } from '../packs.mjs';
 import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
 import { acceptGameDataReplacement } from './helpers/backup-preflight.mjs';
+import { activateHostAction } from './helpers/host-action.mjs';
 
 const campaign = JSON.parse(readFileSync(new URL('../content/campaign.json', import.meta.url)));
 const profileKey = 'revealline.library.dev.v1';
@@ -73,9 +74,16 @@ function assertPausedUnchanged(page, before) {
 // DOM, Phaser drawing and browser storage are modeled; no layout/pixel claim.
 test('startup adopts persisted Large and a deliberate Standard change survives an actual app reload', async (t) => {
   const storage = initialStorage({ textSize: 'large' });
-  let dispose;
-  const lifetime = { after: (callback) => (dispose = callback) };
-  t.after(async () => dispose?.());
+  const disposals = [];
+  const lifetime = {
+    after(callback) {
+      disposals.push(callback);
+    },
+  };
+  const dispose = async () => {
+    while (disposals.length) await disposals.shift()();
+  };
+  t.after(dispose);
   const before = new Map(storage.map),
     writes = storage.writes.length;
   const page = await soloPage(lifetime, { campaign, storage });
@@ -89,9 +97,7 @@ test('startup adopts persisted Large and a deliberate Standard change survives a
   assert.equal(profile(storage).library.preferences.textSize, 'standard');
   assertPausedUnchanged(page, ready);
   assert.deepEqual(page.errors, []);
-  const close = dispose;
-  dispose = null;
-  await close();
+  await dispose();
   const afterClose = new Map(storage.map),
     afterWrites = storage.writes.length;
   const reloaded = await soloPage(lifetime, { campaign, storage });
@@ -224,7 +230,7 @@ test('an unrelated host preference change applies the actual merged stored size 
 test('actual complete-backup import and Undo adopt text size while preserving the verified suspended flight', async (t) => {
   const page = await soloPage(t, { campaign, storage: initialStorage() });
   await startCut(page);
-  page.$('library-button').click();
+  await activateHostAction(page.$('library-button'));
   page.frame(0);
   assert.equal(page.$('library-dialog').open, true);
   assert.equal(page.rendered.paused, true);
@@ -269,5 +275,26 @@ test('actual complete-backup import and Undo adopt text size while preserving th
   page.frame(0);
   assert.equal(page.rendered.paused, true);
   assert.equal(page.rendered.run.tick, 0);
+  assert.deepEqual(page.errors, []);
+});
+
+test('Solo retains imported extra-large through an unrelated display edit and paused flight', async (t) => {
+  const storage = initialStorage({ textSize: 'extra-large' });
+  const page = await soloPage(t, { campaign, storage });
+  assert.equal(page.$('text-size').value, 'extra-large');
+  assert.equal(page.$('text-size').querySelector('[data-text-size-retained]').disabled, true);
+  assert.equal(page.doc.body.dataset.textSize, 'large');
+  await startCut(page);
+  openSettings(page);
+  const before = snapshot(page);
+  page.change('text-face', 'plain');
+  assert.equal(profile(storage).library.preferences.textSize, 'extra-large');
+  assert.equal(JSON.parse(storage.getItem('revealline.display.v1')).textSize, 'extra-large');
+  assert.match(page.$('text-size').parentElement.textContent, /currently uses Large/);
+  assertPausedUnchanged(page, before);
+  page.change('text-size', 'large');
+  assert.equal(profile(storage).library.preferences.textSize, 'large');
+  assert.equal(page.$('text-size').querySelector('[data-text-size-retained]'), null);
+  assertPausedUnchanged(page, before);
   assert.deepEqual(page.errors, []);
 });

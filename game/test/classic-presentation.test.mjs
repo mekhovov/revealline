@@ -4,6 +4,7 @@ import { readFileSync } from 'node:fs';
 import { createRun, stepRun, FIXED_DT, CLASSES, CELL } from '../core/index.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { BoardPainter } from '../ui/render.mjs';
+import { getLocale, setLocale, t } from '../i18n/index.mjs';
 import { createArcadeAdapter, getArcadeCollection } from '../presentation/industrial-arcade.mjs';
 import { canvasPresentation, imagePresentation } from '../presentation/runtime.mjs';
 import {
@@ -380,6 +381,56 @@ test('warning cells and status badges use owned cues, palette colors and finite 
     themes[0].palette,
   );
   assert.deepEqual(calls.find((c) => c.op === 'strokeRect').args, [1073, 385, 14, 14]);
+});
+
+test('cached classic labels follow locale changes while live cues and countdowns remain fresh', () => {
+  const initialLocale = getLocale();
+  const kinds = ['player-speed', 'enemy-slow', 'enemy-freeze'];
+  const longKeys = ['interface:speed', 'interface:enemiesSlow', 'interface:enemiesFrozen'];
+  const shortKeys = ['interface:speed2', 'interface:slow', 'interface:freeze'];
+  try {
+    for (const locale of ['en', 'uk', 'en']) {
+      setLocale(locale, { persist: false });
+      const run = createRun(level());
+      const pickups = classicView(run).powerups;
+      assert.deepEqual(
+        pickups.map((pickup) => pickup.label),
+        ['interface:life', ...longKeys].map((key) => t(key)),
+      );
+      until(run, () => run.classic.powerups.every((pickup) => pickup.collectedTick !== null), {
+        direction: 'down',
+      });
+      stepRun(run, {}, FIXED_DT);
+      const view = classicView(run),
+        before = authoritativeCheckpoint(run);
+      assert.deepEqual(
+        view.effects.map((effect) => effect.kind),
+        kinds,
+      );
+      for (const canvasCSSWidth of [400, 699, 700, 1152]) {
+        const { ctx, calls } = canvas();
+        drawClassicStatus(ctx, view, themes[0].palette, { canvasCSSWidth });
+        assert.deepEqual(
+          calls.filter((call) => call.op === 'fillText').map((call) => call.args[0]),
+          view.effects.map(
+            (effect, index) =>
+              `${t((canvasCSSWidth < 700 ? shortKeys : longKeys)[index])} ${effect.seconds.toFixed(1)}s`,
+          ),
+        );
+      }
+      assert.deepEqual(authoritativeCheckpoint(run), before);
+      stepRun(run, {}, FIXED_DT);
+      const next = classicView(run);
+      assert.ok(next.effects[0].seconds < view.effects[0].seconds);
+      const cell = run.cells[run.cells.length - 1];
+      run.cells[run.cells.length - 1] = 255;
+      assert.equal(classicView(run), null, 'label reuse does not cache or bypass fresh validation');
+      run.cells[run.cells.length - 1] = cell;
+      assert.deepEqual(classicView(run), next);
+    }
+  } finally {
+    setLocale(initialLocale, { persist: false });
+  }
 });
 
 test('classic encounter countdown and lane suppression follow actual frozen actor clock, while world time advances', () => {

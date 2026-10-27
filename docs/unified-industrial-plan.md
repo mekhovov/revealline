@@ -203,3 +203,16 @@ The next delivery remains completion/interception evidence for all six pilots, t
 - The [atomic adoption mechanism](field-kit-atomic-adoption.md) is implemented: one complete ledger/compiled Git tree, exact source/history/ownership checks, explicit new-ref adoption, idempotent recovery and guarded rollback. It never swaps the active checkout's two paths separately. Actual production adoption is **unexecuted** and still requires a ready, approved production continuation; the current technical candidate cannot pass that gate. Phase C approval and public delivery remain separate.
 
 Next required acceptance: remaining native completion/interception routes and creator/device recovery observations, then the Phase C art/sound review and approved production batches. Historical-device recordings and real-network private-room qualification/HTTPS remain required; broader content and online expansion remain optional.
+
+
+### Current-main preservation checkpoint · 26 October 2026
+
+The #1520 author measurements above are dated source-specific records, not new
+current build, physical-device, native or offline qualification. Parent #1493 is
+actually integrated and retains current audio, inspection and resource owners.
+Mission-library tests now have current fixture, custom and handoff source owners;
+this integration preserves those cases and adds their files to the new library
+phase instead of restoring an older monolithic test file. Finite functional CI
+preparation allowances remain separate from gameplay/replay/performance limits.
+Non-success checks and broader qualification may be bypassed under the user's
+explicit accelerated merge instruction; no passing results are fabricated.

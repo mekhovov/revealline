@@ -1,0 +1,479 @@
+TAP version 13
+# Subtest: pointer opening restores focus to its trigger even when the browser did not focus it
+ok 1 - pointer opening restores focus to its trigger even when the browser did not focus it # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.415834
+  ...
+# Subtest: native tuning downloads use JSON and inert CLI shares and retain text after cancellation
+ok 2 - native tuning downloads use JSON and inert CLI shares and retain text after cancellation # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.036791
+  ...
+# Subtest: a pending export cannot duplicate or report its late failure into a reopened editor
+ok 3 - a pending export cannot duplicate or report its late failure into a reopened editor # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.028917
+  ...
+# Subtest: algorithm drafts retain native values and linked roll/pitch edits keep yaw independent
+ok 4 - algorithm drafts retain native values and linked roll/pitch edits keep yaw independent # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.028875
+  ...
+# Subtest: curve overlays, axis visibility and diagnostics show actual available measurements
+ok 5 - curve overlays, axis visibility and diagnostics show actual available measurements # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.035125
+  ...
+# Subtest: save for next flight never invokes restart; apply and restart is a distinct explicit action
+ok 6 - save for next flight never invokes restart; apply and restart is a distinct explicit action # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.03075
+  ...
+# Subtest: unscored draft test returns to the same numeric and camera draft, then reverts without saving
+ok 7 - unscored draft test returns to the same numeric and camera draft, then reverts without saving # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.074541
+  ...
+# Subtest: drone drafts survive rate-profile changes, reopening and independent setup selection
+ok 8 - drone drafts survive rate-profile changes, reopening and independent setup selection # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.027584
+  ...
+# Subtest: a retained drone draft cannot overwrite another tab and explicit refresh discards it
+ok 9 - a retained drone draft cannot overwrite another tab and explicit refresh discards it # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.076625
+  ...
+# Subtest: Save drone assignment & camera rejects incomplete or out-of-range camera values before changing a flight or library
+ok 10 - Save drone assignment & camera rejects incomplete or out-of-range camera values before changing a flight or library # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.070625
+  ...
+# Subtest: Save for next flight rejects incomplete or out-of-range camera values before changing a flight or library
+ok 11 - Save for next flight rejects incomplete or out-of-range camera values before changing a flight or library # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.037209
+  ...
+# Subtest: Apply & restart rejects incomplete or out-of-range camera values before changing a flight or library
+ok 12 - Apply & restart rejects incomplete or out-of-range camera values before changing a flight or library # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.03225
+  ...
+# Subtest: Duplicate drone setup rejects incomplete or out-of-range camera values before changing a flight or library
+ok 13 - Duplicate drone setup rejects incomplete or out-of-range camera values before changing a flight or library # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.027667
+  ...
+# Subtest: Test draft · unscored rejects incomplete or out-of-range camera values before changing a flight or library
+ok 14 - Test draft · unscored rejects incomplete or out-of-range camera values before changing a flight or library # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.076792
+  ...
+# Subtest: Advanced reference quad · experimental rejects incomplete or out-of-range camera values before changing a flight or library
+ok 15 - Advanced reference quad · experimental rejects incomplete or out-of-range camera values before changing a flight or library # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.028625
+  ...
+# Subtest: incomplete camera text survives independent draft navigation and leaves rate exports available
+ok 16 - incomplete camera text survives independent draft navigation and leaves rate exports available # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.083791
+  ...
+# Subtest: valid fractional camera migration, editing, testing and Advanced preview retain exact degrees
+ok 17 - valid fractional camera migration, editing, testing and Advanced preview retain exact degrees # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.03075
+  ...
+# Subtest: actual numeric editing keeps partial text and commits representable units
+ok 18 - actual numeric editing keeps partial text and commits representable units # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.105833
+  ...
+# Subtest: quick numeric editing keeps partial text and commits representable units
+ok 19 - quick numeric editing keeps partial text and commits representable units # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.032
+  ...
+# Subtest: betaflight numeric editing keeps partial text and commits representable units
+ok 20 - betaflight numeric editing keeps partial text and commits representable units # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.065875
+  ...
+# Subtest: Save and Test commit pending numeric text, while blank values block stale-value saves
+ok 21 - Save and Test commit pending numeric text, while blank values block stale-value saves # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0255
+  ...
+# Subtest: unfinished rates survive algorithm navigation and still block stale-value saves
+ok 22 - unfinished rates survive algorithm navigation and still block stale-value saves # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.021208
+  ...
+# Subtest: unfinished rates survive profile navigation and still block stale-value saves
+ok 23 - unfinished rates survive profile navigation and still block stale-value saves # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.019375
+  ...
+# Subtest: unfinished rates survive close navigation and still block stale-value saves
+ok 24 - unfinished rates survive close navigation and still block stale-value saves # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.018875
+  ...
+# Subtest: unfinished rates survive locale navigation and still block stale-value saves
+ok 25 - unfinished rates survive locale navigation and still block stale-value saves # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.01725
+  ...
+# Subtest: unfinished rates survive throttle version navigation and still block stale-value saves
+ok 26 - unfinished rates survive throttle version navigation and still block stale-value saves # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.018084
+  ...
+# Subtest: algorithm drafts retain invalid ranges and fractional pending units without crossing algorithms
+ok 27 - algorithm drafts retain invalid ranges and fractional pending units without crossing algorithms # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.020416
+  ...
+# Subtest: unfinished throttle and assistance fields survive repaint while linked edits replace their peer text
+ok 28 - unfinished throttle and assistance fields survive repaint while linked edits replace their peer text # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.017125
+  ...
+# Subtest: Revert draft explicitly replaces unfinished numeric drafts
+ok 29 - Revert draft explicitly replaces unfinished numeric drafts # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.018083
+  ...
+# Subtest: Restore revision to draft explicitly replaces unfinished numeric drafts
+ok 30 - Restore revision to draft explicitly replaces unfinished numeric drafts # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.024083
+  ...
+# Subtest: Preview import explicitly replaces unfinished numeric drafts
+ok 31 - Preview import explicitly replaces unfinished numeric drafts # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.022208
+  ...
+# Subtest: committing untouched linked axes preserves unequal rates and a pending pitch edit wins
+ok 32 - committing untouched linked axes preserves unequal rates and a pending pitch edit wins # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.064875
+  ...
+# Subtest: import preview creates a new profile only on save and assignment remains explicit
+ok 33 - import preview creates a new profile only on save and assignment remains explicit # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.069
+  ...
+# Subtest: malformed import or changed input invalidates an earlier preview and cannot create a profile
+ok 34 - malformed import or changed input invalidates an earlier preview and cannot create a profile # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.021625
+  ...
+# Subtest: headerless CLI version selection and firmware-default baseline support deliberate imports
+ok 35 - headerless CLI version selection and firmware-default baseline support deliberate imports # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.031084
+  ...
+# Subtest: unsupported firmware headers invalidate a prior preview and cannot save against another version
+ok 36 - unsupported firmware headers invalidate a prior preview and cannot save against another version # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.036041
+  ...
+# Subtest: shared profile users, name history and per-drone vertical camera values remain visible
+ok 37 - shared profile users, name history and per-drone vertical camera values remain visible # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.021708
+  ...
+# Subtest: stale tab notification preserves the draft and a save cannot overwrite newer stored settings
+ok 38 - stale tab notification preserves the draft and a save cannot overwrite newer stored settings # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.019083
+  ...
+# Subtest: Ukrainian controls retain accessible dialog labels and dispose removes listeners and animation
+ok 39 - Ukrainian controls retain accessible dialog labels and dispose removes listeners and animation # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.017584
+  ...
+# Subtest: Apply and restart explicitly assigns an otherwise unassigned new profile to the current drone
+ok 40 - Apply and restart explicitly assigns an otherwise unassigned new profile to the current drone # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.018166
+  ...
+# Subtest: local preset folder upload resolves official paths from firmware-presets and refreshes selected options
+ok 41 - local preset folder upload resolves official paths from firmware-presets and refreshes selected options # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.016292
+  ...
+# Subtest: local preset folder upload resolves official paths from presets and refreshes selected options
+ok 42 - local preset folder upload resolves official paths from presets and refreshes selected options # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.017125
+  ...
+# Subtest: changed preset options require resolution before preview/save (resolved text)
+ok 43 - changed preset options require resolution before preview/save (resolved text) # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.018542
+  ...
+# Subtest: changed preset options require resolution before preview/save (existing preview)
+ok 44 - changed preset options require resolution before preview/save (existing preview) # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.01875
+  ...
+# Subtest: choosing a different preset entry discards old option choices and controls
+ok 45 - choosing a different preset entry discards old option choices and controls # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.027291
+  ...
+# Subtest: failed preset resolution cannot preview stale text, while deliberate pasted CLI replaces the preset
+ok 46 - failed preset resolution cannot preview stale text, while deliberate pasted CLI replaces the preset # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.02175
+  ...
+# Subtest: failed drone selection restores the visible selection and retains drafts (quota)
+ok 47 - failed drone selection restores the visible selection and retains drafts (quota) # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.01975
+  ...
+# Subtest: failed drone selection restores the visible selection and retains drafts (stale tab)
+ok 48 - failed drone selection restores the visible selection and retains drafts (stale tab) # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.020042
+  ...
+# Subtest: duplicating a drone creates and selects its draft in one storage write
+ok 49 - duplicating a drone creates and selects its draft in one storage write # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.021208
+  ...
+# Subtest: failed drone duplication preserves the library and editable draft (quota)
+ok 50 - failed drone duplication preserves the library and editable draft (quota) # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.020583
+  ...
+# Subtest: failed drone duplication preserves the library and editable draft (stale tab)
+ok 51 - failed drone duplication preserves the library and editable draft (stale tab) # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.027667
+  ...
+# Subtest: failed drone duplication preserves the library and editable draft (invalid camera)
+ok 52 - failed drone duplication preserves the library and editable draft (invalid camera) # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.021208
+  ...
+# Subtest: ordinary tuning and camera saves preserve a drone’s existing Advanced aircraft and controller
+ok 53 - ordinary tuning and camera saves preserve a drone’s existing Advanced aircraft and controller # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.08925
+  ...
+# Subtest: a retained draft reopened after another tab edits the same profile cannot overwrite the newer revision
+ok 54 - a retained draft reopened after another tab edits the same profile cannot overwrite the newer revision # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.047917
+  ...
+# Subtest: a save waiting for a browser lock keeps its click-time values and disables editing until completion
+ok 55 - a save waiting for a browser lock keeps its click-time values and disables editing until completion # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.032625
+  ...
+# Subtest: an oversized upload invalidates an earlier successful import preview
+ok 56 - an oversized upload invalidates an earlier successful import preview # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.026167
+  ...
+# Subtest: an unreadable upload invalidates an earlier successful import preview
+ok 57 - an unreadable upload invalidates an earlier successful import preview # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.022583
+  ...
+# Subtest: an earlier upload completing after a newer selection cannot replace its text
+ok 58 - an earlier upload completing after a newer selection cannot replace its text # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.024083
+  ...
+# Subtest: an invalid preset folder selection clears an existing import preview immediately
+ok 59 - an invalid preset folder selection clears an existing import preview immediately # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.022
+  ...
+# Subtest: overlapping preset folder reads publish only the newest complete bundle
+ok 60 - overlapping preset folder reads publish only the newest complete bundle # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.043416
+  ...
+# Subtest: switching locale updates accessible controls without changing numeric, name, camera or assignment drafts
+ok 61 - switching locale updates accessible controls without changing numeric, name, camera or assignment drafts # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.021083
+  ...
+# Subtest: cancel while Apply waits for a browser lock never restarts a flight afterward
+ok 62 - cancel while Apply waits for a browser lock never restarts a flight afterward # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.031375
+  ...
+# Subtest: close while Apply waits for a browser lock never restarts a flight afterward
+ok 63 - close while Apply waits for a browser lock never restarts a flight afterward # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0205
+  ...
+# Subtest: close-and-reopen while Apply waits for a browser lock never restarts a flight afterward
+ok 64 - close-and-reopen while Apply waits for a browser lock never restarts a flight afterward # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.025791
+  ...
+# Subtest: closing a draft comparison retains the unscored return affordance until a normal flight starts
+ok 65 - closing a draft comparison retains the unscored return affordance until a normal flight starts # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.019458
+  ...
+# Subtest: import receipt stays visible through save, duplicate, manual edit and revision restoration
+ok 66 - import receipt stays visible through save, duplicate, manual edit and revision restoration # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.020458
+  ...
+# Subtest: restoring same-rate history cancels an earlier pending native import
+not ok 67 - restoring same-rate history cancels an earlier pending native import
+  ---
+  duration_ms: 35.218208
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/fpv-tuning-ui.test.mjs:1318:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+
+    '880' !== '670'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '670'
+  actual: '880'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/fpv-tuning-ui.test.mjs:1351:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: restoring same-rate history cancels an earlier pending CLI import
+not ok 68 - restoring same-rate history cancels an earlier pending CLI import
+  ---
+  duration_ms: 11.655584
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/fpv-tuning-ui.test.mjs:1318:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+
+    '880' !== '670'
+
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '670'
+  actual: '880'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/fpv-tuning-ui.test.mjs:1351:12)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: restoring history invalidates a completed same-rate preview and retains the restored receipt
+not ok 69 - restoring history invalidates a completed same-rate preview and retains the restored receipt
+  ---
+  duration_ms: 30.815125
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/fpv-tuning-ui.test.mjs:1364:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+
+    + '{"defaultProfileId":"legacy-feel","format":"FpvTuningLibrary.v1","profiles":[{"history":[],"id":"legacy-feel","name":"Legacy feel","response":{"expo":30,"format":"FlightResponseProfile.v1","id":"gentle-v1","maxRate":240,"maxTilt":30,"name":"Gentle","responseTicks":8},"revision":0},{"history":[{"name":"Original receipt","provenance":{"baseline":null,"firmware":{"origin":"native","version":null},"format":"FpvRateImportReceipt.v1","operation":"native","preset":null,"rateIdentity":"97e587f0575f0690","resultSha256":"846310d613cac65ca3c76ade9b43e411af91f2279122d42e9e1ae7687de8e2dc","review":{"applied":{"entries":["{\\"field\\":\\"rates_type\\",\\"value\\":\\"actual\\"}","{\\"field\\":\\"quickrates_rc_expo\\",\\"value\\":false}","{\\"field\\":\\"roll_rc_rate\\",\\"value\\":7}","{\\"field\\":\\"roll_srate\\",\\"value\\":83}","{\\"field\\":\\"roll_expo\\",\\"value\\":0}","{\\"field\\":\\"roll_rate_limit\\",\\"value\\":1998}","{\\"field\\":\\"pitch_rc_rate\\",\\"value\\":7}","{\\"field\\":\\"pitch_srate\\",\\"value\\":67}","{\\"field\\":\\"pitch_expo\\",\\"value\\":0}","{\\"field\\":\\"pitch_rate_limit\\",\\"value\\":1998}","{\\"field\\":\\"yaw_rc_rate\\",\\"value\\":7}","{\\"field\\":\\"yaw_srate\\",\\"value\\":67}","{\\"field\\":\\"yaw_expo\\",\\"value\\":0}","{\\"field\\":\\"yaw_rate_limit\\",\\"value\\":1998}","{\\"field\\":\\"throttle_model\\",\\"value\\":\\"betaflight-2025.12\\"}","{\\"field\\":\\"thr_mid\\",\\"value\\":50}","{\\"field\\":\\"thr_expo\\",\\"value\\":0}","{\\"field\\":\\"thr_hover\\",\\"value\\":50}","{\\"field\\":\\"throttle_limit_type\\",\\"value\\":\\"off\\"}","{\\"field\\":\\"throttle_limit_percent\\",\\"value\\":100}"],"shortened":false,"total":20},"changed":{"entries":[],"shortened":false,"total":0},"ignored":{"entries":[],"shortened":false,"total":0},"inferred":{"entries":[],"shortened":false,"total":0},"normalizations":{"entries":[],"shortened":false,"total":0},"warnings":{"entries":[],"shortened":false,"total":0}},"source":{"bytes":657,"encoding":"utf-8","kind":"native","sha256":"6c7a1ee6e4cf96d82e774fff15789c4e76fa1e693f37cd4d25d73d456ac999bf"},"sourceProfile":null},"response":{"format":"FlightResponseProfile.v2","maxTilt":30,"rates":{"algorithm":"actual","axes":{"pitch":{"expo":0,"limit":1998,"rate":67,"rcRate":7},"roll":{"expo":0,"limit":1998,"rate":83,"rcRate":7},"yaw":{"expo":0,"limit":1998,"rate":67,"rcRate":7}},"format":"FpvRateProfile.v1","quickRatesRcExpo":false,"throttle":{"expo":0,"hover":50,"limitPercent":100,"limitType":"off","mid":50,"model":"betaflight-2025.12"}},"responseTicks":8},"revision":0}],"id":"tuning-b288e056-4037-43f3-929f-8a8ce72dafee","name":"Renamed receipt","provenance":{"baseline":null,"firmware":{"origin":"native","version":null},"format":"FpvRateImportReceipt.v1","operation":"native","preset":null,"rateIdentity":"97e587f0575f0690","resultSha256":"846310d613cac65ca3c76ade9b43e411af91f2279122d42e9e1ae7687de8e2dc","review":{"applied":{"entries":["{\\"field\\":\\"rates_type\\",\\"value\\":\\"actual\\"}","{\\"field\\":\\"quickrates_rc_expo\\",\\"value\\":false}","{\\"field\\":\\"roll_rc_rate\\",\\"value\\":7}","{\\"field\\":\\"roll_srate\\",\\"value\\":83}","{\\"field\\":\\"roll_expo\\",\\"value\\":0}","{\\"field\\":\\"roll_rate_limit\\",\\"value\\":1998}","{\\"field\\":\\"pitch_rc_rate\\",\\"value\\":7}","{\\"field\\":\\"pitch_srate\\",\\"value\\":67}","{\\"field\\":\\"pitch_expo\\",\\"value\\":0}","{\\"field\\":\\"pitch_rate_limit\\",\\"value\\":1998}","{\\"field\\":\\"yaw_rc_rate\\",\\"value\\":7}","{\\"field\\":\\"yaw_srate\\",\\"value\\":67}","{\\"field\\":\\"yaw_expo\\",\\"value\\":0}","{\\"field\\":\\"yaw_rate_limit\\",\\"value\\":1998}","{\\"field\\":\\"throttle_model\\",\\"value\\":\\"betaflight-2025.12\\"}","{\\"field\\":\\"thr_mid\\",\\"value\\":50}","{\\"field\\":\\"thr_expo\\",\\"value\\":0}","{\\"field\\":\\"thr_hover\\",\\"value\\":50}","{\\"field\\":\\"throttle_limit_type\\",\\"value\\":\\"off\\"}","{\\"field\\":\\"throttle_limit_percent\\",\\"value\\":100}"],"shortened":false,"total":20},"changed":{"entries":[],"shortened":false,"total":0},"ignored":{"entries":[],"shortened":false,"total":0},"inferred":{"entries":[],"shortened":false,"total":0},"normalizations":{"entries":[],"shortened":false,"total":0},"warnings":{"entries":[],"shortened":false,"total":0}},"source":{"bytes":657,"encoding":"utf-8","kind":"native","sha256":"6c7a1ee6e4cf96d82e774fff15789c4e76fa1e693f37cd4d25d73d456ac999bf"},"sourceProfile":null},"response":{"format":"FlightResponseProfile.v2","maxTilt":30,"rates":{"algorithm":"actual","axes":{"pitch":{"expo":0,"limit":1998,"rate":67,"rcRate":7},"roll":{"expo":0,"limit":1998,"rate":83,"rcRate":7},"yaw":{"expo":0,"limit":1998,"rate":67,"rcRate":7}},"format":"FpvRateProfile.v1","quickRatesRcExpo":false,"throttle":{"expo":0,"hover":50,"limitPercent":100,"limitType":"off","mid":50,"model":"betaflight-2025.12"}},"responseTicks":8},"revision":1},{"history":[],"id":"tuning-5c4361a8-1b6f-406b-a56a-ea18a15a49e0","name":"Original receipt","provenance":{"baseline":null,"firmware":{"origin":"native","version":null},"format":"FpvRateImportReceipt.v1","operation":"native","preset":null,"rateIdentity":"97e587f0575f0690","resultSha256":"846310d613cac65ca3c76ade9b43e411af91f2279122d42e9e1ae7687de8e2dc","review":{"applied":{"entries":["{\\"field\\":\\"rates_type\\",\\"value\\":\\"actual\\"}","{\\"field\\":\\"quickrates_rc_expo\\",\\"value\\":false}","{\\"field\\":\\"roll_rc_rate\\",\\"value\\":7}","{\\"field\\":\\"roll_srate\\",\\"value\\":83}","{\\"field\\":\\"roll_expo\\",\\"value\\":0}","{\\"field\\":\\"roll_rate_limit\\",\\"value\\":1998}","{\\"field\\":\\"pitch_rc_rate\\",\\"value\\":7}","{\\"field\\":\\"pitch_srate\\",\\"value\\":67}","{\\"field\\":\\"pitch_expo\\",\\"value\\":0}","{\\"field\\":\\"pitch_rate_limit\\",\\"value\\":1998}","{\\"field\\":\\"yaw_rc_rate\\",\\"value\\":7}","{\\"field\\":\\"yaw_srate\\",\\"value\\":67}","{\\"field\\":\\"yaw_expo\\",\\"value\\":0}","{\\"field\\":\\"yaw_rate_limit\\",\\"value\\":1998}","{\\"field\\":\\"throttle_model\\",\\"value\\":\\"betaflight-2025.12\\"}","{\\"field\\":\\"thr_mid\\",\\"value\\":50}","{\\"field\\":\\"thr_expo\\",\\"value\\":0}","{\\"field\\":\\"thr_hover\\",\\"value\\":50}","{\\"field\\":\\"throttle_limit_type\\",\\"value\\":\\"off\\"}","{\\"field\\":\\"throttle_limit_percent\\",\\"value\\":100}"],"shortened":false,"total":20},"changed":{"entries":[],"shortened":false,"total":0},"ignored":{"entries":[],"shortened":false,"total":0},"inferred":{"entries":[],"shortened":false,"total":0},"normalizations":{"entries":[],"shortened":false,"total":0},"warnings":{"entries":[],"shortened":false,"total":0}},"source":{"bytes":658,"encoding":"utf-8","kind":"native","sha256":"4973eec0b9ca8f4df236a856ebfa30202c3adc506aeaa06aa9e8d7a6e0ec4def"},"sourceProfile":null},"response":{"format":"FlightResponseProfile.v2","maxTilt":30,"rates":{"algorithm":"actual","axes":{"pitch":{"expo":0,"limit":1998,"rate":67,"rcRate":7},"roll":{"expo":0,"limit":1998,"rate":83,"rcRate":7},"yaw":{"expo":0,"limit":1998,"rate":67,"rcRate":7}},"format":"FpvRateProfile.v1","quickRatesRcExpo":false,"throttle":{"expo":0,"hover":50,"limitPercent":100,"limitType":"off","mid":50,"model":"betaflight-2025.12"}},"responseTicks":8},"revision":0}],"revision":3,"selectedSetupId":"my-drone","setups":[{"camera":{"tilt":10,"verticalFov":82},"id":"my-drone","name":"My drone","profileId":null}]}'
+    - '{"defaultProfileId":"legacy-feel","format":"FpvTuningLibrary.v1","profiles":[{"history":[],"id":"legacy-feel","name":"Legacy feel","response":{"expo":30,"format":"FlightResponseProfile.v1","id":"gentle-v1","maxRate":240,"maxTilt":30,"name":"Gentle","responseTicks":8},"revision":0},{"history":[{"name":"Original receipt","provenance":{"baseline":null,"firmware":{"origin":"native","version":null},"format":"FpvRateImportReceipt.v1","operation":"native","preset":null,"rateIdentity":"97e587f0575f0690","resultSha256":"846310d613cac65ca3c76ade9b43e411af91f2279122d42e9e1ae7687de8e2dc","review":{"applied":{"entries":["{\\"field\\":\\"rates_type\\",\\"value\\":\\"actual\\"}","{\\"field\\":\\"quickrates_rc_expo\\",\\"value\\":false}","{\\"field\\":\\"roll_rc_rate\\",\\"value\\":7}","{\\"field\\":\\"roll_srate\\",\\"value\\":83}","{\\"field\\":\\"roll_expo\\",\\"value\\":0}","{\\"field\\":\\"roll_rate_limit\\",\\"value\\":1998}","{\\"field\\":\\"pitch_rc_rate\\",\\"value\\":7}","{\\"field\\":\\"pitch_srate\\",\\"value\\":67}","{\\"field\\":\\"pitch_expo\\",\\"value\\":0}","{\\"field\\":\\"pitch_rate_limit\\",\\"value\\":1998}","{\\"field\\":\\"yaw_rc_rate\\",\\"value\\":7}","{\\"field\\":\\"yaw_srate\\",\\"value\\":67}","{\\"field\\":\\"yaw_expo\\",\\"value\\":0}","{\\"field\\":\\"yaw_rate_limit\\",\\"value\\":1998}","{\\"field\\":\\"throttle_model\\",\\"value\\":\\"betaflight-2025.12\\"}","{\\"field\\":\\"thr_mid\\",\\"value\\":50}","{\\"field\\":\\"thr_expo\\",\\"value\\":0}","{\\"field\\":\\"thr_hover\\",\\"value\\":50}","{\\"field\\":\\"throttle_limit_type\\",\\"value\\":\\"off\\"}","{\\"field\\":\\"throttle_limit_percent\\",\\"value\\":100}"],"shortened":false,"total":20},"changed":{"entries":[],"shortened":false,"total":0},"ignored":{"entries":[],"shortened":false,"total":0},"inferred":{"entries":[],"shortened":false,"total":0},"normalizations":{"entries":[],"shortened":false,"total":0},"warnings":{"entries":[],"shortened":false,"total":0}},"source":{"bytes":657,"encoding":"utf-8","kind":"native","sha256":"6c7a1ee6e4cf96d82e774fff15789c4e76fa1e693f37cd4d25d73d456ac999bf"},"sourceProfile":null},"response":{"format":"FlightResponseProfile.v2","maxTilt":30,"rates":{"algorithm":"actual","axes":{"pitch":{"expo":0,"limit":1998,"rate":67,"rcRate":7},"roll":{"expo":0,"limit":1998,"rate":83,"rcRate":7},"yaw":{"expo":0,"limit":1998,"rate":67,"rcRate":7}},"format":"FpvRateProfile.v1","quickRatesRcExpo":false,"throttle":{"expo":0,"hover":50,"limitPercent":100,"limitType":"off","mid":50,"model":"betaflight-2025.12"}},"responseTicks":8},"revision":0}],"id":"tuning-b288e056-4037-43f3-929f-8a8ce72dafee","name":"Renamed receipt","provenance":{"baseline":null,"firmware":{"origin":"native","version":null},"format":"FpvRateImportReceipt.v1","operation":"native","preset":null,"rateIdentity":"97e587f0575f0690","resultSha256":"846310d613cac65ca3c76ade9b43e411af91f2279122d42e9e1ae7687de8e2dc","review":{"applied":{"entries":["{\\"field\\":\\"rates_type\\",\\"value\\":\\"actual\\"}","{\\"field\\":\\"quickrates_rc_expo\\",\\"value\\":false}","{\\"field\\":\\"roll_rc_rate\\",\\"value\\":7}","{\\"field\\":\\"roll_srate\\",\\"value\\":83}","{\\"field\\":\\"roll_expo\\",\\"value\\":0}","{\\"field\\":\\"roll_rate_limit\\",\\"value\\":1998}","{\\"field\\":\\"pitch_rc_rate\\",\\"value\\":7}","{\\"field\\":\\"pitch_srate\\",\\"value\\":67}","{\\"field\\":\\"pitch_expo\\",\\"value\\":0}","{\\"field\\":\\"pitch_rate_limit\\",\\"value\\":1998}","{\\"field\\":\\"yaw_rc_rate\\",\\"value\\":7}","{\\"field\\":\\"yaw_srate\\",\\"value\\":67}","{\\"field\\":\\"yaw_expo\\",\\"value\\":0}","{\\"field\\":\\"yaw_rate_limit\\",\\"value\\":1998}","{\\"field\\":\\"throttle_model\\",\\"value\\":\\"betaflight-2025.12\\"}","{\\"field\\":\\"thr_mid\\",\\"value\\":50}","{\\"field\\":\\"thr_expo\\",\\"value\\":0}","{\\"field\\":\\"thr_hover\\",\\"value\\":50}","{\\"field\\":\\"throttle_limit_type\\",\\"value\\":\\"off\\"}","{\\"field\\":\\"throttle_limit_percent\\",\\"value\\":100}"],"shortened":false,"total":20},"changed":{"entries":[],"shortened":false,"total":0},"ignored":{"entries":[],"shortened":false,"total":0},"inferred":{"entries":[],"shortened":false,"total":0},"normalizations":{"entries":[],"shortened":false,"total":0},"warnings":{"entries":[],"shortened":false,"total":0}},"source":{"bytes":657,"encoding":"utf-8","kind":"native","sha256":"6c7a1ee6e4cf96d82e774fff15789c4e76fa1e693f37cd4d25d73d456ac999bf"},"sourceProfile":null},"response":{"format":"FlightResponseProfile.v2","maxTilt":30,"rates":{"algorithm":"actual","axes":{"pitch":{"expo":0,"limit":1998,"rate":67,"rcRate":7},"roll":{"expo":0,"limit":1998,"rate":83,"rcRate":7},"yaw":{"expo":0,"limit":1998,"rate":67,"rcRate":7}},"format":"FpvRateProfile.v1","quickRatesRcExpo":false,"throttle":{"expo":0,"hover":50,"limitPercent":100,"limitType":"off","mid":50,"model":"betaflight-2025.12"}},"responseTicks":8},"revision":1}],"revision":2,"selectedSetupId":"my-drone","setups":[{"camera":{"tilt":10,"verticalFov":82},"id":"my-drone","name":"My drone","profileId":null}]}'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '{"defaultProfileId":"legacy-feel","format":"FpvTuningLibrary.v1","profiles":[{"history":[],"id":"legacy-feel","name":"Legacy feel","response":{"expo":30,"format":"FlightResponseProfile.v1","id":"gentle-v1","maxRate":240,"maxTilt":30,"name":"Gentle","responseTicks":8},"revision":0},{"history":[{"name":"Original receipt","provenance":{"baseline":null,"firmware":{"origin":"native","version":null},"format":"FpvRateImportReceipt.v1","operation":"native","preset":null,"rateIdentity":"97e587f0575f0690","resultSha256":"846310d613cac65ca3c76ade9b43e411af91f2279122d42e9e1ae7687de8e2dc","review":{"applied":{"entries":["{\\"field\\":\\"rates_type\\",\\"value\\":\\"actual\\"}","{\\"field\\":\\"quickrates_rc_expo\\",\\"value\\":false}","{\\"field\\":\\"roll_rc_rate\\",\\"value\\":7}","{\\"field\\":\\"roll_srate\\",\\"value\\":83}","{\\"field\\":\\"roll_expo\\",\\"value\\":0}","{\\"field\\":\\"roll_rate_limit\\",\\"value\\":1998}","{\\"field\\":\\"pitch_rc_rate\\",\\"value\\":7}","{\\"field\\":\\"pitch_srate\\",\\"value\\":67}","{\\"field\\":\\"pitch_expo\\",\\"value\\":0}","{\\"field\\":\\"pitch_rate_limit\\",\\"value\\":1998}","{\\"field\\":\\"yaw_rc_rate\\",\\"value\\":7}","{\\"field\\":\\"yaw_srate\\",\\"value\\":67}","{\\"field\\":\\"yaw_expo\\",\\"value\\":0}","{\\"field\\":\\"yaw_rate_limit\\",\\"value\\":1998}","{\\"field\\":\\"throttle_model\\",\\"value\\":\\"betaflight-2025.12\\"}","{\\"field\\":\\"thr_mid\\",\\"value\\":50}","{\\"field\\":\\"thr_expo\\",\\"value\\":0}","{\\"field\\":\\"thr_hover\\",\\"value\\":50}","{\\"field\\":\\"throttle_limit_type\\",\\"value\\":\\"off\\"}","{\\"field\\":\\"throttle_limit_percent\\",\\"value\\":100}"],"shortened":false,"total":20},"changed":{"entries":[],"shortened":false,"total":0},"ignored":{"entries":[],"shortened":false,"total":0},"inferred":{"entries":[],"shortened":false,"total":0},"normalizations":{"entries":[],"shortened":false,"total":0},"warnings":{"entries":[],"shortened":false,"total":0}},"source":{"bytes":657,"encoding":"utf-8","kind":"native","sha256":"6c7a1ee6e4cf96d82e774fff15789c4e76fa1e693f37cd4d25d73d456ac999bf"},"sourceProfile":null},"response":{"format":"FlightResponseProfile.v2","maxTilt":30,"rates":{"algorithm":"actual","axes":{"pitch":{"expo":0,"limit":1998,"rate":67,"rcRate":7},"roll":{"expo":0,"limit":1998,"rate":83,"rcRate":7},"yaw":{"expo":0,"limit":1998,"rate":67,"rcRate":7}},"format":"FpvRateProfile.v1","quickRatesRcExpo":false,"throttle":{"expo":0,"hover":50,"limitPercent":100,"limitType":"off","mid":50,"model":"betaflight-2025.12"}},"responseTicks":8},"revision":0}],"id":"tuning-b288e056-4037-43f3-929f-8a8ce72dafee","name":"Renamed receipt","provenance":{"baseline":null,"firmware":{"origin":"native","version":null},"format":"FpvRateImportReceipt.v1","operation":"native","preset":null,"rateIdentity":"97e587f0575f0690","resultSha256":"846310d613cac65ca3c76ade9b43e411af91f2279122d42e9e1ae7687de8e2dc","review":{"applied":{"entries":["{\\"field\\":\\"rates_type\\",\\"value\\":\\"actual\\"}","{\\"field\\":\\"quickrates_rc_expo\\",\\"value\\":false}","{\\"field\\":\\"roll_rc_rate\\",\\"value\\":7}","{\\"field\\":\\"roll_srate\\",\\"value\\":83}","{\\"field\\":\\"roll_expo\\",\\"value\\":0}","{\\"field\\":\\"roll_rate_limit\\",\\"value\\":1998}","{\\"field\\":\\"pitch_rc_rate\\",\\"value\\":7}","{\\"field\\":\\"pitch_srate\\",\\"value\\":67}","{\\"field\\":\\"pitch_expo\\",\\"value\\":0}","{\\"field\\":\\"pitch_rate_limit\\",\\"value\\":1998}","{\\"field\\":\\"yaw_rc_rate\\",\\"value\\":7}","{\\"field\\":\\"yaw_srate\\",\\"value\\":67}","{\\"field\\":\\"yaw_expo\\",\\"value\\":0}","{\\"field\\":\\"yaw_rate_limit\\",\\"value\\":1998}","{\\"field\\":\\"throttle_model\\",\\"value\\":\\"betaflight-2025.12\\"}","{\\"field\\":\\"thr_mid\\",\\"value\\":50}","{\\"field\\":\\"thr_expo\\",\\"value\\":0}","{\\"field\\":\\"thr_hover\\",\\"value\\":50}","{\\"field\\":\\"throttle_limit_type\\",\\"value\\":\\"off\\"}","{\\"field\\":\\"throttle_limit_percent\\",\\"value\\":100}"],"shortened":false,"total":20},"changed":{"entries":[],"shortened":false,"total":0},"ignored":{"entries":[],"shortened":false,"total":0},"inferred":{"entries":[],"shortened":false,"total":0},"normalizations":{"entries":[],"shortened":false,"total":0},"warnings":{"entries":[],"shortened":false,"total":0}},"source":{"bytes":657,"encoding":"utf-8","kind":"native","sha256":"6c7a1ee6e4cf96d82e774fff15789c4e76fa1e693f37cd4d25d73d456ac999bf"},"sourceProfile":null},"response":{"format":"FlightResponseProfile.v2","maxTilt":30,"rates":{"algorithm":"actual","axes":{"pitch":{"expo":0,"limit":1998,"rate":67,"rcRate":7},"roll":{"expo":0,"limit":1998,"rate":83,"rcRate":7},"yaw":{"expo":0,"limit":1998,"rate":67,"rcRate":7}},"format":"FpvRateProfile.v1","quickRatesRcExpo":false,"throttle":{"expo":0,"hover":50,"limitPercent":100,"limitType":"off","mid":50,"model":"betaflight-2025.12"}},"responseTicks":8},"revision":1}],"revision":2,"selectedSetupId":"my-drone","setups":[{"camera":{"tilt":10,"verticalFov":82},"id":"my-drone","name":"My drone","profileId":null}]}'
+  actual: '{"defaultProfileId":"legacy-feel","format":"FpvTuningLibrary.v1","profiles":[{"history":[],"id":"legacy-feel","name":"Legacy feel","response":{"expo":30,"format":"FlightResponseProfile.v1","id":"gentle-v1","maxRate":240,"maxTilt":30,"name":"Gentle","responseTicks":8},"revision":0},{"history":[{"name":"Original receipt","provenance":{"baseline":null,"firmware":{"origin":"native","version":null},"format":"FpvRateImportReceipt.v1","operation":"native","preset":null,"rateIdentity":"97e587f0575f0690","resultSha256":"846310d613cac65ca3c76ade9b43e411af91f2279122d42e9e1ae7687de8e2dc","review":{"applied":{"entries":["{\\"field\\":\\"rates_type\\",\\"value\\":\\"actual\\"}","{\\"field\\":\\"quickrates_rc_expo\\",\\"value\\":false}","{\\"field\\":\\"roll_rc_rate\\",\\"value\\":7}","{\\"field\\":\\"roll_srate\\",\\"value\\":83}","{\\"field\\":\\"roll_expo\\",\\"value\\":0}","{\\"field\\":\\"roll_rate_limit\\",\\"value\\":1998}","{\\"field\\":\\"pitch_rc_rate\\",\\"value\\":7}","{\\"field\\":\\"pitch_srate\\",\\"value\\":67}","{\\"field\\":\\"pitch_expo\\",\\"value\\":0}","{\\"field\\":\\"pitch_rate_limit\\",\\"value\\":1998}","{\\"field\\":\\"yaw_rc_rate\\",\\"value\\":7}","{\\"field\\":\\"yaw_srate\\",\\"value\\":67}","{\\"field\\":\\"yaw_expo\\",\\"value\\":0}","{\\"field\\":\\"yaw_rate_limit\\",\\"value\\":1998}","{\\"field\\":\\"throttle_model\\",\\"value\\":\\"betaflight-2025.12\\"}","{\\"field\\":\\"thr_mid\\",\\"value\\":50}","{\\"field\\":\\"thr_expo\\",\\"value\\":0}","{\\"field\\":\\"thr_hover\\",\\"value\\":50}","{\\"field\\":\\"throttle_limit_type\\",\\"value\\":\\"off\\"}","{\\"field\\":\\"throttle_limit_percent\\",\\"value\\":100}"],"shortened":false,"total":20},"changed":{"entries":[],"shortened":false,"total":0},"ignored":{"entries":[],"shortened":false,"total":0},"inferred":{"entries":[],"shortened":false,"total":0},"normalizations":{"entries":[],"shortened":false,"total":0},"warnings":{"entries":[],"shortened":false,"total":0}},"source":{"bytes":657,"encoding":"utf-8","kind":"native","sha256":"6c7a1ee6e4cf96d82e774fff15789c4e76fa1e693f37cd4d25d73d456ac999bf"},"sourceProfile":null},"response":{"format":"FlightResponseProfile.v2","maxTilt":30,"rates":{"algorithm":"actual","axes":{"pitch":{"expo":0,"limit":1998,"rate":67,"rcRate":7},"roll":{"expo":0,"limit":1998,"rate":83,"rcRate":7},"yaw":{"expo":0,"limit":1998,"rate":67,"rcRate":7}},"format":"FpvRateProfile.v1","quickRatesRcExpo":false,"throttle":{"expo":0,"hover":50,"limitPercent":100,"limitType":"off","mid":50,"model":"betaflight-2025.12"}},"responseTicks":8},"revision":0}],"id":"tuning-b288e056-4037-43f3-929f-8a8ce72dafee","name":"Renamed receipt","provenance":{"baseline":null,"firmware":{"origin":"native","version":null},"format":"FpvRateImportReceipt.v1","operation":"native","preset":null,"rateIdentity":"97e587f0575f0690","resultSha256":"846310d613cac65ca3c76ade9b43e411af91f2279122d42e9e1ae7687de8e2dc","review":{"applied":{"entries":["{\\"field\\":\\"rates_type\\",\\"value\\":\\"actual\\"}","{\\"field\\":\\"quickrates_rc_expo\\",\\"value\\":false}","{\\"field\\":\\"roll_rc_rate\\",\\"value\\":7}","{\\"field\\":\\"roll_srate\\",\\"value\\":83}","{\\"field\\":\\"roll_expo\\",\\"value\\":0}","{\\"field\\":\\"roll_rate_limit\\",\\"value\\":1998}","{\\"field\\":\\"pitch_rc_rate\\",\\"value\\":7}","{\\"field\\":\\"pitch_srate\\",\\"value\\":67}","{\\"field\\":\\"pitch_expo\\",\\"value\\":0}","{\\"field\\":\\"pitch_rate_limit\\",\\"value\\":1998}","{\\"field\\":\\"yaw_rc_rate\\",\\"value\\":7}","{\\"field\\":\\"yaw_srate\\",\\"value\\":67}","{\\"field\\":\\"yaw_expo\\",\\"value\\":0}","{\\"field\\":\\"yaw_rate_limit\\",\\"value\\":1998}","{\\"field\\":\\"throttle_model\\",\\"value\\":\\"betaflight-2025.12\\"}","{\\"field\\":\\"thr_mid\\",\\"value\\":50}","{\\"field\\":\\"thr_expo\\",\\"value\\":0}","{\\"field\\":\\"thr_hover\\",\\"value\\":50}","{\\"field\\":\\"throttle_limit_type\\",\\"value\\":\\"off\\"}","{\\"field\\":\\"throttle_limit_percent\\",\\"value\\":100}"],"shortened":false,"total":20},"changed":{"entries":[],"shortened":false,"total":0},"ignored":{"entries":[],"shortened":false,"total":0},"inferred":{"entries":[],"shortened":false,"total":0},"normalizations":{"entries":[],"shortened":false,"total":0},"warnings":{"entries":[],"shortened":false,"total":0}},"source":{"bytes":657,"encoding":"utf-8","kind":"native","sha256":"6c7a1ee6e4cf96d82e774fff15789c4e76fa1e693f37cd4d25d73d456ac999bf"},"sourceProfile":null},"response":{"format":"FlightResponseProfile.v2","maxTilt":30,"rates":{"algorithm":"actual","axes":{"pitch":{"expo":0,"limit":1998,"rate":67,"rcRate":7},"roll":{"expo":0,"limit":1998,"rate":83,"rcRate":7},"yaw":{"expo":0,"limit":1998,"rate":67,"rcRate":7}},"format":"FpvRateProfile.v1","quickRatesRcExpo":false,"throttle":{"expo":0,"hover":50,"limitPercent":100,"limitType":"off","mid":50,"model":"betaflight-2025.12"}},"responseTicks":8},"revision":1},{"history":[],"id":"tuning-5c4361a8-1b6f-406b-a56a-ea18a15a49e0","name":"Original receipt","provenance":{"baseline":null,"firmware":{"origin":"native","version":null},"format":"FpvRateImportReceipt.v1","operation":"native","preset":null,"rateIdentity":"97e587f0575f0690","resultSha256":"846310d613cac65ca3c76ade9b43e411af91f2279122d42e9e1ae7687de8e2dc","review":{"applied":{"entries":["{\\"field\\":\\"rates_type\\",\\"value\\":\\"actual\\"}","{\\"field\\":\\"quickrates_rc_expo\\",\\"value\\":false}","{\\"field\\":\\"roll_rc_rate\\",\\"value\\":7}","{\\"field\\":\\"roll_srate\\",\\"value\\":83}","{\\"field\\":\\"roll_expo\\",\\"value\\":0}","{\\"field\\":\\"roll_rate_limit\\",\\"value\\":1998}","{\\"field\\":\\"pitch_rc_rate\\",\\"value\\":7}","{\\"field\\":\\"pitch_srate\\",\\"value\\":67}","{\\"field\\":\\"pitch_expo\\",\\"value\\":0}","{\\"field\\":\\"pitch_rate_limit\\",\\"value\\":1998}","{\\"field\\":\\"yaw_rc_rate\\",\\"value\\":7}","{\\"field\\":\\"yaw_srate\\",\\"value\\":67}","{\\"field\\":\\"yaw_expo\\",\\"value\\":0}","{\\"field\\":\\"yaw_rate_limit\\",\\"value\\":1998}","{\\"field\\":\\"throttle_model\\",\\"value\\":\\"betaflight-2025.12\\"}","{\\"field\\":\\"thr_mid\\",\\"value\\":50}","{\\"field\\":\\"thr_expo\\",\\"value\\":0}","{\\"field\\":\\"thr_hover\\",\\"value\\":50}","{\\"field\\":\\"throttle_limit_type\\",\\"value\\":\\"off\\"}","{\\"field\\":\\"throttle_limit_percent\\",\\"value\\":100}"],"shortened":false,"total":20},"changed":{"entries":[],"shortened":false,"total":0},"ignored":{"entries":[],"shortened":false,"total":0},"inferred":{"entries":[],"shortened":false,"total":0},"normalizations":{"entries":[],"shortened":false,"total":0},"warnings":{"entries":[],"shortened":false,"total":0}},"source":{"bytes":658,"encoding":"utf-8","kind":"native","sha256":"4973eec0b9ca8f4df236a856ebfa30202c3adc506aeaa06aa9e8d7a6e0ec4def"},"sourceProfile":null},"response":{"format":"FlightResponseProfile.v2","maxTilt":30,"rates":{"algorithm":"actual","axes":{"pitch":{"expo":0,"limit":1998,"rate":67,"rcRate":7},"roll":{"expo":0,"limit":1998,"rate":83,"rcRate":7},"yaw":{"expo":0,"limit":1998,"rate":67,"rcRate":7}},"format":"FpvRateProfile.v1","quickRatesRcExpo":false,"throttle":{"expo":0,"hover":50,"limitPercent":100,"limitType":"off","mid":50,"model":"betaflight-2025.12"}},"responseTicks":8},"revision":0}],"revision":3,"selectedSetupId":"my-drone","setups":[{"camera":{"tilt":10,"verticalFov":82},"id":"my-drone","name":"My drone","profileId":null}]}'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/game/test/fpv-tuning-ui.test.mjs:1382:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: uploaded CLI receipts hash original BOM and CRLF bytes before browser textarea normalization
+ok 70 - uploaded CLI receipts hash original BOM and CRLF bytes before browser textarea normalization # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.167709
+  ...
+# Subtest: a delayed import source hash cannot publish after edit
+ok 71 - a delayed import source hash cannot publish after edit # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.020833
+  ...
+# Subtest: a delayed import source hash cannot publish after reopen
+ok 72 - a delayed import source hash cannot publish after reopen # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.015292
+  ...
+# Subtest: a pending native import cannot replace a newer numeric draft (blank)
+ok 73 - a pending native import cannot replace a newer numeric draft (blank) # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.020917
+  ...
+# Subtest: a pending native import cannot replace a newer numeric draft (905)
+ok 74 - a pending native import cannot replace a newer numeric draft (905) # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.014792
+  ...
+# Subtest: a pending native import cannot replace a newer numeric draft (920)
+ok 75 - a pending native import cannot replace a newer numeric draft (920) # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013708
+  ...
+# Subtest: a pending CLI import cannot replace a newer numeric draft (blank)
+ok 76 - a pending CLI import cannot replace a newer numeric draft (blank) # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0135
+  ...
+# Subtest: a pending CLI import cannot replace a newer numeric draft (905)
+ok 77 - a pending CLI import cannot replace a newer numeric draft (905) # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013333
+  ...
+# Subtest: a pending CLI import cannot replace a newer numeric draft (920)
+ok 78 - a pending CLI import cannot replace a newer numeric draft (920) # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0155
+  ...
+# Subtest: a cancelled pending import stays cancelled after algorithm round trip
+ok 79 - a cancelled pending import stays cancelled after algorithm round trip # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.012792
+  ...
+# Subtest: a cancelled pending import stays cancelled after edit back to saved value
+ok 80 - a cancelled pending import stays cancelled after edit back to saved value # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013208
+  ...
+# Subtest: a cancelled pending import stays cancelled after revert
+ok 81 - a cancelled pending import stays cancelled after revert # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.012833
+  ...
+# Subtest: saving an import rejects changed preview rates instead of replacing visible edits
+ok 82 - saving an import rejects changed preview rates instead of replacing visible edits # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.012208
+  ...
+# Subtest: firmware-default patch preview accepts a verified file header without a manual version
+ok 83 - firmware-default patch preview accepts a verified file header without a manual version # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.013417
+  ...
+# Subtest: rotation-only CLI export crosses throttle versions only after an explicit choice
+ok 84 - rotation-only CLI export crosses throttle versions only after an explicit choice # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.012291
+  ...
+1..84
+# tests 84
+# suites 0
+# pass 0
+# fail 3
+# cancelled 0
+# skipped 81
+# todo 0
+# duration_ms 251.47025

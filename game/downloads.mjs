@@ -19,6 +19,7 @@ import {
 } from './offline-download-session.mjs';
 import { captureInstallPrompt, installInstructions } from './ui/pwa-install.mjs';
 import { attachDownloadsNavigation } from './ui/downloads-navigation.mjs';
+import { attachOfflineReadiness } from './ui/offline-readiness.mjs';
 import {
   attachOfflinePackageChoice,
   syncOfflinePackageChoices,
@@ -148,6 +149,21 @@ const downloadedAlbums = new Set();
 const baseURL = new URL('../', import.meta.url).href;
 const edition = baseURL;
 const appURL = installedAppURL(location);
+let panelVisible = true;
+const readiness = attachOfflineReadiness({
+  root: $('offline-readiness'),
+  onRecheck: () => $('verify-game').onclick(),
+});
+readiness.update({ available: available.available });
+function selectedEditionState() {
+  try {
+    const active = readInstalledState().active;
+    if (active?.scope === baseURL && active.buildId === available.buildId) return 'selected';
+    return active ? 'other' : 'pending';
+  } catch {
+    return 'unknown';
+  }
+}
 $('install-app').href = appURL;
 $('check-updates').href = gameUpdatesURL(location).href;
 if (updateContext) {
@@ -163,6 +179,7 @@ else
 const install = captureInstallPrompt();
 function refreshInstall() {
   const installed = installedPresentation();
+  readiness.update({ installed });
   localizedText($('installation-status'), () =>
     t(
       installed
@@ -242,6 +259,8 @@ function readyMessage() {
   };
 }
 function busy(value) {
+  if (value) readiness.invalidate();
+  readiness.update({ busy: value || !initialized });
   for (const id of [
     'download-game',
     'verify-game',
@@ -341,7 +360,18 @@ async function estimates({ signal } = {}) {
   );
   $('download-game').disabled = !initialized || Boolean(controller) || setupComplete();
 }
-async function health({ verify = true, signal } = {}) {
+async function health(options = {}) {
+  const token = readiness.begin();
+  try {
+    const observation = await inspectHealth(options);
+    if (observation && !document.hidden && panelVisible) readiness.complete(token, observation);
+    else readiness.fail(token);
+  } catch (error) {
+    readiness.fail(token);
+    throw error;
+  }
+}
+async function inspectHealth({ verify = true, signal } = {}) {
   signal?.throwIfAborted();
   const sequence = ++healthSequence;
   const ids = gameIDs();
@@ -350,9 +380,18 @@ async function health({ verify = true, signal } = {}) {
   signal?.throwIfAborted();
   if (sequence !== healthSequence || JSON.stringify(ids) !== JSON.stringify(gameIDs())) return;
   runtimeHealth = runtime;
+  const sim = { count: 0, total: 0 };
   for (const [id, element] of experienceStatuses) {
     const report = await store.inspect(downloadFiles(catalogue, [id]), { verify, signal });
     if (sequence !== healthSequence) return;
+    if (
+      catalogue.groups
+        .find((group) => group.id === id)
+        ?.launchPath?.startsWith('optional-practice/')
+    ) {
+      sim.total++;
+      if (report.ready) sim.count++;
+    }
     localizedText(element, () =>
       t('interface:downloads.experienceStatus', {
         size: size(report.totalBytes + core.files.reduce((sum, file) => sum + file.bytes, 0)),
@@ -437,6 +476,25 @@ async function health({ verify = true, signal } = {}) {
   }
   if (sequence !== healthSequence) return;
   await estimates({ signal });
+  let retained = null;
+  try {
+    const value = await navigator.storage?.persisted?.();
+    if (typeof value === 'boolean') retained = value;
+  } catch {
+    /* Unavailable retention information does not invalidate verified files. */
+  }
+  signal?.throwIfAborted();
+  if (sequence !== healthSequence) return;
+  return {
+    runtime: runtime.status,
+    content: gameplay.ready,
+    launcher: launcherHealth.status,
+    bookmark: Boolean(navigationRequest),
+    selection: selectedEditionState(),
+    retained,
+    sim,
+    music: { count, total: catalogue.files.filter((file) => file.kind === 'soundtrack').length },
+  };
 }
 async function run(task, { music = false } = {}) {
   if (!initialized || controller) return;
@@ -523,17 +581,23 @@ $('cancel').onclick = () => (navigationRequest ? leaveDownloads() : pauseGameDow
 $('pause-music').onclick = $('cancel-music').onclick = () => controller?.abort();
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) {
+    readiness.invalidate();
     panelController.abort();
     pauseGameDownload();
   } else if (panelController.signal.aborted) panelController = new AbortController();
 });
 window.addEventListener('pagehide', (event) => {
+  readiness.invalidate();
   panelController.abort();
   pauseGameDownload();
   if (!event.persisted) {
     activity?.close();
     navigation.dispose();
   }
+});
+window.addEventListener('storage', (event) => {
+  if (event.key === null || event.key?.startsWith('revealline.installed-app.'))
+    readiness.invalidate();
 });
 function selectionChanged() {
   if (!initialized || controller) return;
@@ -579,6 +643,26 @@ $('download-game').onclick = () => {
   resumeApprovedGame = () => downloadApprovedGame(approval);
   return resumeApprovedGame();
 };
+async function prepareRuntime(signal) {
+  operation(() => t('interface:downloads.preparingRuntime'));
+  const report = await prepareOffline({
+    signal,
+    cancelPreparation: true,
+    onStatus: (state) => operation(() => offlineMessage(state, t)),
+  });
+  if (report.status !== 'ready')
+    throw report.message
+      ? Object.assign(new Error(report.message), { offlineCode: report.messageCode })
+      : localError('interface:downloads.closeOtherWindows');
+}
+async function prepareUpdatedRuntime(signal) {
+  signal.throwIfAborted();
+  await prepareRuntime(signal);
+  launcherHealth = await checkInstalledLauncher({ signal });
+  await health({ verify: true, signal });
+  signal.throwIfAborted();
+  if (!ready) throw localError('interface:downloads.preparationIncomplete');
+}
 function downloadApprovedGame(approval) {
   return run(async (signal) => {
     // Reject an unusable installation before transferring bytes, not after a
@@ -603,18 +687,6 @@ function downloadApprovedGame(approval) {
       signal,
       onProgress: progress,
     };
-    const prepareRuntime = async () => {
-      operation(() => t('interface:downloads.preparingRuntime'));
-      const report = await prepareOffline({
-        signal,
-        cancelPreparation: true,
-        onStatus: (state) => operation(() => offlineMessage(state, t)),
-      });
-      if (report.status !== 'ready')
-        throw report.message
-          ? Object.assign(new Error(report.message), { offlineCode: report.messageCode })
-          : localError('interface:downloads.closeOtherWindows');
-    };
     if (updateContext) {
       // Verified content can be retained before activation. Replacement core
       // preparation must wait for migration checks and hold both profile locks.
@@ -623,20 +695,13 @@ function downloadApprovedGame(approval) {
         ids: approval.ids,
         all: approval.all,
         signal,
-        prepare: async () => {
-          signal.throwIfAborted();
-          await prepareRuntime();
-          launcherHealth = await checkInstalledLauncher({ signal });
-          await health({ verify: true, signal });
-          signal.throwIfAborted();
-          if (!ready) throw localError('interface:downloads.preparationIncomplete');
-        },
+        prepare: () => prepareUpdatedRuntime(signal),
       });
       resumeApprovedGame = null;
       yieldedToPlay = false;
       return () => installedResultMessage(result, t);
     }
-    await prepareRuntime();
+    await prepareRuntime(signal);
     if (navigationRequest)
       await downloadOfflineDestination(store, { request: navigationRequest, ...download });
     else await store.download(download);
@@ -712,6 +777,7 @@ $('remove-chapters').onclick = () =>
 $('retain').onclick = async () => {
   try {
     const granted = await navigator.storage?.persist?.();
+    readiness.update({ retained: typeof granted === 'boolean' ? granted : null });
     localizedText($('retention-status'), () =>
       t(
         granted
@@ -720,6 +786,7 @@ $('retain').onclick = async () => {
       ),
     );
   } catch (error) {
+    readiness.update({ retained: null });
     localizedText($('retention-status'), () => errorText(error));
   }
 };
@@ -783,6 +850,7 @@ async function selectEdition({
     },
     onReady(result) {
       activationResult = result;
+      readiness.update({ selection: selectedEditionState() });
       localizedText($('activation-status'), () => installedResultMessage(result, t));
       $('activate').hidden = result.activated;
       $('transfer-progress').hidden = result.activated || result.deferred === true;
@@ -807,6 +875,26 @@ async function selectEdition({
 }
 $('activate').onclick = () =>
   run(async (signal) => {
+    if (updateContext) {
+      const ids = gameIDs(),
+        all = $('all-game').checked;
+      const gameplay = await store.inspect(downloadFiles(catalogue, ids), {
+        verify: true,
+        signal,
+      });
+      signal.throwIfAborted();
+      if (!gameplay.ready) throw localError('interface:downloads.repairBeforeSelecting');
+      // Progress review intentionally precedes replacement runtime preparation.
+      // Resume that preparation under the same migration/profile locks as the
+      // original update action, without approving any missing chapter downloads.
+      const result = await selectEdition({
+        ids,
+        all,
+        signal,
+        prepare: () => prepareUpdatedRuntime(signal),
+      });
+      return () => installedResultMessage(result, t);
+    }
     await health({ verify: true, signal });
     signal.throwIfAborted();
     if (!ready) throw localError('interface:downloads.repairBeforeSelecting');
@@ -848,12 +936,15 @@ window.addEventListener('message', (event) => {
     });
   if (event.data.action === 'host-ready') refreshInstall();
   if (event.data.action === 'panel-closed') {
+    panelVisible = false;
+    readiness.invalidate();
     navigation.setVisible(false);
     requestedPackage = null;
     panelController.abort();
     pauseGameDownload();
   }
   if (event.data.action === 'panel-opened') {
+    panelVisible = true;
     navigation.setVisible(true);
     if (panelController.signal.aborted) panelController = new AbortController();
   }
@@ -1015,6 +1106,8 @@ busy(false);
 if (updateContext)
   localizedText($('update-status'), () => t('interface:downloads.checkingEdition'));
 void initialize().catch((error) => {
+  readiness.invalidate();
+  readiness.update({ available: false });
   initialized = false;
   lastEstimate = null;
   ready = false;

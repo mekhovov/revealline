@@ -1,7 +1,32 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+// Preserve strict identity without recursively formatting the fixture DOM.
+function boundedIdentity(actual, expected, message) {
+  if (Object.is(actual, expected)) return;
+  const label = (value) => {
+    if (value === null) return 'null';
+    if (value === undefined) return 'undefined';
+    if (typeof value !== 'object' && typeof value !== 'function') return String(value).slice(0, 80);
+    return (
+      [value.tagName, value.id]
+        .filter((part) => typeof part === 'string')
+        .map((part) => part.slice(0, 80))
+        .join('#') || typeof value
+    );
+  };
+  assert.ok(
+    false,
+    (message ?? 'Strict identity mismatch.') +
+      ' Actual: ' +
+      label(actual) +
+      '; expected: ' +
+      label(expected) +
+      '.',
+  );
+}
 import { couchPage } from './helpers/couch-host.mjs';
 import { page as teamPage } from './helpers/coop-host.mjs';
+import { validateEnemyStatsSession } from '../enemy-stats.mjs';
 
 const pad = () => ({
   index: 0,
@@ -71,7 +96,21 @@ async function host(t, mode) {
   tick(30);
   control('pause').click();
   tick(2);
-  const before = snapshot();
+  const before = snapshot(),
+    writesBefore = [...writes];
+  assert.deepEqual(writesBefore.slice(0, 1), ['revealline-enemy-stats.v1:writer']);
+  const sessionKey = `revealline-enemy-stats-session.v1:host:${team ? 'team' : 'versus'}`;
+  assert.deepEqual(
+    writesBefore.slice(1).sort(),
+    (team ? [sessionKey, 'revealline.team-contextual-teaching.v1'] : [sessionKey]).sort(),
+  );
+  const sessionRaw = values.get(sessionKey),
+    cursors = JSON.parse(sessionRaw);
+  assert.equal(Object.keys(cursors).length, 1);
+  assert.equal(
+    validateEnemyStatsSession(Object.values(cursors)[0]).gameType,
+    team ? 'team' : 'versus',
+  );
   assert.equal(team ? before.paused : before.status === 'paused', true);
   const region = control('data-reading');
   region.clientHeight = 120;
@@ -91,6 +130,22 @@ async function host(t, mode) {
       tick(3);
       pulse(0);
       tick(2);
+      const joined = snapshot();
+      const radioKey = 'revealline.couch-radio-setup.v1';
+      const expectedWrites = [...writesBefore, radioKey];
+      assert.deepEqual(writes, expectedWrites);
+      {
+        assert.equal(
+          values.get(radioKey),
+          JSON.stringify({ entries: [], format: 'RadioSetup.v1' }),
+        );
+        assert.deepEqual(joined, {
+          ...before,
+          stored: [...before.stored, [radioKey, values.get(radioKey)]],
+        });
+        before.stored = joined.stored;
+        writesBefore.push(radioKey);
+      }
     },
     open(data = true) {
       opener.focus();
@@ -103,7 +158,9 @@ async function host(t, mode) {
     unchanged({ advance = true } = {}) {
       if (advance) tick(30);
       assert.deepEqual(snapshot(), before);
-      assert.deepEqual(writes, []);
+      const terminalWrites = !advance && writes.length === writesBefore.length + 1;
+      assert.deepEqual(writes, terminalWrites ? [...writesBefore, sessionKey] : writesBefore);
+      assert.equal(values.get(sessionKey), sessionRaw);
     },
   };
 }
@@ -119,41 +176,35 @@ for (const mode of ['Versus', 'Team']) {
     f.control('data-read').focus();
     f.press('Enter');
     assert.deepEqual(hintsAtReveal, [f.control('data-reading-hint').textContent]);
-    assert.equal(f.doc.activeElement, f.region);
+    boundedIdentity(f.doc.activeElement, f.region);
     f.unchanged();
   });
 
   for (const interruption of ['Back', 'disposal'])
-    test(`${mode} ${interruption} during the final reading hint cannot reveal or refocus the retired reader`, async (t) => {
+    test(`${mode} ${interruption} during active reading hint publication cannot reveal or refocus the retired reader`, async (t) => {
       const f = await host(t, mode);
       f.open();
       const hint = f.control('data-reading-hint'),
-        property = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(hint), 'textContent'),
-        reveals = [];
+        reveals = [],
+        append = hint.append.bind(hint);
       let activeHints = 0,
         retiredFocus;
-      Object.defineProperty(hint, 'textContent', {
-        configurable: true,
-        get() {
-          return property.get.call(this);
-        },
-        set(value) {
-          property.set.call(this, value);
-          // The accepted state refresh precedes the navigation hint; its final
-          // presentation refresh is the second active copy assignment.
-          if (value.startsWith(`Reading ${mode} game data.`) && ++activeHints === 2) {
-            if (interruption === 'Back') f.back.click();
-            else f.win.emit('pagehide', { persisted: false });
-            retiredFocus = f.doc.activeElement;
-          }
-        },
+      // Localization publishes an owned text node, not a duplicate nonempty
+      // parent textContent assignment. Interrupt that actual publication.
+      t.mock.method(hint, 'append', (...nodes) => {
+        append(...nodes);
+        if (hint.textContent.startsWith(`Reading ${mode} game data.`) && ++activeHints === 1) {
+          if (interruption === 'Back') f.back.click();
+          else f.win.emit('pagehide', { persisted: false });
+          retiredFocus = f.doc.activeElement;
+        }
       });
       t.mock.method(f.control('data-unit'), 'scrollIntoView', (options) => reveals.push(options));
       f.control('data-read').click();
-      assert.equal(activeHints, 2);
+      assert.equal(activeHints, 1);
       assert.deepEqual(reveals, []);
-      assert.equal(f.doc.activeElement, retiredFocus);
-      if (interruption === 'Back') assert.equal(retiredFocus, f.opener);
+      boundedIdentity(f.doc.activeElement, retiredFocus);
+      if (interruption === 'Back') boundedIdentity(retiredFocus, f.opener);
       assert.equal(f.control('data-reading-done').disabled, true);
       assert.equal(f.region.hasAttribute('data-controller-reading'), false);
       f.unchanged({ advance: interruption !== 'disposal' });
@@ -163,9 +214,11 @@ for (const mode of ['Versus', 'Team']) {
     const f = await host(t, mode);
     f.open();
     f.press('Tab');
-    assert.equal(f.doc.activeElement, f.control('data-read'));
+    boundedIdentity(f.doc.activeElement, f.doc.getElementById('profile-recovery-open'));
+    f.press('Tab');
+    boundedIdentity(f.doc.activeElement, f.control('data-read'));
     f.press('Enter');
-    assert.equal(f.doc.activeElement, f.region);
+    boundedIdentity(f.doc.activeElement, f.region);
     assert.equal(f.region.tabIndex, 0);
     assert.match(f.region.getAttribute('aria-label'), /game data/);
     assert.match(f.region.textContent, /Solo/);
@@ -177,27 +230,31 @@ for (const mode of ['Versus', 'Team']) {
     assert.equal(f.region.scrollTop, 0);
     assert.match(f.control('data-reading-hint').textContent, /Enter, Space or Escape returns/);
     f.press('Escape');
-    assert.equal(f.doc.activeElement, f.control('data-read'));
+    boundedIdentity(f.doc.activeElement, f.control('data-read'));
     assert.equal(f.control('data-reading-done').disabled, true);
     assert.equal(f.control('settings-panel-data').hidden, false);
     f.press('Escape');
-    assert.equal(f.doc.activeElement, f.opener);
+    boundedIdentity(f.doc.activeElement, f.opener);
     f.unchanged();
   });
 
   test(`${mode} controller enters Game data, scrolls and exits without resuming`, async (t) => {
     const f = await host(t, mode);
     f.join();
-    f.open(false);
     const reach = (target) => {
       for (let i = 0; i < 24 && f.doc.activeElement !== target; i++) f.pulse(13);
-      assert.equal(f.doc.activeElement, target);
+      boundedIdentity(f.doc.activeElement, target);
     };
+    reach(f.opener);
+    boundedIdentity(f.opener.closest('[hidden],[inert]'), null);
+    f.pulse(0);
     reach(f.control('settings-tab-data'));
     f.pulse(0);
+    // Native categories are a vertical group; Right enters the selected panel.
+    f.pulse(15);
     reach(f.control('data-read'));
     f.pulse(0);
-    assert.equal(f.doc.activeElement, f.region);
+    boundedIdentity(f.doc.activeElement, f.region);
     f.pulse(13);
     assert.ok(f.region.scrollTop > 0);
     assert.match(f.control('data-reading-hint').textContent, /South or East returns/);
@@ -207,10 +264,10 @@ for (const mode of ['Versus', 'Team']) {
       'The reading region owns its status instead of duplicating it in a hidden panel.',
     );
     f.pulse(1);
-    assert.equal(f.doc.activeElement, f.control('data-read'));
+    boundedIdentity(f.doc.activeElement, f.control('data-read'));
     assert.equal(f.region.hasAttribute('data-controller-reading'), false);
     f.pulse(1);
-    assert.equal(f.doc.activeElement, f.opener);
+    boundedIdentity(f.doc.activeElement, f.opener);
     f.unchanged();
   });
 
@@ -218,7 +275,7 @@ for (const mode of ['Versus', 'Team']) {
     const f = await host(t, mode);
     f.open();
     f.control('data-read').click();
-    assert.equal(f.doc.activeElement, f.region);
+    boundedIdentity(f.doc.activeElement, f.region);
     const audio = f.control('settings-tab-audio');
     audio.focus();
     audio.click();
@@ -226,14 +283,14 @@ for (const mode of ['Versus', 'Team']) {
     assert.equal(f.control('data-reading-done').disabled, true);
     assert.equal(f.region.hasAttribute('data-controller-reading'), false);
     f.control('data-reading-done').click();
-    assert.equal(f.doc.activeElement, audio);
+    boundedIdentity(f.doc.activeElement, audio);
     f.control('settings-tab-data').click();
     f.control('data-read').click();
     f.back.click();
     assert.equal(f.control('data-reading-done').disabled, true);
     assert.equal(f.region.hasAttribute('data-controller-reading'), false);
     f.control('data-reading-done').click();
-    assert.equal(f.doc.activeElement, f.opener);
+    boundedIdentity(f.doc.activeElement, f.opener);
     f.unchanged();
   });
 
@@ -263,7 +320,7 @@ for (const mode of ['Versus', 'Team']) {
     );
     done.emit('pointerdown', { pointerType: 'touch', pointerId: 3, button: 0 });
     done.click();
-    assert.equal(f.doc.activeElement, entry);
+    boundedIdentity(f.doc.activeElement, entry);
     assert.equal(done.disabled, true);
     f.unchanged();
   });

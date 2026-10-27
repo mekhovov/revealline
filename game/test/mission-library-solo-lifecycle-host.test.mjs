@@ -6,6 +6,22 @@ import { authoritativeCheckpoint } from '../replay.mjs';
 import { classicLibrarySources } from '../mission-library/classic-source.mjs';
 import { createMissionLibrary } from '../mission-library/library.mjs';
 
+function requestMissions(page) {
+  const play = page.$('shell-play'),
+    onPlay = play.onclick;
+  let pending;
+  play.onclick = function (...args) {
+    return (pending = onPlay.apply(this, args));
+  };
+  try {
+    play.click();
+  } finally {
+    play.onclick = onPlay;
+  }
+  assert(pending instanceof Promise, 'The public Missions handler owns this request.');
+  return pending;
+}
+
 for (const transition of ['newer focus', 'newer key', 'newer pointer'])
   test(`incoming exact Solo handoff retires after ${transition} during held index loading`, async (t) => {
     const indexBytes = await readFile(
@@ -46,12 +62,12 @@ for (const transition of ['newer focus', 'newer key', 'newer pointer'])
     const focused = doc.activeElement;
     release();
     const p = await page;
-    await settle(() => p.$('journey-collection'));
+    assert.equal(!!p.$('journey-collection'), false, 'Retired boot metadata is not built.');
     await new Promise((resolve) => setImmediate(resolve));
     p.frame(0);
     assert.equal(p.rendered.run.levelId, 'signal-01');
     assert.equal(p.rendered.run.tick, 0);
-    assert.equal(p.$('journey-chooser').open, false);
+    assert.equal(!!p.$('journey-chooser')?.open, false);
     assert.equal(p.doc.activeElement, focused);
     assert.notEqual(p.doc.body.dataset.flightState, 'running');
     assert.deepEqual(p.errors, []);
@@ -84,7 +100,7 @@ for (const transition of [
     const run = p.rendered.run,
       checkpoint = authoritativeCheckpoint(run);
     p.$('shell-play').focus();
-    p.$('shell-play').click();
+    const pending = requestMissions(p);
     await settle(() => requested);
     assert.equal(p.$('mission-library-opening-status').textContent, 'Preparing missions…');
     if (transition === 'blur') {
@@ -113,11 +129,11 @@ for (const transition of [
       'Newer intent dismisses preparation feedback.',
     );
     release();
-    // Lazy metadata may finish constructing the surface; only a new explicit
-    // foreground request may display it or restore its keyboard focus.
-    await settle(() => p.$('journey-collection'));
-    await new Promise((resolve) => setImmediate(resolve));
-    assert.equal(p.$('journey-chooser').open, false);
+    // Retired metadata stops before constructing the surface. Await the same
+    // public handler so an absent catalogue cannot be an early observation.
+    await pending;
+    assert.equal(!!p.$('journey-collection'), false);
+    assert.equal(!!p.$('journey-chooser')?.open, false);
     assert.equal(p.doc.activeElement, focused, 'Late settlement cannot reclaim focus.');
     assert.equal(p.$('shell-home').open, true);
     p.frame(0);
@@ -125,9 +141,11 @@ for (const transition of [
     assert.deepEqual(authoritativeCheckpoint(run), checkpoint);
     assert.notEqual(p.doc.body.dataset.flightState, 'running');
 
-    p.$('shell-play').click();
+    // A fresh request must now build, rather than reuse retired construction.
+    // Await its actual handler; keep the same final UI predicate and clock.
+    await requestMissions(p);
     await settle(() => p.$('journey-chooser')?.open && p.$('journey-collection'));
-    assert.equal(p.$('journey-cards').children.length, 201);
+    assert.equal(p.$('journey-cards').children.length, 240);
     const current = createMissionLibrary(
       classicLibrarySources(
         JSON.parse(

@@ -1,0 +1,511 @@
+{
+  "format": "FPVAlpineStationApproach.v1",
+  "revision": "relief-r6-station-approach",
+  "previousManifestSHA256": {
+    "terrain": "ba98fa057b0bb664f36649c43b521c2a8212ba63c06a895e3b63692c3787b867",
+    "scenery": "991f8d7811ac63ca541d1523b497ec546828433aecd257f76f311101f9d30cc1"
+  },
+  "sourceBytes": 22698929,
+  "edits": [
+    {
+      "chunkId": "alpine-12-12",
+      "pieceIds": [
+        "pylon-0-shoe--1",
+        "pylon-0-shoe-1",
+        "pylon-0-raker-0",
+        "pylon-0-raker-1",
+        "pylon-0-tie-0",
+        "pylon-0-tie-1",
+        "pylon-0-web-1",
+        "pylon-0-bearing--1",
+        "pylon-0-bearing-1",
+        "pylon-1-shoe--1",
+        "pylon-1-shoe-1",
+        "pylon-1-raker-0",
+        "pylon-1-raker-1",
+        "pylon-1-tie-0",
+        "pylon-1-tie-1",
+        "pylon-1-web-1",
+        "pylon-1-bearing--1",
+        "pylon-1-bearing-1",
+        "pylon-2-shoe--1",
+        "pylon-2-shoe-1",
+        "pylon-2-raker-0",
+        "pylon-2-raker-1",
+        "pylon-2-tie-0",
+        "pylon-2-tie-1",
+        "pylon-2-web-1",
+        "pylon-2-tie-2",
+        "pylon-2-web-2",
+        "pylon-2-tie-3",
+        "pylon-2-web-3",
+        "pylon-2-tie-4",
+        "pylon-2-web-4",
+        "pylon-2-tie-5",
+        "pylon-2-web-5",
+        "pylon-2-tie-6",
+        "pylon-2-web-6",
+        "pylon-2-bearing--1",
+        "pylon-2-bearing-1"
+      ],
+      "textures": [
+        {
+          "id": "original-white",
+          "width": 1,
+          "height": 1,
+          "sha256": "ad95131bc0b799c0b1af477fb14fcf26a6a9f76079e48bf090acb7e8367bfd0e"
+        }
+      ]
+    },
+    {
+      "chunkId": "alpine-13-12",
+      "pieceIds": [
+        "lookout-shoe-3480-3170",
+        "lookout-knee-x-3480-3170",
+        "lookout-knee-z-3480-3170",
+        "lookout-shoe-3480-3200",
+        "lookout-knee-x-3480-3200",
+        "lookout-knee-z-3480-3200",
+        "lookout-shoe-3510-3170",
+        "lookout-knee-x-3510-3170",
+        "lookout-knee-z-3510-3170",
+        "lookout-shoe-3510-3200",
+        "lookout-knee-x-3510-3200",
+        "lookout-knee-z-3510-3200",
+        "lookout-edge-post-3477-3167",
+        "lookout-edge-post-3477-3203",
+        "lookout-edge-post-3513-3167",
+        "lookout-edge-post-3513-3203",
+        "lookout-edge-x-3167",
+        "lookout-edge-x-3203",
+        "lookout-edge-west",
+        "lookout-edge-east-north",
+        "lookout-edge-east-south"
+      ],
+      "textures": [
+        {
+          "id": "original-white",
+          "width": 1,
+          "height": 1,
+          "sha256": "ad95131bc0b799c0b1af477fb14fcf26a6a9f76079e48bf090acb7e8367bfd0e"
+        },
+        {
+          "id": "original-station-wall",
+          "width": 256,
+          "height": 128,
+          "sha256": "9bbe8c54522e22779d619e577e0147c282a0f41e51dbbb4ff34b0e4e4a6834a3"
+        },
+        {
+          "id": "original-station-roof",
+          "width": 128,
+          "height": 128,
+          "sha256": "9e830e3b79aac8913aab136251a2b7e2b780106c3bae0c18424f00a73787131f"
+        }
+      ]
+    }
+  ],
+  "manifestSHA256": {
+    "terrain": "c358b01a806e53798cac41f0d5e59dd3bdc1e94bb6d815543525741112e1f39a",
+    "scenery": "8aa0e223d8416b7fa8053c1be28d28f3a06456a73c6e3f06024409b19441eb56"
+  },
+  "maxNineCellResourceBytes": 1496340,
+  "maxRetainedCandidateResourceBytes": 2992680,
+  "pieces": [
+    {
+      "id": "pylon-0-shoe--1",
+      "center": [3304, 560.148405, 3155],
+      "size": [4.32, 1.1031900000000405, 4.32],
+      "material": "masonry"
+    },
+    {
+      "id": "pylon-0-shoe-1",
+      "center": [3316, 560.175, 3155],
+      "size": [4.32, 1.0500000000000682, 4.32],
+      "material": "masonry"
+    },
+    {
+      "id": "pylon-0-raker-0",
+      "from": [3304, 560.5500000000001, 3155],
+      "to": [3310, 579.4, 3155],
+      "width": 0.72,
+      "material": "steel"
+    },
+    {
+      "id": "pylon-0-raker-1",
+      "from": [3316, 560.5500000000001, 3155],
+      "to": [3310, 579.4, 3155],
+      "width": 0.72,
+      "material": "steel"
+    },
+    {
+      "id": "pylon-0-tie-0",
+      "from": [3304.684350132626, 562.7, 3155],
+      "to": [3315.315649867374, 562.7, 3155],
+      "width": 0.45,
+      "material": "steel"
+    },
+    {
+      "id": "pylon-0-tie-1",
+      "from": [3308.9177718832893, 576, 3155],
+      "to": [3311.0822281167107, 576, 3155],
+      "width": 0.45,
+      "material": "steel"
+    },
+    {
+      "id": "pylon-0-web-1",
+      "from": [3315.315649867374, 562.7, 3155],
+      "to": [3308.9177718832893, 576, 3155],
+      "width": 0.4,
+      "material": "steel"
+    },
+    {
+      "id": "pylon-0-bearing--1",
+      "center": [3305.8, 581.15, 3155],
+      "size": [2.4, 0.6, 2.4],
+      "material": "bearing"
+    },
+    {
+      "id": "pylon-0-bearing-1",
+      "center": [3314.2, 581.15, 3155],
+      "size": [2.4, 0.6, 2.4],
+      "material": "bearing"
+    },
+    {
+      "id": "pylon-1-shoe--1",
+      "center": [3241, 530.5371687499996, 3155],
+      "size": [4.6, 20.179787500001908, 4.6],
+      "material": "masonry"
+    },
+    {
+      "id": "pylon-1-shoe-1",
+      "center": [3259, 551.78425, 3155],
+      "size": [4.6, 7.284150000000636, 4.6],
+      "material": "masonry"
+    },
+    {
+      "id": "pylon-1-raker-0",
+      "from": [3241, 540.4770625000006, 3155],
+      "to": [3250, 570.4, 3155],
+      "width": 1,
+      "material": "steel"
+    },
+    {
+      "id": "pylon-1-raker-1",
+      "from": [3259, 555.2763250000004, 3155],
+      "to": [3250, 570.4, 3155],
+      "width": 1,
+      "material": "steel"
+    },
+    {
+      "id": "pylon-1-tie-0",
+      "from": [3246.097873913616, 557.4263250000004, 3155],
+      "to": [3257.720549072894, 557.4263250000004, 3155],
+      "width": 0.6,
+      "material": "steel"
+    },
+    {
+      "id": "pylon-1-tie-1",
+      "from": [3248.9773731272207, 567, 3155],
+      "to": [3252.023317745191, 567, 3155],
+      "width": 0.6,
+      "material": "steel"
+    },
+    {
+      "id": "pylon-1-web-1",
+      "from": [3257.720549072894, 557.4263250000004, 3155],
+      "to": [3248.9773731272207, 567, 3155],
+      "width": 0.5,
+      "material": "steel"
+    },
+    {
+      "id": "pylon-1-bearing--1",
+      "center": [3245.8, 572.15, 3155],
+      "size": [2.4, 0.6, 2.4],
+      "material": "bearing"
+    },
+    {
+      "id": "pylon-1-bearing-1",
+      "center": [3254.2, 572.15, 3155],
+      "size": [2.4, 0.6, 2.4],
+      "material": "bearing"
+    },
+    {
+      "id": "pylon-2-shoe--1",
+      "center": [3176, 416.9114375, 3155],
+      "size": [5.4, 20.776874999998768, 5.4],
+      "material": "masonry"
+    },
+    {
+      "id": "pylon-2-shoe-1",
+      "center": [3204, 442.134125, 3155],
+      "size": [5.4, 25.442474999998467, 5.4],
+      "material": "masonry"
+    },
+    {
+      "id": "pylon-2-raker-0",
+      "from": [3176, 427.1498749999994, 3155],
+      "to": [3190, 561.4, 3155],
+      "width": 1.8,
+      "material": "steel"
+    },
+    {
+      "id": "pylon-2-raker-1",
+      "from": [3204, 454.70536249999924, 3155],
+      "to": [3190, 561.4, 3155],
+      "width": 1.8,
+      "material": "steel"
+    },
+    {
+      "id": "pylon-2-tie-0",
+      "from": [3179.097776072834, 456.8553624999992, 3155],
+      "to": [3203.7178864776592, 456.8553624999992, 3155],
+      "width": 1.08,
+      "material": "steel"
+    },
+    {
+      "id": "pylon-2-tie-1",
+      "from": [3180.855719718448, 473.7128020833327, 3155],
+      "to": [3201.505927566728, 473.7128020833327, 3155],
+      "width": 1.08,
+      "material": "steel"
+    },
+    {
+      "id": "pylon-2-web-1",
+      "from": [3203.7178864776592, 456.8553624999992, 3155],
+      "to": [3180.855719718448, 473.7128020833327, 3155],
+      "width": 0.9,
+      "material": "steel"
+    },
+    {
+      "id": "pylon-2-tie-2",
+      "from": [3182.6136633640626, 490.57024166666616, 3155],
+      "to": [3199.2939686557975, 490.57024166666616, 3155],
+      "width": 1.08,
+      "material": "steel"
+    },
+    {
+      "id": "pylon-2-web-2",
+      "from": [3180.855719718448, 473.7128020833327, 3155],
+      "to": [3199.2939686557975, 490.57024166666616, 3155],
+      "width": 0.9,
+      "material": "steel"
+    },
+    {
+      "id": "pylon-2-tie-3",
+      "from": [3184.371607009677, 507.42768124999964, 3155],
+      "to": [3197.0820097448664, 507.42768124999964, 3155],
+      "width": 1.08,
+      "material": "steel"
+    },
+    {
+      "id": "pylon-2-web-3",
+      "from": [3199.2939686557975, 490.57024166666616, 3155],
+      "to": [3184.371607009677, 507.42768124999964, 3155],
+      "width": 0.9,
+      "material": "steel"
+    },
+    {
+      "id": "pylon-2-tie-4",
+      "from": [3186.129550655291, 524.285120833333, 3155],
+      "to": [3194.8700508339357, 524.285120833333, 3155],
+      "width": 1.08,
+      "material": "steel"
+    },
+    {
+      "id": "pylon-2-web-4",
+      "from": [3184.371607009677, 507.42768124999964, 3155],
+      "to": [3194.8700508339357, 524.285120833333, 3155],
+      "width": 0.9,
+      "material": "steel"
+    },
+    {
+      "id": "pylon-2-tie-5",
+      "from": [3187.8874943009055, 541.1425604166666, 3155],
+      "to": [3192.6580919230046, 541.1425604166666, 3155],
+      "width": 1.08,
+      "material": "steel"
+    },
+    {
+      "id": "pylon-2-web-5",
+      "from": [3194.8700508339357, 524.285120833333, 3155],
+      "to": [3187.8874943009055, 541.1425604166666, 3155],
+      "width": 0.9,
+      "material": "steel"
+    },
+    {
+      "id": "pylon-2-tie-6",
+      "from": [3189.6454379465195, 558, 3155],
+      "to": [3190.446133012074, 558, 3155],
+      "width": 1.08,
+      "material": "steel"
+    },
+    {
+      "id": "pylon-2-web-6",
+      "from": [3187.8874943009055, 541.1425604166666, 3155],
+      "to": [3190.446133012074, 558, 3155],
+      "width": 0.9,
+      "material": "steel"
+    },
+    {
+      "id": "pylon-2-bearing--1",
+      "center": [3185.8, 563.15, 3155],
+      "size": [2.4, 0.6, 2.4],
+      "material": "bearing"
+    },
+    {
+      "id": "pylon-2-bearing-1",
+      "center": [3194.2, 563.15, 3155],
+      "size": [2.4, 0.6, 2.4],
+      "material": "bearing"
+    },
+    {
+      "id": "lookout-shoe-3480-3170",
+      "center": [3480, 560.175, 3170],
+      "size": [5.4, 1.0500000000000682, 5.4],
+      "material": "masonry"
+    },
+    {
+      "id": "lookout-knee-x-3480-3170",
+      "from": [3480, 591, 3170],
+      "to": [3488, 599.2, 3170],
+      "width": 0.72,
+      "material": "steel"
+    },
+    {
+      "id": "lookout-knee-z-3480-3170",
+      "from": [3480, 591, 3170],
+      "to": [3480, 599.2, 3178],
+      "width": 0.72,
+      "material": "steel"
+    },
+    {
+      "id": "lookout-shoe-3480-3200",
+      "center": [3480, 547.23345625, 3200],
+      "size": [5.4, 14.610412499999143, 5.4],
+      "material": "masonry"
+    },
+    {
+      "id": "lookout-knee-x-3480-3200",
+      "from": [3480, 591, 3200],
+      "to": [3488, 599.2, 3200],
+      "width": 0.72,
+      "material": "steel"
+    },
+    {
+      "id": "lookout-knee-z-3480-3200",
+      "from": [3480, 591, 3200],
+      "to": [3480, 599.2, 3192],
+      "width": 0.72,
+      "material": "steel"
+    },
+    {
+      "id": "lookout-shoe-3510-3170",
+      "center": [3510, 543.87015625, 3170],
+      "size": [5.4, 15.55566249999913, 5.4],
+      "material": "masonry"
+    },
+    {
+      "id": "lookout-knee-x-3510-3170",
+      "from": [3510, 591, 3170],
+      "to": [3502, 599.2, 3170],
+      "width": 0.72,
+      "material": "steel"
+    },
+    {
+      "id": "lookout-knee-z-3510-3170",
+      "from": [3510, 591, 3170],
+      "to": [3510, 599.2, 3178],
+      "width": 0.72,
+      "material": "steel"
+    },
+    {
+      "id": "lookout-shoe-3510-3200",
+      "center": [3510, 486.91068750000005, 3200],
+      "size": [5.4, 31.04979999999796, 5.4],
+      "material": "masonry"
+    },
+    {
+      "id": "lookout-knee-x-3510-3200",
+      "from": [3510, 591, 3200],
+      "to": [3502, 599.2, 3200],
+      "width": 0.72,
+      "material": "steel"
+    },
+    {
+      "id": "lookout-knee-z-3510-3200",
+      "from": [3510, 591, 3200],
+      "to": [3510, 599.2, 3192],
+      "width": 0.72,
+      "material": "steel"
+    },
+    {
+      "id": "lookout-edge-post-3477-3167",
+      "center": [3477, 601.7, 3167],
+      "size": [0.5, 1.4, 0.5],
+      "material": "steel"
+    },
+    {
+      "id": "lookout-edge-post-3477-3203",
+      "center": [3477, 601.7, 3203],
+      "size": [0.5, 1.4, 0.5],
+      "material": "steel"
+    },
+    {
+      "id": "lookout-edge-post-3513-3167",
+      "center": [3513, 601.7, 3167],
+      "size": [0.5, 1.4, 0.5],
+      "material": "steel"
+    },
+    {
+      "id": "lookout-edge-post-3513-3203",
+      "center": [3513, 601.7, 3203],
+      "size": [0.5, 1.4, 0.5],
+      "material": "steel"
+    },
+    {
+      "id": "lookout-edge-x-3167",
+      "from": [3477, 602.3, 3167],
+      "to": [3513, 602.3, 3167],
+      "width": 0.32,
+      "material": "steel"
+    },
+    {
+      "id": "lookout-edge-x-3203",
+      "from": [3477, 602.3, 3203],
+      "to": [3513, 602.3, 3203],
+      "width": 0.32,
+      "material": "steel"
+    },
+    {
+      "id": "lookout-edge-west",
+      "from": [3477, 602.3, 3167],
+      "to": [3477, 602.3, 3203],
+      "width": 0.32,
+      "material": "steel"
+    },
+    {
+      "id": "lookout-edge-east-north",
+      "from": [3513, 602.3, 3167],
+      "to": [3513, 602.3, 3179],
+      "width": 0.32,
+      "material": "steel"
+    },
+    {
+      "id": "lookout-edge-east-south",
+      "from": [3513, 602.3, 3191],
+      "to": [3513, 602.3, 3203],
+      "width": 0.32,
+      "material": "steel"
+    }
+  ],
+  "addedTexturePixels": 0,
+  "addedCollisionTriangles": 696,
+  "unchanged": [
+    "Every terrain asset byte",
+    "Every pre-existing oriented triangle, normal, material, UV and texture",
+    "All spawn positions",
+    "Existing routes and starts; new solid source requires separate clearance qualification"
+  ],
+  "nativeAccepted": false,
+  "playerReady": false
+}

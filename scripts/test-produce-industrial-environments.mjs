@@ -7,11 +7,45 @@ import { createDefaultThemeBundle } from '../game/presentation/catalog.mjs';
 import { adoptStudioBundle } from '../game/presentation/studio-session.mjs';
 import {
   createIndustrialEnvironmentBatch,
+  compatibleStudioBaseline,
+  encodeIndustrialEnvironmentModule,
   INDUSTRIAL_ENVIRONMENT_DIRECTORY,
 } from './produce-industrial-environments.mjs';
 import { INDUSTRIAL_ENVIRONMENT_DATA } from '../game/presentation/industrial-environments-data.mjs';
 import { importThemeBundle, verifyThemeAssets } from '../game/presentation/bundle.mjs';
 import { resolvePresentation } from '../game/presentation/model.mjs';
+
+test('generated admission dictionary preserves exact JSON, all source pins and independent objects', async () => {
+  const before = JSON.stringify(INDUSTRIAL_ENVIRONMENT_DATA),
+    bytes = encodeIndustrialEnvironmentModule(INDUSTRIAL_ENVIRONMENT_DATA),
+    decoded = (await import(`data:text/javascript;base64,${bytes.toString('base64')}`))
+      .INDUSTRIAL_ENVIRONMENT_DATA;
+  assert.equal(JSON.stringify(decoded), before);
+  assert.deepEqual(decoded, INDUSTRIAL_ENVIRONMENT_DATA);
+  assert.deepEqual(bytes, encodeIndustrialEnvironmentModule(decoded));
+  assert.ok(Buffer.byteLength(before) - bytes.length > 150000);
+  assert.notEqual(decoded.sources[0], INDUSTRIAL_ENVIRONMENT_DATA.sources[0]);
+  const repeated = {
+    rows: Array.from({ length: 100 }, () => ({
+      title: 'Repeated admission text',
+      values: [1, 2, 3],
+    })),
+  };
+  const sample = encodeIndustrialEnvironmentModule(repeated),
+    result = (await import(`data:text/javascript;base64,${sample.toString('base64')}`))
+      .INDUSTRIAL_ENVIRONMENT_DATA;
+  assert.deepEqual(result, repeated);
+  assert.notEqual(result.rows[0], result.rows[1]);
+  result.rows[0].values[0] = 999;
+  assert.equal(result.rows[1].values[0], 1);
+  const reserved = { title: '\ue000', other: 'literal dictionary marker' },
+    fallback = encodeIndustrialEnvironmentModule(reserved);
+  assert.deepEqual(
+    (await import(`data:text/javascript;base64,${fallback.toString('base64')}`))
+      .INDUSTRIAL_ENVIRONMENT_DATA,
+    reserved,
+  );
+});
 
 test('all fourteen bounded native Studio packages regenerate retained sources and match terrain bindings', async () => {
   const batch = await createIndustrialEnvironmentBatch({ previous: INDUSTRIAL_ENVIRONMENT_DATA }),
@@ -66,19 +100,52 @@ test('all fourteen bounded native Studio packages regenerate retained sources an
   }
 });
 
-test('chapter transport does not authorize unpublished picture slots in the loaded Studio', async () => {
+test('chapter transport does not authorize an unpublished picture slot in the loaded Studio', async () => {
   const studio = await loadPublishedStudio({
-      baseURL: new URL('../game/presentation/compiled/', import.meta.url),
-      fetch: async (url) => new Response(await readFile(new URL(url))),
-    }),
-    broader = createDefaultThemeBundle(),
-    ids = new Set(studio.document.slots.map(({ id }) => id)),
-    missing = broader.slots.filter(({ id }) => !ids.has(id));
-  assert.ok(missing.some(({ id }) => id.startsWith('picture.retro.')));
+    baseURL: new URL('../game/presentation/compiled/', import.meta.url),
+    fetch: async (url) => new Response(await readFile(new URL(url))),
+  });
+  const unpublished = structuredClone(
+    studio.document.slots.find((slot) => slot.id.startsWith('picture.retro.')),
+  );
+  unpublished.id = 'picture.retro.unpublished';
+  unpublished.owner.levelId = 'unpublished-picture';
+  const broader = createDefaultThemeBundle({ slots: [...studio.document.slots, unpublished] });
   const before = JSON.stringify(studio.document);
   assert.throws(
     () => adoptStudioBundle(studio.document, broader),
-    /Unsupported imported slot contract: picture\.retro\./,
+    /Unsupported imported slot contract: picture\.retro\.unpublished/,
   );
   assert.equal(JSON.stringify(studio.document), before);
+});
+
+test('published compatibility admits exact retained picture slots and rejects altered contracts', async () => {
+  const studio = await loadPublishedStudio({
+    baseURL: new URL('../game/presentation/compiled/', import.meta.url),
+    fetch: async (url) => new Response(await readFile(new URL(url))),
+  });
+  const retained = JSON.parse(
+    await readFile(
+      new URL(
+        '../authoring/library/fpv-field-kit/picture-migration-baseline.json',
+        import.meta.url,
+      ),
+    ),
+  );
+  const current = new Set(createDefaultThemeBundle().slots.map((slot) => slot.id));
+  const historical = studio.document.slots.filter((slot) => !current.has(slot.id));
+  assert.equal(historical.length, 4);
+  assert.deepEqual(
+    compatibleStudioBaseline(studio.document, retained).slots,
+    studio.document.slots,
+  );
+  const changed = structuredClone(studio.document);
+  changed.slots.find((slot) => slot.id === historical[0].id).label += ' changed';
+  assert.throws(() => compatibleStudioBaseline(changed, retained), /explicit compatible producer/);
+  const changedPredecessor = structuredClone(retained);
+  changedPredecessor.slots[0].label += ' changed';
+  assert.throws(
+    () => compatibleStudioBaseline(studio.document, changedPredecessor),
+    /pinned predecessor/,
+  );
 });

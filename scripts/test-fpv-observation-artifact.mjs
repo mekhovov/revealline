@@ -4,6 +4,7 @@ import { mkdtemp, readFile, writeFile, rm, mkdir, symlink } from 'node:fs/promis
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
+import { performance } from 'node:perf_hooks';
 import {
   FPV_OBSERVATION_PROTOCOLS,
   validateFPVArtifactBinding,
@@ -20,6 +21,21 @@ import { buildOptionalPractice } from './build-optional-practice.mjs';
 import { createOptionalPackageCandidate } from '../publishing/optional-package-candidate.mjs';
 
 const hash = (bytes) => createHash('sha256').update(bytes).digest('hex');
+
+test('shared observation deadline rejects a late response before delayed timer dispatch', async () => {
+  await assert.rejects(
+    fpvObservationDeadline(
+      Promise.resolve().then(() => {
+        const end = performance.now() + 25;
+        while (performance.now() < end) {}
+        return 'too late';
+      }),
+      5,
+      'Late native response',
+    ),
+    /Late native response timed out/,
+  );
+});
 const binding = { version: 'v1.2.3', sourceRevision: 'b'.repeat(40), sourceTree: 'c'.repeat(40) };
 const plan = (kind) => ({
   format: `revealline-fpv-${kind}-plan.v1`,
@@ -146,6 +162,10 @@ test('shared loader admits complete frozen runtime and source bytes and rejects 
   assert(admitted.binding.members.some((item) => item.path === 'optional-package.json'));
   assert.equal(admitted.binding.envelope.sha256, selected.envelopeSha256);
   await assert.rejects(
+    loadFPVObservationArtifact(selected, { base: directory, packageId: 'civilian-flight' }),
+    /exact civilian-flight package is absent/,
+  );
+  await assert.rejects(
     loadFPVObservationArtifact(
       { ...selected, packageRevision: 'e'.repeat(64) },
       { base: directory },
@@ -158,6 +178,55 @@ test('shared loader admits complete frozen runtime and source bytes and rejects 
     loadFPVObservationArtifact(selected, { base: directory }),
     /artifact bytes differ/,
   );
+});
+
+test('selected Gym admission pins its own revision; unsupported IDs fail before artifact access', async (t) => {
+  const fixture = await optionalFPVSourceFixture(t);
+  const built = await buildOptionalPractice(fixture.root, {
+    packageId: 'civilian-flight',
+    engineCommit: binding.sourceRevision,
+    engineTree: binding.sourceTree,
+    basePath: '/revealline/',
+  });
+  const candidate = createOptionalPackageCandidate({ built, ...binding });
+  const envelope = Buffer.from(
+    JSON.stringify({
+      format: 'revealline-optional-packages.v1',
+      ...binding,
+      packages: [candidate.package],
+    }),
+  );
+  const directory = await temporary(t);
+  for (const [name, bytes] of candidate.files) await writeFile(path.join(directory, name), bytes);
+  await writeFile(path.join(directory, 'optional-packages.json'), envelope);
+  const selected = {
+    ...plan('runtime'),
+    envelopeSha256: hash(envelope),
+    packageRevision: candidate.package.revision,
+  };
+  const admitted = await loadFPVObservationArtifact(selected, {
+    base: directory,
+    packageId: 'civilian-flight',
+  });
+  assert.equal(admitted.binding.package.id, 'civilian-flight');
+  assert.equal(admitted.binding.package.revision, selected.packageRevision);
+  assert.deepEqual(admitted.files, new Map(built.entries.map((item) => [item.name, item.bytes])));
+  await assert.rejects(
+    loadFPVObservationArtifact(selected, { base: directory }),
+    /exact civilian-fpv package is absent/,
+  );
+  await assert.rejects(
+    loadFPVObservationArtifact(
+      { ...selected, packageRevision: 'e'.repeat(64) },
+      { base: directory, packageId: 'civilian-flight' },
+    ),
+    /exact civilian-flight package is absent/,
+  );
+  for (const packageId of ['other', '../civilian-flight', '', null])
+    await assert.rejects(
+      loadFPVObservationArtifact({ ...selected, bundle: '/does-not-exist' }, { packageId }),
+      /registered practice application/,
+    );
 });
 
 test('cleanup records a failure while still closing every other owned resource', async () => {

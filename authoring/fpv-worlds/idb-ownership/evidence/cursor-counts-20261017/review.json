@@ -1,0 +1,46 @@
+{
+  "format": "FPVCursorCountDiagnosticReview.v1",
+  "UTC": "2026-10-17T15:29:16.929577+00:00",
+  "priorHead": "9b3f10cf301fd1ecb5bd8e3026f1e567691256a7",
+  "observedMain": "fb3caf12bd43743670f47c42dc21f7a406223379",
+  "testExit": 0,
+  "browserOrPlayerStorageAccess": false,
+  "newDatabaseOperations": false,
+  "scope": "authoring observer only; no production edit; cursor methods remain untouched",
+  "negative": "before-fix.json",
+  "testLog": {
+    "path": "node20-after.tap",
+    "bytes": 2732,
+    "SHA256": "41971682c712b4bdc8020ca8dc34d4d00838dc3a99547b1cde94f0be10014d57"
+  },
+  "files": [
+    {
+      "path": "authoring/fpv-worlds/idb-ownership/transactions.mjs",
+      "bytes": 12852,
+      "SHA256": "d611006d8a3018043faca7246224578467a827608dfb74349ebc43aa1d54839a"
+    },
+    {
+      "path": "authoring/fpv-worlds/idb-ownership/verify-transactions.mjs",
+      "bytes": 15964,
+      "SHA256": "871eff67450fcb0ae9d74a4a4b8ec5ce79703a591475bc566987de589f0f1b5b"
+    },
+    {
+      "path": "authoring/fpv-worlds/idb-ownership/README.md",
+      "bytes": 13235,
+      "SHA256": "c8e85a28c13193615a1a4b97ad69c0dee36c9f4fcb19467200f09c576b20ada3"
+    },
+    {
+      "path": "candidate.diff",
+      "bytes": 6802,
+      "SHA256": "0d667ff80ee60eca2bdbb696c208e09bf6ba7f6b79190393282a3d2640570f4f"
+    }
+  ],
+  "openGates": [
+    "Current-head remote CI is separate from these memory-only checks.",
+    "Native transaction interception and teardown remain unqualified.",
+    "Exact combined current-main original-package/authoring fixture is not qualified.",
+    "Original affected public context, closer, trigger and contents remain unknown.",
+    "No persistence repair, full restart/offline/eviction, elapsed endurance or physical-device acceptance."
+  ],
+  "rootIndependentReview": "Root reviewed the exact implementation and regression diff before publication; one later README-only count correction changes ten to eleven."
+}

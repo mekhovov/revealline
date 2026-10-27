@@ -1,0 +1,303 @@
+{
+  "format": "SoloHostedAuxiliaryManifestV1",
+  "repository": "mekhovov/revealline",
+  "node": "22.13.1",
+  "playwright": "1.62.1",
+  "performanceExclusion": true,
+  "cpu": 1,
+  "setupTimeoutMs": 2400000,
+  "fixturePreparationTimeoutMs": 180000,
+  "evidenceBytes": 268435456,
+  "rowEvidenceBytes": 33554432,
+  "status": "reviewed-diagnostic-only",
+  "cohort": "linux-shared-mode-public-return-runtime797-production-boot-v2",
+  "runtimeRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+  "candidate": {
+    "revision": "797e03f28743921842df6aa57520a72016ba3dfc",
+    "tree": "bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5",
+    "run": 39104551453,
+    "artifact": 12128990483,
+    "outer": {
+      "bytes": 1094639112,
+      "sha256": "76a01b2d29119f1bc4d8aaa8da77846160133067d0eb3036f5791c3198b5b897"
+    },
+    "inner": {
+      "bytes": 1075807530,
+      "sha256": "5eb1c3e70d8fc460ddeba3762137306cf2e6902c315172c633702621883b7e9c"
+    },
+    "manifestSHA256": "497efcff7f399c12030bfa5297f8e67faaa97ef26626ac88a1b924fcb23db6a0",
+    "producer": "Successful Appearance39104551453; compact metadata independently verified. Full payload/source/worker/CSP validation remains mandatory in hosted consumer."
+  },
+  "baseline": {
+    "revision": "8b01991942dc764b8aa4726851699ce1985e53ae",
+    "tree": "9373b6a74aea8fa1ef47aa17ace140b4cf714609",
+    "scope": "Exact source identity only; no baseline row/build."
+  },
+  "maxParallel": 2,
+  "release": {
+    "format": "SoloSharedModePublicReturnReleaseV1",
+    "scope": "independent-public-shared-mode-return",
+    "protocol": "shared-mode-public-return-v1",
+    "candidateRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+    "predecessorRun": 39096176143,
+    "automaticRetries": 0,
+    "performanceQualification": "excluded",
+    "physicalQualification": "unobserved",
+    "firstEightAllCorrectnessPassed": true,
+    "priorProofInspected": true,
+    "noUnclosedOwners": true,
+    "evidence": [
+      {
+        "runId": 39096176143,
+        "artifactId": 12125002138,
+        "artifactSHA256": "d6b5ed1d46c6f89eab6d40361893f2dedb2d6698a50b6ba612cf6058c68c705d",
+        "summarySHA256": "c67a520f87683b2a43479919f27e798c7cb3adff9a0d0896d815d554d5918955"
+      }
+    ],
+    "selectedJobs": ["recovery-chromium", "recovery-webkit"],
+    "dispatch": {
+      "workflow": ".github/workflows/solo-native-package-consumer.yml",
+      "ref": "refs/heads/main",
+      "lane": "shared-return",
+      "source": "797e03f28743921842df6aa57520a72016ba3dfc"
+    },
+    "ownerScope": "Actual source797 first-eight run39109911286 retained 14 clean closed commands, 8 correctness passes and 4 strict same-engine replay verifications. Fresh ownership and this scenario remain unobserved.",
+    "firstEightSourceRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+    "sourceCohort": "shared-mode-runtime797-diagnostic-v1",
+    "firstEightEvidence": {
+      "format": "SoloFirstEightCorrectnessEvidenceV1",
+      "sourceRevision": "797e03f28743921842df6aa57520a72016ba3dfc",
+      "runId": 39109911286,
+      "artifactId": 12130067688,
+      "artifactSHA256": "5c5f84eb082d13123410b0c1939aab3c9af4ef981ad9b3150b215c3a16aba916",
+      "summarySHA256": "5ff787c26c962ec31c9fbe2d635b679fb393caa5ea2eaa84e41fbcc3061804b8",
+      "correctness": "passed",
+      "ownersClosed": true
+    },
+    "publicationScope": "Reviewed for fixed manual main-branch dispatch after current source CI and normal merge. The exact source797 first-eight correctness prerequisite is approved; no timing, physical, audibility or scenario-result qualification is inferred. Original de332 evidence remains historical only.",
+    "firstEightRequired": true,
+    "firstEightNumericalFailuresRetained": 3,
+    "nodePortabilityMismatchesRetained": 4,
+    "bootReadiness": "production-boot-screen-v1"
+  },
+  "adapterInputs": [
+    {
+      "path": "scripts/solo-remote-auxiliary.mjs",
+      "bytes": 34390,
+      "sha256": "2702674d99bbed64e55886d9e113767aacaa4af7b57912535dddfb8e9c7afeb6"
+    }
+  ],
+  "recipes": {
+    "recovery": {
+      "path": "docs/performance/fixtures/solo-shared-mode/public-return-boot-ready.qualification.fixture",
+      "bytes": 2720,
+      "sha256": "fd53760e86158e8da498eea0201c1b19fa1d34b0aed524bc34e1b6a0e7c91f67"
+    }
+  },
+  "uploads": [],
+  "jobs": [{ "id": "recovery-chromium" }, { "id": "recovery-webkit" }],
+  "frozenTools": [
+    {
+      "path": "scripts/brand-icons.mjs",
+      "bytes": 12391,
+      "sha256": "7fa383d043be55befee6ee04302d407f337b9d6ecb522f443b550ceb6767dcda"
+    },
+    {
+      "path": "scripts/build-entry-writer.mjs",
+      "bytes": 1815,
+      "sha256": "08d33395ea8e67fed40cafb57c1e9573178b266b4ee8d595dcec3c9d14d66874"
+    },
+    {
+      "path": "scripts/default-runtime-metadata.mjs",
+      "bytes": 10256,
+      "sha256": "a4ee09ad2b169613a4bd2e286151255f1376b939964f37be0f28499afe158107"
+    },
+    {
+      "path": "scripts/edition-code-indentation.mjs",
+      "bytes": 3700,
+      "sha256": "b079b539468827fdbea9e5d9541b805a5fde528b1ef16bc5a7834245ec78244e"
+    },
+    {
+      "path": "scripts/game-cli.mjs",
+      "bytes": 94310,
+      "sha256": "384c26bde0dc3e300f651e7a43c9d5f6d3c70eb28e0e07763f7cb51d94929cb5"
+    },
+    {
+      "path": "scripts/localization-audit.mjs",
+      "bytes": 10005,
+      "sha256": "56c2759e666fe7c2bf6964b7182d13be177b4c722f9324f59e7d4765cddd403d"
+    },
+    {
+      "path": "scripts/localization-content.mjs",
+      "bytes": 16926,
+      "sha256": "32b46390220eb124d7bbcfba60088898b745c966c6cb5c167e47462c7899e393"
+    },
+    {
+      "path": "scripts/localization.mjs",
+      "bytes": 13957,
+      "sha256": "d66bb70c6a4c7f0ca1f08cf8a313340af5bba4425b001b7e6844b9030687de6b"
+    },
+    {
+      "path": "scripts/offline-core-closure.mjs",
+      "bytes": 9292,
+      "sha256": "a7cd339b10379f101406dd67cd2f44e925f366fbc4aba396e7df3025ba208635"
+    },
+    {
+      "path": "scripts/pack-indexes.mjs",
+      "bytes": 5421,
+      "sha256": "34ecdb35caecd581a5477e3972130f1ef67004fcd7add7f055126cb65a52a35e"
+    },
+    {
+      "path": "scripts/qualify-solo-runtime.mjs",
+      "bytes": 95197,
+      "sha256": "54e3da78d657e320be2afaa12859877e55941cf708697c34baa594d9550d28b7"
+    },
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "bytes": 74932,
+      "sha256": "8417c019cd8efe8956f95b725b87abe71288aec720c796c07d2a649963a4a8a1"
+    },
+    {
+      "path": "scripts/serve-production-preview.mjs",
+      "bytes": 10414,
+      "sha256": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab"
+    },
+    {
+      "path": "scripts/solo-build-archive.mjs",
+      "bytes": 5262,
+      "sha256": "25a7c537c777c435d3ca80694c4ba925a9448222945a8f46e0d1b029441cf368"
+    },
+    {
+      "path": "scripts/solo-build-worker-closure.mjs",
+      "bytes": 1658,
+      "sha256": "19c0663b20bcc2cf2b29016ecc7c09d54d673b62740ec3e9babe25e965936ac1"
+    },
+    {
+      "path": "scripts/solo-qualification-audio.mjs",
+      "bytes": 19077,
+      "sha256": "8c076969c30ff342b19526e1df22bd8994659f2ac84e7343b111f2a1d2c20af1"
+    },
+    {
+      "path": "scripts/solo-qualification-browser-context.mjs",
+      "bytes": 4026,
+      "sha256": "5f89ceedec155349250283304b38e68dd22eedf32e6c306ff2c25c3258233d7f"
+    },
+    {
+      "path": "scripts/solo-qualification-cadence.mjs",
+      "bytes": 7999,
+      "sha256": "d2031f4a32a64b6a9cb4b21dfa1700dab7e5f7d3742ec22da520ce39e53974dc"
+    },
+    {
+      "path": "scripts/solo-qualification-cpu-profile.mjs",
+      "bytes": 19962,
+      "sha256": "b47327db20a192d12ba09053ed9726d67811d544b9b2b9a32957a70a14df1658"
+    },
+    {
+      "path": "scripts/solo-qualification-export.mjs",
+      "bytes": 5553,
+      "sha256": "edb2d9efa97fa9e19905f83aa93000219db521f3930fe02fb96c57d2162ceb77"
+    },
+    {
+      "path": "scripts/solo-qualification-native-replay.mjs",
+      "bytes": 9513,
+      "sha256": "7e5e0337294144449b66519d945e927a0f0e8c586963df9b83e5a4a2aa246d7c"
+    },
+    {
+      "path": "scripts/solo-qualification-observation.mjs",
+      "bytes": 24474,
+      "sha256": "fc8d6b03d49d44e2010acebb4f89188334503ef2a01316e0a9bdd4406e3b3d94"
+    },
+    {
+      "path": "scripts/solo-qualification-replay-core.mjs",
+      "bytes": 6588,
+      "sha256": "410efba766a4afd11062e43345d7503a4d49d468a8b0496a3303b333b58bb1cd"
+    },
+    {
+      "path": "scripts/solo-qualification-replay-identity.mjs",
+      "bytes": 1866,
+      "sha256": "133c362d1c60bfa8de317a6899d038ce4f1b4c9264b67b95fb0893c84f5fffdb"
+    },
+    {
+      "path": "scripts/solo-qualification-replay.mjs",
+      "bytes": 1260,
+      "sha256": "b5f89a8377a83f5645d6077af54cadfcd1e33905d13161ae6eb667468e8bfacf"
+    },
+    {
+      "path": "scripts/solo-qualification-shared-mode.mjs",
+      "bytes": 20094,
+      "sha256": "bd07a0ff01ee37e0fa3541929673667ffafa43e9f0a6a14fca79cdee32c0cdba"
+    },
+    {
+      "path": "scripts/solo-qualification.mjs",
+      "bytes": 28205,
+      "sha256": "448f8467573b75960453381a810b388a9650d73ee7faf813ec07f40dd37a6f24"
+    },
+    {
+      "path": "scripts/solo-remote-archive.py",
+      "bytes": 22756,
+      "sha256": "822735e979eff256c433b715dcb6cac88de8c99c94bacc1ce10f4cb8d7f8e2f6"
+    },
+    {
+      "path": "scripts/verify-solo-build.mjs",
+      "bytes": 16212,
+      "sha256": "9294c97bf52596d4c6f76f8200e6b4e16bffe5f221cb1538a0f8e2db9693003d"
+    }
+  ],
+  "packageBinding": {
+    "producerRun": 39104551453,
+    "producerConclusion": "success",
+    "scope": "Exact verified source797 package; full hosted archive/member/source/CSP verification remains mandatory."
+  },
+  "scope": "Exact source797 shared-return diagnostic with production boot-screen readiness. Original public actions, workload, strict replay and deadlines are unchanged. Run39126307952 failed before any action; this successor remains unobserved.",
+  "prospectiveTooling": {
+    "status": "current-source-ci-required-before-normal-merge",
+    "sparseClosure": null,
+    "finalToolingRevision": null
+  },
+  "sourceSuccessor": {
+    "priorDeclaration": "docs/performance/solo-shared-mode-public-return-73a345-plan.json",
+    "priorRevision": "73a345cec696d7789198cf295ca5c37b17ca0e71",
+    "scope": "Prior source73 workloads and retained evidence are preserved. No old scenario outcome is promoted."
+  },
+  "firstEightReview": {
+    "path": "docs/performance/fixtures/solo-797e03-consumer/first-eight-39109911286.json",
+    "bytes": 2213,
+    "sha256": "3bedb1f0cc889e21ea2937addd936cbfd7ec78824434b37571d84dbdc1b65f9f"
+  },
+  "toolingSuccessor": {
+    "priorDeclaration": "docs/performance/solo-shared-mode-public-return-797e03-tooling-plan.json",
+    "priorToolingRevision": "f6557a569599f920b47e55c179bdb664eacdd3f0",
+    "priorRun": 39126307952,
+    "priorObservation": "failed-before-actions",
+    "currentObservation": "unobserved",
+    "change": "The exact797 production boot sets data-boot-state=ready and hides #boot-screen, not the child #boot-status. The named fixture observes that real completion authority while retaining Home visibility, all actions, exact replay requirements and original deadlines.",
+    "priorAudit": {
+      "gitDataBlob": "69ea7bae583e3488cab9847b1aeeaba27ef9630c",
+      "bytes": 143924,
+      "sha256": "d2d27a0b8ffaaba8de38331251928c32ffb3f3fc2305053ed0125bdfb9485ae4"
+    },
+    "artifacts": [
+      {
+        "engine": "chromium",
+        "artifactId": 12136034057,
+        "bytes": 278404,
+        "sha256": "ad64b3f67a6d644ad25b888024720aac4b32ec46da0f3bf802af35912b4c0f9d",
+        "closedOwners": 4,
+        "ownerExitCodes": [0, 0, 0, 1],
+        "sourceTestsPassed": 134,
+        "scenarioActions": 0
+      },
+      {
+        "engine": "webkit",
+        "artifactId": 12135824851,
+        "bytes": 274340,
+        "sha256": "d1671f754629d3055453f1682c78772d78eaa354d20528e8f8aca1b378303791",
+        "closedOwners": 4,
+        "ownerExitCodes": [0, 0, 0, 1],
+        "sourceTestsPassed": 134,
+        "scenarioActions": 0
+      }
+    ],
+    "limits": "Both original failures and incomplete diagnostic export remain retained. Neither source controls nor this correction assert shared-route, native timing or physical qualification. No automatic retry."
+  }
+}

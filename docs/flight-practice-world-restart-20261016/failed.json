@@ -1,0 +1,546 @@
+{
+  "format": "OptionalInstallationObservation.v1",
+  "passed": false,
+  "browserPreparationPassed": false,
+  "createdAt": "2026-10-16T03:27:20.170Z",
+  "sourceRevision": "90d8443b299fc46d42db9ccec1ff2bdfbfa23b4a",
+  "sourceTree": "6232c034706a40d5d8cdfed25d3d7b9c61078cda",
+  "envelopeSha256": "78354d4bfac0346877863c443de4abb1fa8292e4fea71e6b5473e766bd0830b8",
+  "artifacts": [
+    {
+      "classification": "public",
+      "core": false,
+      "distribution": {
+        "bytes": 3765184,
+        "path": "distribution-optional-civilian-flight.zip",
+        "sha256": "050d144bd90b90305751e1416c994478a1024f8c775c837481c290257da2521c"
+      },
+      "entry": "optional-practice/civilian-flight/index.html",
+      "id": "civilian-flight",
+      "manifest": {
+        "bytes": 16741,
+        "path": "manifest-optional-civilian-flight.json",
+        "sha256": "fa7aa3c4414937c7901fd2cc8b97e0701963dc35ccb079ae0612817e1a08ee7d"
+      },
+      "revision": "3d55ed30217f4cc5bbe27453545e3b4b93167592657bbd8030fdc886866a540f",
+      "sourceArchive": {
+        "bytes": 3800248,
+        "path": "source-optional-civilian-flight.zip",
+        "sha256": "0668802448ee49a18a221fcf5715a3a513839f384ff1389c952154ac85924977"
+      },
+      "sourceInventory": {
+        "bytes": 27442,
+        "path": "source-inventory-optional-civilian-flight.json",
+        "sha256": "963c9b6228b36cfee3b80c722302b01394df1d10cf9b049a9296c758c83b38cd"
+      }
+    },
+    {
+      "classification": "public",
+      "core": false,
+      "distribution": {
+        "bytes": 6784236,
+        "path": "distribution-optional-civilian-fpv.zip",
+        "sha256": "35eb3849154380cb6a0aef7dc4059e743601fe8a7a463be98bdd82737e28a0c0"
+      },
+      "entry": "optional-practice/civilian-fpv/index.html",
+      "id": "civilian-fpv",
+      "manifest": {
+        "bytes": 18095,
+        "path": "manifest-optional-civilian-fpv.json",
+        "sha256": "8986ec3f9abf07d7e0c447be67b363ed792268e64deeef4624bbd53a3ba2cec0"
+      },
+      "revision": "283a28199a5ca539f7f989c802c7f97e7a0948d26371a2475afda9527031e4d7",
+      "sourceArchive": {
+        "bytes": 6820701,
+        "path": "source-optional-civilian-fpv.zip",
+        "sha256": "f06b37186b6e575745fcc7ba32bac7cefcdab5e4caa0b90a9083a3c23ddaaab7"
+      },
+      "sourceInventory": {
+        "bytes": 30036,
+        "path": "source-inventory-optional-civilian-fpv.json",
+        "sha256": "a7b6f06c877174293a84b54d4cb14666f04deda0d01cee2d009f240b3c6415d1"
+      }
+    },
+    {
+      "classification": "public",
+      "core": false,
+      "distribution": {
+        "bytes": 17585921,
+        "path": "distribution-optional-fpv-worlds.zip",
+        "sha256": "716f738dd8e8cdd6376128258376bc806cbdb831c638c8b4da595afb1941654d"
+      },
+      "entry": "optional-practice/fpv-worlds/index.html",
+      "id": "fpv-worlds",
+      "manifest": {
+        "bytes": 29757,
+        "path": "manifest-optional-fpv-worlds.json",
+        "sha256": "b5b0c23e27edefc1c0933873e3663c7a9cd177929cfd7e8291d6a9d44f004cf5"
+      },
+      "revision": "db84d10a7fd3520eb24631d91c8d0b83f0ab66274b972b3ded9d143f26b959bc",
+      "sourceArchive": {
+        "bytes": 17630934,
+        "path": "source-optional-fpv-worlds.zip",
+        "sha256": "64bbda25c40872b67a5c35f9f2f56e3aa1b9cffeda20ab4987bcca87153d35d3"
+      },
+      "sourceInventory": {
+        "bytes": 50238,
+        "path": "source-inventory-optional-fpv-worlds.json",
+        "sha256": "71a1dc01c568622aa498553dcc2c06744251eb35da8510956c43978057599aee"
+      }
+    }
+  ],
+  "transition": {
+    "kind": "same-payload-path-fixture",
+    "fromVersion": "v0.0.0",
+    "toVersion": "v0.151.1",
+    "changedFiles": [],
+    "previous": null
+  },
+  "browserRestart": {
+    "attempted": false,
+    "passed": false
+  },
+  "harnessSha256": "f2534f08ccf4a5d48a94a58792bdf77b24ac001ed6f04f7a08320d69cbd1894d",
+  "helperSha256": "0401f406bf2fbdcb4b832893f1d4e10855dd003f5e06bc4ea3ddd507ab5295fc",
+  "inputRoute": {
+    "academyOfflineDisclosure": "Native summary keyboard Enter",
+    "academyProfileTransfer": "Native summary and import/export button keyboard Enter",
+    "academyProofTransfer": "Native import/export button keyboard Enter",
+    "offlineActions": "Native button keyboard Enter with fresh status/progress observation",
+    "limitation": "This observer uses the native keyboard route and does not qualify pointer interaction."
+  },
+  "failure": "Require the existing World Studio database.",
+  "currentStep": "saved world retention: before-installation",
+  "diagnostics": [
+    {
+      "url": "http://127.0.0.1:56984/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/index.html#packs",
+      "access": "unlocked",
+      "status": null,
+      "open": null,
+      "check": null
+    }
+  ],
+  "osApps": [],
+  "checkpoints": [],
+  "errors": [],
+  "cleanup": {
+    "errors": [],
+    "temporaryProfileRemoved": true
+  },
+  "worldSeed": {
+    "format": "OptionalInstallationWorldSeed.v1",
+    "mode": "worlds-template-copy",
+    "sourceSha256": "c9e5cbf719a4d5af30f4bbae35803c7adf8209467019802540bc98561dd9d601",
+    "continuitySourceSha256": "de8e32ed741a7169c727987af9bd2c8829d9fc1e27517f8bb4fbd57ea002c393",
+    "preparedBeforeInstallation": false,
+    "passed": false,
+    "checks": [],
+    "scope": "One template copied, named and installed through public Workshop controls; visible Library identity plus read-only exact World Studio database fingerprints. Browser-context offline and process restart only: no machine-wide outage, OS reboot, imported .rlpack/assets, human flight or physical-device qualification.",
+    "template": {
+      "value": "fpv-snake-hunt:0a73f7def9f067b8:snake-hunt-loops-01",
+      "label": "First three"
+    },
+    "sourceStable": true,
+    "failure": "Expected values to be strictly equal:\n\nfalse !== true\n"
+  },
+  "statusDiagnostics": {
+    "events": [
+      {
+        "step": "open civilian-fpv v0.0.0",
+        "receivedAt": 1792121214927,
+        "documentURL": "http://127.0.0.1:56984/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/index.html",
+        "event": {
+          "at": 112.10000000009313,
+          "documentId": "25fdabbd-fdc4-40fe-925b-81c50a719c49",
+          "type": "pageshow",
+          "persisted": false
+        }
+      },
+      {
+        "step": "prepare civilian-fpv",
+        "receivedAt": 1792121218761,
+        "documentURL": "http://127.0.0.1:56984/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/index.html",
+        "event": {
+          "at": 4088,
+          "documentId": "25fdabbd-fdc4-40fe-925b-81c50a719c49",
+          "type": "registration-request",
+          "requested": "http://127.0.0.1:56984/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/"
+        }
+      },
+      {
+        "step": "prepare civilian-fpv",
+        "receivedAt": 1792121218772,
+        "documentURL": "http://127.0.0.1:56984/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/index.html",
+        "event": {
+          "at": 4094.399999999907,
+          "documentId": "25fdabbd-fdc4-40fe-925b-81c50a719c49",
+          "type": "registration-result",
+          "requested": "http://127.0.0.1:56984/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/",
+          "scope": null,
+          "active": null,
+          "waiting": null,
+          "installing": null
+        }
+      },
+      {
+        "step": "prepare civilian-fpv",
+        "receivedAt": 1792121218780,
+        "workerVersion": {
+          "versionId": "0",
+          "scriptURL": "http://127.0.0.1:56984/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/worker.js",
+          "status": "new",
+          "runningStatus": "stopped"
+        }
+      },
+      {
+        "step": "prepare civilian-fpv",
+        "receivedAt": 1792121218791,
+        "workerVersion": {
+          "versionId": "0",
+          "scriptURL": "http://127.0.0.1:56984/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/worker.js",
+          "status": "new",
+          "runningStatus": "stopped"
+        }
+      },
+      {
+        "step": "prepare civilian-fpv",
+        "receivedAt": 1792121218791,
+        "workerVersion": {
+          "versionId": "0",
+          "scriptURL": "http://127.0.0.1:56984/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/worker.js",
+          "status": "new",
+          "runningStatus": "starting"
+        }
+      },
+      {
+        "step": "prepare civilian-fpv",
+        "receivedAt": 1792121218791,
+        "workerVersion": {
+          "versionId": "0",
+          "scriptURL": "http://127.0.0.1:56984/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/worker.js",
+          "status": "new",
+          "runningStatus": "starting"
+        }
+      },
+      {
+        "step": "prepare civilian-fpv",
+        "receivedAt": 1792121218809,
+        "workerVersion": {
+          "versionId": "0",
+          "scriptURL": "http://127.0.0.1:56984/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/worker.js",
+          "status": "installing",
+          "runningStatus": "starting"
+        }
+      },
+      {
+        "step": "prepare civilian-fpv",
+        "receivedAt": 1792121218809,
+        "workerVersion": {
+          "versionId": "0",
+          "scriptURL": "http://127.0.0.1:56984/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/worker.js",
+          "status": "installing",
+          "runningStatus": "running"
+        }
+      },
+      {
+        "step": "prepare civilian-fpv",
+        "receivedAt": 1792121222543,
+        "workerVersion": {
+          "versionId": "0",
+          "scriptURL": "http://127.0.0.1:56984/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/worker.js",
+          "status": "installed",
+          "runningStatus": "running"
+        }
+      },
+      {
+        "step": "prepare civilian-fpv",
+        "receivedAt": 1792121222543,
+        "workerVersion": {
+          "versionId": "0",
+          "scriptURL": "http://127.0.0.1:56984/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/worker.js",
+          "status": "activating",
+          "runningStatus": "running"
+        }
+      },
+      {
+        "step": "prepare civilian-fpv",
+        "receivedAt": 1792121222543,
+        "workerVersion": {
+          "versionId": "0",
+          "scriptURL": "http://127.0.0.1:56984/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/worker.js",
+          "status": "activated",
+          "runningStatus": "running"
+        }
+      },
+      {
+        "step": "prepare civilian-fpv",
+        "receivedAt": 1792121222544,
+        "documentURL": "http://127.0.0.1:56984/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/index.html",
+        "event": {
+          "at": 7878.100000000093,
+          "documentId": "25fdabbd-fdc4-40fe-925b-81c50a719c49",
+          "type": "registration-request",
+          "requested": "http://127.0.0.1:56984/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/"
+        }
+      },
+      {
+        "step": "prepare civilian-fpv",
+        "receivedAt": 1792121222545,
+        "documentURL": "http://127.0.0.1:56984/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/index.html",
+        "event": {
+          "at": 7878.5,
+          "documentId": "25fdabbd-fdc4-40fe-925b-81c50a719c49",
+          "type": "registration-result",
+          "requested": "http://127.0.0.1:56984/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/",
+          "scope": "http://127.0.0.1:56984/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/",
+          "active": {
+            "scriptURL": "http://127.0.0.1:56984/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/worker.js",
+            "state": "activated"
+          },
+          "waiting": null,
+          "installing": null
+        }
+      },
+      {
+        "step": "prepare civilian-fpv",
+        "receivedAt": 1792121222547,
+        "documentURL": "http://127.0.0.1:56984/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/index.html",
+        "event": {
+          "at": 7878.5,
+          "documentId": "25fdabbd-fdc4-40fe-925b-81c50a719c49",
+          "type": "status-request",
+          "channelId": 2,
+          "worker": {
+            "scriptURL": "http://127.0.0.1:56984/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/worker.js",
+            "state": "activated"
+          }
+        }
+      },
+      {
+        "step": "prepare civilian-fpv",
+        "receivedAt": 1792121222868,
+        "documentURL": "http://127.0.0.1:56984/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/index.html",
+        "event": {
+          "at": 8201.899999999907,
+          "documentId": "25fdabbd-fdc4-40fe-925b-81c50a719c49",
+          "type": "status-reply",
+          "channelId": 2,
+          "scope": "http://127.0.0.1:56984/revealline/practice/civilian-fpv/releases/v0.0.0/site/optional-practice/civilian-fpv/",
+          "ready": true,
+          "status": "ready"
+        }
+      },
+      {
+        "step": "open civilian-flight v0.151.1",
+        "receivedAt": 1792121225799,
+        "documentURL": "http://127.0.0.1:56984/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/index.html",
+        "event": {
+          "at": 797.9000000003725,
+          "documentId": "b7ef0fe1-65ae-4beb-b671-eab06dc966ff",
+          "type": "pageshow",
+          "persisted": false
+        }
+      },
+      {
+        "step": "prepare civilian-flight",
+        "receivedAt": 1792121226527,
+        "documentURL": "http://127.0.0.1:56984/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/index.html",
+        "event": {
+          "at": 1519.2000000001863,
+          "documentId": "b7ef0fe1-65ae-4beb-b671-eab06dc966ff",
+          "type": "registration-request",
+          "requested": "http://127.0.0.1:56984/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/"
+        }
+      },
+      {
+        "step": "prepare civilian-flight",
+        "receivedAt": 1792121226529,
+        "documentURL": "http://127.0.0.1:56984/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/index.html",
+        "event": {
+          "at": 1545,
+          "documentId": "b7ef0fe1-65ae-4beb-b671-eab06dc966ff",
+          "type": "registration-result",
+          "requested": "http://127.0.0.1:56984/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/",
+          "scope": null,
+          "active": null,
+          "waiting": null,
+          "installing": null
+        }
+      },
+      {
+        "step": "prepare civilian-flight",
+        "receivedAt": 1792121226603,
+        "workerVersion": {
+          "versionId": "1",
+          "scriptURL": "http://127.0.0.1:56984/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/worker.js",
+          "status": "new",
+          "runningStatus": "stopped"
+        }
+      },
+      {
+        "step": "prepare civilian-flight",
+        "receivedAt": 1792121226608,
+        "workerVersion": {
+          "versionId": "1",
+          "scriptURL": "http://127.0.0.1:56984/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/worker.js",
+          "status": "new",
+          "runningStatus": "stopped"
+        }
+      },
+      {
+        "step": "prepare civilian-flight",
+        "receivedAt": 1792121226608,
+        "workerVersion": {
+          "versionId": "1",
+          "scriptURL": "http://127.0.0.1:56984/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/worker.js",
+          "status": "new",
+          "runningStatus": "starting"
+        }
+      },
+      {
+        "step": "prepare civilian-flight",
+        "receivedAt": 1792121226608,
+        "workerVersion": {
+          "versionId": "1",
+          "scriptURL": "http://127.0.0.1:56984/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/worker.js",
+          "status": "new",
+          "runningStatus": "starting"
+        }
+      },
+      {
+        "step": "prepare civilian-flight",
+        "receivedAt": 1792121226612,
+        "workerVersion": {
+          "versionId": "1",
+          "scriptURL": "http://127.0.0.1:56984/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/worker.js",
+          "status": "installing",
+          "runningStatus": "starting"
+        }
+      },
+      {
+        "step": "prepare civilian-flight",
+        "receivedAt": 1792121226612,
+        "workerVersion": {
+          "versionId": "1",
+          "scriptURL": "http://127.0.0.1:56984/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/worker.js",
+          "status": "installing",
+          "runningStatus": "running"
+        }
+      },
+      {
+        "step": "prepare civilian-flight",
+        "receivedAt": 1792121230466,
+        "workerVersion": {
+          "versionId": "1",
+          "scriptURL": "http://127.0.0.1:56984/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/worker.js",
+          "status": "installed",
+          "runningStatus": "running"
+        }
+      },
+      {
+        "step": "prepare civilian-flight",
+        "receivedAt": 1792121230466,
+        "workerVersion": {
+          "versionId": "1",
+          "scriptURL": "http://127.0.0.1:56984/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/worker.js",
+          "status": "activating",
+          "runningStatus": "running"
+        }
+      },
+      {
+        "step": "prepare civilian-flight",
+        "receivedAt": 1792121230466,
+        "workerVersion": {
+          "versionId": "1",
+          "scriptURL": "http://127.0.0.1:56984/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/worker.js",
+          "status": "activated",
+          "runningStatus": "running"
+        }
+      },
+      {
+        "step": "prepare civilian-flight",
+        "receivedAt": 1792121230466,
+        "documentURL": "http://127.0.0.1:56984/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/index.html",
+        "event": {
+          "at": 5488.600000000093,
+          "documentId": "b7ef0fe1-65ae-4beb-b671-eab06dc966ff",
+          "type": "registration-request",
+          "requested": "http://127.0.0.1:56984/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/"
+        }
+      },
+      {
+        "step": "prepare civilian-flight",
+        "receivedAt": 1792121230474,
+        "documentURL": "http://127.0.0.1:56984/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/index.html",
+        "event": {
+          "at": 5489,
+          "documentId": "b7ef0fe1-65ae-4beb-b671-eab06dc966ff",
+          "type": "registration-result",
+          "requested": "http://127.0.0.1:56984/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/",
+          "scope": "http://127.0.0.1:56984/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/",
+          "active": {
+            "scriptURL": "http://127.0.0.1:56984/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/worker.js",
+            "state": "activated"
+          },
+          "waiting": null,
+          "installing": null
+        }
+      },
+      {
+        "step": "prepare civilian-flight",
+        "receivedAt": 1792121230474,
+        "documentURL": "http://127.0.0.1:56984/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/index.html",
+        "event": {
+          "at": 5489.100000000093,
+          "documentId": "b7ef0fe1-65ae-4beb-b671-eab06dc966ff",
+          "type": "status-request",
+          "channelId": 2,
+          "worker": {
+            "scriptURL": "http://127.0.0.1:56984/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/worker.js",
+            "state": "activated"
+          }
+        }
+      },
+      {
+        "step": "prepare civilian-flight",
+        "receivedAt": 1792121230739,
+        "documentURL": "http://127.0.0.1:56984/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/index.html",
+        "event": {
+          "at": 5761.4000000003725,
+          "documentId": "b7ef0fe1-65ae-4beb-b671-eab06dc966ff",
+          "type": "status-reply",
+          "channelId": 2,
+          "scope": "http://127.0.0.1:56984/revealline/practice/civilian-flight/releases/v0.151.1/site/optional-practice/civilian-flight/",
+          "ready": true,
+          "status": "ready"
+        }
+      },
+      {
+        "step": "open fpv-worlds v0.151.1",
+        "receivedAt": 1792121232795,
+        "documentURL": "http://127.0.0.1:56984/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/index.html",
+        "event": {
+          "at": 1937.5,
+          "documentId": "c6b9bfe4-f33d-4697-a566-f30b6c899000",
+          "type": "pageshow",
+          "persisted": false
+        }
+      },
+      {
+        "step": "open fpv-worlds v0.151.1",
+        "receivedAt": 1792121239050,
+        "documentURL": "http://127.0.0.1:56984/revealline/practice/fpv-worlds/releases/v0.151.1/site/optional-practice/fpv-worlds/index.html",
+        "event": {
+          "at": 2993,
+          "documentId": "63aa9f94-5dde-4ebb-95d9-9a02011a9355",
+          "type": "pageshow",
+          "persisted": false
+        }
+      }
+    ],
+    "dropped": 0,
+    "sourceSha256": "673399906e529671a1befd6bd6120fb4a52e358b089d5f88263e9d4dd078f4d8",
+    "sourceStable": true,
+    "limitation": "Opt-in observer wrappers forward original message/registration calls and capture bounded status, registration and page lifecycle events, with first-page CDP worker lifecycle/errors. The CDP session detaches when its page closes. Admitted package files are unchanged; API instrumentation can affect scheduling, so this is diagnostic evidence rather than an uninstrumented acceptance run."
+  }
+}

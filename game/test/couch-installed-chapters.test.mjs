@@ -1,5 +1,29 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+// Preserve strict identity without recursively formatting the fixture DOM.
+function boundedIdentity(actual, expected, message) {
+  if (Object.is(actual, expected)) return;
+  const label = (value) => {
+    if (value === null) return 'null';
+    if (value === undefined) return 'undefined';
+    if (typeof value !== 'object' && typeof value !== 'function') return String(value).slice(0, 80);
+    return (
+      [value.tagName, value.id]
+        .filter((part) => typeof part === 'string')
+        .map((part) => part.slice(0, 80))
+        .join('#') || typeof value
+    );
+  };
+  assert.ok(
+    false,
+    (message ?? 'Strict identity mismatch.') +
+      ' Actual: ' +
+      label(actual) +
+      '; expected: ' +
+      label(expected) +
+      '.',
+  );
+}
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { createCouchInstalledChapters } from '../couch/couch-installed-chapters.mjs';
@@ -200,6 +224,22 @@ async function fixture(t, { embedded = false, chapter = pilot } = {}) {
 }
 const settle = (predicate, message) => waitFor(predicate, { timeoutMs: 45000, message });
 
+// Enter Advanced setup through its current visible Settings owner.
+function openSetup(page) {
+  if (page.doc.body.dataset.couchScreen !== 'options') {
+    assert.equal(!!page.$('race-options').closest('[hidden],[inert]'), false);
+    page.$('race-options').click();
+  }
+  page.$('race-settings-tab-gameplay').click();
+  assert.equal(!!page.$('race-focus').closest('[hidden],[inert]'), false);
+  page.$('race-focus').click();
+}
+function closeSetup(page) {
+  assert.equal(!!page.$('race-setup-back').closest('[hidden],[inert]'), false);
+  page.$('race-setup-back').click();
+  if (page.doc.body.dataset.couchScreen === 'options') page.$('race-options-back').click();
+}
+
 async function readyInstalledPage(t, { coarse = false } = {}) {
   const f = await fixture(t);
   f.reader.dispose();
@@ -216,10 +256,10 @@ async function readyInstalledPage(t, { coarse = false } = {}) {
     .$('race-level')
     .options.find((option) => option.value.startsWith('installed/'));
   assert.ok(choice);
-  page.$('race-focus').click();
+  openSetup(page);
   page.$('race-level').value = choice.value;
   await action(page.$('race-level'), 'change');
-  page.$('race-setup-back').click();
+  closeSetup(page);
   page.frame(0);
   assert.equal(page.state(), 'ready');
   return { f, page };
@@ -242,7 +282,7 @@ function holdInitialConfirmation(t, f) {
   return { gate, entered: () => entered };
 }
 
-for (const interruption of ['Tab to Help', 'pointer to Help', 'Help then BODY'])
+for (const interruption of ['Tab to Settings', 'pointer to Settings', 'Settings then BODY'])
   test(`initial Start ownership preserves a newer ${interruption} choice`, async (t) => {
     const { f, page } = await readyInstalledPage(t),
       writes = f.writes(),
@@ -258,8 +298,8 @@ for (const interruption of ['Tab to Help', 'pointer to Help', 'Help then BODY'])
       true,
       'Initial preparation keeps focus on Start so a held Confirm cannot become Cancel.',
     );
-    const help = page.$('race-help');
-    if (interruption === 'Tab to Help') {
+    const help = page.$('race-options');
+    if (interruption === 'Tab to Settings') {
       // Exercise the host's actual Tab routing, without selecting its target for it.
       for (let count = 0; page.doc.activeElement !== help && count < 24; count++) {
         const before = page.doc.activeElement;
@@ -267,11 +307,15 @@ for (const interruption of ['Tab to Help', 'pointer to Help', 'Help then BODY'])
         assert.equal(event.defaultPrevented, true, 'The host owns this menu Tab.');
         assert.equal(page.doc.activeElement !== before, true, 'Tab must advance menu focus.');
       }
-      assert.equal(page.doc.activeElement === help, true, 'Help must be reachable using Tab only.');
+      assert.equal(
+        page.doc.activeElement === help,
+        true,
+        'Settings must be reachable using Tab only.',
+      );
     } else {
       help.emit('pointerdown', { pointerType: 'touch', button: 0, isPrimary: true });
       help.focus();
-      if (interruption === 'Help then BODY') page.doc.body.focus();
+      if (interruption === 'Settings then BODY') page.doc.body.focus();
     }
     const owner = page.doc.activeElement;
     held.gate.resolve();
@@ -336,7 +380,7 @@ test('initial Start ownership checks newer focus produced during completion clea
     writes = f.writes(),
     checkpoint = page.checkpoint(),
     start = page.$('race-start'),
-    help = page.$('race-help');
+    help = page.$('race-options');
   start.focus();
   const starting = action(start);
   await settle(held.entered, 'Initial confirmation must be pending.');
@@ -349,6 +393,7 @@ test('initial Start ownership checks newer focus produced during completion clea
       disabled = value;
       if (!value && !moved) {
         moved = true;
+        assert.equal(!!help.closest('[hidden],[inert]'), false);
         help.focus();
       }
     },
@@ -382,10 +427,10 @@ test('interrupted async Start confirmation stays ready after blur and return unt
   const choice = page
     .$('race-level')
     .options.find((option) => option.value.startsWith('installed/'));
-  page.$('race-focus').click();
+  openSetup(page);
   page.$('race-level').value = choice.value;
   await action(page.$('race-level'), 'change');
-  page.$('race-setup-back').click();
+  closeSetup(page);
   page.frame(0);
   const runs = [...page.renders],
     checkpoint = page.checkpoint(),
@@ -449,10 +494,10 @@ test('cancelled Start confirmation cannot overwrite Retry for the same untouched
   const choice = page
     .$('race-level')
     .options.find((option) => option.value.startsWith('installed/'));
-  page.$('race-focus').click();
+  openSetup(page);
   page.$('race-level').value = choice.value;
   await action(page.$('race-level'), 'change');
-  page.$('race-setup-back').click();
+  closeSetup(page);
   page.frame();
   const held = page.checkpoint(),
     runs = [...page.renders];
@@ -779,11 +824,11 @@ test('Couch recovers installed R5 originals when its optional shipped URL is una
   assert.equal(choices.length, 3);
   assert.match(page.$('race-installed-status').textContent, /Featured Pressure Lines.*unavailable/);
   assert.match(page.$('race-installed-status').textContent, /3 installed maps available/);
-  page.$('race-focus').click();
+  openSetup(page);
   page.$('race-level').value = choices[0].value;
   await action(page.$('race-level'), 'change');
   await settle(() => !page.$('race-start').disabled, page.$('race-message').textContent);
-  page.$('race-setup-back').click();
+  closeSetup(page);
   page.frame();
   const binding = page.drawOptions[0].backdrop,
     original = pack.levelVisuals.find((item) => item.levelId === 'orchard-crossing').visualOverrides
@@ -822,14 +867,17 @@ test('actual Couch selection shares the exact installed image, keeps separate mo
     .$('race-level')
     .options.filter((option) => option.value.startsWith('installed/'));
   assert.equal(installed.length, 3);
-  page.$('race-focus').click();
+  openSetup(page);
   page.$('race-level').value = installed[0].value;
   await action(page.$('race-level'), 'change');
   await settle(() => !page.$('race-start').disabled, page.$('race-message').textContent);
-  page.$('race-setup-back').click();
+  closeSetup(page);
   page.frame();
-  const binding = page.drawOptions[0].backdrop;
-  assert.equal(binding, page.drawOptions[1].backdrop);
+  const binding = page.drawOptions[0].backdrop,
+    preparationRegion = page.$('race-preparation'),
+    preparationHome = preparationRegion.parentNode,
+    cancelHome = page.$('race-picture-cancel').parentNode;
+  boundedIdentity(binding, page.drawOptions[1].backdrop);
   assert.equal(sha(binding.image.bytes), binding.pin.sha256);
   assert.equal(page.$('race-canvas-0').width, 1152);
   assert.equal(page.$('race-canvas-0').height, 576);
@@ -850,12 +898,17 @@ test('actual Couch selection shares the exact installed image, keeps separate mo
   page.frames(3);
   page.$('race-options-back').click();
   assert.deepEqual(page.checkpoint(), held);
-  assert.equal(page.drawOptions[0].backdrop, binding);
+  boundedIdentity(page.drawOptions[0].backdrop, binding);
   await action(page.$('race-start'));
   page.frame();
-  assert.equal(page.drawOptions[1].backdrop, binding);
-  page.$('race-pause').click();
-  page.$('race-focus').click();
+  boundedIdentity(page.drawOptions[1].backdrop, binding);
+  // Advanced setup is intentionally unavailable while paused. Keep the
+  // pause/Resume checkpoint proof above, then finish this exact retained race
+  // before taking the visible New match route. No private match mutation.
+  page.frames(151, 200);
+  assert.equal(page.state(), 'finished');
+  openSetup(page);
+  assert.equal(!!page.$('race-confirm-reset').closest('[hidden],[inert]'), false);
   page.$('race-confirm-reset').click();
   await settle(
     () => !page.$('race-start').disabled,
@@ -865,82 +918,101 @@ test('actual Couch selection shares the exact installed image, keeps separate mo
   blurWhenDisabled(refresh);
   refresh.focus();
   await action(refresh);
-  assert.equal(page.doc.activeElement, refresh);
+  boundedIdentity(page.doc.activeElement, refresh);
   assert.equal(page.$('race-start').disabled, false);
   // A real replacement decode is left pending. Back must cancel it while the
   // previously accepted boards remain playable; Retry may still re-check that
   // accepted picture without auto-starting the race.
   let finish;
-  f.model.onDecode = async () => {
-    if (!finish)
-      await new Promise((resolve) => {
-        finish = resolve;
-      });
-  };
-  page.$('race-level').value = installed[1].value;
-  const pendingMap = action(page.$('race-level'), 'change');
-  await settle(() => finish, 'pending map original was not read');
-  assert.equal(page.$('race-preparation').dataset.state, 'busy');
-  assert.equal(page.$('race-preparation').dataset.stage, 'decoding');
-  assert.equal(page.$('race-preparation').closest('[hidden]'), null);
-  assert.equal(page.$('race-preparation').closest('[inert]'), null);
-  assert.equal(page.$('race-setup-back').disabled, false);
-  page.$('race-setup-back').click();
-  assert.equal(page.$('race-start').disabled, false);
-  assert.match(page.$('race-message').textContent, /cancelled/);
-  assert.equal(page.$('race-preparation').hidden, true);
-  finish();
-  f.model.onDecode = null;
-  await pendingMap;
-  const retry = page.$('race-chapter-retry');
-  blurWhenDisabled(retry);
-  retry.focus();
-  await action(retry);
-  assert.equal(page.$('race-start').disabled, false);
-  assert.equal(page.doc.activeElement, page.$('race-start'));
-  page.frame();
-  assert.equal(page.renders[0].tick, 0);
-  page.$('race-focus').click();
-  finish = null;
-  f.model.onDecode = async () => {
-    if (!finish)
-      await new Promise((resolve) => {
-        finish = resolve;
-      });
-  };
-  refresh.focus();
-  const movedRefresh = action(refresh);
-  await settle(() => finish, 'refresh original decode did not start');
-  page.$('race-time').focus();
-  finish();
-  f.model.onDecode = null;
-  await movedRefresh;
-  assert.equal(
-    page.doc.activeElement,
-    page.$('race-time'),
-    'async refresh respects navigation to another visible control',
-  );
-  finish = null;
-  f.model.onDecode = async () => {
-    if (!finish)
-      await new Promise((resolve) => {
-        finish = resolve;
-      });
-  };
-  refresh.focus();
-  const cancelledRefresh = action(refresh);
-  await settle(() => finish, 'second refresh original decode did not start');
-  page.$('race-setup-back').click();
-  const backFocus = page.doc.activeElement;
-  await cancelledRefresh;
-  finish();
-  f.model.onDecode = null;
-  assert.equal(page.doc.activeElement, backFocus, 'late refresh cannot steal Back focus');
-  assert.equal(page.$('race-start').disabled, true);
-  assert.doesNotMatch(page.$('race-installed-status').textContent, /Checking installed/);
-  await action(retry);
-  assert.equal(page.$('race-start').disabled, false);
-  assert.deepEqual(f.writes(), before);
+  const ownedPending = [],
+    acceptedBeforeReplacement = page.checkpoint();
+  try {
+    f.model.onDecode = async () => {
+      if (!finish)
+        await new Promise((resolve) => {
+          finish = resolve;
+        });
+    };
+    page.$('race-level').value = installed[1].value;
+    const pendingMap = action(page.$('race-level'), 'change');
+    ownedPending.push(pendingMap);
+    await settle(() => finish, 'pending map original was not read');
+    assert.equal(page.$('race-preparation').dataset.state, 'busy');
+    assert.equal(page.$('race-preparation').dataset.stage, 'decoding');
+    boundedIdentity(page.$('race-preparation').closest('[hidden]'), null);
+    boundedIdentity(page.$('race-preparation').closest('[inert]'), null);
+    boundedIdentity(page.$('race-preparation'), preparationRegion);
+    boundedIdentity(preparationRegion.parentNode, page.$('race-setup'));
+    assert.deepEqual(page.checkpoint(), acceptedBeforeReplacement);
+    assert.equal(!!page.$('race-picture-cancel').closest('[hidden],[inert]'), false);
+    assert.equal(page.$('race-picture-cancel').disabled, false);
+    assert.equal(page.$('race-setup-back').disabled, false);
+    closeSetup(page);
+    boundedIdentity(preparationRegion.parentNode, preparationHome);
+    boundedIdentity(page.$('race-picture-cancel').parentNode, cancelHome);
+    assert.deepEqual(page.checkpoint(), acceptedBeforeReplacement);
+    assert.equal(page.$('race-start').disabled, false);
+    assert.match(page.$('race-message').textContent, /cancelled/);
+    assert.equal(page.$('race-preparation').hidden, true);
+    finish();
+    f.model.onDecode = null;
+    await pendingMap;
+    const retry = page.$('race-chapter-retry');
+    blurWhenDisabled(retry);
+    retry.focus();
+    await action(retry);
+    assert.equal(page.$('race-start').disabled, false);
+    boundedIdentity(page.doc.activeElement, page.$('race-start'));
+    page.frame();
+    assert.equal(page.renders[0].tick, 0);
+    openSetup(page);
+    finish = null;
+    f.model.onDecode = async () => {
+      if (!finish)
+        await new Promise((resolve) => {
+          finish = resolve;
+        });
+    };
+    refresh.focus();
+    const movedRefresh = action(refresh);
+    ownedPending.push(movedRefresh);
+    await settle(() => finish, 'refresh original decode did not start');
+    page.$('race-time').focus();
+    finish();
+    f.model.onDecode = null;
+    await movedRefresh;
+    boundedIdentity(
+      page.doc.activeElement,
+      page.$('race-time'),
+      'async refresh respects navigation to another visible control',
+    );
+    finish = null;
+    f.model.onDecode = async () => {
+      if (!finish)
+        await new Promise((resolve) => {
+          finish = resolve;
+        });
+    };
+    refresh.focus();
+    const cancelledRefresh = action(refresh);
+    ownedPending.push(cancelledRefresh);
+    await settle(() => finish, 'second refresh original decode did not start');
+    closeSetup(page);
+    const backFocus = page.doc.activeElement;
+    await cancelledRefresh;
+    finish();
+    f.model.onDecode = null;
+    boundedIdentity(page.doc.activeElement, backFocus, 'late refresh cannot steal Back focus');
+    assert.equal(page.$('race-start').disabled, true);
+    assert.doesNotMatch(page.$('race-installed-status').textContent, /Checking installed/);
+    await action(retry);
+    assert.equal(page.$('race-start').disabled, false);
+    assert.deepEqual(f.writes(), before);
+  } finally {
+    finish?.();
+    f.model.onDecode = null;
+    await Promise.allSettled(ownedPending);
+  }
   page.win.emit('pagehide', { persisted: false });
   assert.equal(f.model.urls.size, 0);
 });
@@ -989,10 +1061,10 @@ test('main-lobby Back cancels an explicitly pending Retry and never enables Star
   const installed = page
     .$('race-level')
     .options.find((option) => option.value.startsWith('installed/'));
-  page.$('race-focus').click();
+  openSetup(page);
   page.$('race-level').value = installed.value;
   await action(page.$('race-level'), 'change');
-  page.$('race-setup-back').click();
+  closeSetup(page);
   await settle(() => !page.$('race-start').disabled, 'installed setup did not become ready');
   // Establish a real Retry state without invalidating the accepted installed
   // row: cancel its confirmation while the installed authority lock is held.
@@ -1111,11 +1183,11 @@ for (const [name, build] of [
       .$('race-level')
       .options.filter((option) => option.value.startsWith('installed/'));
     assert.equal(installed.length, 3);
-    page.$('race-focus').click();
+    openSetup(page);
     page.$('race-level').value = installed[0].value;
     await action(page.$('race-level'), 'change');
     await settle(() => !page.$('race-start').disabled, `${name} original did not become ready`);
-    page.$('race-setup-back').click();
+    closeSetup(page);
     page.frame();
     const binding = page.drawOptions[0].backdrop;
     assert.equal(binding, page.drawOptions[1].backdrop);
@@ -1169,7 +1241,7 @@ async function completedInstalledRound(t, format) {
     .$('race-level')
     .options.find((option) => option.value.startsWith('installed/'));
   assert.ok(choice);
-  page.$('race-focus').click();
+  openSetup(page);
   assert.equal(page.$('race-format').value, 'single');
   if (format !== 'single') {
     page.$('race-format').value = format;
@@ -1181,7 +1253,7 @@ async function completedInstalledRound(t, format) {
     () => !page.$('race-start').disabled,
     'The installed first round never became ready.',
   );
-  page.$('race-setup-back').click();
+  closeSetup(page);
   await action(page.$('race-start'));
   page.frame(0);
   assert.equal(page.state(), 'running');

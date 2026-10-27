@@ -296,12 +296,41 @@ const defaultCanvas = () => globalThis.document?.createElement('canvas');
 export function createArcadeAdapter({
   canvasFactory = defaultCanvas,
   reviewRevision = runtimeActorArtRevision(),
+  onContextLoss = () => {},
+  onContextRestored = () => {},
 } = {}) {
   if (reviewRevision === 'industrial-overhead-v2') reviewRevision = INDUSTRIAL_MATERIAL_REVISION;
   let snapshots = new WeakMap(),
     environment = null;
-  const canvases = new Set();
+  const canvases = new Map();
+  function retire(owner) {
+    const wasLost = owner.lost;
+    owner.lost = false;
+    owner.canvas.removeEventListener?.('contextlost', owner.onLost);
+    owner.canvas.removeEventListener?.('contextrestored', owner.onRestored);
+    owner.frames.delete(owner.slot);
+    owner.canvas.width = owner.canvas.height = 0;
+    if (wasLost) onContextRestored({ source: 'arcade-sprite', owner, retired: true });
+  }
+  function clear() {
+    const retired = [...canvases.values()];
+    canvases.clear();
+    snapshots = new WeakMap();
+    for (const owner of retired) retire(owner);
+  }
   return {
+    resourceSnapshot() {
+      let pixels = 0,
+        count = 0,
+        lost = 0;
+      for (const owner of canvases.values()) {
+        const area = owner.canvas.width * owner.canvas.height;
+        if (area > 0) count++;
+        pixels += area;
+        if (owner.lost) lost++;
+      }
+      return { canvases: count, pixels, rgbaBytesEstimate: pixels * 4, lost };
+    },
     setEnvironment(pin) {
       const next = resolveIndustrialEnvironment(pin);
       const previous = resolveIndustrialEnvironment(environment);
@@ -336,7 +365,10 @@ export function createArcadeAdapter({
         }),
         canvas: Object.freeze({ ...base.canvas, palette: paletteFor(collection) }),
         image(slot) {
-          if (frames.has(slot)) return frames.get(slot);
+          if (frames.has(slot)) {
+            const frame = frames.get(slot);
+            return canvases.get(frame.image)?.lost ? (base.image?.(slot) ?? null) : frame;
+          }
           const original = base.image?.(slot) ?? null,
             asset = original?.asset ?? base.resolved?.assets?.[slot];
           if (
@@ -346,7 +378,8 @@ export function createArcadeAdapter({
             hasCustomIndustrialMachineryGeometry(asset, slot)
           )
             return original;
-          let derived = original;
+          let derived = original,
+            canvas = null;
           try {
             const width = original.image.naturalWidth ?? original.image.width,
               height = original.image.naturalHeight ?? original.image.height;
@@ -357,12 +390,12 @@ export function createArcadeAdapter({
               height > 128
             )
               return original;
-            const canvas = canvasFactory();
+            canvas = canvasFactory();
             if (!canvas) return original;
             canvas.width = width;
             canvas.height = height;
             const ctx = canvas.getContext('2d', { willReadFrequently: true });
-            if (!ctx) return original;
+            if (!ctx) throw new Error('Arcade sprite canvas unavailable');
             ctx.drawImage(original.image, 0, 0);
             const data = ctx.getImageData(0, 0, width, height);
             data.data.set(
@@ -372,7 +405,21 @@ export function createArcadeAdapter({
               }).rgba,
             );
             ctx.putImageData(data, 0, 0);
-            canvases.add(canvas);
+            const owner = { canvas, frames, slot, lost: false };
+            owner.onLost = () => {
+              owner.lost = true;
+              onContextLoss({ source: 'arcade-sprite', owner });
+            };
+            owner.onRestored = () => {
+              owner.lost = false;
+              // Some painters retain prepared frames until snapshot identity changes.
+              // Retire every derived frame before publishing the restored generation.
+              clear();
+              onContextRestored({ source: 'arcade-sprite', owner });
+            };
+            canvas.addEventListener?.('contextlost', owner.onLost);
+            canvas.addEventListener?.('contextrestored', owner.onRestored);
+            canvases.set(canvas, owner);
             const vehicle =
               collection.id === 'military-field' &&
               (slot.startsWith('enemy.') ||
@@ -407,6 +454,12 @@ export function createArcadeAdapter({
                 : {}),
             });
           } catch {
+            if (canvas) {
+              const owner = canvases.get(canvas);
+              canvases.delete(canvas);
+              if (owner) retire(owner);
+              else canvas.width = canvas.height = 0;
+            }
             /* A failed/tainted decode must never hide a functional sprite. */
           }
           frames.set(slot, derived);
@@ -417,13 +470,6 @@ export function createArcadeAdapter({
       snapshots.set(base, variants);
       return adapted;
     },
-    clear() {
-      for (const canvas of canvases) {
-        canvas.width = 0;
-        canvas.height = 0;
-      }
-      canvases.clear();
-      snapshots = new WeakMap();
-    },
+    clear,
   };
 }

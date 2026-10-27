@@ -1,5 +1,6 @@
 import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import { activateHostAction } from './helpers/host-action.mjs';
+import { CELEBRATION_SECONDS } from '../ui/celebration.mjs';
 import { waitFor } from './helpers/wait-for.mjs';
 import { winCurrentOpening } from './helpers/solo-opening-win.mjs';
 import test from 'node:test';
@@ -197,10 +198,12 @@ test('session-only Next prepares a new exact original without persistent writes'
     return page.doc.body.dataset.flightState === 'running';
   });
   winCurrentOpening(page);
+  assert.equal(page.$('skip-celebration').hidden, true);
+  // Advance the actual earned-picture presentation to its public result action.
   for (
-    let i = 0;
-    i < Math.ceil(REWARD_BOARD_SECONDS / 0.1) + 2 && page.$('show-result').hidden;
-    i++
+    let frame = 0;
+    frame < Math.min(Math.ceil(CELEBRATION_SECONDS * 10) + 2, Math.ceil(REWARD_BOARD_SECONDS / 0.1) + 2) && page.$('show-result').hidden;
+    frame++
   )
     page.frame(100);
   assert.equal(page.$('show-result').hidden, false);
@@ -262,8 +265,8 @@ test('session-only Next prepares a new exact original without persistent writes'
   page.key('Escape');
   page.key('Escape', false);
   page.frame(0);
-  page.$('library-button').click();
-  page.doc.querySelector('[data-library-panel="saves"]').click();
+  await activateHostAction(page.$('library-button'));
+  await activateHostAction(page.doc.querySelector('[data-library-panel="saves"]'));
   assert.equal(page.$('library-saves').hidden, false);
   assert.equal(page.$('session-originals').hidden, false);
   assert.match(

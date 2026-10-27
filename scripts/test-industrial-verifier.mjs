@@ -123,7 +123,7 @@ test('TAP receipts cannot turn skipped, failed, absent or canceled tests into pa
   assert.equal(summarizeIndustrialTap(tap.replace('# pass 3', '# pass 2'), 0, null).passed, false);
 });
 
-async function processFixture(t, exitOnTerm = false) {
+async function processFixture(t, exitOnTerm = false, termDelayMs = 0) {
   const directory = await fs.mkdtemp(path.join(tmpdir(), 'industrial-process-'));
   const heartbeat = path.join(directory, 'heartbeat');
   const ready = path.join(directory, 'ready');
@@ -153,7 +153,7 @@ async function processFixture(t, exitOnTerm = false) {
       descendant.disconnect();
       fs.writeFileSync(${JSON.stringify(ready)}, String(pid));
     });
-    ${exitOnTerm ? "process.on('SIGTERM', () => { process.stdout.write('# tests 1\\n# pass 1\\n# fail 0\\n# cancelled 0\\n# skipped 0\\n# todo 0\\n'); process.exit(0); });" : ''}
+    ${exitOnTerm ? `process.on('SIGTERM', () => { const exit = () => { process.stdout.write('# tests 1\\n# pass 1\\n# fail 0\\n# cancelled 0\\n# skipped 0\\n# todo 0\\n'); process.exit(0); }; ${termDelayMs ? `setTimeout(exit, ${termDelayMs});` : 'exit();'} });` : ''}
     setInterval(() => {}, 1000);
   `,
   );
@@ -229,6 +229,155 @@ test('aborting cannot accept an exit-zero child and kills its surviving descenda
   );
   await assertDescendantStopped(fixture.heartbeat);
 });
+
+test('accepted group KILL cannot resolve cleanup before delayed delivery settles the owned group', async (t) => {
+  if (process.platform === 'win32') return t.skip('POSIX owned process groups');
+  const fixture = await processFixture(t, true);
+  const controller = new AbortController();
+  const originalKill = process.kill.bind(process);
+  let group,
+    delivery,
+    delivered = false;
+  t.after(() => clearTimeout(delivery));
+  t.mock.method(process, 'kill', (pid, signal) => {
+    if (pid < 0 && signal === 'SIGKILL') {
+      group = pid;
+      delivery ??= setTimeout(() => {
+        originalKill(pid, signal);
+        delivered = true;
+      }, 150);
+      // Model the actual API boundary: acceptance does not mean settlement.
+      return true;
+    }
+    return originalKill(pid, signal);
+  });
+  const running = executeIndustrialPhase({
+    command: [fixture.parent],
+    cwd: fixture.directory,
+    log: fixture.log,
+    signal: controller.signal,
+    deadlineMs: 5000,
+    graceMs: 5000,
+  });
+  await waitForReady(fixture.ready);
+  controller.abort();
+  const result = await running;
+  assert.equal(delivered, true, 'cleanup resolved from signal acceptance before delivery');
+  assert.throws(() => originalKill(group, 0), { code: 'ESRCH' });
+  assert.equal(result.exitCode, 0);
+  assert.equal(result.interrupted, true);
+  assert.equal(result.timedOut, false);
+  assert.equal(result.groupCleanup.absent, true);
+  assert.equal(result.groupCleanup.pgid, -group);
+  await assertDescendantStopped(fixture.heartbeat);
+});
+
+test('an observable group fails at the first termination grace without renewing after late parent close', async (t) => {
+  if (process.platform === 'win32') return t.skip('POSIX owned process groups');
+  const fixture = await processFixture(t, true, 200);
+  const controller = new AbortController();
+  const originalKill = process.kill.bind(process);
+  let probes = 0,
+    kills = 0;
+  t.mock.method(process, 'kill', (pid, signal) => {
+    if (pid < 0 && signal === 'SIGKILL') {
+      kills++;
+      return true;
+    }
+    if (pid < 0 && signal === 0) probes++;
+    return originalKill(pid, signal);
+  });
+  const running = observeIndustrialPhase({
+    command: [fixture.parent],
+    cwd: fixture.directory,
+    log: fixture.log,
+    signal: controller.signal,
+    deadlineMs: 5000,
+    graceMs: 100,
+  });
+  await waitForReady(fixture.ready);
+  controller.abort();
+  const result = await running;
+  assert.equal(result.exitCode, 0);
+  assert.equal(result.interrupted, true);
+  assert.equal(result.timedOut, false);
+  assert.equal(result.executionError?.code, 'ETIMEDOUT');
+  assert.match(result.executionError.message, /group remained observable/);
+  assert.equal(kills, 2, 'existing grace escalation and close cleanup both retain their signals');
+  assert.equal(probes, 1, 'already elapsed grace must not start another polling interval');
+  assert.equal(
+    summarizeIndustrialTap(await fs.readFile(fixture.log, 'utf8'), 0, null).passed,
+    true,
+  );
+  assert.deepEqual(JSON.parse(JSON.stringify(result)), result);
+});
+
+test('late absence cannot turn an expired first termination grace into settled cleanup', async (t) => {
+  if (process.platform === 'win32') return t.skip('POSIX owned process groups');
+  const fixture = await processFixture(t, true, 200);
+  const controller = new AbortController();
+  const originalKill = process.kill.bind(process);
+  t.mock.method(process, 'kill', (pid, signal) => {
+    if (pid < 0 && signal === 'SIGKILL') return true;
+    if (pid < 0 && signal === 0)
+      throw Object.assign(new Error('Modeled group absence at late observation'), {
+        code: 'ESRCH',
+      });
+    return originalKill(pid, signal);
+  });
+  const running = observeIndustrialPhase({
+    command: [fixture.parent],
+    cwd: fixture.directory,
+    log: fixture.log,
+    signal: controller.signal,
+    deadlineMs: 5000,
+    graceMs: 100,
+  });
+  await waitForReady(fixture.ready);
+  controller.abort();
+  const result = await running;
+  assert.equal(result.exitCode, 0);
+  assert.equal(result.interrupted, true);
+  assert.equal(result.groupCleanup.absent, true, 'the late observation is still retained');
+  assert.equal(result.executionError?.code, 'ETIMEDOUT');
+  assert.match(result.executionError.message, /absence was observed after termination grace/);
+});
+
+for (const settles of [true, false]) {
+  test(`signal-zero permission denial ${settles ? 'waits for actual absence' : 'remains failed at the original grace'}`, async (t) => {
+    if (process.platform === 'win32') return t.skip('POSIX owned process groups');
+    const fixture = await processFixture(t, true);
+    const controller = new AbortController();
+    const originalKill = process.kill.bind(process);
+    let probes = 0;
+    t.mock.method(process, 'kill', (pid, signal) => {
+      if (pid < 0 && signal === 0 && (!settles || probes++ === 0))
+        throw Object.assign(new Error('Injected unsettled group permission denial'), {
+          code: 'EPERM',
+        });
+      return originalKill(pid, signal);
+    });
+    const running = observeIndustrialPhase({
+      command: [fixture.parent],
+      cwd: fixture.directory,
+      log: fixture.log,
+      signal: controller.signal,
+      deadlineMs: 5000,
+      graceMs: settles ? 5000 : 100,
+    });
+    await waitForReady(fixture.ready);
+    controller.abort();
+    const result = await running;
+    assert.equal(result.exitCode, 0);
+    assert.equal(result.interrupted, true);
+    assert.equal(result.groupCleanup.absent, settles);
+    assert.ok(result.groupCleanup.probeErrors.EPERM >= 1);
+    assert.equal(result.executionError?.code ?? null, settles ? null : 'EPERM');
+    if (!settles) assert.equal(result.groupCleanup.probes, result.groupCleanup.probeErrors.EPERM);
+    assert.deepEqual(JSON.parse(JSON.stringify(result)), result);
+    await assertDescendantStopped(fixture.heartbeat);
+  });
+}
 
 test('cleanup EPERM preserves the interrupted exit-zero outcome as failed execution evidence', async (t) => {
   if (process.platform === 'win32') return t.skip('POSIX owned process groups');

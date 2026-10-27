@@ -1,4 +1,4 @@
-import { createSimFlightAudio as createWorldAudio } from '../civilian-fpv/sim-presentation.mjs';
+import { createSimFlightAudio } from '../civilian-fpv/sim-presentation.mjs';
 import { PRACTICE_HZ } from './model.mjs';
 
 /** Centimetres and assisted motion remain native model facts. This adapter only
@@ -23,11 +23,12 @@ export function practiceAudioState(state, previous, command = {}) {
   };
 }
 
-export function createPracticeAudio({ window, createAudio = createWorldAudio } = {}) {
+export function createPracticeAudio({ window, createAudio = createSimFlightAudio } = {}) {
   const audio = createAudio({ window });
   let previous = null;
   return Object.freeze({
     enabled: audio.enabled,
+    gameplayOutput: audio.gameplayOutput,
     setEnabled: audio.setEnabled,
     subscribe: audio.subscribe,
     masterSnapshot: audio.masterSnapshot,

@@ -91,6 +91,7 @@
         "ROLE_DOMAIN_MAP",
         "FAMILY_STYLE"
       ],
+      "prompt": "Inspect {{ENEMY_REFERENCES}} and {{ROLE_DOMAIN_MAP}} before creating a separate {{FAMILY_STYLE}} keyframe study. Distinguish an open-field mover, a patrol on changing interior capture contours, an enemy crossing revealed ground and a territory eroder. Give each a stable silhouette and restrained motion signature rather than identical glowing balls. Keep the fill-blocker mark attached only to roles the selected policy designates. Motion diagrams illustrate the declared domain; they do not implement homing, erosion, internal-contour traversal or new behavior. Preserve anchors, collider references and role identity across frames. Current FPV examples use explicit Ukrainian/hostile-military/neutral identity and no Z markings anywhere. Use the built-in image editor for the requested derivative and preserve all references. Record generated keyframes as concepts; timing, loop seams, interruption and actual-size readability require subsequent assembled playback.",
       "example_request": "Make the four enemy roles recognizable by silhouette and motion in every theme."
     },
     {

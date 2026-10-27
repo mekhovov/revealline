@@ -1,6 +1,8 @@
+import { createMediaPreparation } from './media-preparation.mjs';
 import { t } from '../i18n/index.mjs';
 import { DESTRUCTION_CUES, HUMAN_REACTION_CUES } from './destruction-audio.mjs';
 import { destructionBufferGain } from './destruction-level.mjs';
+import { inspectPublishedCue } from '../published-cue-inspection.mjs';
 const cueNames = new Set([
   'focus',
   'confirm',
@@ -12,6 +14,9 @@ const cueNames = new Set([
   ...DESTRUCTION_CUES,
   ...HUMAN_REACTION_CUES,
 ]);
+export const CUE_CACHE_BYTES = 32 * 1024 * 1024;
+// Match optional effect/reaction reads; queue wait and native decoding are separate.
+const CUE_READ_TIMEOUT_MS = 10000;
 
 /** Read-only session cache. An unavailable cue uses its existing procedural
  * fallback; a late decode never replays an event that has already happened. */
@@ -34,6 +39,9 @@ export function createPublishedCues({
     maxDecodedSamples > 16 * 1024 * 1024
   )
     throw new TypeError('Invalid published audio voice budget.');
+  const preparation = sound.mediaPreparation ?? createMediaPreparation();
+  const ownsPreparation = !sound.mediaPreparation;
+  let preparationPhase = 'menu';
   const cache = new Map(),
     attenuation = new Map(),
     pending = new Set(),
@@ -41,7 +49,22 @@ export function createPublishedCues({
     voices = new Set(),
     recent = new Map();
   let closed = false,
+    decodedBytes = 0,
     decodedSamples = 0;
+  const bufferBytes = (value) =>
+    value && typeof value === 'object' ? value.length * value.numberOfChannels * 4 : 0;
+  function retain(name, decoded) {
+    const size = bufferBytes(decoded);
+    for (const [key, value] of cache) {
+      if (decodedBytes + size <= CUE_CACHE_BYTES) break;
+      if (key === name || !bufferBytes(value)) continue;
+      decodedBytes -= bufferBytes(value);
+      cache.delete(key);
+      attenuation.delete(key);
+    }
+    cache.set(name, decoded ?? false);
+    decodedBytes += size;
+  }
   const cancelPending = () => {
     for (const controller of pending) controller.abort();
     pending.clear();
@@ -59,7 +82,7 @@ export function createPublishedCues({
     sound.settings.master &&
     (ui ? sound.menuSettings?.enabled !== false : sound.settings.sfx) &&
     (ui || !sound.persistentMusic || !sound.gameplayPaused);
-  function load(name) {
+  function load(name, { priority = 'demand' } = {}) {
     if (cache.get(name) === 'loading') return loads.get(name);
     if (
       !cueNames.has(name) ||
@@ -67,20 +90,73 @@ export function createPublishedCues({
       typeof sound.context?.decodeAudioData !== 'function'
     )
       return;
-    const controller = new AbortController();
+    const controller = new AbortController(),
+      context = sound.context;
+    const eligible = () =>
+      !closed &&
+      !controller.signal.aborted &&
+      sound.enabled &&
+      sound.context === context &&
+      !sound.audioMaster?.muted &&
+      sound.audioMaster?.volume !== 0;
+    const admission = { signal: controller.signal, priority, eligible };
+    let timedOut = false;
     pending.add(controller);
     cache.set(name, 'loading');
-    const promise = Promise.resolve()
-      .then(() => readAudio(`audio.${name}`, { signal: controller.signal }))
+    const promise = preparation
+      .run(
+        'fetch',
+        async () => {
+          // Start only after admission. Abort cooperative reads, but retain the
+          // shared slot until the underlying promise actually settles.
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (!closed && loads.get(name) === promise) cache.set(name, false);
+            controller.abort();
+          }, CUE_READ_TIMEOUT_MS);
+          const clear = () => clearTimeout(timer);
+          controller.signal.addEventListener('abort', clear, { once: true });
+          try {
+            return await readAudio(`audio.${name}`, { signal: controller.signal });
+          } finally {
+            clear();
+            controller.signal.removeEventListener('abort', clear);
+          }
+        },
+        admission,
+      )
       .then(async (result) => {
-        if (!result || controller.signal.aborted || closed || !sound.enabled) return null;
-        const decoded = await sound.context.decodeAudioData(await result.blob.arrayBuffer());
+        if (!result || !eligible()) return null;
+        const seconds = HUMAN_REACTION_CUES.includes(name)
+          ? 0.7
+          : DESTRUCTION_CUES.includes(name)
+            ? 1
+            : 15;
+        const inspected = await inspectPublishedCue(result.blob, {
+          sampleRate: context.sampleRate,
+          maxDuration: seconds,
+          signal: controller.signal,
+          scheduleScan: (work) => preparation.run('main', work, admission),
+        });
+        const decoded = await preparation.run(
+          'decode',
+          async () => {
+            const bytes = await inspected.blob.arrayBuffer();
+            if (!eligible()) throw new DOMException('Cue decode cancelled.', 'AbortError');
+            return context.decodeAudioData(bytes);
+          },
+          { ...admission, bytes: inspected.reservedBytes },
+        );
         if (closed || controller.signal.aborted || !sound.enabled) return null;
         if (
           !Number.isFinite(decoded.duration) ||
           decoded.duration <= 0 ||
           decoded.duration >
             (HUMAN_REACTION_CUES.includes(name) ? 0.7 : DESTRUCTION_CUES.includes(name) ? 1 : 15) ||
+          !Number.isSafeInteger(decoded.length) ||
+          decoded.length <= 0 ||
+          decoded.length > inspected.outputFrames ||
+          decoded.numberOfChannels !== inspected.channels ||
           decoded.length * decoded.numberOfChannels > 4 * 1024 * 1024
         )
           throw new Error(t('interface:publishedCueExceedsItsDecodedBudget'));
@@ -96,11 +172,16 @@ export function createPublishedCues({
           )
             decoded = null;
           if (decoded) decodedSamples += decoded.length * decoded.numberOfChannels;
-          cache.set(name, decoded ?? false);
+          retain(name, decoded);
         }
       })
-      .catch(() => {
-        if (!closed && !controller.signal.aborted) cache.set(name, false);
+      .catch((error) => {
+        if (error?.name === 'AbortError') {
+          if (!closed && loads.get(name) === promise) {
+            if (timedOut) cache.set(name, false);
+            else cache.delete(name);
+          }
+        } else if (!closed && !controller.signal.aborted) cache.set(name, false);
       })
       .finally(() => {
         pending.delete(controller);
@@ -110,13 +191,29 @@ export function createPublishedCues({
     return promise;
   }
   return Object.freeze({
+    setPreparationPhase(value) {
+      if (!ownsPreparation || closed || value === preparationPhase) return;
+      preparation.setPhase(value);
+      preparationPhase = value;
+    },
+    resourceSnapshot: () => ({
+      decodedBytes,
+      decodedBytesLimit: CUE_CACHE_BYTES,
+      // Entries also include unavailable/loading sentinels, not only PCM buffers.
+      cacheEntries: cache.size,
+      loading: loads.size,
+    }),
     has(name) {
       const value = cache.get(name);
       return !!value && value !== 'loading';
     },
     prepare(names) {
       if (!available()) return Promise.resolve();
-      return Promise.all(names.filter((name) => cueNames.has(name)).map(load));
+      return Promise.all(
+        names
+          .filter((name) => cueNames.has(name))
+          .map((name) => load(name, { priority: 'background' })),
+      );
     },
     play(
       name,
@@ -143,7 +240,7 @@ export function createPublishedCues({
       if (ui && now - (recent.get(name) ?? -Infinity) < 0.08) return true;
       const destruction = [...DESTRUCTION_CUES, ...HUMAN_REACTION_CUES].includes(name);
       const owned = [...sound.voices].filter((voice) => voice.feedback);
-      if (feedback && (owned.length >= maxFeedbackVoices || sound.voices.size >= maxVoices)) {
+      if (feedback && (owned.length >= Math.min(16, maxFeedbackVoices) || sound.voices.size >= maxVoices)) {
         const victim = owned
           .filter((voice) => voice.priority < priority)
           .sort((a, b) => a.priority - b.priority)[0];
@@ -226,12 +323,15 @@ export function createPublishedCues({
     cancelPending,
     close() {
       closed = true;
+      if (ownsPreparation) preparation.close();
       for (const voice of [...voices]) voice.stop();
       cancelPending();
       cache.clear();
+      decodedBytes = 0;
       decodedSamples = 0;
       attenuation.clear();
       recent.clear();
     },
   });
 }
+

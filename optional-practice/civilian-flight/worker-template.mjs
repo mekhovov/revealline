@@ -55,7 +55,8 @@ export function installPracticeWorker(scope, pins, revision) {
     }
     if (event.data?.type !== 'practice-status') return;
     const check = (async () => {
-      let ready = false;
+      let ready = false,
+        inconclusive = false;
       try {
         if (urls.size > 0 && (await scope.caches.keys()).includes(cacheName)) {
           ready = true;
@@ -74,8 +75,16 @@ export function installPracticeWorker(scope, pins, revision) {
         }
       } catch {
         ready = false;
+        inconclusive = true;
       }
-      port.postMessage({ type: 'practice-status', ready, revision, total, scope: base });
+      port.postMessage({
+        type: 'practice-status',
+        ready,
+        status: inconclusive ? 'unknown' : ready ? 'ready' : 'unavailable',
+        revision,
+        total,
+        scope: base,
+      });
     })();
     event.waitUntil?.(check);
   });
@@ -134,6 +143,7 @@ export function installPracticeWorker(scope, pins, revision) {
             if (controller.signal.aborted) throw new Error('Optional download cancelled');
             activity();
             phase = 'downloading';
+            announce();
           }
           phase = 'ready';
           announce();

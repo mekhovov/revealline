@@ -114,7 +114,11 @@
           Try a complete video-reward level, then edit it to learn how posters and victory clips
           work.
         </p>
-        <button id="social-drone-example" data-i18n="interface:creator.socialDroneExampleOpen">
+        <button
+          id="social-drone-example"
+          disabled
+          data-i18n="interface:creator.socialDroneExampleOpen"
+        >
           Open Social Drone video example
         </button>
         <div class="creator-video-recipe" aria-labelledby="video-recipe-title">
@@ -159,6 +163,8 @@
             <input
               id="image"
               type="file"
+              multiple
+              disabled
               accept="image/png,image/jpeg,image/webp,video/mp4,video/webm"
           /></label>
           <p id="intake-help" class="muted" data-i18n="interface:creator.dropPictureHelp">
@@ -167,19 +173,19 @@
         </div>
         <label
           ><span data-i18n="interface:creator.collectionName">Collection name</span>
-          <input id="name" maxlength="160" value="My picture campaign"
+          <input id="name" disabled maxlength="160" value="My picture campaign"
         /></label>
         <label
           ><span data-i18n="interface:creator.levelTitle">Level title</span>
-          <input id="mission-title" maxlength="160" value="First picture"
+          <input id="mission-title" disabled maxlength="160" value="First picture"
         /></label>
         <label
           ><span data-i18n="interface:pictureDescription">Picture description</span>
-          <input id="description" maxlength="512" value="My reveal picture"
+          <input id="description" disabled maxlength="512" value="My reveal picture"
         /></label>
         <label
           ><span data-i18n="interface:creator.pictureFitting">Picture fitting</span>
-          <select id="fit">
+          <select id="fit" disabled>
             <option value="contain" data-i18n="interface:creator.fitWholePicture">
               Fit whole picture
             </option>
@@ -216,15 +222,15 @@
           </summary>
           <label
             ><span data-i18n="tools:creator">Creator</span>
-            <input id="creator-credit" maxlength="512" value="Anonymous creator"
+            <input id="creator-credit" disabled maxlength="512" value="Anonymous creator"
           /></label>
           <label
             ><span data-i18n="interface:creator.pictureCredit">Picture credit</span>
-            <input id="picture-credit" maxlength="512" value="Creator supplied picture"
+            <input id="picture-credit" disabled maxlength="512" value="Creator supplied picture"
           /></label>
           <label
             ><span data-i18n="interface:creator.licenseTerms">License or sharing terms</span>
-            <input id="license" maxlength="512" value="No additional license granted"
+            <input id="license" disabled maxlength="512" value="No additional license granted"
           /></label>
         </details>
         <div class="actions">
@@ -388,7 +394,7 @@
           ><span data-i18n="interface:creator.portableOrSourceBackup"
             >Portable campaign or private source backup</span
           >
-          <input id="import" type="file" accept=".rlpack,.rlsource"
+          <input id="import" disabled type="file" accept=".rlpack,.rlsource"
         /></label>
         <p data-i18n="interface:creator.backupExplanation">
           A .rlpack includes reviewed runtime posters and its selected complete victory videos. A
@@ -418,6 +424,40 @@
         </div>
       </section>
     </main>
+    <aside
+      class="creator-retention"
+      aria-label="Download retention"
+      data-i18n-aria-label="interface:downloadRetention"
+    >
+      <details id="creator-retention" class="panel">
+        <summary data-i18n="interface:downloadRetention">Download retention</summary>
+        <p
+          id="creator-retention-help"
+          data-i18n="interface:askThisBrowserToProtectThisSiteSSavedData"
+        >
+          Ask this browser to protect this site's saved data from automatic removal. This does not
+          download files or replace backups.
+        </p>
+        <button
+          id="creator-retention-button"
+          type="button"
+          disabled
+          aria-describedby="creator-retention-help creator-retention-status"
+          data-i18n="interface:keepDownloadsOnThisDevice"
+        >
+          Keep downloads on this device
+        </button>
+        <p
+          id="creator-retention-status"
+          role="status"
+          aria-live="polite"
+          data-i18n="interface:retentionHasNotBeenChecked"
+        >
+          Retention has not been checked.
+        </p>
+      </details>
+    </aside>
+
     <script
       src="../ui/authoring-input-entry.mjs"
       type="application/x-revealline-locked"

@@ -1,0 +1,346 @@
+{
+  "passed": true,
+  "sourceRecipe": "808a03d906cadb6778b5ac684d005e542ea37bfa",
+  "pin": {
+    "url": "https://alpine-delivery.invalid/delivery.json",
+    "bytes": 115316,
+    "sha256": "92b7ed6acb426a04b007006a72536b8178bd0ad59bba7182637e25fd0d4cf804"
+  },
+  "payloadFiles": 722,
+  "payloadBytes": 22698929,
+  "totalWithDescriptorBytes": 22814245,
+  "verifiedResponses": 723,
+  "productionSessionCases": [
+    {
+      "quality": "performance",
+      "mode": "self-level",
+      "spawnId": "glacial-valley",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 475984,
+      "textureBytes": 8
+    },
+    {
+      "quality": "performance",
+      "mode": "self-level",
+      "spawnId": "switchback-pass",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 492744,
+      "textureBytes": 8
+    },
+    {
+      "quality": "performance",
+      "mode": "self-level",
+      "spawnId": "snow-saddle",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 740944,
+      "textureBytes": 8
+    },
+    {
+      "quality": "performance",
+      "mode": "self-level",
+      "spawnId": "summit-station",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 822420,
+      "textureBytes": 458760
+    },
+    {
+      "quality": "performance",
+      "mode": "self-level",
+      "spawnId": "viaduct-gorge",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 489064,
+      "textureBytes": 8
+    },
+    {
+      "quality": "performance",
+      "mode": "self-level",
+      "spawnId": "reservoir-dam",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 463008,
+      "textureBytes": 8
+    },
+    {
+      "quality": "performance",
+      "mode": "acro",
+      "spawnId": "glacial-valley",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 475984,
+      "textureBytes": 8
+    },
+    {
+      "quality": "performance",
+      "mode": "acro",
+      "spawnId": "switchback-pass",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 492744,
+      "textureBytes": 8
+    },
+    {
+      "quality": "performance",
+      "mode": "acro",
+      "spawnId": "snow-saddle",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 740944,
+      "textureBytes": 8
+    },
+    {
+      "quality": "performance",
+      "mode": "acro",
+      "spawnId": "summit-station",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 822420,
+      "textureBytes": 458760
+    },
+    {
+      "quality": "performance",
+      "mode": "acro",
+      "spawnId": "viaduct-gorge",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 489064,
+      "textureBytes": 8
+    },
+    {
+      "quality": "performance",
+      "mode": "acro",
+      "spawnId": "reservoir-dam",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 463008,
+      "textureBytes": 8
+    },
+    {
+      "quality": "balanced",
+      "mode": "self-level",
+      "spawnId": "glacial-valley",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 475984,
+      "textureBytes": 8
+    },
+    {
+      "quality": "balanced",
+      "mode": "self-level",
+      "spawnId": "switchback-pass",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 492744,
+      "textureBytes": 8
+    },
+    {
+      "quality": "balanced",
+      "mode": "self-level",
+      "spawnId": "snow-saddle",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 740944,
+      "textureBytes": 8
+    },
+    {
+      "quality": "balanced",
+      "mode": "self-level",
+      "spawnId": "summit-station",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 822420,
+      "textureBytes": 458760
+    },
+    {
+      "quality": "balanced",
+      "mode": "self-level",
+      "spawnId": "viaduct-gorge",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 489064,
+      "textureBytes": 8
+    },
+    {
+      "quality": "balanced",
+      "mode": "self-level",
+      "spawnId": "reservoir-dam",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 463008,
+      "textureBytes": 8
+    },
+    {
+      "quality": "balanced",
+      "mode": "acro",
+      "spawnId": "glacial-valley",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 475984,
+      "textureBytes": 8
+    },
+    {
+      "quality": "balanced",
+      "mode": "acro",
+      "spawnId": "switchback-pass",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 492744,
+      "textureBytes": 8
+    },
+    {
+      "quality": "balanced",
+      "mode": "acro",
+      "spawnId": "snow-saddle",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 740944,
+      "textureBytes": 8
+    },
+    {
+      "quality": "balanced",
+      "mode": "acro",
+      "spawnId": "summit-station",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 822420,
+      "textureBytes": 458760
+    },
+    {
+      "quality": "balanced",
+      "mode": "acro",
+      "spawnId": "viaduct-gorge",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 489064,
+      "textureBytes": 8
+    },
+    {
+      "quality": "balanced",
+      "mode": "acro",
+      "spawnId": "reservoir-dam",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 463008,
+      "textureBytes": 8
+    },
+    {
+      "quality": "quality",
+      "mode": "self-level",
+      "spawnId": "glacial-valley",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 475984,
+      "textureBytes": 8
+    },
+    {
+      "quality": "quality",
+      "mode": "self-level",
+      "spawnId": "switchback-pass",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 492744,
+      "textureBytes": 8
+    },
+    {
+      "quality": "quality",
+      "mode": "self-level",
+      "spawnId": "snow-saddle",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 740944,
+      "textureBytes": 8
+    },
+    {
+      "quality": "quality",
+      "mode": "self-level",
+      "spawnId": "summit-station",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 822420,
+      "textureBytes": 458760
+    },
+    {
+      "quality": "quality",
+      "mode": "self-level",
+      "spawnId": "viaduct-gorge",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 489064,
+      "textureBytes": 8
+    },
+    {
+      "quality": "quality",
+      "mode": "self-level",
+      "spawnId": "reservoir-dam",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 463008,
+      "textureBytes": 8
+    },
+    {
+      "quality": "quality",
+      "mode": "acro",
+      "spawnId": "glacial-valley",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 475984,
+      "textureBytes": 8
+    },
+    {
+      "quality": "quality",
+      "mode": "acro",
+      "spawnId": "switchback-pass",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 492744,
+      "textureBytes": 8
+    },
+    {
+      "quality": "quality",
+      "mode": "acro",
+      "spawnId": "snow-saddle",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 740944,
+      "textureBytes": 8
+    },
+    {
+      "quality": "quality",
+      "mode": "acro",
+      "spawnId": "summit-station",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 822420,
+      "textureBytes": 458760
+    },
+    {
+      "quality": "quality",
+      "mode": "acro",
+      "spawnId": "viaduct-gorge",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 489064,
+      "textureBytes": 8
+    },
+    {
+      "quality": "quality",
+      "mode": "acro",
+      "spawnId": "reservoir-dam",
+      "ticks": 100,
+      "contacts": 0,
+      "geometryBytes": 463008,
+      "textureBytes": 8
+    }
+  ],
+  "disposalZero": true,
+  "playerAdmission": false,
+  "limitations": [
+    "Filesystem-backed HTTP response fixture, not internet throughput",
+    "No native rendering, IndexedDB installation, Library selection or public admission",
+    "Short actual shared-flight commands, not whole-region endurance"
+  ]
+}

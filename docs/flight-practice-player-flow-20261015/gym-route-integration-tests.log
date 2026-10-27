@@ -1,0 +1,160 @@
+TAP version 13
+# Subtest: requires exact artifact binding and complete declared EN four-case matrix
+ok 1 - requires exact artifact binding and complete declared EN four-case matrix
+  ---
+  duration_ms: 23.92275
+  ...
+# Subtest: public HUD parsing ignores elapsed time for Worlds and includes Gym position
+ok 2 - public HUD parsing ignores elapsed time for Worlds and includes Gym position
+  ---
+  duration_ms: 3.119333
+  ...
+# Subtest: v2 declares exactly ten EN/UK modes, preserving v1 and its fixed budgets
+ok 3 - v2 declares exactly ten EN/UK modes, preserving v1 and its fixed budgets
+  ---
+  duration_ms: 11.535209
+  ...
+# Subtest: all declared v2 launchers preserve exact locale and package destination
+ok 4 - all declared v2 launchers preserve exact locale and package destination
+  ---
+  duration_ms: 7.904542
+  ...
+# Subtest: Gym exercise is a distinct strict EN/UK assisted protocol with Gym artifact and extra authority
+ok 5 - Gym exercise is a distinct strict EN/UK assisted protocol with Gym artifact and extra authority
+  ---
+  duration_ms: 0.951542
+  ...
+# Subtest: Gym exercise integration captures completion before export, exclusively saves actual text and requires independent frozen replay
+ok 6 - Gym exercise integration captures completion before export, exclusively saves actual text and requires independent frozen replay
+  ---
+  duration_ms: 1879.028333
+  ...
+# Subtest: strict localized HUD parser follows actual dot-decimal copy, not unrelated numbers
+ok 7 - strict localized HUD parser follows actual dot-decimal copy, not unrelated numbers
+  ---
+  duration_ms: 1.468791
+  ...
+# Subtest: v2 observes actual document and public Settings locale, not just query parameters
+ok 8 - v2 observes actual document and public Settings locale, not just query parameters
+  ---
+  duration_ms: 0.919167
+  ...
+# Subtest: v2 uses visible native Retry action with maintained Ukrainian label
+ok 9 - v2 uses visible native Retry action with maintained Ukrainian label
+  ---
+  duration_ms: 0.874083
+  ...
+# Subtest: v2 selects both FPV modes through visible Gameplay and closes the actual Settings dialog
+ok 10 - v2 selects both FPV modes through visible Gameplay and closes the actual Settings dialog
+  ---
+  duration_ms: 2.656834
+  ...
+# Subtest: time/throttle/speed alone never count as altitude movement; fixed threshold tolerates floating rounding
+ok 11 - time/throttle/speed alone never count as altitude movement; fixed threshold tolerates floating rounding
+  ---
+  duration_ms: 0.252125
+  ...
+# Subtest: retry must restore launch height, position and zero FPV speed
+ok 12 - retry must restore launch height, position and zero FPV speed
+  ---
+  duration_ms: 1.796375
+  ...
+# Subtest: Pause uses an ordinary pointer click rather than a focus-and-Enter toggle
+ok 13 - Pause uses an ordinary pointer click rather than a focus-and-Enter toggle
+  ---
+  duration_ms: 0.298666
+  ...
+# Subtest: settings Back follows the visible stack and never presses a hidden second Back
+ok 14 - settings Back follows the visible stack and never presses a hidden second Back
+  ---
+  duration_ms: 0.593167
+  ...
+# Subtest: FPV Retry targets the visible tutorial action within the open pause dialog
+ok 15 - FPV Retry targets the visible tutorial action within the open pause dialog
+  ---
+  duration_ms: 0.35325
+  ...
+# Subtest: adapters correspond to native public source controls and keyboard mappings
+ok 16 - adapters correspond to native public source controls and keyboard mappings
+  ---
+  duration_ms: 18.45525
+  ...
+# Subtest: bad frozen envelope fails before browser launch and retains honest receipt
+ok 17 - bad frozen envelope fails before browser launch and retains honest receipt
+  ---
+  duration_ms: 338.385417
+  ...
+# Subtest: Gym failure receipt has its own format and snapshots both exercise authorities without claiming completion
+ok 18 - Gym failure receipt has its own format and snapshots both exercise authorities without claiming completion
+  ---
+  duration_ms: 128.18225
+  ...
+# Subtest: declared first Gym geometry and key bindings match native source
+ok 19 - declared first Gym geometry and key bindings match native source
+  ---
+  duration_ms: 24.719417
+  ...
+# Subtest: EN and UK parse actual measurement order and require native identity, focus and visible HUD
+ok 20 - EN and UK parse actual measurement order and require native identity, focus and visible HUD
+  ---
+  duration_ms: 2.878666
+  ...
+# Subtest: result text, a checkmark, partial progress or a lifted position cannot counterfeit completion
+ok 21 - result text, a checkmark, partial progress or a lifted position cannot counterfeit completion
+  ---
+  duration_ms: 5.621334
+  ...
+# Subtest: feedback holds in the inner lift band and descends only after actual checkpoint advance
+ok 22 - feedback holds in the inner lift band and descends only after actual checkpoint advance
+  ---
+  duration_ms: 0.237667
+  ...
+# Subtest: bounded public-controller unit journey requires ordered lift/land and always releases R/F
+ok 23 - bounded public-controller unit journey requires ordered lift/land and always releases R/F
+  ---
+  duration_ms: 906.582125
+  ...
+# Subtest: transcript export requires visible results Home before Settings Data and retains actual text
+ok 24 - transcript export requires visible results Home before Settings Data and retains actual text
+  ---
+  duration_ms: 0.6145
+  ...
+# Subtest: trusted completion capture precedes public export and its failure cannot qualify the run
+ok 25 - trusted completion capture precedes public export and its failure cannot qualify the run
+  ---
+  duration_ms: 406.603041
+  ...
+# Subtest: transcript identity/shape validation rejects counterfeit success flags and excessive payloads without claiming replay
+ok 26 - transcript identity/shape validation rejects counterfeit success flags and excessive payloads without claiming replay
+  ---
+  duration_ms: 3.100375
+  ...
+# Subtest: precompleted, skipped, paused and hidden observations fail closed and release owned input
+ok 27 - precompleted, skipped, paused and hidden observations fail closed and release owned input
+  ---
+  duration_ms: 310.656166
+  ...
+# Subtest: abort and deadline are bounded and input release does not inherit an already-aborted signal
+ok 28 - abort and deadline are bounded and input release does not inherit an already-aborted signal
+  ---
+  duration_ms: 35.429583
+  ...
+# Subtest: late key-down cannot report verified cleanup and gets a second release after settling
+ok 29 - late key-down cannot report verified cleanup and gets a second release after settling
+  ---
+  duration_ms: 34.633458
+  ...
+# Subtest: unsupported mode and extended deadline are rejected before any input
+ok 30 - unsupported mode and extended deadline are rejected before any input
+  ---
+  duration_ms: 0.94275
+  ...
+1..30
+# tests 30
+# suites 0
+# pass 30
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 6524.992334

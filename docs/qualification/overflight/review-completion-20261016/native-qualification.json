@@ -1,0 +1,59 @@
+{
+  "scope": "Recorded M4 Pro/Chromium native fixture only; no target-device, real-sortie balance, heap-disposal or enjoyment acceptance.",
+  "runtimeCommit": "79354e38304ea8a86bc54c9fe9ad4c2b3b11373e",
+  "sourceStable": true,
+  "retries": {
+    "count": 10,
+    "sameIdentity": true,
+    "playingBeforePausedExport": true,
+    "canvasCount": 1,
+    "allocatedSprites": 1812,
+    "atlasBytes": 28467840,
+    "note": "Nine short ~0.25-second entry samples; not ten complete sorties."
+  },
+  "soak": {
+    "valid": true,
+    "populations": true,
+    "complete": true,
+    "warmupSeconds": 30,
+    "configuredMeasurementSeconds": 900,
+    "measuredSeconds": 899.9931000000001,
+    "intervals": 107984,
+    "hz": 119.98314209297826,
+    "p95": 11.100000000093132,
+    "p99": 13.400000000139698,
+    "worst": 54.3000000002794,
+    "slowFraction": 0.000009260631204622906,
+    "invalidReasons": [],
+    "droppedSeconds": 0,
+    "resources": {
+      "samples": 63,
+      "canvases": {
+        "min": 1,
+        "max": 1,
+        "last": 1
+      },
+      "atlasBytes": {
+        "min": 28467840,
+        "max": 28467840,
+        "last": 28467840
+      },
+      "allocatedSprites": {
+        "min": 1355,
+        "max": 1831,
+        "last": 1831
+      }
+    },
+    "viewport": {
+      "width": 1280,
+      "height": 720,
+      "devicePixelRatio": 2
+    },
+    "browser": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+    "backing": {
+      "width": 960,
+      "height": 540
+    },
+    "passes": true
+  }
+}

@@ -1,0 +1,61 @@
+name: Temporary native MP3 delivery control
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/solo-native-mp3-control-temporary.yml'
+      - 'scripts/solo-native-mp3-control.mjs'
+      - 'scripts/test-solo-native-mp3-control.mjs'
+      - 'docs/performance/solo-native-mp3-control-20261017.md'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: solo-native-mp3-control-${{ github.event.pull_request.number }}
+  cancel-in-progress: false
+
+jobs:
+  diagnostic:
+    # A source-specific codec/delivery experiment; no game or timing qualification.
+    if: github.event.pull_request.number == 1544 && github.event.pull_request.head.repo.full_name == github.repository && github.event.action == 'synchronize' && github.event.before == 'c9e637ad81fadf49caec884155d1bd0c2496c59c'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 22
+    env:
+      SOLO_TOOLING_REVISION: ${{ github.event.pull_request.head.sha }}
+    steps:
+      - timeout-minutes: 2
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+          fetch-depth: 1
+      - timeout-minutes: 1
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: '22.13.1'
+          package-manager-cache: false
+      - name: Install exact tools and verify native-control ownership contracts
+        timeout-minutes: 2
+        run: |
+          npm ci --ignore-scripts --no-audit --no-fund
+          node --test scripts/test-solo-native-mp3-control.mjs scripts/test-solo-qualification-browser-context.mjs scripts/test-solo-remote-correctness.mjs
+      - name: Install the exact original Linux WebKit backend
+        timeout-minutes: 5
+        run: |
+          npm install --prefix "$RUNNER_TEMP/solo-native-mp3-tools" --no-audit --no-fund --ignore-scripts --save-exact playwright@1.62.1
+          echo "SOLO_PLAYWRIGHT_MODULE=$RUNNER_TEMP/solo-native-mp3-tools/node_modules/playwright/index.mjs" >> "$GITHUB_ENV"
+          echo "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/solo-native-mp3-browsers" >> "$GITHUB_ENV"
+          PLAYWRIGHT_BROWSERS_PATH="$RUNNER_TEMP/solo-native-mp3-browsers" node "$RUNNER_TEMP/solo-native-mp3-tools/node_modules/playwright/cli.js" install --with-deps webkit
+      - name: Observe exact recordings over Blob and HTTP in four fresh native contexts
+        timeout-minutes: 9
+        run: node scripts/solo-native-mp3-control.mjs run "$RUNNER_TEMP/solo-native-mp3-evidence"
+      - name: Retain failures, original media values and owned closure receipts
+        if: always()
+        timeout-minutes: 1
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: solo-native-mp3-control-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/solo-native-mp3-evidence
+          if-no-files-found: warn
+          retention-days: 14

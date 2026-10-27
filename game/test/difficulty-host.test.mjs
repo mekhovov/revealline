@@ -1,6 +1,8 @@
 import { nativeCaptureSession as nativeSession } from '../capture-presentation-session.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { activateHostAction } from './helpers/host-action.mjs';
+import { CELEBRATION_SECONDS } from '../ui/celebration.mjs';
 import { readFileSync } from 'node:fs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
 import { createRecorder, recordInput, authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
@@ -395,9 +397,10 @@ test('replacing a two-chapter pack retains the active Gentle chapter and applies
     id: 'host-two-chapters',
     name: 'Host two chapters',
     description: 'A small public pack fixture with two distinct authored chapters.',
+    // Retain the two source pictures while binding them to this fixture's maps.
     levelVisuals: ['first', 'second'].map((part, index) => ({
+      ...source.levelVisuals[index],
       levelId: `host-map-${part}`,
-      visualOverrides: source.levelVisuals[index].visualOverrides,
     })),
     campaigns: ['first', 'second'].map((part) => ({
       version: 'xonix-campaign.v1',
@@ -422,9 +425,9 @@ test('replacing a two-chapter pack retains the active Gentle chapter and applies
   const freshGentle = freshLevel(expectedGentle);
   const page = await soloPage(t, { campaign, storage: initialStorage('immediate') });
   async function install(candidate) {
-    page.$('library-button').click();
+    await activateHostAction(page.$('library-button'));
     assert.equal(page.$('library-dialog').open, true);
-    page.doc.querySelector('[data-library-panel="packs"]').click();
+    await activateHostAction(page.doc.querySelector('[data-library-panel="packs"]'));
     assert.equal(page.$('library-packs').hidden, false);
     page.$('pack-json').value = JSON.stringify(candidate);
     assert.equal(page.$('install-pack').disabled, false);
@@ -545,8 +548,8 @@ test('ordinary practice selecting an authored campaign ignores saved Gentle and 
   assert.equal(page.$('difficulty-select').disabled, true);
   // Select a real dated practice activity first, so returning to the authored
   // campaign is an actual combobox value change, not a repeated same-option event.
-  page.$('library-button').click();
-  page.doc.querySelector('[data-library-panel="challenges"]').click();
+  await activateHostAction(page.$('library-button'));
+  await activateHostAction(page.doc.querySelector('[data-library-panel="challenges"]'));
   page.$('challenge-date').value = '2026-09-12';
   page.change('challenge-kind', 'calm');
   page.$('launch-challenge').click();
@@ -574,10 +577,12 @@ test('ordinary practice selecting an authored campaign ignores saved Gentle and 
   const completed = authoritativeCheckpoint(page.rendered.run);
   // The shared result flow first lets the completed picture settle. Drive
   // presentation time without changing the completed simulation checkpoint.
+  assert.equal(page.$('skip-celebration').hidden, true);
+  // The real reward flow holds the earned picture before exposing Show result.
   for (
-    let i = 0;
-    i < Math.ceil(REWARD_BOARD_SECONDS / 0.1) + 2 && page.$('show-result').hidden;
-    i++
+    let frame = 0;
+    frame < Math.min(Math.ceil(CELEBRATION_SECONDS * 10) + 2, Math.ceil(REWARD_BOARD_SECONDS / 0.1) + 2) && page.$('show-result').hidden;
+    frame++
   )
     page.frame(100);
   assert.equal(page.$('show-result').hidden, false);

@@ -1,0 +1,7 @@
+{
+  "optional-practice/civilian-fpv/renderer.mjs": "6a52aeffeb878299c88390e15ee9dddf2fc55db612ef54202053878e75522625",
+  "optional-practice/civilian-fpv/combat-actors.mjs": "02a043ee8e54daf84a2df4b6ea333e5a11a4f1a0f8b12e29050e71627ad042d2",
+  "optional-practice/civilian-fpv/combat-presentation.mjs": "01af43d16cdc40a82712dd91a7a882a473cdc17987d7f2485886fcd5222f2150",
+  "optional-practice/civilian-fpv/combat-appearance.mjs": "6901af2dad46bbcee510779a87c7f21bbbb89782ac7f8c0309326186ea880ea9",
+  "optional-practice/civilian-fpv/regional/verified-flight-geometry.mjs": "18573585c1b1f59fe62a9eaefe62275135716291cea072d4acdd3e5a361ecbb2"
+}

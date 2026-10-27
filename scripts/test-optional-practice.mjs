@@ -88,7 +88,7 @@ test('release-qualified practice retains the full shared menu stylesheet closure
     engineTree: 'b'.repeat(40),
     basePath: '/revealline/',
   });
-  assert.equal(built.entries.length, 93);
+  assert.equal(built.entries.length, 97);
   const audio = built.entries.find(
     ({ name }) => name === 'optional-practice/civilian-flight/audio.mjs',
   );
@@ -101,7 +101,8 @@ test('release-qualified practice retains the full shared menu stylesheet closure
   assert.ok(
     !built.entries.some(({ name }) => name === 'optional-practice/civilian-fpv/world-audio.mjs'),
   );
-  assert.equal(OPTIONAL_PRACTICE_LIMITS.files, 96);
+
+  assert.equal(OPTIONAL_PRACTICE_LIMITS.files, 100);
   for (const stylesheet of [
     'mode-play-shell.css',
     'mode-choice.css',

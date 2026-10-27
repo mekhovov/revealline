@@ -397,6 +397,7 @@ jobs:
             publishing/optional-package-promotion.mjs
             publishing/optional-package-admission.mjs
             publishing/optional-module-closure.mjs
+            publishing/optional-import-capabilities.mjs
             publishing/vendor/acorn-8.18.0.mjs
             publishing/vendor/acorn-LICENSE.txt
             publishing/optional-package-policy.mjs

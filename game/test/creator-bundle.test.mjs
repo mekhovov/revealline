@@ -540,3 +540,254 @@ test('installed Creator stars read the separate profile record without changing 
     'difficulty',
   ]);
 });
+
+test('Creator browsing checks its owner after metadata, blob, bytes and digest settlement', async (t) => {
+  const memory = memoryIndexedDB();
+  const store = createCreatorStore({ indexedDB: memory.indexedDB });
+  t.after(() => store.close());
+  const pack = await prepared('Guarded manifest');
+  const approval = approveCreatorBundle(pack);
+  await installPreparedCreatorBundle(
+    store,
+    pack,
+    approval,
+    await reviewCreatorInstallation(store, pack, approval),
+    { decodeImage },
+  );
+  const digest = crypto.subtle.digest.bind(crypto.subtle);
+  for (const stage of ['metadata', 'blob', 'bytes', 'digest']) {
+    await t.test(stage, async () => {
+      let active = true,
+        release,
+        entered,
+        metadataReads = 0,
+        blobReads = 0,
+        byteReads = 0;
+      const gate = new Promise((resolve) => {
+        release = resolve;
+      });
+      const atBoundary = new Promise((resolve) => {
+        entered = resolve;
+      });
+      const retired = new Error(`Retired Creator ${stage}`);
+      async function held(value) {
+        entered();
+        await gate;
+        return value;
+      }
+      const wrapped = {
+        async readDomainMetadata(...args) {
+          const value = await store.readDomainMetadata(...args);
+          if (stage === 'metadata') await held();
+          return {
+            ...value,
+            get library() {
+              metadataReads++;
+              return value.library;
+            },
+          };
+        },
+        async readSelectedBlob(...args) {
+          blobReads++;
+          const blob = await store.readSelectedBlob(...args);
+          if (stage === 'blob') await held();
+          return {
+            async arrayBuffer() {
+              byteReads++;
+              const bytes = await blob.arrayBuffer();
+              return stage === 'bytes' ? held(bytes) : bytes;
+            },
+          };
+        },
+      };
+      const originalDigest = crypto.subtle.digest;
+      if (stage === 'digest') crypto.subtle.digest = async (...args) => held(await digest(...args));
+      try {
+        const pending = installedCreatorManifests(wrapped, {
+          assertCurrent() {
+            if (!active) throw retired;
+          },
+        });
+        await atBoundary;
+        active = false;
+        release();
+        await assert.rejects(pending, (error) => error === retired);
+        if (stage === 'metadata') assert.equal(metadataReads, 0);
+        assert.equal(blobReads, stage === 'metadata' ? 0 : 1);
+        assert.equal(byteReads, ['metadata', 'blob'].includes(stage) ? 0 : 1);
+      } finally {
+        release();
+        crypto.subtle.digest = originalDigest;
+      }
+    });
+  }
+  assert.equal((await installedCreatorManifests(store))[0].editionId, pack.editionId);
+});
+
+test('Creator profile fallback cannot swallow a retired browse and later actions own fresh authority', async (t) => {
+  const memory = memoryIndexedDB();
+  const store = createCreatorStore({ indexedDB: memory.indexedDB });
+  t.after(() => store.close());
+  const pack = await prepared('Guarded profile');
+  const approval = approveCreatorBundle(pack);
+  await installPreparedCreatorBundle(
+    store,
+    pack,
+    approval,
+    await reviewCreatorInstallation(store, pack, approval),
+    { decodeImage },
+  );
+  const retired = new Error('Retired Creator profile');
+  for (const failStorage of [false, true]) {
+    let active = true,
+      release,
+      entered;
+    const gate = new Promise((resolve) => {
+      release = resolve;
+    });
+    const atBoundary = new Promise((resolve) => {
+      entered = resolve;
+    });
+    const pending = installedCreatorLibrarySources({
+      store,
+      assertCurrent() {
+        if (!active) throw retired;
+      },
+      async profileForEdition() {
+        entered();
+        await gate;
+        if (failStorage) throw new Error('Storage unavailable');
+        return null;
+      },
+    });
+    await atBoundary;
+    active = false;
+    release();
+    await assert.rejects(pending, (error) => error === retired);
+  }
+  let active = true,
+    launched = 0;
+  const sources = await installedCreatorLibrarySources({
+    store,
+    loadOptions: { decodeImage },
+    assertCurrent() {
+      if (!active) throw retired;
+    },
+    profileForEdition: async () => {
+      throw new Error('Optional storage unavailable');
+    },
+    launch: () => {
+      launched++;
+      return true;
+    },
+  });
+  active = false;
+  const library = createMissionLibrary(sources);
+  assert.equal(await library.launch(library.missions[0], { mode: 'solo' }), true);
+  assert.equal(launched, 1);
+});
+
+test('Creator default progress transaction checks the browse owner before loaded validation', async (t) => {
+  const memory = memoryIndexedDB();
+  const store = createCreatorStore({ indexedDB: memory.indexedDB });
+  t.after(() => store.close());
+  const pack = await prepared('Retired native progress');
+  const approval = approveCreatorBundle(pack);
+  await installPreparedCreatorBundle(
+    store,
+    pack,
+    approval,
+    await reviewCreatorInstallation(store, pack, approval),
+    { decodeImage },
+  );
+  const disk = managedIndexedDB(),
+    retired = new Error('Retired at native progress delivery');
+  let active = true,
+    delivered = 0,
+    profileResultReads = 0;
+  const indexedDB = {
+    open(...args) {
+      const request = disk.indexedDB.open(...args);
+      let success;
+      Object.defineProperty(request, 'onsuccess', {
+        configurable: true,
+        set(handler) {
+          success = handler;
+        },
+        get() {
+          return () => {
+            const db = request.result,
+              transaction = db.transaction.bind(db);
+            db.transaction = (...parameters) => {
+              const tx = transaction(...parameters),
+                objectStore = tx.objectStore.bind(tx);
+              tx.objectStore = (name) => {
+                const owner = objectStore(name),
+                  get = owner.get.bind(owner);
+                owner.get = (key) => {
+                  const read = get(key);
+                  if (key === creatorProfileKey(pack.editionId)) {
+                    let value;
+                    Object.defineProperty(read, 'result', {
+                      configurable: true,
+                      set(result) {
+                        value = result;
+                      },
+                      get() {
+                        profileResultReads++;
+                        return value;
+                      },
+                    });
+                  }
+                  if (key.endsWith(':performance.v1')) {
+                    let loaded;
+                    Object.defineProperty(read, 'onsuccess', {
+                      configurable: true,
+                      set(handler) {
+                        loaded = handler;
+                      },
+                      get() {
+                        return () => {
+                          delivered++;
+                          active = false;
+                          loaded();
+                        };
+                      },
+                    });
+                  }
+                  return read;
+                };
+                return owner;
+              };
+              return tx;
+            };
+            success();
+          };
+        },
+      });
+      return request;
+    },
+  };
+  const original = Object.getOwnPropertyDescriptor(globalThis, 'indexedDB');
+  Object.defineProperty(globalThis, 'indexedDB', { configurable: true, value: indexedDB });
+  t.after(() => {
+    if (original) Object.defineProperty(globalThis, 'indexedDB', original);
+    else delete globalThis.indexedDB;
+  });
+  await assert.rejects(
+    installedCreatorLibrarySources({
+      store,
+      assertCurrent() {
+        if (!active) throw retired;
+      },
+    }),
+    (error) => error === retired,
+  );
+  assert.equal(delivered, 1, 'the actual final native read callback delivered');
+  assert.equal(
+    profileResultReads,
+    0,
+    'retirement precedes profile validation in the loaded callback',
+  );
+  assert.deepEqual(disk.allPuts, []);
+});

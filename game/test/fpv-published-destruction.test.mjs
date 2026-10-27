@@ -30,6 +30,28 @@ function decoded(tag, length = 4800) {
     getChannelData: () => new Float32Array(length).fill(0.01),
   };
 }
+// Structural PCM16 fixture bytes, not a browser/native decode or audio-quality claim.
+function cueWav(frames = 4800) {
+  const bytes = new Uint8Array(44 + frames * 2),
+    view = new DataView(bytes.buffer);
+  const label = (at, text) => {
+    for (let i = 0; i < text.length; i++) bytes[at + i] = text.charCodeAt(i);
+  };
+  label(0, 'RIFF');
+  view.setUint32(4, bytes.length - 8, true);
+  label(8, 'WAVE');
+  label(12, 'fmt ');
+  view.setUint32(16, 16, true);
+  view.setUint16(20, 1, true);
+  view.setUint16(22, 1, true);
+  view.setUint32(24, 48000, true);
+  view.setUint32(28, 96000, true);
+  view.setUint16(32, 2, true);
+  view.setUint16(34, 16, true);
+  label(36, 'data');
+  view.setUint32(40, frames * 2, true);
+  return bytes;
+}
 function fixture(t, options = {}) {
   const sources = [],
     decodes = [],
@@ -212,6 +234,8 @@ test('late native recording preparation never replays a catch and pause cancels 
   release();
   await drained();
   assert.equal(f.sources.length, count);
+  // Re-enter preparation only after the model also acknowledges the paused state.
+  f.sound.update(frame(1, [], 'paused'), { active: false });
   await f.sound.resume();
   await settleUntil(() => f.decodes.length === 5);
   await drained();
@@ -295,14 +319,14 @@ test('shared published cache bounds aggregate decoded samples and validates nati
     enabled: true,
     paused: false,
     settings: { master: true, sfx: true },
-    context: { state: 'running', decodeAudioData: async () => decoded('bounded', 60) },
+    context: { state: 'running', sampleRate: 48000, decodeAudioData: async () => decoded('bounded', 60) },
   };
   const cues = createPublishedCues({
     sound,
     maxVoices: 12,
     maxFeedbackVoices: 10,
     maxDecodedSamples: 80,
-    readAudio: async () => ({ blob: new Blob([new Uint8Array(1)]) }),
+    readAudio: async () => ({ blob: new Blob([cueWav(60)], { type: 'audio/wav' }) }),
   });
   await cues.prepare(['destroy-soft']);
   await cues.prepare(['destroy-heavy']);
@@ -317,11 +341,11 @@ test('shared published cache bounds aggregate decoded samples and validates nati
 });
 
 test('native published replacement plays through the same mixer and retains the warning reserve', async (t) => {
-  const replacement = new Uint8Array([11, 22, 33, 44]);
+  const replacement = cueWav();
   const f = fixture(t, {
     readAudio: async (slot, options) =>
       slot === 'audio.destroy-soft'
-        ? { blob: new Blob([replacement]) }
+        ? { blob: new Blob([replacement], { type: 'audio/wav' }) }
         : readPortableDestructionAudio(slot, options),
   });
   await f.sound.resume();

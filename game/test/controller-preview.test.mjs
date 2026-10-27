@@ -14,6 +14,7 @@ import { resolveControllerBindings } from '../controller-bindings.mjs';
 import { entryScenario } from '../playground/model.mjs';
 import { prepareScenario } from '../imports.mjs';
 import { preparePack, resolvePackCampaign } from '../packs.mjs';
+import { RasterImage } from './helpers/raster-image.mjs';
 
 const SESSION = '0123456789abcdef0123456789abcdef';
 const packet = (sequence = 0, pressed = [], connected = true) => ({
@@ -522,6 +523,12 @@ test('heartbeat loss reaches the real router as device loss requiring deliberate
 });
 
 test('all offered base, Fieldcraft, Sentinel and reading missions prepare through the real practice pipeline in both policies', async () => {
+  const decodeImage = async (dataUrl) => {
+    const image = new RasterImage();
+    image.src = dataUrl;
+    await image.decode();
+    return image;
+  };
   const json = async (path) => JSON.parse(await readFile(new URL(path, import.meta.url), 'utf8'));
   const [campaign, themes, classRecipes, ...sources] = await Promise.all([
     json('../content/campaign.json'),
@@ -531,7 +538,7 @@ test('all offered base, Fieldcraft, Sentinel and reading missions prepare throug
     json('../content/packs/sentinel-relay.json'),
     json('../controller-lab/reading-practice.json'),
   ]);
-  const packs = await Promise.all(sources.map((source) => preparePack(source)));
+  const packs = await Promise.all(sources.map((source) => preparePack(source, { decodeImage })));
   const entries = [
     { campaign, themes: themes.themes, classRecipes },
     ...packs.flatMap(({ pack }) => pack.campaigns.map((c) => resolvePackCampaign(pack, c.id))),
@@ -543,6 +550,7 @@ test('all offered base, Fieldcraft, Sentinel and reading missions prepare throug
         const original = JSON.stringify(entry);
         const { scenario } = await prepareScenario(
           entryScenario(entry, level.id, { classId: 'scout', turnPolicy, seed: 1 }),
+          { decodeImage },
         );
         assert.equal(scenario.level.id, level.id);
         assert.equal(scenario.settings.turnPolicy, turnPolicy);

@@ -110,6 +110,11 @@
         explicitly before changing setup. After focus loss or a disconnected device, return to the
         app and follow its resume prompt; do not expect a flight to restart automatically.
       </p>
+      <p>
+        In either FPV app, open Settings → Accessibility → Flight guidance. Set Guidance to Detailed
+        for numeric objective readings; Text size and HUD contrast are separate choices. These
+        preferences survive reload. They do not start a flight or hold the aircraft steady.
+      </p>
       <h2>2. Watch, try, pause, retry</h2>
       <p>
         Gym: use Start for the selected drill, or Select Mission to choose Lift and return. Use the
@@ -168,8 +173,40 @@
         <strong>.rlpack</strong> files add content inside World Studio: they are not executable apps
         and cannot be installed in this directory.
       </p>
+      <p>
+        <strong
+          >Browser eviction can remove records and imported worlds, not only cached files.</strong
+        >
+        This differs from the launcher’s scoped removal. Keep exported backups outside browser
+        storage. If records are missing after eviction, reconnect, prepare the app again, then
+        restore your exported backups with its import tools. Downloading the app does not recover
+        lost records; without an export, they may be unrecoverable.
+      </p>
+      <p>
+        <strong>Radio calibration and the tuning library are separate backups.</strong> In the FPV
+        apps, keep Radio setup’s <strong>Export profiles</strong> file for calibration. For rates,
+        throttle and saved drone setups, open
+        <strong
+          >Settings → Controls → Aircraft, rates &amp; throttle → Library → Import / export ·
+          Betaflight and backups</strong
+        >, choose <strong>Backup complete library</strong>, then <strong>Download file</strong>.
+        Save the downloaded JSON outside browser storage. <strong>Export SIM rates</strong> and a
+        rate-only CLI export are not complete-library backups. To restore, open the same section,
+        use <strong>Upload text / JSON</strong> to load your library JSON, wait until its text
+        appears, then choose <strong>Restore library backup</strong>.
+        <strong>Restore library backup replaces the saved library</strong>: first back up any
+        current settings you want to keep. Importing radio calibration does not restore the tuning
+        library. Restored settings apply to a new flight, not an already running attempt.
+      </p>
       <h2>Troubleshooting</h2>
       <ul>
+        <li>
+          <strong>Download stalled / exceeded five minutes:</strong> check your connection and retry
+          online. Cancelled means that attempt stopped, not that a previous copy was removed. A
+          combined download or verification failure does not identify a single cause: check
+          connection and browser storage, then retry. Permission errors do not necessarily mean
+          storage is full. Use the launcher to check saved copies before relying on them offline.
+        </li>
         <li>
           <strong>Empty directory:</strong> no reviewed packages are selected for this host. Use the
           existing FPV flight simulator shortcut in the main game.
@@ -245,6 +282,12 @@
         налаштувань явно натисніть паузу. Після втрати фокусу чи від’єднання пристрою поверніться до
         застосунку й виконайте підказку продовження; політ не відновлюється автоматично.
       </p>
+      <p>
+        В обох застосунках FPV відкрийте «Налаштування → Доступність → Підказки польоту». Виберіть
+        «Підказки → Докладні», щоб бачити числові показники цілі. «Розмір тексту» й «Контраст
+        приладів» налаштовуються окремо. Вибір зберігається після перезавантаження; він не запускає
+        політ і не стабілізує апарат.
+      </p>
       <h2>2. Перегляньте приклад, спробуйте, призупиніть, повторіть</h2>
       <p>
         У тренажері натисніть «Почати» для вибраної вправи або «Вибрати місію» для підйому й
@@ -298,8 +341,34 @@
         застосунків. Автоматичної резервної копії немає. Файли <strong>.rlpack</strong> додають
         контент усередині World Studio, а не виконувані застосунки каталогу.
       </p>
+      <p>
+        <strong
+          >Калібрування пульта й бібліотека налаштувань потребують окремих резервних копій.</strong
+        >
+        У FPV-застосунках збережіть файл <strong>Експорт профілів</strong> з налаштування пульта для
+        калібрування. Для рейтів, газу й збережених конфігурацій дрона відкрийте
+        <strong
+          >Налаштування → Керування → Дрон, рейти й газ → Бібліотека → Імпорт / експорт · Betaflight
+          і резервні копії</strong
+        >, натисніть <strong>Резервна копія всієї бібліотеки</strong>, потім
+        <strong>Завантажити файл</strong>. Збережіть JSON поза сховищем браузера. Експорт окремих
+        рейтів SIM або CLI лише з рейтами не замінює повну копію бібліотеки. Для відновлення в тому
+        самому розділі виберіть свій JSON через <strong>Завантажити текст / JSON</strong>,
+        дочекайтеся появи тексту й натисніть <strong>Відновити бібліотеку</strong>.
+        <strong>Відновити бібліотеку замінює збережену бібліотеку</strong>: спочатку зробіть копію
+        поточних налаштувань, які хочете зберегти. Імпорт калібрування пульта не відновлює
+        бібліотеку налаштувань. Відновлені налаштування діють у новому польоті, а не в уже запущеній
+        спробі.
+      </p>
       <h2>Як усунути проблему</h2>
       <ul>
+        <li>
+          <strong>Завантаження не просувалося / тривало понад п’ять хвилин:</strong> перевірте
+          з’єднання та повторіть спробу онлайн. Скасування зупиняє цю спробу, а не видаляє попередню
+          копію. Спільна помилка завантаження або перевірки не визначає єдину причину: перевірте
+          з’єднання й сховище браузера та повторіть спробу. Помилка дозволу не обов’язково означає
+          заповнене сховище. Перевірте збережені копії в засобі запуску перед роботою офлайн.
+        </li>
         <li>
           <strong>Порожній каталог:</strong> на сайті не вибрано перевірених пакетів. Скористайтеся
           наявним ярликом симулятора FPV в основній грі.
@@ -329,6 +398,15 @@
           спільна квота охоплює й інші ігри цього сайту. Браузер може витіснити кеші. У World Studio
           можна запросити постійне сховище: якщо браузер його надасть, ризик витіснення зменшиться,
           але це не заміна експортованим резервним копіям.
+          <strong
+            >Витіснення браузером може видалити записи та імпортовані світи, а не лише кешовані
+            файли.</strong
+          >
+          Це відрізняється від видалення окремої офлайн-копії на сторінці запуску. Зберігайте
+          експортовані резервні копії поза сховищем браузера. Якщо записи зникли після витіснення,
+          під’єднайте мережу, знову підготуйте застосунок та імпортуйте свої резервні копії його
+          засобами імпорту. Завантаження застосунку не відновлює втрачені записи; без експорту
+          відновлення може бути неможливим.
         </li>
         <li>
           <strong>Порожній 3D-екран:</strong> перевірте WebGL2 та апаратне прискорення або спробуйте

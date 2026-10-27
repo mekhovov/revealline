@@ -108,7 +108,13 @@ export function validateOverflightCombatProfile(source, rulesVersion = 2) {
     maxArray: 16,
   });
   const expected = createOverflightCombatProfile('standard', rulesVersion);
-  exactKeys(profile, Object.keys(expected), 'Combat profile');
+  exactKeys(
+    profile,
+    [...Object.keys(expected), ...(rulesVersion >= 4 ? ['crowdSeparation'] : [])],
+    'Combat profile',
+  );
+  if (Object.hasOwn(profile, 'crowdSeparation'))
+    required(profile.crowdSeparation === 'local-v1', 'Unsupported crowd separation rules.');
   for (const [section, fields] of Object.entries(expected)) {
     if (typeof fields !== 'object') continue;
     required(

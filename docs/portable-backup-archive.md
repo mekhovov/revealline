@@ -1,0 +1,218 @@
+# Portable backup archive
+
+In **Saves & loads**, **Prepare portable archive** gathers the existing validated
+game-data, picture, story and music exports and their original coverage report.
+When this game screen owns a Journey profile, the archive also uses that owner's
+asynchronous export, including saved evidence through its current admission path.
+The existing separate-file preparation and import controls remain available.
+In authored Journey editions, the archive explicitly omits incompatible Legacy
+game-data JSON and the unfinished authored flight. It still exports the supported
+shared originals and current Journey progress. Use the separate attempt export
+for an unfinished flight. The Legacy save/export guards remain enforced.
+
+**Download portable archive** is a native link to a prepared ZIP. It reports a
+download request, not a successful disk write. Check the resulting file in the
+browser destination or Files app. A prepared archive remains available across a
+background/foreground round trip; closing the Library, leaving the page without
+back/forward retention, preparing again or detecting changed ownership releases it.
+Preparation in progress still cancels on backgrounding. No archive action writes
+to, closes or replaces the game, original-media or Journey stores.
+
+## Scope and restoration
+
+The ZIP contains `archive-manifest.json`, bilingual `README.txt`, and the actual
+component filenames listed in the manifest. It preserves the original component
+bytes and their SHA-256 values. It does not rename, transcode or rewrite uploaded
+media. Stored ZIP entries use CRC32 and no compression or encryption. The writer
+follows the [PKWARE ZIP specification](https://pkware.cachefly.net/webdocs/casestudies/APPNOTE.TXT).
+
+This is an archive of the current game profile and saved shared media, with the
+current Journey owner when present. It is not a whole-browser or device backup.
+The manifest explicitly records:
+
+- The existing coverage exclusions and missing or detached originals.
+- Reference-only restricted music; its absent audio bytes are never supplied.
+- Whether Journey is included, unavailable in this screen, or exported with only
+  available evidence. The latter uses a `-journey-recovery.json` filename and
+  visibly warns that unread performance comparisons or replays may be missing.
+- Other game profiles, browser/device settings, download caches and separately
+  stored simulator records, which are excluded.
+- Whether Legacy game-data JSON is included or excluded for an authored Journey
+  owner. The latter also excludes the unfinished authored flight; no substitute
+  Legacy profile or empty saved flight is manufactured.
+
+Member counts come from the actual exports. No fixed five-file count means that
+the entire game is covered. A Journey export conflict, cancellation or changed
+owner prevents publication; only the existing Journey exporter can return its
+explicitly marked available-evidence recovery result.
+
+In **Saves & loads → Inspect and restore an archive**, choose a portable
+ZIP and explicitly inspect it. The read-only inspector checks its bounded ZIP
+structure, safe filenames, CRC32 checksums and each component's recorded SHA-256.
+It lists actual exclusions and offers native downloads of the original files in
+restore order. A different version/profile channel receives an advisory; that
+advisory cannot establish component compatibility or identify a trusted source.
+Download the needed files before closing the screen. Each download is a request,
+not proof of a saved file. Nothing is imported or restored by inspection.
+
+The guided controls review one included component at a time: pictures, stories,
+music, compatible Legacy game data, then Journey. Each uses the existing import
+validator and an explicit Library confirmation before its existing owner commits.
+Pictures and stories merge immutable history while preserving current assignments;
+music replaces its saved library, playlists and listening choices and clears the
+device-only public-style sidecar. The music review explains this replacement and
+its lack of Undo. Game data retains its existing replacement review, available
+Undo snapshot and authored-flight guard. Journey preserves current clear receipts
+and uses its existing merge and best-result rules; progress and optional
+performance evidence can have different durability outcomes.
+
+The receipt counts only actual successful owner results. It distinguishes
+cancelled review, failed preparation, partial Journey storage and an unconfirmed
+write. Earlier completed components remain saved when a later step fails.
+Retry performs a new review against the current destination and generation;
+**Leave this component and continue** advances without claiming that component
+was restored or reversing any partial changes. Keep the ZIP and inspect the
+destination after an uncertain result. Receipts last only while this inspected
+archive stays open; after closing or reloading, inspect and review again. There
+is no persistent restore journal, combined transaction, automatic resume or
+cross-store Undo. Native component downloads remain available as a fallback.
+
+You can also extract it using the device's archive tool. Read the manifest and
+coverage report, then use the existing reviews for pictures, stories, music and
+compatible Legacy game-data JSON. For included
+Journey JSON, use **Keep your Journey → Inspect Journey backup** in the same
+edition. Each restore is separate; there is no new atomic transaction or hidden
+replacement of current progress. Keep a backup of the destination before restoring.
+
+[Apple documents ZIP extraction in Files](https://support.apple.com/en-us/102532):
+open the ZIP to create a folder, then open that folder. This documented capability
+does not replace testing this game's archive on a physical iPhone/iPad.
+
+## Bounds and verification
+
+The component serializers keep their existing limits. The archive adds the
+existing 16 MiB Journey import bound and 128 KiB packaging allowance to the
+existing backup-set budget. The ZIP writer admits the total size and a maximum
+of 16 flat filenames before reading any body. CRC calculation reads at most
+64 KiB at a time; the ZIP retains original Blob parts instead of allocating a
+second whole-archive byte array. These are safety ceilings, not recommended
+backup sizes for low-memory phones.
+
+The inspector accepts this game's flat, uncompressed v1 ZIP profile, including
+early v1 game archives without the later explicit `gameData` field. It rejects
+compression, encryption, ZIP64/extensions, symlink attributes, unsafe or duplicate
+names (including case collisions), inconsistent records, unlisted files,
+oversized metadata and checksum/hash mismatches before exposing any downloads.
+It reads headers and CRC chunks with bounded slices and never allocates a second
+whole ZIP buffer. WebCrypto SHA-256 reads one component at a time; its largest
+allocation remains bounded by the archive's existing overall limit. Physical
+low-memory-device qualification is still required. Recompressed ZIPs can be
+extracted with the device's archive tool and reviewed through the component owners.
+
+Inspection borrows the Library's operation slot, cancellation and feedback.
+Closing the view, changing the chosen file or backgrounding a pending inspection
+prevents late results and retains the busy slot until the current read settles.
+Completed read-only downloads survive a Files-app round trip and are released on
+close/unload or a new preparation. The original file and game stores are untouched.
+
+Focused tests cover unchanged component hashes, explicit exclusions, borrowed
+Journey async export, partial evidence, cancellation and ownership fencing,
+bounded ZIP reads, CRC32, and native-link lifecycle. The system `unzip` reader
+also verifies and extracts a fixture, with every extracted component hash checked.
+Actual game-host tests cover both the ordinary authored Home and Legacy Journey:
+preparing an archive does not change saved game data or resume play. The authored
+case preserves the existing Legacy export rejection and checks actual archive
+members and exclusions. Those are source/fixture results, not physical-device
+qualification.
+
+Additional tests cover malicious ZIP structure, checksum and manifest mismatch,
+exact extracted bytes, early-v1 compatibility, authored/partial Journey scope,
+native download retry, English/Ukrainian changes, cancellation, stale reads and
+the actual ordinary Home export → inspect → download flow. Guided-apply tests
+exercise real media/story/music/Journey commit owners using modeled IndexedDB
+and codec boundaries, destination and generation conflicts, released story
+reservations, Journey partial durability, ordered retry and stale views. The
+actual authored Home host exercises per-component confirmation and cancellation;
+Legacy Journey exercises its unchanged game replacement review, and the authored
+owner still rejects a Legacy game-data component. Inspection does not
+prove that a component's separate restore will succeed; those existing reviewers
+still validate their own format, owner, originals, generations and replacement policy.
+
+Pending device checks: build an exact committed revision; save an archive from
+Safari and a Home Screen installation; find and extract it in Files; compare its
+members and use the existing review flows in an isolated destination. Exercise
+large media within device capacity, cancellation, background/foreground, denied
+downloads, narrow layout, large text and Ukrainian. Confirm restrictions and
+partial-evidence warnings remain visible. Do not overwrite the user's primary
+profile for a qualification test.
+
+## Nonempty restore qualification
+
+The prior browser receipt used an archive with no saved originals or Journey
+clears. It does not qualify nonempty media import. The bounded fixture below
+contains one unchanged PNG, one owned six-second silent MP4, one synthetic coded-
+silence MP3 and one **synthetic, unearned** Journey receipt. Test identities are
+never registered as playable content or shipped as production art. Use only a
+fresh isolated test origin/profile; importing this fixture into a personal
+profile would add diagnostic media and synthetic progress. Music restore retains
+its ordinary replacement warning. No tool below reads or writes browser storage.
+
+Run from the exact committed candidate containing the guided flow. Choose the
+profile key from that destination's ordinary Journey export; do not infer it from
+the release version. For example, the `whole-spatial-v38` route in this candidate
+uses `journey-whole-spatial-v38`:
+
+```sh
+node scripts/prepare-backup-restore-fixture.mjs \
+  --output /tmp/revealline-nonempty-restore-new-attempt \
+  --profile-key journey-whole-spatial-v38
+```
+
+The output directory must not exist. `nonempty-restore.zip` contains the normal
+archive and `receipt.json` pins its source revision, component hashes, exact
+original payload hashes and synthetic receipt identity. Preparation uses finite
+IndexedDB and decoder models; its receipt deliberately leaves native codecs,
+browser persistence and hardware pending. The source originals remain unchanged;
+no downloading, media generation or transcoding occurs. The fixture and its
+comparison export are limited to 2 MiB, separately from product archive limits.
+
+Perform this bounded acceptance on the exact served candidate:
+
+1. Record source revision, browser version, isolated origin and profile key. Open
+   Home → Settings → Progress & Collection → Saves & recovery. Choose the fixture
+   using **Inspect and restore an archive**. Verify five checked components and
+   the explicit authored Legacy/unfinished-flight exclusions. The different-edition
+   warning is expected for the labelled qualification fixture.
+2. Review pictures, then Cancel. Confirm later steps remain blocked, no successful
+   receipt is added and focus returns to Review again. Repeat the review and
+   explicitly confirm its one PNG original. Confirm the story's one MP4 original,
+   the music replacement's one MP3 original, then the single synthetic Journey
+   receipt in that order. Never infer completion from a download or preview.
+3. Record actual native import success/failure separately for the PNG, MP4 and
+   MP3. Import uses the product's normal native media checks; this is not an
+   audible mix or full video-playback qualification. Verify the summary reaches
+   4/4 only after the owners report saved. Close, reload the isolated app, then
+   export a fresh portable archive through the normal UI.
+4. Compare that actual downloaded export with the original fixture receipt:
+
+   ```sh
+   node scripts/prepare-backup-restore-fixture.mjs \
+     --verify /absolute/path/to/downloaded-export.zip \
+     --receipt /tmp/revealline-nonempty-restore-new-attempt/receipt.json
+   ```
+
+   The read-only comparison requires the exact original media payloads and the
+   scoped synthetic Journey receipt. Whole component/ZIP bytes may differ after
+   destination metadata normalization, current-assignment preservation or a new
+   export timestamp. A matching comparison plus observed reload establishes only
+   this desktop profile's tested round trip, not physical-device durability.
+
+5. Reinspect the original fixture and review Journey again. It should report no
+   new synthetic clear. Cancel or keep unchanged. Preserve the actual downloaded
+   archive, receipt, comparison output and screenshots outside the repository;
+   record failures without overwriting the earlier attempt.
+
+The earlier automated partial-failure, stale-writer and quota cases remain
+separate evidence. This procedure does not add an atomic restore, qualify large
+media, prove earned-gameplay correctness, establish offline cold launch or
+replace Safari/Home Screen/Files tests on a physical iPhone.

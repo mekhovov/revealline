@@ -1,4 +1,4 @@
-/** Deterministic, checked source projection for the unchanged 104-file FPV pack.
+/** Deterministic, checked source projection for the bounded FPV packages.
  * Shared services keep their canonical source; this generated module merely
  * co-locates their isolated module scopes, as SIM already does for shared art. */
 import { readFile, writeFile, rename, rm } from 'node:fs/promises';
@@ -8,6 +8,11 @@ import { fileURLToPath } from 'node:url';
 import { parse } from 'acorn';
 import { format, resolveConfig } from 'prettier';
 import { projectEditionModuleIndentation } from './edition-code-indentation.mjs';
+import {
+  assertSharedPortableAudio,
+  PORTABLE_BANK_PATH,
+  ACADEMY_AUDIO_PATH,
+} from './fpv-audio-shared-data.mjs';
 import { OPTIONAL_PACKAGE_POLICIES } from '../publishing/optional-package-policy.mjs';
 import { REACTION_VOICE_PILOT } from '../game/audio/reactions/pilot.mjs';
 import { ACTOR_VOICE_RECORDINGS } from '../game/audio/reactions/actors.mjs';
@@ -23,6 +28,15 @@ const entries = [
   'world-hunt-reactions.mjs',
   'world-enemy-guide.mjs',
   'world-library.mjs',
+  // Keep shared combat state and presentation in this existing bounded package
+  // slot. Academy receives factories only when its host explicitly supplies them.
+  'encounter-runtime.mjs',
+  'encounter-session.mjs',
+  'encounter-controls.mjs',
+  'encounter-geometry.mjs',
+  'combat-presentation.mjs',
+  'combat-actors.mjs',
+  'combat-appearance.mjs',
 ].map((file) => native + file);
 const policy = OPTIONAL_PACKAGE_POLICIES['fpv-worlds'];
 const external = new Set(policy.sharedFiles.filter((file) => file !== target));
@@ -49,6 +63,19 @@ function names(declaration) {
   return [declaration.id.name];
 }
 async function visit(file) {
+  // Share immutable sample data only. All factories, decoded caches and mutable
+  // audio state remain private to their original generated module scopes.
+  if (file === PORTABLE_BANK_PATH) {
+    if (!external.has(ACADEMY_AUDIO_PATH)) throw new Error('Shared audio slot is not admitted.');
+    const canonical = await readFile(path.join(root, file), 'utf8');
+    const academy = await readFile(path.join(root, ACADEMY_AUDIO_PATH), 'utf8');
+    assertSharedPortableAudio(canonical, academy);
+    hashes[file] = hash(canonical);
+    hashes[ACADEMY_AUDIO_PATH] = hash(academy);
+    if (!externals.has(ACADEMY_AUDIO_PATH))
+      externals.set(ACADEMY_AUDIO_PATH, `external${externals.size}`);
+    return externals.get(ACADEMY_AUDIO_PATH);
+  }
   if (external.has(file)) {
     if (!externals.has(file)) externals.set(file, `external${externals.size}`);
     return externals.get(file);
@@ -169,10 +196,10 @@ const formatted = await format(lines.join('\n'), {
   ...(await resolveConfig(path.join(root, target))),
   filepath: path.join(root, target),
   parser: 'babel',
-  // This generated projection repeats nested source scopes. Keep newlines for
-  // inspection without charging their indentation to the offline source budget.
-  // Canonical modules and packed recordings retain their original bytes.
-  tabWidth: 0,
+  // Use a real indentation width: zero makes Prettier's multiline template
+  // interpolation indentation pathological. The lexical projection below removes
+  // code indentation for the offline budget while preserving literal contents.
+  tabWidth: 2,
 });
 // Reuse the checked lexical projection only on this generated copy. It retains
 // every token, comment, literal and line terminator, including packed recordings.

@@ -1,7 +1,7 @@
 import { attachMenuAudioSettings } from './menu-audio.mjs';
 import { t } from '../i18n/index.mjs';
 import { createPublishedCues } from './published-cues.mjs';
-export { createPublishedCues } from './published-cues.mjs';
+export { createPublishedCues, CUE_CACHE_BYTES } from './published-cues.mjs';
 
 /** The page supplies only its accepted release host. No playlist, preferences,
  * imported asset or progress database is read or written by this adapter. */

@@ -11,6 +11,61 @@ const datasetKey = (name) => {
   return datasetKeys.get(name);
 };
 
+// Cache only bounded selector syntax. Every match still reads current node state,
+// ancestry and attributes; no element or query results are retained.
+const selectorSyntax = new Map();
+function parseSelector(selector) {
+  const cached = selectorSyntax.get(selector);
+  if (cached) {
+    selectorSyntax.delete(selector);
+    selectorSyntax.set(selector, cached);
+    return cached;
+  }
+  const parsed = selector.split(',').map((part) => {
+    part = part.trim();
+    if (/\s/.test(part)) {
+      let depth = 0,
+        split = -1;
+      for (let index = 0; index < part.length; index++) {
+        if (['[', '('].includes(part[index])) depth++;
+        if ([']', ')'].includes(part[index])) depth--;
+        if (depth === 0 && /\s/.test(part[index])) split = index;
+      }
+      if (split >= 0) {
+        const ancestor = part.slice(0, split).trim();
+        return {
+          kind: 'descendant',
+          descendant: part.slice(split + 1),
+          direct: ancestor.endsWith('>'),
+          ancestor: ancestor.endsWith('>') ? ancestor.slice(0, -1).trim() : ancestor,
+        };
+      }
+    }
+    if (part === '.race-pad button') return { kind: 'race-pad' };
+    if (part === ':disabled') return { kind: 'disabled' };
+    if (part.startsWith('.')) return { kind: 'class', value: part.slice(1) };
+    if (part.startsWith('#')) return { kind: 'id', value: part.slice(1) };
+    const excluded = [...part.matchAll(/:not\(([^)]+)\)/g)].map((match) => match[1]);
+    part = part.replace(/:not\([^)]+\)/g, '');
+    const tag = part.match(/^[a-z][a-z0-9-]*/i)?.[0]?.toUpperCase();
+    const attributes = [...part.matchAll(/\[([^=*\]]+)(?:(\*?=)["']?([^"'\]]+)["']?)?\]/g)].map(
+      ([, key, operator, value]) => ({ key, operator, value }),
+    );
+    return {
+      kind: 'compound',
+      excluded,
+      tag,
+      attributes,
+      accepted: !!tag || part.startsWith('[') || part === '*',
+    };
+  });
+  if (selector.length <= 2048) {
+    if (selectorSyntax.size === 64) selectorSyntax.delete(selectorSyntax.keys().next().value);
+    selectorSyntax.set(selector, parsed);
+  }
+  return parsed;
+}
+
 export class Events {
   listeners = new Map();
   captureListeners = new Map();
@@ -303,11 +358,21 @@ export class Element extends Events {
     this.append(node);
     return node;
   }
-  after(node) {
-    const siblings = this.parentNode.children;
-    node.remove?.();
-    siblings.splice(siblings.indexOf(this) + 1, 0, node);
-    node.parentNode = this.parentNode;
+  after(...values) {
+    const parent = this.parentNode;
+    if (!parent) return;
+    // Capture the first sibling that will not move before detaching arguments.
+    // This also preserves native order when the receiver itself is supplied.
+    const next =
+      parent.children
+        .slice(parent.children.indexOf(this) + 1)
+        .find((node) => !values.includes(node)) ?? null;
+    const nodes = values.map((value) =>
+      value?.nodeType ? value : this.ownerDocument.createTextNode(String(value)),
+    );
+    const ordered = nodes.filter((node, index) => nodes.lastIndexOf(node) === index);
+    for (const node of ordered) node.remove?.();
+    for (const node of ordered) parent.insertBefore(node, next);
   }
   before(node) {
     if (!this.parentNode) return;
@@ -349,39 +414,22 @@ export class Element extends Events {
     if (name.startsWith('data-')) delete this.dataset[datasetKey(name)];
   }
   matches(selector) {
-    return selector.split(',').some((part) => {
-      part = part.trim();
-      if (/\s/.test(part)) {
-        let depth = 0,
-          split = -1;
-        for (let index = 0; index < part.length; index++) {
-          if (['[', '('].includes(part[index])) depth++;
-          if ([']', ')'].includes(part[index])) depth--;
-          if (depth === 0 && /\s/.test(part[index])) split = index;
-        }
-        if (split >= 0) {
-          const ancestor = part.slice(0, split).trim(),
-            descendant = part.slice(split + 1);
-          return (
-            this.matches(descendant) &&
-            (ancestor.endsWith('>')
-              ? !!this.parentElement?.matches(ancestor.slice(0, -1).trim())
-              : !!this.parentElement?.closest(ancestor))
-          );
-        }
-      }
-      if (part === '.race-pad button')
+    return parseSelector(selector).some((part) => {
+      if (part.kind === 'descendant')
+        return (
+          this.matches(part.descendant) &&
+          (part.direct
+            ? !!this.parentElement?.matches(part.ancestor)
+            : !!this.parentElement?.closest(part.ancestor))
+        );
+      if (part.kind === 'race-pad')
         return this.tagName === 'BUTTON' && !!this.parentElement?.closest('.race-pad');
-      if (part === ':disabled') return this.disabled;
-      if (part.startsWith('.')) return this.classList.contains(part.slice(1));
-      if (part.startsWith('#')) return this.id === part.slice(1);
-      const excluded = [...part.matchAll(/:not\(([^)]+)\)/g)].map((match) => match[1]);
-      if (excluded.some((item) => this.matches(item))) return false;
-      part = part.replace(/:not\([^)]+\)/g, '');
-      const tag = part.match(/^[a-z][a-z0-9-]*/i)?.[0];
-      if (tag && this.tagName !== tag.toUpperCase()) return false;
-      for (const match of part.matchAll(/\[([^=*\]]+)(?:(\*?=)["']?([^"'\]]+)["']?)?\]/g)) {
-        const [, key, operator, value] = match;
+      if (part.kind === 'disabled') return this.disabled;
+      if (part.kind === 'class') return this.classList.contains(part.value);
+      if (part.kind === 'id') return this.id === part.value;
+      if (part.excluded.some((item) => this.matches(item))) return false;
+      if (part.tag && this.tagName !== part.tag) return false;
+      for (const { key, operator, value } of part.attributes) {
         const actual =
           key === 'hidden'
             ? this.hidden
@@ -406,7 +454,7 @@ export class Element extends Events {
         )
           return false;
       }
-      return !!tag || part.startsWith('[') || part === '*';
+      return part.accepted;
     });
   }
   closest(selector) {
@@ -572,6 +620,18 @@ export class Document extends Events {
     return this.documentElement.querySelector(selector);
   }
   getElementById(id) {
-    return this.querySelector(`#${id}`);
+    const name = `${id}`;
+    if (!name) return null;
+    // ID lookup is literal and follows the current connected tree. It must not
+    // parse CSS selectors or retain stale entries after modeled DOM mutations.
+    const find = (node) => {
+      if (node.nodeType === 1 && node.id === name) return node;
+      for (const child of node.children ?? []) {
+        const result = find(child);
+        if (result) return result;
+      }
+      return null;
+    };
+    return find(this);
   }
 }

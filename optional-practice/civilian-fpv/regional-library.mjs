@@ -103,8 +103,156 @@ export const LUNAR_BASIN_LIBRARY_PIN = Object.freeze({
   },
 });
 
+export const LUNAR_SHELTER_LIBRARY_PIN = Object.freeze({
+  ...LUNAR_BASIN_LIBRARY_PIN,
+  edition: { en: 'Shelter detail', uk: 'Деталізовані укриття' },
+  description: {
+    en: '768 × 768 m · six starting points · unscored free flight. Explore supported survey shelters with roof ribs and grounded equipment, split rocks, a winding channel and the survey dish. Separate composition-r3 study; the earlier revision remains available. Sparse fictional landscape using the simulator’s Earth flight physics, not Moon gravity.',
+    uk: '768 × 768 м · шість місць старту · вільний політ без заліку. Досліджуйте укриття з ребрами покрівлі й обладнанням на опорах, розколоті скелі, звивисте русло та антену. Окремий пробний варіант composition-r3; попередня версія залишається доступною. Малонаповнений вигаданий ландшафт. Використовує земну фізику польоту симулятора, а не місячне тяжіння.',
+  },
+  bytes: 2093869,
+  pin: {
+    url: 'https://raw.githubusercontent.com/mekhovov/revealline/f58a1b5197a78243e30e42858d45ded1f55baa31/authoring/fpv-worlds/regions/lunar-basin/delivery-composition-r3/delivery.json',
+    bytes: 14759,
+    sha256: 'e3ec1ebf203e391741e64d218ac2554db3d5b0327dbdc9940e7190726f27ba65',
+  },
+});
+
 // Original, reviewed sources are pinned to an immutable published commit.
 export const REGIONAL_LIBRARY_PINS = Object.freeze([
+  {
+    id: 'alpine-highlands-study',
+    title: {
+      en: 'Alpine Highlands — connected mountain study',
+      uk: 'Альпійське високогір’я — пробний гірський світ',
+    },
+    description: {
+      en: '4.096 × 4.096 km · six starting points · unscored free flight. Braced cable towers and a supported lookout make the station approach easier to read. Keep exploring the open concourse and connected snow and scree routes. Earlier Alpine editions remain available. Wider scenery and route detail are still being refined.',
+      uk: '4,096 × 4,096 км · шість стартових точок · вільний політ без заліку. Вежі канатної дороги з розкосами та підпори оглядового майданчика роблять підхід до станції виразнішим. Досліджуйте відкритий прохід між корпусами та сполучені маршрути серед снігу й осипів. Попередні альпійські версії залишаються доступними. Решта місцевості й деталі маршрутів ще вдосконалюються.',
+    },
+    edition: {
+      en: 'Station approach',
+      uk: 'Підхід до станції',
+    },
+    bytes: 22814245,
+    appearance: {
+      terrain: 'plain',
+      scenery: 'alpine-overlays',
+    },
+    startHeadings: {
+      'glacial-valley': 9000,
+      'switchback-pass': 9000,
+      'snow-saddle': 18000,
+      'summit-station': 9000,
+      'viaduct-gorge': 18000,
+      'reservoir-dam': 18000,
+    },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/ca76af991b127f6ed81434162832a79518add9a8/authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r6/delivery.json',
+      bytes: 115316,
+      sha256: '92b7ed6acb426a04b007006a72536b8178bd0ad59bba7182637e25fd0d4cf804',
+    },
+  },
+  {
+    id: 'alpine-highlands-study',
+    title: {
+      en: 'Alpine Highlands — connected mountain study',
+      uk: 'Альпійське високогір’я — пробний гірський світ',
+    },
+    description: {
+      en: '4.096 × 4.096 km · six starting points · unscored free flight. A restrained grey apron distinguishes the station’s open concourse and approaches beneath the quieter timber wings. Explore the same connected snow and scree landscape. Separate material study; earlier editions remain available. Wider scenery and route detail are still being refined.',
+      uk: '4,096 × 4,096 км · шість стартових точок · вільний політ без заліку. Стримане сіре покриття вирізняє відкритий прохід між корпусами та підходи до станції з дерев’яним облицюванням. Досліджуйте той самий сполучений ландшафт зі снігом та осипами. Окреме дослідження матеріалів; попередні версії залишаються доступними. Решта місцевості й деталі маршрутів ще вдосконалюються.',
+    },
+    edition: {
+      en: 'Station concourse',
+      uk: 'Майданчик між корпусами',
+    },
+    bytes: 22699845,
+    appearance: {
+      terrain: 'plain',
+      scenery: 'alpine-overlays',
+    },
+    startHeadings: {
+      'glacial-valley': 9000,
+      'switchback-pass': 9000,
+      'snow-saddle': 18000,
+      'summit-station': 9000,
+      'viaduct-gorge': 18000,
+      'reservoir-dam': 18000,
+    },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/95b2f108c7c0ef347e120e6f66775805ee5d6e8a/authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r5/delivery.json',
+      bytes: 115316,
+      sha256: '32c5338bb3ac7a4279de1f1cf77ddd36bd050c6b5bd971467f9cf5ef0898d2aa',
+    },
+  },
+  LUNAR_SHELTER_LIBRARY_PIN,
+  {
+    id: 'alpine-highlands-study',
+    title: {
+      en: 'Alpine Highlands — connected mountain study',
+      uk: 'Альпійське високогір’я — пробний гірський світ',
+    },
+    description: {
+      en: '4.096 × 4.096 km · six starting points · unscored free flight. Wider, softer timber seams make the summit station less visually busy. Explore the same connected snow and scree landscape. A separate material study; previous Alpine editions remain available. Wider scenery and route detail are still being refined.',
+      uk: '4,096 × 4,096 км · шість стартових точок · вільний політ без заліку. Ширші й м’якші шви дерев’яного облицювання зменшують візуальний шум на верхній станції. Досліджуйте той самий сполучений ландшафт зі снігом та осипами. Окреме дослідження матеріалів; попередні альпійські версії залишаються доступними. Решта місцевості й деталі маршрутів ще вдосконалюються.',
+    },
+    edition: {
+      en: 'Quieter station surfaces',
+      uk: 'Стриманіші поверхні станції',
+    },
+    bytes: 22694120,
+    appearance: {
+      terrain: 'plain',
+      scenery: 'alpine-overlays',
+    },
+    startHeadings: {
+      'glacial-valley': 9000,
+      'switchback-pass': 9000,
+      'snow-saddle': 18000,
+      'summit-station': 9000,
+      'viaduct-gorge': 18000,
+      'reservoir-dam': 18000,
+    },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/02f2b140d06cc930d8d4dd6b01abcd860db75436/authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r4/delivery.json',
+      bytes: 115316,
+      sha256: '0096934874cb5ad3a8355471242aadbb92a660607d3c04481f6b06eb0937062f',
+    },
+  },
+  {
+    id: 'alpine-highlands-study',
+    title: {
+      en: 'Alpine Highlands — connected mountain study',
+      uk: 'Альпійське високогір’я — пробний гірський світ',
+    },
+    description: {
+      en: '4.096 × 4.096 km · six starting points · unscored free flight. Original timber station cladding, opaque backed panels and roof seams add detail to the refined-contour landscape. Separate station-r3 study; earlier Alpine editions remain available. The wider landscape and route detail are still being refined.',
+      uk: '4,096 × 4,096 км · шість стартових точок · вільний політ без заліку. Оригінальне дерев’яне облицювання станції, непрозорі панелі й шви покрівлі додають деталей ландшафту з уточненими контурами. Окремий пробний варіант station-r3; попередні альпійські версії залишаються доступними. Деталі решти місцевості та маршрутів ще вдосконалюються.',
+    },
+    edition: {
+      en: 'Station surface details',
+      uk: 'Деталі поверхонь станції',
+    },
+    bytes: 22694130,
+    appearance: {
+      terrain: 'plain',
+      scenery: 'alpine-overlays',
+    },
+    startHeadings: {
+      'glacial-valley': 9000,
+      'switchback-pass': 9000,
+      'snow-saddle': 18000,
+      'summit-station': 9000,
+      'viaduct-gorge': 18000,
+      'reservoir-dam': 18000,
+    },
+    pin: {
+      url: 'https://raw.githubusercontent.com/mekhovov/revealline/ffb79b67479f9ed5c8104610695ac8b5cb04edc7/authoring/fpv-worlds/regions/alpine-highlands/delivery-station-r3/delivery.json',
+      bytes: 115316,
+      sha256: 'c60fd92ed1dc00136fb8df55bf02bcc211b932c4bbe018917a1f37b549ac3c8d',
+    },
+  },
   LUNAR_BASIN_LIBRARY_PIN,
   {
     id: 'alpine-highlands-study',
@@ -170,7 +318,7 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
       en: '768 × 768 m · connected wooden harbour decks and shore approach · six starting areas, unscored free flight. Separate harbour-r3 revision; the earlier coastal settlement remains available. Early coastal study; visual water only.',
       uk: '768 × 768 м · сполучені дерев’яні пірси гавані та вихід на берег · шість стартових місць, вільний політ без заліку. Окрема версія harbour-r3; попереднє прибережне поселення залишається доступним. Раннє дослідження узбережжя; вода лише візуальна.',
     },
-    bytes: 7952305,
+    bytes: 7958922,
     appearance: { terrain: 'tropical-settlement' },
     pin: {
       url: 'https://raw.githubusercontent.com/mekhovov/revealline/80f161c5709caa7081ff26bb7472fae67fbdb921/authoring/fpv-worlds/regions/tropical-coast/harbour-delivery-r3/delivery.json',
@@ -245,7 +393,7 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
       en: '384 × 384 m · open market aisle, planted civic courtyard, distinct roofs and four starting points · unscored free flight. A bounded town study with grounded facade materials; the wider terraces remain sparse. The original town version stays available.',
       uk: '384 × 384 м · відкритий ринковий прохід, озеленене міське подвір’я, різні дахи й чотири стартові точки · вільний політ без заліку. Невелике дослідження містечка з виразнішими матеріалами фасадів; дальні тераси ще малодетальні. Початкова версія містечка залишається доступною.',
     },
-    bytes: 8660487,
+    bytes: 8667066,
     appearance: { terrain: 'hillside-town' },
     pin: {
       url: 'https://raw.githubusercontent.com/mekhovov/revealline/ce13f7955d30d3f6417458c7f44b01e047d345e5/authoring/fpv-worlds/regions/hillside-town/delivery-courtyard-r5/delivery.json',
@@ -264,7 +412,7 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
       en: '384 × 384 m · three terraces, graded streets, open doorways and an elevated pad · unscored free flight. Choose one of four starting points. Early town study with original building-kit materials.',
       uk: '384 × 384 м · три тераси, похилі вулиці, відкриті дверні проходи й піднятий майданчик · вільний політ без заліку. Виберіть одну з чотирьох стартових точок. Ранній огляд містечка з оригінальними матеріалами набору будівель.',
     },
-    bytes: 8352486,
+    bytes: 8359044,
     appearance: { terrain: 'plain' },
     pin: {
       url: 'https://raw.githubusercontent.com/mekhovov/revealline/0cdeca133c5f0f10a3a0d1c2b8c8a2361ce8b8a1/authoring/fpv-worlds/regions/hillside-town/delivery-town-r2/delivery.json',
@@ -283,7 +431,7 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
       en: '768 × 768 m · harbour, lagoon piers, reef rocks, palm valley, hillside huts and bamboo grove · unscored free flight. Follow shoreline routes, practise pier openings and explore the village paths. Early coastal study; visual water only.',
       uk: '768 × 768 м · гавань, пірси лагуни, прибережні скелі, пальмова долина, хатини на схилі й бамбуковий гай · вільний політ без заліку. Літайте вздовж берега, крізь отвори пірсів і над стежками поселення. Раннє дослідження узбережжя; вода лише візуальна.',
     },
-    bytes: 7857157,
+    bytes: 7863766,
     appearance: { terrain: 'tropical-settlement' },
     pin: {
       url: 'https://raw.githubusercontent.com/mekhovov/revealline/9f7fbbccf00e94c62cb51c9111dbf2b2ec13235c/authoring/fpv-worlds/regions/tropical-coast/settlement-delivery-review-r2/delivery.json',
@@ -321,7 +469,7 @@ export const REGIONAL_LIBRARY_PINS = Object.freeze([
       en: '384 × 384 m · two piers, a stilt hut, palms and dunes · unscored free flight. Practise open bays, low passes and a shoreline circuit. Early coastal preview; visual water only.',
       uk: '384 × 384 м · два пірси, хатина на палях, пальми й дюни · вільний політ без заліку. Тренуйте проходи, низький політ та маршрут уздовж берега. Ранній огляд узбережжя; вода лише візуальна.',
     },
-    bytes: 5982641,
+    bytes: 5989243,
     appearance: { terrain: 'tropical' },
     pin: {
       url: 'https://raw.githubusercontent.com/mekhovov/revealline/7f2b74dfc186f14c712aa548151bd5baf3eeebf1/authoring/fpv-worlds/regions/tropical-coast/delivery-review-r1/delivery.json',
@@ -444,6 +592,7 @@ export function applyRegionalAppearance(configuration, identity, pins = REGIONAL
     ...configuration,
     // Re-resolving an unknown or older pin clears any previous revision's hints.
     authoredStartHeadings: Object.freeze(authoredStartHeadings),
+    catalogueTitle: approved?.title ? Object.freeze({ ...approved.title }) : null,
     source: { ...configuration.source, surfaceStyle: terrain },
     ...(configuration.scenery &&
     (sceneryStyle !== 'plain' || configuration.scenery.source?.surfaceStyle)
@@ -543,6 +692,67 @@ export function regionalOperationDeadline(win, controller, kind) {
   };
 }
 
+// Explicit presentation families only: names, revisions and hashes never decide identity.
+const regionalFamilies = [
+  ['alpine', { en: 'Alpine Highlands', uk: 'Альпійське високогір’я' }, ['alpine-highlands-study']],
+  ['lunar', { en: 'Lunar Basin', uk: 'Місячна улоговина' }, ['lunar-basin-study']],
+  ['canal', { en: 'Canal City', uk: 'Місто каналів' }, ['canal-city-study']],
+  ['desert', { en: 'Desert Expedition', uk: 'Пустельна експедиція' }, ['desert-expedition-study']],
+  [
+    'tropical',
+    { en: 'Tropical coast', uk: 'Тропічне узбережжя' },
+    ['tropical-coastal-districts', 'tropical-coastal-study'],
+  ],
+  [
+    'railway',
+    { en: 'Railway Valley', uk: 'Залізнична долина' },
+    ['railway-valley-expanse', 'railway-valley-study'],
+  ],
+  ['coaster', { en: 'Coaster Gardens', uk: 'Сад атракціонів' }, ['coaster-gardens-study']],
+  ['hillside', { en: 'Hillside Town', uk: 'Містечко на схилі' }, ['hillside-town-study']],
+  [
+    'canyon',
+    { en: 'Canyon worlds', uk: 'Світи каньйонів' },
+    ['canyon-expanse-study', 'canyon-arrival-landmarks-study'],
+  ],
+  ['urban', { en: 'Urban earthworks', uk: 'Міські земляні споруди' }, ['urban-earthworks-study']],
+];
+const familyById = new Map(
+  regionalFamilies.flatMap(([key, title, ids]) => ids.map((id) => [id, { key, title }])),
+);
+const regionalFamilyKey = (id) => familyById.get(id)?.key ?? `retained:${id}`;
+const regionalRowHash = (row) => row.saved?.sha256 ?? row.pin.sha256;
+
+/** Observer-only grouping. Catalogue order ranks offers; saved active pointers win
+ * presentation defaults. Explicit Fly still verifies the selected retained bytes. */
+export function regionalLibraryFamilies(pins = REGIONAL_LIBRARY_PINS, records = []) {
+  const offered = new Set(pins.map((row) => `${row.id}:${row.pin.sha256}`));
+  const rows = [
+    ...pins.map((row) => ({
+      ...row,
+      saved: records.find((saved) => saved.id === row.id && saved.sha256 === row.pin.sha256),
+    })),
+    ...records
+      .filter((row) => !offered.has(`${row.id}:${row.sha256}`))
+      .map((saved) => ({ id: saved.id, title: saved.descriptor.title, saved })),
+  ];
+  const groups = new Map();
+  for (const row of rows) {
+    const key = regionalFamilyKey(row.id);
+    if (!groups.has(key))
+      groups.set(key, { key, title: familyById.get(row.id)?.title ?? row.title, rows: [] });
+    groups.get(key).rows.push(row);
+  }
+  return [...groups.values()].map((family) => ({
+    ...family,
+    title: { ...family.title },
+    primary:
+      family.rows.find((row) => row.saved?.active) ??
+      family.rows.find((row) => row.saved) ??
+      family.rows[0],
+  }));
+}
+
 /** Regional installations stay separate from scored WorldPack courses. */
 export function mountRegionalLibrary({
   el,
@@ -552,6 +762,7 @@ export function mountRegionalLibrary({
   window: win = globalThis.window,
   pins = REGIONAL_LIBRARY_PINS,
   openLibrary = openRegionalLibrary,
+  onChange = () => {},
 }) {
   const root = el('section', undefined, 'world-catalogue'),
     heading = el('h2'),
@@ -581,6 +792,7 @@ export function mountRegionalLibrary({
     removal = null,
     notice = ['', ''],
     database = null;
+  const expandedFamilies = new Set();
   const dbReady = Promise.resolve().then(() => openLibrary({ indexedDB: win.indexedDB }));
   // A missing browser store remains a visible, recoverable state, never an unhandled rejection.
   dbReady.then(
@@ -617,6 +829,28 @@ export function mountRegionalLibrary({
     button.onclick = callback;
     return button;
   }
+  function focusControl(node, deviceFocus) {
+    if (!node?.isConnected || node.disabled || !visible()) return;
+    if (deviceFocus) node.dataset.fpvMenuFocus = '';
+    node.focus();
+  }
+  function captureFocus(node = parent.ownerDocument.activeElement) {
+    if (!root.contains(node)) return null;
+    const primary = node?.closest?.('[data-region-primary]'),
+      version = node?.closest?.('[data-region-key]'),
+      family = node?.closest?.('[data-region-family]'),
+      summary = node?.tagName === 'SUMMARY';
+    if (!family || (!primary && !version && !summary)) return null;
+    return {
+      family: family.dataset.regionFamily,
+      id: version?.dataset.regionId ?? primary?.dataset.regionPrimaryId,
+      hash: version?.dataset.regionKey ?? primary?.dataset.regionPrimary,
+      primary: Boolean(primary),
+      summary,
+      action: node.dataset.regionAction,
+      device: node.dataset.fpvMenuFocus !== undefined,
+    };
+  }
   function waitFor(value, signal) {
     return new Promise((resolve, reject) => {
       const cancel = () => reject(signal.reason);
@@ -627,64 +861,54 @@ export function mountRegionalLibrary({
         .finally(() => signal.removeEventListener('abort', cancel));
     });
   }
-  function paint() {
+  function paint(focusOverride = null) {
     if (closed) return;
     heading.textContent = txt('Regional free flight', 'Вільний політ у регіонах');
     help.textContent = txt(
-      'Download a region once, then choose Fly. Regions are unscored practice areas. Save the simulator offline separately; this download saves the scenery.',
-      'Завантажте регіон один раз і виберіть «Летіти». Це тренувальні зони без заліку. Симулятор готується офлайн окремо; тут зберігається місцевість.',
+      'Choose a region. Versions keeps every offered and saved edition available. Fly uses the shown saved version; downloads and removals always need your action. Prepare the simulator offline separately.',
+      'Виберіть регіон. У «Версіях» доступні всі запропоновані та збережені варіанти. «Летіти» використовує показану збережену версію; завантаження й вилучення потребують вашої дії. Симулятор готується офлайн окремо.',
     );
     refresh.textContent = txt('Refresh saved regions', 'Оновити збережені регіони');
     cancel.textContent = txt('Cancel', 'Скасувати');
     refresh.disabled = Boolean(operation);
     cancel.hidden = !operation;
     message.textContent = txt(...notice);
-    const focused = parent.ownerDocument.activeElement,
-      focusKey = focused?.closest?.('[data-region-key]')?.dataset.regionKey,
-      focusAction = focused?.dataset.regionAction;
+    const focus = focusOverride ?? captureFocus();
+    for (const details of cards.querySelectorAll('[data-region-versions]')) {
+      if (details.open) expandedFamilies.add(details.dataset.regionVersions);
+      else expandedFamilies.delete(details.dataset.regionVersions);
+    }
     cards.replaceChildren();
-    const offered = new Set(pins.map((row) => row.pin.sha256));
-    const rows = [
-      ...pins.map((row) => ({
-        ...row,
-        saved: records.find((saved) => saved.sha256 === row.pin.sha256 && saved.id === row.id),
-      })),
-      ...records
-        .filter((row) => !offered.has(row.sha256))
-        .map((saved) => ({
-          id: saved.id,
-          title: saved.descriptor.title,
-          saved,
-        })),
-    ];
-    // Labels are presentation only. Identity and focus continue to use the full pin hash.
-    const rowHash = (row) => row.saved?.sha256 ?? row.pin.sha256;
+    const families = regionalLibraryFamilies(pins, records),
+      rows = families.flatMap((family) => family.rows);
+    if (focus && !families.some((family) => family.key === focus.family)) {
+      show(
+        'The focused version is no longer listed. Refresh or choose another region.',
+        'Варіант у фокусі більше не показано. Оновіть список або виберіть інший регіон.',
+      );
+      focusControl(refresh, focus.device);
+    }
     const edition = (row) => {
       if (row.edition) return title(row.edition);
       if (row.saved) return `${txt('Version', 'Версія')} ${row.saved.descriptor.revision}`;
       return '';
     };
     const identitySuffix = (row, peers) => {
-      const hash = rowHash(row);
+      const hash = regionalRowHash(row);
       let length = 8;
       while (
         length < hash.length &&
         peers.some(
           (other) =>
             other !== row &&
-            rowHash(other) !== hash &&
-            rowHash(other).slice(0, length) === hash.slice(0, length),
+            regionalRowHash(other) !== hash &&
+            regionalRowHash(other).slice(0, length) === hash.slice(0, length),
         )
       )
         length++;
       return hash.slice(0, length);
     };
-    for (const row of rows) {
-      const saved = row.saved,
-        hash = saved?.sha256 ?? row.pin.sha256,
-        card = el('article', undefined, 'world-catalogue-card'),
-        name = saved?.descriptor.title ?? row.title,
-        buttons = el('div', undefined, 'button-row');
+    const labels = (row) => {
       const peers = rows.filter((other) => other.id === row.id),
         baseEdition = edition(row),
         needsIdentity =
@@ -697,9 +921,32 @@ export function mountRegionalLibrary({
           .filter(Boolean)
           .join(' · '),
         revisionLabel =
-          saved && row.edition ? `${txt('Version', 'Версія')} ${saved.descriptor.revision}` : '',
-        actionName = [title(name), editionLabel, revisionLabel].filter(Boolean).join(' · ');
+          row.saved && row.edition
+            ? `${txt('Version', 'Версія')} ${row.saved.descriptor.revision}`
+            : '',
+        name = row.title ?? row.saved?.descriptor.title;
+      return {
+        hash: regionalRowHash(row),
+        name,
+        editionLabel,
+        revisionLabel,
+        actionName: [title(name), editionLabel, revisionLabel].filter(Boolean).join(' · '),
+      };
+    };
+    const storageCopy = (row) =>
+      row.saved
+        ? `${txt('Saved for offline flight', 'Збережено для польоту офлайн')} · ${size(row.saved.bytes)} · ${row.saved.descriptor.revision}`
+        : txt(
+            `Optional scenery download${row.bytes ? ` · ${size(row.bytes)}` : ''} · unscored`,
+            `Окреме завантаження місцевості${row.bytes ? ` · ${size(row.bytes)}` : ''} · без заліку`,
+          );
+    function versionCard(row) {
+      const saved = row.saved,
+        { hash, name, editionLabel, actionName } = labels(row),
+        card = el('section', undefined, 'regional-version'),
+        buttons = el('div', undefined, 'button-row');
       card.dataset.regionKey = hash;
+      card.dataset.regionId = row.id;
       card.append(el('strong', title(name)));
       if (editionLabel) {
         const label = el('p', editionLabel);
@@ -707,17 +954,7 @@ export function mountRegionalLibrary({
         card.append(label);
       }
       if (row.description) card.append(el('p', title(row.description)));
-      card.append(
-        el(
-          'p',
-          saved
-            ? `${txt('Saved for offline flight', 'Збережено для польоту офлайн')} · ${size(saved.bytes)} · ${saved.descriptor.revision}`
-            : txt(
-                `Optional scenery download${row.bytes ? ` · ${size(row.bytes)}` : ''} · unscored`,
-                `Окреме завантаження місцевості${row.bytes ? ` · ${size(row.bytes)}` : ''} · без заліку`,
-              ),
-        ),
-      );
+      card.append(el('p', storageCopy(row)));
       if (saved) {
         const play = action(txt('Fly', 'Летіти'), () => run('fly', row), Boolean(operation));
         play.dataset.regionAction = 'fly';
@@ -802,14 +1039,106 @@ export function mountRegionalLibrary({
           ),
         );
       }
-      cards.append(card);
-      if (focusKey === hash)
-        (
-          card.querySelector(`[data-region-action="${focusAction}"]`) ??
-          card.querySelector('button')
-        )?.focus();
+      return card;
     }
-    if (!rows.length)
+    for (const family of families) {
+      const card = el('article', undefined, 'world-catalogue-card'),
+        primary = family.primary,
+        primaryLabels = labels(primary),
+        primaryView = el('div', undefined, 'regional-primary'),
+        selected = el('p'),
+        details = el('details', undefined, 'regional-versions'),
+        summary = el('summary'),
+        versions = el('div', undefined, 'regional-version-list');
+      card.dataset.regionFamily = family.key;
+      card.append(el('h3', title(family.title)));
+      primaryView.dataset.regionPrimary = primaryLabels.hash;
+      primaryView.dataset.regionPrimaryId = primary.id;
+      const chosen = primary.saved
+        ? primary.saved.active
+          ? txt('Current saved version', 'Поточна збережена версія')
+          : txt('Saved version', 'Збережена версія')
+        : txt('Recommended version', 'Рекомендована версія');
+      selected.dataset.regionSelected = '';
+      selected.textContent = `${chosen} · ${primaryLabels.actionName}`;
+      primaryView.append(selected);
+      if (primary.description) primaryView.append(el('p', title(primary.description)));
+      primaryView.append(el('p', storageCopy(primary)));
+      const primaryAction = action(
+        primary.saved ? txt('Fly', 'Летіти') : txt('Download region', 'Завантажити регіон'),
+        () => run(primary.saved ? 'fly' : 'install', primary, 'primary'),
+        Boolean(operation),
+      );
+      primaryAction.dataset.regionAction = primary.saved ? 'fly' : 'install';
+      primaryAction.setAttribute(
+        'aria-label',
+        `${primary.saved ? txt('Fly', 'Летіти') : txt('Download', 'Завантажити')}: ${primaryLabels.actionName}`,
+      );
+      primaryView.append(primaryAction);
+      details.dataset.regionVersions = family.key;
+      summary.textContent = txt(
+        `Versions (${family.rows.length})`,
+        `Версії (${family.rows.length})`,
+      );
+      summary.setAttribute(
+        'aria-label',
+        `${txt('Versions for', 'Версії регіону')} ${title(family.title)} (${family.rows.length})`,
+      );
+      details.append(summary, versions);
+      for (const row of family.rows) versions.append(versionCard(row));
+      details.open =
+        expandedFamilies.has(family.key) ||
+        (!focus?.primary &&
+          family.rows.some((row) => row.id === focus?.id && regionalRowHash(row) === focus?.hash));
+      details.addEventListener('toggle', () => {
+        if (closed || !details.isConnected) return;
+        if (details.open) expandedFamilies.add(family.key);
+        else expandedFamilies.delete(family.key);
+      });
+      card.append(primaryView, details);
+      cards.append(card);
+      if (focus?.family === family.key) {
+        const samePrimary =
+            focus.primary && focus.id === primary.id && focus.hash === primaryLabels.hash,
+          primaryTarget = samePrimary
+            ? primaryView.querySelector(`[data-region-action="${focus.action}"]`)
+            : null,
+          version = [...versions.children].find(
+            (node) => node.dataset.regionId === focus.id && node.dataset.regionKey === focus.hash,
+          ),
+          versionTarget = version?.querySelector(`[data-region-action="${focus.action}"]`);
+        let target = summary;
+        if (!focus.summary) {
+          if (primaryTarget) target = primaryTarget;
+          else if (versionTarget) {
+            // A metadata refresh can select another already-saved edition. Keep
+            // confirmation bound to the previously focused ID, hash and action.
+            details.open = true;
+            expandedFamilies.add(family.key);
+            target = versionTarget;
+          }
+          if (focus.primary && !primaryTarget) {
+            const changed = el(
+              'p',
+              samePrimary
+                ? txt(
+                    'The available action changed. Review Versions before continuing.',
+                    'Доступна дія змінилася. Перегляньте «Версії», перш ніж продовжувати.',
+                  )
+                : txt(
+                    'The shown edition changed. Review Versions before continuing.',
+                    'Показаний варіант змінився. Перегляньте «Версії», перш ніж продовжувати.',
+                  ),
+            );
+            changed.dataset.regionFocusNotice = '';
+            changed.setAttribute('role', 'status');
+            primaryView.append(changed);
+          }
+        }
+        focusControl(target, focus.device);
+      }
+    }
+    if (!families.length)
       cards.append(
         el(
           'p',
@@ -820,15 +1149,35 @@ export function mountRegionalLibrary({
         ),
       );
   }
-  async function run(kind, row = null) {
+  async function run(kind, row = null, focusOrigin = 'version') {
     if (closed || operation) return;
     const controller = new AbortController(),
       signal = controller.signal,
       requestEpoch = epoch;
-    const doc = parent.ownerDocument;
-    let restoreFocus = Boolean(row);
+    const doc = parent.ownerDocument,
+      deviceFocus = doc.activeElement?.dataset.fpvMenuFocus !== undefined;
+    let restoreFocus = Boolean(row),
+      refreshFocus = kind === 'refresh' ? captureFocus() : null;
     const trackFocus = (event) => {
-      if (event.target !== doc.body && !root.contains(event.target)) restoreFocus = false;
+      // Replacing/temporarily disabling a focused control may leave body focus.
+      // Retain refresh intent until an explicit move to another control occurs.
+      if (event.target === doc.body) return;
+      if (kind === 'refresh') {
+        refreshFocus = captureFocus(event.target);
+        return;
+      }
+      const family = event.target.closest?.('[data-region-family]'),
+        version = event.target.closest?.('[data-region-key]'),
+        primary = event.target.closest?.('[data-region-primary]'),
+        hash = row && regionalRowHash(row);
+      if (
+        !root.contains(event.target) ||
+        family?.dataset.regionFamily !== (row && regionalFamilyKey(row.id)) ||
+        (focusOrigin === 'primary'
+          ? primary?.dataset.regionPrimary !== hash || primary?.dataset.regionPrimaryId !== row?.id
+          : version?.dataset.regionKey !== hash || version?.dataset.regionId !== row?.id)
+      )
+        restoreFocus = false;
     };
     doc.addEventListener('focusin', trackFocus);
     operation = controller;
@@ -894,6 +1243,7 @@ export function mountRegionalLibrary({
           'Регіон збережено. Оновлення списку регіонів…',
         );
         records = await waitFor(store.list({ includeRevisions: true }), signal);
+        onChange();
         show(
           'Region saved. Choose Fly when you are ready.',
           'Регіон збережено. Виберіть «Летіти», коли будете готові.',
@@ -936,6 +1286,7 @@ export function mountRegionalLibrary({
         committed = true;
         removal = null;
         records = await waitFor(store.list({ includeRevisions: true }), signal);
+        onChange();
         show(
           scope === 'revision'
             ? 'Saved version removed. Other versions and saved places are kept.'
@@ -946,6 +1297,7 @@ export function mountRegionalLibrary({
         );
       } else {
         records = await waitFor(store.list({ includeRevisions: true }), signal);
+        onChange();
         removal = null;
       }
     } catch (error) {
@@ -976,7 +1328,12 @@ export function mountRegionalLibrary({
               ? 'Не вдалося перевірити збережену місцевість. Виберіть «Відновити завантаження», щоб замінити лише файли цієї версії. Інші версії та збережені місця залишаться.'
               : 'Не вдалося перевірити збережену місцевість. Саме ця версія зараз недоступна для відновлення. Інші версії та збережені місця залишаться.',
           );
-        } else if (error?.name === 'QuotaExceededError')
+        } else if (error?.code === 'world-library-full')
+          show(
+            'The saved scenery library is full. Existing versions and saved places are kept. Keep flying a saved version, or review “Remove this version” for scenery you choose to replace, then retry.',
+            'Бібліотеку збереженої місцевості заповнено. Наявні версії та збережені місця залишаться. Літайте у збереженій версії або перегляньте «Вилучити цю версію» для місцевості, яку вирішите замінити, і повторіть спробу.',
+          );
+        else if (error?.name === 'QuotaExceededError')
           show(
             'Not enough device storage. Free space or use “Remove this version” for a saved scenery download you no longer need, then retry. Existing downloads are retained.',
             'Недостатньо місця на пристрої. Звільніть місце або виберіть «Вилучити цю версію» для збереженої місцевості, яка більше не потрібна, і повторіть. Наявні завантаження збережено.',
@@ -994,19 +1351,36 @@ export function mountRegionalLibrary({
       cancel.disabled = false;
       doc.removeEventListener('focusin', trackFocus);
       if (!closed) {
-        paint();
+        paint(kind === 'refresh' && requestEpoch === epoch && visible() ? refreshFocus : null);
         if (restoreFocus && requestEpoch === epoch && visible()) {
-          const hash = row.saved?.sha256 ?? row.pin?.sha256;
-          const card = [...cards.children].find((item) => item.dataset.regionKey === hash);
-          (
-            card?.querySelector(
+          const hash = row.saved?.sha256 ?? row.pin?.sha256,
+            family = [...cards.children].find(
+              (item) => item.dataset.regionFamily === regionalFamilyKey(row.id),
+            ),
+            version = [...(family?.querySelectorAll('[data-region-key]') ?? [])].find(
+              (item) => item.dataset.regionId === row.id && item.dataset.regionKey === hash,
+            ),
+            repair = failedLoads.has(failureKey(row)) && row.pin;
+          let target;
+          if (
+            version &&
+            (focusOrigin !== 'primary' || kind.startsWith('review-remove') || repair)
+          ) {
+            const details = version.closest('details');
+            details.open = true;
+            expandedFamilies.add(details.dataset.regionVersions);
+            target = version.querySelector(
               kind.startsWith('review-remove')
                 ? '[data-region-action="confirm-remove"]'
-                : failedLoads.has(failureKey(row)) && row.pin
+                : repair
                   ? '[data-region-action="repair"]'
                   : 'button',
-            ) ?? refresh
-          ).focus();
+            );
+          }
+          focusControl(
+            target ?? family?.querySelector('[data-region-primary] button') ?? refresh,
+            deviceFocus,
+          );
         }
         if (pendingRefresh && visible()) {
           pendingRefresh = false;
@@ -1020,11 +1394,82 @@ export function mountRegionalLibrary({
     if (!cancel.disabled) operation?.abort();
   };
   paint();
+  const missionRows = () =>
+    regionalLibraryFamilies(pins, records).flatMap((family) =>
+      family.rows.map((row) => ({ ...row, familyKey: family.key, familyTitle: family.title })),
+    );
+  const currentMission = (row) =>
+    missionRows().find(
+      (candidate) => candidate.id === row.id && regionalRowHash(candidate) === regionalRowHash(row),
+    );
   return {
+    missions: missionRows,
+    async refreshMissions() {
+      const store = await dbReady;
+      if (closed) return;
+      records = await store.list({ includeRevisions: true });
+      if (!closed) onChange();
+    },
+    isInstalled: (row) =>
+      Boolean(currentMission(row)?.saved) && !failedLoads.has(failureKey(currentMission(row))),
+    async prepareMission(row, { signal }) {
+      const current = currentMission(row);
+      if (closed || !current?.pin) throw new Error('This regional download is no longer offered.');
+      const store = await waitFor(dbReady, signal);
+      const controller = new AbortController();
+      const abort = () => controller.abort(signal.reason);
+      signal.addEventListener('abort', abort, { once: true });
+      if (signal.aborted) abort();
+      const deadline = regionalOperationDeadline(win, controller, 'install');
+      try {
+        const options = {
+          pageURL: win.location.href,
+          signal: controller.signal,
+          onActivity: deadline.activity,
+          onProgress: deadline.progress,
+        };
+        const inspected = await store.inspect(current.pin, options);
+        if (inspected.descriptor.id !== row.id)
+          throw new Error('Regional catalogue identity mismatch');
+        controller.signal.throwIfAborted();
+        if (failedLoads.has(failureKey(current)) && current.saved)
+          await store.repair(current.pin, { ...options, id: row.id });
+        else await store.install(current.pin, options);
+        failedLoads.delete(failureKey(current));
+        records = await waitFor(store.list({ includeRevisions: true }), controller.signal);
+        if (!closed) onChange();
+      } finally {
+        deadline.stop();
+        signal.removeEventListener('abort', abort);
+      }
+    },
+    async loadMission(row, { signal } = {}) {
+      const saved = currentMission(row)?.saved;
+      if (closed || !saved)
+        throw new Error('Region is no longer installed. Refresh the level selector.');
+      const store = await dbReady;
+      try {
+        const configuration = await store.load(row.id, { sha256: saved.sha256, signal });
+        signal?.throwIfAborted();
+        return {
+          configuration: applyRegionalAppearance(configuration, saved, pins),
+          record: saved,
+        };
+      } catch (error) {
+        if (error?.code === 'regional-cache-invalid') {
+          failedLoads.add(failureKey(currentMission(row)));
+          if (!closed) onChange();
+        }
+        throw error;
+      }
+    },
     open(container = null) {
       if (closed) return;
-      if (container) container.append(root);
-      else home.after(root);
+      // Re-inserting an already-placed subtree can blur its focused control
+      // before refresh captures the player's intended edition and action.
+      if (container) {
+        if (root.parentNode !== container || root.nextSibling) container.append(root);
+      } else if (home.nextSibling !== root) home.after(root);
       if (operation) pendingRefresh = true;
       else void run('refresh');
     },
