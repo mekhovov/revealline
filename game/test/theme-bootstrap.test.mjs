@@ -540,3 +540,19 @@ test('Classic Snake first paint and Standard/Large reset agree while its hub rem
     assert.equal(hub.variables.get('--overflight-text-scale'), '1');
   }
 });
+
+test('Duel first paint opts in independently while actual Team retains Large fallback', () => {
+  for (const textSize of ['standard', 'large', 'extra-large']) {
+    const record = { 'revealline.display.v1': raw({ textSize }) };
+    const duel = seed(record, { textScaling: 'versus' });
+    assert.equal(duel.dataset.themeTextSize, textSize);
+    assert.equal(
+      duel.variables.get('--primary-text-scale'),
+      textSize === 'extra-large' ? '2' : '1',
+    );
+    assert.equal(duel.variables.get('--iw-text-size'), textSize === 'large' ? '20px' : '16px');
+    const team = seed(record, { textScaling: 'team' });
+    assert.equal(team.dataset.themeTextSize, textSize === 'extra-large' ? 'large' : textSize);
+    assert.equal(team.variables.get('--primary-text-scale'), '1');
+  }
+});

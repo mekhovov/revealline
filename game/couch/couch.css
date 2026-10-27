@@ -125,7 +125,7 @@
     background: #070b18;
   }
   .race-screen h1 {
-    font-size: clamp(36px, 5vw, 64px);
+    font-size: calc(clamp(36px, 5vw, 64px) * var(--primary-text-scale, 1));
     line-height: 0.98;
     margin: 12px 0;
     max-width: 720px;
@@ -137,7 +137,7 @@
   }
   .race-kicker {
     color: #98b3d4;
-    font-size: 16px;
+    font-size: calc(16px * var(--primary-text-scale, 1));
     letter-spacing: 2px;
     margin: 0;
   }
@@ -156,7 +156,7 @@
   }
   #race-briefing h2 {
     margin: 0 0 0.4rem;
-    font-size: clamp(1.15rem, 3vw, 1.6rem);
+    font-size: calc(clamp(1.15rem, 3vw, 1.6rem) * var(--primary-text-scale, 1));
   }
   #race-briefing p {
     margin: 0;
@@ -177,15 +177,15 @@
   .seat h2 {
     color: inherit;
     margin: 2px 0;
-    font-size: 28px;
+    font-size: calc(28px * var(--primary-text-scale, 1));
   }
   .seat > span {
-    font-size: 14px;
+    font-size: calc(14px * var(--primary-text-scale, 1));
     letter-spacing: 2px;
   }
   .seat p {
     margin: 4px 0;
-    font-size: 18px;
+    font-size: calc(18px * var(--primary-text-scale, 1));
   }
   .race-menu-actions {
     display: grid;
@@ -237,7 +237,7 @@
     padding: 12px 14px;
     cursor: pointer;
     color: #9deeff;
-    font-size: 18px;
+    font-size: calc(18px * var(--primary-text-scale, 1));
     list-style-position: inside;
   }
   .race-optional-setup > summary:hover {
@@ -263,7 +263,7 @@
     padding: 9px 14px;
     background: transparent;
     border: 1px solid transparent;
-    font-size: 24px;
+    font-size: calc(24px * var(--primary-text-scale, 1));
   }
   #couch-app .race-menu-actions .race-primary {
     grid-column: 1 / -1;
@@ -279,7 +279,7 @@
   .race-footnote,
   .race-menu-status {
     color: #91a6c2;
-    font-size: 16px;
+    font-size: calc(16px * var(--primary-text-scale, 1));
     line-height: 1.3;
   }
   .race-menu-status {
@@ -314,7 +314,7 @@
     min-height: 44px;
     padding: 9px 14px;
     cursor: pointer;
-    font-size: 24px;
+    font-size: calc(24px * var(--primary-text-scale, 1));
     list-style-position: inside;
   }
   .race-secondary-details > summary:hover,
@@ -373,7 +373,7 @@
     flex-wrap: wrap;
     gap: 2px 12px;
     min-width: 0;
-    font-size: var(--fk-text-secondary, 0.875rem);
+    font-size: calc(var(--fk-text-secondary, 0.875rem) * var(--primary-text-scale, 1));
     line-height: 1.4;
     color: #bdcce0;
   }
@@ -397,18 +397,18 @@
     display: flex;
     align-items: center;
     gap: 15px;
-    font-size: 16px;
+    font-size: calc(16px * var(--primary-text-scale, 1));
   }
   #series-score {
     color: #e9f2ff;
-    font-size: 28px;
+    font-size: calc(28px * var(--primary-text-scale, 1));
     white-space: nowrap;
   }
   #race-clock {
     min-width: 64px;
     text-align: right;
     color: #d7eaff;
-    font-size: 28px;
+    font-size: calc(28px * var(--primary-text-scale, 1));
   }
   .race-boards {
     position: relative;
@@ -437,7 +437,7 @@
     border: 3px solid #78dfff;
     box-shadow: 8px 8px 0 rgb(0 0 0 / 45%);
     font-family: var(--fk-font-display);
-    font-size: clamp(4rem, 16vmin, 9rem);
+    font-size: calc(clamp(4rem, 16vmin, 9rem) * var(--primary-text-scale, 1));
     line-height: 1;
     text-align: center;
   }
@@ -462,12 +462,12 @@
     color: var(--seat-color);
   }
   .racer-heading h2 {
-    font-size: 23px;
+    font-size: calc(23px * var(--primary-text-scale, 1));
     margin: 0;
     color: inherit;
   }
   .racer-heading span {
-    font-size: 15px;
+    font-size: calc(15px * var(--primary-text-scale, 1));
   }
   .race-arena {
     position: relative;
@@ -498,19 +498,19 @@
   }
   .racer-stats {
     text-align: center;
-    font-size: 17px;
+    font-size: calc(17px * var(--primary-text-scale, 1));
     margin: 6px 0;
   }
   .racer-input {
     text-align: center;
-    font-size: 14px;
+    font-size: calc(14px * var(--primary-text-scale, 1));
     color: #8ea8c8;
     margin: 5px 0;
   }
   .racer-capture {
     margin: 4px 0;
     color: #aedfff;
-    font-size: 14px;
+    font-size: calc(14px * var(--primary-text-scale, 1));
     line-height: 1.3;
   }
   .racer-encounter {
@@ -520,7 +520,7 @@
     padding: 5px 8px;
     color: #aedfff;
     background: #101f37;
-    font-size: 15px;
+    font-size: calc(15px * var(--primary-text-scale, 1));
     line-height: 1.2;
   }
   .race-pad {
@@ -570,7 +570,7 @@
   .race-equipment button {
     touch-action: none !important;
     padding: 6px 9px;
-    font-size: 17px;
+    font-size: calc(17px * var(--primary-text-scale, 1));
   }
   .race-pad button.pressed,
   .race-pad button[aria-pressed='true'] {
@@ -608,10 +608,10 @@
       display: none;
     }
     .racer-heading h2 {
-      font-size: 19px;
+      font-size: calc(19px * var(--primary-text-scale, 1));
     }
     .racer-stats {
-      font-size: 15px;
+      font-size: calc(15px * var(--primary-text-scale, 1));
       margin: 3px 0;
     }
     .racer-input {
@@ -638,7 +638,7 @@
       padding: 10px;
     }
     .seat h2 {
-      font-size: 23px;
+      font-size: calc(23px * var(--primary-text-scale, 1));
     }
   }
   @media (max-height: 500px) and (min-width: 701px) {
@@ -646,7 +646,7 @@
       padding-block: 12px;
     }
     body[data-couch-status='paused'] .race-screen h1 {
-      font-size: 32px;
+      font-size: calc(32px * var(--primary-text-scale, 1));
       margin-block: 4px;
     }
     body[data-couch-status='paused'] #race-message {
