@@ -1,0 +1,10 @@
+{
+  "format": "revealline-retained-proof-projection.v1",
+  "scope": "Retained route excerpt after an ownership migration. The examined and simulatedTicks counters describe the original discovery run, not this reduced selection. Retained legal input routes and expected outcomes are unchanged; replay validation is rerun against the current catalog.",
+  "sourcePath": "game/replays/expansion-routes.json",
+  "previousSHA256": "22886cf439f716db31333b3b6d9fae0478f8007aff734632badc7c2f38dc53c8",
+  "sha256": "b096443b90b36625d9aea1e14dc586ef7b3433b2e0752460fa3c7443bf0a6f40",
+  "retainedRoutes": 30,
+  "removedRoutes": 2,
+  "preservedOriginal": "Separate ownership archive and full source-history backup."
+}

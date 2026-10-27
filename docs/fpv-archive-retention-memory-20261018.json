@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-18",
+  "scope": "finite memory-only IndexedDB; no native browser or player data",
+  "module": "optional-practice/civilian-fpv/aircraft-archive.mjs",
+  "moduleSha256": "1519bc331b91d9b72bb77110c30f7f8fd5bd0469b6cf06618681f49c6f982bc9",
+  "initialArchives": 16,
+  "initialSegments": 32,
+  "failedSingleDelete": "injected final budget write failure; entire transaction rolled back",
+  "afterFailedDeleteAndReopen": {
+    "archives": 16,
+    "allOriginalManifestsAndSegmentsExactlyPreserved": true
+  },
+  "explicitSuccessfulDeletes": 10,
+  "afterSuccessfulDeletesAndReopen": {
+    "archives": 6,
+    "segments": 12,
+    "retainedIds": [
+      "archive-11",
+      "archive-12",
+      "archive-13",
+      "archive-14",
+      "archive-15",
+      "archive-16"
+    ],
+    "retainedManifestsAndSegmentsExactlyPreserved": true
+  },
+  "limitations": [
+    "Does not model browser disk, eviction, persistent-origin identity or corruption",
+    "Does not reproduce or explain public16-to1 native inventory loss"
+  ]
+}

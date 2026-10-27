@@ -74,18 +74,24 @@ async function flight(t, options = {}) {
   h.frame(0);
   return h;
 }
+function openWorkshop(h) {
+  for (const id of ['overlay-menu', 'shell-options', 'settings-tab-extras', 'shell-workshop']) {
+    h.$(id).focus();
+    assert.equal(h.doc.activeElement.id, id, `${id} must be reachable through its visible parent`);
+    press(h, 'Enter');
+  }
+  assert.equal(h.$('shell-workshop-dialog').open, true);
+  const summary = h.$('restart-button').closest('details').querySelector('summary');
+  summary.focus();
+  assert.equal(h.doc.activeElement, summary);
+  press(h, 'Enter');
+  assert.equal(summary.parentNode.open, true);
+  h.$('restart-button').focus();
+  assert.equal(h.doc.activeElement.id, 'restart-button');
+}
 function openFrom(h, origin) {
-  if (origin === 'workshop') {
-    h.$('overlay-menu').focus();
-    press(h, 'Enter');
-    h.$('shell-workshop').focus();
-    press(h, 'Enter');
-    const summary = h.$('restart-button').closest('details').querySelector('summary');
-    summary.focus();
-    press(h, 'Enter');
-    assert.equal(summary.parentNode.open, true);
-    h.$('restart-button').focus();
-  } else h.$('overlay-restart').focus();
+  if (origin === 'workshop') openWorkshop(h);
+  else h.$('overlay-restart').focus();
   const opener = h.doc.activeElement;
   const before = checkpoint(h),
     run = h.rendered.run,
@@ -146,7 +152,9 @@ for (const origin of ['overlay', 'workshop'])
     h.frame(0);
     assert.equal(h.$('restart-dialog').open, false);
     assert.equal(h.$('shell-workshop-dialog').open, false);
+    assert.equal(h.$('settings-dialog').open, false);
     assert.equal(h.$('shell-home').open, false);
+    assert.equal(h.doc.querySelectorAll('dialog[open]').length, 0);
     assert.notEqual(h.rendered.run, old.run);
     assert.equal(h.rendered.run.tick, 0);
     assert.equal(h.rendered.run.levelId, old.run.levelId);
@@ -163,10 +171,7 @@ for (const origin of ['overlay', 'workshop'])
   });
 test('confirmation opening failure keeps the old Workshop flight and visible opener', async (t) => {
   const h = await flight(t);
-  h.$('overlay-menu').click();
-  h.$('shell-workshop').click();
-  h.$('restart-button').closest('details').open = true;
-  h.$('restart-button').focus();
+  openWorkshop(h);
   const old = {
     run: h.rendered.run,
     before: checkpoint(h),

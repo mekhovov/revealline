@@ -10,6 +10,7 @@ export function attachTouchSteering({
   window: win = globalThis.window,
   getSettings,
   active,
+  dpadDirectionAtPoint = () => undefined,
   onDirection = () => {},
   onVector = () => {},
   onRelease = () => {},
@@ -60,7 +61,12 @@ export function attachTouchSteering({
     event.preventDefault();
     const x = event.clientX - gesture.x,
       y = event.clientY - gesture.y;
-    const direction = touchDirection(x, y, gesture.direction, gesture.mode === 'dpad' ? 6 : 10);
+    const hitDirection =
+      gesture.mode === 'dpad' ? dpadDirectionAtPoint(event, gesture.element) : undefined;
+    const direction =
+      hitDirection === undefined
+        ? touchDirection(x, y, gesture.direction, gesture.mode === 'dpad' ? 6 : 10)
+        : hitDirection;
     if (direction && direction !== gesture.direction) {
       // onDirection may synchronously clear input when resuming/changing modality.
       const current = gesture;
@@ -115,7 +121,9 @@ export function attachTouchSteering({
         return;
       if (element === pad && mode !== 'dpad') return;
       event.preventDefault();
-      const rect = element.getBoundingClientRect();
+      // Floating gestures use the contact point, so only the fixed D-pad
+      // needs layout geometry. Avoid a forced layout before stick/swipe input.
+      const rect = mode === 'dpad' ? element.getBoundingClientRect() : null;
       gesture = {
         id: event.pointerId,
         element,

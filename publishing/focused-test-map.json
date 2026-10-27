@@ -2,6 +2,57 @@
   "format": "revealline-focused-test-map.v1",
   "categories": [
     {
+      "id": "mission-library-solo-native",
+      "pathPatterns": [
+        "^game/test/mission-library-solo-(?:fixture\\.mjs|(?:(?:custom|incoming|handoff)-)?host\\.test\\.mjs)$",
+        "^game/mission-library/remote-team-display\\.mjs$",
+        "^game/content-design/remote-team-navigation-registry\\.mjs$",
+        "^game/content-design/runtime/remote-team-(?:cultural|expedition|hunt)\\.json$"
+      ],
+      "commands": [
+        {
+          "id": "mission-library-solo-native-custom",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/mission-library-solo-custom-host.test.mjs"
+          ],
+          "timeoutMs": 300000
+        },
+        {
+          "id": "mission-library-solo-native-setup",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/mission-library-solo-host.test.mjs"
+          ],
+          "timeoutMs": 300000
+        },
+        {
+          "id": "mission-library-solo-native-incoming",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/mission-library-solo-incoming-host.test.mjs"
+          ],
+          "timeoutMs": 300000
+        },
+        {
+          "id": "mission-library-solo-native-handoff",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/mission-library-solo-handoff-host.test.mjs"
+          ],
+          "timeoutMs": 300000
+        }
+      ]
+    },
+    {
       "id": "official-download-retention",
       "pathPatterns": [
         "^game/official-downloads\\.mjs$",
@@ -105,7 +156,9 @@
     },
     {
       "id": "company-content-inventory",
-      "pathPatterns": ["^scripts/(test-)?company-content-inventory\\.mjs$"],
+      "pathPatterns": [
+        "^scripts/(test-)?company-content-inventory\\.mjs$"
+      ],
       "commands": [
         {
           "id": "company-content-inventory",
@@ -167,7 +220,10 @@
         {
           "id": "i18n-check",
           "command": "npm",
-          "args": ["run", "i18n:check"]
+          "args": [
+            "run",
+            "i18n:check"
+          ]
         },
         {
           "id": "localization-runtime",
@@ -185,7 +241,12 @@
     },
     {
       "id": "offline",
-      "pathPatterns": ["offline", "service-worker", "manifest\\.webmanifest", "optional-chapters"],
+      "pathPatterns": [
+        "offline",
+        "service-worker",
+        "manifest\\.webmanifest",
+        "optional-chapters"
+      ],
       "commands": [
         {
           "id": "offline-runtime",
@@ -234,6 +295,7 @@
         "^scripts/(?:test-)?pages-capacity-report\\.mjs$",
         "^scripts/(?:write-main-pages-metadata|test-main-pages-metadata)\\.mjs$",
         "^scripts/(?:test-)?pages-candidate-[a-z-]+\\.(?:mjs|py)$",
+        "^scripts/(?:test-)?pages-stack-[a-z0-9-]+\\.(?:mjs|py)$",
         "^\\.github/workflows/"
       ],
       "commands": [
@@ -242,7 +304,16 @@
           "command": "node",
           "args": [
             "--test",
+            "publishing/admission-paths.test.mjs",
+            "publishing/admission-binding.test.mjs",
             "publishing/focused-tests.test.mjs",
+            "publishing/focused-shard-plan.test.mjs",
+            "publishing/focused-git-inputs.test.mjs",
+            "publishing/focused-execution-plan.test.mjs",
+            "publishing/focused-compact.test.mjs",
+            "publishing/focused-compact-cli.test.mjs",
+            "publishing/focused-compact-integration.test.mjs",
+            "publishing/focused-compact-workflow.test.mjs",
             "publishing/fastline-merge-controller.test.mjs",
             "publishing/fastline-release-inputs.test.mjs",
             "publishing/fastline-release-objects.test.mjs",
@@ -257,6 +328,13 @@
             "scripts/test-pages-candidate-overlay.mjs",
             "scripts/test-pages-candidate-archive.mjs",
             "scripts/test-pages-candidate-measurement.mjs",
+            "scripts/test-pages-candidate-stack.mjs",
+            "scripts/test-pages-stack-contract.mjs",
+            "scripts/test-pages-stack-source.mjs",
+            "scripts/test-pages-stack-packet.mjs",
+            "scripts/test-pages-stack-measurement.mjs",
+            "scripts/test-pages-stack-artifacts.mjs",
+            "scripts/test-pages-stack-e2e.mjs",
             "publishing/test-policy.test.mjs"
           ]
         }
@@ -283,18 +361,27 @@
         {
           "id": "company-generated-source-and-media",
           "command": "npm",
-          "args": ["run", "company:check"]
+          "args": [
+            "run",
+            "company:check"
+          ]
         },
         {
           "id": "company-runtime-and-publication",
           "command": "npm",
-          "args": ["run", "company:test"],
+          "args": [
+            "run",
+            "company:test"
+          ],
           "timeoutMs": 2700000
         },
         {
           "id": "company-review-measurements",
           "command": "node",
-          "args": ["--test", "scripts/test-company-review.mjs"]
+          "args": [
+            "--test",
+            "scripts/test-company-review.mjs"
+          ]
         },
         {
           "id": "edition-appearance-contracts",
@@ -382,9 +469,470 @@
           ]
         }
       ]
+    },
+    {
+      "id": "mission-library-solo-cold-opening-diagnostic",
+      "pathPatterns": [
+        "^game/test/mission-library-solo-cold-opening\\.probe\\.mjs$",
+        "^game/mission-library/remote-team-display\\.mjs$",
+        "^game/content-design/remote-team-navigation-registry\\.mjs$",
+        "^game/content-design/runtime/remote-team-(?:cultural|expedition|hunt)\\.json$"
+      ],
+      "commands": [
+        {
+          "id": "mission-library-solo-cold-opening-diagnostic",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/mission-library-solo-cold-opening.probe.mjs"
+          ],
+          "timeoutMs": 300000
+        }
+      ]
+    },
+    {
+      "id": "expansion-proof-dispatch",
+      "pathPatterns": [
+        "^scripts/(verify-packs|verify-neon-routes|test-expansion-proof-dispatch|test-neon-proof-dispatch)\\.mjs$",
+        "^game/test/expansion-playthrough\\.test\\.mjs$",
+        "^game/replays/(expansion|sentinel)-routes\\.json$",
+        "^docs/qualification/neon-level-completion/winning-routes\\.json$"
+      ],
+      "commands": [
+        {
+          "id": "expansion-proof-dispatch",
+          "command": "node",
+          "args": [
+            "--test",
+            "game/test/expansion-playthrough.test.mjs",
+            "scripts/test-expansion-proof-dispatch.mjs",
+            "scripts/test-neon-proof-dispatch.mjs"
+          ],
+          "timeoutMs": 1800000
+        }
+      ]
+    },
+    {
+      "id": "remote-team-display-authoring",
+      "pathPatterns": [
+        "^scripts/(?:remote-team-navigation(?:-test-fixture)?|test-remote-team-navigation)\\.mjs$",
+        "^scripts/remote-team-navigation-(?:cultural|expedition|hunt)\\.check\\.mjs$",
+        "^scripts/published-navigation\\.mjs$",
+        "^scripts/(?:remote-team-display-guard|test_remote_team_display_guard)\\.py$",
+        "^\\.github/workflows/remote-team-display-authoring\\.yml$"
+      ],
+      "commands": [
+        {
+          "id": "remote-team-display-contract",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "scripts/test-remote-team-navigation.mjs"
+          ],
+          "timeoutMs": 300000
+        }
+      ]
+    },
+    {
+      "id": "compiled-menu-browser-contract",
+      "pathPatterns": [
+        "^scripts/(compiled-menu-browser[^/]*|run-compiled-menu-browser|test-compiled-menu-browser-consumer)\\.mjs$",
+        "^scripts/compiled-menu-browser-tools/(package|package-lock)\\.json$",
+        "^docs/verification/compiled-menu-browser-37ec(?:-plan\\.json|\\.md)$",
+        "^\\.github/workflows/compiled-menu-browser-37ec\\.yml$"
+      ],
+      "commands": [
+        {
+          "id": "compiled-menu-browser-contract",
+          "command": "node",
+          "args": [
+            "--test",
+            "scripts/test-compiled-menu-browser-consumer.mjs"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "community-readiness-complete-contract",
+      "pathPatterns": [
+        "^game/test/community-readiness(?:-host)?\\.test\\.mjs$"
+      ],
+      "commands": [
+        {
+          "id": "community-readiness-unit",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/community-readiness.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-readiness-host",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/community-readiness-host.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-readiness-store",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/community-store.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-readiness-moderation-client",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/community-moderation-client.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "unknown-runtime-validate",
+          "command": "npm",
+          "args": [
+            "run",
+            "validate"
+          ],
+          "timeoutMs": 1800000
+        }
+      ]
+    },
+    {
+      "id": "couch-touch-localization-complete-contract",
+      "pathPatterns": [
+        "^game/test/couch-touch-localization-host\\.test\\.mjs$"
+      ],
+      "commands": [
+        {
+          "id": "couch-touch-live-locale",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/couch-touch-localization-host.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "couch-touch-shared-gestures",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/couch-shared-touch.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "couch-touch-steering",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/touch-steering.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "couch-touch-preferences",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/shared-touch-preferences.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "couch-touch-coop-input-policy",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/coop-input-policy.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "unknown-runtime-validate",
+          "command": "npm",
+          "args": [
+            "run",
+            "validate"
+          ],
+          "timeoutMs": 1800000
+        }
+      ]
+    },
+    {
+      "id": "remote-team-display-runtime",
+      "pathPatterns": [
+        "^game/mission-library/remote-team-display\\.mjs$",
+        "^game/content-design/remote-team-navigation-registry\\.mjs$",
+        "^game/content-design/runtime/remote-team-(?:cultural|expedition|hunt)\\.json$",
+        "^game/test/mission-library-remote-team-display\\.test\\.mjs$",
+        "^scripts/test-remote-team-display-distribution\\.mjs$"
+      ],
+      "commands": [
+        {
+          "id": "remote-team-display-reader",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/mission-library-remote-team-display.test.mjs"
+          ],
+          "timeoutMs": 300000
+        },
+        {
+          "id": "remote-team-display-distribution",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "scripts/test-remote-team-display-distribution.mjs"
+          ],
+          "timeoutMs": 300000
+        },
+        {
+          "id": "remote-team-display-lifecycle",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/mission-library-solo-lifecycle-host.test.mjs"
+          ],
+          "timeoutMs": 300000
+        },
+        {
+          "id": "remote-team-display-result-supersession",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/mission-library-solo-result-supersession-host.test.mjs"
+          ],
+          "timeoutMs": 300000
+        }
+      ]
+    },
+    {
+      "id": "community-removal-complete-contract",
+      "pathPatterns": [
+        "^game/test/community-removal-review\\.test\\.mjs$"
+      ],
+      "commands": [
+        {
+          "id": "community-removal-complete-classic-community-package",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/classic-community-package.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-community-account-upload",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/community-account-upload.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-community-appearance",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/community-appearance.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-community-art-cohort",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/community-art-cohort.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-community-creator-guide",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/community-creator-guide.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-community-directory",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/community-directory.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-community-entry",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/community-entry.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-community-friendly-host",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/community-friendly-host.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-community-moderator",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/community-moderator.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-community-native-families",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/community-native-families.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-community-ownership-concurrency",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/community-ownership-concurrency.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-community-removal-review",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/community-removal-review.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-community-routes",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/community-routes.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-community-soundtrack-styles",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/community-soundtrack-styles.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-curated-community-theme-host",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/curated-community-theme-host.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-curated-community-theme",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/curated-community-theme.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-overflight-community",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/overflight-community.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-overflight-riy-community",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/overflight-riy-community.test.mjs"
+          ],
+          "timeoutMs": 180000
+        },
+        {
+          "id": "community-removal-complete-raid-community",
+          "command": "node",
+          "args": [
+            "--test",
+            "--test-concurrency=1",
+            "game/test/raid-community.test.mjs"
+          ],
+          "timeoutMs": 180000
+        }
+      ]
     }
   ],
-  "ignoredPathPatterns": ["^(docs/|.*\\.md$)", "^publishing/pages-controller/(evidence|metadata)/"],
+  "ignoredPathPatterns": [
+    "^(docs/|.*\\.md$)",
+    "^publishing/pages-controller/(evidence|metadata)/"
+  ],
   "runtimePathPatterns": [
     "^(game|scripts|site|platforms|publishing)/",
     "^(package(-lock)?\\.json|eslint\\.config\\.mjs)$"
@@ -393,7 +941,10 @@
     {
       "id": "unknown-runtime-validate",
       "command": "npm",
-      "args": ["run", "validate"],
+      "args": [
+        "run",
+        "validate"
+      ],
       "timeoutMs": 1800000
     }
   ]

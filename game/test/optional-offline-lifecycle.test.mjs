@@ -15,6 +15,40 @@ import { installPracticeWorker as installFPV } from '../../optional-practice/wor
 import { waitFor } from './helpers/wait-for.mjs';
 import { Document } from './helpers/couch-dom.mjs';
 
+for (const kind of ['idle-timeout', 'overall-timeout'])
+  test(`offline feedback adds ${kind} code without changing legacy deadline/reason`, async (t) => {
+    const f = fixture();
+    let progress;
+    const original = f.worker.postMessage.bind(f.worker);
+    f.worker.postMessage = (data, ports) => {
+      original(data, ports);
+      if (data.type === 'practice-progress') progress = ports[0];
+    };
+    t.mock.timers.enable({ apis: ['setTimeout'] });
+    const pending = prepareOptionalOffline(f.options);
+    const rejection = assert.rejects(pending, (error) => {
+      assert.equal(error.offlineCode, kind);
+      assert.equal(
+        error.message,
+        kind === 'idle-timeout'
+          ? 'Download stalled for 30 seconds. Retry online.'
+          : 'Download exceeded five minutes. Retry on a faster connection.',
+      );
+      return true;
+    });
+    await waitFor(() => progress);
+    if (kind === 'overall-timeout') {
+      for (let i = 0; i < 14; i++) {
+        t.mock.timers.tick(20000);
+        progress.postMessage({ type: 'practice-progress', downloaded: i + 1, total: 100 });
+        await new Promise((resolve) => setImmediate(resolve));
+      }
+      t.mock.timers.tick(20000);
+    } else t.mock.timers.tick(30000);
+    await rejection;
+    progress.close();
+  });
+
 const deferred = () => {
   let resolve;
   const promise = new Promise((done) => {
@@ -188,6 +222,82 @@ test('readiness accepts legacy replies but never certifies inconclusive, contrad
   assert.equal(f.registrations(), 0);
   assert.equal(f.unregisters(), 0);
   assert.equal(f.values.size, 0, 'Inspection never rewrites installation records');
+});
+
+for (const packageId of ['civilian-flight', 'civilian-fpv', 'fpv-worlds']) {
+  for (const stage of ['initial', 'final']) {
+    test(`${packageId} ${stage} inconclusive preparation preserves previous records until a verified retry`, async () => {
+      const f = fixture(packageId);
+      recordOptionalInstallation({
+        ...f.options,
+        location: { href: f.location.href.replace('/v1.2.3/', '/v1.2.2/') },
+      });
+      f.storage.setItem('practice-records', 'retained personal progress');
+      const before = [...f.values.entries()];
+      if (stage === 'initial') f.activate();
+      const pending = prepareOptionalOffline(f.options);
+      const rejected = assert.rejects(pending, (error) => {
+        assert.match(error.message, /Offline verification could not finish/);
+        assert.match(error.message, /Retry without removing your saved copy/);
+        assert.doesNotMatch(error.message, /Needs repair|files are missing|download again/);
+        return true;
+      });
+      if (stage === 'final') {
+        await waitFor(() => f.messages.includes('practice-progress'));
+        f.activate();
+      }
+      await waitFor(() => f.ports.length === 1);
+      f.ports.shift().postMessage({
+        type: 'practice-status',
+        scope: f.base.href,
+        ready: false,
+        status: 'unknown',
+      });
+      await rejected;
+      assert.deepEqual(
+        [...f.values.entries()],
+        before,
+        'Unknown cannot advance or delete saved installation/records',
+      );
+      assert.equal(f.registrations(), stage === 'initial' ? 0 : 1);
+      assert.equal(f.unregisters(), 0);
+      assert.equal(
+        f.messages.includes('practice-cancel'),
+        false,
+        'Keep the owning worker and downloaded copy',
+      );
+      const retry = prepareOptionalOffline(f.options);
+      await waitFor(() => f.ports.length === 1);
+      f.reply();
+      assert.equal(await retry, true);
+      const installation = JSON.parse(
+        f.storage.getItem(optionalInstallationKey(packageId, f.root)),
+      );
+      assert.equal(installation.active.version, 'v1.2.3');
+      assert.equal(installation.previous.version, 'v1.2.2');
+      assert.equal(f.storage.getItem('practice-records'), 'retained personal progress');
+      assert.equal(
+        f.registrations(),
+        stage === 'initial' ? 0 : 1,
+        'Retry verifies the existing worker instead of replacing it',
+      );
+      assert.equal(f.unregisters(), 0);
+    });
+  }
+}
+
+test('inconclusive preparation uses the caller locale and does not retry worker registration after lookup failure', async () => {
+  const f = fixture();
+  f.navigator.serviceWorker.getRegistration = async () => {
+    throw new Error('Temporary storage service failure');
+  };
+  await assert.rejects(
+    prepareOptionalOffline({ ...f.options, document: { documentElement: { lang: 'uk' } } }),
+    /Не вдалося завершити офлайн-перевірку.*не видаляючи збережену копію/,
+  );
+  assert.equal(f.registrations(), 0);
+  assert.equal(f.unregisters(), 0);
+  assert.equal(f.values.size, 0);
 });
 
 test('cancelling initial verification never records a late successful installation', async () => {
@@ -549,20 +659,22 @@ test('missing dependencies require repair, then exact offload and a fresh instal
   assert.equal(f.storage.getItem(optionalInstallationKey(f.packageId, f.root)), original);
 });
 
-function workerFixture(install, family, { initialRead, finalWrite, empty = false } = {}) {
+function workerFixture(
+  install,
+  family,
+  { initialRead, finalWrite, empty = false, dependencies = 1 } = {},
+) {
   const base = 'https://example.test/review/optional-practice/civilian-flight/';
   const owner = `revealline.optional.${family}.v1:${new URL(base).pathname}:`;
   const name = owner + 'revision';
   const body = Buffer.from('pinned asset');
   const pins = empty
     ? []
-    : [
-        {
-          path: 'image.png',
-          bytes: body.length,
-          sha256: createHash('sha256').update(body).digest('hex'),
-        },
-      ];
+    : Array.from({ length: dependencies }, (_, index) => ({
+        path: index === 0 ? 'image.png' : `image-${index}.png`,
+        bytes: body.length,
+        sha256: createHash('sha256').update(body).digest('hex'),
+      }));
   const listeners = new Map(),
     stores = new Map(),
     progress = [];
@@ -631,6 +743,30 @@ for (const [family, install] of [
   ['civilian-flight', installFlight],
   ['package', installFPV],
 ]) {
+  test(`${family} announces downloading before awaiting the next dependency`, async () => {
+    const f = workerFixture(install, family, { dependencies: 2 }),
+      body = Buffer.from('pinned asset'),
+      nextResponse = deferred(),
+      phasesAtFetch = [];
+    // A held response must not leave the previous local hashing phase visible.
+    let calls = 0;
+    f.scope.fetch = async () => {
+      phasesAtFetch.push(f.progress.at(-1));
+      if (++calls === 2) await nextResponse.promise;
+      return new Response(body);
+    };
+    const pending = f.start();
+    try {
+      await waitFor(() => calls === 2);
+      assert.deepEqual(phasesAtFetch, ['downloading', 'downloading']);
+      assert.equal(f.progress.at(-1), 'downloading');
+      assert(f.progress.includes('verifying'));
+    } finally {
+      nextResponse.resolve();
+      await pending;
+    }
+    assert.equal(f.progress.at(-1), 'ready');
+  });
   test(`${family} inspection exceptions are inconclusive without changing cached bytes`, async () => {
     for (const stage of ['keys', 'match', 'body', 'digest']) {
       const f = workerFixture(install, family);
@@ -739,6 +875,127 @@ for (const [family, install] of [
     assert(!f.stores.has(f.name));
     assert(!f.progress.includes('ready'));
   });
+  // Hold completion of a real WebCrypto digest, not browser hashing execution.
+  // This deterministic worker fixture does not qualify native hash-in-progress UI.
+  for (const outcome of ['valid', 'rejected']) {
+    test(`${family} cancellation during unresolved digest ${outcome} completion preserves retained caches`, async () => {
+      const f = workerFixture(install, family, { dependencies: 2 }),
+        gate = deferred(),
+        previousName = f.name.replace(/revision$/, 'previous'),
+        unrelatedName = 'unrelated.application.cache';
+      const previous = new Map([
+          [
+            f.base + 'image.png',
+            new Response('previous working asset', { headers: { 'x-owner': 'previous' } }),
+          ],
+        ]),
+        unrelated = new Map([
+          [
+            'https://example.test/unrelated/record',
+            new Response('unrelated retained data', { status: 201 }),
+          ],
+        ]);
+      f.stores.set(previousName, previous);
+      f.stores.set(unrelatedName, unrelated);
+      const snapshot = async () =>
+        Promise.all(
+          [...f.stores.entries()]
+            .sort(([a], [b]) => a.localeCompare(b))
+            .map(async ([name, entries]) => [
+              name,
+              await Promise.all(
+                [...entries.entries()]
+                  .sort(([a], [b]) => a.localeCompare(b))
+                  .map(async ([url, response]) => [
+                    url,
+                    response.status,
+                    [...response.headers.entries()],
+                    createHash('sha256')
+                      .update(Buffer.from(await response.clone().arrayBuffer()))
+                      .digest('hex'),
+                  ]),
+              ),
+            ]),
+        );
+      const before = await snapshot();
+      let digestCalls = 0,
+        completionHeld = false,
+        completionReleased = false,
+        settled = false;
+      f.scope.crypto = {
+        subtle: {
+          digest: async (algorithm, bytes) => {
+            const call = ++digestCalls;
+            const result = await webcrypto.subtle.digest(algorithm, bytes);
+            if (call === 2) {
+              assert.equal(algorithm, 'SHA-256');
+              assert.equal(f.progress.at(-1), 'verifying');
+              completionHeld = true;
+              await gate.promise;
+              completionReleased = true;
+              if (outcome === 'rejected') throw new Error('Injected digest completion rejection');
+            }
+            return result;
+          },
+        },
+      };
+      const pending = f.start();
+      pending.then(
+        () => {
+          settled = true;
+        },
+        () => {
+          settled = true;
+        },
+      );
+      const rejection = assert.rejects(
+        pending,
+        outcome === 'valid'
+          ? /Optional download cancelled/
+          : /Injected digest completion rejection/,
+      );
+      try {
+        await waitFor(() => completionHeld);
+        assert.equal(digestCalls, 2);
+        assert.equal(completionReleased, false);
+        assert.equal(settled, false);
+        assert.equal(f.progress.at(-1), 'verifying');
+        assert.equal(f.writes(), 1, 'The first dependency was staged before cancellation');
+        assert.equal(f.stores.get(f.name).size, 1);
+        f.message({ type: 'practice-cancel' });
+        await new Promise((resolve) => setImmediate(resolve));
+        assert.equal(settled, false, 'Cancellation cannot settle an unresolved digest completion');
+        assert.equal(completionReleased, false);
+        assert.equal(f.writes(), 1);
+        assert(!f.progress.includes('ready'));
+      } finally {
+        gate.resolve();
+        await rejection;
+      }
+      assert.equal(completionReleased, true);
+      assert.equal(settled, true);
+      assert.equal(digestCalls, 2);
+      assert.equal(f.fetches(), 2);
+      assert.equal(
+        f.writes(),
+        1,
+        'Neither delayed success nor rejection writes after cancellation',
+      );
+      assert.equal(f.progress.at(-1), 'failed');
+      assert(!f.progress.includes('ready'));
+      assert(!f.stores.has(f.name), 'The incomplete new version is removed');
+      assert.equal(f.stores.get(previousName), previous);
+      assert.equal(f.stores.get(unrelatedName), unrelated);
+      assert.deepEqual(
+        await snapshot(),
+        before,
+        'Exact retained cache names, entries, metadata and bytes survive',
+      );
+      await new Promise((resolve) => setImmediate(resolve));
+      assert.equal(f.writes(), 1);
+      assert.deepEqual(await snapshot(), before, 'No late completion recreates staging data');
+    });
+  }
   test(`${family} old controlling worker does not recreate an offloaded cache on a later asset read`, async () => {
     const f = workerFixture(install, family);
     await f.start();

@@ -1,5 +1,4 @@
 import { editionOfflinePackageId } from './editions/offline-package-id.mjs';
-import { loadEditionBootstrap } from './editions/bootstrap.mjs';
 import { verifyEditionAssets } from './editions/assets.mjs';
 import {
   resolveEditionAssets,
@@ -101,6 +100,9 @@ export async function loadRuntimeContentProvider({
   const selector = url.searchParams.get('edition') ?? compiled;
   const requested = selector ? editionIdentityId(selector) : selector;
   if (!requested && url.searchParams.get('company') !== '1') return null;
+  // Ordinary Solo never needs the edition authoring compiler or Team runtime.
+  // Evaluate this graph only while an explicitly selected edition is preparing.
+  const { loadEditionBootstrap } = await import('./editions/bootstrap.mjs');
   if (compiled)
     required(requested === compiled, 'This installed edition cannot load another audience.');
   const rootURL = new URL('../', url);

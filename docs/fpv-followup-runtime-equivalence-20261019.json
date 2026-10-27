@@ -1,0 +1,7 @@
+{
+  "sourceRevision": "ecfb4bc01dc3f6d4e7d56062be89725d26d0a491",
+  "qualifiedRuntimeSource": "7109710578a48e5d984a713d4bbb53f46c93c515",
+  "checkedInputs": 243,
+  "mismatches": [],
+  "scope": "Packaged runtime input equivalence only; new source-only tools have separate tests."
+}

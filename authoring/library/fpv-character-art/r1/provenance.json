@@ -1,0 +1,276 @@
+{
+  "format": "FPVCharacterArtProvenance.v1",
+  "status": "Full 36-entry r1 roster; source and Blender visual admission complete; browser qualification recorded separately.",
+  "source": {
+    "name": "MakeHuman core assets",
+    "page": "https://static.makehumancommunity.org/assets/assetpacks/makehuman_system_assets.html",
+    "license": "CC0 1.0 Universal",
+    "licenseEvidence": "https://static.makehumancommunity.org/about/license.html",
+    "legalCode": "https://creativecommons.org/publicdomain/zero/1.0/legalcode",
+    "archiveURL": "https://files.makehumancommunity.org/asset_packs/makehuman_system_assets/makehuman_system_assets_cc0.zip",
+    "archiveBytes": 280737770,
+    "archiveSHA256": "b542127a8e25547c7c29c19f2d1d2adb9a664c80396ecd694095dbc8028a0107",
+    "copyrightHoldersInSelectedAssetHeaders": [
+      "Data Collection AB",
+      "Joel Palmius",
+      "Jonas Hauquier"
+    ],
+    "eyeTextureRestore": {
+      "path": "eyes/materials/brown_eye.png",
+      "sourceURL": "https://raw.githubusercontent.com/makehumancommunity/makehuman/a8bc2d54ff0ac92e78ff71431b1023eda42bf482/makehuman/data/eyes/materials/brown_eye.png",
+      "observedCommit": "a8bc2d54ff0ac92e78ff71431b1023eda42bf482"
+    }
+  },
+  "tools": [
+    {
+      "name": "MPFB",
+      "version": "2.0.18",
+      "sourceURL": "https://github.com/makehumancommunity/mpfb2/tree/v2.0.18",
+      "archiveURL": "https://codeload.github.com/makehumancommunity/mpfb2/zip/refs/tags/v2.0.18",
+      "archiveSHA256": "ada7c4ff11e79cf6ed9b441bccabc52c9359f2848b988f66e89c14c30b21fed7",
+      "sourceCodeLicense": "GPL; this is not the generated asset license"
+    },
+    {
+      "name": "Blender",
+      "version": "4.5.14 LTS",
+      "platform": "macOS arm64",
+      "archiveURL": "https://download.blender.org/release/Blender4.5/blender-4.5.14-macos-arm64.dmg",
+      "archiveSHA256": "65134d9b07b20e2fa8d3c9e44f6f44ffb5c9774dd521b95f50387310241ca170",
+      "execution": "Portable official distribution; background, disable-autoexec, private temporary user resources."
+    }
+  ],
+  "selectedFiles": [
+    {
+      "path": "clothes/male_worksuit01/male_worksuit01.mhclo",
+      "bytes": 254911,
+      "sha256": "77561689f0e9eb13537f67e0582ce4e8b93fc7291ea87f57fd86b38b9114d4e1"
+    },
+    {
+      "path": "clothes/male_worksuit01/male_worksuit01.mhmat",
+      "bytes": 1389,
+      "sha256": "9af03afa0f8cf2d24b4fceb0bd0e3c400ae0975b402e0ea491a33fa32c3b560b"
+    },
+    {
+      "path": "clothes/male_worksuit01/male_worksuit01.obj",
+      "bytes": 302272,
+      "sha256": "d8ef4bf71aa6bd386958921c17e0eed263ef63abc8b50a2c8be6d482f6e1d3f7"
+    },
+    {
+      "path": "clothes/male_worksuit01/male_worksuit01_ao.png",
+      "bytes": 1205288,
+      "sha256": "1ed5f23c5efab316b98a295e1be7905009e61603657577eb922b4d1c99c46810"
+    },
+    {
+      "path": "clothes/male_worksuit01/male_worksuit01_diffuse.png",
+      "bytes": 3230491,
+      "sha256": "4b59b50f7a8a0325c33e86e29f160f59b2385a6f413fccc88287a1c951c39901"
+    },
+    {
+      "path": "clothes/male_worksuit01/male_worksuit01_normal.png",
+      "bytes": 7345267,
+      "sha256": "53f51fd31ec6760c26d377b250bfcdde84be46953f4c72821892b76d13055073"
+    },
+    {
+      "path": "clothes/shoes03/shoes03.mhclo",
+      "bytes": 152873,
+      "sha256": "5a388e18e6759db99bcc8c7d062a2b3bed02eecd32705731ba90063a6e35265b"
+    },
+    {
+      "path": "clothes/shoes03/shoes03.mhmat",
+      "bytes": 1184,
+      "sha256": "0104a8ecf68aa81bca878c12f909aca45a59e265f8b49cf4e4d5e2667773776e"
+    },
+    {
+      "path": "clothes/shoes03/shoes03.mhw",
+      "bytes": 410069,
+      "sha256": "5ea7e817c2db05da540a0d4a71c3fadb422b3560857b8b73873df39ad3e49b5f"
+    },
+    {
+      "path": "clothes/shoes03/shoes03.obj",
+      "bytes": 177420,
+      "sha256": "b03f46c0b5cdc38e4472e4747ba267f101e1e8ae88656180b1334986646108b2"
+    },
+    {
+      "path": "clothes/shoes03/shoes03_diffuse.png",
+      "bytes": 309009,
+      "sha256": "fe8216fbd0c34ecd3ac0e1a01970a4ccf844417be5fd1d72c527c9209256db93"
+    },
+    {
+      "path": "eyebrows/eyebrow001/eyebrow001.mhclo",
+      "bytes": 9141,
+      "sha256": "54c8892c2ba577f4152d779ce1f20f7cd323beb8cbd9cb701796165c221b4f5b"
+    },
+    {
+      "path": "eyebrows/eyebrow001/eyebrow001.mhmat",
+      "bytes": 1098,
+      "sha256": "976e5f4f1d3922d7a11c6e2db233f8b4584b068d00619d5749687e81c92d61fc"
+    },
+    {
+      "path": "eyebrows/eyebrow001/eyebrow001.obj",
+      "bytes": 8227,
+      "sha256": "88b13146395133f3901715e11706cdfd293e5d6087ad7c5e01efe1485a26b513"
+    },
+    {
+      "path": "eyebrows/eyebrow001/eyebrow001.png",
+      "bytes": 89619,
+      "sha256": "9940f7d0b1b223709a19b05156ba6f6e9e4dbdbced02d7574f4d51d72c58967b"
+    },
+    {
+      "path": "eyes/low-poly/low-poly.mhclo",
+      "bytes": 1344,
+      "sha256": "68582e28e9176cba7cfcf35208f671b6201b8d1bc95c32decff61a3160ec34d8"
+    },
+    {
+      "path": "eyes/low-poly/low-poly.obj",
+      "bytes": 6604,
+      "sha256": "783fe1e6331162c876520b4c2bed7a8ca06354ca15497e8ebd68bb1b59f4d3de"
+    },
+    {
+      "path": "eyes/materials/brown_eye.png",
+      "bytes": 610817,
+      "sha256": "4659691c7295ad6206c78b003e5fd0e5f91dcd53032fa914a229bb48cabe424b"
+    },
+    {
+      "path": "hair/short04/short04.mhclo",
+      "bytes": 59195,
+      "sha256": "d60640aa4c4ffce1aa269647ba436b6ee0bb21bb948f927b84e27a48d2107157"
+    },
+    {
+      "path": "hair/short04/short04.mhmat",
+      "bytes": 1316,
+      "sha256": "7a3ac74db8478aa0afdb8a596c6fe3997d1a8a09d12211d70e8f1e9f0b7e0e97"
+    },
+    {
+      "path": "hair/short04/short04.obj",
+      "bytes": 55152,
+      "sha256": "676964a133ee35ffcea1195382bf75542da7a298931e4001bc7b0d7b707225de"
+    },
+    {
+      "path": "hair/short04/short04_diffuse.png",
+      "bytes": 2308132,
+      "sha256": "0bef7fc0e403db5a40fabb2111ebfa6f7e8158e204c6e56b8da98e9ef527846e"
+    },
+    {
+      "path": "skins/young_caucasian_male/young_caucasian_male.mhmat",
+      "bytes": 1462,
+      "sha256": "6eda60b07ff2afbde078a2535ef3913593d84e9de92b2eb76c30f396a181fe2e"
+    },
+    {
+      "path": "skins/young_caucasian_male/young_lightskinned_male_diffuse.png",
+      "bytes": 3693828,
+      "sha256": "862a26e335e958b70534cb5f0d7c47ef30ab148a56c42b3e9da969cf76f12963"
+    }
+  ],
+  "modifications": [
+    "Generated adult male body using MakeHuman macro parameters and the 53-bone GameEngine rig.",
+    "Clothed workwear, shoes, short hair, eyebrows and low-poly eyes; covered hidden body faces removed.",
+    "Baked two live material atlases: 2048-square basecolor/normal/ORM, 1024-square masked hair/brows; no root motion or collision metadata.",
+    "Original in-place idle, walk, run, and visible pulse gesture authored at 30fps; paired full rigs for live and LOD.",
+    "Authored six rigid anatomical regions from the posed clothed surface, sealed boundaries, reduced geometry, and original 512-square textured cut caps.",
+    "Normalized visual height to 1.8m, Y-up glTF, local forward +Z. Gameplay geometry is unchanged.",
+    "Authored 25 shared equipment meshes for all 12 families across tactical, rivals and arcade casts; one shared original 1024-square basecolor/normal/ORM gear atlas.",
+    "Derived fitted vest and coat panels from the selected CC0 workwear. Baked original body shape keys before sampling arm/workwear cross-sections for tapered sleeves with rounded shoulder caps and overlapping elbow hems.",
+    "Authored forward curved cap bills and fitted helmet/beanie shells against the baked body proportions. Authored pouches, straps, backpacks, hood, scarf, radio gear, guards, shield and bounded brace panels.",
+    "Equipment is rigid, bone attached and cosmetic; existing paired rigs, four original clips, anatomical regions and caps are retained. Gameplay hitboxes and rules are unchanged.",
+    "Settled equipment nodes reuse original mesh data with the authored idle-frame-zero damage pose; live bone bindings are unchanged. Matrices independently checked against the actual browser loader within 1.1e-7."
+  ],
+  "builders": [
+    {
+      "path": "authoring/animate-worker.py",
+      "bytes": 6145,
+      "sha256": "13ac33a9e542e0498377905a67c8baae3811876f03fbad6dfea188d20da8192d"
+    },
+    {
+      "path": "authoring/animate.py",
+      "bytes": 840,
+      "sha256": "e9f36639eb4d3527864deacb510c978cbb2b0fae544bb0f670cc6b1d7d9287f3"
+    },
+    {
+      "path": "authoring/assemble.py",
+      "bytes": 10867,
+      "sha256": "c896da51d9f60f55c59bf0fe2b3c27ce265683c74684871d9fa5cd3e491153cf"
+    },
+    {
+      "path": "authoring/bake.py",
+      "bytes": 5773,
+      "sha256": "7d79abc02185f1c0b47474c67fdcf69adb96cfa457ed1a84830ce4c161529d13"
+    },
+    {
+      "path": "authoring/create.py",
+      "bytes": 4719,
+      "sha256": "f3338a3b1769d6450c06b415e93558b4b754cb3e982abb818367184601ea103c"
+    },
+    {
+      "path": "authoring/finalize.mjs",
+      "bytes": 5539,
+      "sha256": "81f1921c9cba6dc16eeb16b38680ce9f3b57bbf2da2fbbca958035ca46342d2e"
+    },
+    {
+      "path": "authoring/inspect-glb.mjs",
+      "bytes": 1689,
+      "sha256": "4827ed47f8688d158852277aaa289a61038725482723c532cf6597ad8c66f1f1"
+    },
+    {
+      "path": "authoring/rebuild.sh",
+      "bytes": 1565,
+      "sha256": "7bf9370641dc1f0313cf9bf6737db4983a6c476cbcdf0f0386bdc750449638fb"
+    },
+    {
+      "path": "authoring/review-wardrobe.py",
+      "bytes": 3864,
+      "sha256": "a0d290b970f63e1a90b27ca6b97a68dadb077b7d834444232d62fcf939278499"
+    },
+    {
+      "path": "authoring/review.py",
+      "bytes": 1717,
+      "sha256": "ecdc5139c3a34fff133f9674916d5d09b1848bee5e4691125189f71999bbb095"
+    },
+    {
+      "path": "authoring/settle-equipment.mjs",
+      "bytes": 7355,
+      "sha256": "b45cf8097b9d373fc5a914d414727542ebb4ee093e072631e6334d0f4009549e"
+    },
+    {
+      "path": "authoring/wardrobe.py",
+      "bytes": 18619,
+      "sha256": "8efe70e8e495a40d72f2dc9683dc27a353daa2a8564735c7974dc8f60c3b5314"
+    }
+  ],
+  "release": {
+    "id": "fpv-character-art",
+    "revision": "r1",
+    "files": [
+      {
+        "path": "characters.glb",
+        "bytes": 13557808,
+        "sha256": "bf99cfa8cfcdb6d20a11b3594eda0cfd5c0f9a85edf48e2fd55e6f4fa2e5c8ad"
+      },
+      {
+        "path": "manifest.json",
+        "bytes": 52499,
+        "sha256": "8121b18a0a6c1ea2c625cb355ef2d5efee0ed6c1486a835d415c3119fc555357"
+      }
+    ],
+    "characters": 36,
+    "families": 12,
+    "casts": [
+      "arcade",
+      "rivals",
+      "tactical"
+    ],
+    "maxEquipmentRows": 8,
+    "metrics": {
+      "downloadBytes": 13610307,
+      "decodedBytes": 103546328,
+      "gpuBytes": 125981328,
+      "vertices": 60691
+    },
+    "sourcePrimitivesPerGear": 1,
+    "visualReview": [
+      "wardrobe-sheet-1.png",
+      "wardrobe-sheet-2.png"
+    ],
+    "browserQualification": "separate application gallery and sustained performance acceptance",
+    "settledEquipmentNodes": 25
+  }
+}

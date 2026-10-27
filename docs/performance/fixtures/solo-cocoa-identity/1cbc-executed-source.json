@@ -1,0 +1,75 @@
+{
+  "format": "SoloCocoaExecutedSourceV1",
+  "sourceRevision": "1cbc4a98afd4e980817579b31d76b995ba261773",
+  "sourceTree": "39f99c40699057805673baa6b2cd3d0301e128cd",
+  "run": 39082271731,
+  "artifact": 12119746074,
+  "archive": {
+    "bytes": 14742,
+    "sha256": "2c786982eff968c74309574dc8e2bf655f7b12eaf5dc2af16cd9fd5c7d1bf386"
+  },
+  "status": "failed-fresh-owner-media-withheld",
+  "scope": "Additive post-hoc exact-Git source readback only. Original executed V1 declaration/workflow and failed outcome stay unchanged; no retrospective authority.",
+  "records": [
+    {
+      "path": "scripts/solo-native-mp3-control.mjs",
+      "gitBlob": "36add09f2cf4bf8a22f2eb6692539133d7be51af",
+      "bytes": 46099,
+      "sha256": "28eab7671344e5819f257ef12e3d28f1b9064af96f2f444b8194e5f54ee41da1"
+    },
+    {
+      "path": "scripts/prepare-solo-audio-fixtures.mjs",
+      "gitBlob": "85013affb4781a06e071872199abbf90e8363329",
+      "bytes": 10676,
+      "sha256": "a8941d708d9b773b3eda1b455f9291ee60f2c8b5846e7501a5a40236478c467e"
+    },
+    {
+      "path": "scripts/solo-qualification-browser-context.mjs",
+      "gitBlob": "ccf6ac62a7e456c77e1f48c5973ead2b0cd0b3d9",
+      "bytes": 4026,
+      "sha256": "5f89ceedec155349250283304b38e68dd22eedf32e6c306ff2c25c3258233d7f"
+    },
+    {
+      "path": "scripts/serve-production-preview.mjs",
+      "gitBlob": "0176a28b0eb56e634a12112d5737211a6ec6de8f",
+      "bytes": 10414,
+      "sha256": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab"
+    },
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "gitBlob": "0658c2efd9fae23268f95a851be03755319fc524",
+      "bytes": 70323,
+      "sha256": "409b266f197483d851980c0cdfe9858123e9a9b7f674ed709536162eca396a8c"
+    },
+    {
+      "path": "scripts/solo-darwin-process-inventory.c",
+      "gitBlob": "48cff29f1e62f91019b4576ec0f288ecbfe4a26d",
+      "bytes": 7955,
+      "sha256": "72ff466c653ddb987a4e5df5df024aabd952cf45d659e7872809412aa996db9f"
+    },
+    {
+      "path": "scripts/solo-darwin-process-inventory.mjs",
+      "gitBlob": "70ec20f65f9c4671eedcc13b59d2cee9624b9997",
+      "bytes": 13716,
+      "sha256": "bc3c1976364478f8cfb06776c54edb06701b8a43b0526db2c974e38229209783"
+    },
+    {
+      "path": "docs/performance/solo-cocoa-identity-plan.json",
+      "gitBlob": "ff258a60fe3a1b66f8c5295321f1d7a339788475",
+      "bytes": 17262,
+      "sha256": "461d9c38f586f45a881de8f5d15c6facd440e3af9390f3c06f422cf04ca44fa1"
+    },
+    {
+      "path": ".github/workflows/solo-native-mp3-cocoa-identity-temporary.yml",
+      "gitBlob": "578fabc5321ba61af55df5d8da673b2636fc7f17",
+      "bytes": 12769,
+      "sha256": "85e6093e3ff5cca164b262408a3a90f15f811c904898ff5e883273a3e0ba7340"
+    },
+    {
+      "path": "scripts/test-solo-cocoa-identity-release.mjs",
+      "gitBlob": "4cee80f988440189dd09b96cdd583ef6088cdb32",
+      "bytes": 9158,
+      "sha256": "c2a387af5e8cf53bf4c02b67e332e1c0e62c030325d1a0846d48f745bbc2e3d3"
+    }
+  ]
+}

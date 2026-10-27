@@ -87,15 +87,16 @@
       unsupported result is evidence of unavailability, not zero memory use. These observations
       include the observer's own overhead and are not cross-device benchmarks. The optional
       30-second sample records animation-frame intervals and browser-reported long tasks, without
-      logging during the sample. Keep this page visible; a hidden page or navigation discards the
-      sample. Active samples arm until the player starts or resumes through the game, then discard
-      on pause, result, focus loss, mission change or navigation. No input is generated. Keyboard
-      counts record only gameplay keys; HUD snapshots describe the observed activity. Canvas and
-      DOM-image pixel estimates are not complete decoded-media or GPU memory measurements. Compare
-      the same scene, viewport, device, browser and input sequence against the selected baseline
-      commit. Frame intervals include browser scheduling and are not CPU render duration. Long tasks
-      are page-wide and cannot identify a reward renderer by themselves. Unsupported browser
-      counters remain unavailable, never a zero result.
+      logging during the sample. Keep this page visible. Active samples arm until the player starts
+      or resumes through the game. Pause, result, focus loss, mission change, hidden pages and
+      navigation retain partial timing evidence, excluded from full-sample qualification.
+      Whole-session totals and interruption reasons remain available. No input is generated.
+      Keyboard counts record only gameplay keys; HUD snapshots describe the observed activity.
+      Canvas and DOM-image pixel estimates are not complete decoded-media or GPU memory
+      measurements. Compare the same scene, viewport, device, browser and input sequence against the
+      selected baseline commit. Frame intervals include browser scheduling and are not CPU render
+      duration. Long tasks are page-wide and cannot identify a reward renderer by themselves.
+      Unsupported browser counters remain unavailable, never a zero result.
     </p>
     <p id="status" role="status">Ready to observe the current default Journey.</p>
     <details>

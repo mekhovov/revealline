@@ -91,6 +91,8 @@ test('native Team and FPV families use their immutable launch and recovery paths
       edition = editionFor(inspected, blob);
     const nativeInstalled = createCommunityNativeInstalled({ indexedDB });
     const creatorStore = createCreatorStore({ indexedDB });
+    const stateStore = createMemoryCommunityStateStore();
+    const downloadStore = createMemoryCommunityDownloadStore();
     const library = createCommunityLibrary({
       client: {
         catalog: async () => ({ editions: [edition], nextCursor: null }),
@@ -98,8 +100,8 @@ test('native Team and FPV families use their immutable launch and recovery paths
       },
       creatorStore,
       nativeInstalled,
-      stateStore: createMemoryCommunityStateStore(),
-      downloadStore: createMemoryCommunityDownloadStore(),
+      stateStore,
+      downloadStore,
     });
     t.after(() => {
       library.close();
@@ -120,9 +122,28 @@ test('native Team and FPV families use their immutable launch and recovery paths
     const review = await library.reviewInstalledOffload(edition);
     await library.offloadInstalled(edition, review);
     assert.equal((await library.status(edition.editionId)).offloaded, true);
-    await library.install(edition);
+    const fresh = createCommunityLibrary({
+      client: {
+        download() {
+          throw new Error('No network in local recovery');
+        },
+        catalog() {
+          throw new Error('No catalog in local recovery');
+        },
+      },
+      creatorStore,
+      nativeInstalled,
+      stateStore,
+      downloadStore,
+    });
+    const retained = (await fresh.catalog({ installed: 'recovery' })).editions[0];
+    assert.equal(retained.editionId, edition.editionId);
+    assert.equal(retained.installed, false);
+    assert.equal(retained.publishedAt, undefined);
+    await fresh.restoreRetained(retained.editionId);
+    assert.equal((await fresh.status(edition.editionId)).playHref, installed.playHref);
     assert.equal(
-      (await library.status(edition.editionId)).runtimeIdentity,
+      (await fresh.status(edition.editionId)).runtimeIdentity,
       installed.runtimeIdentity,
     );
   }

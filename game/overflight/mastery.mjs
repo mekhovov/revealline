@@ -149,6 +149,29 @@ export function validateOverflightMastery(source) {
   return state;
 }
 
+function validateMasteryReceipt(value) {
+  exactKeys(value, ['entry', 'previous'], 'Mastery result receipt');
+  const key = dataIdentity(value.entry?.context);
+  const state = validateOverflightMastery({
+    format: OVERFLIGHT_MASTERY_FORMAT,
+    entries: { [key]: value.entry },
+  });
+  if (value.previous !== null) validateReport(value.previous);
+  return { entry: state.entries[key], previous: value.previous };
+}
+function retainMastery(current, key, updated) {
+  // Persist write order explicitly: a profile export may sort object keys.
+  // Legacy entries have no order, so use their stable identity as a tie-break.
+  const retained = Object.entries(current.entries)
+    .filter(([id]) => id !== key)
+    .sort(([a, left], [b, right]) => (left.order ?? 0) - (right.order ?? 0) || (a < b ? -1 : 1))
+    .slice(-(MAX_ENTRIES - 1));
+  current.entries = Object.fromEntries(
+    [...retained, [key, updated]].map(([id, value], order) => [id, { ...value, order }]),
+  );
+  return validateOverflightMastery(current);
+}
+
 /** Separate shared-profile sidecar. Existing score records and backups are untouched. */
 export function createOverflightMastery({ backend, ...options } = {}) {
   const store =
@@ -157,6 +180,7 @@ export function createOverflightMastery({ backend, ...options } = {}) {
       key: OVERFLIGHT_MASTERY_FORMAT,
       empty: () => ({ format: OVERFLIGHT_MASTERY_FORMAT, entries: {} }),
       validate: validateOverflightMastery,
+      validateReceipt: validateMasteryReceipt,
       ...options,
     });
   const session = new Map();
@@ -188,19 +212,7 @@ export function createOverflightMastery({ backend, ...options } = {}) {
       entry = merge(saved, session.get(key), report, context);
       const state = await store.update((source) => {
         const current = validateOverflightMastery(source);
-        // Persist write order explicitly: a profile export may sort object keys.
-        // Legacy entries have no order, so use their stable identity as a tie-break.
-        const retained = Object.entries(current.entries)
-          .filter(([id]) => id !== key)
-          .sort(
-            ([a, left], [b, right]) => (left.order ?? 0) - (right.order ?? 0) || (a < b ? -1 : 1),
-          )
-          .slice(-(MAX_ENTRIES - 1));
-        const updated = merge(current.entries[key], entry, report, context);
-        current.entries = Object.fromEntries(
-          [...retained, [key, updated]].map(([id, value], order) => [id, { ...value, order }]),
-        );
-        return validateOverflightMastery(current);
+        return retainMastery(current, key, merge(current.entries[key], entry, report, context));
       });
       entry = validateOverflightMastery(state).entries[key];
       durable = true;
@@ -213,7 +225,35 @@ export function createOverflightMastery({ backend, ...options } = {}) {
     return { ...structuredClone(entry), previous, durable };
   }
   return {
-    record(run) {
+    record(run, { attemptId } = {}) {
+      if (attemptId !== undefined)
+        return (async () => {
+          required(
+            !closed && !run.review && !run.fixture && !run.raidVariant && !run.hunt && !run.riy,
+            'Only a saved Single Drone flight can claim a result receipt.',
+          );
+          required(
+            /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}$/.test(attemptId),
+            'Invalid saved flight identity.',
+          );
+          const context = contextOf(run),
+            report = overflightRunReport(run),
+            key = dataIdentity(context);
+          validateReport(report);
+          const saved = await store.updateOnce(
+            { id: attemptId, input: { context, report } },
+            (source) => {
+              const current = validateOverflightMastery(source);
+              const previous = current.entries[key]?.last ?? null;
+              const updated = merge(current.entries[key], null, report, context);
+              const state = retainMastery(current, key, updated);
+              return { state, receipt: { entry: state.entries[key], previous } };
+            },
+          );
+          const receipt = validateMasteryReceipt(saved.receipt);
+          session.set(key, validateOverflightMastery(saved.state).entries[key]);
+          return { ...receipt.entry, previous: receipt.previous, durable: true };
+        })();
       if (!recorded.has(run)) {
         // A completed Marathon contract is still pending until bank/continue.
         if (

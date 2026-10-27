@@ -59,7 +59,8 @@ export const SOURCE_EXTERNAL_CHAPTER = validateExternalChapter({
 
 // Reviewed candidates are literal source authority, never inferred from uploaded
 // files, installed names or catalog ordering. Release publication is separate.
-const routeDescriptors = [{
+const routeDescriptors = [
+  {
     format: 'revealline-external-chapter.v1',
     id: 'route-worlds-ukraine',
     revision: 1,
@@ -114,7 +115,7 @@ const routeDescriptors = [{
       },
     ],
   },
-{
+  {
     format: 'revealline-external-chapter.v1',
     id: 'route-worlds-retro',
     revision: 1,
@@ -168,7 +169,8 @@ const routeDescriptors = [{
         height: 941,
       },
     ],
-  }].map((descriptor) => validateExternalChapter(descriptor));
+  },
+].map((descriptor) => validateExternalChapter(descriptor));
 const sentinelDescriptor = validateExternalChapter({
   format: 'revealline-external-chapter.v1',
   id: 'sentinel-circuit-fpv',
@@ -224,7 +226,8 @@ const sentinelDescriptor = validateExternalChapter({
     },
   ],
 });
-const sentinelThemeDescriptors = [{
+const sentinelThemeDescriptors = [
+  {
     format: 'revealline-external-chapter.v1',
     id: 'sentinel-circuit-ukraine',
     revision: 1,
@@ -279,7 +282,7 @@ const sentinelThemeDescriptors = [{
       },
     ],
   },
-{
+  {
     format: 'revealline-external-chapter.v1',
     id: 'sentinel-circuit-retro',
     revision: 1,
@@ -333,8 +336,10 @@ const sentinelThemeDescriptors = [{
         height: 887,
       },
     ],
-  }].map((descriptor) => validateExternalChapter(descriptor));
-const fractureDescriptors = [{
+  },
+].map((descriptor) => validateExternalChapter(descriptor));
+const fractureDescriptors = [
+  {
     format: 'revealline-external-chapter.v1',
     id: 'fracture-lines-fpv',
     revision: 1,
@@ -389,7 +394,7 @@ const fractureDescriptors = [{
       },
     ],
   },
-{
+  {
     format: 'revealline-external-chapter.v1',
     id: 'fracture-lines-ukraine',
     revision: 1,
@@ -444,7 +449,7 @@ const fractureDescriptors = [{
       },
     ],
   },
-{
+  {
     format: 'revealline-external-chapter.v1',
     id: 'fracture-lines-retro',
     revision: 1,
@@ -498,8 +503,10 @@ const fractureDescriptors = [{
         height: 887,
       },
     ],
-  }].map((descriptor) => validateExternalChapter(descriptor));
-const countercurrentDescriptors = [{
+  },
+].map((descriptor) => validateExternalChapter(descriptor));
+const countercurrentDescriptors = [
+  {
     format: 'revealline-external-chapter.v1',
     id: 'countercurrent-fpv',
     revision: 1,
@@ -554,7 +561,7 @@ const countercurrentDescriptors = [{
       },
     ],
   },
-{
+  {
     format: 'revealline-external-chapter.v1',
     id: 'countercurrent-ukraine',
     revision: 1,
@@ -609,7 +616,7 @@ const countercurrentDescriptors = [{
       },
     ],
   },
-{
+  {
     format: 'revealline-external-chapter.v1',
     id: 'countercurrent-retro',
     revision: 1,
@@ -663,7 +670,8 @@ const countercurrentDescriptors = [{
         height: 887,
       },
     ],
-  }].map((descriptor) => validateExternalChapter(descriptor));
+  },
+].map((descriptor) => validateExternalChapter(descriptor));
 export const SOURCE_EXTERNAL_CHAPTERS = Object.freeze([
   SOURCE_EXTERNAL_CHAPTER,
   ...routeDescriptors,
@@ -672,18 +680,20 @@ export const SOURCE_EXTERNAL_CHAPTERS = Object.freeze([
   ...fractureDescriptors,
   ...countercurrentDescriptors,
 ]);
-const names = ['FPV Front · Pressure Pictures',
-'Ukraine Atlas · Route Choices',
-'1994 Forever · Route Choices',
-'FPV Front · Sentinel Circuit',
-'Ukraine Atlas · Sentinel Circuit',
-'1994 Forever · Sentinel Circuit',
-'FPV Front · Fracture Lines',
-'Ukraine Atlas · Fracture Lines',
-'1994 Forever · Fracture Lines',
-'FPV Front · Countercurrent',
-'Ukraine Atlas · Countercurrent',
-'1994 Forever · Countercurrent'];
+const names = [
+  'FPV Front · Pressure Pictures',
+  'Ukraine Atlas · Route Choices',
+  '1994 Forever · Route Choices',
+  'FPV Front · Sentinel Circuit',
+  'Ukraine Atlas · Sentinel Circuit',
+  '1994 Forever · Sentinel Circuit',
+  'FPV Front · Fracture Lines',
+  'Ukraine Atlas · Fracture Lines',
+  '1994 Forever · Fracture Lines',
+  'FPV Front · Countercurrent',
+  'Ukraine Atlas · Countercurrent',
+  '1994 Forever · Countercurrent',
+];
 export const SOURCE_EXTERNAL_EDITIONS = Object.freeze(
   SOURCE_EXTERNAL_CHAPTERS.map((descriptor, index) =>
     Object.freeze({

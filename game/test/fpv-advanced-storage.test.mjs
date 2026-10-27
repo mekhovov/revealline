@@ -49,7 +49,8 @@ test(
           (checkpoint) => !checkpoint.recording && checkpoint.pending.length === 0,
         ),
       );
-      assert.throws(() => sim.stepMission(), /duration limit/);
+      assert.throws(() => sim.stepMission(), { code: 'ADVANCED_DURATION_LIMIT' });
+      assert.throws(() => sim.proposeMission(), { code: 'ADVANCED_DURATION_LIMIT' });
       const replay = await replayAdvancedRecording(exported);
       assert.equal(replay.verified, true);
       assert.deepEqual(replay.telemetry, sim.telemetry());

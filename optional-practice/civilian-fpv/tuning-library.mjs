@@ -12,6 +12,14 @@ import { rateProfileIdentity } from './rates.mjs';
 import { validateRateImportReceipt } from './betaflight-import.mjs';
 import { validateAdvancedAircraft } from './advanced-simulation.mjs';
 import { validateAdvancedTune } from './advanced-controller.mjs';
+import {
+  createPresetConfiguration,
+  createPresetComponents,
+  applyAircraftComponents,
+  getAircraftPreset,
+  validateAircraftComponents,
+} from './aircraft-presets.mjs';
+import { validateAircraftControllerTune } from './aircraft-physics.mjs';
 
 export const TUNING_LIBRARY_FORMAT = 'FpvTuningLibrary.v1';
 export const TUNING_LIBRARY_KEY = 'revealline.fpv.tuning.v1';
@@ -111,7 +119,11 @@ export function validateTuningLibrary(input) {
     'The player default must reference a saved profile',
   );
   for (const setup of value.setups) {
-    exactKeys(setup, ['id', 'name', 'profileId', 'camera', 'advanced'], 'drone setup');
+    exactKeys(
+      setup,
+      ['id', 'name', 'profileId', 'camera', 'advanced', 'preset', 'components'],
+      'drone setup',
+    );
     required(
       stableId(setup.id) && !setups.has(setup.id) && name(setup.name),
       'Invalid or duplicate drone setup',
@@ -119,6 +131,14 @@ export function validateTuningLibrary(input) {
     setups.add(setup.id);
     required(setup.profileId === null || profiles.has(setup.profileId), 'Drone profile is missing');
     setup.camera = validateDroneCamera(setup.camera);
+    if (setup.preset !== undefined) {
+      exactKeys(setup.preset, ['id', 'revision'], 'aircraft preset provenance');
+      required(
+        stableId(setup.preset.id) && revision(setup.preset.revision) && setup.preset.revision > 0,
+        'Invalid aircraft preset provenance',
+      );
+      required(setup.advanced, 'An aircraft preset needs a saved physical configuration');
+    }
     if (setup.advanced !== undefined) {
       exactKeys(setup.advanced, ['aircraft', 'controller'], 'Advanced drone configuration');
       required(
@@ -127,8 +147,20 @@ export function validateTuningLibrary(input) {
       );
       setup.advanced = {
         aircraft: validateAdvancedAircraft(setup.advanced.aircraft),
-        controller: validateAdvancedTune(setup.advanced.controller),
+        controller:
+          setup.advanced.aircraft.format === 'AdvancedAircraft.v2'
+            ? validateAircraftControllerTune(setup.advanced.controller)
+            : validateAdvancedTune(setup.advanced.controller),
       };
+    }
+    if (setup.components !== undefined) {
+      setup.components = validateAircraftComponents(setup.components);
+      required(
+        setup.advanced?.aircraft.format === 'AdvancedAircraft.v2' &&
+          setup.preset?.id === setup.components.presetId &&
+          setup.advanced.aircraft.id === setup.components.presetId,
+        'Component inventory must describe this aircraft setup',
+      );
     }
   }
   required(setups.has(value.selectedSetupId), 'Selected drone setup is missing');
@@ -223,6 +255,12 @@ export function createTuningLibraryStore({
       );
       const next = copy(current);
       mutate(next);
+      // A no-op save is not a new revision. Explicit restores still write so
+      // they can repair unreadable storage even when the fallback is identical.
+      if (!recover && canonicalJSON(next) === canonicalJSON(current)) {
+        error = null;
+        return copy(current);
+      }
       next.revision++;
       const valid = validateTuningLibrary(next),
         serialized = canonicalJSON(valid);
@@ -255,6 +293,22 @@ export function createTuningLibraryStore({
   };
   function updateProfile(value, id, changes) {
     const profile = find(value, id);
+    const candidate = { ...copy(profile) };
+    if (changes.name !== undefined) candidate.name = changes.name;
+    if (changes.response !== undefined)
+      candidate.response = validateFlightResponse(changes.response);
+    if (Object.hasOwn(changes, 'provenance')) {
+      if (changes.provenance === null) delete candidate.provenance;
+      else candidate.provenance = validateRateImportReceipt(changes.provenance);
+    } else if (
+      candidate.provenance &&
+      (!candidate.response.rates ||
+        candidate.provenance.rateIdentity !== rateProfileIdentity(candidate.response.rates))
+    ) {
+      // Edited rates cannot claim the unchanged output of their source import.
+      delete candidate.provenance;
+    }
+    if (canonicalJSON(candidate) === canonicalJSON(profile)) return false;
     profile.history = [
       ...profile.history,
       {
@@ -265,20 +319,11 @@ export function createTuningLibraryStore({
       },
     ].slice(-24);
     profile.revision++;
-    if (changes.name !== undefined) profile.name = changes.name;
-    if (changes.response !== undefined) profile.response = validateFlightResponse(changes.response);
-    if (Object.hasOwn(changes, 'provenance')) {
-      if (changes.provenance === null) delete profile.provenance;
-      else profile.provenance = validateRateImportReceipt(changes.provenance);
-    } else if (
-      profile.provenance &&
-      (!profile.response.rates ||
-        profile.provenance.rateIdentity !== rateProfileIdentity(profile.response.rates))
-    ) {
-      // The old revision retains its receipt; edited rates cannot claim to be
-      // the unchanged output of the original import.
-      delete profile.provenance;
-    }
+    profile.name = candidate.name;
+    profile.response = candidate.response;
+    if (candidate.provenance) profile.provenance = candidate.provenance;
+    else delete profile.provenance;
+    return true;
   }
   return Object.freeze({
     snapshot: () => copy(current),
@@ -307,6 +352,60 @@ export function createTuningLibraryStore({
         const index = value.setups.findIndex((item) => item.id === drone.id);
         required(index >= 0, 'Unknown drone setup');
         value.setups[index] = drone;
+      });
+    },
+    /** Persist the whole workbench draft in the existing single library entry.
+     * The selected response is explicitly assigned; opening/browsing an item
+     * never calls this method. Shared updates require an explicit action. */
+    saveSetupDraft: async (input, expected = current.revision) => {
+      const request = submitted(input);
+      exactKeys(
+        request,
+        ['setup', 'profile', 'rateAction', 'newProfileId', 'newProfileName', 'select'],
+        'complete setup draft',
+      );
+      exactKeys(request.profile, ['sourceId', 'name', 'response', 'provenance'], 'draft rates');
+      required(
+        request.rateAction === undefined || ['copy', 'update'].includes(request.rateAction),
+        'Choose whether to copy rates or update their shared profile',
+      );
+      required(
+        request.select === undefined || typeof request.select === 'boolean',
+        'Invalid setup selection',
+      );
+      return transaction(expected, (value) => {
+        const source = find(value, request.profile.sourceId),
+          setup = copy(request.setup),
+          trial = copy(value),
+          { sourceId, ...patch } = request.profile;
+        required(
+          patch.name !== undefined && patch.response !== undefined,
+          'Draft rates are incomplete',
+        );
+        const changed = updateProfile(trial, sourceId, patch);
+        setup.profileId =
+          setup.profileId === null && source.id === value.defaultProfileId ? null : source.id;
+        if (changed && (request.rateAction ?? 'copy') === 'copy') {
+          required(
+            stableId(request.newProfileId) &&
+              !value.profiles.some((profile) => profile.id === request.newProfileId),
+            'Choose a new rate profile ID for this copy',
+          );
+          const edited = find(trial, sourceId);
+          value.profiles.push({
+            id: request.newProfileId,
+            name: request.newProfileName ?? edited.name,
+            response: copy(edited.response),
+            revision: 0,
+            history: [],
+            ...(edited.provenance ? { provenance: copy(edited.provenance) } : {}),
+          });
+          setup.profileId = request.newProfileId;
+        } else if (changed) updateProfile(value, sourceId, patch);
+        const index = value.setups.findIndex((item) => item.id === setup.id);
+        if (index < 0) value.setups.push(setup);
+        else value.setups[index] = setup;
+        if (request.select) value.selectedSetupId = setup.id;
       });
     },
     createProfile: async (input, expected = current.revision) => {
@@ -361,6 +460,160 @@ export function createTuningLibraryStore({
         const index = value.setups.findIndex((item) => item.id === drone.id);
         if (index < 0) value.setups.push(drone);
         else value.setups[index] = drone;
+      });
+    },
+    createAndSelectSetup: async (setup, expected = current.revision) => {
+      const drone = submitted(setup);
+      return transaction(expected, (value) => {
+        value.setups.push(drone);
+        value.selectedSetupId = drone.id;
+      });
+    },
+    createPresetSetup: async (input, expected = current.revision) => {
+      const request = submitted(input);
+      exactKeys(
+        request,
+        ['presetId', 'setupId', 'profileId', 'rates', 'response', 'provenance', 'replace'],
+        'aircraft preset selection',
+      );
+      const preset = getAircraftPreset(request.presetId),
+        configuration = createPresetConfiguration(preset.id);
+      required(
+        ['defaults', 'keep'].includes(request.rates),
+        'Choose aircraft defaults or keep current rates',
+      );
+      required(
+        request.replace === undefined || typeof request.replace === 'boolean',
+        'Invalid preset reset',
+      );
+      required(
+        request.rates === 'keep' ||
+          (request.response === undefined && request.provenance === undefined),
+        'Aircraft defaults cannot contain replacement rates',
+      );
+      return transaction(expected, (value) => {
+        const existing = value.setups.find((item) => item.id === request.setupId);
+        required(
+          request.replace ? existing?.preset?.id === preset.id : !existing,
+          'Choose a new setup ID or reset its own preset',
+        );
+        const active = value.setups.find((item) => item.id === value.selectedSetupId),
+          currentProfile = find(value, active.profileId ?? value.defaultProfileId);
+        const response =
+          request.rates === 'keep'
+            ? validateFlightResponse(request.response ?? currentProfile.response)
+            : configuration.response;
+        const provenance =
+          request.rates === 'keep'
+            ? (request.provenance ??
+              (request.response === undefined ? currentProfile.provenance : undefined))
+            : undefined;
+        value.profiles.push({
+          id: request.profileId,
+          name: `${preset.name} · ${request.rates === 'keep' ? 'copied rates' : 'SIM starter rates'}`,
+          revision: 0,
+          response,
+          history: [],
+          ...(provenance ? { provenance } : {}),
+        });
+        const setup = {
+          id: request.setupId,
+          name: existing?.name ?? preset.name,
+          profileId: request.profileId,
+          camera: configuration.camera,
+          advanced: { aircraft: configuration.aircraft, controller: configuration.controller },
+          preset: configuration.preset,
+          components: configuration.components,
+        };
+        if (request.replace) value.setups[value.setups.indexOf(existing)] = setup;
+        else value.setups.push(setup);
+        value.selectedSetupId = setup.id;
+      });
+    },
+    saveAircraftConfiguration: async (input, expected = current.revision) => {
+      const request = submitted(input);
+      exactKeys(
+        request,
+        ['setupId', 'newProfileId', 'advanced', 'response', 'camera', 'preset', 'components'],
+        'aircraft configuration edit',
+      );
+      required(request.advanced, 'An aircraft configuration is required');
+      return transaction(expected, (value) => {
+        const setup = value.setups.find((item) => item.id === request.setupId);
+        required(setup, 'Unknown drone setup');
+        const currentProfile = find(value, setup.profileId ?? value.defaultProfileId);
+        const response =
+          request.response === undefined
+            ? currentProfile.response
+            : validateFlightResponse(request.response);
+        // Physical/camera-only saves do not spend a profile slot. A changed
+        // response gets an independent profile rather than editing shared users.
+        if (canonicalJSON(response) !== canonicalJSON(currentProfile.response)) {
+          value.profiles.push({
+            id: request.newProfileId,
+            name: `${setup.name} · rates`.slice(0, 120),
+            revision: 0,
+            response,
+            history: [],
+          });
+          setup.profileId = request.newProfileId;
+        }
+        if (Object.hasOwn(request, 'preset')) {
+          if (request.preset === null) delete setup.preset;
+          else {
+            required(
+              request.preset?.id === request.advanced.aircraft?.id,
+              'Preset provenance must match the aircraft',
+            );
+            setup.preset = request.preset;
+            // Explicit selection is a fresh built-in baseline even when its ID
+            // matches. Ordinary coefficient edits omit preset and retain the
+            // installed battery/payload inventory instead.
+            delete setup.components;
+          }
+        } else if (setup.advanced?.aircraft.id !== request.advanced.aircraft?.id)
+          delete setup.preset;
+        if (Object.hasOwn(request, 'components')) {
+          if (request.components === null) delete setup.components;
+          else {
+            const components = validateAircraftComponents(request.components);
+            required(
+              components.presetId === setup.preset?.id &&
+                components.presetId === request.advanced.aircraft?.id,
+              'Component inventory must describe this aircraft setup',
+            );
+            setup.components = components;
+          }
+        }
+        if (setup.components?.presetId !== setup.preset?.id) delete setup.components;
+        if (setup.preset && !setup.components) {
+          try {
+            setup.components = createPresetComponents(setup.preset.id, request.advanced.aircraft);
+          } catch {
+            // Unknown future catalog revisions retain numerical physics without
+            // inventing a component inventory for them.
+          }
+        }
+        setup.advanced = request.advanced;
+        if (request.camera !== undefined) setup.camera = validateDroneCamera(request.camera);
+      });
+    },
+    saveAircraftComponents: async (input, expected = current.revision) => {
+      const request = submitted(input);
+      exactKeys(request, ['setupId', 'battery', 'cameraPayload'], 'component edit');
+      return transaction(expected, (value) => {
+        const setup = value.setups.find((item) => item.id === request.setupId);
+        required(
+          setup?.preset && setup.advanced?.aircraft.format === 'AdvancedAircraft.v2',
+          'Select a built-in aircraft setup before editing components',
+        );
+        const result = applyAircraftComponents(
+          setup.advanced.aircraft,
+          setup.components ?? createPresetComponents(setup.preset.id, setup.advanced.aircraft),
+          { battery: request.battery, cameraPayload: request.cameraPayload },
+        );
+        setup.advanced.aircraft = result.aircraft;
+        setup.components = result.components;
       });
     },
     selectSetup: (id, expected = current.revision) =>

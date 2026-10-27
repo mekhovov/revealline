@@ -1,0 +1,4345 @@
+{
+  "snapshot": {
+    "combatArt": {
+      "selection": "current",
+      "installed": false,
+      "active": "current",
+      "pending": false,
+      "issue": null,
+      "storageIssue": false,
+      "renderer": null
+    },
+    "appearance": {
+      "requested": "industrial-workshop",
+      "appearance": {
+        "collectionId": "industrial-workshop",
+        "revision": "r1",
+        "drone": "racer"
+      },
+      "fallbackReason": null,
+      "accepted": null,
+      "pending": false
+    },
+    "replay": null,
+    "sectorTiming": {
+      "status": "none",
+      "reference": null,
+      "referenceId": null,
+      "sectors": [],
+      "latest": null
+    },
+    "ghost": {
+      "enabled": false,
+      "loading": false,
+      "referenceId": null,
+      "presentation": null,
+      "resources": null
+    },
+    "editorPresentation": null,
+    "checkpointPractice": null,
+    "sectionReplay": null,
+    "modePractice": false,
+    "records": [],
+    "catalogue": 204,
+    "learning": null,
+    "radio": {
+      "active": false,
+      "frozen": false,
+      "verified": false,
+      "reason": "select-device",
+      "selected": null,
+      "pickup": null,
+      "profile": null,
+      "connectionLost": false,
+      "editing": false,
+      "profileDirty": false,
+      "armSwitchBound": false,
+      "fireBound": false,
+      "fireReady": false
+    },
+    "immersive": {
+      "active": false,
+      "mode": "none",
+      "toolsOpen": false
+    },
+    "inputDisplay": {
+      "source": "keyboard",
+      "style": "compact"
+    }
+  },
+  "buttons": [
+    {
+      "id": "worlds-shell-action-menu",
+      "text": ""
+    },
+    {
+      "id": "worlds-shell-action-pause",
+      "text": "Pause"
+    },
+    {
+      "id": "game-mode-simulator",
+      "text": "SIMbeta"
+    },
+    {
+      "id": "simulator-modes-more",
+      "text": "Less"
+    },
+    {
+      "id": "worlds-shell-action-primary",
+      "text": "Fly now"
+    },
+    {
+      "id": "worlds-shell-action-home-extra",
+      "text": "Learn to fly"
+    },
+    {
+      "id": "worlds-shell-action-missions",
+      "text": "Explore worlds"
+    },
+    {
+      "id": "worlds-shell-action-settings",
+      "text": "Settings"
+    },
+    {
+      "id": "worlds-shell-action-sound",
+      "text": "Sound: off"
+    },
+    {
+      "id": "worlds-shell-action-fullscreen",
+      "text": "Full screen"
+    }
+  ],
+  "selects": [
+    {
+      "id": "",
+      "value": "1",
+      "options": [
+        {
+          "v": "1",
+          "t": "100%"
+        },
+        {
+          "v": "1.5",
+          "t": "150%"
+        },
+        {
+          "v": "2",
+          "t": "200%"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "1",
+      "options": [
+        {
+          "v": "1",
+          "t": "Standard"
+        },
+        {
+          "v": "2",
+          "t": "Extended (2×)"
+        }
+      ]
+    },
+    {
+      "id": "world-replay-rate",
+      "value": "1",
+      "options": [
+        {
+          "v": "0.25",
+          "t": "0.25×"
+        },
+        {
+          "v": "0.5",
+          "t": "0.5×"
+        },
+        {
+          "v": "1",
+          "t": "1×"
+        }
+      ]
+    },
+    {
+      "id": "flight-mode",
+      "value": "self-level",
+      "options": [
+        {
+          "v": "self-level",
+          "t": "Self-level"
+        },
+        {
+          "v": "acro",
+          "t": "Acro"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "continuous",
+      "options": [
+        {
+          "v": "original",
+          "t": "Original course"
+        },
+        {
+          "v": "continuous",
+          "t": "Continuous combat"
+        },
+        {
+          "v": "hunting",
+          "t": "Target hunting · 3 minutes"
+        },
+        {
+          "v": "elimination",
+          "t": "Elimination"
+        },
+        {
+          "v": "strike",
+          "t": "Strike"
+        },
+        {
+          "v": "survival",
+          "t": "Survival"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "normal",
+      "options": [
+        {
+          "v": "easy",
+          "t": "Easy"
+        },
+        {
+          "v": "normal",
+          "t": "Normal"
+        },
+        {
+          "v": "hard",
+          "t": "Hard"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "12",
+      "options": [
+        {
+          "v": "6",
+          "t": "Sparse · up to 6"
+        },
+        {
+          "v": "12",
+          "t": "Standard · up to 12"
+        },
+        {
+          "v": "20",
+          "t": "Dense · up to 20"
+        },
+        {
+          "v": "64",
+          "t": "Up to 64"
+        },
+        {
+          "v": "96",
+          "t": "Up to 96"
+        },
+        {
+          "v": "128",
+          "t": "Up to 128"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "timed",
+      "options": [
+        {
+          "v": "timed",
+          "t": "Six minutes"
+        },
+        {
+          "v": "endless",
+          "t": "Endless"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "bomb",
+      "options": [
+        {
+          "v": "bomb",
+          "t": "Drop bomb"
+        },
+        {
+          "v": "remote",
+          "t": "Remote charge"
+        },
+        {
+          "v": "drone",
+          "t": "Drone charge"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "balanced",
+      "options": [
+        {
+          "v": "balanced",
+          "t": "Balanced"
+        },
+        {
+          "v": "arcade",
+          "t": "Arcade"
+        },
+        {
+          "v": "tactical",
+          "t": "Tactical"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "normal",
+      "options": [
+        {
+          "v": "normal",
+          "t": "Normal"
+        },
+        {
+          "v": "invulnerable",
+          "t": "Invulnerable · assisted"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "normal",
+      "options": [
+        {
+          "v": "normal",
+          "t": "Normal"
+        },
+        {
+          "v": "one-hit",
+          "t": "One hit · assisted"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "autocannon",
+      "options": [
+        {
+          "v": "autocannon",
+          "t": "Autocannon"
+        },
+        {
+          "v": "scatter",
+          "t": "Scatter"
+        },
+        {
+          "v": "precision",
+          "t": "Precision"
+        },
+        {
+          "v": "rocket",
+          "t": "Rockets"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "scatter",
+      "options": [
+        {
+          "v": "autocannon",
+          "t": "Autocannon"
+        },
+        {
+          "v": "scatter",
+          "t": "Scatter"
+        },
+        {
+          "v": "precision",
+          "t": "Precision"
+        },
+        {
+          "v": "rocket",
+          "t": "Rockets"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "always",
+      "options": [
+        {
+          "v": "off",
+          "t": "Off"
+        },
+        {
+          "v": "damaged",
+          "t": "When damaged"
+        },
+        {
+          "v": "always",
+          "t": "Always"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "aimed",
+      "options": [
+        {
+          "v": "off",
+          "t": "Off"
+        },
+        {
+          "v": "aimed",
+          "t": "Aimed / recently hit"
+        },
+        {
+          "v": "all",
+          "t": "All"
+        }
+      ]
+    },
+    {
+      "id": "flight-source",
+      "value": "keyboard",
+      "options": [
+        {
+          "v": "keyboard",
+          "t": "Keyboard"
+        },
+        {
+          "v": "touch",
+          "t": "Touch"
+        },
+        {
+          "v": "controller",
+          "t": "Controller / Steam Deck"
+        },
+        {
+          "v": "radio",
+          "t": "USB radio"
+        }
+      ]
+    },
+    {
+      "id": "flight-touch-response",
+      "value": "precise",
+      "options": [
+        {
+          "v": "precise",
+          "t": "Precise — small corrections"
+        },
+        {
+          "v": "direct",
+          "t": "Direct — linear response"
+        }
+      ]
+    },
+    {
+      "id": "flight-keyboard-preset",
+      "value": "two-stick",
+      "options": [
+        {
+          "v": "two-stick",
+          "t": "Two-stick · WASD + arrows"
+        },
+        {
+          "v": "classic",
+          "t": "Classic · W/S pitch"
+        }
+      ]
+    },
+    {
+      "id": "sim-defeat-sounds",
+      "value": "reactions",
+      "options": [
+        {
+          "v": "classic",
+          "t": "Classic sounds"
+        },
+        {
+          "v": "reactions",
+          "t": "Humanoid reactions"
+        }
+      ]
+    },
+    {
+      "id": "world-language",
+      "value": "en",
+      "options": [
+        {
+          "v": "en",
+          "t": "English"
+        },
+        {
+          "v": "uk",
+          "t": "Українська"
+        }
+      ]
+    },
+    {
+      "id": "enemy-appearance-1",
+      "value": "authored",
+      "options": [
+        {
+          "v": "authored",
+          "t": "Original level artwork"
+        },
+        {
+          "v": "military",
+          "t": "Military Field · soldiers and vehicles"
+        }
+      ]
+    },
+    {
+      "id": "worlds-global-theme-arcadeArt",
+      "value": "follow-game",
+      "options": [
+        {
+          "v": "follow-game",
+          "t": "Follow theme"
+        },
+        {
+          "v": "authored",
+          "t": "Original mission visuals"
+        }
+      ]
+    },
+    {
+      "id": "worlds-global-theme-ornaments",
+      "value": "theme",
+      "options": [
+        {
+          "v": "theme",
+          "t": "Theme default"
+        },
+        {
+          "v": "off",
+          "t": "Off"
+        },
+        {
+          "v": "subtle",
+          "t": "Subtle"
+        },
+        {
+          "v": "rich",
+          "t": "Detailed"
+        }
+      ]
+    },
+    {
+      "id": "flight-camera",
+      "value": "fpv",
+      "options": [
+        {
+          "v": "fpv",
+          "t": "FPV"
+        },
+        {
+          "v": "chase",
+          "t": "Chase"
+        },
+        {
+          "v": "overview",
+          "t": "Overview"
+        }
+      ]
+    },
+    {
+      "id": "drone-look",
+      "value": "racer",
+      "options": [
+        {
+          "v": "racer",
+          "t": "Racer"
+        },
+        {
+          "v": "pixel",
+          "t": "Pixel"
+        },
+        {
+          "v": "utility",
+          "t": "Utility"
+        }
+      ]
+    },
+    {
+      "id": "flight-quality",
+      "value": "balanced",
+      "options": [
+        {
+          "v": "balanced",
+          "t": "Balanced"
+        },
+        {
+          "v": "low",
+          "t": "Performance"
+        },
+        {
+          "v": "high",
+          "t": "Quality"
+        }
+      ]
+    },
+    {
+      "id": "sim-appearance-interface",
+      "value": "follow-game",
+      "options": [
+        {
+          "v": "follow-game",
+          "t": "Follow game"
+        },
+        {
+          "v": "authored",
+          "t": "Authored appearance"
+        },
+        {
+          "v": "legacy",
+          "t": "Signal Blue"
+        },
+        {
+          "v": "industrial-workshop",
+          "t": "Flight Deck"
+        },
+        {
+          "v": "military-field",
+          "t": "Military Field"
+        },
+        {
+          "v": "ember-foundry",
+          "t": "Ember Foundry"
+        },
+        {
+          "v": "polar-relay",
+          "t": "Polar Relay"
+        },
+        {
+          "v": "vyshyvanka",
+          "t": "Vyshyvanka"
+        },
+        {
+          "v": "dnipro-porcelain",
+          "t": "Dnipro Porcelain"
+        },
+        {
+          "v": "tryzub",
+          "t": "Tryzub"
+        },
+        {
+          "v": "windows-classic",
+          "t": "Desktop 98"
+        },
+        {
+          "v": "dos",
+          "t": "DOS Navigator"
+        },
+        {
+          "v": "orchard-workshop",
+          "t": "Orchard Workshop"
+        },
+        {
+          "v": "neon-ruins",
+          "t": "Neon Ruins"
+        },
+        {
+          "v": "pocket-lcd",
+          "t": "Pocket LCD"
+        },
+        {
+          "v": "copper-observatory",
+          "t": "Copper Observatory"
+        },
+        {
+          "v": "sakura-station",
+          "t": "Sakura Station"
+        },
+        {
+          "v": "obsidian-reliquary",
+          "t": "Obsidian Reliquary"
+        },
+        {
+          "v": "deep-space",
+          "t": "Deep Space"
+        },
+        {
+          "v": "moonlit-grove",
+          "t": "Moonlit Grove"
+        }
+      ]
+    },
+    {
+      "id": "sim-appearance-world",
+      "value": "follow-game",
+      "options": [
+        {
+          "v": "follow-game",
+          "t": "Follow game"
+        },
+        {
+          "v": "authored",
+          "t": "Authored appearance"
+        },
+        {
+          "v": "industrial-workshop",
+          "t": "Flight Deck"
+        },
+        {
+          "v": "military-field",
+          "t": "Military Field"
+        },
+        {
+          "v": "ember-foundry",
+          "t": "Ember Foundry"
+        },
+        {
+          "v": "polar-relay",
+          "t": "Polar Relay"
+        },
+        {
+          "v": "vyshyvanka",
+          "t": "Vyshyvanka"
+        },
+        {
+          "v": "dnipro-porcelain",
+          "t": "Dnipro Porcelain"
+        },
+        {
+          "v": "tryzub",
+          "t": "Tryzub"
+        },
+        {
+          "v": "windows-classic",
+          "t": "Desktop 98"
+        },
+        {
+          "v": "dos",
+          "t": "DOS Navigator"
+        },
+        {
+          "v": "orchard-workshop",
+          "t": "Orchard Workshop"
+        },
+        {
+          "v": "neon-ruins",
+          "t": "Neon Ruins"
+        },
+        {
+          "v": "pocket-lcd",
+          "t": "Pocket LCD"
+        },
+        {
+          "v": "copper-observatory",
+          "t": "Copper Observatory"
+        },
+        {
+          "v": "sakura-station",
+          "t": "Sakura Station"
+        },
+        {
+          "v": "obsidian-reliquary",
+          "t": "Obsidian Reliquary"
+        },
+        {
+          "v": "deep-space",
+          "t": "Deep Space"
+        },
+        {
+          "v": "moonlit-grove",
+          "t": "Moonlit Grove"
+        }
+      ]
+    },
+    {
+      "id": "enemy-appearance-1",
+      "value": "authored",
+      "options": [
+        {
+          "v": "authored",
+          "t": "Original level artwork"
+        },
+        {
+          "v": "military",
+          "t": "Military Field · soldiers and vehicles"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "authored",
+      "options": [
+        {
+          "v": "authored",
+          "t": "As designed"
+        },
+        {
+          "v": "tactical",
+          "t": "Field kit"
+        },
+        {
+          "v": "rivals",
+          "t": "Worn field kit"
+        },
+        {
+          "v": "arcade",
+          "t": "Winter kit"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "auto",
+      "options": [
+        {
+          "v": "auto",
+          "t": "Auto"
+        },
+        {
+          "v": "high",
+          "t": "High"
+        },
+        {
+          "v": "ultra",
+          "t": "Ultra"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "current",
+      "options": [
+        {
+          "v": "current",
+          "t": "Current"
+        },
+        {
+          "v": "realistic",
+          "t": "Realistic"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "custom",
+      "options": [
+        {
+          "v": "custom",
+          "t": "Custom"
+        },
+        {
+          "v": "learning",
+          "t": "Learning · 82° / 0°"
+        },
+        {
+          "v": "all-round",
+          "t": "All-round · 95° / 15°"
+        },
+        {
+          "v": "racing",
+          "t": "Racing · 110° / 25°"
+        }
+      ]
+    },
+    {
+      "id": "sim-text-face",
+      "value": "pixel",
+      "options": [
+        {
+          "v": "pixel",
+          "t": "Game typography"
+        },
+        {
+          "v": "plain",
+          "t": "Plain text"
+        }
+      ]
+    },
+    {
+      "id": "worlds-global-textSize",
+      "value": "standard",
+      "options": [
+        {
+          "v": "standard",
+          "t": "Standard"
+        },
+        {
+          "v": "large",
+          "t": "Large"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "guided",
+      "options": [
+        {
+          "v": "off",
+          "t": "Off"
+        },
+        {
+          "v": "guided",
+          "t": "Guided"
+        },
+        {
+          "v": "minimal",
+          "t": "Minimal"
+        },
+        {
+          "v": "detailed",
+          "t": "Detailed"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "standard",
+      "options": [
+        {
+          "v": "standard",
+          "t": "Standard"
+        },
+        {
+          "v": "large",
+          "t": "Large"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "false",
+      "options": [
+        {
+          "v": "false",
+          "t": "Standard"
+        },
+        {
+          "v": "true",
+          "t": "High contrast"
+        }
+      ]
+    },
+    {
+      "id": "sim-motion",
+      "value": "system",
+      "options": [
+        {
+          "v": "system",
+          "t": "Follow device preference"
+        },
+        {
+          "v": "reduced",
+          "t": "Reduced motion"
+        }
+      ]
+    },
+    {
+      "id": "flight-stick-display",
+      "value": "compact",
+      "options": [
+        {
+          "v": "compact",
+          "t": "Compact sticks"
+        },
+        {
+          "v": "expanded",
+          "t": "Expanded sticks"
+        },
+        {
+          "v": "setup",
+          "t": "Sticks in setup only"
+        }
+      ]
+    },
+    {
+      "id": "flight-drone-guide",
+      "value": "compact",
+      "options": [
+        {
+          "v": "compact",
+          "t": "Compact"
+        },
+        {
+          "v": "learning",
+          "t": "Learning"
+        },
+        {
+          "v": "off",
+          "t": "Off"
+        }
+      ]
+    },
+    {
+      "id": "flight-guide-scale",
+      "value": "standard",
+      "options": [
+        {
+          "v": "standard",
+          "t": "Standard"
+        },
+        {
+          "v": "large",
+          "t": "Large"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "auto",
+      "options": [
+        {
+          "v": "auto",
+          "t": "Auto · fit device"
+        },
+        {
+          "v": "compact",
+          "t": "Compact"
+        },
+        {
+          "v": "large",
+          "t": "Large"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "balanced",
+      "options": [
+        {
+          "v": "quiet",
+          "t": "Quiet"
+        },
+        {
+          "v": "balanced",
+          "t": "Balanced"
+        },
+        {
+          "v": "strong",
+          "t": "Strong"
+        }
+      ]
+    },
+    {
+      "id": "journey-collection",
+      "value": "",
+      "options": [
+        {
+          "v": "",
+          "t": "All"
+        },
+        {
+          "v": "Custom",
+          "t": "Custom"
+        }
+      ]
+    },
+    {
+      "id": "journey-lifecycle",
+      "value": "current",
+      "options": [
+        {
+          "v": "current",
+          "t": "Current"
+        },
+        {
+          "v": "archive",
+          "t": "Archive"
+        },
+        {
+          "v": "",
+          "t": "All editions"
+        }
+      ]
+    },
+    {
+      "id": "journey-campaign",
+      "value": "",
+      "options": [
+        {
+          "v": "",
+          "t": "All campaigns"
+        },
+        {
+          "v": "[\"worlds:downloads\",\"worlds:downloads\",\"mountain-reservoir\"]",
+          "t": "Mountain Reservoir · FPV SIM · Worlds"
+        },
+        {
+          "v": "[\"worlds:downloads\",\"worlds:downloads\",\"festival-grounds\"]",
+          "t": "Festival Grounds · FPV SIM · Worlds"
+        },
+        {
+          "v": "[\"worlds:downloads\",\"worlds:downloads\",\"harbor-docks\"]",
+          "t": "Harbor Docks · FPV SIM · Worlds"
+        },
+        {
+          "v": "[\"worlds:downloads\",\"worlds:downloads\",\"cc0-castle-court\"]",
+          "t": "Castle Courtyard · FPV SIM · Worlds"
+        },
+        {
+          "v": "[\"worlds:downloads\",\"worlds:downloads\",\"cc0-city-plaza\"]",
+          "t": "City Plaza · FPV SIM · Worlds"
+        },
+        {
+          "v": "[\"worlds:downloads\",\"worlds:downloads\",\"cc0-construction-site\"]",
+          "t": "House Construction Site · FPV SIM · Worlds"
+        },
+        {
+          "v": "[\"worlds:downloads\",\"worlds:downloads\",\"cc0-frontier-camp\"]",
+          "t": "Frontier Camp · FPV SIM · Worlds"
+        },
+        {
+          "v": "[\"worlds:downloads\",\"worlds:downloads\",\"cc0-industrial-yard\"]",
+          "t": "Industrial Service Yard · FPV SIM · Worlds"
+        },
+        {
+          "v": "[\"worlds:downloads\",\"worlds:downloads\",\"cc0-orbital-workshop\"]",
+          "t": "Orbital Workshop · FPV SIM · Worlds"
+        },
+        {
+          "v": "[\"worlds:downloads\",\"worlds:downloads\",\"cc0-pine-clearing\"]",
+          "t": "Pine Clearing · FPV SIM · Worlds"
+        },
+        {
+          "v": "[\"worlds:downloads\",\"worlds:downloads\",\"cc0-platform-garden\"]",
+          "t": "Platform Garden · FPV SIM · Worlds"
+        },
+        {
+          "v": "[\"worlds:downloads\",\"worlds:downloads\",\"cc0-race-paddock\"]",
+          "t": "Race Paddock · FPV SIM · Worlds"
+        },
+        {
+          "v": "[\"worlds:downloads\",\"worlds:downloads\",\"cc0-road-lab\"]",
+          "t": "Roadworks Practice Park · FPV SIM · Worlds"
+        },
+        {
+          "v": "[\"worlds:downloads\",\"worlds:downloads\",\"cc0-rock-grotto\"]",
+          "t": "Rock Grotto · FPV SIM · Worlds"
+        },
+        {
+          "v": "[\"worlds:downloads\",\"worlds:downloads\",\"cc0-ruined-halls\"]",
+          "t": "Ruined Halls · FPV SIM · Worlds"
+        },
+        {
+          "v": "[\"worlds:downloads\",\"worlds:downloads\",\"cc0-shipyard\"]",
+          "t": "Dry-dock Shipyard · FPV SIM · Worlds"
+        },
+        {
+          "v": "[\"worlds:downloads\",\"worlds:downloads\",\"cc0-skate-plaza\"]",
+          "t": "Skate Plaza · FPV SIM · Worlds"
+        },
+        {
+          "v": "[\"worlds:downloads\",\"worlds:downloads\",\"cc0-village-green\"]",
+          "t": "Village Green · FPV SIM · Worlds"
+        },
+        {
+          "v": "[\"worlds:downloads\",\"worlds:downloads\",\"cc0-woodland-camp\"]",
+          "t": "Woodland Camp · FPV SIM · Worlds"
+        },
+        {
+          "v": "[\"worlds:downloads\",\"worlds:downloads\",\"cc0-coaster-park\"]",
+          "t": "Coaster Practice Park · FPV SIM · Worlds"
+        },
+        {
+          "v": "[\"worlds:regions\",\"worlds:regions\",\"alpine\"]",
+          "t": "Alpine Highlands · FPV SIM · Maps"
+        },
+        {
+          "v": "[\"worlds:regions\",\"worlds:regions\",\"lunar\"]",
+          "t": "Lunar Basin · FPV SIM · Maps"
+        },
+        {
+          "v": "[\"worlds:regions\",\"worlds:regions\",\"canal\"]",
+          "t": "Canal City · FPV SIM · Maps"
+        },
+        {
+          "v": "[\"worlds:regions\",\"worlds:regions\",\"desert\"]",
+          "t": "Desert Expedition · FPV SIM · Maps"
+        },
+        {
+          "v": "[\"worlds:regions\",\"worlds:regions\",\"tropical\"]",
+          "t": "Tropical coast · FPV SIM · Maps"
+        },
+        {
+          "v": "[\"worlds:regions\",\"worlds:regions\",\"railway\"]",
+          "t": "Railway Valley · FPV SIM · Maps"
+        },
+        {
+          "v": "[\"worlds:regions\",\"worlds:regions\",\"coaster\"]",
+          "t": "Coaster Gardens · FPV SIM · Maps"
+        },
+        {
+          "v": "[\"worlds:regions\",\"worlds:regions\",\"hillside\"]",
+          "t": "Hillside Town · FPV SIM · Maps"
+        },
+        {
+          "v": "[\"worlds:regions\",\"worlds:regions\",\"canyon\"]",
+          "t": "Canyon worlds · FPV SIM · Maps"
+        },
+        {
+          "v": "[\"worlds:regions\",\"worlds:regions\",\"urban\"]",
+          "t": "Urban earthworks · FPV SIM · Maps"
+        }
+      ]
+    },
+    {
+      "id": "journey-mode",
+      "value": "solo",
+      "options": [
+        {
+          "v": "solo",
+          "t": "Solo"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "all",
+      "options": [
+        {
+          "v": "all",
+          "t": "All courses"
+        },
+        {
+          "v": "whoop",
+          "t": "Whoops · up to 2 inches"
+        },
+        {
+          "v": "cinewhoop",
+          "t": "Cinewhoops · 2.2 inches"
+        },
+        {
+          "v": "freestyle",
+          "t": "Freestyle · up to 5 inches"
+        },
+        {
+          "v": "racing",
+          "t": "Racing · 5 inches"
+        },
+        {
+          "v": "long-range",
+          "t": "Long-range · up to 10 inches"
+        },
+        {
+          "v": "training",
+          "t": "Training · 15 inches"
+        }
+      ]
+    },
+    {
+      "id": "world-random-levels",
+      "value": "auto",
+      "options": [
+        {
+          "v": "auto",
+          "t": "Flight levels only"
+        },
+        {
+          "v": "mixed",
+          "t": "Learning + flight levels"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "",
+      "options": []
+    },
+    {
+      "id": "",
+      "value": "",
+      "options": []
+    },
+    {
+      "id": "",
+      "value": "0.25",
+      "options": [
+        {
+          "v": "0.25",
+          "t": ""
+        },
+        {
+          "v": "0.5",
+          "t": ""
+        },
+        {
+          "v": "1",
+          "t": ""
+        }
+      ]
+    },
+    {
+      "id": "regional-starting-point",
+      "value": "",
+      "options": []
+    },
+    {
+      "id": "regional-saved-place",
+      "value": "",
+      "options": []
+    },
+    {
+      "id": "",
+      "value": "",
+      "options": []
+    },
+    {
+      "id": "",
+      "value": "none",
+      "options": [
+        {
+          "v": "none",
+          "t": ""
+        },
+        {
+          "v": "timed-practice",
+          "t": ""
+        },
+        {
+          "v": "battery-endurance",
+          "t": ""
+        }
+      ]
+    },
+    {
+      "id": "first-flight-mode",
+      "value": "self-level",
+      "options": [
+        {
+          "v": "self-level",
+          "t": "Self-level"
+        },
+        {
+          "v": "acro",
+          "t": "Acro"
+        }
+      ]
+    },
+    {
+      "id": "activity-filter",
+      "value": "all",
+      "options": [
+        {
+          "v": "all",
+          "t": "All activities"
+        },
+        {
+          "v": "hunt",
+          "t": "Catch humanoids"
+        },
+        {
+          "v": "training",
+          "t": "Orientation"
+        },
+        {
+          "v": "exploration",
+          "t": "Explore"
+        },
+        {
+          "v": "precision",
+          "t": "Precision"
+        },
+        {
+          "v": "hazard",
+          "t": "Evasion"
+        },
+        {
+          "v": "race",
+          "t": "Race"
+        },
+        {
+          "v": "combat",
+          "t": "Combat"
+        },
+        {
+          "v": "capstone",
+          "t": "Mixed challenge"
+        },
+        {
+          "v": "academy",
+          "t": "Academy drill"
+        },
+        {
+          "v": "follow",
+          "t": "Follow a subject"
+        },
+        {
+          "v": "observe",
+          "t": "Observe a subject"
+        }
+      ]
+    },
+    {
+      "id": "difficulty-filter",
+      "value": "all",
+      "options": [
+        {
+          "v": "all",
+          "t": "All difficulties"
+        },
+        {
+          "v": "beginner",
+          "t": "Beginner"
+        },
+        {
+          "v": "intermediate",
+          "t": "Intermediate"
+        },
+        {
+          "v": "advanced",
+          "t": "Advanced"
+        }
+      ]
+    },
+    {
+      "id": "completion-filter",
+      "value": "all",
+      "options": [
+        {
+          "v": "all",
+          "t": "All progress"
+        },
+        {
+          "v": "complete",
+          "t": "Completed"
+        },
+        {
+          "v": "new",
+          "t": "Not completed"
+        }
+      ]
+    },
+    {
+      "id": "school-tier",
+      "value": "all",
+      "options": [
+        {
+          "v": "all",
+          "t": "All lessons"
+        },
+        {
+          "v": "beginner",
+          "t": "Beginner"
+        },
+        {
+          "v": "experienced",
+          "t": "Experienced"
+        },
+        {
+          "v": "advanced",
+          "t": "Advanced"
+        },
+        {
+          "v": "pro",
+          "t": "Pro"
+        },
+        {
+          "v": "master",
+          "t": "Master"
+        },
+        {
+          "v": "self-level",
+          "t": "Optional self-level"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "",
+      "options": [
+        {
+          "v": "",
+          "t": "All games"
+        },
+        {
+          "v": "worlds",
+          "t": "SIM Worlds"
+        }
+      ]
+    },
+    {
+      "id": "creator-theme",
+      "value": "pixel",
+      "options": [
+        {
+          "v": "academy",
+          "t": "Flight Academy"
+        },
+        {
+          "v": "ukrainian",
+          "t": "Ukrainian Horizons"
+        },
+        {
+          "v": "pixel",
+          "t": "Pixel Circuit"
+        },
+        {
+          "v": "operations",
+          "t": "Field Operations"
+        },
+        {
+          "v": "fpv-field-crossing",
+          "t": "FPV · Field Crossing"
+        },
+        {
+          "v": "fpv-freight-depot",
+          "t": "FPV · Freight Depot"
+        },
+        {
+          "v": "fpv-relay-ruins",
+          "t": "FPV · Relay Ruins"
+        },
+        {
+          "v": "fpv-river-port",
+          "t": "FPV · River Port"
+        },
+        {
+          "v": "fpv-chalk-quarry",
+          "t": "FPV · Chalk Quarry"
+        },
+        {
+          "v": "fpv-orchard-strongpoint",
+          "t": "FPV · Orchard Strongpoint"
+        }
+      ]
+    },
+    {
+      "id": "editor-snap",
+      "value": "0.25",
+      "options": [
+        {
+          "v": "0.25",
+          "t": "0.25 m"
+        },
+        {
+          "v": "1",
+          "t": "1 m"
+        },
+        {
+          "v": "0",
+          "t": "Free"
+        }
+      ]
+    },
+    {
+      "id": "creator-template",
+      "value": "fpv-snake-hunt:0a73f7def9f067b8:snake-hunt-loops-01",
+      "options": [
+        {
+          "v": "fpv-snake-hunt:0a73f7def9f067b8:snake-hunt-loops-01",
+          "t": "First three"
+        },
+        {
+          "v": "fpv-snake-hunt:0a73f7def9f067b8:snake-hunt-loops-02",
+          "t": "Clockwise catch"
+        },
+        {
+          "v": "fpv-snake-hunt:0a73f7def9f067b8:snake-hunt-loops-03",
+          "t": "Wide figure eight"
+        },
+        {
+          "v": "fpv-snake-hunt:0a73f7def9f067b8:snake-hunt-loops-04",
+          "t": "Choose your loop"
+        },
+        {
+          "v": "fpv-snake-hunt:0a73f7def9f067b8:snake-hunt-loops-05",
+          "t": "Spiral inward"
+        },
+        {
+          "v": "fpv-snake-hunt:0a73f7def9f067b8:snake-hunt-loops-06",
+          "t": "Double circuit"
+        },
+        {
+          "v": "fpv-snake-hunt:0a73f7def9f067b8:snake-hunt-weave-01",
+          "t": "Three aisles"
+        },
+        {
+          "v": "fpv-snake-hunt:0a73f7def9f067b8:snake-hunt-weave-02",
+          "t": "Alternating doors"
+        },
+        {
+          "v": "fpv-snake-hunt:0a73f7def9f067b8:snake-hunt-weave-03",
+          "t": "Outside the pillars"
+        },
+        {
+          "v": "fpv-snake-hunt:0a73f7def9f067b8:snake-hunt-weave-04",
+          "t": "Long switchback"
+        },
+        {
+          "v": "fpv-snake-hunt:0a73f7def9f067b8:snake-hunt-weave-05",
+          "t": "Diagonal threading"
+        },
+        {
+          "v": "fpv-snake-hunt:0a73f7def9f067b8:snake-hunt-weave-06",
+          "t": "Exit the coil"
+        },
+        {
+          "v": "fpv-snake-hunt:0a73f7def9f067b8:snake-hunt-heights-01",
+          "t": "Low, high, low"
+        },
+        {
+          "v": "fpv-snake-hunt:0a73f7def9f067b8:snake-hunt-heights-02",
+          "t": "Ascending arc"
+        },
+        {
+          "v": "fpv-snake-hunt:0a73f7def9f067b8:snake-hunt-heights-03",
+          "t": "Roof islands"
+        },
+        {
+          "v": "fpv-snake-hunt:0a73f7def9f067b8:snake-hunt-heights-04",
+          "t": "Over your echo"
+        },
+        {
+          "v": "fpv-snake-hunt:0a73f7def9f067b8:snake-hunt-heights-05",
+          "t": "Descending staircase"
+        },
+        {
+          "v": "fpv-snake-hunt:0a73f7def9f067b8:snake-hunt-heights-06",
+          "t": "Stacked figure eight"
+        },
+        {
+          "v": "fpv-snake-hunt:0a73f7def9f067b8:snake-hunt-chase-01",
+          "t": "Meet the walkers"
+        },
+        {
+          "v": "fpv-snake-hunt:0a73f7def9f067b8:snake-hunt-chase-02",
+          "t": "Crossing patrols"
+        },
+        {
+          "v": "fpv-snake-hunt:0a73f7def9f067b8:snake-hunt-chase-03",
+          "t": "Chase the corners"
+        },
+        {
+          "v": "fpv-snake-hunt:0a73f7def9f067b8:snake-hunt-chase-04",
+          "t": "Moving slalom"
+        },
+        {
+          "v": "fpv-snake-hunt:0a73f7def9f067b8:snake-hunt-chase-05",
+          "t": "One-way collection"
+        },
+        {
+          "v": "fpv-snake-hunt:0a73f7def9f067b8:snake-hunt-chase-06",
+          "t": "The long hunt"
+        },
+        {
+          "v": "fpv-snake-pursuit:ce49bc419eec7230:snake-hunt-interception-loop-intercept",
+          "t": "Loop intercept"
+        },
+        {
+          "v": "fpv-snake-pursuit:ce49bc419eec7230:snake-hunt-interception-two-return-lanes",
+          "t": "Two return lanes"
+        },
+        {
+          "v": "fpv-snake-pursuit:ce49bc419eec7230:snake-hunt-interception-corner-approach",
+          "t": "Corner approach"
+        },
+        {
+          "v": "fpv-snake-pursuit:ce49bc419eec7230:snake-hunt-interception-crossing-patrols",
+          "t": "Crossing patrols"
+        },
+        {
+          "v": "fpv-snake-pursuit:ce49bc419eec7230:snake-hunt-interception-island-bypass",
+          "t": "Island bypass"
+        },
+        {
+          "v": "fpv-snake-pursuit:ce49bc419eec7230:snake-hunt-interception-staggered-interception",
+          "t": "Staggered interception"
+        },
+        {
+          "v": "fpv-snake-pursuit:ce49bc419eec7230:snake-hunt-route-choices-warehouse-return",
+          "t": "Warehouse return"
+        },
+        {
+          "v": "fpv-snake-pursuit:ce49bc419eec7230:snake-hunt-route-choices-courtyard-approaches",
+          "t": "Courtyard approaches"
+        },
+        {
+          "v": "fpv-snake-pursuit:ce49bc419eec7230:snake-hunt-route-choices-platform-perimeter",
+          "t": "Platform perimeter"
+        },
+        {
+          "v": "fpv-snake-pursuit:ce49bc419eec7230:snake-hunt-route-choices-boundary-cutback",
+          "t": "Boundary cutback"
+        },
+        {
+          "v": "fpv-snake-pursuit:ce49bc419eec7230:snake-hunt-route-choices-cross-route-choice",
+          "t": "Cross-route choice"
+        },
+        {
+          "v": "fpv-snake-pursuit:ce49bc419eec7230:snake-hunt-route-choices-airfield-circuit",
+          "t": "Airfield circuit"
+        },
+        {
+          "v": "fpv-expressive-hunt:298acf478cb32c2d:snake-hunt-ground-routes-low-pass-depot",
+          "t": "Low Pass Depot"
+        },
+        {
+          "v": "fpv-expressive-hunt:298acf478cb32c2d:snake-hunt-ground-routes-split-yard-return",
+          "t": "Split Yard Return"
+        },
+        {
+          "v": "fpv-expressive-hunt:298acf478cb32c2d:snake-hunt-ground-routes-crossing-arrivals",
+          "t": "Crossing Arrivals"
+        },
+        {
+          "v": "fpv-expressive-hunt:298acf478cb32c2d:snake-hunt-ground-routes-shelter-arc",
+          "t": "Shelter Arc"
+        },
+        {
+          "v": "fpv-expressive-hunt:298acf478cb32c2d:snake-hunt-ground-routes-freight-slalom",
+          "t": "Freight Slalom"
+        },
+        {
+          "v": "fpv-expressive-hunt:298acf478cb32c2d:snake-hunt-ground-routes-forked-depot",
+          "t": "Forked Depot"
+        },
+        {
+          "v": "fpv-expressive-hunt:298acf478cb32c2d:snake-hunt-approach-windows-low-roof-window",
+          "t": "Low Roof Window"
+        },
+        {
+          "v": "fpv-expressive-hunt:298acf478cb32c2d:snake-hunt-approach-windows-roofline-exchange",
+          "t": "Roofline Exchange"
+        },
+        {
+          "v": "fpv-expressive-hunt:298acf478cb32c2d:snake-hunt-approach-windows-return-slot",
+          "t": "Return Slot"
+        },
+        {
+          "v": "fpv-expressive-hunt:298acf478cb32c2d:snake-hunt-approach-windows-staggered-roofs",
+          "t": "Staggered Roofs"
+        },
+        {
+          "v": "fpv-expressive-hunt:298acf478cb32c2d:snake-hunt-approach-windows-window-chain",
+          "t": "Window Chain"
+        },
+        {
+          "v": "fpv-expressive-hunt:298acf478cb32c2d:snake-hunt-approach-windows-three-yard-finale",
+          "t": "Three-yard Finale"
+        },
+        {
+          "v": "fpv-native-pursuit:0233a9dda4d96084:native-pursuit-refuge-return",
+          "t": "Refuge Return · Committed routes"
+        },
+        {
+          "v": "fpv-native-pursuit:0233a9dda4d96084:native-pursuit-meeting-yard",
+          "t": "Meeting Yard · Committed routes"
+        },
+        {
+          "v": "fpv-native-pursuit:49a87f729321e198:native-pursuit-runner-court",
+          "t": "Runner Court"
+        },
+        {
+          "v": "fpv-native-pursuit:49a87f729321e198:native-pursuit-burst-lanes",
+          "t": "Burst Lanes"
+        },
+        {
+          "v": "fpv-native-pursuit:49a87f729321e198:native-pursuit-refuge-return",
+          "t": "Refuge Return"
+        },
+        {
+          "v": "fpv-native-pursuit:49a87f729321e198:native-pursuit-switchback-crossing",
+          "t": "Switchback Crossing"
+        },
+        {
+          "v": "fpv-native-pursuit:49a87f729321e198:native-pursuit-meeting-yard",
+          "t": "Meeting Yard"
+        },
+        {
+          "v": "fpv-native-pursuit:49a87f729321e198:native-pursuit-armor-windows",
+          "t": "Armor Windows"
+        },
+        {
+          "v": "fpv-adventures:7a780beda75af567:adventure-coast-01",
+          "t": "Lighthouse approach"
+        },
+        {
+          "v": "fpv-adventures:7a780beda75af567:adventure-coast-02",
+          "t": "Under the harbour bridge"
+        },
+        {
+          "v": "fpv-adventures:7a780beda75af567:adventure-coast-03",
+          "t": "Coastal courier"
+        },
+        {
+          "v": "fpv-adventures:7a780beda75af567:adventure-coast-04",
+          "t": "Harbour observer"
+        },
+        {
+          "v": "fpv-adventures:7a780beda75af567:adventure-coast-05",
+          "t": "Three pier landings"
+        },
+        {
+          "v": "fpv-adventures:7a780beda75af567:adventure-quarry-01",
+          "t": "Read the rock bowl"
+        },
+        {
+          "v": "fpv-adventures:7a780beda75af567:adventure-quarry-02",
+          "t": "Conveyor crossings"
+        },
+        {
+          "v": "fpv-adventures:7a780beda75af567:adventure-quarry-03",
+          "t": "Haul-rover escort"
+        },
+        {
+          "v": "fpv-adventures:7a780beda75af567:adventure-quarry-04",
+          "t": "Quarry pulse arena"
+        },
+        {
+          "v": "fpv-adventures:7a780beda75af567:adventure-quarry-05",
+          "t": "Spire and ledge"
+        },
+        {
+          "v": "fpv-adventures:7a780beda75af567:adventure-rooftops-01",
+          "t": "Campus skylines"
+        },
+        {
+          "v": "fpv-adventures:7a780beda75af567:adventure-rooftops-02",
+          "t": "Over and under"
+        },
+        {
+          "v": "fpv-adventures:7a780beda75af567:adventure-rooftops-03",
+          "t": "Rooftop courier trail"
+        },
+        {
+          "v": "fpv-adventures:7a780beda75af567:adventure-rooftops-04",
+          "t": "Roof-to-roof landings"
+        },
+        {
+          "v": "fpv-adventures:7a780beda75af567:adventure-rooftops-05",
+          "t": "Skybridge traffic"
+        },
+        {
+          "v": "fpv-adventures:7a780beda75af567:adventure-orchard-01",
+          "t": "Meet the orchard guide"
+        },
+        {
+          "v": "fpv-adventures:7a780beda75af567:adventure-orchard-02",
+          "t": "Between the rows"
+        },
+        {
+          "v": "fpv-adventures:7a780beda75af567:adventure-orchard-03",
+          "t": "Watch the harvest cart"
+        },
+        {
+          "v": "fpv-adventures:7a780beda75af567:adventure-orchard-04",
+          "t": "A walk through the orchard"
+        },
+        {
+          "v": "fpv-adventures:7a780beda75af567:adventure-orchard-05",
+          "t": "Barn beacon and garden pad"
+        },
+        {
+          "v": "fpv-adventures:7a780beda75af567:adventure-solar-farm-01",
+          "t": "Read the solar lanes"
+        },
+        {
+          "v": "fpv-adventures:7a780beda75af567:adventure-solar-farm-02",
+          "t": "Panel-edge precision"
+        },
+        {
+          "v": "fpv-adventures:7a780beda75af567:adventure-solar-farm-03",
+          "t": "Rover inspection"
+        },
+        {
+          "v": "fpv-adventures:7a780beda75af567:adventure-solar-farm-04",
+          "t": "Service-lane timing"
+        },
+        {
+          "v": "fpv-adventures:7a780beda75af567:adventure-solar-farm-05",
+          "t": "Solar pulse trial"
+        },
+        {
+          "v": "fpv-adventures:7a780beda75af567:adventure-rail-depot-01",
+          "t": "Signals and platforms"
+        },
+        {
+          "v": "fpv-adventures:7a780beda75af567:adventure-rail-depot-02",
+          "t": "Gantry express"
+        },
+        {
+          "v": "fpv-adventures:7a780beda75af567:adventure-rail-depot-03",
+          "t": "Inspection run"
+        },
+        {
+          "v": "fpv-adventures:7a780beda75af567:adventure-rail-depot-04",
+          "t": "Depot crossing windows"
+        },
+        {
+          "v": "fpv-adventures:7a780beda75af567:adventure-rail-depot-05",
+          "t": "Depot drone duel"
+        },
+        {
+          "v": "fpv-academy:e5441eee16783e2c:flight-01",
+          "t": "Lift and land"
+        },
+        {
+          "v": "fpv-academy:e5441eee16783e2c:flight-02",
+          "t": "Hold a volume"
+        },
+        {
+          "v": "fpv-academy:e5441eee16783e2c:flight-03",
+          "t": "Forward and brake"
+        },
+        {
+          "v": "fpv-academy:e5441eee16783e2c:flight-04",
+          "t": "Sideways and brake"
+        },
+        {
+          "v": "fpv-academy:e5441eee16783e2c:flight-05",
+          "t": "Turn and travel"
+        },
+        {
+          "v": "fpv-academy:e5441eee16783e2c:flight-06",
+          "t": "Fly a square"
+        },
+        {
+          "v": "fpv-academy:e5441eee16783e2c:flight-07",
+          "t": "Tilt, centre and drift"
+        },
+        {
+          "v": "fpv-academy:e5441eee16783e2c:flight-08",
+          "t": "Approach a gate"
+        },
+        {
+          "v": "fpv-academy:e5441eee16783e2c:flight-09",
+          "t": "Linked turns"
+        },
+        {
+          "v": "fpv-academy:e5441eee16783e2c:flight-10",
+          "t": "Slalom"
+        },
+        {
+          "v": "fpv-academy:e5441eee16783e2c:flight-11",
+          "t": "Figure eight"
+        },
+        {
+          "v": "fpv-academy:e5441eee16783e2c:flight-12",
+          "t": "Final circuit"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:woodland-01",
+          "t": "Clearing check-in"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:woodland-02",
+          "t": "Three clearings"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:woodland-03",
+          "t": "Trail beacons"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:woodland-04",
+          "t": "Quiet hover"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:woodland-05",
+          "t": "Canopy windows"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:woodland-06",
+          "t": "Crossing trail"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:woodland-07",
+          "t": "Low branch line"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:woodland-08",
+          "t": "Woodland survey"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:courtyard-01",
+          "t": "Courtyard welcome"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:courtyard-02",
+          "t": "Garden markers"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:courtyard-03",
+          "t": "Roofline survey"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:courtyard-04",
+          "t": "Well-side landing"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:courtyard-05",
+          "t": "Window alignment"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:courtyard-06",
+          "t": "Delivery crossing"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:courtyard-07",
+          "t": "Laneway traffic"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:courtyard-08",
+          "t": "Courtyard collection"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:warehouse-01",
+          "t": "Loading bay"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:warehouse-02",
+          "t": "Central aisle"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:warehouse-03",
+          "t": "Pallet switchback"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:warehouse-04",
+          "t": "Beam circuit"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:warehouse-05",
+          "t": "High-low sprint"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:warehouse-06",
+          "t": "Shelf clearance"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:warehouse-07",
+          "t": "Moving freight"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:warehouse-08",
+          "t": "Warehouse circuit"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:stadium-01",
+          "t": "Starting grid"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:stadium-02",
+          "t": "Wide oval"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:stadium-03",
+          "t": "Neon chicane"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:stadium-04",
+          "t": "Altitude ladder"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:stadium-05",
+          "t": "Double hairpin"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:stadium-06",
+          "t": "Podium approach"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:stadium-07",
+          "t": "Crossing lights"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:stadium-08",
+          "t": "Stadium final"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:container-yard-01",
+          "t": "Yard check-in"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:container-yard-02",
+          "t": "Container survey"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:container-yard-03",
+          "t": "Crossing crane"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:container-yard-04",
+          "t": "Target lane"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:container-yard-05",
+          "t": "Patrol interruption"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:container-yard-06",
+          "t": "Drone interception"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:container-yard-07",
+          "t": "Convoy challenge"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:container-yard-08",
+          "t": "Yard extraction"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:garage-01",
+          "t": "Parking approach"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:garage-02",
+          "t": "Upper deck survey"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:garage-03",
+          "t": "Barrier timing"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:garage-04",
+          "t": "Sentry aisle"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:garage-05",
+          "t": "Ground patrol"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:garage-06",
+          "t": "Garage intercept"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:garage-07",
+          "t": "Vehicle watch"
+        },
+        {
+          "v": "fpv-worlds:74546db040e0cd3d:garage-08",
+          "t": "Garage extraction"
+        },
+        {
+          "v": "fpv-beginner:654387e76ace406c:beginner-01",
+          "t": "Meet your drone"
+        },
+        {
+          "v": "fpv-beginner:654387e76ace406c:beginner-02",
+          "t": "Up, down, under control"
+        },
+        {
+          "v": "fpv-beginner:654387e76ace406c:beginner-03",
+          "t": "Find your hover"
+        },
+        {
+          "v": "fpv-beginner:654387e76ace406c:beginner-04",
+          "t": "Turn the nose: yaw"
+        },
+        {
+          "v": "fpv-beginner:654387e76ace406c:beginner-05",
+          "t": "Forward with pitch"
+        },
+        {
+          "v": "fpv-beginner:654387e76ace406c:beginner-06",
+          "t": "Slide with roll"
+        },
+        {
+          "v": "fpv-beginner:654387e76ace406c:beginner-07",
+          "t": "Brake, do not chase"
+        },
+        {
+          "v": "fpv-beginner:654387e76ace406c:beginner-08",
+          "t": "Keep height while moving"
+        },
+        {
+          "v": "fpv-beginner:654387e76ace406c:beginner-09",
+          "t": "Your first corner"
+        },
+        {
+          "v": "fpv-beginner:654387e76ace406c:beginner-10",
+          "t": "See through the goggles"
+        },
+        {
+          "v": "fpv-beginner:654387e76ace406c:beginner-11",
+          "t": "Three friendly gates"
+        },
+        {
+          "v": "fpv-beginner:654387e76ace406c:beginner-12",
+          "t": "Your first solo route"
+        },
+        {
+          "v": "fpv-beginner:654387e76ace406c:beginner-13",
+          "t": "Acro: the tilt stays"
+        },
+        {
+          "v": "fpv-beginner:654387e76ace406c:beginner-14",
+          "t": "Acro: your first line"
+        },
+        {
+          "v": "fpv-acro-school:376562a567e6ba93:beginner-15",
+          "t": "Your first Acro takeoff"
+        },
+        {
+          "v": "fpv-acro-school:376562a567e6ba93:beginner-16",
+          "t": "Thrust, climb and descent"
+        },
+        {
+          "v": "fpv-acro-school:376562a567e6ba93:beginner-17",
+          "t": "Level, then find your hover"
+        },
+        {
+          "v": "fpv-acro-school:376562a567e6ba93:beginner-18",
+          "t": "Roll and lateral braking"
+        },
+        {
+          "v": "fpv-acro-school:376562a567e6ba93:beginner-19",
+          "t": "Yaw: heading is not travel"
+        },
+        {
+          "v": "fpv-acro-school:376562a567e6ba93:beginner-20",
+          "t": "Keep height while tilted"
+        },
+        {
+          "v": "fpv-acro-school:376562a567e6ba93:beginner-21",
+          "t": "Coordinated left and right turns"
+        },
+        {
+          "v": "fpv-acro-school:376562a567e6ba93:beginner-22",
+          "t": "A gentle figure eight"
+        },
+        {
+          "v": "fpv-acro-school:376562a567e6ba93:beginner-23",
+          "t": "Read the FPV horizon"
+        },
+        {
+          "v": "fpv-acro-school:376562a567e6ba93:beginner-24",
+          "t": "Three gates, one smooth line"
+        },
+        {
+          "v": "fpv-acro-school:376562a567e6ba93:beginner-25",
+          "t": "Recover and land precisely"
+        },
+        {
+          "v": "fpv-acro-school:376562a567e6ba93:beginner-26",
+          "t": "Your first solo Acro route"
+        },
+        {
+          "v": "fpv-navigation-school:5c31fce0b5a82b98:beginner-27",
+          "t": "Braking marks"
+        },
+        {
+          "v": "fpv-navigation-school:5c31fce0b5a82b98:beginner-28",
+          "t": "Altitude staircase"
+        },
+        {
+          "v": "fpv-navigation-school:5c31fce0b5a82b98:beginner-29",
+          "t": "Compass cross"
+        },
+        {
+          "v": "fpv-navigation-school:5c31fce0b5a82b98:beginner-30",
+          "t": "Backward return"
+        },
+        {
+          "v": "fpv-navigation-school:5c31fce0b5a82b98:beginner-31",
+          "t": "S-turn handover"
+        },
+        {
+          "v": "fpv-navigation-school:5c31fce0b5a82b98:beginner-32",
+          "t": "Wide corner, tight exit"
+        },
+        {
+          "v": "fpv-navigation-school:5c31fce0b5a82b98:beginner-33",
+          "t": "Three landing approaches"
+        },
+        {
+          "v": "fpv-navigation-school:5c31fce0b5a82b98:beginner-34",
+          "t": "Landmark rally"
+        },
+        {
+          "v": "fpv-navigation-school:5c31fce0b5a82b98:beginner-35",
+          "t": "Slalom rhythm"
+        },
+        {
+          "v": "fpv-navigation-school:5c31fce0b5a82b98:beginner-36",
+          "t": "High–low ribbon"
+        },
+        {
+          "v": "fpv-navigation-school:5c31fce0b5a82b98:beginner-37",
+          "t": "Platform approach"
+        },
+        {
+          "v": "fpv-navigation-school:5c31fce0b5a82b98:beginner-38",
+          "t": "Corridor turnaround"
+        },
+        {
+          "v": "fpv-navigation-school:5c31fce0b5a82b98:beginner-39",
+          "t": "Over, around, under"
+        },
+        {
+          "v": "fpv-navigation-school:5c31fce0b5a82b98:beginner-40",
+          "t": "Read the landmarks"
+        },
+        {
+          "v": "fpv-navigation-school:5c31fce0b5a82b98:beginner-41",
+          "t": "Between floors"
+        },
+        {
+          "v": "fpv-navigation-school:5c31fce0b5a82b98:beginner-42",
+          "t": "Precision pilot route"
+        },
+        {
+          "v": "fpv-skills-school:ccdbc4f61adad55a:beginner-43",
+          "t": "Roll and recover"
+        },
+        {
+          "v": "fpv-skills-school:ccdbc4f61adad55a:beginner-44",
+          "t": "Forward and backward flip"
+        },
+        {
+          "v": "fpv-skills-school:ccdbc4f61adad55a:beginner-45",
+          "t": "Yaw through 360 degrees"
+        },
+        {
+          "v": "fpv-skills-school:ccdbc4f61adad55a:beginner-46",
+          "t": "Recognize inverted, recover"
+        },
+        {
+          "v": "fpv-skills-school:ccdbc4f61adad55a:beginner-47",
+          "t": "Split-S return"
+        },
+        {
+          "v": "fpv-skills-school:ccdbc4f61adad55a:beginner-48",
+          "t": "Immelmann climb-out"
+        },
+        {
+          "v": "fpv-skills-school:ccdbc4f61adad55a:beginner-49",
+          "t": "Dive, judge, pull out"
+        },
+        {
+          "v": "fpv-skills-school:ccdbc4f61adad55a:beginner-50",
+          "t": "First power loop"
+        },
+        {
+          "v": "fpv-skills-school:ccdbc4f61adad55a:beginner-51",
+          "t": "Barrel path"
+        },
+        {
+          "v": "fpv-skills-school:ccdbc4f61adad55a:beginner-52",
+          "t": "Orbit the landmark"
+        },
+        {
+          "v": "fpv-skills-school:ccdbc4f61adad55a:beginner-53",
+          "t": "Climbing corkscrew"
+        },
+        {
+          "v": "fpv-skills-school:ccdbc4f61adad55a:beginner-54",
+          "t": "Inverted turn and exit"
+        },
+        {
+          "v": "fpv-skills-school:ccdbc4f61adad55a:beginner-55",
+          "t": "Loop into a roll"
+        },
+        {
+          "v": "fpv-skills-school:ccdbc4f61adad55a:beginner-56",
+          "t": "Split-S into an orbit"
+        },
+        {
+          "v": "fpv-skills-school:ccdbc4f61adad55a:beginner-57",
+          "t": "Race line with trick zones"
+        },
+        {
+          "v": "fpv-skills-school:ccdbc4f61adad55a:beginner-58",
+          "t": "Master flight"
+        }
+      ]
+    },
+    {
+      "id": "editor-project-course",
+      "value": "custom-mvfyzos2-3bgqx",
+      "options": [
+        {
+          "v": "custom-mvfyzos2-3bgqx",
+          "t": "First three — copy · custom-mvfyzos2-3bgqx"
+        }
+      ]
+    },
+    {
+      "id": "editor-route-mode",
+      "value": "both",
+      "options": [
+        {
+          "v": "both",
+          "t": "Both matching modes"
+        },
+        {
+          "v": "self-level",
+          "t": "Self-level"
+        },
+        {
+          "v": "acro",
+          "t": "Acro"
+        }
+      ]
+    },
+    {
+      "id": "criterion-list",
+      "value": "0",
+      "options": [
+        {
+          "v": "0",
+          "t": "1. Catch the marked humanoids · 3"
+        },
+        {
+          "v": "actor:humanoid-01",
+          "t": "Actor: humanoid-01"
+        },
+        {
+          "v": "actor:humanoid-02",
+          "t": "Actor: humanoid-02"
+        },
+        {
+          "v": "actor:humanoid-03",
+          "t": "Actor: humanoid-03"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "humanoid-01",
+      "options": [
+        {
+          "v": "humanoid-01",
+          "t": "Ground patrol · humanoid-01"
+        },
+        {
+          "v": "humanoid-02",
+          "t": "Ground patrol · humanoid-02"
+        },
+        {
+          "v": "humanoid-03",
+          "t": "Ground patrol · humanoid-03"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "drone",
+      "options": [
+        {
+          "v": "drone",
+          "t": "Drone"
+        },
+        {
+          "v": "patrol",
+          "t": "Ground patrol"
+        },
+        {
+          "v": "sentry",
+          "t": "Ground sentry"
+        },
+        {
+          "v": "vehicle",
+          "t": "Patrol vehicle"
+        },
+        {
+          "v": "hazard",
+          "t": "Moving hazard"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "",
+      "options": [
+        {
+          "v": "",
+          "t": "New Contact Hunt objective"
+        },
+        {
+          "v": "self-level:0",
+          "t": "Self-level · 1. 3 Contact Hunt"
+        },
+        {
+          "v": "acro:0",
+          "t": "Acro · 1. 3 Contact Hunt"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "both",
+      "options": [
+        {
+          "v": "both",
+          "t": "Both flight modes"
+        },
+        {
+          "v": "self-level",
+          "t": "Self-level"
+        },
+        {
+          "v": "acro",
+          "t": "Acro"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "humanoid-02",
+      "options": [
+        {
+          "v": "humanoid-01",
+          "t": "Ground patrol · humanoid-01"
+        },
+        {
+          "v": "humanoid-02",
+          "t": "Ground patrol · humanoid-02"
+        },
+        {
+          "v": "humanoid-03",
+          "t": "Ground patrol · humanoid-03"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "",
+      "options": [
+        {
+          "v": "",
+          "t": "New tracking objective"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "humanoid-01",
+      "options": [
+        {
+          "v": "humanoid-01",
+          "t": "Ground patrol · humanoid-01"
+        },
+        {
+          "v": "humanoid-02",
+          "t": "Ground patrol · humanoid-02"
+        },
+        {
+          "v": "humanoid-03",
+          "t": "Ground patrol · humanoid-03"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "observe",
+      "options": [
+        {
+          "v": "observe",
+          "t": "Observe"
+        },
+        {
+          "v": "follow",
+          "t": "Follow"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "both",
+      "options": [
+        {
+          "v": "both",
+          "t": "Both flight modes"
+        },
+        {
+          "v": "self-level",
+          "t": "Self-level"
+        },
+        {
+          "v": "acro",
+          "t": "Acro"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "authored",
+      "options": [
+        {
+          "v": "authored",
+          "t": "As designed"
+        },
+        {
+          "v": "tactical",
+          "t": "Field kit"
+        },
+        {
+          "v": "rivals",
+          "t": "Worn field kit"
+        },
+        {
+          "v": "arcade",
+          "t": "Winter kit"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "hostile",
+      "options": [
+        {
+          "v": "hostile",
+          "t": "Hostile · pulse combat"
+        },
+        {
+          "v": "rival",
+          "t": "Rival · no weapons or damage"
+        },
+        {
+          "v": "civilian",
+          "t": "Civilian · background movement"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "both",
+      "options": [
+        {
+          "v": "both",
+          "t": "Both flight modes"
+        },
+        {
+          "v": "self-level",
+          "t": "Self-level"
+        },
+        {
+          "v": "acro",
+          "t": "Acro"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "continuous",
+      "options": [
+        {
+          "v": "continuous",
+          "t": "Continuous combat"
+        },
+        {
+          "v": "hunting",
+          "t": "Three-minute hunt"
+        },
+        {
+          "v": "elimination",
+          "t": "Eliminate every target"
+        },
+        {
+          "v": "strike",
+          "t": "Strike objective"
+        },
+        {
+          "v": "survival",
+          "t": "Survival"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "normal",
+      "options": [
+        {
+          "v": "easy",
+          "t": "Easy"
+        },
+        {
+          "v": "normal",
+          "t": "Normal"
+        },
+        {
+          "v": "hard",
+          "t": "Hard"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "12",
+      "options": [
+        {
+          "v": "6",
+          "t": "6"
+        },
+        {
+          "v": "12",
+          "t": "12"
+        },
+        {
+          "v": "20",
+          "t": "20"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "timed",
+      "options": [
+        {
+          "v": "timed",
+          "t": "Six minutes"
+        },
+        {
+          "v": "endless",
+          "t": "Endless"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "autocannon",
+      "options": [
+        {
+          "v": "autocannon",
+          "t": "Autocannon"
+        },
+        {
+          "v": "scatter",
+          "t": "Scatter"
+        },
+        {
+          "v": "precision",
+          "t": "Precision"
+        },
+        {
+          "v": "rocket",
+          "t": "Rockets"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "scatter",
+      "options": [
+        {
+          "v": "autocannon",
+          "t": "Autocannon"
+        },
+        {
+          "v": "scatter",
+          "t": "Scatter"
+        },
+        {
+          "v": "precision",
+          "t": "Precision"
+        },
+        {
+          "v": "rocket",
+          "t": "Rockets"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "bomb",
+      "options": [
+        {
+          "v": "bomb",
+          "t": "Dropped bomb"
+        },
+        {
+          "v": "remote",
+          "t": "Remote charge"
+        },
+        {
+          "v": "drone",
+          "t": "Drone charge"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "balanced",
+      "options": [
+        {
+          "v": "balanced",
+          "t": "Balanced"
+        },
+        {
+          "v": "arcade",
+          "t": "Arcade"
+        },
+        {
+          "v": "tactical",
+          "t": "Tactical"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "normal",
+      "options": [
+        {
+          "v": "normal",
+          "t": "Normal damage"
+        },
+        {
+          "v": "invulnerable",
+          "t": "Invulnerable practice"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "normal",
+      "options": [
+        {
+          "v": "normal",
+          "t": "Normal health"
+        },
+        {
+          "v": "one-hit",
+          "t": "One-hit practice"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "humanoid-01",
+      "options": [
+        {
+          "v": "humanoid-01",
+          "t": "humanoid-01 · lookout"
+        },
+        {
+          "v": "humanoid-02",
+          "t": "humanoid-02 · lookout"
+        },
+        {
+          "v": "humanoid-03",
+          "t": "humanoid-03 · lookout"
+        },
+        {
+          "v": "encounter-target-1",
+          "t": "encounter-target-1 · lookout"
+        },
+        {
+          "v": "encounter-target-2",
+          "t": "encounter-target-2 · patroller"
+        },
+        {
+          "v": "encounter-target-3",
+          "t": "encounter-target-3 · runner"
+        },
+        {
+          "v": "encounter-target-4",
+          "t": "encounter-target-4 · sprinter"
+        },
+        {
+          "v": "encounter-target-5",
+          "t": "encounter-target-5 · refuge-seeker"
+        },
+        {
+          "v": "encounter-target-6",
+          "t": "encounter-target-6 · switchback"
+        },
+        {
+          "v": "encounter-target-7",
+          "t": "encounter-target-7 · rendezvous-pair"
+        },
+        {
+          "v": "encounter-target-8",
+          "t": "encounter-target-8 · courier"
+        },
+        {
+          "v": "encounter-target-9",
+          "t": "encounter-target-9 · shield-bearer"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "lookout",
+      "options": [
+        {
+          "v": "runner",
+          "t": "Recon scout"
+        },
+        {
+          "v": "patroller",
+          "t": "Patrol trooper"
+        },
+        {
+          "v": "lookout",
+          "t": "Military lookout"
+        },
+        {
+          "v": "sprinter",
+          "t": "Assault scout"
+        },
+        {
+          "v": "switchback",
+          "t": "Flanking scout"
+        },
+        {
+          "v": "refuge-seeker",
+          "t": "Cover-seeking rifleman"
+        },
+        {
+          "v": "courier",
+          "t": "Dispatch trooper"
+        },
+        {
+          "v": "rendezvous-pair",
+          "t": "Patrol pair"
+        },
+        {
+          "v": "shield-bearer",
+          "t": "Shield bearer — frontal protection"
+        },
+        {
+          "v": "brace-trooper",
+          "t": "Brace trooper — guarded bursts"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "patrol",
+      "options": [
+        {
+          "v": "patrol",
+          "t": "Military trooper"
+        },
+        {
+          "v": "sentry",
+          "t": "Military sentry"
+        },
+        {
+          "v": "vehicle",
+          "t": "Military vehicle"
+        },
+        {
+          "v": "drone",
+          "t": "Military UAV"
+        },
+        {
+          "v": "prop",
+          "t": "Ground robot / supply"
+        },
+        {
+          "v": "hazard",
+          "t": "Interceptor UAV"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "organic",
+      "options": [
+        {
+          "v": "organic",
+          "t": "Organic"
+        },
+        {
+          "v": "metal",
+          "t": "Metal"
+        },
+        {
+          "v": "electronic",
+          "t": "Electronics"
+        },
+        {
+          "v": "wood",
+          "t": "Wood"
+        },
+        {
+          "v": "glass",
+          "t": "Glass"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "precision",
+      "options": [
+        {
+          "v": "autocannon",
+          "t": "Autocannon"
+        },
+        {
+          "v": "scatter",
+          "t": "Scatter"
+        },
+        {
+          "v": "precision",
+          "t": "Precision"
+        },
+        {
+          "v": "rocket",
+          "t": "Rockets"
+        },
+        {
+          "v": "bomb",
+          "t": "Bomb"
+        },
+        {
+          "v": "remote",
+          "t": "Remote charge"
+        },
+        {
+          "v": "impact",
+          "t": "Drone impact"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "breakup",
+      "options": [
+        {
+          "v": "localized",
+          "t": "Localized defeat"
+        },
+        {
+          "v": "breakup",
+          "t": "High-energy defeat"
+        },
+        {
+          "v": "explosive",
+          "t": "Explosive defeat"
+        }
+      ]
+    },
+    {
+      "id": "asset-license",
+      "value": "CC0-1.0",
+      "options": [
+        {
+          "v": "CC0-1.0",
+          "t": "CC0"
+        },
+        {
+          "v": "CC-BY-4.0",
+          "t": "CC BY 4.0"
+        },
+        {
+          "v": "original",
+          "t": "Original work"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "none",
+      "options": [
+        {
+          "v": "none",
+          "t": ""
+        },
+        {
+          "v": "timed-practice",
+          "t": ""
+        },
+        {
+          "v": "battery-endurance",
+          "t": ""
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "air65-ii-racing-2026",
+      "options": [
+        {
+          "v": "air65-ii-racing-2026",
+          "t": "BETAFPV Air65 II Racing · 2026 · analog · 30000 KV"
+        },
+        {
+          "v": "meteor75-analog-2022",
+          "t": "BETAFPV Meteor75 · 2022 · analog · 19500 KV"
+        },
+        {
+          "v": "meteor75-pro-matrix",
+          "t": "BETAFPV Meteor75 Pro · Matrix · analog · 21000 KV"
+        },
+        {
+          "v": "meteor85-analog",
+          "t": "BETAFPV Meteor85 · Analog · 11000 KV · LAVA battery"
+        },
+        {
+          "v": "mobula8-analog-2023",
+          "t": "Happymodel Mobula8 · 2023 · analog · SPI ELRS · 11000 KV"
+        },
+        {
+          "v": "cetus-x-betaflight-2022",
+          "t": "BETAFPV Cetus X · 2022 · analog · Betaflight SPI ELRS · original 30C cells"
+        },
+        {
+          "v": "protos-16-aio-1-0",
+          "t": "CADDXFPV Protos 1.6 · AIO 1.0 · Ascent Lite · inferred flying mass · SIM response"
+        },
+        {
+          "v": "pavo20-pro-ii-o4-4s",
+          "t": "BETAFPV Pavo20 Pro II · O4 Pro · ELRS · 4S · 5500 KV"
+        },
+        {
+          "v": "smart35-analog",
+          "t": "GEPRC SMART35 · Analog · 3850 KV · 3.5 inch"
+        },
+        {
+          "v": "nazgul-eco-xl5-v11",
+          "t": "iFlight Nazgul ECO XL5 · V1.1 · analog · 6S · 1800 KV"
+        },
+        {
+          "v": "mach-r5-sport-2050",
+          "t": "iFlight Mach R5 Sport · European 2050 KV · analog · canopy"
+        },
+        {
+          "v": "rekon7-pro-o3",
+          "t": "HGLRC Rekon7 PRO · DJI O3 · 1350 KV · 7 inch"
+        },
+        {
+          "v": "chimera7-pro-v2-o4",
+          "t": "iFlight Chimera7 Pro V2 · O4 · 1250 KV · 7.5 inch"
+        },
+        {
+          "v": "helion-pro-o4",
+          "t": "iFlight Helion Pro · O4 · 900 KV · 10 inch"
+        },
+        {
+          "v": "holybro-x650-v2",
+          "t": "Holybro X650 V2 · MN4014 330 KV · Gemfan 1555"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "defaults",
+      "options": [
+        {
+          "v": "defaults",
+          "t": "Use aircraft defaults"
+        },
+        {
+          "v": "keep",
+          "t": "Keep my current rates"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "",
+      "options": []
+    },
+    {
+      "id": "",
+      "value": "reference",
+      "options": [
+        {
+          "v": "reference",
+          "t": "Reference battery"
+        },
+        {
+          "v": "custom",
+          "t": "Custom battery · same cells and chemistry"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "none",
+      "options": [
+        {
+          "v": "none",
+          "t": "No additional camera"
+        },
+        {
+          "v": "custom",
+          "t": "Additional central camera payload"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "legacy",
+      "options": [
+        {
+          "v": "legacy",
+          "t": "Legacy feel"
+        },
+        {
+          "v": "actual",
+          "t": "Actual"
+        },
+        {
+          "v": "betaflight",
+          "t": "Betaflight"
+        },
+        {
+          "v": "quick",
+          "t": "Quick"
+        },
+        {
+          "v": "kiss",
+          "t": "Kiss"
+        },
+        {
+          "v": "raceflight",
+          "t": "Raceflight"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "roll",
+      "options": [
+        {
+          "v": "roll",
+          "t": "Roll"
+        },
+        {
+          "v": "pitch",
+          "t": "Pitch"
+        },
+        {
+          "v": "yaw",
+          "t": "Yaw"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "controller",
+      "options": [
+        {
+          "v": "controller",
+          "t": "PID / controller only"
+        },
+        {
+          "v": "setup",
+          "t": "Compare complete setups"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "roll",
+      "options": [
+        {
+          "v": "roll",
+          "t": "Roll"
+        },
+        {
+          "v": "pitch",
+          "t": "Pitch"
+        },
+        {
+          "v": "yaw",
+          "t": "Yaw"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "",
+      "options": []
+    },
+    {
+      "id": "",
+      "value": "",
+      "options": []
+    },
+    {
+      "id": "",
+      "value": "",
+      "options": []
+    },
+    {
+      "id": "",
+      "value": "",
+      "options": []
+    },
+    {
+      "id": "",
+      "value": "copy",
+      "options": [
+        {
+          "v": "copy",
+          "t": "Save as a copy"
+        },
+        {
+          "v": "update",
+          "t": "Update shared profile"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "patch",
+      "options": [
+        {
+          "v": "patch",
+          "t": "Snippet / preset patch"
+        },
+        {
+          "v": "complete",
+          "t": "Complete configuration"
+        },
+        {
+          "v": "diff",
+          "t": "Sparse diff against firmware defaults"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "",
+      "options": [
+        {
+          "v": "",
+          "t": "Read header / choose version"
+        },
+        {
+          "v": "4.5.2",
+          "t": "4.5.2"
+        },
+        {
+          "v": "4.5.5",
+          "t": "4.5.5"
+        },
+        {
+          "v": "2025.12.4",
+          "t": "2025.12.4"
+        },
+        {
+          "v": "2025.12.5",
+          "t": "2025.12.5"
+        },
+        {
+          "v": "2026.6.2",
+          "t": "2026.6.2"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "draft",
+      "options": [
+        {
+          "v": "draft",
+          "t": "Current draft"
+        },
+        {
+          "v": "defaults",
+          "t": "Verified firmware defaults"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "",
+      "options": []
+    },
+    {
+      "id": "",
+      "value": "current",
+      "options": [
+        {
+          "v": "current",
+          "t": "Current saved tune"
+        }
+      ]
+    },
+    {
+      "id": "",
+      "value": "tune",
+      "options": [
+        {
+          "v": "tune",
+          "t": "One portable controller tune"
+        },
+        {
+          "v": "backup",
+          "t": "Reusable tune library backup"
+        }
+      ]
+    }
+  ],
+  "entries": [
+    {
+      "id": "snake-hunt-loops-01",
+      "course": {
+        "format": "FlightCourse.v2",
+        "id": "snake-hunt-loops-01",
+        "revision": "r1",
+        "environment": "stadium",
+        "locales": {
+          "en": {
+            "title": "First three",
+            "brief": "Catch 3 fictional humanoid targets by touching them in any order. This first course has no echo tail.",
+            "lesson": "Use the usual manual throttle and flight controls. Aim for the marked torso around one metre above its platform. Pulses do not count. Wrong-order targets remain available. Blood is an optional visual setting."
+          },
+          "uk": {
+            "title": "Перші троє",
+            "brief": "Спіймайте 3 вигаданих гуманоїдів дотиком у довільному порядку. У першій вправі хвоста немає.",
+            "lesson": "Керуйте звичайною ручною тягою та нахилом. Цільтеся в позначений тулуб приблизно за метр над платформою. Імпульси не зараховуються. Цілі, яких торкнулися поза чергою, залишаються. Кров — необов’язковий візуальний ефект."
+          }
+        },
+        "spawn": {
+          "x": 0,
+          "y": 0,
+          "z": 26000
+        },
+        "bounds": {
+          "min": {
+            "x": -34000,
+            "y": 0,
+            "z": -34000
+          },
+          "max": {
+            "x": 34000,
+            "y": 18000,
+            "z": 34000
+          }
+        },
+        "obstacles": [],
+        "actors": [
+          {
+            "id": "humanoid-01",
+            "type": "patrol",
+            "role": "hostile",
+            "position": {
+              "x": 0,
+              "y": 0,
+              "z": 12000
+            },
+            "path": [],
+            "speed": 0,
+            "radius": 420,
+            "height": 2000,
+            "health": 50,
+            "fireEveryTicks": 0,
+            "damage": 0
+          },
+          {
+            "id": "humanoid-02",
+            "type": "patrol",
+            "role": "hostile",
+            "position": {
+              "x": -10000,
+              "y": 0,
+              "z": 0
+            },
+            "path": [],
+            "speed": 0,
+            "radius": 420,
+            "height": 2000,
+            "health": 50,
+            "fireEveryTicks": 0,
+            "damage": 0
+          },
+          {
+            "id": "humanoid-03",
+            "type": "patrol",
+            "role": "hostile",
+            "position": {
+              "x": 10000,
+              "y": 0,
+              "z": -10000
+            },
+            "path": [],
+            "speed": 0,
+            "radius": 420,
+            "height": 2000,
+            "health": 50,
+            "fireEveryTicks": 0,
+            "damage": 0
+          }
+        ],
+        "steps": {
+          "self-level": [
+            {
+              "type": "hunt-contact-v1",
+              "targets": [
+                "humanoid-01",
+                "humanoid-02",
+                "humanoid-03"
+              ],
+              "ordered": false,
+              "tail": {
+                "linksPerCatch": 0,
+                "maxLinks": 0,
+                "neckDistance": 4500,
+                "radius": 350
+              }
+            }
+          ],
+          "acro": [
+            {
+              "type": "hunt-contact-v1",
+              "targets": [
+                "humanoid-01",
+                "humanoid-02",
+                "humanoid-03"
+              ],
+              "ordered": false,
+              "tail": {
+                "linksPerCatch": 0,
+                "maxLinks": 0,
+                "neckDistance": 4500,
+                "radius": 350
+              }
+            }
+          ]
+        },
+        "world": {
+          "id": "stadium",
+          "theme": "pixel",
+          "style": "stadium"
+        },
+        "rules": {
+          "seed": 9000,
+          "maxTicks": 36000,
+          "collisionDamage": 0
+        },
+        "conditions": {
+          "profile": "clear",
+          "revision": "r1"
+        }
+      },
+      "world": "stadium",
+      "theme": "snake-hunt",
+      "activity": "hunt",
+      "difficulty": "beginner",
+      "duration": 4,
+      "packIdentity": "fpv-snake-hunt:0a73f7def9f067b8",
+      "legacy": false
+    },
+    {
+      "id": "snake-hunt-loops-02",
+      "course": {
+        "format": "FlightCourse.v2",
+        "id": "snake-hunt-loops-02",
+        "revision": "r1",
+        "environment": "stadium",
+        "locales": {
+          "en": {
+            "title": "Clockwise catch",
+            "brief": "Catch 5 fictional humanoid targets by touching them in numbered order. Each catch lengthens a solid echo of your flown path. Avoid the glowing tail; fly above or around it.",
+            "lesson": "Use the usual manual throttle and flight controls. Aim for the marked torso around one metre above its platform. Pulses do not count. Wrong-order targets remain available. Blood is an optional visual setting."
+          },
+          "uk": {
+            "title": "За годинниковою стрілкою",
+            "brief": "Спіймайте 5 вигаданих гуманоїдів дотиком у порядку номерів. Кожен дотик подовжує твердий слід пройденого шляху. Оминайте світлий хвіст або пролітайте над ним.",
+            "lesson": "Керуйте звичайною ручною тягою та нахилом. Цільтеся в позначений тулуб приблизно за метр над платформою. Імпульси не зараховуються. Цілі, яких торкнулися поза чергою, залишаються. Кров — необов’язковий візуальний ефект."
+          }
+        },
+        "spawn": {
+          "x": 0,
+          "y": 0,
+          "z": 26000
+        },
+        "bounds": {
+          "min": {
+            "x": -34000,
+            "y": 0,
+            "z": -34000
+          },
+          "max": {
+            "x": 34000,
+            "y": 18000,
+            "z": 34000
+          }
+        },
+        "obstacles": [],
+        "actors": [
+          {
+            "id": "humanoid-01",
+            "type": "patrol",
+            "role": "hostile",
+            "position": {
+              "x": -12000,
+              "y": 0,
+              "z": 12000
+            },
+            "path": [],
+            "speed": 0,
+            "radius": 420,
+            "height": 2000,
+            "health": 50,
+            "fireEveryTicks": 0,
+            "damage": 0
+          },
+          {
+            "id": "humanoid-02",
+            "type": "patrol",
+            "role": "hostile",
+            "position": {
+              "x": -16000,
+              "y": 0,
+              "z": -4000
+            },
+            "path": [],
+            "speed": 0,
+            "radius": 420,
+            "height": 2000,
+            "health": 50,
+            "fireEveryTicks": 0,
+            "damage": 0
+          },
+          {
+            "id": "humanoid-03",
+            "type": "patrol",
+            "role": "hostile",
+            "position": {
+              "x": 0,
+              "y": 0,
+              "z": -16000
+            },
+            "path": [],
+            "speed": 0,
+            "radius": 420,
+            "height": 2000,
+            "health": 50,
+            "fireEveryTicks": 0,
+            "damage": 0
+          },
+          {
+            "id": "humanoid-04",
+            "type": "patrol",
+            "role": "hostile",
+            "position": {
+              "x": 16000,
+              "y": 0,
+              "z": -4000
+            },
+            "path": [],
+            "speed": 0,
+            "radius": 420,
+            "height": 2000,
+            "health": 50,
+            "fireEveryTicks": 0,
+            "damage": 0
+          },
+          {
+            "id": "humanoid-05",
+            "type": "patrol",
+            "role": "hostile",
+            "position": {
+              "x": 12000,
+              "y": 0,
+              "z": 12000
+            },
+            "path": [],
+            "speed": 0,
+            "radius": 420,
+            "height": 2000,
+            "health": 50,
+            "fireEveryTicks": 0,
+            "damage": 0
+          }
+        ],
+        "steps": {
+          "self-level": [
+            {
+              "type": "hunt-contact-v1",
+              "targets": [
+                "humanoid-01",
+                "humanoid-02",
+                "humanoid-03",
+                "humanoid-04",
+                "humanoid-05"
+              ],
+              "ordered": true,
+              "tail": {
+                "linksPerCatch": 2,
+                "maxLinks": 64,
+                "neckDistance": 4500,
+                "radius": 350
+              }
+            }
+          ],
+          "acro": [
+            {
+              "type": "hunt-contact-v1",
+              "targets": [
+                "humanoid-01",
+                "humanoid-02",
+                "humanoid-03",
+                "humanoid-04",
+                "humanoid-05"
+              ],
+              "ordered": true,
+              "tail": {
+                "linksPerCatch": 2,
+                "maxLinks": 64,
+                "neckDistance": 4500,
+                "radius": 350
+              }
+            }
+          ]
+        },
+        "world": {
+          "id": "stadium",
+          "theme": "pixel",
+          "style": "stadium"
+        },
+        "rules": {
+          "seed": 9001,
+          "maxTicks": 36000,
+          "collisionDamage": 0
+        },
+        "conditions": {
+          "profile": "clear",
+          "revision": "r1"
+        }
+      },
+      "world": "stadium",
+      "theme": "snake-hunt",
+      "activity": "hunt",
+      "difficulty": "beginner",
+      "duration": 4,
+      "packIdentity": "fpv-snake-hunt:0a73f7def9f067b8",
+      "legacy": false
+    },
+    {
+      "id": "snake-hunt-loops-03",
+      "course": {
+        "format": "FlightCourse.v2",
+        "id": "snake-hunt-loops-03",
+        "revision": "r1",
+        "environment": "stadium",
+        "locales": {
+          "en": {
+            "title": "Wide figure eight",
+            "brief": "Catch 6 fictional humanoid targets by touching them in numbered order. Each catch lengthens a solid echo of your flown path. Avoid the glowing tail; fly above or around it.",
+            "lesson": "Use the usual manual throttle and flight controls. Aim for the marked torso around one metre above its platform. Pulses do not count. Wrong-order targets remain available. Blood is an optional visual setting."
+          },
+          "uk": {
+            "title": "Широка вісімка",
+            "brief": "Спіймайте 6 вигаданих гуманоїдів дотиком у порядку номерів. Кожен дотик подовжує твердий слід пройденого шляху. Оминайте світлий хвіст або пролітайте над ним.",
+            "lesson": "Керуйте звичайною ручною тягою та нахилом. Цільтеся в позначений тулуб приблизно за метр над платформою. Імпульси не зараховуються. Цілі, яких торкнулися поза чергою, залишаються. Кров — необов’язковий візуальний ефект."
+          }
+        },
+        "spawn": {
+          "x": 0,
+          "y": 0,
+          "z": 26000
+        },
+        "bounds": {
+          "min": {
+            "x": -34000,
+            "y": 0,
+            "z": -34000
+          },
+          "max": {
+            "x": 34000,
+            "y": 18000,
+            "z": 34000
+          }
+        },
+        "obstacles": [],
+        "actors": [
+          {
+            "id": "humanoid-01",
+            "type": "patrol",
+            "role": "hostile",
+            "position": {
+              "x": -14000,
+              "y": 0,
+              "z": 8000
+            },
+            "path": [],
+            "speed": 0,
+            "radius": 420,
+            "height": 2000,
+            "health": 50,
+            "fireEveryTicks": 0,
+            "damage": 0
+          },
+          {
+            "id": "humanoid-02",
+            "type": "patrol",
+            "role": "hostile",
+            "position": {
+              "x": -18000,
+              "y": 0,
+              "z": -8000
+            },
+            "path": [],
+            "speed": 0,
+            "radius": 420,
+            "height": 2000,
+            "health": 50,
+            "fireEveryTicks": 0,
+            "damage": 0
+          },
+          {
+            "id": "humanoid-03",
+            "type": "patrol",
+            "role": "hostile",
+            "position": {
+              "x": -4000,
+              "y": 0,
+              "z": -14000
+            },
+            "path": [],
+            "speed": 0,
+            "radius": 420,
+            "height": 2000,
+            "health": 50,
+            "fireEveryTicks": 0,
+            "damage": 0
+          },
+          {
+            "id": "humanoid-04",
+            "type": "patrol",
+            "role": "hostile",
+            "position": {
+              "x": 8000,
+              "y": 0,
+              "z": 0
+            },
+            "path": [],
+            "speed": 0,
+            "radius": 420,
+            "height": 2000,
+            "health": 50,
+            "fireEveryTicks": 0,
+            "damage": 0
+          },
+          {
+            "id": "humanoid-05",
+            "type": "patrol",
+            "role": "hostile",
+            "position": {
+              "x": 18000,
+              "y": 0,
+              "z": -12000
+            },
+            "path": [],
+            "speed": 0,
+            "radius": 420,
+            "height": 2000,
+            "health": 50,
+            "fireEveryTicks": 0,
+            "damage": 0
+          },
+          {
+            "id": "humanoid-06",
+            "type": "patrol",
+            "role": "hostile",
+            "position": {
+              "x": 20000,
+              "y": 0,
+              "z": 8000
+            },
+            "path": [],
+            "speed": 0,
+            "radius": 420,
+            "height": 2000,
+            "health": 50,
+            "fireEveryTicks": 0,
+            "damage": 0
+          }
+        ],
+        "steps": {
+          "self-level": [
+            {
+              "type": "hunt-contact-v1",
+              "targets": [
+                "humanoid-01",
+                "humanoid-02",
+                "humanoid-03",
+                "humanoid-04",
+                "humanoid-05",
+                "humanoid-06"
+              ],
+              "ordered": true,
+              "tail": {
+                "linksPerCatch": 2,
+                "maxLinks": 64,
+                "neckDistance": 4500,
+                "radius": 350
+              }
+            }
+          ],
+          "acro": [
+            {
+              "type": "hunt-contact-v1",
+              "targets": [
+                "humanoid-01",
+                "humanoid-02",
+                "humanoid-03",
+                "humanoid-04",
+                "humanoid-05",
+                "humanoid-06"
+              ],
+              "ordered": true,
+              "tail": {
+                "linksPerCatch": 2,
+                "maxLinks": 64,
+                "neckDistance": 4500,
+                "radius": 350
+              }
+            }
+          ]
+        },
+        "world": {
+          "id": "stadium",
+          "theme": "pixel",
+          "style": "stadium"
+        },
+        "rules": {
+          "seed": 9002,
+          "maxTicks": 36000,
+          "collisionDamage": 0
+        },
+        "conditions": {
+          "profile": "clear",
+          "revision": "r1"
+        }
+      },
+      "world": "stadium",
+      "theme": "snake-hunt",
+      "activity": "hunt",
+      "difficulty": "intermediate",
+      "duration": 4,
+      "packIdentity": "fpv-snake-hunt:0a73f7def9f067b8",
+      "legacy": false
+    },
+    {
+      "id": "snake-hunt-loops-04",
+      "course": {
+        "format": "FlightCourse.v2",
+        "id": "snake-hunt-loops-04",
+        "revision": "r1",
+        "environment": "stadium",
+        "locales": {
+          "en": {
+            "title": "Choose your loop",
+            "brief": "Catch 6 fictional humanoid targets by touching them in any order. Each catch lengthens a solid echo of your flown path. Avoid the glowing tail; fly above or around it.",
+            "lesson": "Use the usual manual throttle and flight controls. Aim for the marked torso around one metre above its platform. Pulses do not count. Wrong-order targets remain available. Blood is an optional visual setting."
+          },
+          "uk": {
+            "title": "Обери свою петлю",
+            "brief": "Спіймайте 6 вигаданих гуманоїдів дотиком у довільному порядку. Кожен дотик подовжує твердий слід пройденого шляху. Оминайте світлий хвіст або пролітайте над ним.",
+            "lesson": "Керуйте звичайною ручною тягою та нахилом. Цільтеся в позначений тулуб приблизно за метр над платформою. Імпульси не зараховуються. Цілі, яких торкнулися поза чергою, залишаються. Кров — необов’язковий візуальний ефект."
+          }
+        },
+        "spawn": {
+          "x": 0,
+          "y": 0,
+          "z": 26000
+        },
+        "bounds": {
+          "min": {
+            "x": -34000,
+            "y": 0,
+            "z": -34000
+          },
+          "max": {
+            "x": 34000,
+            "y": 18000,
+            "z": 34000
+          }
+        },
+        "obstacles": [],
+        "actors": [
+          {
+            "id": "humanoid-01",
+            "type": "patrol",
+            "role": "hostile",
+            "position": {
+              "x": -20000,
+              "y": 0,
+              "z": 8000
+            },
+            "path": [],
+            "speed": 0,
+            "radius": 420,
+            "height": 2000,
+            "health": 50,
+            "fireEveryTicks": 0,
+            "damage": 0
+          },
+          {
+            "id": "humanoid-02",
+            "type": "patrol",
+            "role": "hostile",
+            "position": {
+              "x": -12000,
+              "y": 0,
+              "z": -12000
+            },
+            "path": [],
+            "speed": 0,
+            "radius": 420,
+            "height": 2000,
+            "health": 50,
+            "fireEveryTicks": 0,
+            "damage": 0
+          },
+          {
+            "id": "humanoid-03",
+            "type": "patrol",
+            "role": "hostile",
+            "position": {
+              "x": 4000,
+              "y": 0,
+              "z": -20000
+            },
+            "path": [],
+            "speed": 0,
+            "radius": 420,
+            "height": 2000,
+            "health": 50,
+            "fireEveryTicks": 0,
+            "damage": 0
+          },
+          {
+            "id": "humanoid-04",
+            "type": "patrol",
+            "role": "hostile",
+            "position": {
+              "x": 20000,
+              "y": 0,
+              "z": -6000
+            },
+            "path": [],
+            "speed": 0,
+            "radius": 420,
+            "height": 2000,
+            "health": 50,
+            "fireEveryTicks": 0,
+            "damage": 0
+          },
+          {
+            "id": "humanoid-05",
+            "type": "patrol",
+            "role": "hostile",
+            "position": {
+              "x": 18000,
+              "y": 0,
+              "z": 14000
+            },
+            "path": [],
+            "speed": 0,
+            "radius": 420,
+            "height": 2000,
+            "health": 50,
+            "fireEveryTicks": 0,
+            "damage": 0
+          },
+          {
+            "id": "humanoid-06",
+            "type": "patrol",
+            "role": "hostile",
+            "position": {
+              "x": 0,
+              "y": 0,
+              "z": 8000
+            },
+            "path": [],
+            "speed": 0,
+            "radius": 420,
+            "height": 2000,
+            "health": 50,
+            "fireEveryTicks": 0,
+            "damage": 0
+          }
+        ],
+        "steps": {
+          "self-level": [
+            {
+              "type": "hunt-contact-v1",
+              "targets": [
+                "humanoid-01",
+                "humanoid-02",
+                "humanoid-03",
+                "humanoid-04",
+                "humanoid-05",
+                "humanoid-06"
+              ],
+              "ordered": false,
+              "tail": {
+                "linksPerCatch": 3,
+                "maxLinks": 64,
+                "neckDistance": 4500,
+                "radius": 350
+              }
+            }
+          ],
+          "acro": [
+            {
+              "type": "hunt-contact-v1",
+              "targets": [
+                "humanoid-01",
+                "humanoid-02",
+                "humanoid-03",
+                "humanoid-04",
+                "humanoid-05",
+                "humanoid-06"
+              ],
+              "ordered": false,
+              "tail": {
+                "linksPerCatch": 3,
+                "maxLinks": 64,
+                "neckDistance": 4500,
+                "radius": 350
+              }
+            }
+          ]
+        },
+        "world": {
+          "id": "stadium",
+          "theme": "pixel",
+          "style": "stadium"
+        },
+        "rules": {
+          "seed": 9003,
+          "maxTicks": 36000,
+          "collisionDamage": 0
+        },
+        "conditions": {
+          "profile": "clear",
+          "revision": "r1"
+        }
+      },
+      "world": "stadium",
+      "theme": "snake-hunt",
+      "activity": "hunt",
+      "difficulty": "intermediate",
+      "duration": 4,
+      "packIdentity": "fpv-snake-hunt:0a73f7def9f067b8",
+      "legacy": false
+    },
+    {
+      "id": "snake-hunt-loops-05",
+      "course": {
+        "format": "FlightCourse.v2",
+        "id": "snake-hunt-loops-05",
+        "revision": "r1",
+        "environment": "stadium",
+        "locales": {
+          "en": {
+            "title": "Spiral inward",
+            "brief": "Catch 7 fictional humanoid targets by touching them in numbered order. Each catch lengthens a solid echo of your flown path. Avoid the glowing tail; fly above or around it.",
+            "lesson": "Use the usual manual throttle and flight controls. Aim for the marked torso around one metre above its platform. Pulses do not count. Wrong-order targets remain available. Blood is an optional visual setting."
+          },
+          "uk": {
+            "title": "Спіраль усередину",
+            "brief": "Спіймайте 7 вигаданих гуманоїдів дотиком у порядку номерів. Кожен дотик подовжує твердий слід пройденого шляху. Оминайте світлий хвіст або пролітайте над ним.",
+            "lesson": "Керуйте звичайною ручною тягою та нахилом. Цільтеся в позначений тулуб приблизно за метр над платформою. Імпульси не зараховуються. Цілі, яких торкнулися поза чергою, залишаються. Кров — необов’язковий візуальний ефект."
+          }
+        },
+        "spawn": {
+          "x": 0,
+          "y": 0,
+          "z": 26000
+        },
+        "bounds": {
+          "min": {
+            "x": -34000,
+            "y": 0,
+            "z": -34000
+          },
+          "max": {
+            "x": 34000,
+            "y": 18000,
+            "z": 34000
+          }
+        },
+        "obstacles": [],
+        "actors": [
+          {
+            "id": "humanoid-01",
+            "type": "patrol",
+            "role": "hostile",
+            "position": {
+              "x": -22000,
+              "y": 0,
+              "z": 14000
+            },
+            "path": [],
+            "speed": 0,
+            "radius": 420,
+            "height": 2000,
+            "health": 50,
+            "fireEveryTicks": 0,
+            "damage": 0
+          },
+          {
+            "id": "humanoid-02",
+            "type": "patrol",
+            "role": "hostile",
+            "position": {
+              "x": -24000,
+              "y": 0,
+              "z": -16000
+            },
+            "path": [],
+            "speed": 0,
+            "radius": 420,
+            "height": 2000,
+            "health": 50,
+            "fireEveryTicks": 0,
+            "damage": 0
+          },
+          {
+            "id": "humanoid-03",
+            "type": "patrol",
+            "role": "hostile",
+            "position": {
+              "x": 20000,
+              "y": 0,
+              "z": -22000
+            },
+            "path": [],
+            "speed": 0,
+            "radius": 420,
+            "height": 2000,
+            "health": 50,
+            "fireEveryTicks": 0,
+            "damage": 0
+          },
+          {
+            "id": "humanoid-04",
+            "type": "patrol",
+            "role": "hostile",
+            "position": {
+              "x": 24000,
+              "y": 0,
+              "z": 12000
+            },
+            "path": [],
+            "speed": 0,
+            "radius": 420,
+            "height": 2000,
+            "health": 50,
+            "fireEveryTicks": 0,
+            "damage": 0
+          },
+          {
+            "id": "humanoid-05",
+            "type": "patrol",
+            "role": "hostile",
+            "position": {
+              "x": 6000,
+              "y": 0,
+              "z": 18000
+            },
+            "path": [],
+            "speed": 0,
+            "radius": 420,
+            "height": 2000,
+            "health": 50,
+            "fireEveryTicks": 0,
+            "damage": 0
+          },
+          {
+            "id": "humanoid-06",
+            "type": "patrol",
+            "role": "hostile",
+            "position": {
+              "x": -10000,
+              "y": 0,
+              "z": 4000
+            },
+            "path": [],
+            "speed": 0,
+            "radius": 420,
+            "height": 2000,
+            "health": 50,
+            "fireEveryTicks": 0,
+            "damage": 0
+          },
+          {
+            "id": "humanoid-07",
+            "type": "patrol",
+            "role": "hostile",
+            "position": {
+              "x": 0,
+              "y": 0,
+              "z": -8000
+            },
+            "path": [],
+            "speed": 0,
+            "radius": 420,
+            "height": 2000,
+            "health": 50,
+            "fireEveryTicks": 0,
+            "damage": 0
+          }
+        ],
+        "steps": {
+          "self-level": [
+            {
+              "type": "hunt-contact-v1",
+              "targets": [
+                "humanoid-01",
+                "humanoid-02",
+                "humanoid-03",
+                "humanoid-04",
+                "humanoid-05",
+                "humanoid-06",
+                "humanoid-07"
+              ],
+              "ordered": true,
+              "tail": {
+                "linksPerCatch": 3,
+                "maxLinks": 64,
+                "neckDistance": 4500,
+                "radius": 350
+              }
+            }
+          ],
+          "acro": [
+            {
+              "type": "hunt-contact-v1",
+              "targets": [
+                "humanoid-01",
+                "humanoid-02",
+                "humanoid-03",
+                "humanoid-04",
+                "humanoid-05",
+                "humanoid-06",
+                "humanoid-07"
+              ],
+              "ordered": true,
+              "tail": {
+                "linksPerCatch": 3,
+                "maxLinks": 64,
+                "neckDistance": 4500,
+                "radius": 350
+              }
+            }
+          ]
+        },
+        "world": {
+          "id": "stadium",
+          "theme": "pixel",
+          "style": "stadium"
+        },
+        "rules": {
+          "seed": 9004,
+          "maxTicks": 36000,
+          "collisionDamage": 0
+        },
+        "conditions": {
+          "profile": "clear",
+          "revision": "r1"
+        }
+      },
+      "world": "stadium",
+      "theme": "snake-hunt",
+      "activity": "hunt",
+      "difficulty": "intermediate",
+      "duration": 4,
+      "packIdentity": "fpv-snake-hunt:0a73f7def9f067b8",
+      "legacy": false
+    }
+  ],
+  "errors": [
+    "Failed to load resource: the server responded with a status of 404 (Not Found)"
+  ]
+}

@@ -26,15 +26,18 @@ import { completionVariantKey, appearanceMilestones } from '../progress.mjs';
 import { campaignContinuation, campaignSelection } from '../continuation.mjs';
 
 // Independently emitted by manifest-verified v0.10.0 archived modules before
-// encounter consumer edits. Never regenerate expectations from current modules.
+// encounter consumer edits. Only a retired cosmetic unlock is projected out; see
+// docs/migrations/compatibility-fixture.json. Never regenerate replay expectations from current modules.
 const bytes = await readFile(new URL('./fixtures/compatibility-v0100.json', import.meta.url));
 const fixture = JSON.parse(bytes);
 test('v0.10 replay/profile oracle is pinned and usable without an installed archive', () => {
   assert.equal(fixture.source.revision, '40ae9d23ad8737c4f77f9cc07923948133b7c09d');
   assert.equal(
     createHash('sha256').update(canonicalJSON(fixture)).digest('hex'),
-    'd1e58e7c23006d761a6dfc503e4476f079285e773fda20ef8b3ac24b2940151b',
+    'ac779b280e0c14270f0aa48abb503c7d233bacd66ba9edb6a6cea0df94c80e8f',
   );
+  assert.equal(createHash('sha256').update(canonicalJSON(fixture.cases)).digest('hex'), 'bbb5103f4edc314932ed71ef391b58cc977a690bc52c01c7d354cae8b8b60844');
+  assert.equal(createHash('sha256').update(canonicalJSON(fixture.library)).digest('hex'), '2aa0f794781f332755df7370b7f7cf1d0a35eccb3047723f051c27dde4d4d931');
   assert.ok(bytes.length < 100 * 1024);
   assert.equal(fixture.cases.length, 2);
 });

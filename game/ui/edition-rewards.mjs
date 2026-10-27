@@ -336,7 +336,8 @@ export async function mountEditionRewards({
     note.setAttribute('aria-atomic', 'true');
     return note;
   }
-  let shelfContentKey = null;
+  let shelfContentKey = null,
+    shelfDirty = true;
   let shelfCampaign = null,
     showPictures = false,
     shelfVisit = 0,
@@ -350,6 +351,10 @@ export async function mountEditionRewards({
     shelfURLs.clear();
   }
   function renderShelf() {
+    if (disposed || !collectionDialog.open) {
+      shelfDirty = true;
+      return;
+    }
     const focused = shelf.contains(doc.activeElement) ? doc.activeElement : null;
     const title = node('h3', tr('collection'));
     const exhibits = projectRewardExhibits({
@@ -360,8 +365,14 @@ export async function mountEditionRewards({
       receipts: state.receipts,
       progress,
     });
-    if (!exhibits.some((item) => item.campaign.id === shelfCampaign))
-      shelfCampaign = exhibits[0]?.campaign.id ?? null;
+    if (!exhibits.some((item) => item.campaign.id === shelfCampaign)) {
+      // Open the Collection on an earned campaign first. A freshly unlocked
+      // video should never be hidden behind an unrelated campaign picker.
+      shelfCampaign =
+        exhibits.find((item) => item.rows.some((row) => row.receipt))?.campaign.id ??
+        exhibits[0]?.campaign.id ??
+        null;
+    }
     const exhibit = exhibits.find((item) => item.campaign.id === shelfCampaign);
     const contentKey = JSON.stringify([
       shelfCampaign,
@@ -373,6 +384,7 @@ export async function mountEditionRewards({
     ]);
     if (shelfContentKey === contentKey) {
       syncShelfSaveNote();
+      shelfDirty = false;
       return;
     }
     shelfContentKey = contentKey;
@@ -478,14 +490,24 @@ export async function mountEditionRewards({
     shelf.append(grid);
     syncShelfSaveNote();
     restoreFocus(focused);
+    shelfDirty = false;
     if (imageJobs.length) {
       const visit = shelfVisit,
         controller = new AbortController();
       shelfRequest = controller;
-      const owner = { urls: shelfURLs, current: () => shelfVisit };
+      const owner = {
+        urls: shelfURLs,
+        current: () => (collectionDialog.open ? shelfVisit : null),
+      };
       // Two requests at a time keep decoding away from a burst of full-size art.
       const work = async () => {
-        while (imageJobs.length && !controller.signal.aborted) {
+        while (
+          imageJobs.length &&
+          !disposed &&
+          collectionDialog.open &&
+          visit === shelfVisit &&
+          !controller.signal.aborted
+        ) {
           const job = imageJobs.shift();
           await loadImage(
             job.payload,
@@ -595,6 +617,8 @@ export async function mountEditionRewards({
     }
     if (won) {
       actions.append(exploreButton(receipt, 'result'));
+      if (receipt.definition.payloads.some((item) => item.type === 'video'))
+        actions.append(exploreButton(receipt, 'result-video', 'playVideo'));
       const saved = store.status();
       if (!saved.durable) {
         const compact = node(
@@ -909,6 +933,7 @@ export async function mountEditionRewards({
     showPictures = false;
     releaseShelfPictures();
     shelfContentKey = null;
+    shelfDirty = true;
     const toggle = doc.getElementById('completion-reward-exhibit-pictures');
     if (toggle) {
       toggle.textContent = tr('showPromisePictures');
@@ -921,7 +946,7 @@ export async function mountEditionRewards({
   const shelfObserver =
     typeof win.MutationObserver === 'function'
       ? new win.MutationObserver(() => {
-          if (collectionDialog.open) renderShelf();
+          if (collectionDialog.open) refresh();
           else closeShelf();
         })
       : null;
@@ -1002,8 +1027,9 @@ export async function mountEditionRewards({
       exportButton.textContent = tr('export');
       labelText.textContent = tr('import');
       saveStatus();
-      renderShelf();
+      shelfDirty = true;
     }
+    if (shelfDirty && collectionDialog.open) renderShelf();
     if (dirty || lastRun !== run || lastKind !== kind || lastMotion !== getReducedMotion())
       renderResult(animate);
     resultLayout.sync(!result.hidden && result.dataset.placement === 'summary', run);

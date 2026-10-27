@@ -1,0 +1,223 @@
+{
+  "format": "ProductionMemoryIndependentAudit.v1",
+  "passed": true,
+  "receipt": {
+    "path": "/tmp/practice-production-memory-20261016-run1/observation.json",
+    "sha256": "5f8cfdbb23b49f7cbab03cf867e1e357e74b1dbff500627f3da541e0fd1f9fc8"
+  },
+  "logSha256": "f6e133f6c8596abd36a1f4bd9e1b610cbe42d149e633f8cabbe00a7787ce831e",
+  "observerRevision": "88867270621a9d59f8041056e2653d21421ad374",
+  "packageRevision": "1b339bfe6596290b6db17ae0e268e4c8a843071a",
+  "shellRevision": "3a1b5e3c348b4623caa949e23602fc5f9fc0b444",
+  "authorityFiles": 12,
+  "manifestSha256": "179309a60e6f18e27a4403bb48026766e0080b1566cf2a077a5b1108392adbce",
+  "originals": {
+    "members": 3493,
+    "bytes": 1072077940,
+    "beforeAfterReceiptsVerified": true,
+    "manifestBytesRechecked": true,
+    "fullGigabyteRehashedByThisAudit": false
+  },
+  "delivery": {
+    "selectedFiles": 2737,
+    "selectedBytes": 116052929,
+    "maxBytes": 134217728,
+    "memoryRequests": 9262,
+    "fileRequests": 72,
+    "uniqueMembers": 807,
+    "cleared": true,
+    "pendingReads": 0
+  },
+  "overlay": {
+    "zipMembersBytePinned": 357,
+    "launcherCopiesBytePinned": 30,
+    "generatedCatalogFiles": 4,
+    "scope": "Catalog generator source inspected; four generated catalogue files not independently regenerated in this audit."
+  },
+  "cases": [
+    {
+      "id": "en-civilian-flight",
+      "phase": "ready",
+      "onePlay": true,
+      "runtimeBeforePlay": 0,
+      "personalAppearance": "tryzub",
+      "guideHeading": "Your first practice flight",
+      "returned": true
+    },
+    {
+      "id": "en-civilian-fpv",
+      "phase": "disarmed",
+      "onePlay": true,
+      "runtimeBeforePlay": 0,
+      "personalAppearance": "tryzub",
+      "guideHeading": "Your first practice flight",
+      "returned": true
+    },
+    {
+      "id": "en-fpv-worlds",
+      "phase": "ready",
+      "onePlay": true,
+      "runtimeBeforePlay": 0,
+      "personalAppearance": "tryzub",
+      "guideHeading": "Your first practice flight",
+      "returned": true
+    },
+    {
+      "id": "uk-civilian-flight",
+      "phase": "ready",
+      "onePlay": true,
+      "runtimeBeforePlay": 0,
+      "personalAppearance": "tryzub",
+      "guideHeading": "Ваш перший тренувальний політ",
+      "returned": true
+    },
+    {
+      "id": "uk-civilian-fpv",
+      "phase": "disarmed",
+      "onePlay": true,
+      "runtimeBeforePlay": 0,
+      "personalAppearance": "tryzub",
+      "guideHeading": "Ваш перший тренувальний політ",
+      "returned": true
+    },
+    {
+      "id": "uk-fpv-worlds",
+      "phase": "ready",
+      "onePlay": true,
+      "runtimeBeforePlay": 0,
+      "personalAppearance": "tryzub",
+      "guideHeading": "Ваш перший тренувальний політ",
+      "returned": true
+    }
+  ],
+  "screenshots": [
+    {
+      "path": "en-civilian-flight-main-appearance.png",
+      "sha256": "913d244223003589ed12e80e0c2d1235222b94a9911d9f0f46a160ac19011f6a"
+    },
+    {
+      "path": "en-civilian-flight-directory.png",
+      "sha256": "d43099f9a16b85f724dca52462b68b65d58f3ce7f3f6b767e5756e5deb2e42db"
+    },
+    {
+      "path": "en-civilian-flight-app-home.png",
+      "sha256": "4e8254f3e4ebad18dda28b8992ab89811239b7a8fce6879da796ddc428e89790"
+    },
+    {
+      "path": "en-civilian-flight-guide.png",
+      "sha256": "11e6843d154d3e0e8ad04f252fbb2ad9aca19edb024d42072d1b80074d5e7b02"
+    },
+    {
+      "path": "en-civilian-fpv-main-appearance.png",
+      "sha256": "913d244223003589ed12e80e0c2d1235222b94a9911d9f0f46a160ac19011f6a"
+    },
+    {
+      "path": "en-civilian-fpv-directory.png",
+      "sha256": "35ed8d04411900a35de78450cedcbf2ef0abf11edaaeafba7d3c84672088664b"
+    },
+    {
+      "path": "en-civilian-fpv-app-home.png",
+      "sha256": "6782730cbd385e19bb00aca0bababf187a7825571ec3b7ef20518666c9bb64ee"
+    },
+    {
+      "path": "en-civilian-fpv-guide.png",
+      "sha256": "11e6843d154d3e0e8ad04f252fbb2ad9aca19edb024d42072d1b80074d5e7b02"
+    },
+    {
+      "path": "en-fpv-worlds-main-appearance.png",
+      "sha256": "913d244223003589ed12e80e0c2d1235222b94a9911d9f0f46a160ac19011f6a"
+    },
+    {
+      "path": "en-fpv-worlds-directory.png",
+      "sha256": "35ed8d04411900a35de78450cedcbf2ef0abf11edaaeafba7d3c84672088664b"
+    },
+    {
+      "path": "en-fpv-worlds-app-home.png",
+      "sha256": "ea72be57b521ae9f35e7163614454176aa466d46e557fa6f1d39a72d22aa04d3"
+    },
+    {
+      "path": "en-fpv-worlds-guide.png",
+      "sha256": "11e6843d154d3e0e8ad04f252fbb2ad9aca19edb024d42072d1b80074d5e7b02"
+    },
+    {
+      "path": "uk-civilian-flight-main-appearance.png",
+      "sha256": "8ff9dc00fa5d255dff5889051abae218e1f86d5a41ce57079489dfd06e67a228"
+    },
+    {
+      "path": "uk-civilian-flight-directory.png",
+      "sha256": "5bee35409617b23fdbbe92c37c8e1939cecbf31e806f22739c4f669877f7c021"
+    },
+    {
+      "path": "uk-civilian-flight-app-home.png",
+      "sha256": "23c4812ff774161e312e3d8ee8fc875278997c3b5fac9238e91cb61f439b64fb"
+    },
+    {
+      "path": "uk-civilian-flight-guide.png",
+      "sha256": "7cee94a77084a4aef74e9e2b813039d95510af8b63dd3120a562163e9f777062"
+    },
+    {
+      "path": "uk-civilian-fpv-main-appearance.png",
+      "sha256": "8ff9dc00fa5d255dff5889051abae218e1f86d5a41ce57079489dfd06e67a228"
+    },
+    {
+      "path": "uk-civilian-fpv-directory.png",
+      "sha256": "5bee35409617b23fdbbe92c37c8e1939cecbf31e806f22739c4f669877f7c021"
+    },
+    {
+      "path": "uk-civilian-fpv-app-home.png",
+      "sha256": "0632637cfcc2586580360ba443e0df9d0b13154bc0ce1c37971073f95f4d5a98"
+    },
+    {
+      "path": "uk-civilian-fpv-guide.png",
+      "sha256": "5f74fbd2d9c0af0e7f769915fdc4b1e4f9072de59c843aca381004905d65211d"
+    },
+    {
+      "path": "uk-fpv-worlds-main-appearance.png",
+      "sha256": "8ff9dc00fa5d255dff5889051abae218e1f86d5a41ce57079489dfd06e67a228"
+    },
+    {
+      "path": "uk-fpv-worlds-directory.png",
+      "sha256": "5bee35409617b23fdbbe92c37c8e1939cecbf31e806f22739c4f669877f7c021"
+    },
+    {
+      "path": "uk-fpv-worlds-app-home.png",
+      "sha256": "31ab47c5b894c02127287e43cab86d47f5f4c56d8b25a45bdf1aff4cfb05be47"
+    },
+    {
+      "path": "uk-fpv-worlds-guide.png",
+      "sha256": "7a3e6122bde577d1e3a0bfd0a910a7d807e6d7280b3f61d8a90f28c644183648"
+    }
+  ],
+  "cleanup": {
+    "completed": true,
+    "operations": [
+      {
+        "name": "browser",
+        "closed": true
+      },
+      {
+        "name": "server",
+        "closed": true
+      }
+    ]
+  },
+  "requestFailures": [
+    {
+      "path": "/favicon.ico",
+      "message": "Outside local fixture root."
+    }
+  ],
+  "priorFailuresPreserved": [
+    {
+      "path": "/tmp/practice-production-personal-appearance-v2-20261016-run2/observation.json",
+      "sha256": "f15c40a3196b8999ea03cc2219c87f57c441ead62fddf2a9d67d8e5fb41f0296",
+      "completed": false
+    }
+  ],
+  "limitations": [
+    "Read-only receipt/source/hash audit, not another native execution or a second full 1GB rehash. Full before/after integrity relies on the pinned reviewed streaming verifier and its complete receipts.",
+    "Bounded original-byte memory delivery is observer I/O, not a runtime startup fix, cold-disk performance result, or public hosting qualification.",
+    "Six EN/UK one-Play start-screen journeys and Tryzub personal preference transfer only; no flight arming/completion, all-theme, compiled edition URL-pair, physical-device or human accessibility claim.",
+    "Public eligibility remains false; only explicit unpublished catalogue/release overlays are used."
+  ]
+}

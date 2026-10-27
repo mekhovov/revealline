@@ -9,12 +9,30 @@ import { earnTeamVictory } from './helpers/coop-win.mjs';
 import { COOP_PICTURE_BINDINGS } from '../couch/coop-picture-bindings.mjs';
 import { COOP_STARTER_PACK } from '../coop/library.mjs';
 import { canonicalJSON } from '../data-json.mjs';
+import { createMissionLibrary } from '../mission-library/library.mjs';
+import { createRemoteTeamLibrarySources } from '../mission-library/remote-team.mjs';
 
 // Actual Team host, picture reader and authenticated PNG originals; only DOM,
 // image decode and Canvas rasterization are finite boundaries. These assertions
 // do not qualify browser layout, decoded pixels, physical input or public play.
+// Check the complete Team metadata inventory, then use the native collection
+// filter for starter Classic or owned Custom picture previews. Expedition
+// schematic canvases are legitimate and outside this picture-preview scope.
 const first = COOP_PICTURE_BINDINGS[0],
   yard = COOP_PICTURE_BINDINGS[1];
+// Independent metadata inventory: no chooser DOM, gameplay, media or profile
+// reads. The retained Journey, Expeditions and Hunt catalogs can grow without
+// replacing an exact identity check with another hardcoded card count.
+const metadataLibrary = createMissionLibrary(
+  createRemoteTeamLibrarySources({
+    launch: () => assert.fail('A preview inventory must never launch a mission'),
+  }),
+);
+const builtinMissionIds = new Set(metadataLibrary.missions.map((row) => row.id));
+const classicMissionIds = new Set(
+  metadataLibrary.missions.filter((row) => row.collection === 'Classic').map((row) => row.id),
+);
+metadataLibrary.dispose();
 const flush = () => new Promise((resolve) => setImmediate(resolve));
 const dialog = (f) => f.$('journey-chooser');
 const viewer = (f) => f.$('coop-discovery-preview');
@@ -51,8 +69,60 @@ const ready = (f, state = 'ready') =>
     () => previewStatus(f).dataset.state === state,
     () => previewStatus(f).textContent,
   );
-async function browsingReady(f, count = 2) {
-  assert.equal(playButtons(f).length, count + 12);
+function assertCustomMissionIds(ids, customPack) {
+  const custom = ids.map((id) => JSON.parse(id));
+  if (customPack) {
+    assert.equal(new Set(custom.map(([owner]) => owner)).size, 1);
+    for (const [owner] of custom)
+      assert.match(
+        owner,
+        /^team-custom:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}:1$/i,
+        'The first visit-local import has its own opaque owner, never a compiled owner',
+      );
+    assert.deepEqual(
+      custom.map(([, ...identity]) => identity).sort(),
+      customPack.levels
+        .map((level) => [
+          `${customPack.id}@${customPack.revision}`,
+          customPack.id,
+          level.id,
+          String(customPack.revision),
+        ])
+        .sort(),
+      'Only the exact imported pack, edition and level rows supplement the builtins',
+    );
+  } else assert.deepEqual(custom, [], 'No uncatalogued or imported rows appear');
+  return custom[0]?.[0] ?? null;
+}
+
+async function browsingReady(f, customPack = null) {
+  const filter = f.$('journey-collection');
+  filter.value = '';
+  filter.emit('change');
+  await flush();
+  const ids = playButtons(f).map((button) => button.dataset.missionId);
+  assert.equal(new Set(ids).size, ids.length, 'Every card has one unique opaque identity');
+  assert.deepEqual(
+    new Set(ids.filter((id) => builtinMissionIds.has(id))),
+    builtinMissionIds,
+    'Every independently catalogued Team mission is present exactly once',
+  );
+  const customOwner = assertCustomMissionIds(
+    ids.filter((id) => !builtinMissionIds.has(id)),
+    customPack,
+  );
+  filter.value = customPack ? 'Custom' : 'Classic';
+  filter.emit('change');
+  await flush();
+  const scopedIds = playButtons(f).map((button) => button.dataset.missionId);
+  assert.equal(new Set(scopedIds).size, scopedIds.length, 'Filtered identities remain unique');
+  if (customPack)
+    assert.equal(
+      assertCustomMissionIds(scopedIds, customPack),
+      customOwner,
+      'Filtering retains the exact visit-local import owner',
+    );
+  else assert.deepEqual(new Set(scopedIds), classicMissionIds);
   assert.equal(
     f.$('journey-cards').querySelectorAll('canvas').length,
     0,
@@ -236,7 +306,7 @@ function retained(f) {
   };
 }
 
-test('Team cards browse without artwork; explicit full preview returns directly without awards', async (t) => {
+test('starter Classic Team cards browse without artwork; explicit full preview returns directly without awards', async (t) => {
   const f = await fixture(t),
     writes = [...f.writes];
   await open(f);
@@ -252,6 +322,7 @@ test('Team cards browse without artwork; explicit full preview returns directly 
   enter(f, f.$('journey-back'));
   assert.equal(viewer(f).hidden, true);
   assert.equal(dialog(f).open, false);
+  assert.equal(f.$('journey-collection').value, 'Classic');
   assert.equal(f.doc.activeElement.id, 'coop-discovery-open');
   f.tick(20);
   assert.equal(f.drawImages.length, 0);
@@ -492,7 +563,7 @@ test('local .rlteam artwork with exact starter IDs keeps its own teaser and full
   assert.equal(f.$('coop-pack-status').dataset.state, 'ready', f.$('coop-pack-status').textContent);
   assert.equal(f.previewDrawImages.at(-1).sha256, yard.picture.sha256);
   await open(f);
-  await browsingReady(f, 4);
+  await browsingReady(f, COOP_STARTER_PACK);
   const origin = await previewButton(f, 'First Connection', true);
   const reads = f.artwork.calls.reads.length,
     writes = [...f.writes];
@@ -508,6 +579,7 @@ test('local .rlteam artwork with exact starter IDs keeps its own teaser and full
   assert.equal(f.doc.activeElement.id, 'coop-discovery-open');
   assert.equal(f.drawImages.length, 0);
   assert.equal(f.earnedDrawImages.length, 0);
+  assert.equal(f.$('journey-collection').value, 'Custom');
   assert.deepEqual(f.writes, writes);
 });
 

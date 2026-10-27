@@ -82,6 +82,66 @@ test('headerless dump rates needs a version, unsupported tags and conflicting he
   );
 });
 
+test('explicit unsupported firmware headers never become missing headers or verified release tags', async () => {
+  const baseline = betaflightDefaultRateProfile('2026.6.2'),
+    original = structuredClone(baseline);
+  for (const version of [
+    '3.5.7',
+    '5.0.0',
+    '2030.12.1',
+    '4.5.2-RC1',
+    '2026.6.2-dev',
+    '2026.6.2-RC.1',
+    '2026.6.2+local.1',
+    '2026.6.2-dev+custom.1',
+  ]) {
+    const source = `# Betaflight / STM32F405 (S405) ${version} (abcdef) MSP API: 1.47\nset roll_srate = 83`;
+    for (const kind of ['complete', 'diff', 'patch']) {
+      const options = { kind, ...(kind === 'patch' ? { baseline } : {}) };
+      fails(() => parseBetaflightConfiguration(source, options), 'unsupported-version');
+      fails(
+        () => parseBetaflightConfiguration(source, { ...options, sourceVersion: '2026.6.2' }),
+        'version-conflict',
+      );
+      await assert.rejects(
+        previewBetaflightImport(source, options),
+        (error) => error instanceof BetaflightImportError && error.code === 'unsupported-version',
+      );
+      assert.deepEqual(
+        baseline,
+        original,
+        'Failed interpretation must preserve the patch baseline',
+      );
+    }
+  }
+  fails(
+    () =>
+      parseBetaflightConfiguration('# Betaflight 2026.6.2\n# Betaflight 2026.6.2-dev', {
+        kind: 'diff',
+      }),
+    'version-conflict',
+  );
+});
+
+test('exact release headers retain their source version and genuinely headerless patches remain supported', () => {
+  for (const version of BETAFLIGHT_IMPORT_VERSIONS) {
+    const result = parseBetaflightConfiguration(
+      `# Betaflight / STM32F405 (S405) ${version} (abcdef) MSP API: 1.47\nset roll_srate = 83`,
+      { kind: 'diff' },
+    );
+    assert.equal(result.sourceVersion, version);
+    assert.equal(result.sourceVersionOrigin, 'header');
+    assert.equal(result.profile.axes.roll.rate, 83);
+  }
+  const result = parseBetaflightConfiguration('dump rates\nset roll_srate = 83', {
+    kind: 'patch',
+    baseline: betaflightDefaultRateProfile('2026.6.2'),
+  });
+  assert.equal(result.sourceVersion, null);
+  assert.equal(result.sourceVersionOrigin, 'unspecified');
+  assert.equal(result.profile.axes.roll.rate, 83);
+});
+
 test('profiles and assignments are sequential; PID namespace cannot redirect rate settings', () => {
   const result = parse(`rateprofile 1
 set roll_rc_rate = 15
@@ -344,6 +404,132 @@ set yaw_expo = 70
   assert.equal(profile.axes.roll.rate, 75);
   assert.equal(profile.axes.yaw.expo, 20);
   assert.equal(result.warnings.length, 1);
+});
+
+test('preset option matching agrees with the tagged App while preserving original labels', async () => {
+  const cases = JSON.parse(
+    readFileSync(
+      new URL('./fixtures/fpv/betaflight-preset-option-case.json', import.meta.url),
+      'utf8',
+    ),
+  );
+  for (const observation of cases.observations) {
+    const resolution = resolveBetaflightPresetBundle({
+      files: cases.files,
+      entry: cases.entry,
+      options: observation.options,
+    });
+    assert.deepEqual(
+      resolution.text.trim().split('\n').filter(Boolean),
+      observation.upstreamCommands,
+      observation.name,
+    );
+    assert.deepEqual(
+      resolution.options.map((option) => option.name),
+      ['Race rates', 'Smooth rates'],
+    );
+    assert.deepEqual(
+      resolution.options.filter((option) => option.checked).map((option) => option.name),
+      observation.checkedOptions,
+    );
+    assert.deepEqual(resolution.warnings, []);
+    assert.deepEqual(
+      JSON.parse(resolution.identity).options,
+      resolution.options.map((option) => [option.name, option.checked]),
+    );
+    const { provenance } = await previewBetaflightImport(resolution.text, {
+      kind: 'patch',
+      baseline: createRateProfile(),
+      presetBundle: { files: cases.files, entry: cases.entry, options: observation.options },
+    });
+    assert.deepEqual(
+      provenance.preset.options.entries.map((entry) => JSON.parse(entry)),
+      resolution.options,
+    );
+    for (const [path, contents] of Object.entries(cases.files))
+      assert.ok(
+        provenance.preset.files.entries.includes(
+          `${sha(contents)} ${Buffer.byteLength(contents)} ${path}`,
+        ),
+      );
+  }
+  const explicit = resolveBetaflightPresetBundle({
+    files: cases.files,
+    entry: cases.entry,
+    options: { 'RACE RATES': false, 'smooth rates': true },
+  });
+  assert.equal(explicit.text.trim(), 'set roll_srate = 80');
+  fails(
+    () =>
+      resolveBetaflightPresetBundle({
+        files: cases.files,
+        entry: cases.entry,
+        options: { 'SMOOTH RATES': true },
+      }),
+    'exclusive-options',
+  );
+});
+
+test('explicit preset review flags match tagged App boolean metadata and survive transfer receipts', async () => {
+  const cases = JSON.parse(
+    readFileSync(
+      new URL('./fixtures/fpv/betaflight-preset-review-boolean.json', import.meta.url),
+      'utf8',
+    ),
+  );
+  for (const observation of cases.observations) {
+    const files = { 'main.txt': `${observation.line}\n${cases.payload}` },
+      bundle = { files, entry: 'main.txt' },
+      resolved = resolveBetaflightPresetBundle(bundle);
+    assert.equal(resolved.forceOptionsReview, observation.upstreamForceOptionsReview);
+    assert.equal(resolved.text.trim(), cases.payload);
+    const { provenance } = await previewBetaflightImport(resolved.text, {
+      kind: 'patch',
+      baseline: createRateProfile(),
+      presetBundle: bundle,
+    });
+    assert.ok(
+      provenance.preset.metadata.entries.some((entry) => {
+        const metadata = JSON.parse(entry);
+        return (
+          metadata.field === 'FORCE_OPTIONS_REVIEW' &&
+          metadata.value === observation.upstreamForceOptionsReview
+        );
+      }),
+    );
+  }
+  assert.equal(
+    resolveBetaflightPresetBundle({
+      files: { 'main.txt': `#$ FORCE_OPTIONS_REVIEW\n${cases.payload}` },
+      entry: 'main.txt',
+    }).forceOptionsReview,
+    true,
+    'Keep the existing bare-directive compatibility behavior',
+  );
+});
+
+test('case-only duplicate preset options and selections are rejected without mutating inputs', () => {
+  const files = {
+    'main.txt': '#$ OPTION BEGIN (CHECKED): Race\n#$ OPTION END\n#$ INCLUDE: child.txt',
+    'child.txt': '#$ OPTION BEGIN (UNCHECKED): RACE\nset roll_srate = 90\n#$ OPTION END',
+  };
+  const options = { Race: true, RACE: false };
+  const before = JSON.stringify({ files, options });
+  fails(
+    () => resolveBetaflightPresetBundle({ files, entry: 'main.txt', options }),
+    'duplicate-option',
+  );
+  assert.equal(JSON.stringify({ files, options }), before);
+  for (const path of ['main.txt', 'child.txt']) {
+    const duplicate = {
+      ...files,
+      [path]: `${files[path]}\n#$ OPTION BEGIN (UNCHECKED): race\n#$ OPTION END`,
+    };
+    fails(
+      () => resolveBetaflightPresetBundle({ files: duplicate, entry: 'main.txt' }),
+      'duplicate-option',
+    );
+  }
 });
 
 test('preset includes reject missing, cyclic, escaping and unsupported nested dependencies before apply', () => {

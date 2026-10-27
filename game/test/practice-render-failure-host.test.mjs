@@ -123,7 +123,12 @@ test('post-ready practice render failure latches, preserves native Return and al
       assert.equal(page.doc.body.dataset.flightState, 'paused');
       pad.buttons[0] = { pressed: true, value: 1 };
       armed = true;
+      // An unchanged paused board is retained. A public resize requires the
+      // actual draw whose failure this control owns, without starting play.
+      page.win.emit('resize');
+      const beforeFaultPaints = paintCalls;
       assert.doesNotThrow(() => page.frame(16));
+      assert.equal(paintCalls, beforeFaultPaints + 1, 'The armed renderer actually ran.');
       pad.buttons[0] = { pressed: false, value: 0 };
       const checkpoint = authoritativeCheckpoint(run),
         failedPaints = paintCalls,
@@ -229,6 +234,7 @@ test('ordinary Solo render exceptions retain the existing propagation path', asy
     }),
   });
   armed = true;
+  page.win.emit('resize'); // Require a dirty-board draw rather than a retained paused frame.
   assert.throws(
     () => page.frame(16),
     (error) => error === fault,

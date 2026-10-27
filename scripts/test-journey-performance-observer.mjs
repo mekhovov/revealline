@@ -238,6 +238,7 @@ test('unready pictures, preparation errors, hidden pages and superseded actions 
   h.doc.body.dataset.flightState = 'running';
   h.frame(30001);
   assert.match(h.records().at(-1).outcome, /timeout/);
+  assert.equal(h.records().at(-1).elapsedMs, 30001);
   h.click('next-button');
   h.nodes.get('flight-preparation-status').dataset.state = 'error';
   h.frame();
@@ -511,7 +512,7 @@ test('bounded passive frame samples record distributions without pretending unsu
   assert.deepEqual(h.doc.body.dataset, {});
 });
 
-test('frame observation discards hidden and navigation samples and detaches its controls', () => {
+test('frame observation retains hidden and navigation partial samples and detaches its controls', () => {
   for (const reason of ['visibility', 'navigation']) {
     const h = harness();
     h.frame();
@@ -525,7 +526,9 @@ test('frame observation discards hidden and navigation samples and detaches its 
     const samples = h.records().filter((entry) => entry.action === 'Frame sample');
     assert.equal(samples.length, 1);
     assert.match(samples[0].outcome, /discarded/);
-    assert.equal(samples[0].frameIntervals, undefined);
+    assert.equal(samples[0].partial, true);
+    assert.equal(samples[0].frameIntervals.count, 99);
+    assert.equal(samples[0].frameIntervals.maxMs, 16);
     if (reason === 'navigation') assert.equal(h.outer.get('sample').listeners.has('click'), false);
   }
 });
@@ -698,7 +701,7 @@ test('active profile waits for foreground play, then records both seats and trut
   assert.equal(h.doc.listeners.has('keydown'), false);
 });
 
-test('active profile rejects pauses, focus loss, mission changes and an expired arm', () => {
+test('active profile excludes partial observations from qualification but preserves their evidence', () => {
   for (const reason of ['pause', 'focus', 'mission', 'arm-timeout']) {
     const h = harness('team');
     h.frame();
@@ -718,7 +721,9 @@ test('active profile rejects pauses, focus loss, mission changes and an expired 
     const sample = h.records().at(-1);
     assert.equal(sample.action, 'Frame sample');
     assert.match(sample.outcome, /discarded/);
-    assert.equal(sample.frameIntervals, undefined);
+    assert.equal(sample.partial, true);
+    if (reason === 'arm-timeout') assert.equal(sample.frameIntervals, undefined);
+    else assert.equal(sample.frameIntervals.count, 81);
     assert.equal(h.outer.get('sample').disabled, false);
   }
 });
@@ -735,7 +740,49 @@ test('active sample rechecks focus even when its deadline runs before the next f
   h.doc.focused = false;
   h.frame(16);
   assert.match(h.records().at(-1).outcome, /discarded/);
-  assert.equal(h.records().at(-1).frameIntervals, undefined);
+  assert.equal(h.records().at(-1).partial, true);
+  assert.equal(h.records().at(-1).frameIntervals.count, 1875);
+  assert.equal(h.records().at(-1).finalIntervalIncomplete, true);
+});
+
+test('a pause-causing stall is retained even in a short active sample', () => {
+  const h = harness('team');
+  h.frame();
+  h.frame();
+  h.outer.get('sample-scope').value = 'active';
+  h.outer.get('sample').listeners.get('click')();
+  h.nodes.get('coop-play').hidden = false;
+  h.frame();
+  h.frame();
+  h.nodes.get('coop-overlay').hidden = false;
+  h.frame(417);
+  const sample = h.records().at(-1);
+  assert.equal(sample.partial, true);
+  assert.equal(sample.frameIntervals.count, 2);
+  assert.equal(sample.frameIntervals.maxMs, 417);
+  assert.equal(sample.frameIntervals.over250ms, 1);
+  assert.equal(sample.observerTotals.maxFrameIntervalMs, 417);
+  assert.equal(sample.observerTotals.partialSamples, 1);
+});
+
+test('observer totals survive bounded record eviction and replaced partial samples', () => {
+  const h = harness();
+  h.frame();
+  h.frame();
+  h.outer.get('sample').listeners.get('click')();
+  h.frame();
+  h.frame(500);
+  for (let i = 0; i < 102; i++) {
+    h.outer.get('sample').listeners.get('click')();
+    h.frame();
+    h.frame();
+  }
+  assert.equal(h.records().length, 100);
+  const totals = h.records().at(-1).observerTotals;
+  assert.equal(totals.samples, 102);
+  assert.equal(totals.maxFrameIntervalMs, 500);
+  assert.equal(totals.over250ms, 1);
+  assert.equal(totals.partialSamples, 102);
 });
 
 test('an expired arm reports genuine DOM focus and native activation without admitting menu frames', () => {
