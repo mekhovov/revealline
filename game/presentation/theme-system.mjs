@@ -251,6 +251,26 @@ const productionTheme = (
 });
 const ukrainianSource = (name) =>
   `swarmshared/da1c1f3c4b985ead2b8d306c9d883cb0dbcd1521/themes/palettes/${name}.json; original game adaptation`;
+const RETAINED_DESKTOP_INTERFACE = freeze(
+  productionTheme(
+    'windows-classic',
+    'Desktop 98',
+    {
+      ink: '#008888',
+      panel: '#c0c0c0',
+      panelRaised: '#dedede',
+      text: '#000000',
+      muted: '#282828',
+      line: '#808080',
+      controlLine: '#000080',
+      accent: '#000080',
+      amber: '#654000',
+      hazard: '#8e1010',
+      safe: '#17551d',
+    },
+    { texture: false, revision: 'r2' },
+  ),
+);
 const RETAINED_PRODUCTION_INTERFACE_THEMES = freeze([
   { ...RETAINED_INTERFACE_THEMES[0], revision: 'r2', name: 'Classic Field Kit' },
   productionTheme(
@@ -390,24 +410,11 @@ export const BUILTIN_INTERFACE_THEMES = freeze([
     },
     { source: ukrainianSource('tryzub') },
   ),
-  productionTheme(
-    'windows-classic',
-    'Desktop 98',
-    {
-      ink: '#008888',
-      panel: '#c0c0c0',
-      panelRaised: '#dedede',
-      text: '#000000',
-      muted: '#282828',
-      line: '#808080',
-      controlLine: '#000080',
-      accent: '#000080',
-      amber: '#654000',
-      hazard: '#8e1010',
-      safe: '#17551d',
-    },
-    { texture: false, revision: 'r2' },
-  ),
+  {
+    ...RETAINED_DESKTOP_INTERFACE,
+    revision: 'r3',
+    tokens: { ...RETAINED_DESKTOP_INTERFACE.tokens, input: '#ffffff', inputText: '#000000' },
+  },
   productionTheme(
     'dos',
     'DOS Navigator',
@@ -559,17 +566,20 @@ export const APPLICATION_THEME_FAMILY = 'industrial-workshop';
 // recordings, authored defaults and first-paint projections.
 export const INSTALLED_THEME_FAMILIES = freeze([
   ...BUILTIN_THEME_FAMILIES,
-  ...RETAINED_PRODUCTION_INTERFACE_THEMES.filter((entry) =>
-    ['legacy', 'industrial-workshop'].includes(entry.id),
-  ).map((entry) => ({
-    format: 'ThemeFamily.v1',
-    id: entry.id,
-    revision: entry.revision,
-    name: entry.name,
-    interface: { id: entry.id, revision: entry.revision },
-    arcade: entry.id === 'legacy' ? null : { id: entry.id, revision: 'r2' },
-    sim: entry.id === 'legacy' ? null : { id: entry.id, revision: 'r1' },
-  })),
+  ...[...RETAINED_PRODUCTION_INTERFACE_THEMES, RETAINED_DESKTOP_INTERFACE]
+    .filter((entry) => ['legacy', 'industrial-workshop', 'windows-classic'].includes(entry.id))
+    .map((entry) => ({
+      format: 'ThemeFamily.v1',
+      id: entry.id,
+      revision: entry.revision,
+      name: entry.name,
+      interface: { id: entry.id, revision: entry.revision },
+      arcade:
+        entry.id === 'legacy'
+          ? null
+          : { id: entry.id, revision: entry.id === 'windows-classic' ? 'r1' : 'r2' },
+      sim: entry.id === 'legacy' ? null : { id: entry.id, revision: 'r1' },
+    })),
   ...RETAINED_THEME_FAMILIES.filter(
     (retained) =>
       !BUILTIN_THEME_FAMILIES.some(
@@ -635,6 +645,7 @@ export function getInterfaceTheme(id, revision) {
       ...BUILTIN_INTERFACE_THEMES,
       ...RETAINED_INTERFACE_THEMES,
       ...RETAINED_PRODUCTION_INTERFACE_THEMES,
+      RETAINED_DESKTOP_INTERFACE,
     ].find((item) => item.id === id && (!revision || item.revision === revision)) ?? null
   );
 }

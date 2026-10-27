@@ -718,6 +718,10 @@ function beginResultPlayback() {
   refreshReplayControl();
 }
 function refreshReplayControl() {
+  resultPreview?.setAttribute(
+    'aria-label',
+    locale === 'uk' ? 'Повтор останніх 8 ходів Snake' : 'Snake final 8 moves replay',
+  );
   const button = $('review');
   if (!button) return;
   const playing = !!resultPlayback?.playing;
@@ -1507,6 +1511,7 @@ function renderCopy() {
   playShell?.setLocale(locale);
   snakeSettingsView?.refresh(locale);
   snakeGlobalSettings?.refresh(locale);
+  statsViews.forEach((view) => view.refresh());
   touchPresentationControls?.refresh();
   for (const view of touchViews) view.apply(touch.snapshot());
   renderModeLinks();

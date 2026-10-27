@@ -30,8 +30,7 @@
   padding: 0.5rem 0.7rem;
   border-radius: 0.4rem;
   font:
-    calc(var(--reaction-caption-size, 1rem) * var(--primary-text-scale, 1)) / 1.45 system-ui,
-    sans-serif;
+    calc(var(--reaction-caption-size, 1rem) * var(--primary-text-scale, 1)) / 1.45 var(--fk-font-ui, system-ui, sans-serif);
   text-align: start;
   white-space: normal;
   overflow-wrap: anywhere;

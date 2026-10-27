@@ -19,7 +19,7 @@ const sourceHashes={
 'game/audio/portable-destruction.mjs':
 'cd40ca4c27a528f4d9890808e1662f19ccd4d9dc1e18a03fb6a98eb6e21392a2',
 'optional-practice/civilian-fpv/sim-presentation.mjs':
-'7a686a34cb1ddbe37f54a270f53764e8f6b9c34f174cae83c1478339d3835f16',
+'b010f4b272eabfd8108a6f083e92cc4b09463844abac84897749835516466f4d',
 'game/audio/dialogue-mix.mjs':'43ffa5b261e585e59b515fab19d1b6d0ccf636152ca6107602dbdb9143ddb00a',
 'game/ui/audio-master.mjs':'6bf14bc5268c0eff8f38c21c819f398917712fdc2607c33977ac873111d1dca8',
 'game/audio-preferences.mjs':'8baa3a25c6a80981f44e833ba8cb2e10d297f90b51684994d4e8328a7e846a71',
@@ -47,7 +47,7 @@ const sourceHashes={
 'optional-practice/civilian-fpv/world-hunt-reactions.mjs':
 '7d890938c2ec3b6d8bd6046db3b436589cf7b356c0e7004ef8814e59713dbbc7',
 'game/ui/contextual-reactions.mjs':
-'7c7824c2abc70515a4020b1ff6b63e216c62043a2b4afaefa5a761d9f667db08',
+'bddaf2ba07894f22db1fb6496dffb69dbcded4990b1a89391f43b020fb8cca61',
 'game/ui/hunt-feedback-layout.mjs':
 '54f9755b9fb40953d106b3c0d181948b5eb0983f6b360dba1a1435cf69808a53',
 'game/ui/reaction-caption.mjs':
@@ -15192,7 +15192,7 @@ actorPortrait.width=actorPortrait.height=56;
 actorPortrait.style.cssText=portrait.style.cssText;
 actorPortrait.hidden=true;
 caption.style.cssText=
-'font-family:system-ui,sans-serif;line-height:1.45;overflow-wrap:anywhere;min-width:0;';
+'font-family:var(--fk-font-ui,system-ui,sans-serif);line-height:1.45;overflow-wrap:anywhere;min-width:0;';
 panel.append(portrait,actorPortrait,caption);
 container.append(panel);
 // The optional reader belongs to this accepted-caption owner, not a second
@@ -15445,12 +15445,12 @@ getLocale(),
 );
 readerText.style.fontSize=`calc(${state.scale}rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1))`;
 readerText.style.background=state.background
-?'var(--panel-bg, #172126)'
+?'var(--fk-panel-raised, var(--panel-bg, #172126))'
 :'transparent';
 }
 }
-panel.style.background=state.background?'var(--panel-bg, #172126)':'transparent';
-panel.style.color='var(--text-color, #fff)';
+panel.style.background=state.background?'var(--fk-panel-raised, var(--panel-bg, #172126))':'transparent';
+panel.style.color='var(--fk-text, var(--text-color, #fff))';
 caption.style.fontSize=`calc(${state.scale}rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1))`;
 if(current){
 const localized=localizedCurrentLine();

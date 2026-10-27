@@ -1,0 +1,580 @@
+TAP version 13
+# Subtest: SIM preferences preserve existing authored choices, new installs follow game, and missing collections retain intent
+ok 1 - SIM preferences preserve existing authored choices, new installs follow game, and missing collections retain intent
+  ---
+  duration_ms: 3.741
+  ...
+# Subtest: first successful arm freezes accepted appearance until a new attempt, even after disarming
+ok 2 - first successful arm freezes accepted appearance until a new attempt, even after disarming
+  ---
+  duration_ms: 0.554667
+  ...
+# Subtest: recording metadata is bounded, portable and independent of Academy proof/reward identity
+ok 3 - recording metadata is bounded, portable and independent of Academy proof/reward identity
+  ---
+  duration_ms: 950.464875
+  ...
+# Subtest: replacing cosmetic metadata owns queued inputs and retries a failed save of an existing proof
+ok 4 - replacing cosmetic metadata owns queued inputs and retries a failed save of an existing proof
+  ---
+  duration_ms: 949.471541
+  ...
+# Subtest: World snapshots preserve gameplay identities while their existing record IDs distinguish appearance
+ok 5 - World snapshots preserve gameplay identities while their existing record IDs distinguish appearance
+  ---
+  duration_ms: 1387.291667
+  ...
+# Subtest: World pinned profile owns one bounded authored fallback while legacy profiles keep exact appearance
+ok 6 - World pinned profile owns one bounded authored fallback while legacy profiles keep exact appearance
+  ---
+  duration_ms: 31.1065
+  ...
+# Subtest: World archive keeps legacy records and round-trips Academy appearance with separate record IDs
+ok 7 - World archive keeps legacy records and round-trips Academy appearance with separate record IDs
+  ---
+  duration_ms: 6016.365458
+  ...
+# Subtest: World archive preserves the versioned profile fallback inside its unchanged course/proof record
+ok 8 - World archive preserves the versioned profile fallback inside its unchanged course/proof record
+  ---
+  duration_ms: 35.96325
+  ...
+# Subtest: seven independent current bodies preserve exact originals, authored rigs and finite build paths
+ok 9 - seven independent current bodies preserve exact originals, authored rigs and finite build paths
+  ---
+  duration_ms: 29.705209
+  ...
+# Subtest: only the complete canonical FPV map receives current recommendations; caller data stays owned
+ok 10 - only the complete canonical FPV map receives current recommendations; caller data stays owned
+  ---
+  duration_ms: 139.779416
+  ...
+# Subtest: current starter availability neither mutates nor grants historical progress rewards
+ok 11 - current starter availability neither mutates nor grants historical progress rewards
+  ---
+  duration_ms: 25.532333
+  ...
+# Subtest: catalog refuses ambiguous, unregistered, unsupported and non-data presentation declarations
+ok 12 - catalog refuses ambiguous, unregistered, unsupported and non-data presentation declarations
+  ---
+  duration_ms: 301.833708
+  ...
+# Subtest: manual old and new body identities survive the unchanged library format
+ok 13 - manual old and new body identities survive the unchanged library format
+  ---
+  duration_ms: 405.995042
+  ...
+# Subtest: compact minimum changes only registered loaded bodies and keeps desktop, fallback and rotor clocks
+ok 14 - compact minimum changes only registered loaded bodies and keeps desktop, fallback and rotor clocks
+  ---
+  duration_ms: 1.767792
+  ...
+# Subtest: actual painter keeps explicit originals, reports missing assets and retains neutral unknown fallback
+ok 15 - actual painter keeps explicit originals, reports missing assets and retains neutral unknown fallback
+  ---
+  duration_ms: 23.918791
+  ...
+# Subtest: SIM admits only a bounded complete cosmetic context pair from optional launcher URLs
+ok 16 - SIM admits only a bounded complete cosmetic context pair from optional launcher URLs
+  ---
+  duration_ms: 3.744916
+  ...
+# Subtest: SIM follows context or personal family, preserves independent overrides, and complete apply resets them
+ok 17 - SIM follows context or personal family, preserves independent overrides, and complete apply resets them
+  ---
+  duration_ms: 192.588042
+  ...
+# Subtest: injected context precedes launcher pin and unavailable revisions remain visible in host diagnostics
+ok 18 - injected context precedes launcher pin and unavailable revisions remain visible in host diagnostics
+  ---
+  duration_ms: 204.474792
+  ...
+# Subtest: all production family collection pins round-trip through World and Academy presentation metadata
+ok 19 - all production family collection pins round-trip through World and Academy presentation metadata
+  ---
+  duration_ms: 126.555
+  ...
+# Subtest: complete apply from another tab updates SIM intent while preserving the armed appearance
+ok 20 - complete apply from another tab updates SIM intent while preserving the armed appearance
+  ---
+  duration_ms: 139.846208
+  ...
+# Subtest: SIM offers fixed Classic Field Kit separately from Authored without changing the selected world
+ok 21 - SIM offers fixed Classic Field Kit separately from Authored without changing the selected world
+  ---
+  duration_ms: 47.617708
+  ...
+# Subtest: SIM notifies pre-Arm artwork changes even when the world profile is unchanged and disposes that subscription
+ok 22 - SIM notifies pre-Arm artwork changes even when the world profile is unchanged and disposes that subscription
+  ---
+  duration_ms: 150.16525
+  ...
+# Subtest: World random flight from the shared chooser follows displayed filters, preserves mode and avoids repeats
+ok 23 - World random flight from the shared chooser follows displayed filters, preserves mode and avoids repeats
+  ---
+  duration_ms: 24704.380167
+  ...
+# Subtest: World random flight includes the active installed revision and excludes retained archived courses
+ok 24 - World random flight includes the active installed revision and excludes retained archived courses
+  ---
+  duration_ms: 1423.952542
+  ...
+# Subtest: World ordinary results offer a filtered random next flight through unarmed preparation
+ok 25 - World ordinary results offer a filtered random next flight through unarmed preparation
+  ---
+  duration_ms: 2040.070667
+  ...
+# Subtest: World disposal retires menu and renderer owners before their reparented controls disappear
+ok 26 - World disposal retires menu and renderer owners before their reparented controls disappear
+  ---
+  duration_ms: 1582.800958
+  ...
+# Subtest: World Reset unapplied fields discards Hunt and pursuit drafts without changing the accepted course
+ok 27 - World Reset unapplied fields discards Hunt and pursuit drafts without changing the accepted course
+  ---
+  duration_ms: 2012.563209
+  ...
+# Subtest: World app prepares a pinned appearance and queues drone/theme changes after arming
+ok 28 - World app prepares a pinned appearance and queues drone/theme changes after arming
+  ---
+  duration_ms: 2939.224792
+  ...
+# Subtest: World route thumbnails share selected palettes without modifying source geometry or authored scene references
+ok 29 - World route thumbnails share selected palettes without modifying source geometry or authored scene references
+  ---
+  duration_ms: 723.076958
+  ...
+# Subtest: World recovery retains its saved theme and drone while new appearance choices remain queued
+ok 30 - World recovery retains its saved theme and drone while new appearance choices remain queued
+  ---
+  duration_ms: 662.362459
+  ...
+# Subtest: World replay visibly falls back from an unavailable pinned revision (legacy environment) without changing its record
+ok 31 - World replay visibly falls back from an unavailable pinned revision (legacy environment) without changing its record
+  ---
+  duration_ms: 940.850791
+  ...
+# Subtest: World replay visibly falls back from an unavailable pinned revision (saved authored profile) without changing its record
+ok 32 - World replay visibly falls back from an unavailable pinned revision (saved authored profile) without changing its record
+  ---
+  duration_ms: 764.226166
+  ...
+# Subtest: World pre-arm appearance refresh keeps focus on the control the player is using
+ok 33 - World pre-arm appearance refresh keeps focus on the control the player is using
+  ---
+  duration_ms: 710.053291
+  ...
+# Subtest: World title retains connected catalogue nodes and transfers the common bar into native flight
+ok 34 - World title retains connected catalogue nodes and transfers the common bar into native flight
+  ---
+  duration_ms: 2165.391208
+  ...
+# Subtest: World keyboard and native pause actions open the same shared menu without resuming on Back
+ok 35 - World keyboard and native pause actions open the same shared menu without resuming on Back
+  ---
+  duration_ms: 2099.833166
+  ...
+# Subtest: World language refresh preserves native mission ownership and menu phase without another animation frame
+ok 36 - World language refresh preserves native mission ownership and menu phase without another animation frame
+  ---
+  duration_ms: 1657.709334
+  ...
+# Subtest: World terminal preview offers Retry and prepares a fresh disarmed attempt
+ok 37 - World terminal preview offers Retry and prepares a fresh disarmed attempt
+  ---
+  duration_ms: 892.794208
+  ...
+# Subtest: World menu Back dismisses the visible surface without closing its paused native flight
+ok 38 - World menu Back dismisses the visible surface without closing its paused native flight
+  ---
+  duration_ms: 687.771875
+  ...
+# Subtest: World native Hunt guide remains reachable from the shared pause menu without consuming controls or changing the flight
+ok 39 - World native Hunt guide remains reachable from the shared pause menu without consuming controls or changing the flight
+  ---
+  duration_ms: 911.926333
+  ...
+# Subtest: World exhausted unfinished playback keeps native Results reachable without Continue
+ok 40 - World exhausted unfinished playback keeps native Results reachable without Continue
+  ---
+  duration_ms: 1023.6255
+  ...
+# Subtest: World exhausted section playback keeps native Results reachable without Continue
+ok 41 - World exhausted section playback keeps native Results reachable without Continue
+  ---
+  duration_ms: 1157.474959
+  ...
+# Subtest: native industrial Start and Retry retain source-authenticated art while the next attempt uses changed preferences
+ok 42 - native industrial Start and Retry retain source-authenticated art while the next attempt uses changed preferences
+  ---
+  duration_ms: 726.22
+  ...
+# Subtest: native host rejects changed retained source before replacing the active renderer
+ok 43 - native host rejects changed retained source before replacing the active renderer
+  ---
+  duration_ms: 750.909875
+  ...
+# Subtest: Studio imports exact retained Acro appearance, exports it, and explicitly detaches on creator-theme change
+ok 44 - Studio imports exact retained Acro appearance, exports it, and explicitly detaches on creator-theme change
+  ---
+  duration_ms: 1238.958459
+  ...
+# Subtest: an explicit native mode change prepares a new mode pin while Retry keeps that pin
+ok 45 - an explicit native mode change prepares a new mode pin while Retry keeps that pin
+  ---
+  duration_ms: 2109.341583
+  ...
+# Subtest: World categories retain every authored preference and restore Home and Pause openers
+ok 46 - World categories retain every authored preference and restore Home and Pause openers
+  ---
+  duration_ms: 2633.591458
+  ...
+# Subtest: Worlds uses shared display and master settings ahead of old SIM-local preferences
+ok 47 - Worlds uses shared display and master settings ahead of old SIM-local preferences
+  ---
+  duration_ms: 2076.231292
+  ...
+# Subtest: World shared tools keep iframe focus through D-pad and return to paused Settings on controller Back
+ok 48 - World shared tools keep iframe focus through D-pad and return to paused Settings on controller Back
+  ---
+  duration_ms: 3117.506292
+  ...
+# Subtest: fresh Ukrainian World launch localizes shared Appearance and cue controls immediately
+ok 49 - fresh Ukrainian World launch localizes shared Appearance and cue controls immediately
+  ---
+  duration_ms: 1746.986667
+  ...
+# Subtest: World flight feedback and shared menu sound retain separate sliders and preference records
+ok 50 - World flight feedback and shared menu sound retain separate sliders and preference records
+  ---
+  duration_ms: 1294.403208
+  ...
+# Subtest: World result shortcuts are immediately available while the result is being verified
+ok 51 - World result shortcuts are immediately available while the result is being verified
+  ---
+  duration_ms: 2942.296333
+  ...
+# Subtest: World defeat focuses Retry and verification preserves the connected action row and chosen focus
+ok 52 - World defeat focuses Retry and verification preserves the connected action row and chosen focus
+  ---
+  duration_ms: 2180.832125
+  ...
+# Subtest: World results embed one compact live statistics disclosure without replacing verified actions
+ok 53 - World results embed one compact live statistics disclosure without replacing verified actions
+  ---
+  duration_ms: 3149.990916
+  ...
+# Subtest: Worlds and School share one complete scrollable library with direct native launches
+ok 54 - Worlds and School share one complete scrollable library with direct native launches
+  ---
+  duration_ms: 3718.023917
+  ...
+# Subtest: World route preview uses the selected Acro route and changes no course geometry
+ok 55 - World route preview uses the selected Acro route and changes no course geometry
+  ---
+  duration_ms: 1150.62375
+  ...
+# Subtest: World mission library owns controller navigation and isolated pinned goals
+ok 56 - World mission library owns controller navigation and isolated pinned goals
+  ---
+  duration_ms: 1829.568
+  ...
+# Subtest: World mission launch cannot steal Home focus after deferred scene preparation
+ok 57 - World mission launch cannot steal Home focus after deferred scene preparation
+  ---
+  duration_ms: 1851.642375
+  ...
+# Subtest: World Hunt schemes expose actual targets, patrols and collision footprints without inventing an unordered route
+ok 58 - World Hunt schemes expose actual targets, patrols and collision footprints without inventing an unordered route
+  ---
+  duration_ms: 736.371416
+  ...
+# Subtest: World shared chooser remains usable when native scene loading fails
+ok 59 - World shared chooser remains usable when native scene loading fails
+  ---
+  duration_ms: 2390.022333
+  ...
+# Subtest: the unarmed Hunt preset creates an immediately eligible native target without editing a weapon field
+ok 60 - the unarmed Hunt preset creates an immediately eligible native target without editing a weapon field
+  ---
+  duration_ms: 182.119917
+  ...
+# Subtest: Contact Hunt authoring admits ordered finite targets and native tail settings in both modes
+ok 61 - Contact Hunt authoring admits ordered finite targets and native tail settings in both modes
+  ---
+  duration_ms: 271.033416
+  ...
+# Subtest: Contact Hunt edits and objective movement preserve the other mode and binding positions
+ok 62 - Contact Hunt edits and objective movement preserve the other mode and binding positions
+  ---
+  duration_ms: 205.877166
+  ...
+# Subtest: Contact Hunt refuses conflicts, invalid tail bounds and duplicate-mode creation atomically
+ok 63 - Contact Hunt refuses conflicts, invalid tail bounds and duplicate-mode creation atomically
+  ---
+  duration_ms: 73.746166
+  ...
+# Subtest: deleting Hunt targets cleans both modes, preserves surviving order, and keeps last-objective fallback undoable
+ok 64 - deleting Hunt targets cleans both modes, preserves surviving order, and keeps last-objective fallback undoable
+  ---
+  duration_ms: 22.90375
+  ...
+# Subtest: changing a Hunt target to Rival removes only its catch references and cannot enable its weapon
+ok 65 - changing a Hunt target to Rival removes only its catch references and cannot enable its weapon
+  ---
+  duration_ms: 344.207166
+  ...
+# Subtest: a stale Contact Hunt panel cannot overwrite a newer objective and Ukrainian controls stay localized
+ok 66 - a stale Contact Hunt panel cannot overwrite a newer objective and Ukrainian controls stay localized
+  ---
+  duration_ms: 43.284708
+  ...
+# Subtest: adding an unarmed actor preserves a new Hunt draft without silently adding it to the quota
+ok 67 - adding an unarmed actor preserves a new Hunt draft without silently adding it to the quota
+  ---
+  duration_ms: 221.610709
+  ...
+# Subtest: mode-specific Hunt drafts survive actor addition and moving applies the draft atomically
+ok 68 - mode-specific Hunt drafts survive actor addition and moving applies the draft atomically
+  ---
+  duration_ms: 252.336459
+  ...
+# Subtest: unapplied Hunt target order participates in project challenge switching without marking untouched panels dirty
+ok 69 - unapplied Hunt target order participates in project challenge switching without marking untouched panels dirty
+  ---
+  duration_ms: 192.870333
+  ...
+# Subtest: applying one Hunt preserves another hidden pending draft until explicit discard resets both
+ok 70 - applying one Hunt preserves another hidden pending draft until explicit discard resets both
+  ---
+  duration_ms: 230.220209
+  ...
+# Subtest: new Hunt target drafts remain pending through actor addition and clear after native admission
+ok 71 - new Hunt target drafts remain pending through actor addition and clear after native admission
+  ---
+  duration_ms: 61.975167
+  ...
+# Subtest: obsolete hidden Hunt drafts cannot block a newer accepted objective after refresh
+ok 72 - obsolete hidden Hunt drafts cannot block a newer accepted objective after refresh
+  ---
+  duration_ms: 163.944041
+  ...
+# Subtest: retained pursuit graph edits remain pending after host refresh and explicit reset restores admitted source
+ok 73 - retained pursuit graph edits remain pending after host refresh and explicit reset restores admitted source
+  ---
+  duration_ms: 136.519833
+  ...
+# Subtest: extracts stable semantic IDs in world coordinates and produces a self-contained GLB
+ok 74 - extracts stable semantic IDs in world coordinates and produces a self-contained GLB
+  ---
+  duration_ms: 20.06175
+  ...
+# Subtest: local glTF resource resolution repacks buffers and rejects URLs, traversal and missing resources
+ok 75 - local glTF resource resolution repacks buffers and rejects URLs, traversal and missing resources
+  ---
+  duration_ms: 6.661041
+  ...
+# Subtest: GLB length, accessor overflow, nonfinite data, node cycles and duplicate semantic IDs are rejected
+ok 76 - GLB length, accessor overflow, nonfinite data, node cycles and duplicate semantic IDs are rejected
+  ---
+  duration_ms: 254.133667
+  ...
+# Subtest: required unsupported compression is rejected explicitly
+ok 77 - required unsupported compression is rejected explicitly
+  ---
+  duration_ms: 4.968333
+  ...
+# Subtest: reimport keeps authored overrides and diagnoses removed source IDs
+ok 78 - reimport keeps authored overrides and diagnoses removed source IDs
+  ---
+  duration_ms: 25.491459
+  ...
+# Subtest: project composition resolves explicit courses, themes and playlist references
+ok 79 - project composition resolves explicit courses, themes and playlist references
+  ---
+  duration_ms: 16.713291
+  ...
+# Subtest: portable pack verifies exact hashes and rejects trailing bytes or tampering
+ok 80 - portable pack verifies exact hashes and rejects trailing bytes or tampering
+  ---
+  duration_ms: 183.839084
+  ...
+# Subtest: editable ZIP round trip verifies directory metadata, CRC and resource closure
+ok 81 - editable ZIP round trip verifies directory metadata, CRC and resource closure
+  ---
+  duration_ms: 74.089292
+  ...
+# Subtest: IndexedDB install writes metadata and all blobs; stale generation does not change either
+ok 82 - IndexedDB install writes metadata and all blobs; stale generation does not change either
+  ---
+  duration_ms: 255.725583
+  ...
+# Subtest: hash validation completes before installation; corrupt packs never open an install transaction
+ok 83 - hash validation completes before installation; corrupt packs never open an install transaction
+  ---
+  duration_ms: 2.870209
+  ...
+# Subtest: transaction abort after queuing new blobs retains the previous revision and blobs
+ok 84 - transaction abort after queuing new blobs retains the previous revision and blobs
+  ---
+  duration_ms: 20.111958
+  ...
+# Subtest: animation cannot move gameplay anchors, but bounded cosmetic object animation is accepted
+ok 85 - animation cannot move gameplay anchors, but bounded cosmetic object animation is accepted
+  ---
+  duration_ms: 12.182291
+  ...
+# Subtest: spatial editor applies current presentation before every course build without changing authored source or scene bytes
+ok 86 - spatial editor applies current presentation before every course build without changing authored source or scene bytes
+  ---
+  duration_ms: 142.455625
+  ...
+# Subtest: spatial editor preserves an authenticated retained binding when a proposed drag is rejected
+ok 87 - spatial editor preserves an authenticated retained binding when a proposed drag is rejected
+  ---
+  duration_ms: 500.530333
+  ...
+# Subtest: native Hunt preview names accepted families and counts an optional courier without a quota or points award
+ok 88 - native Hunt preview names accepted families and counts an optional courier without a quota or points award
+  ---
+  duration_ms: 105.072917
+  ...
+# Subtest: historical native waypoints remain patrol/lookout rather than inheriting a costume’s pursuit family
+ok 89 - historical native waypoints remain patrol/lookout rather than inheriting a costume’s pursuit family
+  ---
+  duration_ms: 2.016792
+  ...
+# Subtest: successor refuge and meeting advice never rewrites historical policy descriptions
+ok 90 - successor refuge and meeting advice never rewrites historical policy descriptions
+  ---
+  duration_ms: 13.496375
+  ...
+# Subtest: an actor inspector scopes native counts before family grouping and still admits optional couriers
+ok 91 - an actor inspector scopes native counts before family grouping and still admits optional couriers
+  ---
+  duration_ms: 3.235709
+  ...
+# Subtest: World Studio uses native versioned guide advice and exposes optional couriers without changing objectives
+ok 92 - World Studio uses native versioned guide advice and exposes optional couriers without changing objectives
+  ---
+  duration_ms: 355.877708
+  ...
+# Subtest: a restored native snapshot accounts for once-only catches and a pair survivor without mutating recorded identity
+ok 93 - a restored native snapshot accounts for once-only catches and a pair survivor without mutating recorded identity
+  ---
+  duration_ms: 9.761208
+  ...
+# Subtest: native specialist guide owns a paused modal, explains hull contact, and Back/Escape never start or resume a flight
+ok 94 - native specialist guide owns a paused modal, explains hull contact, and Back/Escape never start or resume a flight
+  ---
+  duration_ms: 16.592792
+  ...
+# Subtest: preview remains unstarted, preserves mode-specific ordered/tail advice and relocalizes native names
+ok 95 - preview remains unstarted, preserves mode-specific ordered/tail advice and relocalizes native names
+  ---
+  duration_ms: 1.170334
+  ...
+# Subtest: ordinary non-Hunt worlds have no prey guide and disposal retires the modal without a flight callback
+ok 96 - ordinary non-Hunt worlds have no prey guide and disposal retires the modal without a flight callback
+  ---
+  duration_ms: 16.51725
+  ...
+# Subtest: world validation rejects unsupported rules, duplicate actors, malformed geometry and unknown targets
+ok 97 - world validation rejects unsupported rules, duplicate actors, malformed geometry and unknown targets
+  ---
+  duration_ms: 11.835833
+  ...
+# Subtest: static sphere sweep cannot tunnel through a thin wall or rotated box
+ok 98 - static sphere sweep cannot tunnel through a thin wall or rotated box
+  ---
+  duration_ms: 625.433209
+  ...
+# Subtest: drone takes off from support and refuses a solid-overlap spawn
+ok 99 - drone takes off from support and refuses a solid-overlap spawn
+  ---
+  duration_ms: 228.1415
+  ...
+# Subtest: elevated triangle platform supports a landing objective with exact surface identity
+ok 100 - elevated triangle platform supports a landing objective with exact surface identity
+  ---
+  duration_ms: 7391.395542
+  ...
+# Subtest: moving actor relative sweep catches crossing trajectories between endpoints
+ok 101 - moving actor relative sweep catches crossing trajectories between endpoints
+  ---
+  duration_ms: 5.342625
+  ...
+# Subtest: a moving hazard contacts a resting drone after its floor movement is resolved
+ok 102 - a moving hazard contacts a resting drone after its floor movement is resolved
+  ---
+  duration_ms: 1.72825
+  ...
+# Subtest: fictional pulses damage targets, obey cooldown and complete verified combat
+ok 103 - fictional pulses damage targets, obey cooldown and complete verified combat
+  ---
+  duration_ms: 27.995958
+  ...
+# Subtest: enemy pulses can defeat the drone, while intervening geometry blocks both sides
+ok 104 - enemy pulses can defeat the drone, while intervening geometry blocks both sides
+  ---
+  duration_ms: 43.233041
+  ...
+# Subtest: authored ground and vehicle patrols stop at solid map obstacles
+ok 105 - authored ground and vehicle patrols stop at solid map obstacles
+  ---
+  duration_ms: 526.95525
+  ...
+# Subtest: ground patrols climb authored 0.15 m steps and supported slopes
+ok 106 - ground patrols climb authored 0.15 m steps and supported slopes
+  ---
+  duration_ms: 232.350542
+  ...
+# Subtest: projectile admission remains bounded while firing continuously
+ok 107 - projectile admission remains bounded while firing continuously
+  ---
+  duration_ms: 771.666542
+  ...
+# Subtest: pause freezes every subsystem; recovered command prefix resumes with the same final hash
+ok 108 - pause freezes every subsystem; recovered command prefix resumes with the same final hash
+  ---
+  duration_ms: 230.132416
+  ...
+# Subtest: reset is deterministic; themes can change but rules, visibility and tampered commands cannot
+ok 109 - reset is deterministic; themes can change but rules, visibility and tampered commands cannot
+  ---
+  duration_ms: 130.648417
+  ...
+# Subtest: recorder requires the consumed command and rejects skipped ticks
+ok 110 - recorder requires the consumed command and rejects skipped ticks
+  ---
+  duration_ms: 8.038833
+  ...
+# Subtest: real GLTFLoader reproduces blocked bitmap fetch and the shared decoder preserves exact PNG/material semantics
+ok 111 - real GLTFLoader reproduces blocked bitmap fetch and the shared decoder preserves exact PNG/material semantics
+  ---
+  duration_ms: 395.972459
+  ...
+# Subtest: actual import repacks local sidecars and renderer keeps valid imported texture, rejected scene ownership and bounds atomic
+ok 112 - actual import repacks local sidecars and renderer keeps valid imported texture, rejected scene ownership and bounds atomic
+  ---
+  duration_ms: 1241.325083
+  ...
+# Subtest: late image success after cancellation is released, and unprovided remote images never reach a decoder
+ok 113 - late image success after cancellation is released, and unprovided remote images never reach a decoder
+  ---
+  duration_ms: 304.4735
+  ...
+# Subtest: decoded imported art stays authored under themes and only exact explicit node bindings replace a material
+ok 114 - decoded imported art stays authored under themes and only exact explicit node bindings replace a material
+  ---
+  duration_ms: 636.557375
+  ...
+1..114
+# tests 114
+# suites 0
+# pass 114
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 94298.859625

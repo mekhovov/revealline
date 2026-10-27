@@ -163,9 +163,13 @@ test('material close-up composes native player, Studio and tall-card surfaces wi
   assert.ok(studio.className.includes('material-close-up-studio'));
   assert.equal(studio.dataset.uiSurface, 'panel');
   const controls = container.querySelectorAll('[data-close-up-control]');
-  assert.equal(controls.length, 8);
+  assert.equal(controls.length, 9);
+  const select = container.querySelector('[data-close-up-control="player-select"]');
+  assert.equal(select.tagName, 'SELECT');
+  assert.equal(select.children.length, 2);
+  assert.equal(select.getAttribute('aria-label'), 'Preview terrain detail');
   for (const control of controls) {
-    assert.ok(['BUTTON', 'INPUT'].includes(control.tagName));
+    assert.ok(['BUTTON', 'INPUT', 'SELECT'].includes(control.tagName));
     for (const property of [
       'background',
       'backgroundImage',

@@ -300,7 +300,7 @@ export function attachContextualReactions({
   actorPortrait.style.cssText = portrait.style.cssText;
   actorPortrait.hidden = true;
   caption.style.cssText =
-    'font-family:system-ui,sans-serif;line-height:1.45;overflow-wrap:anywhere;min-width:0;';
+    'font-family:var(--fk-font-ui,system-ui,sans-serif);line-height:1.45;overflow-wrap:anywhere;min-width:0;';
   panel.append(portrait, actorPortrait, caption);
   container.append(panel);
   // The optional reader belongs to this accepted-caption owner, not a second
@@ -549,11 +549,11 @@ export function attachContextualReactions({
           getLocale(),
         );
         readerText.style.fontSize = `calc(${state.scale}rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1))`;
-        readerText.style.background = state.background ? 'var(--panel-bg, #172126)' : 'transparent';
+        readerText.style.background = state.background ? 'var(--fk-panel-raised, var(--panel-bg, #172126))' : 'transparent';
       }
     }
-    panel.style.background = state.background ? 'var(--panel-bg, #172126)' : 'transparent';
-    panel.style.color = 'var(--text-color, #fff)';
+    panel.style.background = state.background ? 'var(--fk-panel-raised, var(--panel-bg, #172126))' : 'transparent';
+    panel.style.color = 'var(--fk-text, var(--text-color, #fff))';
     caption.style.fontSize = `calc(${state.scale}rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1))`;
     if (current) {
       const localized = localizedCurrentLine();

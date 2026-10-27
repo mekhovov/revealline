@@ -1,3 +1,4 @@
+import { CLASSIC_SNAKE_CAMPAIGN_REVISION } from '../../snake/classic-campaign.mjs';
 import { restoreClassicSnakeReplay } from '../../snake/classic-core.mjs';
 import {
   createClassicSnakeMatch,
@@ -50,6 +51,22 @@ export function prepareSnakeResultFixture(replay, { mode = replay.mode, pace = '
   };
 }
 
+export function storeSnakeResultFixture(storage, session) {
+  const saveKey = `revealline.classic-snake.round.${CLASSIC_SNAKE_CAMPAIGN_REVISION}`;
+  const marker = 'revealline.test.snake-result-fixture';
+  if (
+    !storage.getItem(marker) &&
+    [saveKey, 'revealline.classic-snake.round.v2', 'revealline.classic-snake.round.v1'].some(
+      (key) => storage.getItem(key),
+    )
+  )
+    throw new Error(
+      'Existing Snake profile detected. Use a fresh localhost port; this fixture will not overwrite it.',
+    );
+  storage.setItem(marker, 'This localhost origin is reserved for manual result verification.');
+  storage.setItem(saveKey, JSON.stringify(session));
+}
+
 async function mount() {
   const { document, location, localStorage, fetch } = globalThis;
   const form = document.getElementById('prepare');
@@ -61,15 +78,6 @@ async function mount() {
         throw new Error('Use a dedicated localhost test origin.');
       const mode = document.getElementById('mode').value;
       const locale = document.getElementById('locale').value;
-      const saveKey = 'revealline.classic-snake.round.v2';
-      const marker = 'revealline.test.snake-result-fixture';
-      if (
-        !localStorage.getItem(marker) &&
-        (localStorage.getItem(saveKey) || localStorage.getItem('revealline.classic-snake.round.v1'))
-      )
-        throw new Error(
-          'Existing Snake profile detected. Use a fresh localhost port; this fixture will not overwrite it.',
-        );
       const replay =
         mode === 'team'
           ? (await (await fetch('../fixtures/classic-snake-v4-proofs.json')).json()).proofs.find(
@@ -82,11 +90,7 @@ async function mount() {
               await fetch('../../../docs/verification/classic-snake/authored-open-loop.replay.json')
             ).json();
       const prepared = prepareSnakeResultFixture(replay, { mode });
-      localStorage.setItem(
-        marker,
-        'This localhost origin is reserved for manual result verification.',
-      );
-      localStorage.setItem(saveKey, JSON.stringify(prepared.session));
+      storeSnakeResultFixture(localStorage, prepared.session);
       const link = document.getElementById('launch');
       const url = new URL('../../snake/play.html', location.href);
       url.search = new URLSearchParams({
