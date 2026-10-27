@@ -290,10 +290,7 @@
             "playerRadius": 0.18,
             "pointsPerCell": 10,
             "objectivePoints": 500,
-            "timeMedals": [
-              30,
-              60
-            ],
+            "timeMedals": [30, 60],
             "timeLimitSeconds": 0,
             "cutTimeLimitSeconds": 0,
             "maxTrailCells": 0

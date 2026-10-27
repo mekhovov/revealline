@@ -1,0 +1,148 @@
+{
+  "format": "FPVSealedPackingViewCoverage.v1",
+  "sourceManifest": "combined-packing-view-006.jsonl",
+  "sourceManifestSHA256": "85a2e07fd5f47e29059fc1cb23d07edd71ff7b220ae886cf0982a4c508e48fa1",
+  "sealedParts": [
+    {
+      "localReceipt": "batch-001/part-0001-local.json",
+      "localReceiptSHA256": "8240459682adcbc19c9474e430f3dfab475b175c8dd693426517cf6b7b96335d",
+      "sha256": "46360e3916646a8c41f6062795a6f1fe92b5769926044551700a3c3187e83c93",
+      "compressedBytes": 825699727,
+      "objects": 2679,
+      "rawBytes": 1344857498
+    },
+    {
+      "localReceipt": "batch-001/part-0002-local.json",
+      "localReceiptSHA256": "ba0da45b2b897283c086d306070b3d3d9f68d3fe07cc09a7fc96e5116ef89e6d",
+      "sha256": "9d76fd0a4ed90188fffac80f9790e679cc5c209bd6f12cca1e1c187d13dc6c40",
+      "compressedBytes": 765913992,
+      "objects": 3548,
+      "rawBytes": 1342711602
+    },
+    {
+      "localReceipt": "batch-001/part-0003-local.json",
+      "localReceiptSHA256": "e945d7ae7c5814a6d8ebacecbf205c5deef050d53aed104f54e17d2381f36fc7",
+      "sha256": "5280e98ddcd944daa283bd426287a0c42e63ea6c5055552deaf362fc84ace076",
+      "compressedBytes": 807778526,
+      "objects": 3738,
+      "rawBytes": 1336618805
+    },
+    {
+      "localReceipt": "batch-001/part-0004-local.json",
+      "localReceiptSHA256": "f59f256ca83f130617c50d55df1b56b4927a708d4927083b5c4ffdda90518121",
+      "sha256": "a611cc22eac994b4fe7af86cb1d126b136cb5f31d48cfc7e0a8730091e962b89",
+      "compressedBytes": 80453881,
+      "objects": 610,
+      "rawBytes": 131142929
+    },
+    {
+      "localReceipt": "batch-003/part-0001-local.json",
+      "localReceiptSHA256": "efc19f14512c382010a8ae85287882131b0cb6c9f02c8bee38f797af6ef5c1dc",
+      "sha256": "9d974f7da889830ed507a387d2bd06a39a9d0634e457287463a723f7fb6b7520",
+      "compressedBytes": 343503618,
+      "objects": 1493,
+      "rawBytes": 608205082
+    },
+    {
+      "localReceipt": "batch-003/part-0002-local.json",
+      "localReceiptSHA256": "7ce84b818d8e94bd16532d64fd5b60f278225edb683be683e427c427ebac5115",
+      "sha256": "8c0b7aa858bc4ba55a3bbab88bb90e01ec21b58647de30682b3bfb750166c611",
+      "compressedBytes": 1044774812,
+      "objects": 758,
+      "rawBytes": 1329559170
+    },
+    {
+      "localReceipt": "batch-003/part-0003-local.json",
+      "localReceiptSHA256": "6a7afabcfa46adfa704e9eb5ff84f364a6ea5986247e9402071ff583d52da75c",
+      "sha256": "2f0d817fed4cf9fa05d8cc4b684cb0dc5df0529bd5fff1ce9d4c408dd0bfdf32",
+      "compressedBytes": 856682700,
+      "objects": 3054,
+      "rawBytes": 1338149993
+    },
+    {
+      "localReceipt": "batch-003/part-0004-local.json",
+      "localReceiptSHA256": "c54f8e62781c613c667fd1f79f1e190074ba609502d1151d4d0cdb06ae86f142",
+      "sha256": "96e54d4137442c325fec7a3ec0340b9395edde473d60934d6d5895c0554310b8",
+      "compressedBytes": 1066854934,
+      "objects": 924,
+      "rawBytes": 1337249497
+    },
+    {
+      "localReceipt": "batch-005/part-0001-local.json",
+      "localReceiptSHA256": "5d8a20c35e53734e9b76868b79087e0f5d170d39a0a1711cff91bb8ea4a1ca51",
+      "sha256": "102e33a30593f1df5ac75fd810880d170344552b2d6bdc2728d45275a0e775d0",
+      "compressedBytes": 113189584,
+      "objects": 4050,
+      "rawBytes": 205141263
+    },
+    {
+      "localReceipt": "batch-006/part-0001-local.json",
+      "localReceiptSHA256": "aefee96bae12287041375ca770df473678c040136bdc09138bcc75bc430859ea",
+      "sha256": "35b7972b6e9472961534b2f5c1a01e875acda8eac094b5e4e2652642f91163b7",
+      "compressedBytes": 44509758,
+      "objects": 68,
+      "rawBytes": 114660921
+    },
+    {
+      "localReceipt": "batch-007/part-0001-local.json",
+      "localReceiptSHA256": "d159b90bdb7d63c9557a9a2800a6e4c0355844b574b4b1dfbf4b3a6dd7dd93d5",
+      "sha256": "bd6595d702e48191b9b9bafe5a1105ad34bb466cb2e0a28314c24394dd2e9565",
+      "compressedBytes": 290570903,
+      "objects": 985,
+      "rawBytes": 502515262
+    },
+    {
+      "localReceipt": "batch-007/part-0002-local.json",
+      "localReceiptSHA256": "229b64ea19d6e6a77c8aa25ce2ae861c32d169de226f8ef33bae0dd237519615",
+      "sha256": "d636f3184ee164c3b6dc656280f1f48d17eae0b72d7cb38b16d09b0188ed5098",
+      "compressedBytes": 1078128357,
+      "objects": 577,
+      "rawBytes": 1348277447
+    },
+    {
+      "localReceipt": "batch-007/part-0003-local.json",
+      "localReceiptSHA256": "e07e52b7611c12fcb7a9d16b0f6fc27292a7fdb76d55de1f4d3d417f899d2d7e",
+      "sha256": "1c571cf78fefa69569939741c5771f33c3fa68f5540964de0cf9c6ad1332f26d",
+      "compressedBytes": 204095581,
+      "objects": 726,
+      "rawBytes": 331174142
+    },
+    {
+      "localReceipt": "batch-flat-001/part-0001-local.json",
+      "localReceiptSHA256": "f622ecae3120efafe217e6f978c32ccb0b289ba39cfb359561a2564a73eb5f1b",
+      "sha256": "fa059aac33fe88f19f92886d2f5a42b66aa9de05e57db735460a0743c54d44b0",
+      "compressedBytes": 10005,
+      "objects": 11,
+      "rawBytes": 23796
+    },
+    {
+      "localReceipt": "batch-policy-001/part-0001-local.json",
+      "localReceiptSHA256": "a91029e54d30ccdb9816ded718aa33f13a2dccdc4e5f1cb34937eff515c91d35",
+      "sha256": "f966df1dc59abd44344edaff5b55d52fd5e0719183533aa84ad53ab64a123063",
+      "compressedBytes": 7372794,
+      "objects": 8,
+      "rawBytes": 7412239
+    },
+    {
+      "localReceipt": "batch-policy-002/part-0001-local.json",
+      "localReceiptSHA256": "602ba0409afdb649a387a78b7f63720cae8de72b943d955a9387d85bda2aaf6d",
+      "sha256": "ba941694c6a3682c00a5c7c22e4ebc5dff0e53599ed2877d1901fe1a2e5b0f9d",
+      "compressedBytes": 9998275,
+      "objects": 11,
+      "rawBytes": 9994666
+    }
+  ],
+  "sealedUniqueObjects": 23240,
+  "sealedRawBytes": 11287694312,
+  "sealedCompressedBytes": 7539537447,
+  "packingViewLogicalFilePaths": 122680,
+  "packingViewLogicalBytes": 20679544552,
+  "logicalPathsInSealedParts": 122646,
+  "logicalPathsReusingExactReleaseOrOriginalArchiveIdentity": 34,
+  "missingFromSealedOrExistingAssetMetadata": [],
+  "deferredMutableSourceAuditRows": 610,
+  "allPackingViewLogicalFilesRepresented": true,
+  "allUploadsAndReadbacksComplete": false,
+  "finalInputSetConfirmed": false,
+  "overallDisconnectSafetyClaimed": false
+}

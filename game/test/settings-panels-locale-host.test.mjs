@@ -1,5 +1,30 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+// Preserve strict identity without recursively formatting the fixture DOM.
+function boundedIdentity(actual, expected, message) {
+  const same = Object.is(actual, expected);
+  if (same) return;
+  const label = (value) => {
+    if (value === null) return 'null';
+    if (value === undefined) return 'undefined';
+    if (typeof value !== 'object' && typeof value !== 'function') return String(value).slice(0, 80);
+    return (
+      [value.tagName, value.id]
+        .filter((x) => typeof x === 'string')
+        .map((x) => x.slice(0, 80))
+        .join('#') || typeof value
+    );
+  };
+  assert.ok(
+    false,
+    (message ?? 'Strict identity mismatch.') +
+      ' Actual: ' +
+      label(actual) +
+      '; expected: ' +
+      label(expected) +
+      '.',
+  );
+}
 import { readFileSync } from 'node:fs';
 import { getLocale, setLocale, t as translate } from '../i18n/index.mjs';
 
@@ -15,8 +40,17 @@ function ticks(page, count) {
   for (let i = 0; i < count; i++) page.frame();
 }
 function assertSelection(page, selected) {
-  assert.equal(page.doc.activeElement, page.$(`settings-tab-${selected}`));
-  for (const name of ['controls', 'audio', 'display', 'data']) {
+  boundedIdentity(page.doc.activeElement, page.$(`settings-tab-${selected}`));
+  for (const name of [
+    'gameplay',
+    'controls',
+    'audio',
+    'display',
+    'accessibility',
+    'data',
+    'content',
+    'extras',
+  ]) {
     const tab = page.$(`settings-tab-${name}`),
       panel = page.$(`settings-panel-${name}`),
       active = name === selected;
@@ -123,8 +157,8 @@ test('cold Ukrainian Solo: Settings Home/End preserve the paused cut across lang
     keyboard(page, 'Enter');
     assertSelection(page, 'audio');
     for (const [key, destination] of [
-      ['Home', 'controls'],
-      ['End', 'data'],
+      ['Home', 'gameplay'],
+      ['End', 'extras'],
     ]) {
       assert.equal(keyboard(page, key).defaultPrevented, true);
       assertSelection(page, destination);

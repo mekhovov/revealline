@@ -6,8 +6,21 @@ import { campaignKey, loadLibrary } from '../library.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { soloPage, settle } from './helpers/solo-dom.mjs';
 import { retryFixture } from './fixtures/retry-scenarios.mjs';
+import { attachMissionPicker } from '../ui/mission-picker.mjs';
 
 const classes = JSON.parse(readFileSync(new URL('../content/classes.json', import.meta.url)));
+
+function openRetainedPicker(page) {
+  // This identity test owns the retained Legacy component. Public Missions
+  // routes through the separate unified chooser, so admit the actual retained
+  // dialog/picker after public pause without replacing any application handler.
+  page.$('shell-menu').click();
+  page.$('shell-home').close();
+  page.$('shell-missions').showModal();
+  attachMissionPicker({ document: page.doc }).focusSelectedChapter();
+  assert.equal(page.$('shell-missions').open, true);
+  assert.equal(page.$('shell-mission-content').hidden, false);
+}
 
 test('mission selector repaint uses the adopted base identity after a real win and difficulty/locale changes', async (t) => {
   const locale = getLocale();
@@ -63,13 +76,17 @@ test('mission selector repaint uses the adopted base identity after a real win a
     page.frame(1000 / 30);
   page.key('ArrowDown', false);
   assert.equal(page.rendered.run.status, 'won');
+  // The accepted clear is immediate even while its retained view is dormant.
+  const profile = loadLibrary(page.storage, 'revealline.library.dev.v1').library;
+  assert.deepEqual(Object.keys(profile.campaigns[baseKey].clears), ['selector-1']);
+  const checkpoint = authoritativeCheckpoint(page.rendered.run);
+  openRetainedPicker(page);
+  await settle(() => cards().length === 3 && !cards()[1].disabled);
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
   assert.deepEqual(available(), [true, true, false]);
   assert.match(cards()[0].querySelector('.medal').textContent, /^★+$/);
   assert.equal(cards()[2].dataset.pictureState, 'concealed');
   assert.equal(page.$('pack-select').value, '');
-  const profile = loadLibrary(page.storage, 'revealline.library.dev.v1').library;
-  assert.deepEqual(Object.keys(profile.campaigns[baseKey].clears), ['selector-1']);
-  const checkpoint = authoritativeCheckpoint(page.rendered.run);
   page.change('difficulty-select', 'gentle');
   assert.deepEqual(authoritativeCheckpoint(page.rendered.run), checkpoint);
   assert.deepEqual(available(), [true, true, false]);
@@ -93,6 +110,10 @@ test('mission selector repaint uses the adopted base identity after a real win a
   assert.equal(page.rendered.run.levelId, 'selector-2');
   assert.equal(page.$('difficulty-select').value, 'gentle');
   assert.equal(page.$('pack-select').value, '', 'Gentle still belongs to the same base chapter.');
+  const selectedCheckpoint = authoritativeCheckpoint(page.rendered.run);
+  openRetainedPicker(page);
+  await settle(() => cards()[0]?.querySelector('.medal').textContent === '✓');
+  assert.deepEqual(authoritativeCheckpoint(page.rendered.run), selectedCheckpoint);
   assert.equal(cards()[0].querySelector('.medal').textContent, '✓');
   assert.deepEqual(available(), [true, true, false]);
   assert.deepEqual(

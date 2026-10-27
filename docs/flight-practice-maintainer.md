@@ -31,6 +31,39 @@ manifests and an explicit growth reserve. `cannot-fit` exits 1. A successful
 `requires-exact-build` result only means the lower bound did not exceed the guard;
 it does not replace archive admission or the final complete-site inventory.
 
+### External build output and local resource limits
+
+The normal build accepts an absolute external output directory. Use an installed
+Node version matching CI, a clean committed source, the exact full commit hash,
+and a new output name:
+
+```sh
+node scripts/game-cli.mjs build --out /absolute/mounted-drive/NEW_OUTPUT \
+  --version VERSION --revision FULL_COMMIT_HASH --progress stderr
+```
+
+Budget both the expanded site and its ZIP, plus a safety reserve. Source-file
+bytes alone are not a guaranteed bound on generated output. Expanded writes
+use at most four workers and share parent-directory creation; failures settle
+already-owned writes before staging cleanup. ZIP order and accepted bytes are
+unchanged. Keep source pins, logs and failed results alongside successful output.
+The optional `--progress stderr` writes phase-start markers to standard error;
+omit it for the original JSON-only output. A marker is not a percentage or a
+completion receipt. Cross-volume or unknown device metadata vetoes optional
+cloning once per batch; same-device files still undergo their original per-file
+eligibility and exact-byte checks. These optimizations do not bypass validation
+or prove that a complete build fits its verification deadline.
+
+A mounted network folder moves storage, **not computation**. The owner-approved
+`/Volumes/alex/CodexMigrationStaging` share is not remote execution, a browser
+profile relocation, hosting authorization or a complete-site capacity pass.
+Measure available space on the actual output filesystem and retain separate
+system/profile headroom. Do not delete unrelated files, move a real user browser
+profile, or extend verification limits merely to obtain a pass. See the
+[19 October local diagnostic checkpoint](flight-practice-execution-2026-10-19.md)
+for the distinction between sufficient storage, completed isolated validators
+and a still-failing normal full build.
+
 ## Register an application
 
 1. Create `optional-practice/<id>/index.html`, a manifest, application modules and `README.md`. Use a stable lowercase hyphenated ID; do not rename an installed app to ship an update. Add instructions, asset sources, copyright/license inventory and support information. Offline preparation must pass that ID to the shared installation service.

@@ -11,6 +11,7 @@ export function attachEncounterDisplayControls({
   prefix = '',
   soundContainer,
   destructionPreferences,
+  onChange = () => {},
 } = {}) {
   const checkbox = doc.getElementById(`${prefix}enemy-remains`),
     status = doc.getElementById(`${prefix}enemy-remains-status`),
@@ -22,6 +23,7 @@ export function attachEncounterDisplayControls({
     writable,
     prefix,
     preferences: destructionPreferences,
+    onChange,
     container: checkbox?.closest('section') ?? checkbox?.parentElement?.parentElement,
     soundContainer:
       soundContainer ??
@@ -38,6 +40,7 @@ export function attachEncounterDisplayControls({
       status.hidden = !state.warningKey;
     }
     if (retry) retry.hidden = state.warningKey !== 'common:preferences.encounterSaveFailed';
+    onChange();
   });
   const change = () => preferences.set(checkbox.checked);
   const save = () => preferences.retry();

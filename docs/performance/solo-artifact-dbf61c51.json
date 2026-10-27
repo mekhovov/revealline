@@ -1,0 +1,208 @@
+{
+  "format": "SoloArtifactVerificationV2",
+  "status": "artifact-verified-native-partial-performance-pending",
+  "createdAt": "2026-10-16T16:09:53.896875+00:00",
+  "sourceRevision": "dbf61c518e9df3ed68b24f693686c9600405f3f2",
+  "version": "0.151.1",
+  "producer": {
+    "kind": "existing GitHub Actions package",
+    "workflowRun": 38923926418,
+    "artifactId": 12056463652,
+    "sourceRevision": "dbf61c518e9df3ed68b24f693686c9600405f3f2",
+    "node": "v22.13.1",
+    "platform": "Linux",
+    "localBuild": false,
+    "qualification": "development preview; qualification is separately measured, never inferred from CI packaging"
+  },
+  "acquisitionReceipt": {
+    "path": "/Volumes/alex/solo-performance-b1174522/evidence/ci-artifact-dbf61c51-38923926418/acquisition.json",
+    "bytes": 8229,
+    "sha256": "599f1c20c5ea5731a62e2cec72d3a9568e516ad7618ad79451dc72d17528036b"
+  },
+  "ingestionReceipt": {
+    "path": ".cache/solo-followup/artifact-solo-final-dbf61c51-ci-ram-v2/receipt.json",
+    "bytes": 34368,
+    "sha256": "91860d48562d2b22a6a6c26e344f0e97416bb895bf6aa13a46af783a046021c6"
+  },
+  "durableIngestionReceipt": {
+    "path": "/Volumes/alex/solo-performance-b1174522/artifacts/dbf61c51/0.151.1-ci-38923926418/orchestration-ci-successor-preview-receipt.json",
+    "bytes": 34368,
+    "sha256": "91860d48562d2b22a6a6c26e344f0e97416bb895bf6aa13a46af783a046021c6"
+  },
+  "finalization": {
+    "path": "/Volumes/alex/solo-performance-b1174522/artifacts/dbf61c51/0.151.1-ci-38923926418/successor-finalization.json",
+    "bytes": 1116,
+    "sha256": "6f87f1a0f2e69c4b51cdb464c555f676b79fec4d2ed4e0ea36ee6d8ef3e12532"
+  },
+  "payload": {
+    "files": 3501,
+    "bytes": 1072180396,
+    "manifestSHA256": "db37e4f1b0bfe4c037a39d4549287a328f570bc816c7e96d8f7e4bcab54f8fe5"
+  },
+  "zip": {
+    "members": 3502,
+    "bytes": 1073296707,
+    "sha256": "fb0201194d57fabc752c9054eed9d1c9398dfa629f84a5c2b9d5980aecfd6c0a"
+  },
+  "proofs": [
+    {
+      "path": "/Volumes/alex/solo-performance-b1174522/artifacts/dbf61c51/0.151.1-ci-38923926418/proof-old-rollback-full-readback.json",
+      "bytes": 1360,
+      "sha256": "90cc004723a52967fbe767aeb1009cd19079149ac2305f3935a91b2b5b254f64"
+    },
+    {
+      "path": "/Volumes/alex/solo-performance-b1174522/artifacts/dbf61c51/0.151.1-ci-38923926418/proof-zip-verification.json",
+      "bytes": 1129,
+      "sha256": "639ff2f97e454fedea6c1cc86b1dca1ca806a8b869cef86fbca32f9ee553e9b1"
+    },
+    {
+      "path": "/Volumes/alex/solo-performance-b1174522/artifacts/dbf61c51/0.151.1-ci-38923926418/proof-source-verification.json",
+      "bytes": 30314,
+      "sha256": "3a2af607160557392fb9a29572d34a7ee1bce3407c0dccfb33581aa7bf706a46"
+    },
+    {
+      "path": "/Volumes/alex/solo-performance-b1174522/artifacts/dbf61c51/0.151.1-ci-38923926418/proof-csp.json",
+      "bytes": 1174,
+      "sha256": "ae774ce1dd8de9932e3c976c34fa47496080cd3c4cae41b705f016a4a9492d3e"
+    },
+    {
+      "path": "/Volumes/alex/solo-performance-b1174522/artifacts/dbf61c51/0.151.1-ci-38923926418/proof-preservation.json",
+      "bytes": 1505,
+      "sha256": "f19680642aa93864bd66943c768b8c5343e66f2ba8c4b6b133789e55bf358acc"
+    },
+    {
+      "path": "/Volumes/alex/solo-performance-b1174522/artifacts/dbf61c51/0.151.1-ci-38923926418/proof-preview-members.json",
+      "bytes": 1360,
+      "sha256": "9939016f52dc209f8a8b36110ce4cba1d74de7443573ccd527dd4cf344fd1ddd"
+    },
+    {
+      "path": "/Volumes/alex/solo-performance-b1174522/artifacts/dbf61c51/0.151.1-ci-38923926418/proof-preview-verification.json",
+      "bytes": 31282,
+      "sha256": "06a03df569a341fddeb686caad239e9e50c18a11866375d5e97a780bb20ce2a3"
+    },
+    {
+      "path": "/Volumes/alex/solo-performance-b1174522/artifacts/dbf61c51/0.151.1-ci-38923926418/proof-preview-csp.json",
+      "bytes": 1219,
+      "sha256": "87ca98168b46c548ac746a971d3f80acf82dbd01fa284f338d114b8c2b6d7809"
+    },
+    {
+      "path": "/Volumes/alex/solo-performance-b1174522/artifacts/dbf61c51/0.151.1-ci-38923926418/proof-baseline-unchanged.json",
+      "bytes": 293,
+      "sha256": "d40d59f4090742d5e30b53cbd7aaef1eace34c5211f939a58c914c578ebfbd4d"
+    },
+    {
+      "path": "/Volumes/alex/solo-performance-b1174522/artifacts/dbf61c51/0.151.1-ci-38923926418/proof-baseline-csp.json",
+      "bytes": 1173,
+      "sha256": "9000eea742149cf918a9035298cb42403a7d7312ac7e1be702aa827d548ebd36"
+    }
+  ],
+  "producerFocusedTests": {
+    "files": 54,
+    "tests": 535,
+    "pass": 535,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "tap": {
+      "path": "/Volumes/alex/solo-performance-b1174522/evidence/ci-artifact-dbf61c51-38923926418/supporting/focused-tests.tap",
+      "bytes": 128742,
+      "sha256": "7d4481ac5f9001f2638304b3bfa10138f38bf11e94bc8e92d9fce4957a5eace2"
+    },
+    "scope": "Separate CI focused suite, not full repository coverage."
+  },
+  "frozenTargetedTests": {
+    "receipt": {
+      "path": ".cache/solo-followup/terminal-frozen-dbf61c51-151940/receipt.json",
+      "bytes": 8563,
+      "sha256": "6d0b8acfe0981b69445c527b3ee7fc63b8692a23956e1ec85e10ab84717dc47f"
+    },
+    "files": 22,
+    "tests": 212,
+    "pass": 212,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "sourceUnchanged": true
+  },
+  "sourceChecks": {
+    "receipt": {
+      "path": ".cache/solo-followup/final-source-checks-20261016T151940Z-dbf61c51/receipt.json",
+      "bytes": 5890,
+      "sha256": "2963951a2051d1d4955bfd79c5618dba5dd092848e4fc41420daaa371416c0f2"
+    },
+    "lint": "passed",
+    "validation": "passed",
+    "formatting": "failed",
+    "formattingScope": "Nine files byte-identical to original main at exact dbf source; later fixture changes are separate."
+  },
+  "baselineUnchanged": {
+    "status": "passed",
+    "sourceRevision": "b11745223861c3973ad4bf440cc536198b8e0371",
+    "manifestSHA256": "2a19dfb7227e5d528fe4f072d1eef9e753ac987396a8f5b8248247483814e8a8",
+    "verifiedMembers": 3495,
+    "inventorySHA256": "99aac15c2d2b04c6779a1af43f2baf568de157ecf89d534a6f2fd5c7fc291f81"
+  },
+  "rollback": {
+    "sourceRevision": "8c727777aac2e0ec6fa0bc260051b8a7d99a8b94",
+    "archive": "/Volumes/alex/solo-performance-b1174522/artifacts/8c727777/0.151.1-ci-38901373460",
+    "fullReadback": "passed"
+  },
+  "localBuild": false,
+  "nativeObservations": [
+    {
+      "kind": "static-worker-and-paused-render",
+      "status": "passed",
+      "observations": 4,
+      "report": {
+        "path": "/Volumes/SoloPerf-RAM-solo-final-8c727777-ram-v4/evidence/native-core-dbf61c51-attempt01/receipt.json",
+        "bytes": 45760,
+        "sha256": "6bb14fb6d1c0824c49b047b099af529ddb31c0ad471888e7819bcd1856589697"
+      },
+      "scope": "Chrome 155.0.8059.85 and WebKit 26.5; excluded from timing."
+    },
+    {
+      "kind": "demo-public-handoff",
+      "status": "passed",
+      "counterWindows": 9,
+      "report": {
+        "path": "/Volumes/SoloPerf-RAM-solo-final-8c727777-ram-v4/evidence/demo-final-dbf61c51-attempt01/report.json",
+        "bytes": 746234,
+        "sha256": "c5000553896ff87997d69f26724d702c218e6db65a3560b467bdb0a7cbbcd311"
+      },
+      "scope": "Real hidden interval, public Start, strict original/fresh same-engine replay; excluded from timing and heat claims."
+    },
+    {
+      "kind": "persistent-webkit-raster",
+      "status": "failed",
+      "observedCases": 11,
+      "totalCases": 12,
+      "report": {
+        "path": "/Volumes/SoloPerf-RAM-solo-final-8c727777-ram-v4/evidence/raster-final-dbf61c51-attempt01/raster/report.json",
+        "bytes": 89885,
+        "sha256": "0a649835607aacff52019f52c9361d20b0c2035e5515d71c4121dcbe97ab425b"
+      },
+      "scope": "Full/acquire at 0.10 seconds fails identical-input control: 40,713 changed channels, maximum delta 1. Concealment comparison is unobserved for that case; unchanged strict gate. Other cases and 0.25-second control pass. Cause remains unattributed."
+    }
+  ],
+  "limitations": [
+    "Package verification is independent of native correctness, timing, retained memory and thermal qualification.",
+    "Earlier observations retain original source, browser context and failure identity.",
+    "Physical iPhone17Pro/iOS27.0.1/Safari and SteamDeckOLED/default refresh remain unobserved."
+  ],
+  "scope": "Existing successful CI package; all members, supported source projections, static workers, offline closure, exact CSP and durable readback verified before use. No deployment, release qualification or universal smoothness claim.",
+  "nativePreservation": {
+    "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/native-dbf61c51-preservation-01/receipt.json",
+    "bytes": 3138,
+    "sha256": "1c8916d0a98064fb78b3565c5090f21ece09b78b0fa529d67a10f74166398d00"
+  },
+  "nativeEvidenceArchive": {
+    "absolutePath": "/Volumes/alex/solo-performance-b1174522/evidence/native-final-dbf61c51-preserved-01/evidence.tar.gz",
+    "bytes": 2248057,
+    "sha256": "7469daf4acd2386415ac1b92214c535c8620164892c956b6eb8ded9cfcfd654e"
+  },
+  "ownedDemoProfileRetirement": {
+    "path": "/Users/oleksandr.mekhovov/.codex/worktrees/solo-performance/go_test/.cache/solo-followup/demo-profile-dbf-final-retirement/receipt.json",
+    "bytes": 1750,
+    "sha256": "f0549dceed11ebfb47bdf7fd63fde4a042dbe2fbe31038651f25f4c362eabd68"
+  }
+}

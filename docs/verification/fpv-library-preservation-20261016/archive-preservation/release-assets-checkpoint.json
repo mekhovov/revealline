@@ -1,0 +1,204 @@
+{
+  "format": "fpv-original-release-preservation.v1",
+  "releaseID": 414505790,
+  "tag": "fpv-development-preservation-20261016",
+  "draft": true,
+  "releaseURL": "https://github.com/mekhovov/revealline/releases/tag/untagged-9a5982b8261a24c31535",
+  "startedAt": "2026-10-16T03:37:01.375069+00:00",
+  "archives": [
+    {
+      "originalPath": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/company-original-artifact.zip",
+      "qualifierDirectory": "regional-family-library-81c0d658",
+      "originalName": "company-original-artifact.zip",
+      "bytes": 78418136,
+      "sha256": "40138377866713e03bf7ce8e4c48ec8f5e28ec865cea904a0e2d3adc6053aeb2",
+      "sourceBefore": {
+        "bytes": 78418136,
+        "mtimeNs": 1792118116455480900
+      },
+      "sourceStableDuringPreflight": true,
+      "memberInspection": {
+        "members": 2288,
+        "uncompressedBytes": 214156200,
+        "nestedArchives": 2,
+        "forbiddenNames": [],
+        "secretPatternMembers": []
+      },
+      "inspectionPassed": true,
+      "releaseID": 414505790,
+      "assetID": 646023129,
+      "assetName": "regional-family-library-81c0d658--company-original-artifact--401383778667.zip",
+      "assetURL": "https://github.com/mekhovov/revealline/releases/download/untagged-9a5982b8261a24c31535/regional-family-library-81c0d658--company-original-artifact--401383778667.zip",
+      "assetAPIURL": "https://api.github.com/repos/mekhovov/revealline/releases/assets/646023129",
+      "serverDigest": "sha256:40138377866713e03bf7ce8e4c48ec8f5e28ec865cea904a0e2d3adc6053aeb2",
+      "serverBytes": 78418136,
+      "reusedExistingAssetByDigest": false,
+      "fullReadback": {
+        "bytes": 78418136,
+        "sha256": "40138377866713e03bf7ce8e4c48ec8f5e28ec865cea904a0e2d3adc6053aeb2",
+        "method": "Full authenticated GitHub release asset download streamed and hashed without disk duplicate"
+      },
+      "sourceAfter": {
+        "bytes": 78418136,
+        "mtimeNs": 1792118116455480900,
+        "sha256": "40138377866713e03bf7ce8e4c48ec8f5e28ec865cea904a0e2d3adc6053aeb2"
+      },
+      "sourceStableBeforeAndAfterUpload": true,
+      "preserved": true,
+      "verifiedAt": "2026-10-16T03:40:31.297813+00:00"
+    },
+    {
+      "originalPath": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/distribution-optional-civilian-flight.zip",
+      "qualifierDirectory": "regional-family-library-81c0d658",
+      "originalName": "distribution-optional-civilian-flight.zip",
+      "bytes": 3762262,
+      "sha256": "4bfee7444065b619191d4eca261636c46278d4d3b1b98a23fbafb2f11bda25ab",
+      "sourceBefore": {
+        "bytes": 3762262,
+        "mtimeNs": 1792116456061921800
+      },
+      "sourceStableDuringPreflight": true,
+      "memberInspection": {
+        "members": 94,
+        "uncompressedBytes": 3748578,
+        "nestedArchives": 0,
+        "forbiddenNames": [],
+        "secretPatternMembers": []
+      },
+      "inspectionPassed": true,
+      "releaseID": 414505790,
+      "assetID": 646030545,
+      "assetName": "regional-family-library-81c0d658--distribution-optional-civilian-flight--4bfee7444065.zip",
+      "assetURL": "https://github.com/mekhovov/revealline/releases/download/untagged-9a5982b8261a24c31535/regional-family-library-81c0d658--distribution-optional-civilian-flight--4bfee7444065.zip",
+      "assetAPIURL": "https://api.github.com/repos/mekhovov/revealline/releases/assets/646030545",
+      "serverDigest": "sha256:4bfee7444065b619191d4eca261636c46278d4d3b1b98a23fbafb2f11bda25ab",
+      "serverBytes": 3762262,
+      "reusedExistingAssetByDigest": false,
+      "fullReadback": {
+        "bytes": 3762262,
+        "sha256": "4bfee7444065b619191d4eca261636c46278d4d3b1b98a23fbafb2f11bda25ab",
+        "method": "Full authenticated GitHub release asset download streamed and hashed without disk duplicate"
+      },
+      "sourceAfter": {
+        "bytes": 3762262,
+        "mtimeNs": 1792116456061921800,
+        "sha256": "4bfee7444065b619191d4eca261636c46278d4d3b1b98a23fbafb2f11bda25ab"
+      },
+      "sourceStableBeforeAndAfterUpload": true,
+      "preserved": true,
+      "verifiedAt": "2026-10-16T03:40:51.148718+00:00"
+    },
+    {
+      "originalPath": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/distribution-optional-civilian-fpv.zip",
+      "qualifierDirectory": "regional-family-library-81c0d658",
+      "originalName": "distribution-optional-civilian-fpv.zip",
+      "bytes": 6781322,
+      "sha256": "a8fc25331fa42acda229c4f76d5d3a2d233b627c2638aeca624287fd65199c5c",
+      "sourceBefore": {
+        "bytes": 6781322,
+        "mtimeNs": 1792116454818905600
+      },
+      "sourceStableDuringPreflight": true,
+      "memberInspection": {
+        "members": 101,
+        "uncompressedBytes": 6766304,
+        "nestedArchives": 0,
+        "forbiddenNames": [],
+        "secretPatternMembers": []
+      },
+      "inspectionPassed": true,
+      "releaseID": 414505790,
+      "assetID": 646031472,
+      "assetName": "regional-family-library-81c0d658--distribution-optional-civilian-fpv--a8fc25331fa4.zip",
+      "assetURL": "https://github.com/mekhovov/revealline/releases/download/untagged-9a5982b8261a24c31535/regional-family-library-81c0d658--distribution-optional-civilian-fpv--a8fc25331fa4.zip",
+      "assetAPIURL": "https://api.github.com/repos/mekhovov/revealline/releases/assets/646031472",
+      "serverDigest": "sha256:a8fc25331fa42acda229c4f76d5d3a2d233b627c2638aeca624287fd65199c5c",
+      "serverBytes": 6781322,
+      "reusedExistingAssetByDigest": false,
+      "fullReadback": {
+        "bytes": 6781322,
+        "sha256": "a8fc25331fa42acda229c4f76d5d3a2d233b627c2638aeca624287fd65199c5c",
+        "method": "Full authenticated GitHub release asset download streamed and hashed without disk duplicate"
+      },
+      "sourceAfter": {
+        "bytes": 6781322,
+        "mtimeNs": 1792116454818905600,
+        "sha256": "a8fc25331fa42acda229c4f76d5d3a2d233b627c2638aeca624287fd65199c5c"
+      },
+      "sourceStableBeforeAndAfterUpload": true,
+      "preserved": true,
+      "verifiedAt": "2026-10-16T03:41:15.430774+00:00"
+    },
+    {
+      "originalPath": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/distribution-optional-fpv-worlds.zip",
+      "qualifierDirectory": "regional-family-library-81c0d658",
+      "originalName": "distribution-optional-fpv-worlds.zip",
+      "bytes": 17600770,
+      "sha256": "c1152ca1a81b451387bce73e5034479d16943565faac05410a1c281893326113",
+      "sourceBefore": {
+        "bytes": 17600770,
+        "mtimeNs": 1792116455698245800
+      },
+      "sourceStableDuringPreflight": true,
+      "memberInspection": {
+        "members": 162,
+        "uncompressedBytes": 17574342,
+        "nestedArchives": 0,
+        "forbiddenNames": [],
+        "secretPatternMembers": [
+          "distribution-optional-fpv-worlds.zip!optional-practice/civilian-fpv/vendor/rapier/rapier.mjs"
+        ]
+      },
+      "inspectionPassed": true,
+      "reviewedPatternExceptions": [
+        {
+          "member": "distribution-optional-fpv-worlds.zip!optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+          "vendorSHA256": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0",
+          "encodedWasmBytes": 4109472,
+          "decodedWasmBytes": 3082103,
+          "decodedWasmSHA256": "17cfa80eebd8de0291b948496dbffba724b98b489687f8272ca236a7bbf1dd4b",
+          "finding": "Two AKIA-shaped substrings are inside the known committed vendor WebAssembly base64 literal, not credential configuration. Exact vendor hash matches public b65 source."
+        }
+      ],
+      "releaseID": 414505790,
+      "assetID": 646032634,
+      "assetName": "regional-family-library-81c0d658--distribution-optional-fpv-worlds--c1152ca1a81b.zip",
+      "assetURL": "https://github.com/mekhovov/revealline/releases/download/untagged-9a5982b8261a24c31535/regional-family-library-81c0d658--distribution-optional-fpv-worlds--c1152ca1a81b.zip",
+      "assetAPIURL": "https://api.github.com/repos/mekhovov/revealline/releases/assets/646032634",
+      "serverDigest": "sha256:c1152ca1a81b451387bce73e5034479d16943565faac05410a1c281893326113",
+      "serverBytes": 17600770,
+      "reusedExistingAssetByDigest": false,
+      "fullReadback": {
+        "bytes": 17600770,
+        "sha256": "c1152ca1a81b451387bce73e5034479d16943565faac05410a1c281893326113",
+        "method": "Full authenticated GitHub release asset download streamed and hashed without disk duplicate"
+      },
+      "sourceAfter": {
+        "bytes": 17600770,
+        "mtimeNs": 1792116455698245800,
+        "sha256": "c1152ca1a81b451387bce73e5034479d16943565faac05410a1c281893326113"
+      },
+      "sourceStableBeforeAndAfterUpload": true,
+      "preserved": true,
+      "verifiedAt": "2026-10-16T03:42:04.659042+00:00"
+    }
+  ],
+  "complete": false,
+  "updatedAt": "2026-10-16T03:42:04.659057+00:00",
+  "remainingOriginalPaths": [
+    "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/github-artifact.zip",
+    "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/source-optional-civilian-flight.zip",
+    "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/source-optional-civilian-fpv.zip",
+    "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-81c0d658/source-optional-fpv-worlds.zip",
+    "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/company-original-artifact.zip",
+    "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/distribution-optional-civilian-flight.zip",
+    "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/distribution-optional-civilian-fpv.zip",
+    "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/distribution-optional-fpv-worlds.zip",
+    "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/github-artifact.zip",
+    "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/source-optional-civilian-flight.zip",
+    "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/source-optional-civilian-fpv.zip",
+    "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/source-optional-fpv-worlds.zip",
+    "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/library-metadata-bc9bc71f/distribution-optional-fpv-worlds.zip"
+  ],
+  "checkpointOnly": true
+}

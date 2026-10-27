@@ -35,6 +35,15 @@ test('simulator qualification build retains both complete package closures, iden
   }
   for (const module of [
     'sim-boot.mjs',
+    'setup-draft.mjs',
+    'setup-workbench.mjs',
+    'aircraft-tuning-fields.mjs',
+    'controller-tune-library.mjs',
+    'controller-tune-panel.mjs',
+    'response-bench.mjs',
+    'response-bench-client.mjs',
+    'response-bench-worker.mjs',
+    'response-bench-panel.mjs',
     'advanced-worker.mjs',
     'advanced-controller.mjs',
     'advanced-aircraft-runtime.mjs',
@@ -53,6 +62,7 @@ test('simulator qualification build retains both complete package closures, iden
     'advanced-ghost-path.mjs',
     'propulsion-evidence.mjs',
     'propulsion-evidence-ui.mjs',
+    'propulsion-load.mjs',
     'aircraft-challenge.mjs',
     'aircraft-challenge-ui.mjs',
     'vendor/rapier/rapier.mjs',
@@ -196,6 +206,8 @@ test('qualification source stages with unchanged desktop policy, exact worker ha
     'optional-practice/civilian-fpv/index.html',
     'optional-practice/fpv-worlds/index.html',
     'optional-practice/civilian-fpv/advanced-worker.mjs',
+    'optional-practice/civilian-fpv/response-bench-worker.mjs',
+    'optional-practice/fpv-worlds/response-bench-worker.mjs',
     'optional-practice/civilian-fpv/vendor/rapier/rapier.mjs',
   ]) {
     const response = await native.handle(new Request(`revealline://app/${name}`));

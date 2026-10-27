@@ -2,7 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { createRun, stepRun, validateLevel, CELL, FIXED_DT } from '../core/index.mjs';
-import { commitCapture } from '../core/capture.mjs';
+import { commitCapture, selfContact, appendTrail } from '../core/capture.mjs';
+import { authoritativeCheckpoint } from '../replay.mjs';
 
 const base = (extra = {}) => ({
   version: 'xonix-level.v1',
@@ -286,4 +287,141 @@ test('wall contact blocks movement without closing or destroying a valid live cu
   assert.equal(s.lives, 3);
   assert.equal(s.player.cutting, true);
   assert.equal(s.claimedCount, 0);
+});
+
+test('empty movement leaves an idle or live trail unchanged without constructing cell sets', () => {
+  for (const cutting of [false, true]) {
+    const state = run();
+    if (cutting) cutFixture(state);
+    const before = authoritativeCheckpoint(state),
+      trail = state.trail,
+      segments = state.trailSegments,
+      trace = { started: null, cells: [], additions: [] },
+      NativeSet = globalThis.Set;
+    let sets = 0,
+      contact;
+    // Observe only these two synchronous calls; restore before assertions or hashing.
+    globalThis.Set = class extends NativeSet {
+      constructor(...args) {
+        super(...args);
+        sets++;
+      }
+    };
+    try {
+      contact = selfContact(state, trace, FIXED_DT);
+      appendTrail(state, trace, FIXED_DT);
+    } finally {
+      globalThis.Set = NativeSet;
+    }
+    assert.equal(contact, null);
+    assert.equal(sets, 0);
+    assert.equal(state.trail, trail);
+    assert.equal(state.trailSegments, segments);
+    assert.deepEqual(authoritativeCheckpoint(state), before);
+  }
+});
+
+test('long immutable bent trails retain exact earliest-contact horizons without changing run state', () => {
+  const state = run(),
+    segments = [];
+  for (let row = 0; row < 32; row++) {
+    const y = row + 2.5,
+      left = row % 2 === 0;
+    segments.push(Object.freeze({ x1: left ? 4.5 : 44.5, y1: y, x2: left ? 44.5 : 4.5, y2: y }));
+    if (row < 31)
+      segments.push(
+        Object.freeze({ x1: left ? 44.5 : 4.5, y1: y, x2: left ? 44.5 : 4.5, y2: y + 1 }),
+      );
+  }
+  state.player.cutting = true;
+  state.trailSegments = Object.freeze(segments);
+  const before = authoritativeCheckpoint(state),
+    trace = Object.freeze({
+      cells: Object.freeze([]),
+      additions: Object.freeze([
+        Object.freeze({ x1: 4.5, y1: 33.5, x2: 4.5, y2: 31.5, t0: 0.25, t1: 0.75 }),
+      ]),
+    });
+  assert.equal(segments.length, 63);
+  assert.equal(selfContact(state, trace, 0.375), null);
+  assert.equal(selfContact(state, trace, 0.5), 0.5);
+  assert.equal(selfContact(state, trace, 1), 0.5);
+  assert.equal(state.trailSegments, segments);
+  assert.deepEqual(authoritativeCheckpoint(state), before);
+});
+
+test('contact checks include earlier additions in the same movement and preserve reversal timing', () => {
+  const state = run(),
+    before = authoritativeCheckpoint(state),
+    trace = {
+      cells: [],
+      additions: [
+        { x1: 10.5, y1: 10.5, x2: 14.5, y2: 10.5, t0: 0, t1: 0.25 },
+        { x1: 14.5, y1: 10.5, x2: 14.5, y2: 14.5, t0: 0.25, t1: 0.5 },
+        { x1: 14.5, y1: 14.5, x2: 12.5, y2: 14.5, t0: 0.5, t1: 0.75 },
+        { x1: 12.5, y1: 14.5, x2: 12.5, y2: 8.5, t0: 0.75, t1: 1.5 },
+      ],
+    };
+  assert.equal(selfContact(state, trace, 1), null);
+  assert.equal(selfContact(state, trace, 1.25), 1.25);
+  assert.equal(selfContact(state, trace, 1.5), 1.25);
+  assert.deepEqual(authoritativeCheckpoint(state), before);
+  state.trailSegments = Object.freeze([Object.freeze({ x1: 24.5, y1: 1, x2: 24.5, y2: 4.5 })]);
+  const reversal = {
+    cells: [],
+    additions: [{ x1: 24.5, y1: 4.5, x2: 24.5, y2: 3.5, t0: 0.25, t1: 0.75 }],
+  };
+  assert.equal(selfContact(state, reversal, 0.125), null);
+  assert.equal(selfContact(state, reversal, 0.5), 0.25);
+});
+
+test('cell-only contact preserves consecutive-cell immunity, repeated-cell failure and horizon order', () => {
+  const state = run();
+  state.trail = [
+    { x: 24, y: 1, index: 72 },
+    { x: 24, y: 2, index: 120 },
+  ];
+  const before = authoritativeCheckpoint(state),
+    trace = {
+      additions: [],
+      cells: [
+        { index: 120, time: 0 },
+        { index: 168, time: 0.25 },
+        { index: 72, time: 0.5 },
+      ],
+    };
+  assert.equal(selfContact(state, trace, 0.25), null);
+  assert.equal(selfContact(state, trace, 0.5), 0.5);
+  assert.equal(selfContact(state, trace, 1), 0.5);
+  assert.deepEqual(authoritativeCheckpoint(state), before);
+});
+
+test('contact reads retain tail ownership until append clips and merges the accepted movement', () => {
+  const state = run();
+  state.player.cutting = true;
+  state.trail = [1, 2, 3].map((y) => ({ x: 24, y, index: y * 48 + 24 }));
+  const tail = { x1: 24.5, y1: 1, x2: 24.5, y2: 3.5 };
+  state.trailSegments = [tail];
+  const trace = {
+      started: null,
+      cells: [
+        { index: 168, time: 0 },
+        { index: 216, time: 0.25 },
+        { index: 264, time: 0.75 },
+      ],
+      additions: [{ x1: 24.5, y1: 3.5, x2: 24.5, y2: 5.5, t0: 0, t1: 1 }],
+    },
+    originalTrace = structuredClone(trace),
+    before = authoritativeCheckpoint(state);
+  assert.equal(selfContact(state, trace, 0.5), null);
+  assert.deepEqual(authoritativeCheckpoint(state), before);
+  appendTrail(state, trace, 0.5);
+  assert.equal(state.trailSegments.length, 1);
+  assert.equal(state.trailSegments[0], tail);
+  assert.deepEqual(tail, { x1: 24.5, y1: 1, x2: 24.5, y2: 4.5 });
+  assert.deepEqual(
+    state.trail.map(({ index }) => index),
+    [72, 120, 168, 216],
+  );
+  assert.deepEqual(trace, originalTrace);
 });

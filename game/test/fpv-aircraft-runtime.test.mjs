@@ -40,7 +40,7 @@ const ground = (shift = 0) =>
     ],
   });
 
-test('all twelve aircraft run physical self-level and Acro sessions with independent mass and geometry', () => {
+test('all catalog aircraft run physical self-level and Acro sessions with independent mass and geometry', () => {
   for (const item of listAircraftPresets())
     for (const mode of ['acro', 'self-level']) {
       const config = createPresetConfiguration(item.id),
@@ -52,7 +52,7 @@ test('all twelve aircraft run physical self-level and Acro sessions with indepen
           sim.stepMission();
         }
         const telemetry = sim.telemetry();
-        assert.equal(telemetry.backend, 'civilian-quad-aircraft.v1');
+        assert.equal(telemetry.backend, 'civilian-quad-aircraft.v3');
         assert.ok(Number.isFinite(telemetry.position.y), `${item.id} ${mode}`);
         assert.equal(telemetry.usedAh, 0);
         assert.ok(telemetry.supportHeight > 0);

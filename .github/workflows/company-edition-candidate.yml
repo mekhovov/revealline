@@ -32,6 +32,17 @@ on:
         default: droneaid-community,droneaid-nl-community,droneaid-nl-workshop-lights,droneaid-nl-parts-in-motion,droneaid-nl-signals-of-support,droneaid-nl-careful-handoff,droneaid-nl-makers-together,droneaid-nl-shared-horizon,social-drone-ua,victory-drones,ukraine-culture,fpv-learning
         type: string
 
+      field_kit_candidate:
+        description: Create an isolated Field Kit metadata artifact without adopting production
+        required: false
+        default: false
+        type: boolean
+      field_kit_source_sha:
+        description: Required with Field Kit candidate; exact commit of the selected workflow ref
+        required: false
+        default: ''
+        type: string
+
 permissions:
   contents: read
 
@@ -42,15 +53,25 @@ concurrency:
 jobs:
   optional-practice:
     runs-on: ubuntu-latest
-    # The aircraft/replay suite passed in 7m26s on run 39059412458, but
-    # dependency setup and artifact checks took the job beyond eight minutes.
-    # Keep every check and allow bounded headroom for hosted-runner variance.
-    timeout-minutes: 12
+    # The earlier aircraft/replay suite alone needed 7m26s on run 39059412458.
+    # All-catalog course and verified Regional geometry flights now add sustained
+    # physics coverage. Retain every check and bound the larger suite plus setup
+    # and package verification with headroom for hosted-runner variance.
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         with:
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          # Match the revision that supplies this workflow. On pull_request this
+          # is the merge integration tree; the candidate job remains exact-head.
+          ref: ${{ github.sha }}
           persist-credentials: false
+      - name: Record optional integration source
+        env:
+          EVENT_SOURCE_REVISION: ${{ github.sha }}
+          PR_HEAD_REVISION: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EVENT_SOURCE_REVISION"
+          printf 'Optional integration source: `%s`\nPR head: `%s`\n' "$EVENT_SOURCE_REVISION" "$PR_HEAD_REVISION" >> "$GITHUB_STEP_SUMMARY"
       - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
         with:
           package-manager-cache: false
@@ -73,12 +94,13 @@ jobs:
         run: node scripts/bundle-optional-practice.mjs --out .cache/optional-flight-candidate --base-path /revealline/ --packages civilian-flight,civilian-fpv,fpv-worlds
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
         with:
-          name: optional-flight-candidate-${{ github.event.pull_request.head.sha || github.sha }}
+          name: optional-flight-integration-${{ github.sha }}-head-${{ github.event.pull_request.head.sha || github.sha }}
           path: .cache/optional-flight-candidate/
           if-no-files-found: error
           retention-days: 14
       - name: Report optional-package boundary
         run: |
+          echo 'This optional package tests the event source revision (the merge integration tree for pull requests), not an isolated PR-head package. The separate company candidate retains its exact-head source.' >> "$GITHUB_STEP_SUMMARY"
           echo 'The assisted orientation gym, FPV Flight Studio and FPV World Studio are separately admitted optional candidates, independent of core and edition offline caches.' >> "$GITHUB_STEP_SUMMARY"
           echo 'Archive integrity was checked. Automated route/replay tests follow the explicit test policy; waived suites are skipped, not passed. This is not publication, physical radio evidence or real flight proficiency.' >> "$GITHUB_STEP_SUMMARY"
   candidate:
@@ -145,6 +167,187 @@ jobs:
           path: .cache/company-candidate/
           if-no-files-found: error
           retention-days: 14
+      - name: Create and reproduce isolated Field Kit candidate
+        id: field_kit_candidate
+        if: github.event_name == 'workflow_dispatch' && inputs.field_kit_candidate && github.repository == 'mekhovov/revealline'
+        timeout-minutes: 15
+        env:
+          EXPECTED_FIELD_KIT_SOURCE: ${{ inputs.field_kit_source_sha }}
+          FIELD_KIT_WORKFLOW_SHA: ${{ github.workflow_sha }}
+        run: |
+          set -euo pipefail
+          [[ "$EXPECTED_FIELD_KIT_SOURCE" =~ ^[a-f0-9]{40}$ ]]
+          test "$GITHUB_SHA" = "$EXPECTED_FIELD_KIT_SOURCE"
+          test "$FIELD_KIT_WORKFLOW_SHA" = "$EXPECTED_FIELD_KIT_SOURCE"
+          test "$(git rev-parse HEAD)" = "$EXPECTED_FIELD_KIT_SOURCE"
+          test -z "$(git status --porcelain --untracked-files=all)"
+          export FIELD_KIT_SOURCE_TREE="$(git rev-parse 'HEAD^{tree}')"
+          timeout --signal=TERM --kill-after=30s 300s node scripts/produce-field-kit-theme.mjs --candidate .cache/field-kit-candidate
+          timeout --signal=TERM --kill-after=30s 300s node scripts/produce-field-kit-theme.mjs --check-candidate .cache/field-kit-candidate
+          test "$(git rev-parse HEAD)" = "$EXPECTED_FIELD_KIT_SOURCE"
+          test -z "$(git status --porcelain --untracked-files=all)"
+          node --input-type=module <<'FIELD_KIT_ARTIFACT'
+          import assert from 'node:assert/strict';
+          import fs from 'node:fs/promises';
+          import { createReadStream } from 'node:fs';
+          import path from 'node:path';
+          import { createHash } from 'node:crypto';
+
+          const output = path.resolve('.cache/field-kit-candidate');
+          const maxFiles = 512,
+            maxFileBytes = 64 * 1024 * 1024,
+            maxBytes = 128 * 1024 * 1024;
+          const digest = /^[a-f0-9]{64}$/u,
+            revision = /^[a-f0-9]{40}$/u;
+          const source = process.env.EXPECTED_FIELD_KIT_SOURCE;
+          const tree = process.env.FIELD_KIT_SOURCE_TREE;
+          assert(revision.test(source ?? '') && revision.test(tree ?? ''), 'Invalid source identity.');
+          assert.equal(source, process.env.GITHUB_SHA, 'Selected workflow ref moved.');
+          assert.equal(source, process.env.FIELD_KIT_WORKFLOW_SHA, 'Workflow/source mismatch.');
+          assert.equal(process.env.GITHUB_REPOSITORY, 'mekhovov/revealline', 'Foreign repository.');
+          for (const key of ['GITHUB_RUN_ID', 'GITHUB_RUN_ATTEMPT'])
+            assert(
+              /^[1-9][0-9]*$/u.test(process.env[key] ?? '') && Number.isSafeInteger(Number(process.env[key])),
+              'Invalid run identity.',
+            );
+          assert.equal(await fs.realpath(output), output, 'Candidate path contains a link.');
+          assert((await fs.lstat(output)).isDirectory(), 'Candidate must be a directory.');
+          const reviewPath = path.join(output, 'review.json');
+          const reviewStat = await fs.lstat(reviewPath);
+          assert(
+            reviewStat.isFile() && reviewStat.size > 0 && reviewStat.size <= 2 * 1024 * 1024,
+            'Invalid candidate receipt size or type.',
+          );
+          const reviewBytes = await fs.readFile(reviewPath);
+          assert.equal(reviewBytes.length, reviewStat.size, 'Candidate receipt changed.');
+          const review = JSON.parse(reviewBytes);
+          assert.equal(review.format, 'revealline-field-kit-candidate.v1', 'Unexpected candidate receipt.');
+          assert.equal(review.source?.sourceRevision, source, 'Candidate source differs.');
+          assert.equal(review.source?.sourceTree, tree, 'Candidate tree differs.');
+          assert(digest.test(review.source?.aggregateSha256 ?? ''), 'Missing source aggregate.');
+          assert(
+            Array.isArray(review.files) && review.files.length > 0 && review.files.length < maxFiles,
+            'Candidate file count exceeds its bound.',
+          );
+          const declared = new Map();
+          for (const file of review.files) {
+            assert(
+              file &&
+                typeof file.path === 'string' &&
+                /^(?:production\.rltheme|compiled\/(?:assets\/)?[A-Za-z0-9][A-Za-z0-9_.-]*)$/u.test(
+                  file.path,
+                ) &&
+                !declared.has(file.path) &&
+                Number.isSafeInteger(file.bytes) &&
+                file.bytes >= 0 &&
+                file.bytes <= maxFileBytes &&
+                digest.test(file.sha256 ?? ''),
+              'Invalid or duplicate candidate file declaration.',
+            );
+            declared.set(file.path, file);
+          }
+          assert(
+            [...declared.values()].reduce((sum, file) => sum + file.bytes, reviewStat.size) <= maxBytes,
+            'Declared candidate output exceeds its bound.',
+          );
+          for (const name of ['production.rltheme', 'compiled/manifest.json', 'compiled/studio.json'])
+            assert(declared.has(name), 'Missing candidate ledger or metadata.');
+          const actual = [],
+            seen = new Set();
+          let totalBytes = 0;
+          async function visit(relative = '') {
+            const entries = await fs.readdir(path.join(output, relative), { withFileTypes: true });
+            assert(entries.length <= maxFiles, 'Candidate directory exceeds its bound.');
+            for (const entry of entries) {
+              const name = relative ? relative + '/' + entry.name : entry.name;
+              const target = path.join(output, name),
+                stat = await fs.lstat(target);
+              if (stat.isDirectory()) {
+                assert(name === 'compiled' || name === 'compiled/assets', 'Unexpected candidate directory.');
+                await visit(name);
+                continue;
+              }
+              assert(
+                stat.isFile() && !stat.isSymbolicLink(),
+                'Candidate links or special files are forbidden.',
+              );
+              assert(name === 'review.json' || declared.has(name), 'Unlisted candidate file.');
+              assert(
+                !seen.has(name) &&
+                  seen.size < maxFiles &&
+                  stat.size <= maxFileBytes &&
+                  totalBytes + stat.size <= maxBytes,
+                'Candidate output exceeds its bound.',
+              );
+              seen.add(name);
+              const hash = createHash('sha256');
+              let bytes = 0;
+              for await (const chunk of createReadStream(target)) {
+                bytes += chunk.length;
+                assert(bytes <= stat.size && bytes <= maxFileBytes, 'Candidate changed while reading.');
+                hash.update(chunk);
+              }
+              assert.equal(bytes, stat.size, 'Candidate file changed.');
+              const sha256 = hash.digest('hex');
+              if (name !== 'review.json') {
+                assert.equal(bytes, declared.get(name).bytes, 'Candidate file size differs.');
+                assert.equal(sha256, declared.get(name).sha256, 'Candidate file digest differs.');
+              } else
+                assert.equal(
+                  sha256,
+                  createHash('sha256').update(reviewBytes).digest('hex'),
+                  'Candidate receipt changed.',
+                );
+              totalBytes += bytes;
+              actual.push({ path: name, bytes, sha256 });
+            }
+          }
+          await visit();
+          assert.equal(seen.size, declared.size + 1, 'Candidate files are missing.');
+          const binding = {
+            format: 'revealline-field-kit-candidate-artifact.v1',
+            sourceRevision: source,
+            sourceTree: tree,
+            workflowRevision: process.env.FIELD_KIT_WORKFLOW_SHA,
+            repository: process.env.GITHUB_REPOSITORY,
+            runId: Number(process.env.GITHUB_RUN_ID),
+            runAttempt: Number(process.env.GITHUB_RUN_ATTEMPT),
+            reproducedByteIdentically: true,
+            files: actual.sort((a, b) => a.path.localeCompare(b.path)),
+            totalBytes,
+            productionAdopted: false,
+            continuationApproved: false,
+            qualification: 'Technical candidate only; no production, artwork, device or release approval.',
+          };
+          await fs.writeFile(
+            '.cache/field-kit-candidate-binding.json',
+            JSON.stringify(binding, null, 2) + '\n',
+            { flag: 'wx' },
+          );
+          console.log(
+            JSON.stringify({
+              sourceRevision: source,
+              files: actual.length,
+              totalBytes,
+              productionAdopted: false,
+              continuationApproved: false,
+            }),
+          );
+          FIELD_KIT_ARTIFACT
+          test "$(git rev-parse HEAD)" = "$EXPECTED_FIELD_KIT_SOURCE"
+          test -z "$(git status --porcelain --untracked-files=all)"
+      - name: Retain isolated Field Kit candidate
+        if: github.event_name == 'workflow_dispatch' && inputs.field_kit_candidate && github.repository == 'mekhovov/revealline' && steps.field_kit_candidate.outcome == 'success'
+        timeout-minutes: 5
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f # v6
+        with:
+          name: field-kit-candidate-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            .cache/field-kit-candidate/
+            .cache/field-kit-candidate-binding.json
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 0
       - name: Report qualification boundary
         run: |
           echo 'Company candidate compilation and original member checks passed.' >> "$GITHUB_STEP_SUMMARY"

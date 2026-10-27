@@ -212,7 +212,17 @@ test('exact poster stays visible through silent preparation; explicit native act
   assert.deepEqual(h.gains, [0.2]);
   assert.deepEqual(
     Object.keys(h.player).sort(),
-    ['dispose', 'element', 'pause', 'play', 'replay', 'setPreferences', 'skip', 'snapshot'].sort(),
+    [
+      'dispose',
+      'element',
+      'pause',
+      'play',
+      'replay',
+      'resourceSnapshot',
+      'setPreferences',
+      'skip',
+      'snapshot',
+    ].sort(),
   );
   h.video.at(4);
   assert.equal(h.player.snapshot().state, 'poster');
@@ -1041,4 +1051,58 @@ test('cinematic arrival keeps the exact poster through starting and fades only d
   f.video.at(f.descriptor.segment.endSeconds);
   assert.equal(f.poster.hidden, false);
   assert.equal(f.video.hidden, true);
+});
+
+test('resource diagnostic counts exact native media owners without playing or allocating', async (t) => {
+  const h = await setup(t);
+  const initial = h.player.resourceSnapshot();
+  assert.equal(initial.mediaElements, 1);
+  assert.equal(initial.ownedBlobURLs, 1);
+  assert.equal(initial.ownedBlobBytes, h.prepared.descriptor.source.bytes);
+  assert.equal(initial.nativeDecodedBytes, null);
+  const before = {
+    plays: h.video.playCalls,
+    loads: h.video.loads,
+    urls: h.urls.size,
+    changes: h.changes.length,
+  };
+  for (let i = 0; i < 20; i++) assert.deepEqual(h.player.resourceSnapshot(), initial);
+  assert.deepEqual(
+    {
+      plays: h.video.playCalls,
+      loads: h.video.loads,
+      urls: h.urls.size,
+      changes: h.changes.length,
+    },
+    before,
+  );
+  h.player.dispose();
+  const retired = h.player.resourceSnapshot();
+  assert.equal(retired.mediaElements, 0);
+  assert.equal(retired.ownedBlobURLs, 0);
+  assert.equal(retired.ownedBlobBytes, 0);
+  assert.equal(retired.disposed, true);
+  assert.equal(h.urls.size, 0);
+});
+
+test('resource diagnostic distinguishes owned play cancellation from unobservable native settlement', async (t) => {
+  const h = await setup(t);
+  h.ready();
+  const held = deferred();
+  h.video.playResult = () => held.promise;
+  const playing = h.player.play();
+  assert.equal(h.player.resourceSnapshot().pendingPlayCommand, true);
+  h.player.pause();
+  await playing;
+  const paused = h.player.resourceSnapshot();
+  assert.equal(paused.pendingPlayCommand, false);
+  assert.equal(paused.mediaElements, 1);
+  assert.equal(paused.nativeDecodedBytes, null);
+  held.resolve();
+  await microtasks();
+  assert.equal(
+    h.player.snapshot().state,
+    'poster',
+    'The first native Play never completed; Pause keeps its existing poster.',
+  );
 });

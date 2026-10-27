@@ -73,9 +73,7 @@
       "revision": "2",
       "title": "Neon Words & Symbols",
       "themeId": "retro",
-      "classIds": [
-        "scout"
-      ],
+      "classIds": ["scout"],
       "levels": [
         {
           "version": "xonix-level.v5",

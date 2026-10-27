@@ -1,0 +1,233 @@
+{
+  "format": "SoloQualificationV1",
+  "id": "large-profile-public-import-and-reload-paused-settings-route-v2",
+  "kind": "lifecycle",
+  "timeoutMs": 360000,
+  "query": {
+    "journey": "opening"
+  },
+  "coverage": [
+    "480 saved campaign records",
+    "3840 gallery records",
+    "960 score records",
+    "public import and reload",
+    "metadata pressure only; original media and soundtrack libraries excluded"
+  ],
+  "actions": [
+    {
+      "type": "click",
+      "selector": "#shell-featured",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "click",
+      "selector": "#pause-button"
+    },
+    {
+      "type": "wait",
+      "phase": "paused"
+    },
+    {
+      "type": "click",
+      "selector": "#overlay-settings"
+    },
+    {
+      "type": "click",
+      "selector": "#settings-tab-data"
+    },
+    {
+      "type": "click",
+      "selector": "#settings-saves"
+    },
+    {
+      "type": "upload",
+      "selector": "#save-file",
+      "file": "large-profile.library.json"
+    },
+    {
+      "type": "expect",
+      "selector": "#undo-library:not(:disabled)",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "expect",
+      "selector": "#library-capacity",
+      "contains": "480"
+    },
+    {
+      "type": "snapshot",
+      "group": "imported-large-profile"
+    },
+    {
+      "type": "reload",
+      "timeoutMs": 120000
+    },
+    {
+      "type": "click",
+      "selector": "#shell-continue",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "click",
+      "selector": "#pause-button"
+    },
+    {
+      "type": "wait",
+      "phase": "paused"
+    },
+    {
+      "type": "click",
+      "selector": "#overlay-settings"
+    },
+    {
+      "type": "click",
+      "selector": "#settings-tab-data"
+    },
+    {
+      "type": "click",
+      "selector": "#settings-saves"
+    },
+    {
+      "type": "expect",
+      "selector": "#library-capacity",
+      "contains": "480"
+    },
+    {
+      "type": "click",
+      "selector": "[data-close=\"library-dialog\"]"
+    },
+    {
+      "type": "click",
+      "selector": "[data-close=\"settings-dialog\"]"
+    },
+    {
+      "type": "expect",
+      "selector": "body:not(:has(dialog[open])) #start-button",
+      "timeoutMs": 30000
+    },
+    {
+      "type": "click",
+      "selector": "#start-button",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "wait",
+      "phase": "running",
+      "timeoutMs": 60000
+    },
+    {
+      "type": "repeat",
+      "count": 30,
+      "actions": [
+        {
+          "type": "key",
+          "key": "ArrowRight",
+          "ms": 250
+        },
+        {
+          "type": "key",
+          "key": "ArrowLeft",
+          "ms": 250
+        }
+      ]
+    },
+    {
+      "type": "click",
+      "selector": "#pause-button"
+    },
+    {
+      "type": "wait",
+      "phase": "paused"
+    },
+    {
+      "type": "snapshot",
+      "group": "large-profile-playing"
+    },
+    {
+      "type": "exportReplay"
+    }
+  ],
+  "expectedReplayDefinition": {
+    "level": {
+      "version": "xonix-level.v5",
+      "id": "first-return",
+      "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-211ae8f36cc0327a",
+      "name": "First return",
+      "width": 72,
+      "height": 36,
+      "spawn": {
+        "x": 24.5,
+        "y": 0.5
+      },
+      "walls": [],
+      "foundations": [],
+      "goal": {
+        "coverage": 0.3
+      },
+      "encounter": null,
+      "classic": {
+        "version": "classic.v1",
+        "terrain": [],
+        "powerups": [],
+        "arcadeActions": {
+          "version": "arcade-actions.v1"
+        }
+      },
+      "enemies": [
+        {
+          "id": "keeper",
+          "type": "bouncer",
+          "x": 58.5,
+          "y": 23.5,
+          "vx": 7.81352993211135,
+          "vy": -7.81352993211135,
+          "course": "field-course.v2"
+        }
+      ],
+      "objectives": [],
+      "supplies": [],
+      "rules": {
+        "lives": 3,
+        "moveSpeed": 8.84,
+        "boostMultiplier": 1.5,
+        "respawnSeconds": 0.65,
+        "graceSeconds": 1,
+        "playerRadius": 0.18,
+        "pointsPerCell": 10,
+        "objectivePoints": 500,
+        "timeMedals": [
+          90,
+          150
+        ],
+        "switchCooldownSeconds": 2,
+        "timeLimitSeconds": 0,
+        "cutTimeLimitSeconds": 0,
+        "maxTrailCells": 0,
+        "stopOnCapture": true
+      },
+      "signalZones": [],
+      "hangars": [
+        {
+          "id": "home-hangar",
+          "x": 24.5,
+          "y": 0.5,
+          "radius": 2
+        }
+      ]
+    },
+    "options": {
+      "classId": "scout",
+      "turnPolicy": "immediate"
+    }
+  }
+}

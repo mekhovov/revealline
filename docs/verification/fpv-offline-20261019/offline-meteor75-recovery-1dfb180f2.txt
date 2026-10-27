@@ -1,0 +1,112 @@
+Browser tab: 8, Title: "FPV / LINE · Simulator", URL: "http://127.0.0.1:9242/optional-practice/fpv-worlds/index.html".
+1 AXWebArea FPV / LINE · Simulator, URL: 127.0.0.1:9242/optional-practice/fpv-worlds/index.html
+	2 container Pause, ID: worlds-shell-pause-dialog
+		3 heading Pause, Value: 1, ID: worlds-shell-pause-title
+			4 text Pause
+		5 container
+			6 button Resume, ID: worlds-shell-action-pause-resume
+			7 heading Flight setup, Value: 2
+				8 text Flight setup
+			9 container
+				10 text Flight mode
+				11 pop up button (collapsed, settable) Flight mode, Value: Self-level, Secondary Actions: Expand
+					12 menu
+						13 (selected) Self-level
+						14 Acro
+			15 container
+				16 text Controls
+				17 pop up button (collapsed, settable) Controls, Value: Keyboard, Secondary Actions: Expand
+					18 menu
+						19 (selected) Keyboard
+						20 Touch
+						21 Controller / Steam Deck
+						22 USB radio
+			23 button Set up radio
+			24 text Changing mode starts a new paused attempt. Changing input keeps flight paused.
+			25 container Camera view
+				26 text Camera view
+				27 checkbox FPV, Value: 1
+				28 checkbox Chase, Value: 0
+				29 checkbox Overview, Value: 0
+				30 text V · R3: click the right stick. Radio: choose a view in this menu.
+			31 button (collapsed) Your device controls, Secondary Actions: Expand
+				32 text Your device controls
+			33 heading Watch → Try → Repeat, Value: 2
+				34 text Watch → Try → Repeat
+			35 text Lift and land
+			36 button Retry
+			37 button Watch example
+			38 text Watch the example, then try the full route. A new attempt waits for Arm.
+			39 heading MISSIONS, Value: 3
+				40 text MISSIONS
+			41 button Skip, ID: worlds-shell-action-pause-skip
+			42 button Random, ID: worlds-shell-action-pause-random
+			43 button Choose, ID: worlds-shell-action-pause-choose
+			44 heading SOUND, Value: 3
+				45 text SOUND
+			46 checkbox Sound: off, Value: 0, ID: worlds-shell-action-pause-sound
+			47 heading SETTINGS, Value: 3
+				48 text SETTINGS
+			49 button Settings, ID: worlds-shell-action-pause-settings
+			50 button Full screen, ID: worlds-shell-action-pause-fullscreen
+			51 button Home, ID: worlds-shell-action-pause-home
+			52 container Enemies defeated
+				53 button (collapsed) Lifetime 0 Enemy details +, Secondary Actions: Expand
+					54 text Lifetime
+					55 text 0
+					56 text Enemy details
+					123 text  +
+			58 button Aircraft, rates & throttle
+			59 heading Practice splits · unscored, Value: 3
+				115 text Practice splits · unscored
+			116 text Observed at 50 Hz mission steps. No record or score. Earlier timings are unavailable after recovery or interrupted observation.
+			62 content list
+				117 container
+					118 AXListMarker 1. 
+					119 text No observed splits yet.
+			66 heading Practice clips & recovery, Value: 3
+				124 text Practice clips & recovery
+			125 text Recent clip: 0:00.00–0:15.00. Last durable checkpoint: 0:15.00. Checkpoint saved.
+			122 text Checkpoint restored. The flight remains paused; arm when ready.
+			69 button Export recent clip
+			70 button Export recovery checkpoint
+			71 button Restore last saved checkpoint
+			72 container
+				73 text Import recovery checkpoint
+				74 button Import recovery checkpoint
+			75 container
+				76 heading Saved flight sessions, Value: 3
+					126 text Saved flight sessions
+				127 text Archiving on this device. Saved through 0:00. Sessions save locally after flight begins, up to 32 MiB each, 128 MiB total and 16 sessions. Nothing is deleted automatically. Finish an archive to save its final segment; flying can continue. All aircraft archives are unscored.
+				79 pop up button (collapsed, settable) Description: Saved session archive, Value: World · 2026-10-19T05:02:25.935Z · 0:00–0:15 · finished, Secondary Actions: Expand
+					112 menu
+						113 (selected) World · 2026-10-19T05:02:25.935Z · 0:00–0:15 · finished
+				128 text Check the selected archive against this frozen course: Lift and land. Uses the recorded aircraft, settings and mode. Static hold, gate and landing objectives only; unscored. Complete session physics verified from reset. Unscored.
+				81 button Finish current archive
+				82 button Refresh saved sessions
+				83 button Export selected archive
+				84 button Verify selected archive
+				85 button Verify course completion
+				86 button Delete selected local archive
+				129 text Import session archive
+				88 button Import session archive
+			89 container Optional practice challenges
+				90 text Optional practice challenges
+				91 container
+					92 text Rules for a new attempt
+					93 pop up button (collapsed, settable) Rules for a new attempt, Value: Unlimited practice, Secondary Actions: Expand
+						94 menu
+							95 (selected) Unlimited practice
+							96 Timed practice
+							97 Battery endurance
+				98 button Restart with selected rules
+				99 text Restart returns to launch with a fresh battery and the same aircraft, mode and conditions. Arm when ready. Pause and recovery retain charge and challenge progress. Ordinary practice has no time limit.
+				100 text Current flight: unlimited practice
+			101 container Your best flight
+				102 text Your best flight
+				103 text Unscored practice · timing only
+				104 checkbox (disabled) Show personal best, Value: 0
+				105 text Only a verified recording for the same challenge, world revision, flight mode and response profile. Camera view does not change compatibility. No collision or scoring changes.
+		106 text Tab/arrows move; Enter selects; Esc goes back. Controller: release, then press/release A to connect. Calibrated radio: hold yaw right for 0.7 s, then centre to connect; roll/pitch move, hold yaw right/left then centre to confirm/go back.
+
+The focused UI element is 1 AXWebArea FPV / LINE · Simulator, URL: 127.0.0.1:9242/optional-practice/fpv-worlds/index.html

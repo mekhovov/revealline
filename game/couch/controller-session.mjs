@@ -137,6 +137,17 @@ export function createControllerSession({
   }
   function restore() {
     if (!saved || capturing || (!editable && !restoreInFlight && !pendingInitialSlots)) return;
+    // Nothing can consume a saved profile until an unrestored physical device
+    // exists. In particular keyboard/standard-pad Solo has no raw devices here.
+    // Keep all physical identities below: restored duplicates still make a
+    // matching unconfigured device ambiguous and must not be filtered out.
+    let eligible = false;
+    for (const d of devices.values())
+      if (d.index < 1024 && !d.restoreDone) {
+        eligible = true;
+        break;
+      }
+    if (!eligible) return;
     const entries = saved.entries();
     const physical = [...devices.values()].filter((d) => d.index < 1024);
     const wasEditable = editable;

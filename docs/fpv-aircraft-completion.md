@@ -1,5 +1,11 @@
 # Aircraft implementation and remaining evidence gates
 
+Current progress and priorities: [SIM completion plan](fpv-current-completion-plan.md).
+The current catalog has fifteen aircraft after the [Mobula8 addition](fpv-civilian-kits.md)
+and [Cetus X / Protos additions](fpv-civilian-candidate-implementation.md).
+The twelve-aircraft release receipts below retain their original scope; newer
+flight corrections have their own publication and acceptance gates in the plan.
+
 This record follows the approved twelve-aircraft plan of 17 October 2026. The
 first live-testing release is independent of later archive and endurance work.
 Publication is complete only after protected checks, deployment, and public-player
@@ -95,11 +101,17 @@ re-armed at launch. This correction does not change physics or recording identit
 
 The source-pinned [numerical](fpv-aircraft-numerical-qualification.json) and
 [browser](fpv-aircraft-browser-qualification.json) reports compare 250, 500 and
-1,000 Hz with a 2 kHz reference. The selected 500 Hz backend passes the 2% response,
+1,000 Hz with a 2 kHz reference. The original 500 Hz backend passes the 2% response,
 contact-consistency and twice-real-time gates on the recorded qualification machine.
 Direct and worker traces match across the recorded Node, Chrome, Firefox and WebKit
 versions. These tests establish the consistency and capacity of this implementation.
 They do not measure a real quadrotor or qualify every browser/device architecture.
+
+The later v3 [centered-contact qualification](fpv-current-contact-20261019.md)
+adds a stricter floor-drop probe that exposes a 500 Hz limitation on Nazgul.
+New v3 sessions therefore use 1,000 Hz; historical timing is retained. The fresh
+fifteen-aircraft numerical and replay checks pass locally, but the earlier
+cross-browser report must not be presented as qualification of that new backend.
 
 The catalog remains a specification-based model. Static tables in the active
 physics record are numerical model inputs; the separate evidence inspector does

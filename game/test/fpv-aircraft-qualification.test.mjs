@@ -2,14 +2,17 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { runAircraftTimingQualification } from './helpers/fpv-aircraft-qualification.mjs';
 import { createAdvancedSimulation } from '../../optional-practice/civilian-fpv/advanced-simulation.mjs';
-import { createPresetConfiguration } from '../../optional-practice/civilian-fpv/aircraft-presets.mjs';
+import {
+  createPresetConfiguration,
+  listAircraftPresets,
+} from '../../optional-practice/civilian-fpv/aircraft-presets.mjs';
 
-test('full Rapier aircraft catalog qualifies its frozen 500 Hz backend against 2 kHz', async () => {
+test('full Rapier aircraft catalog qualifies its frozen 1000 Hz backend against 2 kHz', async () => {
   const result = await runAircraftTimingQualification({ repetitions: 2 });
-  assert.equal(result.aircraft.length, 12);
-  assert.equal(result.selectedHzOnThisRuntime, 500);
+  assert.equal(result.aircraft.length, listAircraftPresets().length);
+  assert.equal(result.selectedHzOnThisRuntime, 1000);
   for (const aircraft of result.aircraft) {
-    const selected = aircraft.candidates.find((candidate) => candidate.frequency === 500);
+    const selected = aircraft.candidates.find((candidate) => candidate.frequency === 1000);
     assert.equal(selected.accuracyPass, true, aircraft.preset);
     assert.equal(selected.contactsPass, true, aircraft.preset);
     assert.equal(selected.capacityPass, true, aircraft.preset);

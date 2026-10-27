@@ -1,0 +1,121 @@
+{
+  "format": "SoloNativeCocoaIdentityReleaseV1",
+  "scope": "codec-only-original-bossa-fresh-native-owner-required",
+  "release": {
+    "status": "reviewed-one-shot-proposal-awaiting-root-application",
+    "onceOnlyBefore": "2c519bfe94b6364a57c71ba40b7212c71f0994ab",
+    "automaticRetries": 0,
+    "automaticPhaseContinuation": false
+  },
+  "productionPackage": null,
+  "performanceQualification": false,
+  "toolingSource": "actual reviewed PR head, checked against SOLO_TOOLING_REVISION and current frozen input bytes before native work",
+  "currentInputs": [
+    {
+      "path": "scripts/solo-native-mp3-control.mjs",
+      "bytes": 46099,
+      "sha256": "28eab7671344e5819f257ef12e3d28f1b9064af96f2f444b8194e5f54ee41da1"
+    },
+    {
+      "path": "scripts/prepare-solo-audio-fixtures.mjs",
+      "bytes": 10676,
+      "sha256": "a8941d708d9b773b3eda1b455f9291ee60f2c8b5846e7501a5a40236478c467e"
+    },
+    {
+      "path": "scripts/solo-qualification-browser-context.mjs",
+      "bytes": 4026,
+      "sha256": "5f89ceedec155349250283304b38e68dd22eedf32e6c306ff2c25c3258233d7f"
+    },
+    {
+      "path": "scripts/serve-production-preview.mjs",
+      "bytes": 10414,
+      "sha256": "4c63ec2ea6d7b6b3c79793dd1e8dc8f75daa9ee6c783ee076d8bc050602c1cab"
+    },
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "bytes": 70323,
+      "sha256": "409b266f197483d851980c0cdfe9858123e9a9b7f674ed709536162eca396a8c"
+    },
+    {
+      "path": "scripts/solo-darwin-process-inventory.c",
+      "bytes": 7955,
+      "sha256": "72ff466c653ddb987a4e5df5df024aabd952cf45d659e7872809412aa996db9f"
+    },
+    {
+      "path": "scripts/solo-darwin-process-inventory.mjs",
+      "bytes": 13716,
+      "sha256": "bc3c1976364478f8cfb06776c54edb06701b8a43b0526db2c974e38229209783"
+    }
+  ],
+  "priorNonBrowserWitness": {
+    "path": "docs/performance/fixtures/solo-darwin-inventory/397-owner-preflight.json",
+    "bytes": 25733,
+    "sha256": "325d6b84ad298db72a174fac0cd75298c9ff1e5b4756cd567a3823ee00efb3e9"
+  },
+  "previousAttempt": {
+    "revision": "2c519bfe94b6364a57c71ba40b7212c71f0994ab",
+    "tree": "76f5c88845d0340ae27e13f5ab61b0c82a9ac1bf",
+    "run": 39076890164,
+    "artifact": 12117935204,
+    "archive": {
+      "bytes": 9432,
+      "sha256": "0e8429393e6c233299d9d5d080de3924cfdda7e06b2a6c545648f673d777754a"
+    },
+    "workflow": {
+      "path": ".github/workflows/solo-native-mp3-cocoa-metal-temporary.yml",
+      "bytes": 12368,
+      "sha256": "077836bb2545390be5deb0e7c8abd754176dec75e7a633eea59591eaf654b417"
+    },
+    "status": "failed-hosted-owner-contract-browser-media-withheld",
+    "contracts": {
+      "tests": 83,
+      "pass": 78,
+      "fail": 1,
+      "skipped": 4
+    },
+    "fullBeforeAndAllInventoriesRetained": false,
+    "retrospectiveOwnershipPass": false,
+    "reports": [
+      {
+        "member": "solo-native-mp3-contracts/normal.json",
+        "bytes": 2489,
+        "sha256": "ad1ed9a8fc6b60675fb9279782f3c67e8399b56761b43034793d8b9e3bb66975",
+        "utf8": "{\n  \"case\": \"normal\",\n  \"result\": {\n    \"argv\": [\n      \"/Users/runner/hostedtoolcache/node/22.13.1/x64/bin/node\",\n      \"-e\",\n      \"console.log(\\\"short owned leader\\\")\"\n    ],\n    \"cwd\": \"/private/var/folders/20/jp1_0n3n7kndh6rnbqb5344m0000gn/T/darwin-owner-test-Lrdnja\",\n    \"startedAt\": \"2026-10-17T22:55:45.819Z\",\n    \"timeoutMs\": 10000,\n    \"rssBytes\": 6442450944,\n    \"outputBytes\": 4194304,\n    \"status\": \"closed\",\n    \"tracked\": [\n      {\n        \"pid\": 9659,\n        \"ppid\": 9567,\n        \"pgid\": 9659,\n        \"birth\": \"00000000000000009659\",\n        \"state\": \"R\",\n        \"rss\": 0,\n        \"argv\": \"/Users/runner/hostedtoolcache/node/22.13.1/x64/bin/node -e console.log(\\\"short owned leader\\\")\",\n        \"ownerTagged\": false,\n        \"inspectionIncomplete\": false,\n        \"pathInspection\": \"unobserved\",\n        \"rssInspection\": \"unobserved\",\n        \"ownerTagInspection\": \"unobserved\",\n        \"identityKind\": \"private-unique-id-uint64\",\n        \"euid\": 501,\n        \"ruid\": 501,\n        \"parentUniqueId\": \"9567\",\n        \"version\": 19979\n      }\n    ],\n    \"forcedCleanup\": false,\n    \"ambiguous\": [],\n    \"survivors\": [],\n    \"initialLeaderCapture\": \"direct-child-birth\",\n    \"processInventory\": {\n      \"platform\": \"darwin\",\n      \"path\": \"/private/tmp/solo-process-owner.kPwUSg/inventory\",\n      \"bytes\": 13896,\n      \"sha256\": \"489e05c3984c34f77e770ceac17e5b05c08b0b2a41266bbae32e5e627b0c1d19\",\n      \"format\": \"SoloDarwinProcessInventoryV3\",\n      \"identityKind\": \"private-unique-id-uint64\"\n    },\n    \"foreignSystemProcesses\": [\n      {\n        \"format\": \"SoloKnownNonBrowserProcessWitnessV1\",\n        \"scope\": \"Exact root kernel /bin/ps executable only; ownership and unreadable resource/tag fields remain unknown; no signal authority.\",\n        \"process\": {\n          \"pid\": 9710,\n          \"ppid\": 1040,\n          \"pgid\": 1032,\n          \"birth\": \"00000000000000009710\",\n          \"identityKind\": \"private-unique-id-uint64\",\n          \"parentUniqueId\": \"1040\",\n          \"version\": 20081,\n          \"euid\": 0,\n          \"ruid\": 0,\n          \"state\": \"R\",\n          \"executable\": \"/bin/ps\",\n          \"pathInspection\": \"complete\",\n          \"rssInspection\": \"unavailable\",\n          \"ownerTagInspection\": \"unavailable\",\n          \"rss\": null,\n          \"ownerTagged\": null\n        }\n      }\n    ],\n    \"peakRSS\": 917504,\n    \"exitCode\": 0,\n    \"signal\": null,\n    \"violation\": null,\n    \"outputBytesObserved\": 19,\n    \"completedAt\": \"2026-10-17T22:55:46.299Z\"\n  }\n}\n"
+      },
+      {
+        "member": "solo-native-mp3-contracts/deadline.json",
+        "bytes": 9200,
+        "sha256": "9a05425e16f5a6e9e08a88b896a2376f9eec3077731f10d8161b04e75abcad01",
+        "utf8": "{\n  \"case\": \"deadline\",\n  \"result\": {\n    \"argv\": [\n      \"/Users/runner/hostedtoolcache/node/22.13.1/x64/bin/node\",\n      \"-e\",\n      \"setInterval(()=>{},1000)\"\n    ],\n    \"cwd\": \"/private/var/folders/20/jp1_0n3n7kndh6rnbqb5344m0000gn/T/darwin-owner-test-Lrdnja\",\n    \"startedAt\": \"2026-10-17T22:55:46.342Z\",\n    \"timeoutMs\": 100,\n    \"rssBytes\": 6442450944,\n    \"outputBytes\": 4194304,\n    \"status\": \"failed\",\n    \"tracked\": [\n      {\n        \"pid\": 9719,\n        \"ppid\": 9567,\n        \"pgid\": 9719,\n        \"birth\": \"00000000000000009719\",\n        \"state\": \"R\",\n        \"rss\": 0,\n        \"argv\": \"/Users/runner/hostedtoolcache/node/22.13.1/x64/bin/node -e setInterval(()=>{},1000)\",\n        \"ownerTagged\": false,\n        \"inspectionIncomplete\": false,\n        \"pathInspection\": \"unobserved\",\n        \"rssInspection\": \"unobserved\",\n        \"ownerTagInspection\": \"unobserved\",\n        \"identityKind\": \"private-unique-id-uint64\",\n        \"euid\": 501,\n        \"ruid\": 501,\n        \"parentUniqueId\": \"9567\",\n        \"version\": 20098\n      }\n    ],\n    \"forcedCleanup\": true,\n    \"ambiguous\": [\n      {\n        \"pid\": 9813,\n        \"ppid\": 9810,\n        \"pgid\": 9762,\n        \"birth\": \"00000000000000009813\",\n        \"state\": \"R\",\n        \"rss\": 0,\n        \"argv\": \"/bin/bash\",\n        \"ownerTagged\": false,\n        \"inspectionIncomplete\": true,\n        \"pathInspection\": \"complete\",\n        \"rssInspection\": \"unavailable\",\n        \"ownerTagInspection\": \"unavailable\",\n        \"identityKind\": \"private-unique-id-uint64\",\n        \"euid\": 0,\n        \"ruid\": 0,\n        \"parentUniqueId\": \"9810\",\n        \"version\": 20282\n      },\n      {\n        \"pid\": 9812,\n        \"ppid\": 9810,\n        \"pgid\": 9762,\n        \"birth\": \"00000000000000009812\",\n        \"state\": \"R\",\n        \"rss\": 0,\n        \"argv\": \"/bin/bash\",\n        \"ownerTagged\": false,\n        \"inspectionIncomplete\": true,\n        \"pathInspection\": \"complete\",\n        \"rssInspection\": \"unavailable\",\n        \"ownerTagInspection\": \"unavailable\",\n        \"identityKind\": \"private-unique-id-uint64\",\n        \"euid\": 0,\n        \"ruid\": 0,\n        \"parentUniqueId\": \"9810\",\n        \"version\": 20281\n      },\n      {\n        \"pid\": 9810,\n        \"ppid\": 9762,\n        \"pgid\": 9762,\n        \"birth\": \"00000000000000009810\",\n        \"state\": \"R\",\n        \"rss\": 0,\n        \"argv\": \"/bin/bash\",\n        \"ownerTagged\": false,\n        \"inspectionIncomplete\": true,\n        \"pathInspection\": \"complete\",\n        \"rssInspection\": \"unavailable\",\n        \"ownerTagInspection\": \"unavailable\",\n        \"identityKind\": \"private-unique-id-uint64\",\n        \"euid\": 0,\n        \"ruid\": 0,\n        \"parentUniqueId\": \"9762\",\n        \"version\": 20278\n      },\n      {\n        \"pid\": 9762,\n        \"ppid\": 1,\n        \"pgid\": 9762,\n        \"birth\": \"00000000000000009762\",\n        \"state\": \"R\",\n        \"rss\": 0,\n        \"argv\": \"/bin/bash\",\n        \"ownerTagged\": false,\n        \"inspectionIncomplete\": true,\n        \"pathInspection\": \"complete\",\n        \"rssInspection\": \"unavailable\",\n        \"ownerTagInspection\": \"unavailable\",\n        \"identityKind\": \"private-unique-id-uint64\",\n        \"euid\": 0,\n        \"ruid\": 0,\n        \"parentUniqueId\": \"1\",\n        \"version\": 20190\n      }\n    ],\n    \"survivors\": [],\n    \"initialLeaderCapture\": \"direct-child-birth\",\n    \"processInventory\": {\n      \"platform\": \"darwin\",\n      \"path\": \"/private/tmp/solo-process-owner.kPwUSg/inventory\",\n      \"bytes\": 13896,\n      \"sha256\": \"489e05c3984c34f77e770ceac17e5b05c08b0b2a41266bbae32e5e627b0c1d19\",\n      \"format\": \"SoloDarwinProcessInventoryV3\",\n      \"identityKind\": \"private-unique-id-uint64\"\n    },\n    \"foreignSystemProcesses\": [\n      {\n        \"format\": \"SoloKnownNonBrowserProcessWitnessV1\",\n        \"scope\": \"Exact root kernel /bin/ps executable only; ownership and unreadable resource/tag fields remain unknown; no signal authority.\",\n        \"process\": {\n          \"pid\": 9752,\n          \"ppid\": 1040,\n          \"pgid\": 1032,\n          \"birth\": \"00000000000000009752\",\n          \"identityKind\": \"private-unique-id-uint64\",\n          \"parentUniqueId\": \"1040\",\n          \"version\": 20167,\n          \"euid\": 0,\n          \"ruid\": 0,\n          \"state\": \"R\",\n          \"executable\": \"/bin/ps\",\n          \"pathInspection\": \"complete\",\n          \"rssInspection\": \"unavailable\",\n          \"ownerTagInspection\": \"unavailable\",\n          \"rss\": null,\n          \"ownerTagged\": null\n        }\n      },\n      {\n        \"format\": \"SoloKnownNonBrowserProcessWitnessV1\",\n        \"scope\": \"Exact root kernel /bin/ps executable only; ownership and unreadable resource/tag fields remain unknown; no signal authority.\",\n        \"process\": {\n          \"pid\": 9757,\n          \"ppid\": 1040,\n          \"pgid\": 1032,\n          \"birth\": \"00000000000000009757\",\n          \"identityKind\": \"private-unique-id-uint64\",\n          \"parentUniqueId\": \"1040\",\n          \"version\": 20177,\n          \"euid\": 0,\n          \"ruid\": 0,\n          \"state\": \"R\",\n          \"executable\": \"/bin/ps\",\n          \"pathInspection\": \"complete\",\n          \"rssInspection\": \"unavailable\",\n          \"ownerTagInspection\": \"unavailable\",\n          \"rss\": null,\n          \"ownerTagged\": null\n        }\n      },\n      {\n        \"format\": \"SoloKnownNonBrowserProcessWitnessV1\",\n        \"scope\": \"Exact root kernel /bin/ps executable only; ownership and unreadable resource/tag fields remain unknown; no signal authority.\",\n        \"process\": {\n          \"pid\": 9763,\n          \"ppid\": 1040,\n          \"pgid\": 1032,\n          \"birth\": \"00000000000000009763\",\n          \"identityKind\": \"private-unique-id-uint64\",\n          \"parentUniqueId\": \"1040\",\n          \"version\": 20189,\n          \"euid\": 0,\n          \"ruid\": 0,\n          \"state\": \"R\",\n          \"executable\": \"/bin/ps\",\n          \"pathInspection\": \"complete\",\n          \"rssInspection\": \"unavailable\",\n          \"ownerTagInspection\": \"unavailable\",\n          \"rss\": null,\n          \"ownerTagged\": null\n        }\n      },\n      {\n        \"format\": \"SoloKnownNonBrowserProcessWitnessV1\",\n        \"scope\": \"Exact root kernel /bin/ps executable only; ownership and unreadable resource/tag fields remain unknown; no signal authority.\",\n        \"process\": {\n          \"pid\": 9776,\n          \"ppid\": 1040,\n          \"pgid\": 1032,\n          \"birth\": \"00000000000000009776\",\n          \"identityKind\": \"private-unique-id-uint64\",\n          \"parentUniqueId\": \"1040\",\n          \"version\": 20213,\n          \"euid\": 0,\n          \"ruid\": 0,\n          \"state\": \"R\",\n          \"executable\": \"/bin/ps\",\n          \"pathInspection\": \"complete\",\n          \"rssInspection\": \"unavailable\",\n          \"ownerTagInspection\": \"unavailable\",\n          \"rss\": null,\n          \"ownerTagged\": null\n        }\n      },\n      {\n        \"format\": \"SoloKnownNonBrowserProcessWitnessV1\",\n        \"scope\": \"Exact root kernel /bin/ps executable only; ownership and unreadable resource/tag fields remain unknown; no signal authority.\",\n        \"process\": {\n          \"pid\": 9790,\n          \"ppid\": 1040,\n          \"pgid\": 1032,\n          \"birth\": \"00000000000000009790\",\n          \"identityKind\": \"private-unique-id-uint64\",\n          \"parentUniqueId\": \"1040\",\n          \"version\": 20242,\n          \"euid\": 0,\n          \"ruid\": 0,\n          \"state\": \"R\",\n          \"executable\": \"/bin/ps\",\n          \"pathInspection\": \"complete\",\n          \"rssInspection\": \"unavailable\",\n          \"ownerTagInspection\": \"unavailable\",\n          \"rss\": null,\n          \"ownerTagged\": null\n        }\n      },\n      {\n        \"format\": \"SoloKnownNonBrowserProcessWitnessV1\",\n        \"scope\": \"Exact root kernel /bin/ps executable only; ownership and unreadable resource/tag fields remain unknown; no signal authority.\",\n        \"process\": {\n          \"pid\": 9797,\n          \"ppid\": 1040,\n          \"pgid\": 1032,\n          \"birth\": \"00000000000000009797\",\n          \"identityKind\": \"private-unique-id-uint64\",\n          \"parentUniqueId\": \"1040\",\n          \"version\": 20255,\n          \"euid\": 0,\n          \"ruid\": 0,\n          \"state\": \"R\",\n          \"executable\": \"/bin/ps\",\n          \"pathInspection\": \"complete\",\n          \"rssInspection\": \"unavailable\",\n          \"ownerTagInspection\": \"unavailable\",\n          \"rss\": null,\n          \"ownerTagged\": null\n        }\n      }\n    ],\n    \"peakRSS\": 31043584,\n    \"firstAmbiguousInventory\": {\n      \"format\": \"SoloFirstAmbiguousInventoryV1\",\n      \"ambiguousCount\": 1,\n      \"retainedCount\": 1,\n      \"additionalRowsOmitted\": 0,\n      \"row\": {\n        \"pid\": 9762,\n        \"ppid\": 1,\n        \"pgid\": 9762,\n        \"birth\": \"00000000000000009762\",\n        \"state\": \"R\",\n        \"rss\": 0,\n        \"argv\": \"/bin/bash\",\n        \"argvCodeUnits\": 9,\n        \"argvTruncated\": false,\n        \"ownerTagged\": false,\n        \"inspectionIncomplete\": true,\n        \"identityKind\": \"private-unique-id-uint64\",\n        \"euid\": 0,\n        \"ruid\": 0,\n        \"parentUniqueId\": \"1\",\n        \"version\": 20190,\n        \"pathInspection\": \"complete\",\n        \"rssInspection\": \"unavailable\",\n        \"ownerTagInspection\": \"unavailable\"\n      }\n    },\n    \"exitCode\": null,\n    \"signal\": \"SIGTERM\",\n    \"violation\": \"deadline\",\n    \"outputBytesObserved\": 0,\n    \"completedAt\": \"2026-10-17T22:55:47.347Z\"\n  }\n}\n"
+      }
+    ]
+  },
+  "media": {
+    "id": "builtin.catalog.joth.bossa-nova",
+    "bytes": 1196325,
+    "sha256": "0ee835fd279ac5fa15f9346744cbafc2ba800c1c0671b78ca9abe2b4353402f7"
+  },
+  "limits": {
+    "jobMinutes": 28,
+    "playwright": "1.62.1",
+    "webkitRevision": "2336",
+    "browserVersion": "26.5",
+    "ownerPreflightTimeoutMs": 120000,
+    "passiveMs": 5000,
+    "playbackMs": 10000,
+    "sampleMs": 500,
+    "armTimeoutMs": 60000,
+    "commandTimeoutMs": 300000,
+    "preparationTimeoutMs": 180000,
+    "maximumEvidenceBytes": 16777216,
+    "maximumRecords": 128,
+    "maximumSamples": 32
+  },
+  "evidenceProtocol": "identity-maps-v1",
+  "evidenceScope": "First ambiguous before/current/owned identity maps only; complete-or-overflow, no arguments/environment, classification or signal authority.",
+  "historicalSource": {
+    "path": "docs/performance/fixtures/solo-cocoa-identity/2c-executed-source.json",
+    "bytes": 2969,
+    "sha256": "250d3bc287b377a72574002de24e0a13d2b6eb2531af253f48300d5608f91448"
+  }
+}

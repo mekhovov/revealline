@@ -571,6 +571,19 @@ export function createVictoryStoryPresentation({
     setPreferences,
     dispose,
     snapshot,
+    resourceSnapshot() {
+      return {
+        state,
+        disposed,
+        mediaElements: Number(media !== null),
+        ownedBlobURLs: Number(url !== null),
+        ownedBlobBytes: url !== null ? story.source.bytes : 0,
+        pendingPlayCommand: cancelPlay !== null,
+        nativeDecodedBytes: null,
+        accounting:
+          'Owned video elements, Blob URLs and cancelable play command only; native decode buffers, pending native playback, GPU copies and allocations are unobservable.',
+      };
+    },
   });
   try {
     const allocatedVideo = createVideo();

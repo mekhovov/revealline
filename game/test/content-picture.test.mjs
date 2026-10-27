@@ -2,8 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { webcrypto } from 'node:crypto';
+import { resolveObjectURL } from 'node:buffer';
 import { acquireCandidatePicture } from '../content-design/picture.mjs';
-import { loadPreviewArtwork } from '../content-design/assets.mjs';
+import { loadPreviewArtwork, loadVerifiedArtwork } from '../content-design/assets.mjs';
 import { createContentAttemptPreparer } from '../content-design/attempt.mjs';
 import { createOpeningCandidates } from '../content-design/horizon-candidates.mjs';
 import { decodeOwnedPicture } from '../ui/presentation-image.mjs';
@@ -514,4 +515,234 @@ test('the existing result renderer displays candidate pixels without altering ea
   assert.equal(calls.length, 1, 'A missing candidate cannot fall back to a different image.');
   assert.equal(canvas.hidden, true);
   host.dispose();
+});
+
+const binaryMedia = await loadVerifiedArtwork(asset, {
+  fetchAsset: async () => new Response(bytes),
+  digest: (value) => webcrypto.subtle.digest('SHA-256', value),
+});
+const loadBinaryArtwork = async () => binaryMedia;
+
+function ownedURLFixture(t) {
+  const urls = [],
+    revoked = [];
+  const api = {
+    createObjectURL(blob) {
+      assert.equal(blob, binaryMedia.blob);
+      const url = URL.createObjectURL(blob);
+      urls.push(url);
+      return url;
+    },
+    revokeObjectURL(url) {
+      revoked.push(url);
+      URL.revokeObjectURL(url);
+    },
+  };
+  t.after(() => {
+    for (const url of urls) URL.revokeObjectURL(url);
+  });
+  return { api, urls, revoked };
+}
+
+test('binary picture URLs survive complete decode and display transfer until their single owner releases', async (t) => {
+  const urls = ownedURLFixture(t),
+    entered = deferred(),
+    decoded = deferred(),
+    drawable = image();
+  const pending = acquireCandidatePicture(asset, {
+    binary: true,
+    loadArtwork: loadBinaryArtwork,
+    URLImpl: urls.api,
+    decodeImage: (url) => {
+      assert.match(url, /^blob:/);
+      assert.equal(resolveObjectURL(url).size, binaryMedia.blob.size);
+      entered.resolve();
+      return decoded.promise;
+    },
+  });
+  await entered.promise;
+  assert.equal(urls.urls.length, 1);
+  assert.deepEqual(urls.revoked, []);
+  assert.equal(drawable.closed, 0);
+  decoded.resolve(drawable);
+  const picture = await pending;
+  assert(resolveObjectURL(urls.urls[0]));
+  const owner = createCandidateFlightPictures({ context, asset, picture });
+  await owner.ensure();
+  assert(owner.ready('horizon'));
+  assert.equal(owner.current().image, drawable);
+  owner.cancel();
+  assert(owner.ready('horizon'), 'A paused display retains its current original.');
+  assert(resolveObjectURL(urls.urls[0]));
+  assert.deepEqual(urls.revoked, []);
+  owner.dispose();
+  owner.dispose();
+  picture.release();
+  assert.deepEqual(urls.revoked, urls.urls);
+  assert.equal(resolveObjectURL(urls.urls[0]), undefined);
+  assert.equal(drawable.removed, 1);
+  assert.equal(drawable.closed, 1);
+});
+
+test('binary picture verification rejects forged, mismatched and serialized media before URL allocation', async () => {
+  for (const [pin, loader] of [
+    [asset, async () => ({ ...binaryMedia })],
+    [{ ...asset, revision: 'other' }, loadBinaryArtwork],
+    [source.assets[1], loadBinaryArtwork],
+    [asset, loadArtwork],
+  ])
+    await assert.rejects(
+      acquireCandidatePicture(pin, {
+        binary: true,
+        loadArtwork: loader,
+        URLImpl: {
+          createObjectURL: () => assert.fail('Unverified bytes cannot become a display URL.'),
+          revokeObjectURL: () => assert.fail('No URL was admitted.'),
+        },
+        decodeImage: () => assert.fail('Unverified pixels cannot reach decoding.'),
+      }),
+      /verify/,
+    );
+  await assert.rejects(
+    acquireCandidatePicture(asset, {
+      binary: true,
+      URLImpl: {},
+      loadArtwork: () => assert.fail('Missing owned URL support must reject before fetching.'),
+    }),
+    /object URLs/,
+  );
+});
+
+test('binary decode failures and wrong dimensions revoke their URL without publishing a picture', async (t) => {
+  for (const mode of ['decode', 'dimensions']) {
+    const urls = ownedURLFixture(t),
+      drawable = image(1, 1);
+    await assert.rejects(
+      acquireCandidatePicture(asset, {
+        binary: true,
+        loadArtwork: loadBinaryArtwork,
+        URLImpl: urls.api,
+        decodeImage: async (url) => {
+          assert(resolveObjectURL(url));
+          if (mode === 'decode') throw new Error('Complete binary decode failed.');
+          return drawable;
+        },
+      }),
+      mode === 'decode' ? /Complete binary decode failed/ : /dimensions/,
+    );
+    assert.equal(urls.urls.length, 1);
+    assert.deepEqual(urls.revoked, urls.urls);
+    assert.equal(resolveObjectURL(urls.urls[0]), undefined);
+    assert.equal(drawable.closed, mode === 'dimensions' ? 1 : 0);
+  }
+});
+
+test('binary abort and decode deadline revoke promptly while late decoded images are disposed once', async (t) => {
+  for (const reason of ['abort', 'deadline']) {
+    const urls = ownedURLFixture(t),
+      started = deferred(),
+      late = deferred(),
+      controller = new AbortController(),
+      drawable = image();
+    const pending = acquireCandidatePicture(asset, {
+      binary: true,
+      loadArtwork: loadBinaryArtwork,
+      URLImpl: urls.api,
+      signal: controller.signal,
+      decodeTimeoutMs: reason === 'deadline' ? 5 : 15000,
+      decodeImage: (url) => {
+        assert(resolveObjectURL(url));
+        started.resolve();
+        return late.promise;
+      },
+    });
+    const rejection = assert.rejects(
+      pending,
+      reason === 'abort' ? { name: 'AbortError' } : /timed out/,
+    );
+    await started.promise;
+    if (reason === 'abort') controller.abort();
+    await rejection;
+    assert.equal(urls.urls.length, 1);
+    assert.deepEqual(urls.revoked, urls.urls);
+    assert.equal(resolveObjectURL(urls.urls[0]), undefined);
+    assert.equal(drawable.closed, 0, 'The uncooperative decoder has not returned its image yet.');
+    late.resolve(drawable);
+    await turn();
+    assert.equal(drawable.removed, 1);
+    assert.equal(drawable.closed, 1);
+    assert.deepEqual(urls.revoked, urls.urls);
+  }
+});
+
+test('binary attempt preparation preserves default preview serialization, authoritative runs and recorder contents', async (t) => {
+  const encodedImage = image(),
+    binaryImages = [],
+    binaryURLs = [];
+  const portable = createContentAttemptPreparer(source, {
+    themes,
+    loadArtwork,
+    decodeImage: async (url) => {
+      assert.equal(url, media.dataUrl);
+      return encodedImage;
+    },
+  });
+  const runtime = createContentAttemptPreparer(source, {
+    themes,
+    serializeArtwork: false,
+    loadArtwork: loadBinaryArtwork,
+    decodeImage: async (url) => {
+      assert.match(url, /^blob:/);
+      assert(resolveObjectURL(url));
+      binaryURLs.push(url);
+      const drawable = image();
+      binaryImages.push(drawable);
+      return drawable;
+    },
+  });
+  t.after(() => {
+    portable.dispose();
+    runtime.dispose();
+    for (const url of binaryURLs) URL.revokeObjectURL(url);
+  });
+  const preview = await portable.prepare(request(portable));
+  const first = await runtime.prepare(request(runtime));
+  assert.equal(preview.visualOverrides.background.dataUrl, media.dataUrl);
+  assert.deepEqual(first.visualOverrides, {});
+  assert.deepEqual(first.manifest, preview.manifest);
+  assert.deepEqual(authoritativeCheckpoint(first.run), authoritativeCheckpoint(preview.run));
+  assert.deepEqual(first.recorder, preview.recorder);
+  for (let tick = 0; tick < 24; tick++)
+    for (const attempt of [preview, first]) {
+      const input = { direction: 'down' };
+      recordInput(attempt.recorder, input);
+      stepRun(attempt.run, input, FIXED_DT);
+    }
+  assert.deepEqual(authoritativeCheckpoint(first.run), authoritativeCheckpoint(preview.run));
+  assert.deepEqual(first.recorder, preview.recorder);
+  runtime.cancel();
+  assert.equal(binaryImages[0].closed, 1);
+  assert.equal(resolveObjectURL(binaryURLs[0]), undefined);
+  const taken = runtime.take(await runtime.prepare(request(runtime)));
+  runtime.dispose();
+  assert.equal(binaryImages[1].closed, 0);
+  assert(resolveObjectURL(binaryURLs[1]));
+  taken.picture.release();
+  assert.equal(binaryImages[1].closed, 1);
+  assert.equal(resolveObjectURL(binaryURLs[1]), undefined);
+  portable.dispose();
+  assert.equal(encodedImage.closed, 1);
+});
+
+test('binary preparation options remain explicit and never accept a missing injected loader', () => {
+  for (const serializeArtwork of [null, 0, 'false'])
+    assert.throws(
+      () => createContentAttemptPreparer(source, { themes, serializeArtwork }),
+      /serialized artwork/,
+    );
+  for (const serializeArtwork of [true, false])
+    assert.throws(
+      () => createContentAttemptPreparer(source, { themes, serializeArtwork, loadArtwork: null }),
+      /artwork loader/,
+    );
 });

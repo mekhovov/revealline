@@ -76,18 +76,39 @@ test('the actual game has a static dark guard before resources and a single caug
   const firstStyle = html.indexOf('<style>');
   const firstResource = html.search(/<(?:link|script)\b/);
   assert.ok(firstStyle > 0 && firstStyle < firstResource);
+  const accessStyle = html.slice(firstStyle, html.indexOf('</style>', firstStyle));
+  assert.match(accessStyle, /html:not\(\[data-access-state='unlocked'\]\)/);
+  const bootStyle = [...html.matchAll(/<style>[\s\S]*?<\/style>/g)].find((match) =>
+    match[0].includes("html:not([data-boot-state='ready'])"),
+  );
+  assert.ok(bootStyle);
+  const firstGameResource = [...html.matchAll(/<(?:link|script)\b[^>]*>/g)].find(
+    (match) => !/\b(?:href|src)="\.\/access-gate\.(?:css|mjs)"/.test(match[0]),
+  );
+  assert.ok(bootStyle.index < firstGameResource.index);
   assert.match(
-    html.slice(firstStyle, html.indexOf('</style>', firstStyle)),
+    bootStyle[0],
     /body\s*>\s*:not\(#boot-screen\):not\(#access-gate\):not\(script\)[\s\S]*?display:\s*none\s*!important/,
   );
   assert.match(html, /<section\b[^>]*id="boot-screen"/);
   assert.match(html, /<noscript\s*>[\s\S]*?JavaScript is disabled/);
-  assert.match(html, /<script src="boot.mjs" defer><\/script>/);
-  assert.match(html, /<script id="boot-phaser" src="vendor\/phaser-4.2.1.min.js" defer><\/script>/);
+  for (const [src, id] of [
+    ['boot.mjs', null],
+    ['vendor/phaser-4.2.1.min.js', 'boot-phaser'],
+  ]) {
+    const scripts = [...html.matchAll(/<script\b[^>]*>[\s\S]*?<\/script>/g)].filter((match) =>
+      match[0].includes(`src="${src}"`),
+    );
+    assert.equal(scripts.length, 1);
+    assert.match(scripts[0][0], /\sdefer\s/);
+    assert.match(scripts[0][0], /type="application\/x-revealline-locked"/);
+    assert.match(scripts[0][0], /data-access-type=""/);
+    if (id) assert.ok(scripts[0][0].includes(`id="${id}"`));
+  }
   const earlyStyles = [...html.matchAll(/<link\b[^>]*\shref="([^"]+\.css)"/g)];
   assert.deepEqual(
     earlyStyles.map((match) => match[1]),
-    ['presentation/industrial-workshop.css', 'access-gate.css'],
+    ['./access-gate.css', 'presentation/industrial-workshop.css'],
   );
   assert.match(html, /data-boot-href="ui\/operation-status.css"/);
   assert.match(html, /data-boot-href="ui\/handheld-play.css"/);
@@ -148,6 +169,9 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
   await copy('game/index.html');
   for (const name of [
     'game/boot.mjs',
+    // These real entry points are deferred at runtime, but still ship offline.
+    'game/boot-updates.mjs',
+    'game/editions/bootstrap.mjs',
     'game/access-gate.mjs',
     'game/boot.css',
     ...[...LAUNCHER_APPEARANCE_FILES, ...LAUNCHER_NAVIGATION_FILES].map((name) => `game/${name}`),
@@ -244,6 +268,8 @@ test('build rewrites native root paths, preserves extras and includes boot bytes
     'index.html',
     'game/index.html',
     'game/boot.mjs',
+    'game/boot-updates.mjs',
+    'game/editions/bootstrap.mjs',
     'game/boot.css',
     'game/ui/handheld-play.css',
     'game/ui/touch-steering.css',

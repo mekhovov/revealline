@@ -332,7 +332,7 @@ test('Always enables actual mouse steering and survives a complete backup; omitt
   assert.equal(page.doc.body.dataset.inputMode, 'pointer');
   assert.equal(page.rendered.run.player.cutting, true);
   controls(page, 'shown');
-  page.$('library-button').click();
+  await activateHostAction(page.$('library-button'));
   page.frame(0);
   controls(page, 'hidden');
   const slot = page.storage.getItem(sessionKey);
@@ -589,18 +589,23 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
 }
 
 test('Right hand survives actual app reload while Auto still hides keyboard controls', async (t) => {
-  const storage = storageWith(handPreferences('left')),
-    lifetime = { after: (callback) => (dispose = callback) };
-  let dispose;
-  t.after(async () => dispose?.());
+  const storage = storageWith(handPreferences('left'));
+  const disposals = [];
+  const lifetime = {
+    after(callback) {
+      disposals.push(callback);
+    },
+  };
+  const dispose = async () => {
+    while (disposals.length) await disposals.shift()();
+  };
+  t.after(dispose);
   const page = await soloPage(lifetime, { campaign, storage });
   pauseForHand(page);
   page.change('touch-side', 'right');
   steeringHand(page, 'right');
   controls(page, 'hidden');
-  const close = dispose;
-  dispose = null;
-  await close();
+  await dispose();
   const before = new Map(storage.map),
     writes = storage.writes.length;
   const reloaded = await soloPage(lifetime, { campaign, storage });
@@ -707,7 +712,7 @@ test('practice hand placement stays session-only without changing profile or sav
 test('complete-backup import and Undo adopt hand placement without rewriting the saved attempt', async (t) => {
   const page = await soloPage(t, { campaign, storage: storageWith(handPreferences('left')) });
   await startHandCut(page);
-  page.$('library-button').click();
+  await activateHostAction(page.$('library-button'));
   page.frame(0);
   const original = JSON.parse(page.storage.getItem(sessionKey)),
     library = currentProfile(page.storage).library;

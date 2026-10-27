@@ -1,0 +1,10 @@
+test_reviewed_git_dependency_restores_link_and_refuses_mismatch (test_preservation.PreservationTests.test_reviewed_git_dependency_restores_link_and_refuses_mismatch) ... {"format": "FPVPortableRestoreReceipt.v1", "files": 0, "logicalBytes": 0, "allFileHashesMatch": true, "unresolvedInternalLinks": [], "githubDependencyFileCount": 1, "githubDependencyBytes": 33, "allGitHubDependencyFileHashesMatch": true, "complete": true, "scope": "inventoried non-Git payload; Git checkout recovery is a separate receipt", "overallDisconnectSafetyClaimed": false, "inventoryCoverageComplete": true, "deferredExternalDependenciesExplicitlyAccepted": false, "createdAtUnix": 1792125774.779495}
+ok
+test_restores_relative_files_and_refuses_existing_output (test_preservation.PreservationTests.test_restores_relative_files_and_refuses_existing_output) ... {"format": "FPVPortableRestoreReceipt.v1", "files": 1, "logicalBytes": 14, "allFileHashesMatch": true, "unresolvedInternalLinks": [], "githubDependencyFileCount": 0, "githubDependencyBytes": 0, "allGitHubDependencyFileHashesMatch": true, "complete": true, "scope": "inventoried non-Git payload; Git checkout recovery is a separate receipt", "overallDisconnectSafetyClaimed": false, "inventoryCoverageComplete": true, "deferredExternalDependenciesExplicitlyAccepted": false, "createdAtUnix": 1792125776.876804}
+ok
+test_refuses_malicious_part_header_and_cache_symlink_parent (test_preservation.PreservationTests.test_refuses_malicious_part_header_and_cache_symlink_parent) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 4.255s
+
+OK

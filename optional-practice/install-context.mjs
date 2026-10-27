@@ -2,7 +2,99 @@ const idPattern = /^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$/;
 const versionPattern = /^v\d+\.\d+\.\d+$/;
 const operations = new Map();
 const preparations = new Map();
-const cancelledError = () => new DOMException('Cancelled', 'AbortError');
+// Additive metadata only: keep legacy Error messages and AbortError identity.
+const failureCopy = Object.freeze({
+  'idle-timeout': [
+    'Download stalled for 30 seconds. Retry online.',
+    'Завантаження не просувалося 30 секунд. Перевірте з’єднання та повторіть спробу онлайн.',
+  ],
+  'overall-timeout': [
+    'Download exceeded five minutes. Retry on a faster connection.',
+    'Завантаження тривало понад п’ять хвилин. Повторіть спробу зі швидшим з’єднанням.',
+  ],
+  'verification-incomplete': [
+    'Offline verification could not finish. Retry without removing your saved copy.',
+    'Не вдалося завершити офлайн-перевірку. Повторіть спробу, не видаляючи збережену копію.',
+  ],
+  'needs-repair': [
+    'Needs repair: offline files are missing. Remove this version’s offline copy and download again.',
+    'Потрібне відновлення: офлайн-файли відсутні. Видаліть офлайн-копію цієї версії та завантажте її знову.',
+  ],
+  'operation-pending': [
+    'Another offline operation is still stopping. Wait, then retry.',
+    'Попередня офлайн-операція ще зупиняється. Зачекайте та повторіть спробу.',
+  ],
+  'registration-stalled': [
+    'Worker registration stalled. Retry online.',
+    'Не вдалося вчасно підготувати офлайн-службу. Повторіть спробу онлайн.',
+  ],
+  'update-pending': [
+    'Update downloaded. Close this version’s tabs and reopen to finish.',
+    'Оновлення завантажено. Закрийте вкладки цієї версії та відкрийте її знову, щоб завершити.',
+  ],
+  unsupported: [
+    'Offline preparation needs a secure browser with service-worker support. Online practice remains available.',
+    'Для офлайн-підготовки потрібен захищений браузер із підтримкою сервісних воркерів. Онлайн-тренування залишається доступним.',
+  ],
+  'download-failed': [
+    'Download or verification failed. Check connection and available storage, then retry.',
+    'Не вдалося завантажити або перевірити файли. Перевірте з’єднання та вільне місце у сховищі браузера й повторіть спробу.',
+  ],
+  storage: [
+    'Browser storage is unavailable or full. Check storage permissions and free space, then retry.',
+    'Сховище браузера недоступне або заповнене. Перевірте дозволи та вільне місце й повторіть спробу.',
+  ],
+  cancelled: ['Offline download cancelled.', 'Автономне завантаження скасовано.'],
+  unknown: [
+    'Offline preparation failed. Check your connection and browser storage, then retry. Online practice remains available.',
+    'Не вдалося підготувати офлайн. Перевірте з’єднання та сховище браузера й повторіть спробу. Онлайн-тренування залишається доступним.',
+  ],
+});
+const legacyFailures = new Map([
+  ...Object.entries(failureCopy)
+    .filter(([code]) => code !== 'unknown')
+    .flatMap(([code, text]) => text.map((message) => [message, code])),
+  ['Another offline operation is still stopping. Retry shortly.', 'operation-pending'],
+  ['Download is still stopping. Retry removing this offline copy.', 'operation-pending'],
+  ['Service workers unavailable', 'unsupported'],
+  ['Optional practice worker unavailable', 'download-failed'],
+]);
+function offlineError(code, message) {
+  return Object.assign(new Error(message), { offlineCode: code });
+}
+const cancelledError = () =>
+  Object.assign(new DOMException('Cancelled', 'AbortError'), {
+    offlineCode: 'cancelled',
+  });
+
+/** Only fixed, owned codes/legacy messages become UI copy; unknown text is never rendered. */
+export function optionalOfflineFailureCode(error) {
+  try {
+    const name = error?.name,
+      code = error?.offlineCode;
+    if (name === 'AbortError') return 'cancelled';
+    if (typeof code === 'string' && Object.hasOwn(failureCopy, code)) return code;
+    if (name === 'QuotaExceededError') return 'storage';
+    return legacyFailures.get(error?.message) ?? 'unknown';
+  } catch {
+    return 'unknown';
+  }
+}
+export function optionalOfflineFailureMessage(error, locale = 'en', operation = 'prepare') {
+  const code = optionalOfflineFailureCode(error),
+    index = locale === 'uk' ? 1 : 0;
+  if (operation === 'remove' && code === 'cancelled')
+    return [
+      'Offline removal cancelled. Check this copy’s status before retrying.',
+      'Видалення офлайн-копії скасовано. Перевірте її стан перед повторною спробою.',
+    ][index];
+  if (operation === 'remove' && code === 'unknown')
+    return [
+      'Could not remove offline files. Check browser storage permissions, then retry.',
+      'Не вдалося видалити офлайн-файли. Перевірте дозволи сховища браузера та повторіть спробу.',
+    ][index];
+  return failureCopy[code][index];
+}
 const checkCancelled = (signal) => {
   if (signal?.aborted) throw cancelledError();
 };
@@ -32,7 +124,12 @@ function ownOfflineOperation(base, navigator, signal, operation, retirement = ()
   };
   const timer = setTimeout(() => {
     waiting.abort();
-    rejectResult(new Error('Another offline operation is still stopping. Retry shortly.'));
+    rejectResult(
+      offlineError(
+        'operation-pending',
+        'Another offline operation is still stopping. Retry shortly.',
+      ),
+    );
   }, 30000);
   signal?.addEventListener('abort', cancelled, { once: true });
   if (signal?.aborted) cancelled();
@@ -89,7 +186,13 @@ function stopInstallingWorker(worker, timeoutMs = 30000) {
       if (worker.state !== 'installing') finish();
     };
     const timer = setTimeout(
-      () => finish(new Error('Download is still stopping. Retry removing this offline copy.')),
+      () =>
+        finish(
+          offlineError(
+            'operation-pending',
+            'Download is still stopping. Retry removing this offline copy.',
+          ),
+        ),
       timeoutMs,
     );
     worker.addEventListener('statechange', change);
@@ -109,7 +212,11 @@ function registerOptionalWorker(base, navigator, signal, retain) {
     };
     const cancelled = () => finish(null, cancelledError());
     const timer = setTimeout(
-      () => finish(null, new Error('Worker registration stalled. Retry online.')),
+      () =>
+        finish(
+          null,
+          offlineError('registration-stalled', 'Worker registration stalled. Retry online.'),
+        ),
       30000,
     );
     signal.addEventListener('abort', cancelled, { once: true });
@@ -235,7 +342,7 @@ export async function prepareOptionalOffline({
 } = {}) {
   if (!idPattern.test(packageId) || packageId.length > 64)
     throw new TypeError('Invalid optional package identity.');
-  if (!navigator?.serviceWorker) throw new Error('Service workers unavailable');
+  if (!navigator?.serviceWorker) throw offlineError('unsupported', 'Service workers unavailable');
   const base = new URL('./', location.href);
   const abort = new AbortController();
   const cancel = () => abort.abort();
@@ -247,7 +354,8 @@ export async function prepareOptionalOffline({
   if (signal?.aborted) abort.abort();
   const uk = doc?.documentElement?.lang === 'uk';
   const incompleteVerification = () =>
-    new Error(
+    offlineError(
+      'verification-incomplete',
       uk
         ? 'Не вдалося завершити офлайн-перевірку. Повторіть спробу, не видаляючи збережену копію.'
         : 'Offline verification could not finish. Retry without removing your saved copy.',
@@ -330,7 +438,7 @@ export async function prepareOptionalOffline({
           cancelWorker(worker);
           throw cancelledError();
         }
-        if (!worker) throw new Error('Optional practice worker unavailable');
+        if (!worker) throw offlineError('download-failed', 'Optional practice worker unavailable');
         await new Promise((resolve, reject) => {
           let idle,
             overall,
@@ -353,20 +461,26 @@ export async function prepareOptionalOffline({
             clearTimeout(idle);
             idle = setTimeout(() => {
               cancelWorker(worker);
-              finish(new Error('Download stalled for 30 seconds. Retry online.'));
+              finish(
+                offlineError('idle-timeout', 'Download stalled for 30 seconds. Retry online.'),
+              );
             }, 30000);
           };
           const change = () => {
             if (worker.state === 'activated') finish();
             else if (worker.state === 'redundant')
               finish(
-                new Error(
+                offlineError(
+                  'download-failed',
                   'Download or verification failed. Check connection and available storage, then retry.',
                 ),
               );
             else if (worker.state === 'installed' && registration.active)
               finish(
-                new Error('Update downloaded. Close this version’s tabs and reopen to finish.'),
+                offlineError(
+                  'update-pending',
+                  'Update downloaded. Close this version’s tabs and reopen to finish.',
+                ),
               );
           };
           const channel = new MessageChannel();
@@ -382,7 +496,12 @@ export async function prepareOptionalOffline({
           activity();
           overall = setTimeout(() => {
             cancelWorker(worker);
-            finish(new Error('Download exceeded five minutes. Retry on a faster connection.'));
+            finish(
+              offlineError(
+                'overall-timeout',
+                'Download exceeded five minutes. Retry on a faster connection.',
+              ),
+            );
           }, 300000);
           try {
             if (abort.signal.aborted) cancelled();
@@ -403,7 +522,8 @@ export async function prepareOptionalOffline({
         checkCancelled(abort.signal);
         if (ready.status === 'unknown') throw incompleteVerification();
         if (ready.status !== 'ready')
-          throw new Error(
+          throw offlineError(
+            'needs-repair',
             'Needs repair: offline files are missing. Remove this version’s offline copy and download again.',
           );
         recordOptionalInstallation({ packageId, location, storage });

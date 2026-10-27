@@ -9,13 +9,42 @@ import {
 import {
   listAircraftPresets,
   createPresetConfiguration,
+  applyAircraftComponents,
 } from '../../optional-practice/civilian-fpv/aircraft-presets.mjs';
+import { aircraftPerformance } from '../../optional-practice/civilian-fpv/aircraft-physics.mjs';
 import { DEFAULT_RESPONSE } from '../../optional-practice/civilian-fpv/radio-profile.mjs';
 import { createVerifiedFlightGeometry } from '../../optional-practice/civilian-fpv/regional/verified-flight-geometry.mjs';
 import { createEnduranceFixture } from '../../authoring/fpv-worlds/regions/endurance-fixture.mjs';
 await initAdvancedRuntime();
 const fixture = await createEnduranceFixture();
 const neutral = { roll: 0, pitch: 0, yaw: 0, throttle: 0 };
+
+test('Regional centre-facing starts accept every compass quadrant but still reject invalid explicit headings', () => {
+  const preset = createPresetConfiguration('meteor75-analog-2022');
+  for (const x of [64000, 704000])
+    for (const z of [6000, 122000]) {
+      const manifest = structuredClone(fixture.terrain.manifest);
+      manifest.spawns[0].position = { x, y: 10000, z };
+      const configuration = {
+        manifest,
+        source: fixture.terrain.source,
+        advanced: { aircraft: preset.aircraft, controller: preset.controller },
+        response: preset.response,
+        initialHeading: 'region-centre',
+      };
+      const session = createAdvancedRegionalSession(configuration);
+      const yaw = session.snapshot().attitude.yaw;
+      const expected = (Math.atan2(384000 - x, z - 64000) * 18000) / Math.PI;
+      const difference = ((yaw - expected + 54000) % 36000) - 18000;
+      assert.ok(Math.abs(difference) <= 2, `${x}/${z}: ${yaw} versus ${expected}`);
+      session.dispose();
+      for (const initialHeading of [-1, 36000, NaN])
+        assert.throws(
+          () => createAdvancedRegionalSession({ ...configuration, initialHeading }),
+          /Invalid Regional Advanced heading/,
+        );
+    }
+});
 
 async function sessionFixture(
   t,
@@ -28,18 +57,25 @@ async function sessionFixture(
     beforeProposal,
     coverage,
     challenge,
+    backend,
+    frequency,
+    customize,
+    manifest = fixture.terrain.manifest,
+    prepareFrame,
   } = {},
 ) {
   let simulation, options;
   const preset = createPresetConfiguration(id);
+  customize?.(preset);
   const session = createAdvancedRegionalSession(
     {
-      manifest: fixture.terrain.manifest,
+      manifest,
       source: fixture.terrain.source,
       ...(mixed ? { geometryProfile: 'terrain-scenery-v1', scenery: fixture.scenery } : {}),
       advanced: { aircraft: preset.aircraft, controller: preset.controller },
       response: response ?? preset.response,
       mode,
+      ...(prepareFrame ? { prepareFrame } : {}),
       ...(challenge ? { challenge } : {}),
     },
     {
@@ -47,8 +83,12 @@ async function sessionFixture(
         let owner;
         return {
           async initialize(next) {
-            options = next;
-            owner = simulation = createAdvancedSimulation(next);
+            options = {
+              ...next,
+              ...(backend ? { backend } : {}),
+              ...(frequency === undefined ? {} : { frequency }),
+            };
+            owner = simulation = createAdvancedSimulation(options);
             return { telemetry: owner.telemetry() };
           },
           async propose(sample) {
@@ -106,6 +146,101 @@ async function sessionFixture(
   await session.prepare();
   return { session, simulation: () => simulation, options: () => options };
 }
+
+test('current Regional host resumes historical v1 recovery and continues with the original solver', async (t) => {
+  const historical = await sessionFixture(t, 'meteor75-analog-2022', {
+    backend: 'civilian-quad-aircraft-regional.v1',
+  });
+  const current = await sessionFixture(t, 'meteor75-analog-2022');
+  assert.equal(current.simulation().configuration().backend, 'civilian-quad-aircraft-regional.v3');
+  historical.session.arm();
+  const controls = { ...neutral, throttle: 0.5 };
+  for (let tick = 0; tick < 30; tick++) await historical.session.step(controls);
+  historical.session.pause();
+  const saved = await historical.session.captureRecovery();
+  // Historical wrappers did not record the committed terrain window origin.
+  delete saved.terrainOriginMm;
+  await current.session.restoreRecovery(saved);
+  assert.equal(current.session.snapshot().status, 'paused');
+  assert.equal(current.simulation().configuration().backend, 'civilian-quad-aircraft-regional.v1');
+  assert.equal(current.simulation().stateHash(), historical.simulation().stateHash());
+  historical.session.arm();
+  current.session.arm();
+  for (let tick = 0; tick < 20; tick++) {
+    await historical.session.step(controls);
+    await current.session.step(controls);
+  }
+  historical.session.pause();
+  current.session.pause();
+  const expected = current.simulation().stateHash();
+  assert.equal(
+    expected,
+    historical.simulation().stateHash(),
+    'Continuation uses the original solver',
+  );
+  for (const backend of ['civilian-quad-aircraft-regional.v99', 'civilian-quad-aircraft.v1']) {
+    const invalid = structuredClone(saved);
+    invalid.simulation.config.backend = backend;
+    await assert.rejects(current.session.restoreRecovery(invalid), /backend/);
+    assert.equal(current.simulation().stateHash(), expected);
+  }
+});
+
+test('Regional custom rates, PID gains and component mass change the actual response for every aircraft', async (t) => {
+  for (const { id } of listAircraftPresets()) {
+    const source = createPresetConfiguration(id);
+    const throttle = Math.min(0.9, aircraftPerformance(source.aircraft).hoverThrottle + 0.04);
+    const runs = {};
+    for (const kind of ['baseline', 'rates', 'controller', 'mass']) {
+      const h = await sessionFixture(t, id, {
+        customize(preset) {
+          if (kind === 'rates') preset.response.rates.axes.roll.rcRate *= 2;
+          if (kind === 'controller') preset.controller.gains.roll.p *= 0.3;
+          if (kind === 'mass')
+            preset.aircraft = applyAircraftComponents(preset.aircraft, preset.components, {
+              battery: {
+                massGrams: preset.components.reference.batteryMassGrams * 1.5,
+                capacityMah: preset.components.reference.capacityMah,
+              },
+            }).aircraft;
+        },
+      });
+      assert.deepEqual(h.simulation().configuration().aircraft, h.options().aircraft);
+      assert.deepEqual(h.simulation().configuration().controller, h.options().controller);
+      assert.deepEqual(h.simulation().configuration().response, h.options().response);
+      h.session.arm();
+      let requested = 0,
+        achieved = 0;
+      for (let tick = 0; tick < 50; tick++) {
+        const result = await h.session.step({
+          ...neutral,
+          throttle,
+          roll: tick >= 20 && tick < 25 ? 0.35 : 0,
+        });
+        assert.equal(result.status, 'active', `${id}/${kind}: ${result.reason}`);
+        requested = Math.max(requested, result.advancedTelemetry.requestedRates.roll);
+        achieved = Math.max(achieved, result.advancedTelemetry.achievedRates.roll);
+      }
+      runs[kind] = { requested, achieved, height: h.simulation().telemetry().position.y };
+      await h.session.dispose();
+    }
+    assert.ok(runs.rates.requested > runs.baseline.requested, `${id}: changed rates ignored`);
+    assert.ok(
+      Math.abs(runs.rates.achieved - runs.baseline.achieved) > 0.01,
+      `${id}: rates did not affect rotation`,
+    );
+    assert.equal(runs.controller.requested, runs.baseline.requested);
+    assert.ok(
+      Math.abs(runs.controller.achieved - runs.baseline.achieved) > 0.01,
+      `${id}: PID did not affect rotation`,
+    );
+    assert.equal(runs.mass.requested, runs.baseline.requested);
+    assert.ok(
+      runs.mass.height < runs.baseline.height - 0.01,
+      `${id}: installed battery mass did not affect lift`,
+    );
+  }
+});
 
 test('Regional optional challenge rules remain frozen in worker identity and reject cross-rule recovery', async (t) => {
   const challenge = {
@@ -314,4 +449,68 @@ test('cancelled Regional file restore leaves the current aircraft and recording 
     name: 'AbortError',
   });
   assert.deepEqual(await h.session.captureRecovery(), saved);
+});
+
+test('pausing speculative Regional prefetch preserves immediate checkpoint saves, but real preparation errors still reject', async (t) => {
+  for (const operation of ['captureRecovery', 'exportRecovery', 'failure']) {
+    const manifest = structuredClone(fixture.terrain.manifest);
+    manifest.spawns[0].position.x = 127999;
+    let frames = 0;
+    const h = await sessionFixture(t, 'meteor75-analog-2022', {
+      manifest,
+      prepareFrame(_group, { signal }) {
+        if (++frames === 1) return;
+        return new Promise((_resolve, reject) => {
+          signal.addEventListener(
+            'abort',
+            () =>
+              reject(
+                operation === 'failure'
+                  ? new Error('Injected terrain preparation failure')
+                  : new DOMException('Speculative prefetch cancelled', 'AbortError'),
+              ),
+            { once: true },
+          );
+        });
+      },
+    });
+    h.session.arm();
+    for (let tick = 0; tick < 100 && frames < 2; tick++) {
+      await h.session.step({ ...neutral, roll: 0.2, throttle: 0.6 });
+      await new Promise((resolve) => setImmediate(resolve));
+    }
+    assert.equal(frames, 2, 'Test must pause an actual in-progress prefetch');
+    const before = h.simulation().stateHash();
+    h.session.pause();
+    if (operation === 'failure') {
+      await assert.rejects(h.session.exportRecovery(), /Injected terrain preparation failure/);
+    } else {
+      const saved = await h.session[operation]();
+      assert.equal(h.simulation().stateHash(), before);
+      assert.equal(saved.simulation.checkpoint.state.missionTick, h.session.snapshot().ticks);
+      assert.deepEqual(saved.terrainOriginMm, h.session.snapshot().originMm);
+      assert.equal(h.session.snapshot().status, 'paused');
+    }
+    await h.session.dispose();
+  }
+});
+
+test('fresh Regional 1000 Hz sessions preserve explicit v3 500 Hz recovery timing', async (t) => {
+  const source = await sessionFixture(t, 'meteor75-analog-2022', { frequency: 500 });
+  const target = await sessionFixture(t, 'meteor75-analog-2022');
+  source.session.arm();
+  for (let tick = 0; tick < 8; tick++) await source.session.step({ ...neutral, throttle: 0.4 });
+  source.session.pause();
+  const saved = await source.session.exportRecovery();
+  assert.equal(target.simulation().configuration().frequency, 1000);
+  await target.session.restoreRecovery(saved);
+  assert.equal(target.simulation().configuration().frequency, 500);
+  assert.deepEqual(target.simulation().configuration(), source.simulation().configuration());
+  source.session.arm();
+  target.session.arm();
+  for (let tick = 0; tick < 8; tick++) {
+    await source.session.step(neutral);
+    await target.session.step(neutral);
+    assert.equal(target.simulation().stateHash(), source.simulation().stateHash());
+  }
 });

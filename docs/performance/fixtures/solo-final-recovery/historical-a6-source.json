@@ -1,0 +1,25 @@
+{
+  "format": "SoloHistoricalAuxiliarySourceWitnessV1",
+  "sourceRevision": "a6eacee2f09f06f9ffa76fe8cd5d674aff0475a4",
+  "sourceTree": "6b13627e324f695b6ee8d9f2dee2eeeb7217c332",
+  "manifest": {
+    "path": "docs/performance/solo-remote-auxiliary-plan.json",
+    "bytes": 16686,
+    "sha256": "f1bcea489cb600f2cb708a8dcac5474daec5ca63ebcbf3597d97dcedcf15e7d9",
+    "gitBlob": "d9888bec8edeaa4eb051195b0d726e1d62370dca"
+  },
+  "adapterInputs": [
+    {
+      "path": "scripts/solo-remote-auxiliary.mjs",
+      "bytes": 21813,
+      "sha256": "9c21ecfe357b4008a4317348311e5acfd25c9561a027319be8495bf54aa7f900",
+      "gitBlob": "ce7f6198c1bc7462835b4c47d87ccca1e19e8f44"
+    },
+    {
+      "path": "scripts/solo-remote-baseline.mjs",
+      "bytes": 15700,
+      "sha256": "62265c0d41693d249b476917617d3c26fe6b8514e2b12c67fc3d896214ba58a0",
+      "gitBlob": "a9362e45d5bcbb4bf1105a7c8ae8982bb0cd30ea"
+    }
+  ]
+}

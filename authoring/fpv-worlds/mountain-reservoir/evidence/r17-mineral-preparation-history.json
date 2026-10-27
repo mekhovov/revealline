@@ -1,0 +1,22 @@
+{
+  "format": "FPVReservoirMineralFinishPreparationHistory.v1",
+  "preservedSourceHistory": "Originalr12visual rejection andr13\u201316bounded acceptance files unchanged. Original r8/r9/r11/r16 distributions and all old proofs untouched.",
+  "attempts": [
+    {
+      "kind": "Isolated sparse dependency preflight",
+      "result": "ERR_MODULE_NOT_FOUND for tracked vendor i18next and optional install-context before generation",
+      "productionChange": false,
+      "resolution": "Hydrated exact42832974Git blobs into external checkout; transitive277-module read-only source graph recorded externally.",
+      "preservedRawLog": "/Volumes/alex/CodexMigrationStaging/fpv-temp/reservoir-r17-baseline-r4-20261016.log",
+      "rawLogSHA256": "77cc758f6810de3607db975fbdf03b58519d7b3ba5137811d3c58fa661d204cc"
+    },
+    {
+      "kind": "Unrendered early texture prototype",
+      "result": "Mean+2.82/255 above baseline; never visually accepted/promoted",
+      "resolution": "Candidate mean aligned by fixed190base; early texture images/metrics preserved externally",
+      "preservedDirectory": "/Volumes/alex/CodexMigrationStaging/fpv-temp/reservoir-mineral-finish-texture-study-20261016"
+    }
+  ],
+  "gatesWeakened": false,
+  "nativeArtAccepted": false
+}

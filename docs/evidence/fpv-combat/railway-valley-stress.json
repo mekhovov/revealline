@@ -1,0 +1,4477 @@
+{
+  "pin": {
+    "id": "railway-valley-study",
+    "title": {
+      "en": "Railway Valley — regional preview",
+      "uk": "Залізнична долина — огляд регіону"
+    },
+    "description": {
+      "en": "384 × 384 m · bridge, freight yard and open workshop · unscored free flight. An early regional preview with static trains and clear practice corridors.",
+      "uk": "384 × 384 м · міст, вантажний двір і відкритий цех · вільний політ без заліку. Ранній огляд регіону зі статичними потягами та відкритими маршрутами для практики."
+    },
+    "bytes": 5691267,
+    "appearance": {
+      "terrain": "railway"
+    },
+    "pin": {
+      "url": "https://raw.githubusercontent.com/mekhovov/revealline/31c0b54b668fa004be03f46f7ddcfa195ee734b3/authoring/fpv-worlds/regions/railway-valley/delivery-structure-r1/delivery.json",
+      "bytes": 6661,
+      "sha256": "431b2dfb4be228e094174f1ccdd8eb72f906f09eb39a62c31b16e2bfb1239f15"
+    }
+  },
+  "hardware": {
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+    "cores": 14,
+    "deviceMemory": 32,
+    "pixelRatio": 1,
+    "width": 1920,
+    "height": 1080,
+    "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)",
+    "timerQuery": true
+  },
+  "elapsedMs": 600008.1000000015,
+  "frames": 35792,
+  "completed": true,
+  "errors": [],
+  "transitions": [
+    {
+      "reason": "initial",
+      "elapsedMs": 214,
+      "origin": {
+        "x": 192000,
+        "y": 0,
+        "z": 64000
+      },
+      "terrain": {
+        "state": "ready",
+        "terrainReady": true,
+        "flightReady": false,
+        "hasRetainedTerrain": true,
+        "geometryProfile": "terrain-scenery-v1",
+        "geometryBytes": 845688,
+        "textureBytes": 2446676,
+        "resourceBytes": 3292364,
+        "sourceBytes": 3524110,
+        "reservedSourceBytes": 3524110,
+        "reservedGeometryBytes": 3292364,
+        "provenance": {
+          "regionId": "railway-valley-study",
+          "revision": "structure-r1",
+          "positionMm": {
+            "x": 250000,
+            "y": 16000,
+            "z": 40000
+          },
+          "originMm": {
+            "x": 192000,
+            "y": 0,
+            "z": 64000
+          },
+          "compiler": "FPV regional mixed owner v1",
+          "chunks": [
+            {
+              "chunkId": "railway-1-0",
+              "terrain": {
+                "chunkId": "railway-1-0",
+                "collision": {
+                  "id": "railway-1-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-0.json",
+                  "bytes": 6388,
+                  "sha256": "2c206adaf12b1cb89a14561baa5d94f709a179d31ee736ea341a5adfb6e8f9aa"
+                },
+                "scene": {
+                  "id": "railway-1-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-0.glb",
+                  "bytes": 38408,
+                  "sha256": "56711e7c4b7e344b7565146e0f4e33c8da0600a6be7d38f586f93d661556b61f"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-0",
+                "collision": {
+                  "id": "railway-1-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-0.json",
+                  "bytes": 708567,
+                  "sha256": "add4ba15bed559f4e6011a0497d4db05fc159adb08869e114a3aa5e2fb4ec5c9"
+                },
+                "scene": {
+                  "id": "railway-1-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-0.glb",
+                  "bytes": 455356,
+                  "sha256": "0ac9e0054cb989a646d8f9c5a06952627960d82152585d8e092d1c116d67b552"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-0-0",
+              "terrain": {
+                "chunkId": "railway-0-0",
+                "collision": {
+                  "id": "railway-0-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-0.json",
+                  "bytes": 6367,
+                  "sha256": "a1171df21e80bbb332ab1d9fd7f23bf8c93925374d5eae152bcb3b5026a65697"
+                },
+                "scene": {
+                  "id": "railway-0-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-0.glb",
+                  "bytes": 38420,
+                  "sha256": "1489f342d6f23447be0497202d8842ddfc22cc4a85c6701027d88e0fe2996b16"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-0-0",
+                "collision": {
+                  "id": "railway-0-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-0.json",
+                  "bytes": 1779,
+                  "sha256": "73445dea3892ed8508bb9c7dcbe7bef7dca27a167a88129273a75e715778209f"
+                },
+                "scene": {
+                  "id": "railway-0-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-0.glb",
+                  "bytes": 2112,
+                  "sha256": "f2b7e3b8364516606c9046040265a3b952bdf18d9c398f34d34ceb4f04ac79c0"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-1-1",
+              "terrain": {
+                "chunkId": "railway-1-1",
+                "collision": {
+                  "id": "railway-1-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-1.json",
+                  "bytes": 6371,
+                  "sha256": "0e2b1c8215d5442f3f3e41609009f858b78bfa316265056cb9d87c3a13361458"
+                },
+                "scene": {
+                  "id": "railway-1-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-1.glb",
+                  "bytes": 38392,
+                  "sha256": "270e6be0bae41dc52fe15988d9e69af84ef3858456e932054897bf72298784ed"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-1",
+                "collision": {
+                  "id": "railway-1-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-1.json",
+                  "bytes": 547134,
+                  "sha256": "08aa0397f999aa5478edf9f6b81357f2f094da744e1f168201ca4488bcf4adfe"
+                },
+                "scene": {
+                  "id": "railway-1-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-1.glb",
+                  "bytes": 377616,
+                  "sha256": "6175f4e26054f8066be73c94d8fffffb76b5151d97667c8c6eb99db67a5b12ee"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-2-0",
+              "terrain": {
+                "chunkId": "railway-2-0",
+                "collision": {
+                  "id": "railway-2-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-0.json",
+                  "bytes": 6164,
+                  "sha256": "ef8fcefccbd5c5ca5b46eaea741d85b2fbefc10f9be10e933ee1cf3b96127312"
+                },
+                "scene": {
+                  "id": "railway-2-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-0.glb",
+                  "bytes": 38408,
+                  "sha256": "c9045eac8ae1505fd931118d004d278212c927b1084d649804c5f576cf6ec8f0"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-0",
+                "collision": {
+                  "id": "railway-2-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-0.json",
+                  "bytes": 698079,
+                  "sha256": "9a7831e99a96a565e242d0757f66e76167b1777349e62188c5b631b8d58b591b"
+                },
+                "scene": {
+                  "id": "railway-2-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-0.glb",
+                  "bytes": 457360,
+                  "sha256": "42b1f0bbfd7c8b1d61e67d9ef1eb33fd178b7faced9ed590a8051d095f747530"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-0-1",
+              "terrain": {
+                "chunkId": "railway-0-1",
+                "collision": {
+                  "id": "railway-0-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-1.json",
+                  "bytes": 6309,
+                  "sha256": "62cf2b1009bfd30d618ea4c1dec72e620da3962cce4f9298f92de773e07d9821"
+                },
+                "scene": {
+                  "id": "railway-0-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-1.glb",
+                  "bytes": 38404,
+                  "sha256": "f414fee89cd5d3d394682dbcc57bcc516df742a651b1014670a26a0c1d3ecdbe"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-0-1",
+                "collision": {
+                  "id": "railway-0-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-1.json",
+                  "bytes": 1731,
+                  "sha256": "20dea06c1d746cf1c6328ff713896112f04c9d6078e7bf1946e8c99c2eb35d05"
+                },
+                "scene": {
+                  "id": "railway-0-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-1.glb",
+                  "bytes": 2112,
+                  "sha256": "643beb0f4b83a2b2946293fc2d9aba2b95cd01b2ea503c2ff44f77b9f14d0255"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-2-1",
+              "terrain": {
+                "chunkId": "railway-2-1",
+                "collision": {
+                  "id": "railway-2-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-1.json",
+                  "bytes": 6382,
+                  "sha256": "4c4a7699be712c0914bf3f13569fc6705fc59eafa90b9503a53488833a7a03fe"
+                },
+                "scene": {
+                  "id": "railway-2-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-1.glb",
+                  "bytes": 38408,
+                  "sha256": "50a9eb5e24eb4a6beccfea8d3a9d583f9e2b74818df72f568c65ce881fdb9988"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-1",
+                "collision": {
+                  "id": "railway-2-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-1.json",
+                  "bytes": 1731,
+                  "sha256": "c8cb4b0fa08677b45abcb7c6165e64abca834d6ae7acf3caa2bbcaae10ed3f3d"
+                },
+                "scene": {
+                  "id": "railway-2-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-1.glb",
+                  "bytes": 2112,
+                  "sha256": "49b6e73a4052006607bbc7c353e24b42e4bda702205c4115a904b65fef40eb91"
+                }
+              }
+            }
+          ]
+        },
+        "failure": null
+      }
+    },
+    {
+      "reason": "quality location",
+      "elapsedMs": 187.69999999925494,
+      "origin": {
+        "x": 192000,
+        "y": 0,
+        "z": 64000
+      },
+      "terrain": {
+        "state": "ready",
+        "terrainReady": true,
+        "flightReady": false,
+        "hasRetainedTerrain": true,
+        "geometryProfile": "terrain-scenery-v1",
+        "geometryBytes": 845688,
+        "textureBytes": 2446676,
+        "resourceBytes": 3292364,
+        "sourceBytes": 3524110,
+        "reservedSourceBytes": 3524110,
+        "reservedGeometryBytes": 3292364,
+        "provenance": {
+          "regionId": "railway-valley-study",
+          "revision": "structure-r1",
+          "positionMm": {
+            "x": 250000,
+            "y": 16000,
+            "z": 40000
+          },
+          "originMm": {
+            "x": 192000,
+            "y": 0,
+            "z": 64000
+          },
+          "compiler": "FPV regional mixed owner v1",
+          "chunks": [
+            {
+              "chunkId": "railway-1-0",
+              "terrain": {
+                "chunkId": "railway-1-0",
+                "collision": {
+                  "id": "railway-1-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-0.json",
+                  "bytes": 6388,
+                  "sha256": "2c206adaf12b1cb89a14561baa5d94f709a179d31ee736ea341a5adfb6e8f9aa"
+                },
+                "scene": {
+                  "id": "railway-1-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-0.glb",
+                  "bytes": 38408,
+                  "sha256": "56711e7c4b7e344b7565146e0f4e33c8da0600a6be7d38f586f93d661556b61f"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-0",
+                "collision": {
+                  "id": "railway-1-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-0.json",
+                  "bytes": 708567,
+                  "sha256": "add4ba15bed559f4e6011a0497d4db05fc159adb08869e114a3aa5e2fb4ec5c9"
+                },
+                "scene": {
+                  "id": "railway-1-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-0.glb",
+                  "bytes": 455356,
+                  "sha256": "0ac9e0054cb989a646d8f9c5a06952627960d82152585d8e092d1c116d67b552"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-0-0",
+              "terrain": {
+                "chunkId": "railway-0-0",
+                "collision": {
+                  "id": "railway-0-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-0.json",
+                  "bytes": 6367,
+                  "sha256": "a1171df21e80bbb332ab1d9fd7f23bf8c93925374d5eae152bcb3b5026a65697"
+                },
+                "scene": {
+                  "id": "railway-0-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-0.glb",
+                  "bytes": 38420,
+                  "sha256": "1489f342d6f23447be0497202d8842ddfc22cc4a85c6701027d88e0fe2996b16"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-0-0",
+                "collision": {
+                  "id": "railway-0-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-0.json",
+                  "bytes": 1779,
+                  "sha256": "73445dea3892ed8508bb9c7dcbe7bef7dca27a167a88129273a75e715778209f"
+                },
+                "scene": {
+                  "id": "railway-0-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-0.glb",
+                  "bytes": 2112,
+                  "sha256": "f2b7e3b8364516606c9046040265a3b952bdf18d9c398f34d34ceb4f04ac79c0"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-1-1",
+              "terrain": {
+                "chunkId": "railway-1-1",
+                "collision": {
+                  "id": "railway-1-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-1.json",
+                  "bytes": 6371,
+                  "sha256": "0e2b1c8215d5442f3f3e41609009f858b78bfa316265056cb9d87c3a13361458"
+                },
+                "scene": {
+                  "id": "railway-1-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-1.glb",
+                  "bytes": 38392,
+                  "sha256": "270e6be0bae41dc52fe15988d9e69af84ef3858456e932054897bf72298784ed"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-1",
+                "collision": {
+                  "id": "railway-1-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-1.json",
+                  "bytes": 547134,
+                  "sha256": "08aa0397f999aa5478edf9f6b81357f2f094da744e1f168201ca4488bcf4adfe"
+                },
+                "scene": {
+                  "id": "railway-1-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-1.glb",
+                  "bytes": 377616,
+                  "sha256": "6175f4e26054f8066be73c94d8fffffb76b5151d97667c8c6eb99db67a5b12ee"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-2-0",
+              "terrain": {
+                "chunkId": "railway-2-0",
+                "collision": {
+                  "id": "railway-2-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-0.json",
+                  "bytes": 6164,
+                  "sha256": "ef8fcefccbd5c5ca5b46eaea741d85b2fbefc10f9be10e933ee1cf3b96127312"
+                },
+                "scene": {
+                  "id": "railway-2-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-0.glb",
+                  "bytes": 38408,
+                  "sha256": "c9045eac8ae1505fd931118d004d278212c927b1084d649804c5f576cf6ec8f0"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-0",
+                "collision": {
+                  "id": "railway-2-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-0.json",
+                  "bytes": 698079,
+                  "sha256": "9a7831e99a96a565e242d0757f66e76167b1777349e62188c5b631b8d58b591b"
+                },
+                "scene": {
+                  "id": "railway-2-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-0.glb",
+                  "bytes": 457360,
+                  "sha256": "42b1f0bbfd7c8b1d61e67d9ef1eb33fd178b7faced9ed590a8051d095f747530"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-0-1",
+              "terrain": {
+                "chunkId": "railway-0-1",
+                "collision": {
+                  "id": "railway-0-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-1.json",
+                  "bytes": 6309,
+                  "sha256": "62cf2b1009bfd30d618ea4c1dec72e620da3962cce4f9298f92de773e07d9821"
+                },
+                "scene": {
+                  "id": "railway-0-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-1.glb",
+                  "bytes": 38404,
+                  "sha256": "f414fee89cd5d3d394682dbcc57bcc516df742a651b1014670a26a0c1d3ecdbe"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-0-1",
+                "collision": {
+                  "id": "railway-0-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-1.json",
+                  "bytes": 1731,
+                  "sha256": "20dea06c1d746cf1c6328ff713896112f04c9d6078e7bf1946e8c99c2eb35d05"
+                },
+                "scene": {
+                  "id": "railway-0-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-1.glb",
+                  "bytes": 2112,
+                  "sha256": "643beb0f4b83a2b2946293fc2d9aba2b95cd01b2ea503c2ff44f77b9f14d0255"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-2-1",
+              "terrain": {
+                "chunkId": "railway-2-1",
+                "collision": {
+                  "id": "railway-2-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-1.json",
+                  "bytes": 6382,
+                  "sha256": "4c4a7699be712c0914bf3f13569fc6705fc59eafa90b9503a53488833a7a03fe"
+                },
+                "scene": {
+                  "id": "railway-2-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-1.glb",
+                  "bytes": 38408,
+                  "sha256": "50a9eb5e24eb4a6beccfea8d3a9d583f9e2b74818df72f568c65ce881fdb9988"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-1",
+                "collision": {
+                  "id": "railway-2-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-1.json",
+                  "bytes": 1731,
+                  "sha256": "c8cb4b0fa08677b45abcb7c6165e64abca834d6ae7acf3caa2bbcaae10ed3f3d"
+                },
+                "scene": {
+                  "id": "railway-2-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-1.glb",
+                  "bytes": 2112,
+                  "sha256": "49b6e73a4052006607bbc7c353e24b42e4bda702205c4115a904b65fef40eb91"
+                }
+              }
+            }
+          ]
+        },
+        "failure": null
+      }
+    },
+    {
+      "reason": "resident boundary 1",
+      "elapsedMs": 162.30000000074506,
+      "origin": {
+        "x": 320000,
+        "y": 0,
+        "z": 64000
+      },
+      "terrain": {
+        "state": "ready",
+        "terrainReady": true,
+        "flightReady": false,
+        "hasRetainedTerrain": true,
+        "geometryProfile": "terrain-scenery-v1",
+        "geometryBytes": 739944,
+        "textureBytes": 2446676,
+        "resourceBytes": 3186620,
+        "sourceBytes": 3426876,
+        "reservedSourceBytes": 3426876,
+        "reservedGeometryBytes": 3186620,
+        "provenance": {
+          "regionId": "railway-valley-study",
+          "revision": "structure-r1",
+          "positionMm": {
+            "x": 378000,
+            "y": 16000,
+            "z": 40000
+          },
+          "originMm": {
+            "x": 320000,
+            "y": 0,
+            "z": 64000
+          },
+          "compiler": "FPV regional mixed owner v1",
+          "chunks": [
+            {
+              "chunkId": "railway-2-0",
+              "terrain": {
+                "chunkId": "railway-2-0",
+                "collision": {
+                  "id": "railway-2-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-0.json",
+                  "bytes": 6164,
+                  "sha256": "ef8fcefccbd5c5ca5b46eaea741d85b2fbefc10f9be10e933ee1cf3b96127312"
+                },
+                "scene": {
+                  "id": "railway-2-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-0.glb",
+                  "bytes": 38408,
+                  "sha256": "c9045eac8ae1505fd931118d004d278212c927b1084d649804c5f576cf6ec8f0"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-0",
+                "collision": {
+                  "id": "railway-2-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-0.json",
+                  "bytes": 698079,
+                  "sha256": "9a7831e99a96a565e242d0757f66e76167b1777349e62188c5b631b8d58b591b"
+                },
+                "scene": {
+                  "id": "railway-2-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-0.glb",
+                  "bytes": 457360,
+                  "sha256": "42b1f0bbfd7c8b1d61e67d9ef1eb33fd178b7faced9ed590a8051d095f747530"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-1-0",
+              "terrain": {
+                "chunkId": "railway-1-0",
+                "collision": {
+                  "id": "railway-1-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-0.json",
+                  "bytes": 6388,
+                  "sha256": "2c206adaf12b1cb89a14561baa5d94f709a179d31ee736ea341a5adfb6e8f9aa"
+                },
+                "scene": {
+                  "id": "railway-1-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-0.glb",
+                  "bytes": 38408,
+                  "sha256": "56711e7c4b7e344b7565146e0f4e33c8da0600a6be7d38f586f93d661556b61f"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-0",
+                "collision": {
+                  "id": "railway-1-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-0.json",
+                  "bytes": 708567,
+                  "sha256": "add4ba15bed559f4e6011a0497d4db05fc159adb08869e114a3aa5e2fb4ec5c9"
+                },
+                "scene": {
+                  "id": "railway-1-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-0.glb",
+                  "bytes": 455356,
+                  "sha256": "0ac9e0054cb989a646d8f9c5a06952627960d82152585d8e092d1c116d67b552"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-2-1",
+              "terrain": {
+                "chunkId": "railway-2-1",
+                "collision": {
+                  "id": "railway-2-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-1.json",
+                  "bytes": 6382,
+                  "sha256": "4c4a7699be712c0914bf3f13569fc6705fc59eafa90b9503a53488833a7a03fe"
+                },
+                "scene": {
+                  "id": "railway-2-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-1.glb",
+                  "bytes": 38408,
+                  "sha256": "50a9eb5e24eb4a6beccfea8d3a9d583f9e2b74818df72f568c65ce881fdb9988"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-1",
+                "collision": {
+                  "id": "railway-2-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-1.json",
+                  "bytes": 1731,
+                  "sha256": "c8cb4b0fa08677b45abcb7c6165e64abca834d6ae7acf3caa2bbcaae10ed3f3d"
+                },
+                "scene": {
+                  "id": "railway-2-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-1.glb",
+                  "bytes": 2112,
+                  "sha256": "49b6e73a4052006607bbc7c353e24b42e4bda702205c4115a904b65fef40eb91"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-1-1",
+              "terrain": {
+                "chunkId": "railway-1-1",
+                "collision": {
+                  "id": "railway-1-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-1.json",
+                  "bytes": 6371,
+                  "sha256": "0e2b1c8215d5442f3f3e41609009f858b78bfa316265056cb9d87c3a13361458"
+                },
+                "scene": {
+                  "id": "railway-1-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-1.glb",
+                  "bytes": 38392,
+                  "sha256": "270e6be0bae41dc52fe15988d9e69af84ef3858456e932054897bf72298784ed"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-1",
+                "collision": {
+                  "id": "railway-1-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-1.json",
+                  "bytes": 547134,
+                  "sha256": "08aa0397f999aa5478edf9f6b81357f2f094da744e1f168201ca4488bcf4adfe"
+                },
+                "scene": {
+                  "id": "railway-1-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-1.glb",
+                  "bytes": 377616,
+                  "sha256": "6175f4e26054f8066be73c94d8fffffb76b5151d97667c8c6eb99db67a5b12ee"
+                }
+              }
+            }
+          ]
+        },
+        "failure": null
+      }
+    },
+    {
+      "reason": "resident boundary 2",
+      "elapsedMs": 168.10000000149012,
+      "origin": {
+        "x": 192000,
+        "y": 0,
+        "z": 64000
+      },
+      "terrain": {
+        "state": "ready",
+        "terrainReady": true,
+        "flightReady": false,
+        "hasRetainedTerrain": true,
+        "geometryProfile": "terrain-scenery-v1",
+        "geometryBytes": 845688,
+        "textureBytes": 2446676,
+        "resourceBytes": 3292364,
+        "sourceBytes": 3524110,
+        "reservedSourceBytes": 3524110,
+        "reservedGeometryBytes": 3292364,
+        "provenance": {
+          "regionId": "railway-valley-study",
+          "revision": "structure-r1",
+          "positionMm": {
+            "x": 250000,
+            "y": 16000,
+            "z": 40000
+          },
+          "originMm": {
+            "x": 192000,
+            "y": 0,
+            "z": 64000
+          },
+          "compiler": "FPV regional mixed owner v1",
+          "chunks": [
+            {
+              "chunkId": "railway-1-0",
+              "terrain": {
+                "chunkId": "railway-1-0",
+                "collision": {
+                  "id": "railway-1-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-0.json",
+                  "bytes": 6388,
+                  "sha256": "2c206adaf12b1cb89a14561baa5d94f709a179d31ee736ea341a5adfb6e8f9aa"
+                },
+                "scene": {
+                  "id": "railway-1-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-0.glb",
+                  "bytes": 38408,
+                  "sha256": "56711e7c4b7e344b7565146e0f4e33c8da0600a6be7d38f586f93d661556b61f"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-0",
+                "collision": {
+                  "id": "railway-1-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-0.json",
+                  "bytes": 708567,
+                  "sha256": "add4ba15bed559f4e6011a0497d4db05fc159adb08869e114a3aa5e2fb4ec5c9"
+                },
+                "scene": {
+                  "id": "railway-1-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-0.glb",
+                  "bytes": 455356,
+                  "sha256": "0ac9e0054cb989a646d8f9c5a06952627960d82152585d8e092d1c116d67b552"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-0-0",
+              "terrain": {
+                "chunkId": "railway-0-0",
+                "collision": {
+                  "id": "railway-0-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-0.json",
+                  "bytes": 6367,
+                  "sha256": "a1171df21e80bbb332ab1d9fd7f23bf8c93925374d5eae152bcb3b5026a65697"
+                },
+                "scene": {
+                  "id": "railway-0-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-0.glb",
+                  "bytes": 38420,
+                  "sha256": "1489f342d6f23447be0497202d8842ddfc22cc4a85c6701027d88e0fe2996b16"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-0-0",
+                "collision": {
+                  "id": "railway-0-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-0.json",
+                  "bytes": 1779,
+                  "sha256": "73445dea3892ed8508bb9c7dcbe7bef7dca27a167a88129273a75e715778209f"
+                },
+                "scene": {
+                  "id": "railway-0-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-0.glb",
+                  "bytes": 2112,
+                  "sha256": "f2b7e3b8364516606c9046040265a3b952bdf18d9c398f34d34ceb4f04ac79c0"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-1-1",
+              "terrain": {
+                "chunkId": "railway-1-1",
+                "collision": {
+                  "id": "railway-1-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-1.json",
+                  "bytes": 6371,
+                  "sha256": "0e2b1c8215d5442f3f3e41609009f858b78bfa316265056cb9d87c3a13361458"
+                },
+                "scene": {
+                  "id": "railway-1-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-1.glb",
+                  "bytes": 38392,
+                  "sha256": "270e6be0bae41dc52fe15988d9e69af84ef3858456e932054897bf72298784ed"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-1",
+                "collision": {
+                  "id": "railway-1-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-1.json",
+                  "bytes": 547134,
+                  "sha256": "08aa0397f999aa5478edf9f6b81357f2f094da744e1f168201ca4488bcf4adfe"
+                },
+                "scene": {
+                  "id": "railway-1-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-1.glb",
+                  "bytes": 377616,
+                  "sha256": "6175f4e26054f8066be73c94d8fffffb76b5151d97667c8c6eb99db67a5b12ee"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-2-0",
+              "terrain": {
+                "chunkId": "railway-2-0",
+                "collision": {
+                  "id": "railway-2-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-0.json",
+                  "bytes": 6164,
+                  "sha256": "ef8fcefccbd5c5ca5b46eaea741d85b2fbefc10f9be10e933ee1cf3b96127312"
+                },
+                "scene": {
+                  "id": "railway-2-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-0.glb",
+                  "bytes": 38408,
+                  "sha256": "c9045eac8ae1505fd931118d004d278212c927b1084d649804c5f576cf6ec8f0"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-0",
+                "collision": {
+                  "id": "railway-2-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-0.json",
+                  "bytes": 698079,
+                  "sha256": "9a7831e99a96a565e242d0757f66e76167b1777349e62188c5b631b8d58b591b"
+                },
+                "scene": {
+                  "id": "railway-2-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-0.glb",
+                  "bytes": 457360,
+                  "sha256": "42b1f0bbfd7c8b1d61e67d9ef1eb33fd178b7faced9ed590a8051d095f747530"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-0-1",
+              "terrain": {
+                "chunkId": "railway-0-1",
+                "collision": {
+                  "id": "railway-0-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-1.json",
+                  "bytes": 6309,
+                  "sha256": "62cf2b1009bfd30d618ea4c1dec72e620da3962cce4f9298f92de773e07d9821"
+                },
+                "scene": {
+                  "id": "railway-0-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-1.glb",
+                  "bytes": 38404,
+                  "sha256": "f414fee89cd5d3d394682dbcc57bcc516df742a651b1014670a26a0c1d3ecdbe"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-0-1",
+                "collision": {
+                  "id": "railway-0-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-1.json",
+                  "bytes": 1731,
+                  "sha256": "20dea06c1d746cf1c6328ff713896112f04c9d6078e7bf1946e8c99c2eb35d05"
+                },
+                "scene": {
+                  "id": "railway-0-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-1.glb",
+                  "bytes": 2112,
+                  "sha256": "643beb0f4b83a2b2946293fc2d9aba2b95cd01b2ea503c2ff44f77b9f14d0255"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-2-1",
+              "terrain": {
+                "chunkId": "railway-2-1",
+                "collision": {
+                  "id": "railway-2-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-1.json",
+                  "bytes": 6382,
+                  "sha256": "4c4a7699be712c0914bf3f13569fc6705fc59eafa90b9503a53488833a7a03fe"
+                },
+                "scene": {
+                  "id": "railway-2-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-1.glb",
+                  "bytes": 38408,
+                  "sha256": "50a9eb5e24eb4a6beccfea8d3a9d583f9e2b74818df72f568c65ce881fdb9988"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-1",
+                "collision": {
+                  "id": "railway-2-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-1.json",
+                  "bytes": 1731,
+                  "sha256": "c8cb4b0fa08677b45abcb7c6165e64abca834d6ae7acf3caa2bbcaae10ed3f3d"
+                },
+                "scene": {
+                  "id": "railway-2-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-1.glb",
+                  "bytes": 2112,
+                  "sha256": "49b6e73a4052006607bbc7c353e24b42e4bda702205c4115a904b65fef40eb91"
+                }
+              }
+            }
+          ]
+        },
+        "failure": null
+      }
+    },
+    {
+      "reason": "resident boundary 1",
+      "elapsedMs": 155.5,
+      "origin": {
+        "x": 320000,
+        "y": 0,
+        "z": 64000
+      },
+      "terrain": {
+        "state": "ready",
+        "terrainReady": true,
+        "flightReady": false,
+        "hasRetainedTerrain": true,
+        "geometryProfile": "terrain-scenery-v1",
+        "geometryBytes": 739944,
+        "textureBytes": 2446676,
+        "resourceBytes": 3186620,
+        "sourceBytes": 3426876,
+        "reservedSourceBytes": 3426876,
+        "reservedGeometryBytes": 3186620,
+        "provenance": {
+          "regionId": "railway-valley-study",
+          "revision": "structure-r1",
+          "positionMm": {
+            "x": 378000,
+            "y": 16000,
+            "z": 40000
+          },
+          "originMm": {
+            "x": 320000,
+            "y": 0,
+            "z": 64000
+          },
+          "compiler": "FPV regional mixed owner v1",
+          "chunks": [
+            {
+              "chunkId": "railway-2-0",
+              "terrain": {
+                "chunkId": "railway-2-0",
+                "collision": {
+                  "id": "railway-2-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-0.json",
+                  "bytes": 6164,
+                  "sha256": "ef8fcefccbd5c5ca5b46eaea741d85b2fbefc10f9be10e933ee1cf3b96127312"
+                },
+                "scene": {
+                  "id": "railway-2-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-0.glb",
+                  "bytes": 38408,
+                  "sha256": "c9045eac8ae1505fd931118d004d278212c927b1084d649804c5f576cf6ec8f0"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-0",
+                "collision": {
+                  "id": "railway-2-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-0.json",
+                  "bytes": 698079,
+                  "sha256": "9a7831e99a96a565e242d0757f66e76167b1777349e62188c5b631b8d58b591b"
+                },
+                "scene": {
+                  "id": "railway-2-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-0.glb",
+                  "bytes": 457360,
+                  "sha256": "42b1f0bbfd7c8b1d61e67d9ef1eb33fd178b7faced9ed590a8051d095f747530"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-1-0",
+              "terrain": {
+                "chunkId": "railway-1-0",
+                "collision": {
+                  "id": "railway-1-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-0.json",
+                  "bytes": 6388,
+                  "sha256": "2c206adaf12b1cb89a14561baa5d94f709a179d31ee736ea341a5adfb6e8f9aa"
+                },
+                "scene": {
+                  "id": "railway-1-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-0.glb",
+                  "bytes": 38408,
+                  "sha256": "56711e7c4b7e344b7565146e0f4e33c8da0600a6be7d38f586f93d661556b61f"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-0",
+                "collision": {
+                  "id": "railway-1-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-0.json",
+                  "bytes": 708567,
+                  "sha256": "add4ba15bed559f4e6011a0497d4db05fc159adb08869e114a3aa5e2fb4ec5c9"
+                },
+                "scene": {
+                  "id": "railway-1-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-0.glb",
+                  "bytes": 455356,
+                  "sha256": "0ac9e0054cb989a646d8f9c5a06952627960d82152585d8e092d1c116d67b552"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-2-1",
+              "terrain": {
+                "chunkId": "railway-2-1",
+                "collision": {
+                  "id": "railway-2-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-1.json",
+                  "bytes": 6382,
+                  "sha256": "4c4a7699be712c0914bf3f13569fc6705fc59eafa90b9503a53488833a7a03fe"
+                },
+                "scene": {
+                  "id": "railway-2-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-1.glb",
+                  "bytes": 38408,
+                  "sha256": "50a9eb5e24eb4a6beccfea8d3a9d583f9e2b74818df72f568c65ce881fdb9988"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-1",
+                "collision": {
+                  "id": "railway-2-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-1.json",
+                  "bytes": 1731,
+                  "sha256": "c8cb4b0fa08677b45abcb7c6165e64abca834d6ae7acf3caa2bbcaae10ed3f3d"
+                },
+                "scene": {
+                  "id": "railway-2-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-1.glb",
+                  "bytes": 2112,
+                  "sha256": "49b6e73a4052006607bbc7c353e24b42e4bda702205c4115a904b65fef40eb91"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-1-1",
+              "terrain": {
+                "chunkId": "railway-1-1",
+                "collision": {
+                  "id": "railway-1-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-1.json",
+                  "bytes": 6371,
+                  "sha256": "0e2b1c8215d5442f3f3e41609009f858b78bfa316265056cb9d87c3a13361458"
+                },
+                "scene": {
+                  "id": "railway-1-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-1.glb",
+                  "bytes": 38392,
+                  "sha256": "270e6be0bae41dc52fe15988d9e69af84ef3858456e932054897bf72298784ed"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-1",
+                "collision": {
+                  "id": "railway-1-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-1.json",
+                  "bytes": 547134,
+                  "sha256": "08aa0397f999aa5478edf9f6b81357f2f094da744e1f168201ca4488bcf4adfe"
+                },
+                "scene": {
+                  "id": "railway-1-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-1.glb",
+                  "bytes": 377616,
+                  "sha256": "6175f4e26054f8066be73c94d8fffffb76b5151d97667c8c6eb99db67a5b12ee"
+                }
+              }
+            }
+          ]
+        },
+        "failure": null
+      }
+    },
+    {
+      "reason": "resident boundary 2",
+      "elapsedMs": 159.5,
+      "origin": {
+        "x": 192000,
+        "y": 0,
+        "z": 64000
+      },
+      "terrain": {
+        "state": "ready",
+        "terrainReady": true,
+        "flightReady": false,
+        "hasRetainedTerrain": true,
+        "geometryProfile": "terrain-scenery-v1",
+        "geometryBytes": 845688,
+        "textureBytes": 2446676,
+        "resourceBytes": 3292364,
+        "sourceBytes": 3524110,
+        "reservedSourceBytes": 3524110,
+        "reservedGeometryBytes": 3292364,
+        "provenance": {
+          "regionId": "railway-valley-study",
+          "revision": "structure-r1",
+          "positionMm": {
+            "x": 250000,
+            "y": 16000,
+            "z": 40000
+          },
+          "originMm": {
+            "x": 192000,
+            "y": 0,
+            "z": 64000
+          },
+          "compiler": "FPV regional mixed owner v1",
+          "chunks": [
+            {
+              "chunkId": "railway-1-0",
+              "terrain": {
+                "chunkId": "railway-1-0",
+                "collision": {
+                  "id": "railway-1-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-0.json",
+                  "bytes": 6388,
+                  "sha256": "2c206adaf12b1cb89a14561baa5d94f709a179d31ee736ea341a5adfb6e8f9aa"
+                },
+                "scene": {
+                  "id": "railway-1-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-0.glb",
+                  "bytes": 38408,
+                  "sha256": "56711e7c4b7e344b7565146e0f4e33c8da0600a6be7d38f586f93d661556b61f"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-0",
+                "collision": {
+                  "id": "railway-1-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-0.json",
+                  "bytes": 708567,
+                  "sha256": "add4ba15bed559f4e6011a0497d4db05fc159adb08869e114a3aa5e2fb4ec5c9"
+                },
+                "scene": {
+                  "id": "railway-1-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-0.glb",
+                  "bytes": 455356,
+                  "sha256": "0ac9e0054cb989a646d8f9c5a06952627960d82152585d8e092d1c116d67b552"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-0-0",
+              "terrain": {
+                "chunkId": "railway-0-0",
+                "collision": {
+                  "id": "railway-0-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-0.json",
+                  "bytes": 6367,
+                  "sha256": "a1171df21e80bbb332ab1d9fd7f23bf8c93925374d5eae152bcb3b5026a65697"
+                },
+                "scene": {
+                  "id": "railway-0-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-0.glb",
+                  "bytes": 38420,
+                  "sha256": "1489f342d6f23447be0497202d8842ddfc22cc4a85c6701027d88e0fe2996b16"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-0-0",
+                "collision": {
+                  "id": "railway-0-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-0.json",
+                  "bytes": 1779,
+                  "sha256": "73445dea3892ed8508bb9c7dcbe7bef7dca27a167a88129273a75e715778209f"
+                },
+                "scene": {
+                  "id": "railway-0-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-0.glb",
+                  "bytes": 2112,
+                  "sha256": "f2b7e3b8364516606c9046040265a3b952bdf18d9c398f34d34ceb4f04ac79c0"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-1-1",
+              "terrain": {
+                "chunkId": "railway-1-1",
+                "collision": {
+                  "id": "railway-1-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-1.json",
+                  "bytes": 6371,
+                  "sha256": "0e2b1c8215d5442f3f3e41609009f858b78bfa316265056cb9d87c3a13361458"
+                },
+                "scene": {
+                  "id": "railway-1-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-1.glb",
+                  "bytes": 38392,
+                  "sha256": "270e6be0bae41dc52fe15988d9e69af84ef3858456e932054897bf72298784ed"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-1",
+                "collision": {
+                  "id": "railway-1-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-1.json",
+                  "bytes": 547134,
+                  "sha256": "08aa0397f999aa5478edf9f6b81357f2f094da744e1f168201ca4488bcf4adfe"
+                },
+                "scene": {
+                  "id": "railway-1-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-1.glb",
+                  "bytes": 377616,
+                  "sha256": "6175f4e26054f8066be73c94d8fffffb76b5151d97667c8c6eb99db67a5b12ee"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-2-0",
+              "terrain": {
+                "chunkId": "railway-2-0",
+                "collision": {
+                  "id": "railway-2-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-0.json",
+                  "bytes": 6164,
+                  "sha256": "ef8fcefccbd5c5ca5b46eaea741d85b2fbefc10f9be10e933ee1cf3b96127312"
+                },
+                "scene": {
+                  "id": "railway-2-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-0.glb",
+                  "bytes": 38408,
+                  "sha256": "c9045eac8ae1505fd931118d004d278212c927b1084d649804c5f576cf6ec8f0"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-0",
+                "collision": {
+                  "id": "railway-2-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-0.json",
+                  "bytes": 698079,
+                  "sha256": "9a7831e99a96a565e242d0757f66e76167b1777349e62188c5b631b8d58b591b"
+                },
+                "scene": {
+                  "id": "railway-2-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-0.glb",
+                  "bytes": 457360,
+                  "sha256": "42b1f0bbfd7c8b1d61e67d9ef1eb33fd178b7faced9ed590a8051d095f747530"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-0-1",
+              "terrain": {
+                "chunkId": "railway-0-1",
+                "collision": {
+                  "id": "railway-0-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-1.json",
+                  "bytes": 6309,
+                  "sha256": "62cf2b1009bfd30d618ea4c1dec72e620da3962cce4f9298f92de773e07d9821"
+                },
+                "scene": {
+                  "id": "railway-0-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-1.glb",
+                  "bytes": 38404,
+                  "sha256": "f414fee89cd5d3d394682dbcc57bcc516df742a651b1014670a26a0c1d3ecdbe"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-0-1",
+                "collision": {
+                  "id": "railway-0-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-1.json",
+                  "bytes": 1731,
+                  "sha256": "20dea06c1d746cf1c6328ff713896112f04c9d6078e7bf1946e8c99c2eb35d05"
+                },
+                "scene": {
+                  "id": "railway-0-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-1.glb",
+                  "bytes": 2112,
+                  "sha256": "643beb0f4b83a2b2946293fc2d9aba2b95cd01b2ea503c2ff44f77b9f14d0255"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-2-1",
+              "terrain": {
+                "chunkId": "railway-2-1",
+                "collision": {
+                  "id": "railway-2-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-1.json",
+                  "bytes": 6382,
+                  "sha256": "4c4a7699be712c0914bf3f13569fc6705fc59eafa90b9503a53488833a7a03fe"
+                },
+                "scene": {
+                  "id": "railway-2-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-1.glb",
+                  "bytes": 38408,
+                  "sha256": "50a9eb5e24eb4a6beccfea8d3a9d583f9e2b74818df72f568c65ce881fdb9988"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-1",
+                "collision": {
+                  "id": "railway-2-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-1.json",
+                  "bytes": 1731,
+                  "sha256": "c8cb4b0fa08677b45abcb7c6165e64abca834d6ae7acf3caa2bbcaae10ed3f3d"
+                },
+                "scene": {
+                  "id": "railway-2-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-1.glb",
+                  "bytes": 2112,
+                  "sha256": "49b6e73a4052006607bbc7c353e24b42e4bda702205c4115a904b65fef40eb91"
+                }
+              }
+            }
+          ]
+        },
+        "failure": null
+      }
+    },
+    {
+      "reason": "quality location",
+      "elapsedMs": 269.19999999925494,
+      "origin": {
+        "x": 192000,
+        "y": 0,
+        "z": 192000
+      },
+      "terrain": {
+        "state": "ready",
+        "terrainReady": true,
+        "flightReady": false,
+        "hasRetainedTerrain": true,
+        "geometryProfile": "terrain-scenery-v1",
+        "geometryBytes": 1280664,
+        "textureBytes": 2446676,
+        "resourceBytes": 3727340,
+        "sourceBytes": 5675931,
+        "reservedSourceBytes": 5675931,
+        "reservedGeometryBytes": 3727340,
+        "provenance": {
+          "regionId": "railway-valley-study",
+          "revision": "structure-r1",
+          "positionMm": {
+            "x": 160000,
+            "y": 4000,
+            "z": 160000
+          },
+          "originMm": {
+            "x": 192000,
+            "y": 0,
+            "z": 192000
+          },
+          "compiler": "FPV regional mixed owner v1",
+          "chunks": [
+            {
+              "chunkId": "railway-1-1",
+              "terrain": {
+                "chunkId": "railway-1-1",
+                "collision": {
+                  "id": "railway-1-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-1.json",
+                  "bytes": 6371,
+                  "sha256": "0e2b1c8215d5442f3f3e41609009f858b78bfa316265056cb9d87c3a13361458"
+                },
+                "scene": {
+                  "id": "railway-1-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-1.glb",
+                  "bytes": 38392,
+                  "sha256": "270e6be0bae41dc52fe15988d9e69af84ef3858456e932054897bf72298784ed"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-1",
+                "collision": {
+                  "id": "railway-1-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-1.json",
+                  "bytes": 547134,
+                  "sha256": "08aa0397f999aa5478edf9f6b81357f2f094da744e1f168201ca4488bcf4adfe"
+                },
+                "scene": {
+                  "id": "railway-1-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-1.glb",
+                  "bytes": 377616,
+                  "sha256": "6175f4e26054f8066be73c94d8fffffb76b5151d97667c8c6eb99db67a5b12ee"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-0-1",
+              "terrain": {
+                "chunkId": "railway-0-1",
+                "collision": {
+                  "id": "railway-0-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-1.json",
+                  "bytes": 6309,
+                  "sha256": "62cf2b1009bfd30d618ea4c1dec72e620da3962cce4f9298f92de773e07d9821"
+                },
+                "scene": {
+                  "id": "railway-0-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-1.glb",
+                  "bytes": 38404,
+                  "sha256": "f414fee89cd5d3d394682dbcc57bcc516df742a651b1014670a26a0c1d3ecdbe"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-0-1",
+                "collision": {
+                  "id": "railway-0-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-1.json",
+                  "bytes": 1731,
+                  "sha256": "20dea06c1d746cf1c6328ff713896112f04c9d6078e7bf1946e8c99c2eb35d05"
+                },
+                "scene": {
+                  "id": "railway-0-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-1.glb",
+                  "bytes": 2112,
+                  "sha256": "643beb0f4b83a2b2946293fc2d9aba2b95cd01b2ea503c2ff44f77b9f14d0255"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-1-0",
+              "terrain": {
+                "chunkId": "railway-1-0",
+                "collision": {
+                  "id": "railway-1-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-0.json",
+                  "bytes": 6388,
+                  "sha256": "2c206adaf12b1cb89a14561baa5d94f709a179d31ee736ea341a5adfb6e8f9aa"
+                },
+                "scene": {
+                  "id": "railway-1-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-0.glb",
+                  "bytes": 38408,
+                  "sha256": "56711e7c4b7e344b7565146e0f4e33c8da0600a6be7d38f586f93d661556b61f"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-0",
+                "collision": {
+                  "id": "railway-1-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-0.json",
+                  "bytes": 708567,
+                  "sha256": "add4ba15bed559f4e6011a0497d4db05fc159adb08869e114a3aa5e2fb4ec5c9"
+                },
+                "scene": {
+                  "id": "railway-1-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-0.glb",
+                  "bytes": 455356,
+                  "sha256": "0ac9e0054cb989a646d8f9c5a06952627960d82152585d8e092d1c116d67b552"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-1-2",
+              "terrain": {
+                "chunkId": "railway-1-2",
+                "collision": {
+                  "id": "railway-1-2-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-2.json",
+                  "bytes": 6377,
+                  "sha256": "f12db14afd571f356822db1ad807f27586dabb08e7dfd644a3fff64fece52aa4"
+                },
+                "scene": {
+                  "id": "railway-1-2-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-2.glb",
+                  "bytes": 38404,
+                  "sha256": "1250460a6b339c60b63f2fd67cbb0a42559d42bb1492a733b223887d97759bee"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-2",
+                "collision": {
+                  "id": "railway-1-2-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-2.json",
+                  "bytes": 699421,
+                  "sha256": "a7b1201652f1d54404d794a293b58cb07d35dff48399927204bba0c81a361a84"
+                },
+                "scene": {
+                  "id": "railway-1-2-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-2.glb",
+                  "bytes": 447736,
+                  "sha256": "114d4b371642f2815f10d32c99637d923c5d8071c5d6b2a5f019b17f7dab98bb"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-2-1",
+              "terrain": {
+                "chunkId": "railway-2-1",
+                "collision": {
+                  "id": "railway-2-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-1.json",
+                  "bytes": 6382,
+                  "sha256": "4c4a7699be712c0914bf3f13569fc6705fc59eafa90b9503a53488833a7a03fe"
+                },
+                "scene": {
+                  "id": "railway-2-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-1.glb",
+                  "bytes": 38408,
+                  "sha256": "50a9eb5e24eb4a6beccfea8d3a9d583f9e2b74818df72f568c65ce881fdb9988"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-1",
+                "collision": {
+                  "id": "railway-2-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-1.json",
+                  "bytes": 1731,
+                  "sha256": "c8cb4b0fa08677b45abcb7c6165e64abca834d6ae7acf3caa2bbcaae10ed3f3d"
+                },
+                "scene": {
+                  "id": "railway-2-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-1.glb",
+                  "bytes": 2112,
+                  "sha256": "49b6e73a4052006607bbc7c353e24b42e4bda702205c4115a904b65fef40eb91"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-0-0",
+              "terrain": {
+                "chunkId": "railway-0-0",
+                "collision": {
+                  "id": "railway-0-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-0.json",
+                  "bytes": 6367,
+                  "sha256": "a1171df21e80bbb332ab1d9fd7f23bf8c93925374d5eae152bcb3b5026a65697"
+                },
+                "scene": {
+                  "id": "railway-0-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-0.glb",
+                  "bytes": 38420,
+                  "sha256": "1489f342d6f23447be0497202d8842ddfc22cc4a85c6701027d88e0fe2996b16"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-0-0",
+                "collision": {
+                  "id": "railway-0-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-0.json",
+                  "bytes": 1779,
+                  "sha256": "73445dea3892ed8508bb9c7dcbe7bef7dca27a167a88129273a75e715778209f"
+                },
+                "scene": {
+                  "id": "railway-0-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-0.glb",
+                  "bytes": 2112,
+                  "sha256": "f2b7e3b8364516606c9046040265a3b952bdf18d9c398f34d34ceb4f04ac79c0"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-0-2",
+              "terrain": {
+                "chunkId": "railway-0-2",
+                "collision": {
+                  "id": "railway-0-2-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-2.json",
+                  "bytes": 5563,
+                  "sha256": "004c7df3129b0dc0eeaea26996eb7d9f0cf29a8a98eb67be2e8cd36bdd712bf6"
+                },
+                "scene": {
+                  "id": "railway-0-2-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-2.glb",
+                  "bytes": 38404,
+                  "sha256": "94b8b5e91ff68e37766a68c80664a8bd921670391192c65ef56c7227f5ed85ca"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-0-2",
+                "collision": {
+                  "id": "railway-0-2-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-2.json",
+                  "bytes": 1755,
+                  "sha256": "1973c0bb6a2571fa0a266cc0b7d76804b49b9f48ba12cc7e74eed7bfc17ef0bc"
+                },
+                "scene": {
+                  "id": "railway-0-2-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-2.glb",
+                  "bytes": 2116,
+                  "sha256": "2fbc44baa96e246b2d9f47f7356ceae3c0ef9685fdeef3d248c39a9bc9621c18"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-2-0",
+              "terrain": {
+                "chunkId": "railway-2-0",
+                "collision": {
+                  "id": "railway-2-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-0.json",
+                  "bytes": 6164,
+                  "sha256": "ef8fcefccbd5c5ca5b46eaea741d85b2fbefc10f9be10e933ee1cf3b96127312"
+                },
+                "scene": {
+                  "id": "railway-2-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-0.glb",
+                  "bytes": 38408,
+                  "sha256": "c9045eac8ae1505fd931118d004d278212c927b1084d649804c5f576cf6ec8f0"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-0",
+                "collision": {
+                  "id": "railway-2-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-0.json",
+                  "bytes": 698079,
+                  "sha256": "9a7831e99a96a565e242d0757f66e76167b1777349e62188c5b631b8d58b591b"
+                },
+                "scene": {
+                  "id": "railway-2-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-0.glb",
+                  "bytes": 457360,
+                  "sha256": "42b1f0bbfd7c8b1d61e67d9ef1eb33fd178b7faced9ed590a8051d095f747530"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-2-2",
+              "terrain": {
+                "chunkId": "railway-2-2",
+                "collision": {
+                  "id": "railway-2-2-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-2.json",
+                  "bytes": 6254,
+                  "sha256": "1c4a05c63315425f2382aa2c8430a848ce51f2a9d843c7494cbaeabe2be414e9"
+                },
+                "scene": {
+                  "id": "railway-2-2-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-2.glb",
+                  "bytes": 38408,
+                  "sha256": "10e104f1af0ff4622fd794aedb45fc1999350997f4c14250d2fb095f99ca7abe"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-2",
+                "collision": {
+                  "id": "railway-2-2-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-2.json",
+                  "bytes": 515355,
+                  "sha256": "53913fcef4e36cdac188ff1e13228d1f116329ff8dea179696817f9950167577"
+                },
+                "scene": {
+                  "id": "railway-2-2-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-2.glb",
+                  "bytes": 352028,
+                  "sha256": "1e38c2a87ff56eeb9cfe37af1b5abdd09bc9ec32e5f8e9ec5b2dd24ef596a312"
+                }
+              }
+            }
+          ]
+        },
+        "failure": null
+      }
+    },
+    {
+      "reason": "resident boundary 1",
+      "elapsedMs": 258.8999999985099,
+      "origin": {
+        "x": 320000,
+        "y": 0,
+        "z": 192000
+      },
+      "terrain": {
+        "state": "ready",
+        "terrainReady": true,
+        "flightReady": false,
+        "hasRetainedTerrain": true,
+        "geometryProfile": "terrain-scenery-v1",
+        "geometryBytes": 1122048,
+        "textureBytes": 2446676,
+        "resourceBytes": 3568724,
+        "sourceBytes": 5530859,
+        "reservedSourceBytes": 5530859,
+        "reservedGeometryBytes": 3568724,
+        "provenance": {
+          "regionId": "railway-valley-study",
+          "revision": "structure-r1",
+          "positionMm": {
+            "x": 288000,
+            "y": 4000,
+            "z": 160000
+          },
+          "originMm": {
+            "x": 320000,
+            "y": 0,
+            "z": 192000
+          },
+          "compiler": "FPV regional mixed owner v1",
+          "chunks": [
+            {
+              "chunkId": "railway-2-1",
+              "terrain": {
+                "chunkId": "railway-2-1",
+                "collision": {
+                  "id": "railway-2-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-1.json",
+                  "bytes": 6382,
+                  "sha256": "4c4a7699be712c0914bf3f13569fc6705fc59eafa90b9503a53488833a7a03fe"
+                },
+                "scene": {
+                  "id": "railway-2-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-1.glb",
+                  "bytes": 38408,
+                  "sha256": "50a9eb5e24eb4a6beccfea8d3a9d583f9e2b74818df72f568c65ce881fdb9988"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-1",
+                "collision": {
+                  "id": "railway-2-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-1.json",
+                  "bytes": 1731,
+                  "sha256": "c8cb4b0fa08677b45abcb7c6165e64abca834d6ae7acf3caa2bbcaae10ed3f3d"
+                },
+                "scene": {
+                  "id": "railway-2-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-1.glb",
+                  "bytes": 2112,
+                  "sha256": "49b6e73a4052006607bbc7c353e24b42e4bda702205c4115a904b65fef40eb91"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-1-1",
+              "terrain": {
+                "chunkId": "railway-1-1",
+                "collision": {
+                  "id": "railway-1-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-1.json",
+                  "bytes": 6371,
+                  "sha256": "0e2b1c8215d5442f3f3e41609009f858b78bfa316265056cb9d87c3a13361458"
+                },
+                "scene": {
+                  "id": "railway-1-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-1.glb",
+                  "bytes": 38392,
+                  "sha256": "270e6be0bae41dc52fe15988d9e69af84ef3858456e932054897bf72298784ed"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-1",
+                "collision": {
+                  "id": "railway-1-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-1.json",
+                  "bytes": 547134,
+                  "sha256": "08aa0397f999aa5478edf9f6b81357f2f094da744e1f168201ca4488bcf4adfe"
+                },
+                "scene": {
+                  "id": "railway-1-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-1.glb",
+                  "bytes": 377616,
+                  "sha256": "6175f4e26054f8066be73c94d8fffffb76b5151d97667c8c6eb99db67a5b12ee"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-2-0",
+              "terrain": {
+                "chunkId": "railway-2-0",
+                "collision": {
+                  "id": "railway-2-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-0.json",
+                  "bytes": 6164,
+                  "sha256": "ef8fcefccbd5c5ca5b46eaea741d85b2fbefc10f9be10e933ee1cf3b96127312"
+                },
+                "scene": {
+                  "id": "railway-2-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-0.glb",
+                  "bytes": 38408,
+                  "sha256": "c9045eac8ae1505fd931118d004d278212c927b1084d649804c5f576cf6ec8f0"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-0",
+                "collision": {
+                  "id": "railway-2-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-0.json",
+                  "bytes": 698079,
+                  "sha256": "9a7831e99a96a565e242d0757f66e76167b1777349e62188c5b631b8d58b591b"
+                },
+                "scene": {
+                  "id": "railway-2-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-0.glb",
+                  "bytes": 457360,
+                  "sha256": "42b1f0bbfd7c8b1d61e67d9ef1eb33fd178b7faced9ed590a8051d095f747530"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-2-2",
+              "terrain": {
+                "chunkId": "railway-2-2",
+                "collision": {
+                  "id": "railway-2-2-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-2.json",
+                  "bytes": 6254,
+                  "sha256": "1c4a05c63315425f2382aa2c8430a848ce51f2a9d843c7494cbaeabe2be414e9"
+                },
+                "scene": {
+                  "id": "railway-2-2-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-2.glb",
+                  "bytes": 38408,
+                  "sha256": "10e104f1af0ff4622fd794aedb45fc1999350997f4c14250d2fb095f99ca7abe"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-2",
+                "collision": {
+                  "id": "railway-2-2-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-2.json",
+                  "bytes": 515355,
+                  "sha256": "53913fcef4e36cdac188ff1e13228d1f116329ff8dea179696817f9950167577"
+                },
+                "scene": {
+                  "id": "railway-2-2-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-2.glb",
+                  "bytes": 352028,
+                  "sha256": "1e38c2a87ff56eeb9cfe37af1b5abdd09bc9ec32e5f8e9ec5b2dd24ef596a312"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-1-0",
+              "terrain": {
+                "chunkId": "railway-1-0",
+                "collision": {
+                  "id": "railway-1-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-0.json",
+                  "bytes": 6388,
+                  "sha256": "2c206adaf12b1cb89a14561baa5d94f709a179d31ee736ea341a5adfb6e8f9aa"
+                },
+                "scene": {
+                  "id": "railway-1-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-0.glb",
+                  "bytes": 38408,
+                  "sha256": "56711e7c4b7e344b7565146e0f4e33c8da0600a6be7d38f586f93d661556b61f"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-0",
+                "collision": {
+                  "id": "railway-1-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-0.json",
+                  "bytes": 708567,
+                  "sha256": "add4ba15bed559f4e6011a0497d4db05fc159adb08869e114a3aa5e2fb4ec5c9"
+                },
+                "scene": {
+                  "id": "railway-1-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-0.glb",
+                  "bytes": 455356,
+                  "sha256": "0ac9e0054cb989a646d8f9c5a06952627960d82152585d8e092d1c116d67b552"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-1-2",
+              "terrain": {
+                "chunkId": "railway-1-2",
+                "collision": {
+                  "id": "railway-1-2-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-2.json",
+                  "bytes": 6377,
+                  "sha256": "f12db14afd571f356822db1ad807f27586dabb08e7dfd644a3fff64fece52aa4"
+                },
+                "scene": {
+                  "id": "railway-1-2-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-2.glb",
+                  "bytes": 38404,
+                  "sha256": "1250460a6b339c60b63f2fd67cbb0a42559d42bb1492a733b223887d97759bee"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-2",
+                "collision": {
+                  "id": "railway-1-2-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-2.json",
+                  "bytes": 699421,
+                  "sha256": "a7b1201652f1d54404d794a293b58cb07d35dff48399927204bba0c81a361a84"
+                },
+                "scene": {
+                  "id": "railway-1-2-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-2.glb",
+                  "bytes": 447736,
+                  "sha256": "114d4b371642f2815f10d32c99637d923c5d8071c5d6b2a5f019b17f7dab98bb"
+                }
+              }
+            }
+          ]
+        },
+        "failure": null
+      }
+    },
+    {
+      "reason": "resident boundary 2",
+      "elapsedMs": 264.8999999985099,
+      "origin": {
+        "x": 192000,
+        "y": 0,
+        "z": 192000
+      },
+      "terrain": {
+        "state": "ready",
+        "terrainReady": true,
+        "flightReady": false,
+        "hasRetainedTerrain": true,
+        "geometryProfile": "terrain-scenery-v1",
+        "geometryBytes": 1280664,
+        "textureBytes": 2446676,
+        "resourceBytes": 3727340,
+        "sourceBytes": 5675931,
+        "reservedSourceBytes": 5675931,
+        "reservedGeometryBytes": 3727340,
+        "provenance": {
+          "regionId": "railway-valley-study",
+          "revision": "structure-r1",
+          "positionMm": {
+            "x": 160000,
+            "y": 4000,
+            "z": 160000
+          },
+          "originMm": {
+            "x": 192000,
+            "y": 0,
+            "z": 192000
+          },
+          "compiler": "FPV regional mixed owner v1",
+          "chunks": [
+            {
+              "chunkId": "railway-1-1",
+              "terrain": {
+                "chunkId": "railway-1-1",
+                "collision": {
+                  "id": "railway-1-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-1.json",
+                  "bytes": 6371,
+                  "sha256": "0e2b1c8215d5442f3f3e41609009f858b78bfa316265056cb9d87c3a13361458"
+                },
+                "scene": {
+                  "id": "railway-1-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-1.glb",
+                  "bytes": 38392,
+                  "sha256": "270e6be0bae41dc52fe15988d9e69af84ef3858456e932054897bf72298784ed"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-1",
+                "collision": {
+                  "id": "railway-1-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-1.json",
+                  "bytes": 547134,
+                  "sha256": "08aa0397f999aa5478edf9f6b81357f2f094da744e1f168201ca4488bcf4adfe"
+                },
+                "scene": {
+                  "id": "railway-1-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-1.glb",
+                  "bytes": 377616,
+                  "sha256": "6175f4e26054f8066be73c94d8fffffb76b5151d97667c8c6eb99db67a5b12ee"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-0-1",
+              "terrain": {
+                "chunkId": "railway-0-1",
+                "collision": {
+                  "id": "railway-0-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-1.json",
+                  "bytes": 6309,
+                  "sha256": "62cf2b1009bfd30d618ea4c1dec72e620da3962cce4f9298f92de773e07d9821"
+                },
+                "scene": {
+                  "id": "railway-0-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-1.glb",
+                  "bytes": 38404,
+                  "sha256": "f414fee89cd5d3d394682dbcc57bcc516df742a651b1014670a26a0c1d3ecdbe"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-0-1",
+                "collision": {
+                  "id": "railway-0-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-1.json",
+                  "bytes": 1731,
+                  "sha256": "20dea06c1d746cf1c6328ff713896112f04c9d6078e7bf1946e8c99c2eb35d05"
+                },
+                "scene": {
+                  "id": "railway-0-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-1.glb",
+                  "bytes": 2112,
+                  "sha256": "643beb0f4b83a2b2946293fc2d9aba2b95cd01b2ea503c2ff44f77b9f14d0255"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-1-0",
+              "terrain": {
+                "chunkId": "railway-1-0",
+                "collision": {
+                  "id": "railway-1-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-0.json",
+                  "bytes": 6388,
+                  "sha256": "2c206adaf12b1cb89a14561baa5d94f709a179d31ee736ea341a5adfb6e8f9aa"
+                },
+                "scene": {
+                  "id": "railway-1-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-0.glb",
+                  "bytes": 38408,
+                  "sha256": "56711e7c4b7e344b7565146e0f4e33c8da0600a6be7d38f586f93d661556b61f"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-0",
+                "collision": {
+                  "id": "railway-1-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-0.json",
+                  "bytes": 708567,
+                  "sha256": "add4ba15bed559f4e6011a0497d4db05fc159adb08869e114a3aa5e2fb4ec5c9"
+                },
+                "scene": {
+                  "id": "railway-1-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-0.glb",
+                  "bytes": 455356,
+                  "sha256": "0ac9e0054cb989a646d8f9c5a06952627960d82152585d8e092d1c116d67b552"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-1-2",
+              "terrain": {
+                "chunkId": "railway-1-2",
+                "collision": {
+                  "id": "railway-1-2-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-2.json",
+                  "bytes": 6377,
+                  "sha256": "f12db14afd571f356822db1ad807f27586dabb08e7dfd644a3fff64fece52aa4"
+                },
+                "scene": {
+                  "id": "railway-1-2-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-2.glb",
+                  "bytes": 38404,
+                  "sha256": "1250460a6b339c60b63f2fd67cbb0a42559d42bb1492a733b223887d97759bee"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-2",
+                "collision": {
+                  "id": "railway-1-2-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-2.json",
+                  "bytes": 699421,
+                  "sha256": "a7b1201652f1d54404d794a293b58cb07d35dff48399927204bba0c81a361a84"
+                },
+                "scene": {
+                  "id": "railway-1-2-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-2.glb",
+                  "bytes": 447736,
+                  "sha256": "114d4b371642f2815f10d32c99637d923c5d8071c5d6b2a5f019b17f7dab98bb"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-2-1",
+              "terrain": {
+                "chunkId": "railway-2-1",
+                "collision": {
+                  "id": "railway-2-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-1.json",
+                  "bytes": 6382,
+                  "sha256": "4c4a7699be712c0914bf3f13569fc6705fc59eafa90b9503a53488833a7a03fe"
+                },
+                "scene": {
+                  "id": "railway-2-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-1.glb",
+                  "bytes": 38408,
+                  "sha256": "50a9eb5e24eb4a6beccfea8d3a9d583f9e2b74818df72f568c65ce881fdb9988"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-1",
+                "collision": {
+                  "id": "railway-2-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-1.json",
+                  "bytes": 1731,
+                  "sha256": "c8cb4b0fa08677b45abcb7c6165e64abca834d6ae7acf3caa2bbcaae10ed3f3d"
+                },
+                "scene": {
+                  "id": "railway-2-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-1.glb",
+                  "bytes": 2112,
+                  "sha256": "49b6e73a4052006607bbc7c353e24b42e4bda702205c4115a904b65fef40eb91"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-0-0",
+              "terrain": {
+                "chunkId": "railway-0-0",
+                "collision": {
+                  "id": "railway-0-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-0.json",
+                  "bytes": 6367,
+                  "sha256": "a1171df21e80bbb332ab1d9fd7f23bf8c93925374d5eae152bcb3b5026a65697"
+                },
+                "scene": {
+                  "id": "railway-0-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-0.glb",
+                  "bytes": 38420,
+                  "sha256": "1489f342d6f23447be0497202d8842ddfc22cc4a85c6701027d88e0fe2996b16"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-0-0",
+                "collision": {
+                  "id": "railway-0-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-0.json",
+                  "bytes": 1779,
+                  "sha256": "73445dea3892ed8508bb9c7dcbe7bef7dca27a167a88129273a75e715778209f"
+                },
+                "scene": {
+                  "id": "railway-0-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-0.glb",
+                  "bytes": 2112,
+                  "sha256": "f2b7e3b8364516606c9046040265a3b952bdf18d9c398f34d34ceb4f04ac79c0"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-0-2",
+              "terrain": {
+                "chunkId": "railway-0-2",
+                "collision": {
+                  "id": "railway-0-2-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-2.json",
+                  "bytes": 5563,
+                  "sha256": "004c7df3129b0dc0eeaea26996eb7d9f0cf29a8a98eb67be2e8cd36bdd712bf6"
+                },
+                "scene": {
+                  "id": "railway-0-2-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-2.glb",
+                  "bytes": 38404,
+                  "sha256": "94b8b5e91ff68e37766a68c80664a8bd921670391192c65ef56c7227f5ed85ca"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-0-2",
+                "collision": {
+                  "id": "railway-0-2-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-2.json",
+                  "bytes": 1755,
+                  "sha256": "1973c0bb6a2571fa0a266cc0b7d76804b49b9f48ba12cc7e74eed7bfc17ef0bc"
+                },
+                "scene": {
+                  "id": "railway-0-2-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-2.glb",
+                  "bytes": 2116,
+                  "sha256": "2fbc44baa96e246b2d9f47f7356ceae3c0ef9685fdeef3d248c39a9bc9621c18"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-2-0",
+              "terrain": {
+                "chunkId": "railway-2-0",
+                "collision": {
+                  "id": "railway-2-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-0.json",
+                  "bytes": 6164,
+                  "sha256": "ef8fcefccbd5c5ca5b46eaea741d85b2fbefc10f9be10e933ee1cf3b96127312"
+                },
+                "scene": {
+                  "id": "railway-2-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-0.glb",
+                  "bytes": 38408,
+                  "sha256": "c9045eac8ae1505fd931118d004d278212c927b1084d649804c5f576cf6ec8f0"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-0",
+                "collision": {
+                  "id": "railway-2-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-0.json",
+                  "bytes": 698079,
+                  "sha256": "9a7831e99a96a565e242d0757f66e76167b1777349e62188c5b631b8d58b591b"
+                },
+                "scene": {
+                  "id": "railway-2-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-0.glb",
+                  "bytes": 457360,
+                  "sha256": "42b1f0bbfd7c8b1d61e67d9ef1eb33fd178b7faced9ed590a8051d095f747530"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-2-2",
+              "terrain": {
+                "chunkId": "railway-2-2",
+                "collision": {
+                  "id": "railway-2-2-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-2.json",
+                  "bytes": 6254,
+                  "sha256": "1c4a05c63315425f2382aa2c8430a848ce51f2a9d843c7494cbaeabe2be414e9"
+                },
+                "scene": {
+                  "id": "railway-2-2-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-2.glb",
+                  "bytes": 38408,
+                  "sha256": "10e104f1af0ff4622fd794aedb45fc1999350997f4c14250d2fb095f99ca7abe"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-2",
+                "collision": {
+                  "id": "railway-2-2-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-2.json",
+                  "bytes": 515355,
+                  "sha256": "53913fcef4e36cdac188ff1e13228d1f116329ff8dea179696817f9950167577"
+                },
+                "scene": {
+                  "id": "railway-2-2-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-2.glb",
+                  "bytes": 352028,
+                  "sha256": "1e38c2a87ff56eeb9cfe37af1b5abdd09bc9ec32e5f8e9ec5b2dd24ef596a312"
+                }
+              }
+            }
+          ]
+        },
+        "failure": null
+      }
+    },
+    {
+      "reason": "resident boundary 1",
+      "elapsedMs": 263.19999999925494,
+      "origin": {
+        "x": 320000,
+        "y": 0,
+        "z": 192000
+      },
+      "terrain": {
+        "state": "ready",
+        "terrainReady": true,
+        "flightReady": false,
+        "hasRetainedTerrain": true,
+        "geometryProfile": "terrain-scenery-v1",
+        "geometryBytes": 1122048,
+        "textureBytes": 2446676,
+        "resourceBytes": 3568724,
+        "sourceBytes": 5530859,
+        "reservedSourceBytes": 5530859,
+        "reservedGeometryBytes": 3568724,
+        "provenance": {
+          "regionId": "railway-valley-study",
+          "revision": "structure-r1",
+          "positionMm": {
+            "x": 288000,
+            "y": 4000,
+            "z": 160000
+          },
+          "originMm": {
+            "x": 320000,
+            "y": 0,
+            "z": 192000
+          },
+          "compiler": "FPV regional mixed owner v1",
+          "chunks": [
+            {
+              "chunkId": "railway-2-1",
+              "terrain": {
+                "chunkId": "railway-2-1",
+                "collision": {
+                  "id": "railway-2-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-1.json",
+                  "bytes": 6382,
+                  "sha256": "4c4a7699be712c0914bf3f13569fc6705fc59eafa90b9503a53488833a7a03fe"
+                },
+                "scene": {
+                  "id": "railway-2-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-1.glb",
+                  "bytes": 38408,
+                  "sha256": "50a9eb5e24eb4a6beccfea8d3a9d583f9e2b74818df72f568c65ce881fdb9988"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-1",
+                "collision": {
+                  "id": "railway-2-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-1.json",
+                  "bytes": 1731,
+                  "sha256": "c8cb4b0fa08677b45abcb7c6165e64abca834d6ae7acf3caa2bbcaae10ed3f3d"
+                },
+                "scene": {
+                  "id": "railway-2-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-1.glb",
+                  "bytes": 2112,
+                  "sha256": "49b6e73a4052006607bbc7c353e24b42e4bda702205c4115a904b65fef40eb91"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-1-1",
+              "terrain": {
+                "chunkId": "railway-1-1",
+                "collision": {
+                  "id": "railway-1-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-1.json",
+                  "bytes": 6371,
+                  "sha256": "0e2b1c8215d5442f3f3e41609009f858b78bfa316265056cb9d87c3a13361458"
+                },
+                "scene": {
+                  "id": "railway-1-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-1.glb",
+                  "bytes": 38392,
+                  "sha256": "270e6be0bae41dc52fe15988d9e69af84ef3858456e932054897bf72298784ed"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-1",
+                "collision": {
+                  "id": "railway-1-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-1.json",
+                  "bytes": 547134,
+                  "sha256": "08aa0397f999aa5478edf9f6b81357f2f094da744e1f168201ca4488bcf4adfe"
+                },
+                "scene": {
+                  "id": "railway-1-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-1.glb",
+                  "bytes": 377616,
+                  "sha256": "6175f4e26054f8066be73c94d8fffffb76b5151d97667c8c6eb99db67a5b12ee"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-2-0",
+              "terrain": {
+                "chunkId": "railway-2-0",
+                "collision": {
+                  "id": "railway-2-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-0.json",
+                  "bytes": 6164,
+                  "sha256": "ef8fcefccbd5c5ca5b46eaea741d85b2fbefc10f9be10e933ee1cf3b96127312"
+                },
+                "scene": {
+                  "id": "railway-2-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-0.glb",
+                  "bytes": 38408,
+                  "sha256": "c9045eac8ae1505fd931118d004d278212c927b1084d649804c5f576cf6ec8f0"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-0",
+                "collision": {
+                  "id": "railway-2-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-0.json",
+                  "bytes": 698079,
+                  "sha256": "9a7831e99a96a565e242d0757f66e76167b1777349e62188c5b631b8d58b591b"
+                },
+                "scene": {
+                  "id": "railway-2-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-0.glb",
+                  "bytes": 457360,
+                  "sha256": "42b1f0bbfd7c8b1d61e67d9ef1eb33fd178b7faced9ed590a8051d095f747530"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-2-2",
+              "terrain": {
+                "chunkId": "railway-2-2",
+                "collision": {
+                  "id": "railway-2-2-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-2.json",
+                  "bytes": 6254,
+                  "sha256": "1c4a05c63315425f2382aa2c8430a848ce51f2a9d843c7494cbaeabe2be414e9"
+                },
+                "scene": {
+                  "id": "railway-2-2-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-2.glb",
+                  "bytes": 38408,
+                  "sha256": "10e104f1af0ff4622fd794aedb45fc1999350997f4c14250d2fb095f99ca7abe"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-2",
+                "collision": {
+                  "id": "railway-2-2-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-2.json",
+                  "bytes": 515355,
+                  "sha256": "53913fcef4e36cdac188ff1e13228d1f116329ff8dea179696817f9950167577"
+                },
+                "scene": {
+                  "id": "railway-2-2-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-2.glb",
+                  "bytes": 352028,
+                  "sha256": "1e38c2a87ff56eeb9cfe37af1b5abdd09bc9ec32e5f8e9ec5b2dd24ef596a312"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-1-0",
+              "terrain": {
+                "chunkId": "railway-1-0",
+                "collision": {
+                  "id": "railway-1-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-0.json",
+                  "bytes": 6388,
+                  "sha256": "2c206adaf12b1cb89a14561baa5d94f709a179d31ee736ea341a5adfb6e8f9aa"
+                },
+                "scene": {
+                  "id": "railway-1-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-0.glb",
+                  "bytes": 38408,
+                  "sha256": "56711e7c4b7e344b7565146e0f4e33c8da0600a6be7d38f586f93d661556b61f"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-0",
+                "collision": {
+                  "id": "railway-1-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-0.json",
+                  "bytes": 708567,
+                  "sha256": "add4ba15bed559f4e6011a0497d4db05fc159adb08869e114a3aa5e2fb4ec5c9"
+                },
+                "scene": {
+                  "id": "railway-1-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-0.glb",
+                  "bytes": 455356,
+                  "sha256": "0ac9e0054cb989a646d8f9c5a06952627960d82152585d8e092d1c116d67b552"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-1-2",
+              "terrain": {
+                "chunkId": "railway-1-2",
+                "collision": {
+                  "id": "railway-1-2-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-2.json",
+                  "bytes": 6377,
+                  "sha256": "f12db14afd571f356822db1ad807f27586dabb08e7dfd644a3fff64fece52aa4"
+                },
+                "scene": {
+                  "id": "railway-1-2-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-2.glb",
+                  "bytes": 38404,
+                  "sha256": "1250460a6b339c60b63f2fd67cbb0a42559d42bb1492a733b223887d97759bee"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-2",
+                "collision": {
+                  "id": "railway-1-2-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-2.json",
+                  "bytes": 699421,
+                  "sha256": "a7b1201652f1d54404d794a293b58cb07d35dff48399927204bba0c81a361a84"
+                },
+                "scene": {
+                  "id": "railway-1-2-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-2.glb",
+                  "bytes": 447736,
+                  "sha256": "114d4b371642f2815f10d32c99637d923c5d8071c5d6b2a5f019b17f7dab98bb"
+                }
+              }
+            }
+          ]
+        },
+        "failure": null
+      }
+    },
+    {
+      "reason": "resident boundary 2",
+      "elapsedMs": 320.79999999701977,
+      "origin": {
+        "x": 192000,
+        "y": 0,
+        "z": 192000
+      },
+      "terrain": {
+        "state": "ready",
+        "terrainReady": true,
+        "flightReady": false,
+        "hasRetainedTerrain": true,
+        "geometryProfile": "terrain-scenery-v1",
+        "geometryBytes": 1280664,
+        "textureBytes": 2446676,
+        "resourceBytes": 3727340,
+        "sourceBytes": 5675931,
+        "reservedSourceBytes": 5675931,
+        "reservedGeometryBytes": 3727340,
+        "provenance": {
+          "regionId": "railway-valley-study",
+          "revision": "structure-r1",
+          "positionMm": {
+            "x": 160000,
+            "y": 4000,
+            "z": 160000
+          },
+          "originMm": {
+            "x": 192000,
+            "y": 0,
+            "z": 192000
+          },
+          "compiler": "FPV regional mixed owner v1",
+          "chunks": [
+            {
+              "chunkId": "railway-1-1",
+              "terrain": {
+                "chunkId": "railway-1-1",
+                "collision": {
+                  "id": "railway-1-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-1.json",
+                  "bytes": 6371,
+                  "sha256": "0e2b1c8215d5442f3f3e41609009f858b78bfa316265056cb9d87c3a13361458"
+                },
+                "scene": {
+                  "id": "railway-1-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-1.glb",
+                  "bytes": 38392,
+                  "sha256": "270e6be0bae41dc52fe15988d9e69af84ef3858456e932054897bf72298784ed"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-1",
+                "collision": {
+                  "id": "railway-1-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-1.json",
+                  "bytes": 547134,
+                  "sha256": "08aa0397f999aa5478edf9f6b81357f2f094da744e1f168201ca4488bcf4adfe"
+                },
+                "scene": {
+                  "id": "railway-1-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-1.glb",
+                  "bytes": 377616,
+                  "sha256": "6175f4e26054f8066be73c94d8fffffb76b5151d97667c8c6eb99db67a5b12ee"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-0-1",
+              "terrain": {
+                "chunkId": "railway-0-1",
+                "collision": {
+                  "id": "railway-0-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-1.json",
+                  "bytes": 6309,
+                  "sha256": "62cf2b1009bfd30d618ea4c1dec72e620da3962cce4f9298f92de773e07d9821"
+                },
+                "scene": {
+                  "id": "railway-0-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-1.glb",
+                  "bytes": 38404,
+                  "sha256": "f414fee89cd5d3d394682dbcc57bcc516df742a651b1014670a26a0c1d3ecdbe"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-0-1",
+                "collision": {
+                  "id": "railway-0-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-1.json",
+                  "bytes": 1731,
+                  "sha256": "20dea06c1d746cf1c6328ff713896112f04c9d6078e7bf1946e8c99c2eb35d05"
+                },
+                "scene": {
+                  "id": "railway-0-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-1.glb",
+                  "bytes": 2112,
+                  "sha256": "643beb0f4b83a2b2946293fc2d9aba2b95cd01b2ea503c2ff44f77b9f14d0255"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-1-0",
+              "terrain": {
+                "chunkId": "railway-1-0",
+                "collision": {
+                  "id": "railway-1-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-0.json",
+                  "bytes": 6388,
+                  "sha256": "2c206adaf12b1cb89a14561baa5d94f709a179d31ee736ea341a5adfb6e8f9aa"
+                },
+                "scene": {
+                  "id": "railway-1-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-0.glb",
+                  "bytes": 38408,
+                  "sha256": "56711e7c4b7e344b7565146e0f4e33c8da0600a6be7d38f586f93d661556b61f"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-0",
+                "collision": {
+                  "id": "railway-1-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-0.json",
+                  "bytes": 708567,
+                  "sha256": "add4ba15bed559f4e6011a0497d4db05fc159adb08869e114a3aa5e2fb4ec5c9"
+                },
+                "scene": {
+                  "id": "railway-1-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-0.glb",
+                  "bytes": 455356,
+                  "sha256": "0ac9e0054cb989a646d8f9c5a06952627960d82152585d8e092d1c116d67b552"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-1-2",
+              "terrain": {
+                "chunkId": "railway-1-2",
+                "collision": {
+                  "id": "railway-1-2-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-2.json",
+                  "bytes": 6377,
+                  "sha256": "f12db14afd571f356822db1ad807f27586dabb08e7dfd644a3fff64fece52aa4"
+                },
+                "scene": {
+                  "id": "railway-1-2-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-2.glb",
+                  "bytes": 38404,
+                  "sha256": "1250460a6b339c60b63f2fd67cbb0a42559d42bb1492a733b223887d97759bee"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-2",
+                "collision": {
+                  "id": "railway-1-2-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-2.json",
+                  "bytes": 699421,
+                  "sha256": "a7b1201652f1d54404d794a293b58cb07d35dff48399927204bba0c81a361a84"
+                },
+                "scene": {
+                  "id": "railway-1-2-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-2.glb",
+                  "bytes": 447736,
+                  "sha256": "114d4b371642f2815f10d32c99637d923c5d8071c5d6b2a5f019b17f7dab98bb"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-2-1",
+              "terrain": {
+                "chunkId": "railway-2-1",
+                "collision": {
+                  "id": "railway-2-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-1.json",
+                  "bytes": 6382,
+                  "sha256": "4c4a7699be712c0914bf3f13569fc6705fc59eafa90b9503a53488833a7a03fe"
+                },
+                "scene": {
+                  "id": "railway-2-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-1.glb",
+                  "bytes": 38408,
+                  "sha256": "50a9eb5e24eb4a6beccfea8d3a9d583f9e2b74818df72f568c65ce881fdb9988"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-1",
+                "collision": {
+                  "id": "railway-2-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-1.json",
+                  "bytes": 1731,
+                  "sha256": "c8cb4b0fa08677b45abcb7c6165e64abca834d6ae7acf3caa2bbcaae10ed3f3d"
+                },
+                "scene": {
+                  "id": "railway-2-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-1.glb",
+                  "bytes": 2112,
+                  "sha256": "49b6e73a4052006607bbc7c353e24b42e4bda702205c4115a904b65fef40eb91"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-0-0",
+              "terrain": {
+                "chunkId": "railway-0-0",
+                "collision": {
+                  "id": "railway-0-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-0.json",
+                  "bytes": 6367,
+                  "sha256": "a1171df21e80bbb332ab1d9fd7f23bf8c93925374d5eae152bcb3b5026a65697"
+                },
+                "scene": {
+                  "id": "railway-0-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-0.glb",
+                  "bytes": 38420,
+                  "sha256": "1489f342d6f23447be0497202d8842ddfc22cc4a85c6701027d88e0fe2996b16"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-0-0",
+                "collision": {
+                  "id": "railway-0-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-0.json",
+                  "bytes": 1779,
+                  "sha256": "73445dea3892ed8508bb9c7dcbe7bef7dca27a167a88129273a75e715778209f"
+                },
+                "scene": {
+                  "id": "railway-0-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-0.glb",
+                  "bytes": 2112,
+                  "sha256": "f2b7e3b8364516606c9046040265a3b952bdf18d9c398f34d34ceb4f04ac79c0"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-0-2",
+              "terrain": {
+                "chunkId": "railway-0-2",
+                "collision": {
+                  "id": "railway-0-2-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-2.json",
+                  "bytes": 5563,
+                  "sha256": "004c7df3129b0dc0eeaea26996eb7d9f0cf29a8a98eb67be2e8cd36bdd712bf6"
+                },
+                "scene": {
+                  "id": "railway-0-2-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-0-2.glb",
+                  "bytes": 38404,
+                  "sha256": "94b8b5e91ff68e37766a68c80664a8bd921670391192c65ef56c7227f5ed85ca"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-0-2",
+                "collision": {
+                  "id": "railway-0-2-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-2.json",
+                  "bytes": 1755,
+                  "sha256": "1973c0bb6a2571fa0a266cc0b7d76804b49b9f48ba12cc7e74eed7bfc17ef0bc"
+                },
+                "scene": {
+                  "id": "railway-0-2-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-0-2.glb",
+                  "bytes": 2116,
+                  "sha256": "2fbc44baa96e246b2d9f47f7356ceae3c0ef9685fdeef3d248c39a9bc9621c18"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-2-0",
+              "terrain": {
+                "chunkId": "railway-2-0",
+                "collision": {
+                  "id": "railway-2-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-0.json",
+                  "bytes": 6164,
+                  "sha256": "ef8fcefccbd5c5ca5b46eaea741d85b2fbefc10f9be10e933ee1cf3b96127312"
+                },
+                "scene": {
+                  "id": "railway-2-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-0.glb",
+                  "bytes": 38408,
+                  "sha256": "c9045eac8ae1505fd931118d004d278212c927b1084d649804c5f576cf6ec8f0"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-0",
+                "collision": {
+                  "id": "railway-2-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-0.json",
+                  "bytes": 698079,
+                  "sha256": "9a7831e99a96a565e242d0757f66e76167b1777349e62188c5b631b8d58b591b"
+                },
+                "scene": {
+                  "id": "railway-2-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-0.glb",
+                  "bytes": 457360,
+                  "sha256": "42b1f0bbfd7c8b1d61e67d9ef1eb33fd178b7faced9ed590a8051d095f747530"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-2-2",
+              "terrain": {
+                "chunkId": "railway-2-2",
+                "collision": {
+                  "id": "railway-2-2-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-2.json",
+                  "bytes": 6254,
+                  "sha256": "1c4a05c63315425f2382aa2c8430a848ce51f2a9d843c7494cbaeabe2be414e9"
+                },
+                "scene": {
+                  "id": "railway-2-2-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-2.glb",
+                  "bytes": 38408,
+                  "sha256": "10e104f1af0ff4622fd794aedb45fc1999350997f4c14250d2fb095f99ca7abe"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-2",
+                "collision": {
+                  "id": "railway-2-2-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-2.json",
+                  "bytes": 515355,
+                  "sha256": "53913fcef4e36cdac188ff1e13228d1f116329ff8dea179696817f9950167577"
+                },
+                "scene": {
+                  "id": "railway-2-2-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-2.glb",
+                  "bytes": 352028,
+                  "sha256": "1e38c2a87ff56eeb9cfe37af1b5abdd09bc9ec32e5f8e9ec5b2dd24ef596a312"
+                }
+              }
+            }
+          ]
+        },
+        "failure": null
+      }
+    },
+    {
+      "reason": "quality location",
+      "elapsedMs": 255.89999999850988,
+      "origin": {
+        "x": 320000,
+        "y": 0,
+        "z": 64000
+      },
+      "terrain": {
+        "state": "ready",
+        "terrainReady": true,
+        "flightReady": false,
+        "hasRetainedTerrain": true,
+        "geometryProfile": "terrain-scenery-v1",
+        "geometryBytes": 739944,
+        "textureBytes": 2446676,
+        "resourceBytes": 3186620,
+        "sourceBytes": 3426876,
+        "reservedSourceBytes": 3426876,
+        "reservedGeometryBytes": 3186620,
+        "provenance": {
+          "regionId": "railway-valley-study",
+          "revision": "structure-r1",
+          "positionMm": {
+            "x": 300000,
+            "y": 19000,
+            "z": 32000
+          },
+          "originMm": {
+            "x": 320000,
+            "y": 0,
+            "z": 64000
+          },
+          "compiler": "FPV regional mixed owner v1",
+          "chunks": [
+            {
+              "chunkId": "railway-2-0",
+              "terrain": {
+                "chunkId": "railway-2-0",
+                "collision": {
+                  "id": "railway-2-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-0.json",
+                  "bytes": 6164,
+                  "sha256": "ef8fcefccbd5c5ca5b46eaea741d85b2fbefc10f9be10e933ee1cf3b96127312"
+                },
+                "scene": {
+                  "id": "railway-2-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-0.glb",
+                  "bytes": 38408,
+                  "sha256": "c9045eac8ae1505fd931118d004d278212c927b1084d649804c5f576cf6ec8f0"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-0",
+                "collision": {
+                  "id": "railway-2-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-0.json",
+                  "bytes": 698079,
+                  "sha256": "9a7831e99a96a565e242d0757f66e76167b1777349e62188c5b631b8d58b591b"
+                },
+                "scene": {
+                  "id": "railway-2-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-0.glb",
+                  "bytes": 457360,
+                  "sha256": "42b1f0bbfd7c8b1d61e67d9ef1eb33fd178b7faced9ed590a8051d095f747530"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-1-0",
+              "terrain": {
+                "chunkId": "railway-1-0",
+                "collision": {
+                  "id": "railway-1-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-0.json",
+                  "bytes": 6388,
+                  "sha256": "2c206adaf12b1cb89a14561baa5d94f709a179d31ee736ea341a5adfb6e8f9aa"
+                },
+                "scene": {
+                  "id": "railway-1-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-0.glb",
+                  "bytes": 38408,
+                  "sha256": "56711e7c4b7e344b7565146e0f4e33c8da0600a6be7d38f586f93d661556b61f"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-0",
+                "collision": {
+                  "id": "railway-1-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-0.json",
+                  "bytes": 708567,
+                  "sha256": "add4ba15bed559f4e6011a0497d4db05fc159adb08869e114a3aa5e2fb4ec5c9"
+                },
+                "scene": {
+                  "id": "railway-1-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-0.glb",
+                  "bytes": 455356,
+                  "sha256": "0ac9e0054cb989a646d8f9c5a06952627960d82152585d8e092d1c116d67b552"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-2-1",
+              "terrain": {
+                "chunkId": "railway-2-1",
+                "collision": {
+                  "id": "railway-2-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-1.json",
+                  "bytes": 6382,
+                  "sha256": "4c4a7699be712c0914bf3f13569fc6705fc59eafa90b9503a53488833a7a03fe"
+                },
+                "scene": {
+                  "id": "railway-2-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-1.glb",
+                  "bytes": 38408,
+                  "sha256": "50a9eb5e24eb4a6beccfea8d3a9d583f9e2b74818df72f568c65ce881fdb9988"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-1",
+                "collision": {
+                  "id": "railway-2-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-1.json",
+                  "bytes": 1731,
+                  "sha256": "c8cb4b0fa08677b45abcb7c6165e64abca834d6ae7acf3caa2bbcaae10ed3f3d"
+                },
+                "scene": {
+                  "id": "railway-2-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-1.glb",
+                  "bytes": 2112,
+                  "sha256": "49b6e73a4052006607bbc7c353e24b42e4bda702205c4115a904b65fef40eb91"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-1-1",
+              "terrain": {
+                "chunkId": "railway-1-1",
+                "collision": {
+                  "id": "railway-1-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-1.json",
+                  "bytes": 6371,
+                  "sha256": "0e2b1c8215d5442f3f3e41609009f858b78bfa316265056cb9d87c3a13361458"
+                },
+                "scene": {
+                  "id": "railway-1-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-1.glb",
+                  "bytes": 38392,
+                  "sha256": "270e6be0bae41dc52fe15988d9e69af84ef3858456e932054897bf72298784ed"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-1",
+                "collision": {
+                  "id": "railway-1-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-1.json",
+                  "bytes": 547134,
+                  "sha256": "08aa0397f999aa5478edf9f6b81357f2f094da744e1f168201ca4488bcf4adfe"
+                },
+                "scene": {
+                  "id": "railway-1-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-1.glb",
+                  "bytes": 377616,
+                  "sha256": "6175f4e26054f8066be73c94d8fffffb76b5151d97667c8c6eb99db67a5b12ee"
+                }
+              }
+            }
+          ]
+        },
+        "failure": null
+      }
+    },
+    {
+      "reason": "resident boundary 1",
+      "elapsedMs": 182.79999999701977,
+      "origin": {
+        "x": 320000,
+        "y": 0,
+        "z": 64000
+      },
+      "terrain": {
+        "state": "ready",
+        "terrainReady": true,
+        "flightReady": false,
+        "hasRetainedTerrain": true,
+        "geometryProfile": "terrain-scenery-v1",
+        "geometryBytes": 739944,
+        "textureBytes": 2446676,
+        "resourceBytes": 3186620,
+        "sourceBytes": 3426876,
+        "reservedSourceBytes": 3426876,
+        "reservedGeometryBytes": 3186620,
+        "provenance": {
+          "regionId": "railway-valley-study",
+          "revision": "structure-r1",
+          "positionMm": {
+            "x": 383000,
+            "y": 19000,
+            "z": 32000
+          },
+          "originMm": {
+            "x": 320000,
+            "y": 0,
+            "z": 64000
+          },
+          "compiler": "FPV regional mixed owner v1",
+          "chunks": [
+            {
+              "chunkId": "railway-2-0",
+              "terrain": {
+                "chunkId": "railway-2-0",
+                "collision": {
+                  "id": "railway-2-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-0.json",
+                  "bytes": 6164,
+                  "sha256": "ef8fcefccbd5c5ca5b46eaea741d85b2fbefc10f9be10e933ee1cf3b96127312"
+                },
+                "scene": {
+                  "id": "railway-2-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-0.glb",
+                  "bytes": 38408,
+                  "sha256": "c9045eac8ae1505fd931118d004d278212c927b1084d649804c5f576cf6ec8f0"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-0",
+                "collision": {
+                  "id": "railway-2-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-0.json",
+                  "bytes": 698079,
+                  "sha256": "9a7831e99a96a565e242d0757f66e76167b1777349e62188c5b631b8d58b591b"
+                },
+                "scene": {
+                  "id": "railway-2-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-0.glb",
+                  "bytes": 457360,
+                  "sha256": "42b1f0bbfd7c8b1d61e67d9ef1eb33fd178b7faced9ed590a8051d095f747530"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-1-0",
+              "terrain": {
+                "chunkId": "railway-1-0",
+                "collision": {
+                  "id": "railway-1-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-0.json",
+                  "bytes": 6388,
+                  "sha256": "2c206adaf12b1cb89a14561baa5d94f709a179d31ee736ea341a5adfb6e8f9aa"
+                },
+                "scene": {
+                  "id": "railway-1-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-0.glb",
+                  "bytes": 38408,
+                  "sha256": "56711e7c4b7e344b7565146e0f4e33c8da0600a6be7d38f586f93d661556b61f"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-0",
+                "collision": {
+                  "id": "railway-1-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-0.json",
+                  "bytes": 708567,
+                  "sha256": "add4ba15bed559f4e6011a0497d4db05fc159adb08869e114a3aa5e2fb4ec5c9"
+                },
+                "scene": {
+                  "id": "railway-1-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-0.glb",
+                  "bytes": 455356,
+                  "sha256": "0ac9e0054cb989a646d8f9c5a06952627960d82152585d8e092d1c116d67b552"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-2-1",
+              "terrain": {
+                "chunkId": "railway-2-1",
+                "collision": {
+                  "id": "railway-2-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-1.json",
+                  "bytes": 6382,
+                  "sha256": "4c4a7699be712c0914bf3f13569fc6705fc59eafa90b9503a53488833a7a03fe"
+                },
+                "scene": {
+                  "id": "railway-2-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-1.glb",
+                  "bytes": 38408,
+                  "sha256": "50a9eb5e24eb4a6beccfea8d3a9d583f9e2b74818df72f568c65ce881fdb9988"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-1",
+                "collision": {
+                  "id": "railway-2-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-1.json",
+                  "bytes": 1731,
+                  "sha256": "c8cb4b0fa08677b45abcb7c6165e64abca834d6ae7acf3caa2bbcaae10ed3f3d"
+                },
+                "scene": {
+                  "id": "railway-2-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-1.glb",
+                  "bytes": 2112,
+                  "sha256": "49b6e73a4052006607bbc7c353e24b42e4bda702205c4115a904b65fef40eb91"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-1-1",
+              "terrain": {
+                "chunkId": "railway-1-1",
+                "collision": {
+                  "id": "railway-1-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-1.json",
+                  "bytes": 6371,
+                  "sha256": "0e2b1c8215d5442f3f3e41609009f858b78bfa316265056cb9d87c3a13361458"
+                },
+                "scene": {
+                  "id": "railway-1-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-1.glb",
+                  "bytes": 38392,
+                  "sha256": "270e6be0bae41dc52fe15988d9e69af84ef3858456e932054897bf72298784ed"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-1",
+                "collision": {
+                  "id": "railway-1-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-1.json",
+                  "bytes": 547134,
+                  "sha256": "08aa0397f999aa5478edf9f6b81357f2f094da744e1f168201ca4488bcf4adfe"
+                },
+                "scene": {
+                  "id": "railway-1-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-1.glb",
+                  "bytes": 377616,
+                  "sha256": "6175f4e26054f8066be73c94d8fffffb76b5151d97667c8c6eb99db67a5b12ee"
+                }
+              }
+            }
+          ]
+        },
+        "failure": null
+      }
+    },
+    {
+      "reason": "resident boundary 2",
+      "elapsedMs": 218.19999999925494,
+      "origin": {
+        "x": 320000,
+        "y": 0,
+        "z": 64000
+      },
+      "terrain": {
+        "state": "ready",
+        "terrainReady": true,
+        "flightReady": false,
+        "hasRetainedTerrain": true,
+        "geometryProfile": "terrain-scenery-v1",
+        "geometryBytes": 739944,
+        "textureBytes": 2446676,
+        "resourceBytes": 3186620,
+        "sourceBytes": 3426876,
+        "reservedSourceBytes": 3426876,
+        "reservedGeometryBytes": 3186620,
+        "provenance": {
+          "regionId": "railway-valley-study",
+          "revision": "structure-r1",
+          "positionMm": {
+            "x": 300000,
+            "y": 19000,
+            "z": 32000
+          },
+          "originMm": {
+            "x": 320000,
+            "y": 0,
+            "z": 64000
+          },
+          "compiler": "FPV regional mixed owner v1",
+          "chunks": [
+            {
+              "chunkId": "railway-2-0",
+              "terrain": {
+                "chunkId": "railway-2-0",
+                "collision": {
+                  "id": "railway-2-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-0.json",
+                  "bytes": 6164,
+                  "sha256": "ef8fcefccbd5c5ca5b46eaea741d85b2fbefc10f9be10e933ee1cf3b96127312"
+                },
+                "scene": {
+                  "id": "railway-2-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-0.glb",
+                  "bytes": 38408,
+                  "sha256": "c9045eac8ae1505fd931118d004d278212c927b1084d649804c5f576cf6ec8f0"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-0",
+                "collision": {
+                  "id": "railway-2-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-0.json",
+                  "bytes": 698079,
+                  "sha256": "9a7831e99a96a565e242d0757f66e76167b1777349e62188c5b631b8d58b591b"
+                },
+                "scene": {
+                  "id": "railway-2-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-0.glb",
+                  "bytes": 457360,
+                  "sha256": "42b1f0bbfd7c8b1d61e67d9ef1eb33fd178b7faced9ed590a8051d095f747530"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-1-0",
+              "terrain": {
+                "chunkId": "railway-1-0",
+                "collision": {
+                  "id": "railway-1-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-0.json",
+                  "bytes": 6388,
+                  "sha256": "2c206adaf12b1cb89a14561baa5d94f709a179d31ee736ea341a5adfb6e8f9aa"
+                },
+                "scene": {
+                  "id": "railway-1-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-0.glb",
+                  "bytes": 38408,
+                  "sha256": "56711e7c4b7e344b7565146e0f4e33c8da0600a6be7d38f586f93d661556b61f"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-0",
+                "collision": {
+                  "id": "railway-1-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-0.json",
+                  "bytes": 708567,
+                  "sha256": "add4ba15bed559f4e6011a0497d4db05fc159adb08869e114a3aa5e2fb4ec5c9"
+                },
+                "scene": {
+                  "id": "railway-1-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-0.glb",
+                  "bytes": 455356,
+                  "sha256": "0ac9e0054cb989a646d8f9c5a06952627960d82152585d8e092d1c116d67b552"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-2-1",
+              "terrain": {
+                "chunkId": "railway-2-1",
+                "collision": {
+                  "id": "railway-2-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-1.json",
+                  "bytes": 6382,
+                  "sha256": "4c4a7699be712c0914bf3f13569fc6705fc59eafa90b9503a53488833a7a03fe"
+                },
+                "scene": {
+                  "id": "railway-2-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-1.glb",
+                  "bytes": 38408,
+                  "sha256": "50a9eb5e24eb4a6beccfea8d3a9d583f9e2b74818df72f568c65ce881fdb9988"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-1",
+                "collision": {
+                  "id": "railway-2-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-1.json",
+                  "bytes": 1731,
+                  "sha256": "c8cb4b0fa08677b45abcb7c6165e64abca834d6ae7acf3caa2bbcaae10ed3f3d"
+                },
+                "scene": {
+                  "id": "railway-2-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-1.glb",
+                  "bytes": 2112,
+                  "sha256": "49b6e73a4052006607bbc7c353e24b42e4bda702205c4115a904b65fef40eb91"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-1-1",
+              "terrain": {
+                "chunkId": "railway-1-1",
+                "collision": {
+                  "id": "railway-1-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-1.json",
+                  "bytes": 6371,
+                  "sha256": "0e2b1c8215d5442f3f3e41609009f858b78bfa316265056cb9d87c3a13361458"
+                },
+                "scene": {
+                  "id": "railway-1-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-1.glb",
+                  "bytes": 38392,
+                  "sha256": "270e6be0bae41dc52fe15988d9e69af84ef3858456e932054897bf72298784ed"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-1",
+                "collision": {
+                  "id": "railway-1-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-1.json",
+                  "bytes": 547134,
+                  "sha256": "08aa0397f999aa5478edf9f6b81357f2f094da744e1f168201ca4488bcf4adfe"
+                },
+                "scene": {
+                  "id": "railway-1-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-1.glb",
+                  "bytes": 377616,
+                  "sha256": "6175f4e26054f8066be73c94d8fffffb76b5151d97667c8c6eb99db67a5b12ee"
+                }
+              }
+            }
+          ]
+        },
+        "failure": null
+      }
+    },
+    {
+      "reason": "resident boundary 1",
+      "elapsedMs": 187.40000000223517,
+      "origin": {
+        "x": 320000,
+        "y": 0,
+        "z": 64000
+      },
+      "terrain": {
+        "state": "ready",
+        "terrainReady": true,
+        "flightReady": false,
+        "hasRetainedTerrain": true,
+        "geometryProfile": "terrain-scenery-v1",
+        "geometryBytes": 739944,
+        "textureBytes": 2446676,
+        "resourceBytes": 3186620,
+        "sourceBytes": 3426876,
+        "reservedSourceBytes": 3426876,
+        "reservedGeometryBytes": 3186620,
+        "provenance": {
+          "regionId": "railway-valley-study",
+          "revision": "structure-r1",
+          "positionMm": {
+            "x": 383000,
+            "y": 19000,
+            "z": 32000
+          },
+          "originMm": {
+            "x": 320000,
+            "y": 0,
+            "z": 64000
+          },
+          "compiler": "FPV regional mixed owner v1",
+          "chunks": [
+            {
+              "chunkId": "railway-2-0",
+              "terrain": {
+                "chunkId": "railway-2-0",
+                "collision": {
+                  "id": "railway-2-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-0.json",
+                  "bytes": 6164,
+                  "sha256": "ef8fcefccbd5c5ca5b46eaea741d85b2fbefc10f9be10e933ee1cf3b96127312"
+                },
+                "scene": {
+                  "id": "railway-2-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-0.glb",
+                  "bytes": 38408,
+                  "sha256": "c9045eac8ae1505fd931118d004d278212c927b1084d649804c5f576cf6ec8f0"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-0",
+                "collision": {
+                  "id": "railway-2-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-0.json",
+                  "bytes": 698079,
+                  "sha256": "9a7831e99a96a565e242d0757f66e76167b1777349e62188c5b631b8d58b591b"
+                },
+                "scene": {
+                  "id": "railway-2-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-0.glb",
+                  "bytes": 457360,
+                  "sha256": "42b1f0bbfd7c8b1d61e67d9ef1eb33fd178b7faced9ed590a8051d095f747530"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-1-0",
+              "terrain": {
+                "chunkId": "railway-1-0",
+                "collision": {
+                  "id": "railway-1-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-0.json",
+                  "bytes": 6388,
+                  "sha256": "2c206adaf12b1cb89a14561baa5d94f709a179d31ee736ea341a5adfb6e8f9aa"
+                },
+                "scene": {
+                  "id": "railway-1-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-0.glb",
+                  "bytes": 38408,
+                  "sha256": "56711e7c4b7e344b7565146e0f4e33c8da0600a6be7d38f586f93d661556b61f"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-0",
+                "collision": {
+                  "id": "railway-1-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-0.json",
+                  "bytes": 708567,
+                  "sha256": "add4ba15bed559f4e6011a0497d4db05fc159adb08869e114a3aa5e2fb4ec5c9"
+                },
+                "scene": {
+                  "id": "railway-1-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-0.glb",
+                  "bytes": 455356,
+                  "sha256": "0ac9e0054cb989a646d8f9c5a06952627960d82152585d8e092d1c116d67b552"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-2-1",
+              "terrain": {
+                "chunkId": "railway-2-1",
+                "collision": {
+                  "id": "railway-2-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-1.json",
+                  "bytes": 6382,
+                  "sha256": "4c4a7699be712c0914bf3f13569fc6705fc59eafa90b9503a53488833a7a03fe"
+                },
+                "scene": {
+                  "id": "railway-2-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-1.glb",
+                  "bytes": 38408,
+                  "sha256": "50a9eb5e24eb4a6beccfea8d3a9d583f9e2b74818df72f568c65ce881fdb9988"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-1",
+                "collision": {
+                  "id": "railway-2-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-1.json",
+                  "bytes": 1731,
+                  "sha256": "c8cb4b0fa08677b45abcb7c6165e64abca834d6ae7acf3caa2bbcaae10ed3f3d"
+                },
+                "scene": {
+                  "id": "railway-2-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-1.glb",
+                  "bytes": 2112,
+                  "sha256": "49b6e73a4052006607bbc7c353e24b42e4bda702205c4115a904b65fef40eb91"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-1-1",
+              "terrain": {
+                "chunkId": "railway-1-1",
+                "collision": {
+                  "id": "railway-1-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-1.json",
+                  "bytes": 6371,
+                  "sha256": "0e2b1c8215d5442f3f3e41609009f858b78bfa316265056cb9d87c3a13361458"
+                },
+                "scene": {
+                  "id": "railway-1-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-1.glb",
+                  "bytes": 38392,
+                  "sha256": "270e6be0bae41dc52fe15988d9e69af84ef3858456e932054897bf72298784ed"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-1",
+                "collision": {
+                  "id": "railway-1-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-1.json",
+                  "bytes": 547134,
+                  "sha256": "08aa0397f999aa5478edf9f6b81357f2f094da744e1f168201ca4488bcf4adfe"
+                },
+                "scene": {
+                  "id": "railway-1-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-1.glb",
+                  "bytes": 377616,
+                  "sha256": "6175f4e26054f8066be73c94d8fffffb76b5151d97667c8c6eb99db67a5b12ee"
+                }
+              }
+            }
+          ]
+        },
+        "failure": null
+      }
+    },
+    {
+      "reason": "resident boundary 2",
+      "elapsedMs": 155.10000000149012,
+      "origin": {
+        "x": 320000,
+        "y": 0,
+        "z": 64000
+      },
+      "terrain": {
+        "state": "ready",
+        "terrainReady": true,
+        "flightReady": false,
+        "hasRetainedTerrain": true,
+        "geometryProfile": "terrain-scenery-v1",
+        "geometryBytes": 739944,
+        "textureBytes": 2446676,
+        "resourceBytes": 3186620,
+        "sourceBytes": 3426876,
+        "reservedSourceBytes": 3426876,
+        "reservedGeometryBytes": 3186620,
+        "provenance": {
+          "regionId": "railway-valley-study",
+          "revision": "structure-r1",
+          "positionMm": {
+            "x": 300000,
+            "y": 19000,
+            "z": 32000
+          },
+          "originMm": {
+            "x": 320000,
+            "y": 0,
+            "z": 64000
+          },
+          "compiler": "FPV regional mixed owner v1",
+          "chunks": [
+            {
+              "chunkId": "railway-2-0",
+              "terrain": {
+                "chunkId": "railway-2-0",
+                "collision": {
+                  "id": "railway-2-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-0.json",
+                  "bytes": 6164,
+                  "sha256": "ef8fcefccbd5c5ca5b46eaea741d85b2fbefc10f9be10e933ee1cf3b96127312"
+                },
+                "scene": {
+                  "id": "railway-2-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-0.glb",
+                  "bytes": 38408,
+                  "sha256": "c9045eac8ae1505fd931118d004d278212c927b1084d649804c5f576cf6ec8f0"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-0",
+                "collision": {
+                  "id": "railway-2-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-0.json",
+                  "bytes": 698079,
+                  "sha256": "9a7831e99a96a565e242d0757f66e76167b1777349e62188c5b631b8d58b591b"
+                },
+                "scene": {
+                  "id": "railway-2-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-0.glb",
+                  "bytes": 457360,
+                  "sha256": "42b1f0bbfd7c8b1d61e67d9ef1eb33fd178b7faced9ed590a8051d095f747530"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-1-0",
+              "terrain": {
+                "chunkId": "railway-1-0",
+                "collision": {
+                  "id": "railway-1-0-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-0.json",
+                  "bytes": 6388,
+                  "sha256": "2c206adaf12b1cb89a14561baa5d94f709a179d31ee736ea341a5adfb6e8f9aa"
+                },
+                "scene": {
+                  "id": "railway-1-0-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-0.glb",
+                  "bytes": 38408,
+                  "sha256": "56711e7c4b7e344b7565146e0f4e33c8da0600a6be7d38f586f93d661556b61f"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-0",
+                "collision": {
+                  "id": "railway-1-0-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-0.json",
+                  "bytes": 708567,
+                  "sha256": "add4ba15bed559f4e6011a0497d4db05fc159adb08869e114a3aa5e2fb4ec5c9"
+                },
+                "scene": {
+                  "id": "railway-1-0-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-0.glb",
+                  "bytes": 455356,
+                  "sha256": "0ac9e0054cb989a646d8f9c5a06952627960d82152585d8e092d1c116d67b552"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-2-1",
+              "terrain": {
+                "chunkId": "railway-2-1",
+                "collision": {
+                  "id": "railway-2-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-1.json",
+                  "bytes": 6382,
+                  "sha256": "4c4a7699be712c0914bf3f13569fc6705fc59eafa90b9503a53488833a7a03fe"
+                },
+                "scene": {
+                  "id": "railway-2-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-2-1.glb",
+                  "bytes": 38408,
+                  "sha256": "50a9eb5e24eb4a6beccfea8d3a9d583f9e2b74818df72f568c65ce881fdb9988"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-2-1",
+                "collision": {
+                  "id": "railway-2-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-1.json",
+                  "bytes": 1731,
+                  "sha256": "c8cb4b0fa08677b45abcb7c6165e64abca834d6ae7acf3caa2bbcaae10ed3f3d"
+                },
+                "scene": {
+                  "id": "railway-2-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-2-1.glb",
+                  "bytes": 2112,
+                  "sha256": "49b6e73a4052006607bbc7c353e24b42e4bda702205c4115a904b65fef40eb91"
+                }
+              }
+            },
+            {
+              "chunkId": "railway-1-1",
+              "terrain": {
+                "chunkId": "railway-1-1",
+                "collision": {
+                  "id": "railway-1-1-collision",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-1.json",
+                  "bytes": 6371,
+                  "sha256": "0e2b1c8215d5442f3f3e41609009f858b78bfa316265056cb9d87c3a13361458"
+                },
+                "scene": {
+                  "id": "railway-1-1-scene",
+                  "url": "http://127.0.0.1:8774/terrain/railway-1-1.glb",
+                  "bytes": 38392,
+                  "sha256": "270e6be0bae41dc52fe15988d9e69af84ef3858456e932054897bf72298784ed"
+                }
+              },
+              "scenery": {
+                "chunkId": "railway-1-1",
+                "collision": {
+                  "id": "railway-1-1-collision",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-1.json",
+                  "bytes": 547134,
+                  "sha256": "08aa0397f999aa5478edf9f6b81357f2f094da744e1f168201ca4488bcf4adfe"
+                },
+                "scene": {
+                  "id": "railway-1-1-scene",
+                  "url": "http://127.0.0.1:8774/scenery/railway-1-1.glb",
+                  "bytes": 377616,
+                  "sha256": "6175f4e26054f8066be73c94d8fffffb76b5151d97667c8c6eb99db67a5b12ee"
+                }
+              }
+            }
+          ]
+        },
+        "failure": null
+      }
+    }
+  ],
+  "segments": [
+    {
+      "quality": "low",
+      "effects": false,
+      "frames": 5683,
+      "drawP50": 0.4,
+      "drawP95": 0.5,
+      "effectsP95": 0,
+      "actorsP95": 0.3,
+      "intervalP95": 16.7,
+      "gpuP95": 1.769,
+      "heapBytes": [
+        71884251,
+        68958395,
+        55190791,
+        44445607,
+        52871323,
+        67920551,
+        57976171,
+        56826303,
+        53804267,
+        50370435,
+        65301027,
+        44052915,
+        58426995,
+        71425207,
+        43525553,
+        64216805,
+        52288725,
+        49666701,
+        69649245,
+        57380581,
+        48643409,
+        61498465,
+        54450709,
+        48100189,
+        61111065,
+        54319097,
+        47361057,
+        60084765,
+        75127501,
+        57224995,
+        47006143,
+        56854951,
+        49809987,
+        50496979,
+        65422651,
+        52960515,
+        64650011,
+        55117423,
+        52537499,
+        49535071,
+        45748491,
+        60704107,
+        48214119,
+        54322631,
+        69248459,
+        45582427,
+        68190679
+      ],
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "low",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": null,
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 0
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "combat": {
+          "moving": 0,
+          "settled": 0,
+          "marks": 0,
+          "bursts": 0,
+          "calls": 0,
+          "tier": "low",
+          "runId": "railway",
+          "tick": 0,
+          "stored": 0,
+          "capacity": 1024,
+          "evicted": 0,
+          "maxDrawCalls": 16,
+          "registeredPools": 11
+        },
+        "combatActors": {
+          "actors": 20,
+          "instances": 512,
+          "calls": 4,
+          "templates": 20,
+          "capacity": 20
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 35,
+          "materials": 20,
+          "textures": 0
+        },
+        "renderer": {
+          "calls": 48,
+          "triangles": 27786,
+          "geometries": 48,
+          "textures": 2,
+          "programs": 9,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "quality": "low",
+      "effects": true,
+      "frames": 5683,
+      "drawP50": 1.4,
+      "drawP95": 1.5,
+      "effectsP95": 1,
+      "actorsP95": 0.3,
+      "intervalP95": 16.7,
+      "gpuP95": 1.91,
+      "heapBytes": [
+        52497063,
+        65038607,
+        72717159,
+        71564619,
+        65591995,
+        61388784,
+        54499328,
+        57179392,
+        78893412,
+        64817412,
+        75760754,
+        64897070,
+        103550421,
+        89139765,
+        98103157,
+        113279617,
+        69162230,
+        62182302,
+        61557826,
+        78590038,
+        70012754,
+        67412502,
+        66679294,
+        81538402,
+        83799294,
+        64639530,
+        78230206,
+        78773789,
+        54570712,
+        70069056,
+        69061276,
+        74771444,
+        66648268,
+        58563262,
+        58369470,
+        85262378,
+        65579484,
+        82092488,
+        60044656,
+        81737748,
+        73232812,
+        60752544,
+        71957056,
+        65576968,
+        84788276,
+        48616185,
+        66370341
+      ],
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "low",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": null,
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 0
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "combat": {
+          "moving": 107,
+          "settled": 254,
+          "marks": 32,
+          "bursts": 4,
+          "calls": 9,
+          "tier": "low",
+          "runId": "railway",
+          "tick": 14900,
+          "stored": 1024,
+          "capacity": 1024,
+          "evicted": 8,
+          "maxDrawCalls": 16,
+          "registeredPools": 11
+        },
+        "combatActors": {
+          "actors": 20,
+          "instances": 500,
+          "calls": 4,
+          "templates": 20,
+          "capacity": 20
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 35,
+          "materials": 20,
+          "textures": 0
+        },
+        "renderer": {
+          "calls": 57,
+          "triangles": 43458,
+          "geometries": 59,
+          "textures": 2,
+          "programs": 9,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "quality": "high",
+      "effects": false,
+      "frames": 5662,
+      "drawP50": 0.4,
+      "drawP95": 0.6,
+      "effectsP95": 0,
+      "actorsP95": 0.3,
+      "intervalP95": 16.7,
+      "gpuP95": 2.797,
+      "heapBytes": [
+        73296483,
+        59722110,
+        48239138,
+        52311870,
+        56933098,
+        48733110,
+        46890054,
+        66256546,
+        57963982,
+        53841326,
+        57968134,
+        50372482,
+        69661318,
+        81361678,
+        72641210,
+        88296194,
+        64903220,
+        52944032,
+        68594936,
+        46697548,
+        71091436,
+        62134228,
+        48973196,
+        64703860,
+        59468312,
+        48320264,
+        63977932,
+        61348448,
+        88395782,
+        51654905,
+        70865717,
+        45401350,
+        64708374,
+        57704334,
+        54209642,
+        46649074,
+        65853502,
+        59888554,
+        63908462,
+        56190290,
+        47818874,
+        46329094,
+        65610714,
+        57165242,
+        53269006,
+        57127966,
+        49331962,
+        68538662
+      ],
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": null,
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 0
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "combat": {
+          "moving": 0,
+          "settled": 0,
+          "marks": 0,
+          "bursts": 0,
+          "calls": 0,
+          "tier": "high",
+          "runId": "railway",
+          "tick": 0,
+          "stored": 0,
+          "capacity": 1024,
+          "evicted": 0,
+          "maxDrawCalls": 24,
+          "registeredPools": 11
+        },
+        "combatActors": {
+          "actors": 20,
+          "instances": 652,
+          "calls": 4,
+          "templates": 20,
+          "capacity": 20
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 35,
+          "materials": 20,
+          "textures": 3
+        },
+        "renderer": {
+          "calls": 37,
+          "triangles": 31636,
+          "geometries": 37,
+          "textures": 4,
+          "programs": 10,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "quality": "high",
+      "effects": true,
+      "frames": 5667,
+      "drawP50": 1.8,
+      "drawP95": 2.3,
+      "effectsP95": 1.4,
+      "actorsP95": 0.5,
+      "intervalP95": 16.7,
+      "gpuP95": 1.706,
+      "heapBytes": [
+        57673257,
+        76749993,
+        79889389,
+        76344189,
+        54091266,
+        68114810,
+        75806046,
+        76346150,
+        64424630,
+        66714410,
+        59986026,
+        60150590,
+        87300966,
+        62854132,
+        51953456,
+        62148624,
+        78755004,
+        98290508,
+        95581924,
+        75036940,
+        90279904,
+        81178024,
+        92026456,
+        92820876,
+        81634724,
+        62226756,
+        67449184,
+        99766981,
+        59682842,
+        78451054,
+        77318646,
+        64432022,
+        58521146,
+        76632338,
+        75848002,
+        82981254,
+        96943098,
+        75421746,
+        74082110,
+        58220798,
+        51817130,
+        61014278,
+        60707258,
+        64525430,
+        54601222,
+        81068702,
+        83146274
+      ],
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "balanced",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": null,
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 0
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "combat": {
+          "moving": 227,
+          "settled": 767,
+          "marks": 84,
+          "bursts": 5,
+          "calls": 11,
+          "tier": "high",
+          "runId": "railway",
+          "tick": 24900,
+          "stored": 1024,
+          "capacity": 1024,
+          "evicted": 8,
+          "maxDrawCalls": 24,
+          "registeredPools": 11
+        },
+        "combatActors": {
+          "actors": 20,
+          "instances": 664,
+          "calls": 4,
+          "templates": 20,
+          "capacity": 20
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 35,
+          "materials": 20,
+          "textures": 3
+        },
+        "renderer": {
+          "calls": 48,
+          "triangles": 77576,
+          "geometries": 48,
+          "textures": 4,
+          "programs": 10,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "quality": "ultra",
+      "effects": false,
+      "frames": 5678,
+      "drawP50": 0.6,
+      "drawP95": 1,
+      "effectsP95": 0.1,
+      "actorsP95": 0.5,
+      "intervalP95": 16.8,
+      "gpuP95": 1.668,
+      "heapBytes": [
+        62213733,
+        48544181,
+        62408745,
+        45440081,
+        68863877,
+        44153661,
+        44474557,
+        49419711,
+        46850161,
+        43983513,
+        44653617,
+        45125261,
+        71532258,
+        67572736,
+        66334676,
+        59687710,
+        49876385,
+        50452677,
+        48583937,
+        44661021,
+        45169513,
+        49615421,
+        46171185,
+        46815141,
+        44333245,
+        47392461,
+        47930117,
+        81766463,
+        75298777,
+        77811773,
+        78187905,
+        57204983,
+        48224643,
+        48591199,
+        49000271,
+        53812677,
+        56450405,
+        57294141,
+        56534225,
+        56796233,
+        70595541,
+        56779093,
+        54403033,
+        54496317,
+        68291825,
+        63917165,
+        53193261
+      ],
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "high",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": null,
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 0
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "combat": {
+          "moving": 0,
+          "settled": 0,
+          "marks": 0,
+          "bursts": 0,
+          "calls": 0,
+          "tier": "ultra",
+          "runId": "railway",
+          "tick": 0,
+          "stored": 0,
+          "capacity": 1024,
+          "evicted": 0,
+          "maxDrawCalls": 40,
+          "registeredPools": 11
+        },
+        "combatActors": {
+          "actors": 20,
+          "instances": 664,
+          "calls": 4,
+          "templates": 20,
+          "capacity": 20
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 46,
+          "materials": 26,
+          "textures": 3
+        },
+        "renderer": {
+          "calls": 42,
+          "triangles": 26340,
+          "geometries": 42,
+          "textures": 4,
+          "programs": 10,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "quality": "ultra",
+      "effects": true,
+      "frames": 5680,
+      "drawP50": 2,
+      "drawP95": 2.6,
+      "effectsP95": 1.7,
+      "actorsP95": 0.4,
+      "intervalP95": 16.7,
+      "gpuP95": 1.476,
+      "heapBytes": [
+        55005260,
+        55078724,
+        55817244,
+        68021912,
+        68542708,
+        70606460,
+        81470744,
+        91298260,
+        92397968,
+        91122688,
+        78209397,
+        57424189,
+        55066385,
+        76991693,
+        60834341,
+        69390153,
+        76677053,
+        97364109,
+        93844949,
+        95876449,
+        91193957,
+        89944121,
+        88490713,
+        97325349,
+        104131821,
+        108023013,
+        62957961,
+        78643885,
+        66677785,
+        76654089,
+        77061313,
+        64307041,
+        64984773,
+        61626653,
+        62802397,
+        77084001,
+        87565109,
+        81983901,
+        98313841,
+        97657473,
+        95695417,
+        89147105,
+        102657429,
+        60268285,
+        61016753,
+        80039445,
+        80059589,
+        65229889
+      ],
+      "resources": {
+        "available": true,
+        "disposed": false,
+        "quality": "high",
+        "drone": "racer",
+        "presentation": {
+          "collectionId": "authored",
+          "revision": "r1",
+          "profileId": null,
+          "actors": [],
+          "actorGoals": [],
+          "projectileBatches": 0,
+          "activeProjectiles": 0,
+          "surfaceDetailGroups": 0
+        },
+        "effects": {
+          "playerPulse": 9233635,
+          "hostilePulse": 16232561,
+          "ghost": 9824751,
+          "ghostEmissive": 2390144,
+          "trail": 9824751,
+          "goalOutline": 9169660,
+          "goalActive": 15266215,
+          "goalComplete": 9808542,
+          "goalInactive": 8366516,
+          "goalGlow": 11069917,
+          "goalGlowInactive": 9030085,
+          "goalEmissive": 8577493,
+          "goalBadge": 10872788,
+          "directionArrow": 15264432
+        },
+        "hunt": null,
+        "combat": {
+          "moving": 0,
+          "settled": 1534,
+          "marks": 152,
+          "bursts": 0,
+          "calls": 9,
+          "tier": "ultra",
+          "runId": "railway",
+          "tick": 34900,
+          "stored": 1024,
+          "capacity": 1024,
+          "evicted": 8,
+          "maxDrawCalls": 40,
+          "registeredPools": 11
+        },
+        "combatActors": {
+          "actors": 20,
+          "instances": 652,
+          "calls": 4,
+          "templates": 20,
+          "capacity": 20
+        },
+        "importedMaterialBindings": {
+          "applied": 0,
+          "diagnostics": []
+        },
+        "registered": {
+          "geometries": 46,
+          "materials": 26,
+          "textures": 3
+        },
+        "renderer": {
+          "calls": 51,
+          "triangles": 96496,
+          "geometries": 53,
+          "textures": 4,
+          "programs": 10,
+          "contextLost": false
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,93 @@
+{
+  "format": "SoloDarwinExecutedCocoaPrerequisiteV1",
+  "head": "92ff7ef800e542617b4fc3efad96bd07ce6cbecb",
+  "tree": "0cbdde8dbe125e0194d6e23df0b2da288f6c751e",
+  "run": 39054542040,
+  "conclusion": "failure",
+  "preflight": {
+    "status": "passed",
+    "artifact": 12108293386,
+    "bytes": 13920,
+    "sha256": "c074eb0e76adfd0f4cdf8d9b33867a68c7814f0c11a21b892c2277869fdf76cb",
+    "reportBytes": 14446,
+    "reportSHA256": "5a33014ec00e33d79ef79a24ea30d8d5ab6069a252a364e924bd4d443befece6",
+    "nativeCases": {
+      "leader": "passed",
+      "tree": "passed",
+      "deadline": "expected-negative-observed"
+    }
+  },
+  "cocoa": {
+    "status": "failed-before-browser-installation",
+    "job": 117459907894,
+    "artifact": 12108966441,
+    "bytes": 1382,
+    "sha256": "ddfaba45eaf1cd42bfda207c100f05783a20492a6b33b423210aa0fc17500b9a",
+    "contracts": {
+      "tests": 77,
+      "passed": 72,
+      "failed": 1,
+      "skipped": 4
+    },
+    "failure": "hosted Darwin native owner closes a short leader and rejects forced deadline cleanup: ambiguous thermald row",
+    "log": {
+      "bytes": 69861,
+      "sha256": "bf3e0c3dc2411a1d843d7a658b9c541ed7d7f3b7692490da3687c4e7a2258286"
+    },
+    "observedRow": {
+      "pid": 17275,
+      "ppid": 1,
+      "pgid": 17275,
+      "birth": "00000000000000017275",
+      "state": "R",
+      "rss": 0,
+      "argv": "/usr/libexec/thermald",
+      "ownerTagged": false,
+      "inspectionIncomplete": true,
+      "pathInspection": "complete",
+      "rssInspection": "unavailable",
+      "ownerTagInspection": "unavailable",
+      "identityKind": "private-unique-id-uint64",
+      "euid": 0,
+      "ruid": 0,
+      "parentUniqueId": "1",
+      "version": 35176
+    },
+    "browserObservations": 0,
+    "mediaObservations": 0,
+    "missingEvidence": "Full ownedCommand record and whether normal/deadline loop case failed were not retained; no owner closure inferred."
+  },
+  "records": [
+    {
+      "path": ".github/workflows/solo-darwin-owner-preflight-kernel-ps-temporary.yml",
+      "bytes": 25376,
+      "sha256": "087ab3aeb77625dc860517fae36c17ac5b2ac89328056e798eb6a90cd8c6581c"
+    },
+    {
+      "path": "scripts/test-solo-darwin-process-inventory.mjs",
+      "bytes": 37478,
+      "sha256": "378da5188d0f9bc9a2a13f7029a7958944d141a9303f84503d5a7f74bf13994b"
+    },
+    {
+      "path": "scripts/run-solo-remote-correctness.mjs",
+      "bytes": 66253,
+      "sha256": "0b3886f51d11160ebbb749da826e4ac9d39186879e794b6bb25c268e1fdf62e8"
+    },
+    {
+      "path": "scripts/solo-darwin-process-inventory.mjs",
+      "bytes": 13716,
+      "sha256": "bc3c1976364478f8cfb06776c54edb06701b8a43b0526db2c974e38229209783"
+    },
+    {
+      "path": "scripts/solo-darwin-process-inventory.c",
+      "bytes": 7955,
+      "sha256": "72ff466c653ddb987a4e5df5df024aabd952cf45d659e7872809412aa996db9f"
+    },
+    {
+      "path": "scripts/solo-native-mp3-control.mjs",
+      "bytes": 46099,
+      "sha256": "28eab7671344e5819f257ef12e3d28f1b9064af96f2f444b8194e5f54ee41da1"
+    }
+  ],
+  "scope": "Immutable failed execution; later classifier cannot rewrite its result. macOS Intel test host, not physical iPhone."
+}

@@ -5,8 +5,9 @@
   "provenance": {
     "path": "authoring/library/fpv-field-kit/production.rltheme",
     "gitBlob": "dcce2267046eaa542e9e505e9bbb07cf8224da8d",
-    "bytes": 8084131,
-    "sha256": "9c15bb198ac606f06d6b0e0bcbfaf5f613d5fd7d10dd4bbf8202e10109a615ab"
+    "bytes": 7975251,
+    "sha256": "2c08a679505bb8ebe34d8295f5c33e736297091aa6e598e872e4c198b953a1ea",
+    "scope": "Derived retained-content oracle after an ownership migration. Source commit and tag identify the original artifact; these new bytes are not that release or its historical qualification."
   },
   "metadata": {
     "format": "revealline-theme-bundle.v1",
@@ -26,27 +27,37 @@
   },
   "groups": {
     "slots": {
-      "count": 335,
-      "sha256": "f2d853890e884c926450d6cbe7ed2648676e62a079a9e8768fc73a8fc12d1051"
+      "count": 302,
+      "sha256": "93cd0c41cf186805569b72f283fbeb803cf31623b3935cbc3cd0aa494f1fac22"
     },
     "assets": {
-      "count": 2590,
-      "sha256": "0c7f6b41032716e3488809554c63f26a5aa34c99c283a8482187c817ffb06295"
+      "count": 2557,
+      "sha256": "ab2d993530d5ee4eed6d99ca6a5c393bd433f09535485fbe7bf4e78ef549424a"
     },
     "themes": {
       "count": 99,
-      "sha256": "f79516784adc17a6b303a2d0c769a53e80dd0687abacb25254f9875b11469940"
+      "sha256": "9611e322bdb43575d40eb26299d2133a1badd3c1bc9381c6e7ba9b1f729a5729"
     },
     "collections": {
       "count": 1,
-      "sha256": "74daee988fe6fe616d1ecc4a6ffd9f6c9c47b2fc00584259232f8f1477db1b57"
+      "sha256": "84f512c5583368c0d68f138d2d3f7821e0492c0693e931751f8ec3311f6f30cc"
     }
   },
   "payloads": {
     "count": 132,
-    "bytes": 4009342,
     "sha256": "4932cc57542adc364f44cb548011a7ca26afa7e0cb1eb00e00647fe5c381738c"
   },
   "audioRecords": 408,
-  "scope": "Exact PR #770 parent 0d165 production98/audio50 predecessor, read from immutable Git bytes before any correction production generation."
+  "scope": "Exact PR #770 parent 0d165 production98/audio50 predecessor, read from immutable Git bytes before any correction production generation.",
+  "migration": {
+    "format": "revealline-retained-production-oracle.v1",
+    "originalBundleSHA256": "9c15bb198ac606f06d6b0e0bcbfaf5f613d5fd7d10dd4bbf8202e10109a615ab",
+    "originalFixtureSHA256": "e397af798928a72502c970276fe212eaad8d2a4889f5afe02587559244496714",
+    "removedSlots": 33,
+    "removedAssets": 33,
+    "preservedPayloads": {
+      "count": 132,
+      "sha256": "4932cc57542adc364f44cb548011a7ca26afa7e0cb1eb00e00647fe5c381738c"
+    }
+  }
 }

@@ -1,9 +1,34 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+// Preserve strict identity without recursively formatting the fixture DOM.
+function boundedIdentity(actual, expected, message) {
+  if (Object.is(actual, expected)) return;
+  const label = (value) => {
+    if (value === null) return 'null';
+    if (value === undefined) return 'undefined';
+    if (typeof value !== 'object' && typeof value !== 'function') return String(value).slice(0, 80);
+    return (
+      [value.tagName, value.id]
+        .filter((part) => typeof part === 'string')
+        .map((part) => part.slice(0, 80))
+        .join('#') || typeof value
+    );
+  };
+  assert.ok(
+    false,
+    (message ?? 'Strict identity mismatch.') +
+      ' Actual: ' +
+      label(actual) +
+      '; expected: ' +
+      label(expected) +
+      '.',
+  );
+}
 import { page } from './helpers/coop-host.mjs';
 import { deferred, waitFor } from './helpers/coop-presentation-fixture.mjs';
 import { COOP_STARTER_PACK } from '../coop/library.mjs';
 import { AUDIO_PREFERENCES_KEY } from '../audio-preferences.mjs';
+import { validateEnemyStatsSession } from '../enemy-stats.mjs';
 
 const ids = [
   'gameplay',
@@ -49,7 +74,12 @@ async function fixture(t, options = {}) {
       options.beforeImport?.(args);
     },
   });
-  return Object.assign(f, { values, writes, storage });
+  const initialWrites = structuredClone(writes);
+  assert.deepEqual(
+    initialWrites.map(([key]) => key),
+    ['revealline-enemy-stats.v1:writer'],
+  );
+  return Object.assign(f, { values, writes, storage, initialWrites });
 }
 const state = (f) => ({
   hud: [
@@ -67,14 +97,32 @@ const state = (f) => ({
   stored: [...f.values],
 });
 const pause = (f) => {
-  assert.deepEqual(f.writes, [], 'The lobby does not save preferences or teaching progress.');
+  assert.deepEqual(
+    f.writes,
+    f.initialWrites,
+    'The lobby adds no preferences or teaching progress.',
+  );
   f.$('coop-start').click();
   f.tap('KeyD');
   f.tap('ArrowLeft');
   f.tick(45);
   f.$('coop-pause').click();
   f.tick();
-  assert.deepEqual(f.writes, [firstCutWrite], 'Starting introduces only the first-cut lesson.');
+  assert.deepEqual(f.writes.slice(0, 1), f.initialWrites);
+  assert.deepEqual(
+    f.writes
+      .slice(1)
+      .map(([key]) => key)
+      .sort(),
+    ['revealline-enemy-stats-session.v1:host:team', teachingKey].sort(),
+  );
+  assert.deepEqual(
+    f.writes.find(([key]) => key === teachingKey),
+    firstCutWrite,
+  );
+  const cursors = JSON.parse(f.values.get('revealline-enemy-stats-session.v1:host:team'));
+  assert.equal(Object.keys(cursors).length, 1);
+  assert.equal(validateEnemyStatsSession(Object.values(cursors)[0]).gameType, 'team');
 };
 
 test('Team Settings has all eight categories, original controls, and exact lobby return without preparing or saving', async (t) => {
@@ -87,8 +135,8 @@ test('Team Settings has all eight categories, original controls, and exact lobby
   ].map(f.$);
   const before = state(f);
   open(f);
-  assert.equal(f.doc.activeElement, tab(f, 'display'));
-  assert.equal(f.$('coop-options').closest('#coop-tools'), null);
+  boundedIdentity(f.doc.activeElement, tab(f, 'display'));
+  boundedIdentity(f.$('coop-options').closest('#coop-tools'), null);
   for (const id of ids) {
     tab(f, id).focus();
     f.tap('Enter');
@@ -97,20 +145,26 @@ test('Team Settings has all eight categories, original controls, and exact lobby
     assert.equal(f.$(`coop-settings-panel-${id}`).inert, false);
     assert.equal(ids.filter((key) => !f.$(`coop-settings-panel-${key}`).hidden).length, 1);
   }
-  for (const node of controls) assert.equal(f.$(node.id), node);
+  for (const node of controls) boundedIdentity(f.$(node.id), node);
   for (const id of ['coop-text-face', 'coop-text-size']) {
-    assert.equal(f.$(id).parentNode, f.$('coop-settings-panel-accessibility'));
-    assert.equal(
-      f.doc.querySelector(`label[for="${id}"]`).parentNode,
+    boundedIdentity(
+      f.$(id).closest('#coop-settings-panel-accessibility'),
+      f.$('coop-settings-panel-accessibility'),
+    );
+    boundedIdentity(
+      f.doc.querySelector(`label[for="${id}"]`).closest('#coop-settings-panel-accessibility'),
       f.$('coop-settings-panel-accessibility'),
     );
   }
-  assert.equal(f.$('coop-system-reduction').parentNode, f.$('coop-settings-panel-accessibility'));
+  boundedIdentity(
+    f.$('coop-system-reduction').closest('#coop-settings-panel-accessibility'),
+    f.$('coop-settings-panel-accessibility'),
+  );
   assert.match(f.$('coop-settings-panel-data').textContent, /does not write Solo saves/);
   f.$('coop-settings-close').click();
   assert.equal(f.doc.activeElement.id, 'coop-settings-open');
   assert.deepEqual(state(f), before);
-  assert.deepEqual(f.writes, []);
+  assert.deepEqual(f.writes, f.initialWrites);
   assert.equal(f.drawImages.length, 0, 'Settings does not paint or start the lobby arena');
 });
 
@@ -184,15 +238,14 @@ test('Settings tab keys stay in the categories and Tab cannot reach inactive con
     assert.equal(f.doc.activeElement.closest('[hidden],[inert]'), null);
   }
   assert.equal(f.drawImages.length, 0);
-  assert.deepEqual(f.writes, []);
+  assert.deepEqual(f.writes, f.initialWrites);
 });
 
 test('a controller selects Team Settings and paused quick sound without resuming', async (t) => {
   const f = await fixture(t);
   pause(f);
-  const before = state(f);
-  const writesBefore = f.writes.length;
-  const beforeWrites = [...f.writes],
+  const beforeJoin = state(f),
+    writesBeforeJoin = [...f.writes],
     volume = Number(f.$('coop-master-volume').value);
   const pad = {
     index: 0,
@@ -211,6 +264,15 @@ test('a controller selects Team Settings and paused quick sound without resuming
   };
   f.tick(2);
   button(0);
+  const radioWrite = [
+    'revealline.couch-radio-setup.v1',
+    JSON.stringify({ entries: [], format: 'RadioSetup.v1' }),
+  ];
+  assert.deepEqual(f.writes, [...writesBeforeJoin, radioWrite]);
+  assert.deepEqual(state(f), { ...beforeJoin, stored: [...beforeJoin.stored, radioWrite] });
+  const before = state(f),
+    writesBefore = f.writes.length,
+    beforeWrites = [...f.writes];
   for (let i = 0; i < 30 && f.doc.activeElement.id !== 'coop-settings-open'; i++) button(13);
   assert.equal(f.doc.activeElement.id, 'coop-settings-open');
   button(0);
@@ -261,7 +323,7 @@ test('closing Settings does not cancel a pending Team picture and late readiness
   await waitFor(() => f.$('coop-picture-status').dataset.state === 'ready');
   assert.equal(f.doc.activeElement.id, 'coop-settings-open');
   assert.equal(f.drawImages.length, 0);
-  assert.deepEqual(f.writes, []);
+  assert.deepEqual(f.writes, f.initialWrites);
 });
 
 test('Settings Back leaves a pending Team import under its existing operation owner', async (t) => {
@@ -271,9 +333,13 @@ test('Settings Back leaves a pending Team import under its existing operation ow
   pack.id = 'settings-import';
   pack.name = 'Settings import';
   const source = JSON.stringify(pack);
-  f.$('coop-pack-file').focus();
-  const pending = f.selectFile(source, () => gate.promise);
   open(f);
+  tab(f, 'gameplay').click();
+  f.$('coop-pack-file').closest('details').open = true;
+  assert.equal(!!f.$('coop-pack-file').closest('[hidden],[inert]'), false);
+  f.$('coop-pack-file').focus();
+  boundedIdentity(f.doc.activeElement, f.$('coop-pack-file'));
+  const pending = f.selectFile(source, () => gate.promise);
   f.tap('Escape');
   assert.equal(f.$('coop-pack-status').dataset.state, 'busy');
   assert.equal(f.$('coop-pack-cancel').hidden, false);
@@ -281,7 +347,7 @@ test('Settings Back leaves a pending Team import under its existing operation ow
   await pending;
   assert.match(f.$('coop-pack-status').textContent, /Settings import/);
   assert.equal(f.doc.activeElement.id, 'coop-settings-open');
-  assert.deepEqual(f.writes, []);
+  assert.deepEqual(f.writes, f.initialWrites);
 });
 
 for (const interruption of ['blur', 'hidden', 'pagehide'])
@@ -329,9 +395,9 @@ test('queued old close and newer focus cannot replace the current Settings visit
 test('paused keyboard quick Sound and Settings mute share one owner without resuming', async (t) => {
   const f = await fixture(t);
   pause(f);
-  const before = state(f);
-  const writesBefore = f.writes.length;
-  const beforeWrites = [...f.writes],
+  const before = state(f),
+    writesBefore = f.writes.length,
+    beforeWrites = [...f.writes],
     volume = Number(f.$('coop-master-volume').value);
   const note = f.$('coop-audio-note').textContent;
   for (let i = 0; i < 30 && f.doc.activeElement.id !== 'coop-quick-sound'; i++) f.tap('Tab');
@@ -394,12 +460,12 @@ test('a newer focus choice during native Settings opening wins over the default 
         show = dialog.showModal;
       dialog.showModal = () => {
         show();
-        $('coop-theme-card-follow-game').focus();
+        $('coop-settings-tab-accessibility').focus();
       };
     },
   });
   open(f);
-  assert.equal(f.doc.activeElement.id, 'coop-theme-card-follow-game');
+  assert.equal(f.doc.activeElement.id, 'coop-settings-tab-accessibility');
 });
 
 for (const change of ['reopen', 'background'])
@@ -422,5 +488,5 @@ for (const change of ['reopen', 'background'])
     assert.notEqual(f.doc.activeElement, opener);
     assert.equal(f.$('coop-options').open, change === 'reopen');
     if (change === 'reopen') assert.equal(f.doc.activeElement, tab(f, 'display'));
-    assert.deepEqual(f.writes, []);
+    assert.deepEqual(f.writes, f.initialWrites);
   });
