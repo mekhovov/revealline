@@ -1,0 +1,231 @@
+name: Generate reviewed localization registry candidate
+
+'on':
+  push:
+    branches: [codex/localization-candidate-303638f1-20261027]
+    paths: [.github/workflows/localization-registry-candidate.yml]
+
+permissions:
+  contents: read
+
+jobs:
+  candidate:
+    if: github.repository == 'mekhovov/revealline' && github.ref == 'refs/heads/codex/localization-candidate-303638f1-20261027' && github.event.before == '303638f129626a7d1e57ad4f5ad1fe9d1415b9ef'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      SOURCE_BASE: 303638f129626a7d1e57ad4f5ad1fe9d1415b9ef
+      SOURCE_BASE_TREE: 40303b70735755a72bb6b4bccae72b0c76fbdc50
+      WORKFLOW_PATH: .github/workflows/localization-registry-candidate.yml
+    steps:
+      - name: Check out the exact isolated candidate revision
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+        with:
+          ref: ${{ github.sha }}
+          fetch-depth: 2
+          persist-credentials: false
+
+      - name: Use the production build runtime
+        uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+        with:
+          package-manager-cache: false
+          node-version: 22.22.2
+
+      - name: Bind the exact parent and workflow-only source difference
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import fs from 'node:fs';
+          import path from 'node:path';
+          import {execFileSync} from 'node:child_process';
+          const git = (...args) => execFileSync('git', ['--no-replace-objects', ...args], {encoding: 'utf8'}).trim();
+          const source = process.env.GITHUB_SHA;
+          assert.match(source, /^[a-f0-9]{40}$/);
+          assert.equal(git('rev-parse', 'HEAD'), source);
+          const parents = git('show', '-s', '--format=%P', 'HEAD').split(' ');
+          assert.deepEqual(parents, [process.env.SOURCE_BASE]);
+          assert.equal(git('rev-parse', `${process.env.SOURCE_BASE}^{tree}`), process.env.SOURCE_BASE_TREE);
+          assert.equal(git('diff', '--name-status', '--no-renames', process.env.SOURCE_BASE, 'HEAD'), `A\t${process.env.WORKFLOW_PATH}`);
+          assert.equal(git('status', '--porcelain=v1'), '');
+          const out = path.join(process.env.RUNNER_TEMP, 'localization-candidate');
+          fs.mkdirSync(out);
+          fs.writeFileSync(path.join(out, 'input-binding.json'), JSON.stringify({
+            format: 'revealline-localization-input-binding.v1',
+            sourceRevision: source,
+            sourceTree: git('rev-parse', 'HEAD^{tree}'),
+            baselineRevision: process.env.SOURCE_BASE,
+            baselineTree: process.env.SOURCE_BASE_TREE,
+            workflowPath: process.env.WORKFLOW_PATH,
+            workflowBlob: git('rev-parse', `HEAD:${process.env.WORKFLOW_PATH}`),
+            onlyDifferenceFromBaseline: 'one added workflow outside localization input roots',
+            runId: process.env.GITHUB_RUN_ID,
+            runAttempt: process.env.GITHUB_RUN_ATTEMPT,
+            nodeVersion: process.version,
+          }, null, 2) + '\n', {flag: 'wx'});
+          NODE
+
+      - name: Verify every tracked source file before dependency installation
+        run: node scripts/check-source-identity.mjs --root . > "$RUNNER_TEMP/localization-candidate/source-before-install.json"
+
+      - name: Install the existing locked build dependencies
+        run: npm ci --prefer-offline
+
+      - name: Verify every tracked source file before generation
+        run: node scripts/check-source-identity.mjs --root . > "$RUNNER_TEMP/localization-candidate/source-before-generation.json"
+
+      - name: Verify hosted generation storage and memory headroom
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import fs from 'node:fs';
+          import path from 'node:path';
+          const minimumDiskBytes = 3 * 1024 ** 3;
+          const minimumAvailableMemoryBytes = 4 * 1024 ** 3;
+          const available = directory => {
+            const info = fs.statfsSync(directory);
+            const bytes = info.bavail * info.bsize;
+            assert(Number.isSafeInteger(bytes) && bytes >= minimumDiskBytes);
+            return bytes;
+          };
+          const match = fs.readFileSync('/proc/meminfo', 'utf8').match(/^MemAvailable:\s+(\d+)\s+kB$/m);
+          assert(match, 'Linux available-memory metadata is required.');
+          const availableMemoryBytes = Number(match[1]) * 1024;
+          assert(Number.isSafeInteger(availableMemoryBytes) && availableMemoryBytes >= minimumAvailableMemoryBytes);
+          const resource = {
+            sourceRevision: process.env.GITHUB_SHA,
+            workspaceAvailableBytes: available(process.cwd()),
+            temporaryAvailableBytes: available(process.env.RUNNER_TEMP),
+            availableMemoryBytes,
+            minimumDiskBytes,
+            minimumAvailableMemoryBytes,
+            generatorHeapMiB: 3072,
+            checkedAt: new Date().toISOString(),
+            reservationOrGuaranteedRuntimeCapacity: false,
+          };
+          fs.writeFileSync(path.join(process.env.RUNNER_TEMP, 'localization-candidate', 'hosted-resources.json'), JSON.stringify(resource, null, 2) + '\n', {flag: 'wx'});
+          NODE
+
+      - name: Generate twice, verify a fixed point, and restore the two source originals
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import fs from 'node:fs';
+          import path from 'node:path';
+          import {createHash} from 'node:crypto';
+          import {execFileSync} from 'node:child_process';
+          const out = path.join(process.env.RUNNER_TEMP, 'localization-candidate');
+          const targets = ['game/i18n/catalogs.mjs', 'game/i18n/content-registry.mjs'];
+          const packageData = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+          assert.equal(packageData.scripts['i18n:build'], 'node scripts/localization.mjs build');
+          assert.equal(packageData.scripts['prei18n:build'], undefined);
+          assert.equal(packageData.scripts['posti18n:build'], undefined);
+          const hash = bytes => createHash('sha256').update(bytes).digest('hex');
+          const read = file => {
+            const info = fs.lstatSync(file);
+            assert(info.isFile() && !info.isSymbolicLink());
+            assert(info.size > 0 && info.size <= 2000000);
+            return fs.readFileSync(file);
+          };
+          const originals = targets.map(read);
+          const generate = () => execFileSync(process.execPath, ['--max-old-space-size=3072', 'scripts/localization.mjs', 'build'], {
+            stdio: 'inherit', timeout: 300000, killSignal: 'SIGKILL',
+          });
+          try {
+            generate();
+            const first = targets.map(read);
+            assert(first[0].equals(originals[0]), 'The existing catalog must remain byte-identical; stop for separate review otherwise.');
+            assert(!first[1].equals(originals[1]), 'No registry correction was generated.');
+            generate();
+            const second = targets.map(read);
+            targets.forEach((file, index) => assert(first[index].equals(second[index]), `Generation is not a fixed point: ${file}`));
+            const changed = execFileSync('git', ['--no-replace-objects', 'diff', '--name-only', '-z', '--no-ext-diff', 'HEAD'], {encoding: 'utf8'}).split('\0').filter(Boolean);
+            assert(changed.every(file => targets.includes(file)), 'Unexpected tracked source mutation.');
+            assert.equal(execFileSync('git', ['--no-replace-objects', 'ls-files', '--others', '--exclude-standard', '-z'], {encoding: 'utf8'}), '');
+            const files = targets.map((file, index) => {
+              const name = path.basename(file);
+              fs.writeFileSync(path.join(out, name), first[index], {flag: 'wx'});
+              return {path: file, name, bytes: first[index].length, sha256: hash(first[index]), originalBytes: originals[index].length, originalSha256: hash(originals[index])};
+            });
+            assert(files.reduce((sum, file) => sum + file.bytes, 0) <= 4000000);
+            fs.writeFileSync(path.join(out, 'generation.json'), JSON.stringify({
+              format: 'revealline-localization-generation.v1',
+              sourceRevision: process.env.GITHUB_SHA,
+              baselineRevision: process.env.SOURCE_BASE,
+              generator: 'node --max-old-space-size=3072 scripts/localization.mjs build',
+              generatorHeapMiB: 3072,
+              exactPackageCommandAndNoHooksVerified: true,
+              completeGeneratorInvocations: 2,
+              secondGenerationByteIdentical: true,
+              catalogByteIdenticalToBaseline: true,
+              onlyExpectedGeneratedFilesChanged: true,
+              noUntrackedSourceFiles: true,
+              files,
+              buildDeploymentRuntimeOrCapacityAcceptance: false,
+            }, null, 2) + '\n', {flag: 'wx'});
+          } finally {
+            targets.forEach((file, index) => fs.writeFileSync(file, originals[index]));
+          }
+          NODE
+
+      - name: Verify every tracked source file after restoring the declared generated originals
+        run: node scripts/check-source-identity.mjs --root . > "$RUNNER_TEMP/localization-candidate/source-after-restore.json"
+
+      - name: Validate complete source evidence and small output bounds
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          import assert from 'node:assert/strict';
+          import fs from 'node:fs';
+          import path from 'node:path';
+          import {createHash} from 'node:crypto';
+          const out = path.join(process.env.RUNNER_TEMP, 'localization-candidate');
+          const read = file => JSON.parse(fs.readFileSync(path.join(out, file), 'utf8'));
+          const binding = read('input-binding.json');
+          const generation = read('generation.json');
+          const names = ['source-before-install.json', 'source-before-generation.json', 'source-after-restore.json'];
+          const evidence = names.map(read);
+          for (const item of evidence) {
+            assert.equal(item.format, 'revealline-source-identity.v1');
+            assert.equal(item.sourceRevision, process.env.GITHUB_SHA);
+            assert.equal(item.sourceTree, binding.sourceTree);
+            assert.equal(item.allTrackedSourceContentsAndModesMatch, true);
+            for (const key of ['files', 'bytes', 'aggregateSha256', 'aggregateFormat']) assert.equal(item[key], evidence[0][key]);
+          }
+          assert.equal(generation.sourceRevision, process.env.GITHUB_SHA);
+          assert.equal(generation.baselineRevision, process.env.SOURCE_BASE);
+          assert.equal(binding.baselineTree, process.env.SOURCE_BASE_TREE);
+          const members = fs.readdirSync(out).sort();
+          assert.deepEqual(members, ['catalogs.mjs', 'content-registry.mjs', 'generation.json', 'hosted-resources.json', 'input-binding.json', ...names].sort());
+          let bytes = 0;
+          const records = members.map(name => {
+            const file = path.join(out, name), info = fs.lstatSync(file);
+            assert(info.isFile() && !info.isSymbolicLink() && info.size <= 2000000);
+            const content = fs.readFileSync(file);
+            bytes += content.length;
+            return {name, bytes: content.length, sha256: createHash('sha256').update(content).digest('hex')};
+          });
+          assert(bytes <= 4500000);
+          fs.writeFileSync(path.join(out, 'manifest.json'), JSON.stringify({
+            format: 'revealline-localization-candidate-artifact.v1',
+            sourceRevision: process.env.GITHUB_SHA,
+            baselineRevision: process.env.SOURCE_BASE,
+            workflowPath: process.env.WORKFLOW_PATH,
+            completeTrackedSourceVerifiedBeforeAndAfter: true,
+            bytes,
+            members: records,
+            outputIsCandidateOnly: true,
+            buildDeploymentRuntimeOrCapacityAcceptance: false,
+          }, null, 2) + '\n', {flag: 'wx'});
+          NODE
+
+      - name: Preserve the small source-bound data candidate for independent review
+        uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+        with:
+          name: localization-registry-candidate-${{ github.sha }}
+          path: ${{ runner.temp }}/localization-candidate/
+          if-no-files-found: error
+          compression-level: 9
+          retention-days: 7
