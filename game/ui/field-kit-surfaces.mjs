@@ -61,7 +61,9 @@ export function attachFieldKitSurfaces({
   listen(doc.getElementById('collection-records'), 'click', () => openLibrary('scores'));
   for (const control of doc.querySelectorAll('[data-field-kit-text-size]')) {
     listen(control, 'change', () => {
-      doc.body.dataset.textSize = effectiveTextSize(control.value);
+      doc.body.dataset.textSize = effectiveTextSize(control.value, {
+        extraLarge: doc.documentElement?.dataset.textScaling === 'solo',
+      });
     });
   }
   return {

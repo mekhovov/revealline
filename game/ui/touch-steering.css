@@ -30,12 +30,12 @@
     user-select: none;
     -webkit-user-select: none;
     opacity: var(--touch-opacity, 0.55);
-    font: 13px/1.4 var(--fk-font-ui, sans-serif);
+    font: calc(13px * var(--primary-text-scale, 1)) / 1.4 var(--fk-font-ui, sans-serif);
   }
   .game-shell #touch-surface > span:first-child,
   .race-pad .touch-surface > span:first-child,
   .snake-touch-seat .touch-surface > span:first-child {
-    font: 54px/1.3 var(--fk-font-ui, sans-serif);
+    font: calc(54px * var(--primary-text-scale, 1)) / 1.3 var(--fk-font-ui, sans-serif);
   }
   .game-shell .play-controls .direction-controls,
   .race-pad .race-cross,
@@ -98,7 +98,7 @@
     box-shadow: none;
     background: #19364ab3;
     color: #c4f3ff;
-    font: bold 25px/1 var(--fk-font-ui, sans-serif);
+    font: bold calc(25px * var(--primary-text-scale, 1)) / 1 var(--fk-font-ui, sans-serif);
     touch-action: none;
   }
   .game-shell .play-controls .direction-controls button.pressed,

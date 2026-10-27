@@ -1387,6 +1387,7 @@ try {
     matchMedia,
     getStorage: () => profileStorage(),
     legacyPreferences: library.preferences,
+    extraLarge: true,
     writable: () =>
       !practice && !courseSession && !courseEntry && persistenceReady && writer.writable,
     onWarning: (message, key) => {
@@ -8965,7 +8966,7 @@ try {
       document.body.dataset.textSize !== (state.effectiveTextSize ?? state.textSize) ||
       document.body.dataset.textFace !== state.textFace ||
       document.body.dataset.effects !== effects;
-    renderTextSizeControl($('text-size'), state.textSize);
+    renderTextSizeControl($('text-size'), state.textSize, { extraLarge: true });
     document.body.dataset.textSize = state.effectiveTextSize ?? state.textSize;
     $('text-face').value = state.textFace;
     document.body.dataset.textFace = state.textFace;
@@ -13481,6 +13482,7 @@ try {
           ? { style: flightActorLease.pin().style, snapshot: flightActorLease.snapshot }
           : null,
         textFace: displayPreferences.snapshot().textFace,
+        textScale: displayPreferences.snapshot().effectiveTextSize === 'extra-large' ? 2 : 1,
         // The texture is detached; only the displayed Phaser canvas has a CSS size.
         displayCSSWidth: this.displayCSSWidth,
         paused,
@@ -15423,6 +15425,7 @@ try {
       quality: qualityPolicy.snapshot().tier,
       renderOptions: {
         textFace: displayPreferences.snapshot().textFace,
+        textScale: displayPreferences.snapshot().effectiveTextSize === 'extra-large' ? 2 : 1,
         showGrid: library.preferences.showGrid,
         showCombatScrap: encounterDisplay.snapshot().showRemains,
         brutal: encounterDisplay.snapshot().brutal,

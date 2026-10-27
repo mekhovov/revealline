@@ -44,6 +44,53 @@ export function presentationEvent(event, run = null) {
   };
 }
 
+/** Enlarged text keeps its glyph size and wraps within the board instead of
+ * using Canvas fillText's horizontal squeeze. Only the qualified host opts in. */
+function drawLargeLabel(ctx, label, { size, fonts, color, width, height, x, y }) {
+  ctx.save();
+  ctx.globalAlpha = 1;
+  ctx.font = `500 ${size}px ${fonts?.numeric || '\"Field Kit Mono\", monospace'}`;
+  const padding = size * 0.4,
+    available = Math.max(size, width - 16 - padding * 2),
+    measure = (text) => {
+      const measured = ctx.measureText?.(text)?.width;
+      return Number.isFinite(measured) ? measured : [...text].length * size * 0.6;
+    },
+    lines = [];
+  let line = '';
+  for (const word of label.split(/\s+/)) {
+    const joined = line ? `${line} ${word}` : word;
+    if (measure(joined) <= available) {
+      line = joined;
+      continue;
+    }
+    if (line) lines.push(line);
+    line = '';
+    for (const character of word) {
+      if (line && measure(line + character) > available) {
+        lines.push(line);
+        line = '';
+      }
+      line += character;
+    }
+  }
+  if (line) lines.push(line);
+  const lineHeight = size * 1.3,
+    boxWidth = Math.min(width - 16, Math.max(...lines.map(measure)) + padding * 2),
+    boxHeight = lines.length * lineHeight + padding * 2,
+    left = Math.max(8, Math.min(width - boxWidth - 8, x - boxWidth / 2)),
+    top = Math.max(8, Math.min(height - boxHeight - 8, y));
+  ctx.fillStyle = '#0c1423';
+  ctx.fillRect(left, top, boxWidth, boxHeight);
+  ctx.fillStyle = color;
+  ctx.textBaseline = 'top';
+  ctx.textAlign = 'left';
+  lines.forEach((text, index) =>
+    ctx.fillText(text, left + padding, top + padding + index * lineHeight),
+  );
+  ctx.restore();
+}
+
 export function drawEventFeedback(
   ctx,
   event,
@@ -56,6 +103,7 @@ export function drawEventFeedback(
     width = 1152,
     height = 576,
     fonts = null,
+    textScale = 1,
   } = {},
 ) {
   if (!finitePoint(event) || event.age >= 0.7) return;
@@ -147,6 +195,18 @@ export function drawEventFeedback(
       : event.type === 'shield.absorbed'
         ? t('interface:shieldUsed')
         : t('interface:ready2');
+  if (textScale === 2) {
+    drawLargeLabel(ctx, label, {
+      size: 28 * unit,
+      fonts,
+      color,
+      width,
+      height,
+      x: event.x * 16,
+      y: event.y * 16 - 48 * unit,
+    });
+    return;
+  }
   const textWidth = Math.min(width - 16, label.length * 8.4 * unit + 12 * unit),
     x = Math.max(8, Math.min(width - textWidth - 8, event.x * 16 - textWidth / 2)),
     y = Math.max(18 * unit, Math.min(height - 18 * unit, event.y * 16 - 24 * unit));
@@ -167,12 +227,24 @@ export function drawRecoveryCue(
   ctx,
   run,
   palette,
-  { screenScale = 1, width = 1152, fonts = null } = {},
+  { screenScale = 1, width = 1152, height = 864, fonts = null, textScale = 1 } = {},
 ) {
   if (run.status !== 'respawning') return;
   const seconds = Math.max(0, run.respawnAt - run.time),
     unit = Math.min(4, Math.max(1, 1 / Math.max(0.1, screenScale)));
   if (!Number.isFinite(seconds)) return;
+  if (textScale === 2) {
+    drawLargeLabel(ctx, t('gameplay:recoveryS', { value1: seconds.toFixed(1) }), {
+      size: 32 * unit,
+      fonts,
+      color: palette.accent,
+      width,
+      height,
+      x: width / 2,
+      y: 18 * unit,
+    });
+    return;
+  }
   ctx.save();
   ctx.font = `500 ${16 * unit}px ${fonts?.numeric || '"Field Kit Mono", monospace'}`;
   ctx.textBaseline = 'top';

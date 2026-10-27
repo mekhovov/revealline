@@ -19,7 +19,7 @@ const sourceHashes={
 'game/audio/portable-destruction.mjs':
 'cd40ca4c27a528f4d9890808e1662f19ccd4d9dc1e18a03fb6a98eb6e21392a2',
 'optional-practice/civilian-fpv/sim-presentation.mjs':
-'9d8c23b8b45c6ddafda3985210f3164a527529baf1de788aecbc2ca9f5496785',
+'7a686a34cb1ddbe37f54a270f53764e8f6b9c34f174cae83c1478339d3835f16',
 'game/audio/dialogue-mix.mjs':'43ffa5b261e585e59b515fab19d1b6d0ccf636152ca6107602dbdb9143ddb00a',
 'game/ui/audio-master.mjs':'6bf14bc5268c0eff8f38c21c819f398917712fdc2607c33977ac873111d1dca8',
 'game/audio-preferences.mjs':'8baa3a25c6a80981f44e833ba8cb2e10d297f90b51684994d4e8328a7e846a71',
@@ -47,11 +47,11 @@ const sourceHashes={
 'optional-practice/civilian-fpv/world-hunt-reactions.mjs':
 '7d890938c2ec3b6d8bd6046db3b436589cf7b356c0e7004ef8814e59713dbbc7',
 'game/ui/contextual-reactions.mjs':
-'7da5da76cbda9857c46d86d807d0c05d1075c0cb076f497ced9e2ef84fc23635',
+'7c7824c2abc70515a4020b1ff6b63e216c62043a2b4afaefa5a761d9f667db08',
 'game/ui/hunt-feedback-layout.mjs':
 '54f9755b9fb40953d106b3c0d181948b5eb0983f6b360dba1a1435cf69808a53',
 'game/ui/reaction-caption.mjs':
-'4bb936f010f3508167d25f60429c4c1b851d8dee3c92f98028132e5bb8e15842',
+'67b17d8a8112980e907b2bdc3d01b664f6e5f34b3c3c799cc88cfb349823ed9b',
 'game/journey/reaction-portraits.mjs':
 '39cbf1428dca4e3d6f71e71fed4b41e280b3c0bc284e3bcacf580fca5552952f',
 'game/ui/art/reactions/guide-idle.svg':
@@ -11899,7 +11899,7 @@ if(node.textContent!==text)node.textContent=text;
 // Result surfaces also have legacy footnote rules; the explicit caption
 // preference takes precedence without exposing a hidden parent surface.
 node.style.display=node.hidden?'none':'block';
-node.style.fontSize=`calc(${options.scale}rem * var(--overflight-text-scale, 1))`;
+node.style.fontSize=`calc(${options.scale}rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1))`;
 node.style.lineHeight='1.45';
 node.style.color='var(--fk-text, #f1f5fa)';
 node.style.background=options.background?'var(--fk-panel, #172126)':'transparent';
@@ -15443,7 +15443,7 @@ player:lastMessage.player,
 },
 getLocale(),
 );
-readerText.style.fontSize=`calc(${state.scale}rem * var(--overflight-text-scale, 1))`;
+readerText.style.fontSize=`calc(${state.scale}rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1))`;
 readerText.style.background=state.background
 ?'var(--panel-bg, #172126)'
 :'transparent';
@@ -15451,7 +15451,7 @@ readerText.style.background=state.background
 }
 panel.style.background=state.background?'var(--panel-bg, #172126)':'transparent';
 panel.style.color='var(--text-color, #fff)';
-caption.style.fontSize=`calc(${state.scale}rem * var(--overflight-text-scale, 1))`;
+caption.style.fontSize=`calc(${state.scale}rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1))`;
 if(current){
 const localized=localizedCurrentLine();
 caption.textContent=reactionCaptionText(

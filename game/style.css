@@ -22,7 +22,7 @@
     padding: var(--safe-top) var(--safe-right) var(--safe-bottom) var(--safe-left);
     background: var(--paper);
     color: var(--ink);
-    font: 14px/1.5 var(--fk-font-ui, sans-serif);
+    font: calc(14px * var(--primary-text-scale, 1)) / 1.5 var(--fk-font-ui, sans-serif);
   }
   button,
   input,
@@ -73,7 +73,7 @@
     border: 2px solid var(--ink);
     background: var(--accent);
     color: var(--ink);
-    font-size: 13px;
+    font-size: calc(13px * var(--primary-text-scale, 1));
     font-weight: 600;
     letter-spacing: 0;
     overflow-wrap: anywhere;
@@ -94,7 +94,7 @@
   }
   .wordmark {
     font-weight: 800;
-    font-size: 21px;
+    font-size: calc(21px * var(--primary-text-scale, 1));
     letter-spacing: -0.8px;
     text-decoration: none;
     display: flex;
@@ -102,7 +102,7 @@
     align-items: center;
   }
   .brand-mark {
-    font-size: 29px;
+    font-size: calc(29px * var(--primary-text-scale, 1));
     color: #5f8587;
   }
   .slash {
@@ -114,10 +114,10 @@
     display: flex;
     align-items: center;
     gap: 23px;
-    font-size: 12px;
+    font-size: calc(12px * var(--primary-text-scale, 1));
   }
   .version {
-    font: 10px var(--fk-font-mono, monospace);
+    font: calc(10px * var(--primary-text-scale, 1)) var(--fk-font-mono, monospace);
     color: var(--muted);
     border: 1px solid var(--line);
     padding: 4px 7px;
@@ -133,7 +133,7 @@
     display: flex;
     justify-content: space-between;
     gap: 12px;
-    font: 10px/1.4 var(--fk-font-mono, monospace);
+    font: calc(10px * var(--primary-text-scale, 1)) / 1.4 var(--fk-font-mono, monospace);
     letter-spacing: 1.4px;
   }
   .edition {
@@ -169,22 +169,22 @@
   }
   .telemetry span {
     display: block;
-    font: 9px var(--fk-font-mono, monospace);
+    font: calc(9px * var(--primary-text-scale, 1)) var(--fk-font-mono, monospace);
     letter-spacing: 1.3px;
     color: var(--muted);
   }
   .telemetry strong {
     display: block;
-    font: 22px/1.25 var(--fk-font-mono, monospace);
+    font: calc(22px * var(--primary-text-scale, 1)) / 1.25 var(--fk-font-mono, monospace);
     margin-top: 5px;
     letter-spacing: -1px;
   }
   .telemetry small {
-    font-size: 12px;
+    font-size: calc(12px * var(--primary-text-scale, 1));
     letter-spacing: 0;
   }
   .telemetry #lives {
-    font-size: 15px;
+    font-size: calc(15px * var(--primary-text-scale, 1));
     letter-spacing: 2px;
     padding-top: 4px;
     color: #627f7f;
@@ -218,7 +218,7 @@
   }
   .coverage em {
     display: block;
-    font: 8px var(--fk-font-mono, monospace);
+    font: calc(8px * var(--primary-text-scale, 1)) var(--fk-font-mono, monospace);
     color: var(--muted);
     margin-top: 1px;
   }
@@ -258,20 +258,20 @@
   }
   .first-flight-heading h2 {
     margin: 0;
-    font-size: 16px;
+    font-size: calc(16px * var(--primary-text-scale, 1));
   }
   .first-flight-heading > span {
-    font-size: 11px;
+    font-size: calc(11px * var(--primary-text-scale, 1));
   }
   .first-flight-panel p {
     margin: 8px 0;
-    font-size: 12px;
+    font-size: calc(12px * var(--primary-text-scale, 1));
     line-height: 1.5;
   }
   .first-flight-task {
     display: none;
     margin: 0 0 6px;
-    font-size: 12px;
+    font-size: calc(12px * var(--primary-text-scale, 1));
     line-height: 1.4;
     font-weight: 700;
     overflow-wrap: anywhere;
@@ -320,7 +320,7 @@
   .first-flight-panel label {
     display: block;
     margin-top: 8px;
-    font-size: 12px;
+    font-size: calc(12px * var(--primary-text-scale, 1));
   }
   .first-flight-panel select {
     width: 100%;
@@ -352,12 +352,12 @@
   .first-flight-steps summary {
     cursor: pointer;
     padding: 12px 0;
-    font-size: 12px;
+    font-size: calc(12px * var(--primary-text-scale, 1));
   }
   .first-flight-steps ol {
     margin: 0;
     padding-left: 20px;
-    font-size: 12px;
+    font-size: calc(12px * var(--primary-text-scale, 1));
     line-height: 1.6;
   }
   .first-flight-markers {
@@ -394,7 +394,7 @@
     max-width: 150px;
     background: #112d35e8;
     padding: 2px 4px;
-    font: 10px/1.2 var(--fk-font-mono, monospace);
+    font: calc(10px * var(--primary-text-scale, 1)) / 1.2 var(--fk-font-mono, monospace);
     white-space: nowrap;
   }
   .first-flight-marker-start > span,
@@ -444,7 +444,7 @@
     overflow-wrap: anywhere;
   }
   .game-overlay[data-kind='ready'][data-intro='false'] #overlay-title {
-    font-size: clamp(23px, 2.7vw, 34px);
+    font-size: calc(clamp(23px, 2.7vw, 34px) * var(--primary-text-scale, 1));
     margin-bottom: 12px;
   }
   .game-overlay[data-kind='ready'] #overlay-copy {
@@ -464,13 +464,13 @@
     flex-shrink: 0;
   }
   .eyebrow {
-    font: 9px/1.6 var(--fk-font-mono, monospace);
+    font: calc(9px * var(--primary-text-scale, 1)) / 1.6 var(--fk-font-mono, monospace);
     letter-spacing: 1.8px;
     color: var(--accent);
     margin: 0 0 14px;
   }
   h1 {
-    font-size: clamp(25px, 3.5vw, 48px);
+    font-size: calc(clamp(25px, 3.5vw, 48px) * var(--primary-text-scale, 1));
     font-weight: 600;
     line-height: 1.06;
     letter-spacing: -1.8px;
@@ -479,24 +479,24 @@
   #overlay-copy {
     max-width: 370px;
     color: #bacbcc;
-    font-size: 13px;
+    font-size: calc(13px * var(--primary-text-scale, 1));
     line-height: 1.65;
     margin: 0 0 23px;
   }
   #retry-consequence {
     color: #bacbcc;
-    font-size: 11px;
+    font-size: calc(11px * var(--primary-text-scale, 1));
     line-height: 1.5;
     margin: 0 0 16px;
   }
   #overlay-difficulty {
     color: #bacbcc;
-    font-size: 12px;
+    font-size: calc(12px * var(--primary-text-scale, 1));
     line-height: 1.5;
     margin: 0 0 16px;
   }
   #difficulty-note {
-    font-size: 11px;
+    font-size: calc(11px * var(--primary-text-scale, 1));
     line-height: 1.5;
   }
   #difficulty-select,
@@ -509,7 +509,7 @@
   }
   .difficulty-details {
     margin: -8px 0 16px;
-    font-size: 11px;
+    font-size: calc(11px * var(--primary-text-scale, 1));
     line-height: 1.5;
   }
   .difficulty-details summary {
@@ -555,7 +555,7 @@
     background: #173a4359;
   }
   .overlay-footnote {
-    font: 9px/1.6 var(--fk-font-mono, monospace);
+    font: calc(9px * var(--primary-text-scale, 1)) / 1.6 var(--fk-font-mono, monospace);
     color: #9cb3b3;
     margin: 20px 0 0;
   }
@@ -567,7 +567,7 @@
     border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent);
     background: color-mix(in srgb, var(--accent) 10%, transparent);
     color: #d8e9df;
-    font: 10px/1.4 var(--fk-font-mono, monospace);
+    font: calc(10px * var(--primary-text-scale, 1)) / 1.4 var(--fk-font-mono, monospace);
     letter-spacing: 0.35px;
   }
   .game-overlay[data-kind='won'] .result-auto-next[hidden][data-reserve-space='true'] {
@@ -577,14 +577,14 @@
   .landing-version {
     margin: 10px 0 0;
     color: var(--muted);
-    font: 8px/1 var(--fk-font-mono, monospace);
+    font: calc(8px * var(--primary-text-scale, 1)) / 1 var(--fk-font-mono, monospace);
     letter-spacing: 1px;
     opacity: 0.72;
     text-align: right;
     text-transform: uppercase;
   }
   .result-medals {
-    font-size: 26px;
+    font-size: calc(26px * var(--primary-text-scale, 1));
     letter-spacing: 5px;
     color: var(--accent);
     margin-bottom: 17px;
@@ -595,7 +595,7 @@
     justify-content: space-between;
     align-items: center;
     height: 36px;
-    font: 9px var(--fk-font-mono, monospace);
+    font: calc(9px * var(--primary-text-scale, 1)) var(--fk-font-mono, monospace);
     color: var(--muted);
   }
   .flight-status > span:first-child {
@@ -641,7 +641,7 @@
     background: #e7ece1;
     color: var(--ink);
     border-radius: 3px;
-    font: 19px var(--fk-font-mono, monospace);
+    font: calc(19px * var(--primary-text-scale, 1)) var(--fk-font-mono, monospace);
     padding: 0;
   }
   .direction-controls [data-move='up'] {
@@ -652,7 +652,7 @@
   }
   .direction-controls #stop-button {
     grid-row: 2;
-    font-size: 9px;
+    font-size: calc(9px * var(--primary-text-scale, 1));
   }
   .direction-controls [data-move='right'] {
     grid-row: 2;
@@ -695,12 +695,12 @@
     min-width: 110px;
   }
   kbd {
-    font: 9px var(--fk-font-mono, monospace);
+    font: calc(9px * var(--primary-text-scale, 1)) var(--fk-font-mono, monospace);
     opacity: 0.65;
   }
   .ability-buttons > span {
     width: 100%;
-    font: 9px var(--fk-font-mono, monospace);
+    font: calc(9px * var(--primary-text-scale, 1)) var(--fk-font-mono, monospace);
     color: var(--muted);
   }
   .utility-buttons {
@@ -725,14 +725,14 @@
     border: 1px solid var(--line);
     color: var(--ink);
     background: transparent;
-    font-size: 18px;
+    font-size: calc(18px * var(--primary-text-scale, 1));
   }
   .icon-button[aria-pressed='true'] {
     background: var(--ink);
     color: var(--paper);
   }
   .run-message {
-    font-size: 11px;
+    font-size: calc(11px * var(--primary-text-scale, 1));
     min-height: 17px;
     margin: 11px 0 8px;
     color: #4e6d70;
@@ -752,7 +752,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
-    font: 9px/1.5 var(--fk-font-mono, monospace);
+    font: calc(9px * var(--primary-text-scale, 1)) / 1.5 var(--fk-font-mono, monospace);
     color: var(--muted);
     align-items: center;
   }
@@ -789,7 +789,7 @@
   .mission-brief {
     margin: 0 0 16px;
     border-block: 1px solid var(--line);
-    font-size: 12px;
+    font-size: calc(12px * var(--primary-text-scale, 1));
     line-height: 1.6;
     overflow-wrap: anywhere;
   }
@@ -822,7 +822,7 @@
     margin-top: 6px;
   }
   .controller-boost-cue {
-    font-size: 11px;
+    font-size: calc(11px * var(--primary-text-scale, 1));
     line-height: 1.5;
     border-left: 3px solid var(--accent);
     padding: 5px 8px;
@@ -842,7 +842,7 @@
     padding: 7px;
     background: transparent;
     color: inherit;
-    font-size: 11px;
+    font-size: calc(11px * var(--primary-text-scale, 1));
     line-height: 1.35;
     overflow-wrap: anywhere;
   }
@@ -853,7 +853,7 @@
   .mission-brief .reading-hint {
     margin: 4px 0 0;
     min-height: 2.8em;
-    font-size: 10px;
+    font-size: calc(10px * var(--primary-text-scale, 1));
     line-height: 1.4;
     overflow-wrap: anywhere;
   }
@@ -885,13 +885,13 @@
   .field {
     display: grid;
     gap: 5px;
-    font: 10px var(--fk-font-mono, monospace);
+    font: calc(10px * var(--primary-text-scale, 1)) var(--fk-font-mono, monospace);
     color: var(--muted);
     margin-bottom: 13px;
   }
   .field select,
   .field input {
-    font: 12px var(--fk-font-ui, sans-serif);
+    font: calc(12px * var(--primary-text-scale, 1)) var(--fk-font-ui, sans-serif);
     width: 100%;
     min-width: 0;
     border: 1px solid #b6c4bc;
@@ -935,7 +935,7 @@
     gap: 10px;
   }
   .class-description {
-    font-size: 11px;
+    font-size: calc(11px * var(--primary-text-scale, 1));
     line-height: 1.6;
     margin: 0 0 15px;
     min-height: 36px;
@@ -945,13 +945,13 @@
     overflow-wrap: anywhere;
   }
   .micro-note {
-    font-size: 9px;
+    font-size: calc(9px * var(--primary-text-scale, 1));
     color: var(--muted);
     line-height: 1.55;
     margin: -3px 0 21px;
   }
   .section-line {
-    font-size: 8px;
+    font-size: calc(8px * var(--primary-text-scale, 1));
     letter-spacing: 0.8px;
     border-top: 1px solid var(--line);
     padding-top: 16px;
@@ -974,15 +974,15 @@
     border-radius: 2px;
   }
   .mission .number {
-    font: 10px var(--fk-font-mono, monospace);
+    font: calc(10px * var(--primary-text-scale, 1)) var(--fk-font-mono, monospace);
     color: var(--muted);
   }
   .mission .name {
-    font-size: 12px;
+    font-size: calc(12px * var(--primary-text-scale, 1));
     flex: 1;
   }
   .mission .medal {
-    font: 9px var(--fk-font-mono, monospace);
+    font: calc(9px * var(--primary-text-scale, 1)) var(--fk-font-mono, monospace);
     color: #97712c;
     letter-spacing: 2px;
   }
@@ -999,12 +999,12 @@
     padding-top: 18px;
   }
   .deck-footer p {
-    font-size: 21px;
+    font-size: calc(21px * var(--primary-text-scale, 1));
     letter-spacing: -0.7px;
     margin: 0;
   }
   .deck-footer span {
-    font-size: 10px;
+    font-size: calc(10px * var(--primary-text-scale, 1));
     color: var(--muted);
   }
   .page-footer {
@@ -1014,15 +1014,15 @@
     padding: 23px 0 19px;
     margin-top: 20px;
     border-top: 1px solid var(--line);
-    font: 9px var(--fk-font-mono, monospace);
+    font: calc(9px * var(--primary-text-scale, 1)) var(--fk-font-mono, monospace);
     color: var(--muted);
   }
   .page-footer nav {
-    font: 9px var(--fk-font-mono, monospace);
+    font: calc(9px * var(--primary-text-scale, 1)) var(--fk-font-mono, monospace);
     gap: 15px;
   }
   .warning {
-    font-size: 11px;
+    font-size: calc(11px * var(--primary-text-scale, 1));
     border-left: 3px solid var(--danger);
     padding: 8px;
     background: #edcfb630;
@@ -1040,14 +1040,14 @@
     background: #09202899;
   }
   dialog h2 {
-    font-size: 29px;
+    font-size: calc(29px * var(--primary-text-scale, 1));
     line-height: 1.15;
     letter-spacing: -1px;
     margin-top: 0;
   }
   dialog p,
   dialog li {
-    font-size: 12px;
+    font-size: calc(12px * var(--primary-text-scale, 1));
     line-height: 1.8;
   }
   dialog li {
@@ -1063,18 +1063,18 @@
     border: 0;
     background: none;
     color: inherit;
-    font-size: 26px;
+    font-size: calc(26px * var(--primary-text-scale, 1));
   }
   .achievement {
     padding: 13px 0;
     border-bottom: 1px solid var(--line);
   }
   .achievement strong {
-    font-size: 13px;
+    font-size: calc(13px * var(--primary-text-scale, 1));
     display: block;
   }
   .achievement span {
-    font-size: 11px;
+    font-size: calc(11px * var(--primary-text-scale, 1));
     color: var(--muted);
   }
   .achievement:not(.earned) {
@@ -1112,7 +1112,7 @@
       padding-left: 9px;
     }
     .telemetry strong {
-      font-size: 19px;
+      font-size: calc(19px * var(--primary-text-scale, 1));
     }
     .meter {
       left: 58px;
@@ -1134,15 +1134,15 @@
       padding: 0 16px;
     }
     .wordmark {
-      font-size: 17px;
+      font-size: calc(17px * var(--primary-text-scale, 1));
       gap: 7px;
     }
     .brand-mark {
-      font-size: 24px;
+      font-size: calc(24px * var(--primary-text-scale, 1));
     }
     .masthead nav {
       gap: 12px;
-      font-size: 10px;
+      font-size: calc(10px * var(--primary-text-scale, 1));
     }
     .masthead .version {
       display: none;
@@ -1151,7 +1151,7 @@
       padding: 17px 16px 0;
     }
     .edition {
-      font-size: 8px;
+      font-size: calc(8px * var(--primary-text-scale, 1));
       letter-spacing: 0.8px;
       margin-bottom: 14px;
     }
@@ -1167,14 +1167,14 @@
       gap: 7px;
     }
     .telemetry span {
-      font-size: 8px;
+      font-size: calc(8px * var(--primary-text-scale, 1));
       letter-spacing: 0.6px;
     }
     .telemetry strong {
-      font-size: 18px;
+      font-size: calc(18px * var(--primary-text-scale, 1));
     }
     .telemetry #lives {
-      font-size: 11px;
+      font-size: calc(11px * var(--primary-text-scale, 1));
       letter-spacing: 1px;
     }
     .meter {
@@ -1182,39 +1182,39 @@
       top: 25px;
     }
     .coverage em {
-      font-size: 7px;
+      font-size: calc(7px * var(--primary-text-scale, 1));
     }
     .game-overlay {
       padding: 22px;
     }
     h1 {
-      font-size: 30px;
+      font-size: calc(30px * var(--primary-text-scale, 1));
       margin-bottom: 12px;
       letter-spacing: -1px;
     }
     #overlay-copy {
-      font-size: 11px;
+      font-size: calc(11px * var(--primary-text-scale, 1));
       line-height: 1.55;
       margin-bottom: 16px;
     }
     .eyebrow {
-      font-size: 8px;
+      font-size: calc(8px * var(--primary-text-scale, 1));
       margin-bottom: 9px;
     }
     .overlay-footnote {
-      font-size: 8px;
+      font-size: calc(8px * var(--primary-text-scale, 1));
       margin-top: 13px;
     }
     .button {
       min-height: 42px;
-      font-size: 12px;
+      font-size: calc(12px * var(--primary-text-scale, 1));
       padding: 10px 13px;
     }
     .overlay-actions {
       gap: 6px;
     }
     .flight-status {
-      font-size: 8px;
+      font-size: calc(8px * var(--primary-text-scale, 1));
       height: 31px;
     }
     .flight-status > span:last-child {
@@ -1226,7 +1226,7 @@
       gap: 3px;
     }
     .icon-button {
-      font-size: 15px;
+      font-size: calc(15px * var(--primary-text-scale, 1));
     }
     .ability-buttons {
       flex-direction: column;
@@ -1235,18 +1235,18 @@
     }
     .ability-buttons .button {
       min-height: 37px;
-      font-size: 11px;
+      font-size: calc(11px * var(--primary-text-scale, 1));
     }
     .ability-buttons > span {
-      font-size: 8px;
+      font-size: calc(8px * var(--primary-text-scale, 1));
     }
     .run-message {
-      font-size: 10px;
+      font-size: calc(10px * var(--primary-text-scale, 1));
       min-height: 30px;
     }
     .minor-controls {
       gap: 10px;
-      font-size: 8px;
+      font-size: calc(8px * var(--primary-text-scale, 1));
     }
     .minor-controls > span {
       display: none;
@@ -1286,7 +1286,7 @@
       gap: 6px;
     }
     .mission .name {
-      font-size: 11px;
+      font-size: calc(11px * var(--primary-text-scale, 1));
     }
     .deck-footer {
       display: none;
@@ -1301,7 +1301,7 @@
       gap: 10px;
     }
     .result-medals {
-      font-size: 20px;
+      font-size: calc(20px * var(--primary-text-scale, 1));
       margin-bottom: 10px;
     }
   }
@@ -1314,31 +1314,31 @@
     }
     .masthead nav {
       gap: 8px;
-      font-size: 9px;
+      font-size: calc(9px * var(--primary-text-scale, 1));
     }
     .wordmark {
-      font-size: 15px;
+      font-size: calc(15px * var(--primary-text-scale, 1));
     }
     .brand-mark {
       display: none;
     }
     .edition {
-      font-size: 7px;
+      font-size: calc(7px * var(--primary-text-scale, 1));
     }
     .game-overlay {
       padding: 16px;
     }
     h1 {
-      font-size: 25px;
+      font-size: calc(25px * var(--primary-text-scale, 1));
     }
     .overlay-footnote {
       display: none;
     }
     .overlay-actions .button {
-      font-size: 11px;
+      font-size: calc(11px * var(--primary-text-scale, 1));
     }
     .telemetry strong {
-      font-size: 16px;
+      font-size: calc(16px * var(--primary-text-scale, 1));
     }
     .ability-buttons .button {
       min-width: 89px;
@@ -1362,17 +1362,17 @@
       height: 40px;
     }
     .masthead .wordmark {
-      font-size: 16px;
+      font-size: calc(16px * var(--primary-text-scale, 1));
     }
     .masthead .brand-mark {
-      font-size: 21px;
+      font-size: calc(21px * var(--primary-text-scale, 1));
     }
     main {
       padding: 10px 18px 0;
     }
     .edition {
       margin-bottom: 8px;
-      font-size: 8px;
+      font-size: calc(8px * var(--primary-text-scale, 1));
     }
     .game-layout {
       grid-template-columns: minmax(0, 1fr) 228px;
@@ -1385,14 +1385,14 @@
       height: 40px;
     }
     .telemetry span {
-      font-size: 7px;
+      font-size: calc(7px * var(--primary-text-scale, 1));
     }
     .telemetry strong {
-      font-size: 16px;
+      font-size: calc(16px * var(--primary-text-scale, 1));
       margin-top: 2px;
     }
     .telemetry #lives {
-      font-size: 11px;
+      font-size: calc(11px * var(--primary-text-scale, 1));
     }
     .coverage em {
       display: none;
@@ -1402,7 +1402,7 @@
     }
     .flight-status {
       height: 24px;
-      font-size: 8px;
+      font-size: calc(8px * var(--primary-text-scale, 1));
     }
     .flight-deck {
       max-height: calc(100svh - var(--safe-top) - var(--safe-bottom) - 83px);
@@ -1422,11 +1422,11 @@
       padding: 22px;
     }
     h1 {
-      font-size: 26px;
+      font-size: calc(26px * var(--primary-text-scale, 1));
       margin-bottom: 10px;
     }
     #overlay-copy {
-      font-size: 11px;
+      font-size: calc(11px * var(--primary-text-scale, 1));
       line-height: 1.4;
       margin-bottom: 12px;
     }
@@ -1434,13 +1434,13 @@
       display: none;
     }
     .eyebrow {
-      font-size: 7px;
+      font-size: calc(7px * var(--primary-text-scale, 1));
       margin-bottom: 8px;
     }
     .overlay-actions .button {
       min-height: 36px;
       padding: 8px 13px;
-      font-size: 11px;
+      font-size: calc(11px * var(--primary-text-scale, 1));
     }
     .ability-buttons {
       gap: 3px;
@@ -1450,10 +1450,10 @@
       min-height: 28px;
       min-width: 84px;
       padding: 4px;
-      font-size: 10px;
+      font-size: calc(10px * var(--primary-text-scale, 1));
     }
     .ability-buttons > span {
-      font-size: 7px;
+      font-size: calc(7px * var(--primary-text-scale, 1));
       text-align: center;
     }
     .utility-buttons {
@@ -1468,7 +1468,7 @@
       display: none;
     }
     .result-medals {
-      font-size: 16px;
+      font-size: calc(16px * var(--primary-text-scale, 1));
       margin-bottom: 7px;
     }
   }
@@ -1508,7 +1508,7 @@
     color: var(--ink);
     border: 1px solid var(--ink);
     padding: 12px 18px;
-    font-size: 12px;
+    font-size: calc(12px * var(--primary-text-scale, 1));
     box-shadow: 0 2px 12px #10283125;
   }
 
@@ -1543,7 +1543,7 @@
   }
   @media (max-height: 500px) and (min-width: 681px) {
     .ability-buttons > span {
-      line-height: 8px;
+      line-height: calc(8px * var(--primary-text-scale, 1));
     }
     .game-overlay {
       overflow: auto;
@@ -1559,7 +1559,8 @@
     margin: 18px 0;
     border: 1px solid var(--line);
     padding: 12px;
-    font: var(--fk-text-control, 16px) / 1.5 var(--fk-font-mono, monospace);
+    font: calc(var(--fk-text-control, 16px) * var(--primary-text-scale, 1)) / 1.5
+      var(--fk-font-mono, monospace);
     resize: vertical;
   }
 
@@ -1620,7 +1621,7 @@
     flex: 1;
     min-height: 44px;
     padding: 8px;
-    font-size: 11px;
+    font-size: calc(11px * var(--primary-text-scale, 1));
   }
   .wide-dialog {
     width: min(920px, calc(100vw - 28px));
@@ -1655,7 +1656,7 @@
     margin: 12px 0;
     padding: 12px;
     border: 1px solid var(--line);
-    font: 11px/1.5 var(--fk-font-mono, monospace);
+    font: calc(11px * var(--primary-text-scale, 1)) / 1.5 var(--fk-font-mono, monospace);
     resize: vertical;
   }
   .library-tabs {
@@ -1665,7 +1666,7 @@
     margin: 20px 0;
   }
   .library-tabs button {
-    font-size: 12px;
+    font-size: calc(12px * var(--primary-text-scale, 1));
     padding: 8px 12px;
   }
   .scoreboard {
@@ -1674,12 +1675,12 @@
     gap: 20px;
   }
   .scoreboard h3 {
-    font-size: 16px;
+    font-size: calc(16px * var(--primary-text-scale, 1));
     margin: 8px 0;
   }
   .scoreboard ol {
     padding-left: 22px;
-    font-size: 12px;
+    font-size: calc(12px * var(--primary-text-scale, 1));
     line-height: 1.8;
   }
   .scoreboard section {
@@ -1692,7 +1693,7 @@
   }
   .pack-list button {
     margin: 5px 8px 5px 0;
-    font-size: 12px;
+    font-size: calc(12px * var(--primary-text-scale, 1));
   }
   .slider-field {
     display: flex;
@@ -1733,10 +1734,10 @@
     margin-top: 9px;
   }
   .gallery-card strong {
-    font-size: 14px;
+    font-size: calc(14px * var(--primary-text-scale, 1));
   }
   .gallery-card span {
-    font-size: 10px;
+    font-size: calc(10px * var(--primary-text-scale, 1));
     letter-spacing: 1px;
   }
   #gallery-canvas {
@@ -1779,7 +1780,7 @@
       grid-area: title;
       margin: 0;
       padding-right: 44px;
-      font-size: 24px;
+      font-size: calc(24px * var(--primary-text-scale, 1));
       overflow-wrap: anywhere;
     }
     #gallery-view-masteries {
@@ -1819,7 +1820,7 @@
     max-width: 840px;
   }
   .appearance-hint {
-    font-size: 12px;
+    font-size: calc(12px * var(--primary-text-scale, 1));
     line-height: 1.5;
     margin: 8px 0 14px;
   }
@@ -1830,7 +1831,7 @@
     border-left: 3px solid var(--accent);
     padding-left: 12px;
     font-weight: 600;
-    font-size: 12px;
+    font-size: calc(12px * var(--primary-text-scale, 1));
     line-height: 1.5;
     margin: 12px 0;
     overflow-wrap: anywhere;
@@ -1861,7 +1862,7 @@
     margin: 0 0 8px;
   }
   .appearance-reward p {
-    font-size: 12px;
+    font-size: calc(12px * var(--primary-text-scale, 1));
     line-height: 1.5;
     margin: 5px 0 0;
   }
@@ -1932,10 +1933,10 @@
       justify-content: flex-end;
       gap: 8px;
       max-width: 65%;
-      font-size: 10px;
+      font-size: calc(10px * var(--primary-text-scale, 1));
     }
     .masthead .wordmark {
-      font-size: 12px;
+      font-size: calc(12px * var(--primary-text-scale, 1));
     }
     .masthead .version {
       display: none;
@@ -1951,7 +1952,7 @@
       min-width: 100px;
     }
     .deck-actions button {
-      font-size: 12px;
+      font-size: calc(12px * var(--primary-text-scale, 1));
     }
     .gallery-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1992,7 +1993,7 @@
     padding: 12px 20px;
     background: var(--ink);
     color: var(--paper);
-    font-size: 12px;
+    font-size: calc(12px * var(--primary-text-scale, 1));
     box-shadow: 0 4px 18px #0002;
   }
   .key-binding-list {
@@ -2020,7 +2021,7 @@
   }
   .mastery-note {
     color: #665019;
-    font-size: 0.8rem;
+    font-size: calc(0.8rem * var(--primary-text-scale, 1));
     line-height: 1.45;
     overflow-wrap: anywhere;
     white-space: pre-line;
@@ -2034,7 +2035,7 @@
     margin: 0.5rem 0 1rem;
     padding-left: 1.2rem;
     color: #665019;
-    font-size: 0.85rem;
+    font-size: calc(0.85rem * var(--primary-text-scale, 1));
     line-height: 1.6;
     overflow-wrap: anywhere;
   }
@@ -2050,7 +2051,7 @@
     border: 1px solid var(--muted);
     border-left: 4px solid var(--accent);
     border-radius: 4px;
-    font-size: 12px;
+    font-size: calc(12px * var(--primary-text-scale, 1));
     line-height: 1.4;
     overflow-wrap: anywhere;
   }
@@ -2525,7 +2526,7 @@
     min-height: 44px;
     min-width: 0;
     padding: 0.4rem;
-    font-size: 0.875rem;
+    font-size: calc(0.875rem * var(--primary-text-scale, 1));
   }
   .field-kit.game-shell
     .game-overlay:is([data-kind='won'], [data-kind='lost'])
@@ -2595,20 +2596,20 @@
     aspect-ratio: auto;
   }
   .field-kit.game-shell .game-overlay[data-kind='won'] #overlay-eyebrow {
-    font-size: 0.75rem;
+    font-size: calc(0.75rem * var(--primary-text-scale, 1));
     line-height: 1.2;
   }
   .field-kit.game-shell .game-overlay[data-kind='won'] #overlay-title {
-    font-size: 26px;
+    font-size: calc(26px * var(--primary-text-scale, 1));
     line-height: 1.05;
   }
   .field-kit.game-shell .game-overlay[data-kind='won'] #overlay-copy {
-    font-size: 0.9rem;
+    font-size: calc(0.9rem * var(--primary-text-scale, 1));
     line-height: 1.25;
   }
   .field-kit.game-shell .game-overlay[data-kind='won'] #result-medals {
     justify-self: start;
-    font-size: 26px;
+    font-size: calc(26px * var(--primary-text-scale, 1));
     line-height: 1;
   }
   .field-kit.game-shell

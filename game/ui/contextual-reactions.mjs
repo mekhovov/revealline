@@ -548,13 +548,13 @@ export function attachContextualReactions({
           },
           getLocale(),
         );
-        readerText.style.fontSize = `calc(${state.scale}rem * var(--overflight-text-scale, 1))`;
+        readerText.style.fontSize = `calc(${state.scale}rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1))`;
         readerText.style.background = state.background ? 'var(--panel-bg, #172126)' : 'transparent';
       }
     }
     panel.style.background = state.background ? 'var(--panel-bg, #172126)' : 'transparent';
     panel.style.color = 'var(--text-color, #fff)';
-    caption.style.fontSize = `calc(${state.scale}rem * var(--overflight-text-scale, 1))`;
+    caption.style.fontSize = `calc(${state.scale}rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1))`;
     if (current) {
       const localized = localizedCurrentLine();
       caption.textContent = reactionCaptionText(

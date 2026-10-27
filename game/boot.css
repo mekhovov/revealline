@@ -20,7 +20,8 @@
     overflow-wrap: anywhere;
     background: var(--fk-bg, #070b12);
     color: var(--fk-text, #f3f0db);
-    font: 400 var(--fk-text-body, 18px) / 1.5 var(--fk-font-ui, 'Field Kit UI', sans-serif);
+    font: 400 calc(var(--fk-text-body, 18px) * var(--primary-text-scale, 1)) / 1.5
+      var(--fk-font-ui, 'Field Kit UI', sans-serif);
   }
   #boot-screen .launch-card {
     width: min(100%, 620px);
@@ -40,7 +41,8 @@
   #boot-screen h1 {
     margin: 24px 0 16px;
     color: var(--fk-text, #f3f0db);
-    font: 600 clamp(40px, 8vw, 56px) / 1.05 var(--fk-font-display, 'Field Kit Display', sans-serif);
+    font: 600 calc(clamp(40px, 8vw, 56px) * var(--primary-text-scale, 1)) / 1.05
+      var(--fk-font-display, 'Field Kit Display', sans-serif);
     text-transform: none;
     letter-spacing: 0;
   }
@@ -87,7 +89,8 @@
     background: var(--fk-panel-raised, #182531);
     color: var(--fk-text, #f3f0db);
     text-decoration: none;
-    font: 500 var(--fk-text-control, 16px) / 1.35 var(--fk-font-ui, 'Field Kit UI', sans-serif);
+    font: 500 calc(var(--fk-text-control, 16px) * var(--primary-text-scale, 1)) / 1.35
+      var(--fk-font-ui, 'Field Kit UI', sans-serif);
     cursor: pointer;
   }
   #boot-screen a {
@@ -104,7 +107,7 @@
     border-top: 1px solid var(--fk-line, #425563);
     padding-top: 12px;
     color: var(--fk-muted, #a5b2bb);
-    font-size: var(--fk-text-body, 18px);
+    font-size: calc(var(--fk-text-body, 18px) * var(--primary-text-scale, 1));
   }
   #boot-screen .launch-help summary {
     min-height: 44px;
@@ -116,7 +119,8 @@
     margin: 12px 0;
   }
   #boot-screen code {
-    font: 500 var(--fk-text-secondary, 14px) / 1.5 var(--fk-font-mono, 'Field Kit Mono', monospace);
+    font: 500 calc(var(--fk-text-secondary, 14px) * var(--primary-text-scale, 1)) / 1.5
+      var(--fk-font-mono, 'Field Kit Mono', monospace);
     overflow-wrap: anywhere;
   }
   #boot-screen .launch-command {
@@ -130,11 +134,11 @@
   #boot-screen .launch-notice {
     margin: 20px 0 0;
     color: var(--fk-amber, #f4bf62);
-    font-size: var(--fk-text-body, 18px);
+    font-size: calc(var(--fk-text-body, 18px) * var(--primary-text-scale, 1));
   }
   #boot-screen .launch-detail {
     font-family: var(--fk-font-mono, 'Field Kit Mono', monospace);
-    font-size: var(--fk-text-secondary, 14px);
+    font-size: calc(var(--fk-text-secondary, 14px) * var(--primary-text-scale, 1));
   }
   #boot-screen[hidden],
   #boot-screen [hidden] {

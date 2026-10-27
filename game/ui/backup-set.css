@@ -35,7 +35,7 @@
 
   .field-kit #backup-set-files > li > span {
     color: var(--fk-muted);
-    font-size: var(--fk-text-secondary);
+    font-size: calc(var(--fk-text-secondary) * var(--primary-text-scale, 1));
   }
 
   .field-kit #backup-set-filenames {
@@ -57,7 +57,7 @@
   .field-kit #backup-set-filename-list dt {
     margin-block-start: var(--fk-space-3);
     color: var(--fk-muted);
-    font-size: var(--fk-text-secondary);
+    font-size: calc(var(--fk-text-secondary) * var(--primary-text-scale, 1));
   }
 
   .field-kit #backup-set-filename-list dd {
