@@ -6,8 +6,8 @@ export function resolveTextSize(value) {
   return value;
 }
 
-/** Hosts must explicitly opt into their qualified extra-large layout. The
- * established Large presentation remains every other host's fallback. */
+/** Hosts explicitly opt into their additional layout. The established Large
+ * presentation remains every other host's fallback. */
 export function effectiveTextSize(value, { extraLarge = false } = {}) {
   return resolveTextSize(value) === 'extra-large' && !extraLarge ? 'large' : value;
 }

@@ -16,6 +16,7 @@ import { validateCompiledPresentation } from '../presentation/host.mjs';
 import { FRESH_SOLO_VISUAL_RELEASE } from '../presentation/fresh-visual-theme.mjs';
 import { importMediaBundle } from '../media-bundle.mjs';
 import { hashPresentationBytes } from '../presentation/bundle.mjs';
+import { REWARD_BOARD_SECONDS } from '../ui/reward-arrival.mjs';
 
 // Modeled host journey. Injected one-pixel art is not production visual evidence.
 const campaign = JSON.parse(await readFile(new URL('../content/campaign.json', import.meta.url)));
@@ -201,7 +202,7 @@ test('session-only Next prepares a new exact original without persistent writes'
   // Advance the actual earned-picture presentation to its public result action.
   for (
     let frame = 0;
-    frame < Math.ceil(CELEBRATION_SECONDS * 10) + 2 && page.$('show-result').hidden;
+    frame < Math.min(Math.ceil(CELEBRATION_SECONDS * 10) + 2, Math.ceil(REWARD_BOARD_SECONDS / 0.1) + 2) && page.$('show-result').hidden;
     frame++
   )
     page.frame(100);

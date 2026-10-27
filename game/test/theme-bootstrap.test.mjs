@@ -25,6 +25,7 @@ function seed(
   {
     studio = false,
     primaryTextScaling = false,
+    overflightTextScaling = false,
     coarse = false,
     reduced = false,
     brokenStorage = false,
@@ -41,6 +42,7 @@ function seed(
         }
       : {};
   if (primaryTextScaling) dataset.textScaling = 'solo';
+  if (overflightTextScaling) dataset.textScaling = 'overflight';
   const document = {
     documentElement: { dataset, style: { setProperty: (key, value) => variables.set(key, value) } },
     currentScript: { dataset: { themeDensity: studio ? 'studio' : 'player' } },
@@ -489,7 +491,8 @@ test('qualified primary extra-large seeds its multiplier before deferred styles 
     assert.equal(primary.variables.get('--primary-text-scale'), '1');
   }
   const other = seed({ 'revealline.display.v1': raw({ textSize: 'extra-large' }) });
-  assert.equal(other.variables.has('--primary-text-scale'), false);
+  assert.equal(other.variables.get('--primary-text-scale'), '1');
+  assert.equal(other.variables.get('--overflight-text-scale'), '1');
   assert.equal(other.dataset.themeTextSize, 'large');
   const resolved = resolvePresentation({
     accessibility: { textSize: 'extra-large', textFace: 'plain', extraLarge: true },
@@ -499,4 +502,20 @@ test('qualified primary extra-large seeds its multiplier before deferred styles 
     presentationThemeVariables(resolved)['--iw-text-size'],
     variables.get('--iw-text-size'),
   );
+});
+
+test('primary and Overflight first-paint scale factors remain independent across every stored size', () => {
+  for (const textSize of ['standard', 'large', 'extra-large']) {
+    for (const host of ['primary', 'overflight', 'other']) {
+      const result = seed(
+        { 'revealline.display.v1': raw({ textSize }) },
+        { primaryTextScaling: host === 'primary', overflightTextScaling: host === 'overflight' },
+      );
+      const extra = textSize === 'extra-large';
+      assert.equal(result.variables.get('--primary-text-scale'), host === 'primary' && extra ? '2' : '1');
+      assert.equal(result.variables.get('--overflight-text-scale'), host === 'overflight' && extra ? '2' : '1');
+      assert.ok(Number(result.variables.get('--primary-text-scale')) * Number(result.variables.get('--overflight-text-scale')) <= 2);
+      assert.equal(result.dataset.themeTextSize, extra && host === 'other' ? 'large' : textSize);
+    }
+  }
 });

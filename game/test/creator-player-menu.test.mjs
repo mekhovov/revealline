@@ -7,9 +7,41 @@ import { attachCreatorPlayerMenu, creatorVersusHref } from '../creator/player-me
 import { focusCreatorInstalledPlay } from '../creator/player-menu-focus.mjs';
 import { attachControllerNavigation } from '../ui/controller-navigation.mjs';
 import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
+import { MENU_ANIMATION_KEY } from '../ui/menu-animation-preferences.mjs';
 import { getLocale, setLocale, translateDOM } from '../i18n/index.mjs';
 
 const html = await readFile(new URL('../creator/player.html', import.meta.url), 'utf8');
+
+test('Creator retains its menu-motion control and pending choice until Retry verifies persistence', (t) => {
+  const original = getLocale();
+  t.after(() => setLocale(original));
+  const h = fixture(t),
+    input = h.$('creator-background-animation'),
+    write = h.win.localStorage.setItem;
+  let working = false;
+  h.win.localStorage.setItem = (key, value) => {
+    if (key === MENU_ANIMATION_KEY && !working) return;
+    write(key, value);
+  };
+  h.$('creator-open-settings').click();
+  input.checked = false;
+  input.emit('change');
+  const status = h.$(`${input.id}-save-status`),
+    retry = h.$(`${input.id}-save-retry`);
+  assert.equal(input.checked, false);
+  assert.match(status.textContent, /Session only.*could not be confirmed/);
+  assert.equal(retry.hidden, false);
+  retry.focus();
+  setLocale('uk');
+  assert.equal(retry.textContent, 'Повторити збереження');
+  working = true;
+  retry.click();
+  assert.equal(h.win.localStorage.getItem(MENU_ANIMATION_KEY), 'off');
+  assert.equal(status.textContent, 'Збережено');
+  assert.equal(h.doc.activeElement, input);
+  assert.equal(h.$('creator-background-animation'), input);
+  assert.equal(retry.hidden, true);
+});
 const pack = Object.freeze({
   editionId: 'exact-edition',
   manifest: {

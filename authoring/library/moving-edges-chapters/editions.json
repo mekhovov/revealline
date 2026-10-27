@@ -5,7 +5,7 @@
       "themeId": "fpv",
       "id": "moving-edges-fpv",
       "artRoot": "authoring/library/moving-edges-art",
-      "provenanceSha256": "bdaac5fc8776c83a9e2201f36409b576478b835c708e97e335c8c2d7ee9006e1",
+      "provenanceSha256": "dbc0583efc7fdeeb685858a361734a18973799515023a1b59bc495641d86a6e5",
       "images": [
         {
           "sourceCellId": "moving-edges/terrace-stitch/fpv",
@@ -37,7 +37,7 @@
       "themeId": "ukraine",
       "id": "moving-edges-ukraine",
       "artRoot": "authoring/library/moving-edges-art",
-      "provenanceSha256": "bdaac5fc8776c83a9e2201f36409b576478b835c708e97e335c8c2d7ee9006e1",
+      "provenanceSha256": "dbc0583efc7fdeeb685858a361734a18973799515023a1b59bc495641d86a6e5",
       "images": [
         {
           "sourceCellId": "moving-edges/terrace-stitch/ukraine",
@@ -69,7 +69,7 @@
       "themeId": "retro",
       "id": "moving-edges-retro",
       "artRoot": "authoring/library/moving-edges-art",
-      "provenanceSha256": "bdaac5fc8776c83a9e2201f36409b576478b835c708e97e335c8c2d7ee9006e1",
+      "provenanceSha256": "dbc0583efc7fdeeb685858a361734a18973799515023a1b59bc495641d86a6e5",
       "images": [
         {
           "sourceCellId": "moving-edges/terrace-stitch/retro",

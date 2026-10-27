@@ -334,3 +334,37 @@ test('the room picker needs a fresh controller press after foreground loss befor
   f.input.poll();
   assert.equal(f.navigated.filter((command) => command.confirm).length, 1);
 });
+
+test('Rooms support cache keeps the exact loss sample after neutralization and explicit clears retire it without polling', (t) => {
+  const f = fixture(t);
+  f.setScope('dialog:settings');
+  assert.equal(f.input.supportObservation(), null);
+  f.input.poll();
+  f.input.poll();
+  assert.equal(f.input.supportObservation().assigned, true);
+  f.setPads([]);
+  assert.deepEqual(f.input.poll(), neutral);
+  const reads = f.reads,
+    lost = f.input.supportObservation();
+  assert.equal(lost.status, 'disconnected');
+  assert.equal(lost.assigned, false);
+  lost.status = 'invented';
+  assert.equal(f.input.supportObservation().status, 'disconnected');
+  assert.equal(f.reads, reads);
+  f.setReadError();
+  f.input.poll();
+  assert.equal(f.input.supportObservation().status, 'unavailable');
+  assert.equal(f.input.supportObservation().assigned, false);
+  f.input.clear();
+  assert.equal(f.input.supportObservation(), null);
+  f.input.poll();
+  const afterPoll = f.reads;
+  f.win.emit('blur');
+  assert.equal(f.input.supportObservation(), null);
+  assert.equal(f.reads, afterPoll);
+  f.input.poll();
+  f.suspend();
+  assert.equal(f.input.supportObservation(), null);
+  f.input.destroy();
+  assert.equal(f.input.supportObservation(), null);
+});

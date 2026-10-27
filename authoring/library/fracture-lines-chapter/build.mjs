@@ -26,7 +26,7 @@ const ART = 'authoring/library/fracture-lines-art';
 // Final source and art metadata are immutable inputs; no current-owner fallback.
 export const INPUTS = Object.freeze({
   'authoring/library/fracture-lines/build.mjs':
-    '56cb05d183ce0406af2949506d6c3f6da78e9e275ce7302360a3d6742d72e59d',
+    'b7d56b6222df77ab0a2064bb41ef3118e4823f5585f4f6f29133f22584881b8f',
   'authoring/library/fracture-lines/layouts.json':
     'af15577704ce673100f7c6d89ae92baffa25c5ebfdae2459ea4c720a9d7ab179',
   'authoring/library/fracture-lines/controls.mjs':

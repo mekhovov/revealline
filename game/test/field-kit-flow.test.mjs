@@ -7,7 +7,7 @@ import { attachGameShell } from '../ui/game-shell.mjs';
 
 const visibleActions = (page) =>
   [...page.doc.querySelector('.home-actions').children]
-    .filter((node) => !node.hidden)
+    .filter((node) => !node.hidden && node.matches('button,a'))
     .map((node) => node.id || node.href);
 
 // The ordinary host owns one asynchronous unified library. Exercise actual

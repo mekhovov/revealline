@@ -729,6 +729,7 @@ export function mountBeginnerCoach({
   locale = () => 'en',
   liveDisplay = true,
   onStart = () => {},
+  onLessonMode = null,
   onPause = () => {},
   onRetry = () => {},
   onNext = () => {},
@@ -755,6 +756,9 @@ export function mountBeginnerCoach({
     completedFlightStep = -1,
     stepAdvancedAt = 0;
   let refs = {};
+  let modeChanging = false,
+    modeChangeFailed = false,
+    modeChangeSerial = 0;
   let labMode = 'example',
     labSource = 'keyboard',
     labRunning = false,
@@ -809,6 +813,8 @@ export function mountBeginnerCoach({
     const el = node('button', className, label);
     el.type = 'button';
     el.dataset.coachAction = action;
+    if (modeChanging && ['start', 'lesson-mode'].includes(action))
+      el.setAttribute('aria-disabled', 'true');
     return el;
   };
   const axisName = (axis) =>
@@ -1917,16 +1923,32 @@ export function mountBeginnerCoach({
     const card = node('section', 'coach-card');
     let notes = null;
     const startLabel = () =>
-      replay
-        ? t('Continue playback', 'Продовжити перегляд')
-        : selectedAircraftPractice()
-          ? t(
-              `Practice with ${snapshot.practiceAircraftName} →`,
-              `Практика з ${snapshot.practiceAircraftName} →`,
-            )
-          : activeStep() > 0 || (snapshot.state?.ticks ?? 0) > 0
-            ? t('Back to practice →', 'До практики →')
-            : t('Let’s fly →', 'Почнімо політ →');
+      modeChanging
+        ? t('Preparing lesson…', 'Підготовка уроку…')
+        : replay
+          ? t('Continue playback', 'Продовжити перегляд')
+          : mode() !== lesson.mode
+            ? selectedAircraftPractice()
+              ? t(
+                  `Practice with ${snapshot.practiceAircraftName} in ${mode() === 'acro' ? 'Acro' : 'Self-level'} · unscored →`,
+                  `Практика з ${snapshot.practiceAircraftName} ${mode() === 'acro' ? 'в Acro' : 'із самовирівнюванням'} · без заліку →`,
+                )
+              : snapshot.modePractice
+                ? t(
+                    'Continue in Self-level · unscored →',
+                    'Продовжити із самовирівнюванням · без заліку →',
+                  )
+                : mode() === 'acro'
+                  ? t('Continue in Acro →', 'Продовжити в Acro →')
+                  : t('Continue in Self-level →', 'Продовжити із самовирівнюванням →')
+            : selectedAircraftPractice()
+              ? t(
+                  `Practice with ${snapshot.practiceAircraftName} →`,
+                  `Практика з ${snapshot.practiceAircraftName} →`,
+                )
+              : activeStep() > 0 || (snapshot.state?.ticks ?? 0) > 0
+                ? t('Back to practice →', 'До практики →')
+                : t('Let’s fly →', 'Почнімо політ →');
     const heading = node('header', 'coach-heading'),
       eyebrow = node('p', 'coach-eyebrow', curriculumPosition());
     const headingText = node('div', '');
@@ -1960,12 +1982,13 @@ export function mountBeginnerCoach({
       refs.stepAdvance.hidden = true;
       card.append(refs.stepAdvance);
     }
-    if (stage === 'guide' && mode() !== lesson.mode)
-      card.append(
+    if (stage === 'guide' && mode() !== lesson.mode) {
+      const choice = node('div', 'coach-mode-choice');
+      choice.append(
         node(
           'p',
           'coach-pause-note',
-          snapshot.modePractice
+          snapshot.modePractice && !selectedAircraftPractice()
             ? t(
                 'Self-level practice · no score. These manoeuvres require Acro; the original objectives stay unchanged.',
                 'Практика із самовирівнюванням · без заліку. Для цих маневрів потрібен Acro; початкові цілі не змінюються.',
@@ -1976,6 +1999,45 @@ export function mountBeginnerCoach({
               ),
         ),
       );
+      if (typeof onLessonMode === 'function' && !replay) {
+        const actions = node('div', 'coach-actions');
+        actions.append(
+          button(
+            'lesson-mode',
+            modeChanging
+              ? t('Changing flight mode…', 'Зміна режиму польоту…')
+              : lesson.mode === 'acro'
+                ? t('Restart lesson in Acro', 'Почати урок заново в Acro')
+                : t('Restart lesson in Self-level', 'Почати урок заново із самовирівнюванням'),
+          ),
+          button('start', startLabel()),
+        );
+        choice.append(
+          actions,
+          node(
+            'p',
+            'coach-pause-note',
+            t(
+              'Changing mode restarts this lesson and keeps it paused. Choose when you are ready to fly.',
+              'Зміна режиму починає цей урок заново й залишає його на паузі. Почніть політ, коли будете готові.',
+            ),
+          ),
+        );
+        if (modeChangeFailed) {
+          const failure = node(
+            'p',
+            'coach-pause-note',
+            t(
+              'The mode could not be changed. Try again or continue in the current mode.',
+              'Не вдалося змінити режим. Спробуйте ще раз або продовжуйте в поточному режимі.',
+            ),
+          );
+          failure.setAttribute('role', 'status');
+          choice.append(failure);
+        }
+      }
+      card.append(choice);
+    }
     if (stage === 'complete') {
       card.append(
         node(
@@ -2490,12 +2552,39 @@ export function mountBeginnerCoach({
   function click(event) {
     const action = event.target.closest?.('[data-coach-action]')?.dataset.coachAction;
     if (!action || !lesson || disposed) return;
+    if (modeChanging && ['start', 'lesson-mode'].includes(action)) return;
     if (action === 'start') {
       setPracticeView(false, { resume: false });
       pausePreview();
       stage = 'live';
       render();
       onStart();
+    } else if (
+      action === 'lesson-mode' &&
+      stage === 'guide' &&
+      !replay &&
+      mode() !== lesson.mode &&
+      typeof onLessonMode === 'function'
+    ) {
+      pausePreview();
+      onPause();
+      const serial = ++modeChangeSerial,
+        selectedMode = lesson.mode;
+      modeChanging = true;
+      modeChangeFailed = false;
+      render();
+      void (async () => {
+        try {
+          await onLessonMode(selectedMode);
+        } catch {
+          if (serial === modeChangeSerial) modeChangeFailed = true;
+        } finally {
+          if (!disposed && serial === modeChangeSerial) {
+            modeChanging = false;
+            render();
+          }
+        }
+      })();
     } else if (action === 'lab-immersive') {
       setPracticeView(!labImmersive);
     } else if (action === 'lab-replay') {
@@ -2660,6 +2749,8 @@ export function mountBeginnerCoach({
     open(value, options = {}) {
       setPracticeView(false, { resume: false });
       if (disposed) return;
+      modeChangeSerial++;
+      modeChanging = modeChangeFailed = false;
       pausePreview();
       lesson = value;
       snapshot = {

@@ -1,0 +1,44 @@
+{
+  "format": "FPVHudPackageMeasurement.v1",
+  "date": "2026-10-20T20:44:47.953Z",
+  "qualification": "working-tree measurement; zero identities are placeholders, not release evidence",
+  "packages": [
+    {
+      "id": "civilian-fpv",
+      "runtimeFiles": 145,
+      "runtimeBytes": 11988839,
+      "sourceFiles": 147,
+      "sourceBytes": 12030895,
+      "inputBytes": 13203567,
+      "inputBudget": 13303808,
+      "limits": {
+        "files": 150,
+        "bytes": 13107200
+      },
+      "revision": "dace4cbd1260300c2ce1a8a448398342fb9d2163695f39d5980ffd86f70e4bdd",
+      "inputHeadroom": 100241
+    },
+    {
+      "id": "fpv-worlds",
+      "runtimeFiles": 208,
+      "runtimeBytes": 19252910,
+      "sourceFiles": 210,
+      "sourceBytes": 19303244,
+      "inputBytes": 20445208,
+      "inputBudget": 20971520,
+      "limits": {
+        "files": 210,
+        "bytes": 20971520
+      },
+      "revision": "53b451ed5314436323852fac1cebfb29d674d1adb8ab068c198e65996ba35594",
+      "inputHeadroom": 526312
+    }
+  ],
+  "sourceHashes": {
+    "optional-practice/civilian-fpv/flight-fullscreen.mjs": "dcd098a4c8c1417e430d0ab702560623f9675febdc01e9bbd0d5d56f4758cc1f",
+    "optional-practice/civilian-fpv/flight-fullscreen.css": "ee8a524896d66aabba81fd341eb20a3f4f9ba77d0ac4dcc4d9c1433795d48724",
+    "optional-practice/civilian-fpv/style.css": "ae891ea04017536e7643b138dfee86de00ac86b47ca5597026fb35fa8c3076e1",
+    "optional-practice/civilian-fpv/world-app.mjs": "4b60d679807d780554bc4828cfc6d562975abd9a75658b0b12cc7ab20970053f",
+    "optional-practice/civilian-fpv/app.mjs": "076fe7f01700996f19f1bccd17a59a44deae0d0f7411ac75d527723ed00c6730"
+  }
+}

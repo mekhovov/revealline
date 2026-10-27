@@ -1,0 +1,1883 @@
+TAP version 13
+# Subtest: challenge recovery storage keeps the paired accepted clock without changing older envelopes
+ok 1 - challenge recovery storage keeps the paired accepted clock without changing older envelopes
+  ---
+  duration_ms: 2.333542
+  ...
+# Subtest: recovery storage commits one bounded slot per host and interrupted replacement preserves the last durable checkpoint
+ok 2 - recovery storage commits one bounded slot per host and interrupted replacement preserves the last durable checkpoint
+  ---
+  duration_ms: 0.831125
+  ...
+# Subtest: recovery validates captured mission/physics agreement before opening storage and closes cancelled transactions
+ok 3 - recovery validates captured mission/physics agreement before opening storage and closes cancelled transactions
+  ---
+  duration_ms: 0.431541
+  ...
+# Subtest: unavailable and blocked IndexedDB reject without losing or creating a false saved point
+ok 4 - unavailable and blocked IndexedDB reject without losing or creating a false saved point
+  ---
+  duration_ms: 0.191209
+  ...
+# Subtest: live autosave keeps one pending write, records the captured tick, and never pauses flight
+ok 5 - live autosave keeps one pending write, records the captured tick, and never pauses flight
+  ---
+  duration_ms: 5.441917
+  ...
+# Subtest: quota failure retains the last durable time and exact recent-clip range without pausing
+ok 6 - quota failure retains the last durable time and exact recent-clip range without pausing
+  ---
+  duration_ms: 0.852
+  ...
+# Subtest: changing sessions aborts the old capture before it can overwrite a checkpoint
+ok 7 - changing sessions aborts the old capture before it can overwrite a checkpoint
+  ---
+  duration_ms: 0.559083
+  ...
+# Subtest: export actions preserve live flight and restoring the saved point pauses before application
+ok 8 - export actions preserve live flight and restoring the saved point pauses before application
+  ---
+  duration_ms: 1.133292
+  ...
+# Subtest: cancelled and oversized recovery imports never apply, and configuration mismatch stays rejected
+ok 9 - cancelled and oversized recovery imports never apply, and configuration mismatch stays rejected
+  ---
+  duration_ms: 0.828666
+  ...
+# Subtest: controls remain hidden for legacy flights and translate status for Ukrainian practice
+ok 10 - controls remain hidden for legacy flights and translate status for Ukrainian practice
+  ---
+  duration_ms: 0.272542
+  ...
+# Subtest: preserved Advanced originals survive autosaves and duplicate preservation without duplicate slots
+ok 11 - preserved Advanced originals survive autosaves and duplicate preservation without duplicate slots
+  ---
+  duration_ms: 0.78025
+  ...
+# Subtest: failed original pointer write keeps the earlier complete original and current recovery
+ok 12 - failed original pointer write keeps the earlier complete original and current recovery
+  ---
+  duration_ms: 0.36175
+  ...
+# Subtest: restoring real native and Challenge envelope shapes preserves before migration and exports exact original
+ok 13 - restoring real native and Challenge envelope shapes preserves before migration and exports exact original
+  ---
+  duration_ms: 3.605917
+  ...
+# Subtest: original storage failure prevents migration while leaving verified recovery paused
+ok 14 - original storage failure prevents migration while leaving verified recovery paused
+  ---
+  duration_ms: 0.963667
+  ...
+# Subtest: cancel after original backup starts cannot migrate the restored flight
+ok 15 - cancel after original backup starts cannot migrate the restored flight
+  ---
+  duration_ms: 0.685833
+  ...
+# Subtest: new actor-rule checkpoints do not replace preserved originals and unsupported legacy missions skip migration
+ok 16 - new actor-rule checkpoints do not replace preserved originals and unsupported legacy missions skip migration
+  ---
+  duration_ms: 0.605833
+  ...
+# Subtest: Analog video pass bounds memory, keeps reduced-motion noise still and releases GPU resources
+ok 17 - Analog video pass bounds memory, keeps reduced-motion noise still and releases GPU resources
+  ---
+  duration_ms: 40.501084
+  ...
+# Subtest: Analog render gate follows the current native or regional camera and releases its pass outside FPV
+ok 18 - Analog render gate follows the current native or regional camera and releases its pass outside FPV
+  ---
+  duration_ms: 18.005833
+  ...
+# Subtest: projectile families have distinct readable silhouettes and hostile colors
+ok 19 - projectile families have distinct readable silhouettes and hostile colors
+  ---
+  duration_ms: 0.171291
+  ...
+# Subtest: all weapon barrels and flashes align with the simulated muzzle across aircraft sizes
+ok 20 - all weapon barrels and flashes align with the simulated muzzle across aircraft sizes
+  ---
+  duration_ms: 0.178834
+  ...
+# Subtest: weapon flashes match the fired weapon and cannot freeze on the terminal result
+ok 21 - weapon flashes match the fired weapon and cannot freeze on the terminal result
+  ---
+  duration_ms: 0.081667
+  ...
+# Subtest: remains attachments survive renderer replacement and recentering without snapping to a lower floor
+ok 22 - remains attachments survive renderer replacement and recentering without snapping to a lower floor
+  ---
+  duration_ms: 2.429333
+  ...
+# Subtest: combat surface rays ignore sprites and hidden scene branches
+ok 23 - combat surface rays ignore sprites and hidden scene branches
+  ---
+  duration_ms: 0.640042
+  ...
+# Subtest: all catalog aircraft render their physical rotor positions and dimensions after legacy scale normalization
+ok 24 - all catalog aircraft render their physical rotor positions and dimensions after legacy scale normalization
+  ---
+  duration_ms: 22.791292
+  ...
+# Subtest: skins retain physical size and rotor geometry while changing cosmetic color
+ok 25 - skins retain physical size and rotor geometry while changing cosmetic color
+  ---
+  duration_ms: 1.29825
+  ...
+# Subtest: civilian Mobula8 appearance uses guarded three-blade props and an orange canopy without changing physics
+ok 26 - civilian Mobula8 appearance uses guarded three-blade props and an orange canopy without changing physics
+  ---
+  duration_ms: 0.968583
+  ...
+# Subtest: two-blade reference aircraft retain their actual blade count in the visual model
+ok 27 - two-blade reference aircraft retain their actual blade count in the visual model
+  ---
+  duration_ms: 1.522041
+  ...
+# Subtest: rendered fuselage and rotors use the same center-of-mass coordinate convention
+ok 28 - rendered fuselage and rotors use the same center-of-mass coordinate convention
+  ---
+  duration_ms: 0.568042
+  ...
+# Subtest: view frame uses actual support height independently of collision radius and camera offsets
+ok 29 - view frame uses actual support height independently of collision radius and camera offsets
+  ---
+  duration_ms: 0.571791
+  ...
+# Subtest: physical rotor animation honors each motor direction and does not advance while paused
+ok 30 - physical rotor animation honors each motor direction and does not advance while paused
+  ---
+  duration_ms: 0.211625
+  ...
+# Subtest: new civilian whoops use original guarded geometry, distinct canopies and correct blade counts
+ok 31 - new civilian whoops use original guarded geometry, distinct canopies and correct blade counts
+  ---
+  duration_ms: 2.052542
+  ...
+# Subtest: close chase camera preserves heading through roll, clamps distance and respects collision resolution
+ok 32 - close chase camera preserves heading through roll, clamps distance and respects collision resolution
+  ---
+  duration_ms: 0.651083
+  ...
+# Subtest: FPV foreground uses black three-blade ten-inch props without changing aircraft identity or spin
+ok 33 - FPV foreground uses black three-blade ten-inch props without changing aircraft identity or spin
+  ---
+  duration_ms: 175.61825
+  ...
+# Subtest: all FPV quality tiers retain three curved black blades, invisible pivots and bounded transparent blur
+ok 34 - all FPV quality tiers retain three curved black blades, invisible pivots and bounded transparent blur
+  ---
+  duration_ms: 12.865542
+  ...
+# Subtest: FPV foreground stays peripheral across every preset, skin, lens and screen shape
+ok 35 - FPV foreground stays peripheral across every preset, skin, lens and screen shape
+  ---
+  duration_ms: 304.984125
+  ...
+# Subtest: FPV swept props and cosmetic knife preserve the central half at every phase and camera tilt
+ok 36 - FPV swept props and cosmetic knife preserve the central half at every phase and camera tilt
+  ---
+  duration_ms: 245.937208
+  ...
+# Subtest: FPV nose stays 22–28 percent wide and 8–10 percent high without raising the flight camera
+ok 37 - FPV nose stays 22–28 percent wide and 8–10 percent high without raising the flight camera
+  ---
+  duration_ms: 15.256083
+  ...
+# Subtest: FPV prop preference preserves camera pose, pauses rotor phase and follows view visibility
+ok 38 - FPV prop preference preserves camera pose, pauses rotor phase and follows view visibility
+  ---
+  duration_ms: 3.077917
+  ...
+# Subtest: FPV shows only the two equipped weapon mounts and only the active accepted muzzle flash
+ok 39 - FPV shows only the two equipped weapon mounts and only the active accepted muzzle flash
+  ---
+  duration_ms: 3.090542
+  ...
+# Subtest: native and regional pulses share bounded pools and subtract the current render origin
+ok 40 - native and regional pulses share bounded pools and subtract the current render origin
+  ---
+  duration_ms: 2.241791
+  ...
+# Subtest: shader preparation exposes every empty colored pool without fabricating actors or remains
+ok 41 - shader preparation exposes every empty colored pool without fabricating actors or remains
+  ---
+  duration_ms: 7.675666
+  ...
+# Subtest: combat remains are bounded independent facts, survive restore, and reject a foreign attempt atomically
+ok 42 - combat remains are bounded independent facts, survive restore, and reject a foreign attempt atomically
+  ---
+  duration_ms: 41.3115
+  ...
+# Subtest: all shared families and casts keep their wardrobe and exact equipment in clean and graphic recipes
+ok 43 - all shared families and casts keep their wardrobe and exact equipment in clean and graphic recipes
+  ---
+  duration_ms: 29.782333
+  ...
+# Subtest: ledger ordering revisions change only with accepted membership or a successful reset/restore
+ok 44 - ledger ordering revisions change only with accepted membership or a successful reset/restore
+  ---
+  duration_ms: 17.7645
+  ...
+# Subtest: nearest cosmetic ordering follows new facts, camera motion, recentering and restore
+ok 45 - nearest cosmetic ordering follows new facts, camera motion, recentering and restore
+  ---
+  duration_ms: 5.170583
+  ...
+# Subtest: full bullet-mark quota avoids querying invisible impact support
+ok 46 - full bullet-mark quota avoids querying invisible impact support
+  ---
+  duration_ms: 4.150084
+  ...
+# Subtest: effect tiers bound complete clusters, motion, surface marks, and draw calls at full ledger capacity
+ok 47 - effect tiers bound complete clusters, motion, surface marks, and draw calls at full ledger capacity
+  ---
+  duration_ms: 1142.678334
+  ...
+# Subtest: pause and camera rendering do not advance motion; reduced effects retains grounded remains
+ok 48 - pause and camera rendering do not advance motion; reduced effects retains grounded remains
+  ---
+  duration_ms: 3.999959
+  ...
+# Subtest: effect detail can be supplied by the host preference getter without recreating presentation
+ok 49 - effect detail can be supplied by the host preference getter without recreating presentation
+  ---
+  duration_ms: 1.644125
+  ...
+# Subtest: automatic detail recovers at ordinary 60 Hz while retaining the overall graphics cap
+ok 50 - automatic detail recovers at ordinary 60 Hz while retaining the overall graphics cap
+  ---
+  duration_ms: 2.293708
+  ...
+# Subtest: archive restore rebuilds settled pieces without replaying an historical burst and rebases every matrix
+ok 51 - archive restore rebuilds settled pieces without replaying an historical burst and rebases every matrix
+  ---
+  duration_ms: 4.597584
+  ...
+# Subtest: unknown surfaces receive no blood decals; accepted ground queries and direction produce deterministic effects
+ok 52 - unknown surfaces receive no blood decals; accepted ground queries and direction produce deterministic effects
+  ---
+  duration_ms: 3.725875
+  ...
+# Subtest: new detail preferences do not rewrite strict shared gore preferences and restore chosen detail
+ok 53 - new detail preferences do not rewrite strict shared gore preferences and restore chosen detail
+  ---
+  duration_ms: 0.374041
+  ...
+# Subtest: accepted nonfatal hits provide material feedback without awarding persistent defeat remains
+ok 54 - accepted nonfatal hits provide material feedback without awarding persistent defeat remains
+  ---
+  duration_ms: 1.709458
+  ...
+# Subtest: native family rigs render in four shared batches, animate from ticks, retire dead actors, and release resources
+ok 55 - native family rigs render in four shared batches, animate from ticks, retire dead actors, and release resources
+  ---
+  duration_ms: 29.435917
+  ...
+# Subtest: live vehicle rigs follow accepted appearance model changes for the same actor identity
+ok 56 - live vehicle rigs follow accepted appearance model changes for the same actor identity
+  ---
+  duration_ms: 2.046541
+  ...
+# Subtest: admitted appearance leases share model assets, bound skinning, rebase and release each ownership layer
+ok 57 - admitted appearance leases share model assets, bound skinning, rebase and release each ownership layer
+  ---
+  duration_ms: 7.258458
+  ...
+# Subtest: skinned animation uses accepted spawn-relative ticks, pauses, rewinds, and honors reduced motion
+ok 58 - skinned animation uses accepted spawn-relative ticks, pauses, rewinds, and honors reduced motion
+  ---
+  duration_ms: 1.916459
+  ...
+# Subtest: optional positive-Z art follows accepted headings without rotating the source or Current rigs
+ok 59 - optional positive-Z art follows accepted headings without rotating the source or Current rigs
+  ---
+  duration_ms: 1.717667
+  ...
+# Subtest: missing, unready, malformed and failed clone templates fall back atomically to current art
+ok 60 - missing, unready, malformed and failed clone templates fall back atomically to current art
+  ---
+  duration_ms: 3.008792
+  ...
+# Subtest: representative admission rejects excess draws and releases rejected clone-only allocations
+ok 61 - representative admission rejects excess draws and releases rejected clone-only allocations
+  ---
+  duration_ms: 1.863292
+  ...
+# Subtest: authored rigid regions share pack paints, keep caps attached, and preserve archives across art changes
+ok 62 - authored rigid regions share pack paints, keep caps attached, and preserve archives across art changes
+  ---
+  duration_ms: 11.662166
+  ...
+# Subtest: authored remains obey full-ledger budgets, clean treatment and conservative low-detail fallback
+ok 63 - authored remains obey full-ledger budgets, clean treatment and conservative low-detail fallback
+  ---
+  duration_ms: 490.0495
+  ...
+# Subtest: rejected or missing authored regions retain caller ownership and fall back without losing remains
+ok 64 - rejected or missing authored regions retain caller ownership and fall back without losing remains
+  ---
+  duration_ms: 5.671333
+  ...
+# Subtest: settled authored regions and their caps remain above an inclined accepted surface
+ok 65 - settled authored regions and their caps remain above an inclined accepted surface
+  ---
+  duration_ms: 3.01375
+  ...
+# Subtest: all 128 Realistic soldiers share bounded baked poses and retain family equipment beyond the skinning limit
+ok 66 - all 128 Realistic soldiers share bounded baked poses and retain family equipment beyond the skinning limit
+  ---
+  duration_ms: 14.828208
+  ...
+# Subtest: crowd resource admission includes the whole pack and falls back atomically when either limit is exceeded
+ok 67 - crowd resource admission includes the whole pack and falls back atomically when either limit is exceeded
+  ---
+  duration_ms: 84.001042
+  ...
+# Subtest: bulk actor palettes cover twenty accepted identities with shared gear, stable LOD and recovery-only braces
+ok 68 - bulk actor palettes cover twenty accepted identities with shared gear, stable LOD and recovery-only braces
+  ---
+  duration_ms: 9.667125
+  ...
+# Subtest: all-family remains share source geometry, keep clean clothed regions and enforce whole-cluster budgets
+ok 69 - all-family remains share source geometry, keep clean clothed regions and enforce whole-cluster budgets
+  ---
+  duration_ms: 688.298833
+  ...
+# Subtest: terrain marks reject unsupported corners and revalidate support across streaming recovery
+ok 70 - terrain marks reject unsupported corners and revalidate support across streaming recovery
+  ---
+  duration_ms: 6.838792
+  ...
+# Subtest: explicit accepted cast matches the live model and survives later global cast changes
+ok 71 - explicit accepted cast matches the live model and survives later global cast changes
+  ---
+  duration_ms: 1.791209
+  ...
+# Subtest: clean Current bodies use one connected settled transform and keep their clothing
+ok 72 - clean Current bodies use one connected settled transform and keep their clothing
+  ---
+  duration_ms: 0.369334
+  ...
+# Subtest: same-region equipment merges without losing any family or cast at High detail
+ok 73 - same-region equipment merges without losing any family or cast at High detail
+  ---
+  duration_ms: 26.27025
+  ...
+# Subtest: clean remains bake the declared settled gear branch transform into the connected body pose
+ok 74 - clean remains bake the declared settled gear branch transform into the connected body pose
+  ---
+  duration_ms: 2.6525
+  ...
+# Subtest: physics surface identities resolve to separate exact renderer attachments for blood and impacts
+ok 75 - physics surface identities resolve to separate exact renderer attachments for blood and impacts
+  ---
+  duration_ms: 1.981625
+  ...
+# Subtest: surface marks follow their exact support and wait through missing geometry and renderer rebuilds
+ok 76 - surface marks follow their exact support and wait through missing geometry and renderer rebuilds
+  ---
+  duration_ms: 2.984833
+  ...
+# Subtest: high airborne debris falls beyond the old lifetime and settles on actual geometry after terminal gameplay
+ok 77 - high airborne debris falls beyond the old lifetime and settles on actual geometry after terminal gameplay
+  ---
+  duration_ms: 5.535042
+  ...
+# Subtest: missing streamed geometry preserves pending motion without inventing a floor, including a fresh renderer restore
+ok 78 - missing streamed geometry preserves pending motion without inventing a floor, including a fresh renderer restore
+  ---
+  duration_ms: 3.615208
+  ...
+# Subtest: settled poses survive a different renderer and recentering after support revalidation
+ok 79 - settled poses survive a different renderer and recentering after support revalidation
+  ---
+  duration_ms: 6.334167
+  ...
+# Subtest: settled remains wait for their original support instead of snapping to a different floor
+ok 80 - settled remains wait for their original support instead of snapping to a different floor
+  ---
+  duration_ms: 2.921542
+  ...
+# Subtest: blood remains independent of dismemberment and all twelve connected current-art regions are authored
+ok 81 - blood remains independent of dismemberment and all twelve connected current-art regions are authored
+  ---
+  duration_ms: 2.274042
+  ...
+# Subtest: settled bodies reproject changed recipe bounds and follow the normal of their exact support
+ok 82 - settled bodies reproject changed recipe bounds and follow the normal of their exact support
+  ---
+  duration_ms: 2.769291
+  ...
+# Subtest: changing settled Current remains to thicker appearance geometry preserves real floor clearance
+ok 83 - changing settled Current remains to thicker appearance geometry preserves real floor clearance
+  ---
+  duration_ms: 2.619334
+  ...
+# Subtest: surface impacts have a separate 1024-record ring and restore marks without a new burst
+ok 84 - surface impacts have a separate 1024-record ring and restore marks without a new burst
+  ---
+  duration_ms: 301.115042
+  ...
+# Subtest: surface contacts with numeric collider handles remain valid cosmetic records
+ok 85 - surface contacts with numeric collider handles remain valid cosmetic records
+  ---
+  duration_ms: 0.150042
+  ...
+# Subtest: unsupported full impact rings cannot spend an unbounded frame on surface revalidation
+ok 86 - unsupported full impact rings cannot spend an unbounded frame on surface revalidation
+  ---
+  duration_ms: 8.406917
+  ...
+# Subtest: a blocked shield impact emits a metallic contact instead of a false blood wound
+ok 87 - a blocked shield impact emits a metallic contact instead of a false blood wound
+  ---
+  duration_ms: 1.233875
+  ...
+# Subtest: full remains rings bound reconstruction queries and retry missing support at a controlled rate
+ok 88 - full remains rings bound reconstruction queries and retry missing support at a controlled rate
+  ---
+  duration_ms: 440.235042
+  ...
+# Subtest: full twelve-region and impact archives fit the independently bounded cosmetic envelope
+ok 89 - full twelve-region and impact archives fit the independently bounded cosmetic envelope
+  ---
+  duration_ms: 115.831417
+  ...
+# Subtest: combat vitals hide before combat, during hidden presentation and after disposal
+ok 90 - combat vitals hide before combat, during hidden presentation and after disposal
+  ---
+  duration_ms: 2.368583
+  ...
+# Subtest: health off, when damaged and always update independently from ammunition
+ok 91 - health off, when damaged and always update independently from ammunition
+  ---
+  duration_ms: 0.38075
+  ...
+# Subtest: health tones, exact meter values and zero hull remain authoritative
+ok 92 - health tones, exact meter values and zero hull remain authoritative
+  ---
+  duration_ms: 0.508875
+  ...
+# Subtest: ammunition follows active weapon rules, finite reserves and unlimited conventional reserves
+ok 93 - ammunition follows active weapon rules, finite reserves and unlimited conventional reserves
+  ---
+  duration_ms: 0.310917
+  ...
+# Subtest: magazine capacity is supplied by the host instead of a duplicated HUD rules table
+ok 94 - magazine capacity is supplied by the host instead of a duplicated HUD rules table
+  ---
+  duration_ms: 0.334917
+  ...
+# Subtest: reload countdown uses the selected weapon accepted ticks and never invents loaded rounds
+ok 95 - reload countdown uses the selected weapon accepted ticks and never invents loaded rounds
+  ---
+  duration_ms: 0.374084
+  ...
+# Subtest: Arcade conventional and rocket recharge uses the three and five second release thresholds
+ok 96 - Arcade conventional and rocket recharge uses the three and five second release thresholds
+  ---
+  duration_ms: 0.292958
+  ...
+# Subtest: an overlapping Arcade refill and manual reload shows the earliest accepted completion
+ok 97 - an overlapping Arcade refill and manual reload shows the earliest accepted completion
+  ---
+  duration_ms: 0.261166
+  ...
+# Subtest: payload refill, armed charges and deployed ordnance reflect accepted combat state
+ok 98 - payload refill, armed charges and deployed ordnance reflect accepted combat state
+  ---
+  duration_ms: 0.354666
+  ...
+# Subtest: paused and unavailable encounters freeze countdowns and suppress urgent announcements
+ok 99 - paused and unavailable encounters freeze countdowns and suppress urgent announcements
+  ---
+  duration_ms: 0.836166
+  ...
+# Subtest: destroyed aircraft show offline weapons without active reload or recharge prompts
+ok 100 - destroyed aircraft show offline weapons without active reload or recharge prompts
+  ---
+  duration_ms: 0.4445
+  ...
+# Subtest: empty finite reserves give a service-pad cue and missing weapons hide only their card
+ok 101 - empty finite reserves give a service-pad cue and missing weapons hide only their card
+  ---
+  duration_ms: 0.300875
+  ...
+# Subtest: HUD is localized, accessible without color, and limits live announcements to categories
+ok 102 - HUD is localized, accessible without color, and limits live announcements to categories
+  ---
+  duration_ms: 0.301125
+  ...
+# Subtest: repeated accepted snapshots do not churn text nodes or mutate gameplay data
+ok 103 - repeated accepted snapshots do not churn text nodes or mutate gameplay data
+  ---
+  duration_ms: 0.694791
+  ...
+# Subtest: host feedback caches actual immutable definition values once per flight
+ok 104 - host feedback caches actual immutable definition values once per flight
+  ---
+  duration_ms: 64.544291
+  ...
+# Subtest: all combat activities keep vitals independent of summary visibility and health preferences
+ok 105 - all combat activities keep vitals independent of summary visibility and health preferences
+  ---
+  duration_ms: 0.554875
+  ...
+# Subtest: canonical vitals styling positions the panel above the canvas and belongs to the projection source
+ok 106 - canonical vitals styling positions the panel above the canvas and belongs to the projection source
+  ---
+  duration_ms: 1.472042
+  ...
+# Subtest: vitals SVG icons retain a bounded intrinsic size before styles load
+ok 107 - vitals SVG icons retain a bounded intrinsic size before styles load
+  ---
+  duration_ms: 0.285708
+  ...
+# Subtest: ready and paused combat keep Resume in its own row above variable-height vitals
+ok 108 - ready and paused combat keep Resume in its own row above variable-height vitals
+  ---
+  duration_ms: 0.788625
+  ...
+# Subtest: native admission creates supported distinct routes and preserves course
+ok 109 - native admission creates supported distinct routes and preserves course
+  ---
+  duration_ms: 38.044958
+  ...
+# Subtest: admission shortfalls are bounded and a map with no usable targets gives a clear error
+ok 110 - admission shortfalls are bounded and a map with no usable targets gives a clear error
+  ---
+  duration_ms: 4.791417
+  ...
+# Subtest: cancel and rejected commit preserve RNG, actor, projectile and event state
+ok 111 - cancel and rejected commit preserve RNG, actor, projectile and event state
+  ---
+  duration_ms: 2.881375
+  ...
+# Subtest: closing normal speed uses a continuous threshold and bounded damage
+ok 112 - closing normal speed uses a continuous threshold and bounded damage
+  ---
+  duration_ms: 0.068583
+  ...
+# Subtest: one lethal accepted impact produces one defeat and completes finite elimination
+ok 113 - one lethal accepted impact produces one defeat and completes finite elimination
+  ---
+  duration_ms: 2.366625
+  ...
+# Subtest: contact separation and thirteen accepted ticks are both required before another impact
+ok 114 - contact separation and thirteen accepted ticks are both required before another impact
+  ---
+  duration_ms: 4.603375
+  ...
+# Subtest: player shots can destroy hazards and civilians; verified walls block shots
+ok 115 - player shots can destroy hazards and civilians; verified walls block shots
+  ---
+  duration_ms: 5.168167
+  ...
+# Subtest: Hunt has no return fire and completes after exactly 9000 accepted ticks
+ok 116 - Hunt has no return fire and completes after exactly 9000 accepted ticks
+  ---
+  duration_ms: 195.958542
+  ...
+# Subtest: Hunt replaces a target after 50 ticks with a new logical identity and stable physics slot
+ok 117 - Hunt replaces a target after 50 ticks with a new logical identity and stable physics slot
+  ---
+  duration_ms: 3.974958
+  ...
+# Subtest: Continuous wave delay is fixed by final five seconds of damage; skip creates a new life
+ok 118 - Continuous wave delay is fixed by final five seconds of damage; skip creates a new life
+  ---
+  duration_ms: 2.254042
+  ...
+# Subtest: checkpoint restores settled facts without replaying old effects and rejects tampering
+ok 119 - checkpoint restores settled facts without replaying old effects and rejects tampering
+  ---
+  duration_ms: 3.250625
+  ...
+# Subtest: native physics-only bridge suppresses course completion and reports accepted actor contact
+ok 120 - native physics-only bridge suppresses course completion and reports accepted actor contact
+  ---
+  duration_ms: 6.19575
+  ...
+# Subtest: authored prototype roster survives population changes while active slots obey the selected count
+ok 121 - authored prototype roster survives population changes while active slots obey the selected count
+  ---
+  duration_ms: 2.965959
+  ...
+# Subtest: optional props do not block finite elimination or completion of a wave
+ok 122 - optional props do not block finite elimination or completion of a wave
+  ---
+  duration_ms: 4.303666
+  ...
+# Subtest: impact counters remain separate from pulse accuracy and damage breaks the streak
+ok 123 - impact counters remain separate from pulse accuracy and damage breaks the streak
+  ---
+  duration_ms: 2.13
+  ...
+# Subtest: same accepted inputs produce varied deterministic next waves with stable physics archetypes
+ok 124 - same accepted inputs produce varied deterministic next waves with stable physics archetypes
+  ---
+  duration_ms: 2.186583
+  ...
+# Subtest: incoming attackers obey difficulty limits and hunting never returns fire
+ok 125 - incoming attackers obey difficulty limits and hunting never returns fire
+  ---
+  duration_ms: 21.42825
+  ...
+# Subtest: a mutual fatal collision records the target once and fails the run before success
+ok 126 - a mutual fatal collision records the target once and fails the run before success
+  ---
+  duration_ms: 2.702875
+  ...
+# Subtest: checkpoint validation rejects forged nested state even with recomputed checksums
+ok 127 - checkpoint validation rejects forged nested state even with recomputed checksums
+  ---
+  duration_ms: 5.829833
+  ...
+# Subtest: native physical checkpoint uses configured collision slots and validates their shapes
+ok 128 - native physical checkpoint uses configured collision slots and validates their shapes
+  ---
+  duration_ms: 3.187834
+  ...
+# Subtest: humanoid motion reuses pursuit warning, burst, recovery and restore state
+ok 129 - humanoid motion reuses pursuit warning, burst, recovery and restore state
+  ---
+  duration_ms: 7.106667
+  ...
+# Subtest: a full settled-remains ledger is retained outside per-tick snapshots
+ok 130 - a full settled-remains ledger is retained outside per-tick snapshots
+  ---
+  duration_ms: 194.560625
+  ...
+# Mean accepted tick with full remains ledger: 0.023 ms
+# Subtest: all shipped world and learning catalogue courses admit at least one verified combat target
+ok 131 - all shipped world and learning catalogue courses admit at least one verified combat target
+  ---
+  duration_ms: 871.129833
+  ...
+# Subtest: tall narrow humanoids use continuous capsule hits without gaps between sampled heights
+ok 132 - tall narrow humanoids use continuous capsule hits without gaps between sampled heights
+  ---
+  duration_ms: 1.664167
+  ...
+# Subtest: accepted player damage and actor defeat events contain independent presentation facts
+ok 133 - accepted player damage and actor defeat events contain independent presentation facts
+  ---
+  duration_ms: 1.446167
+  ...
+# Subtest: actor movement consumes verified host support instead of linear route height
+ok 134 - actor movement consumes verified host support instead of linear route height
+  ---
+  duration_ms: 1.590542
+  ...
+# Subtest: continuous waves wait for a clear spawn instead of appearing inside the player
+ok 135 - continuous waves wait for a clear spawn instead of appearing inside the player
+  ---
+  duration_ms: 1.401583
+  ...
+# Subtest: authored encounters preserve all prototypes when active population changes
+ok 136 - authored encounters preserve all prototypes when active population changes
+  ---
+  duration_ms: 3.396459
+  ...
+# Subtest: portable recovery retains exact encounter definition and rejects tampering before navigation
+ok 137 - portable recovery retains exact encounter definition and rejects tampering before navigation
+  ---
+  duration_ms: 7.432334
+  ...
+# Subtest: accepted firing and damage facts retain contact direction and actor foot anchor
+ok 138 - accepted firing and damage facts retain contact direction and actor foot anchor
+  ---
+  duration_ms: 3.474084
+  ...
+# Subtest: all companion actors including optional props must be destructible
+ok 139 - all companion actors including optional props must be destructible
+  ---
+  duration_ms: 2.933917
+  ...
+# Subtest: hunting replacement waits when another living target occupies its spawn
+ok 140 - hunting replacement waits when another living target occupies its spawn
+  ---
+  duration_ms: 5.511166
+  ...
+# Subtest: new combat preserves every authored actor before generated population and raises the effective minimum
+ok 141 - new combat preserves every authored actor before generated population and raises the effective minimum
+  ---
+  duration_ms: 20.806208
+  ...
+# Subtest: unsupported authored paths use a validated alternative under the same stable actor identity
+ok 142 - unsupported authored paths use a validated alternative under the same stable actor identity
+  ---
+  duration_ms: 16.0545
+  ...
+# Subtest: authored relocation is seeded, bounded, spawn-clear and never silently replaces a missing actor
+ok 143 - authored relocation is seeded, bounded, spawn-clear and never silently replaces a missing actor
+  ---
+  duration_ms: 30.626959
+  ...
+# Subtest: over-capacity authored rosters fail explicitly without mutating retained definitions
+ok 144 - over-capacity authored rosters fail explicitly without mutating retained definitions
+  ---
+  duration_ms: 10.298708
+  ...
+# Subtest: every shipped world and learning course transfers its complete authored roster at Sparse population
+ok 145 - every shipped world and learning course transfers its complete authored roster at Sparse population
+  ---
+  duration_ms: 589.819416
+  ...
+# Subtest: v2 config normalizes distinct loadout and independent survival population
+ok 146 - v2 config normalizes distinct loadout and independent survival population
+  ---
+  duration_ms: 11.753
+  ...
+# Subtest: v1 authored definition upgrades only when explicitly selected
+ok 147 - v1 authored definition upgrades only when explicitly selected
+  ---
+  duration_ms: 12.316542
+  ...
+# Subtest: v2 rejected/cancelled transactions preserve RNG and one-shot command sequence
+ok 148 - v2 rejected/cancelled transactions preserve RNG and one-shot command sequence
+  ---
+  duration_ms: 13.550791
+  ...
+# Subtest: autocannon uses magazine, reload timing and preserved selected-weapon reload
+ok 149 - autocannon uses magazine, reload timing and preserved selected-weapon reload
+  ---
+  duration_ms: 20.676375
+  ...
+# Subtest: scatter hit accuracy is bounded per trigger rather than per pellet or victim
+ok 150 - scatter hit accuracy is bounded per trigger rather than per pellet or victim
+  ---
+  duration_ms: 14.219792
+  ...
+# Subtest: projectiles leave persistent supported surface impacts
+ok 151 - projectiles leave persistent supported surface impacts
+  ---
+  duration_ms: 12.7755
+  ...
+# Subtest: Hunting replacement waits four to eight accepted seconds and changes route position
+ok 152 - Hunting replacement waits four to eight accepted seconds and changes route position
+  ---
+  duration_ms: 23.627833
+  ...
+# Subtest: payload deployment, gravity, remote settling and detonation persist once
+ok 153 - payload deployment, gravity, remote settling and detonation persist once
+  ---
+  duration_ms: 15.716
+  ...
+# Subtest: blocked payload release consumes no ammunition
+ok 154 - blocked payload release consumes no ammunition
+  ---
+  duration_ms: 14.825334
+  ...
+# Subtest: Tactical reserve is finite and only pad refills it
+ok 155 - Tactical reserve is finite and only pad refills it
+  ---
+  duration_ms: 30.427
+  ...
+# Subtest: health pickups remain at full health, heal only living players, and reward count is unique
+ok 156 - health pickups remain at full health, heal only living players, and reward count is unique
+  ---
+  duration_ms: 12.443166
+  ...
+# Subtest: Survival has stable slots over99, a reserved final slot and reversible admission
+ok 157 - Survival has stable slots over99, a reserved final slot and reversible admission
+  ---
+  duration_ms: 43.319166
+  ...
+# Subtest: Timed Survival needs final defeat and time; ordinary survivors do not block completion
+ok 158 - Timed Survival needs final defeat and time; ordinary survivors do not block completion
+  ---
+  duration_ms: 14.130291
+  ...
+# Subtest: Strike continues accepted ordnance aftermath and objective success beats drone death
+ok 159 - Strike continues accepted ordnance aftermath and objective success beats drone death
+  ---
+  duration_ms: 69.091708
+  ...
+# Subtest: component damage provides protection counterplay and one reward per defeated actor
+ok 160 - component damage provides protection counterplay and one reward per defeated actor
+  ---
+  duration_ms: 15.585708
+  ...
+# Subtest: v2 recovery round trips ammo, commands, impacts, pickups and corruption is rejected
+ok 161 - v2 recovery round trips ammo, commands, impacts, pickups and corruption is rejected
+  ---
+  duration_ms: 17.93375
+  ...
+# Subtest: balanced: autocannon + scatter defeats ordinary and armored targets with admitted ammunition
+ok 162 - balanced: autocannon + scatter defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 15.255083
+  ...
+# Subtest: balanced: autocannon + precision defeats ordinary and armored targets with admitted ammunition
+ok 163 - balanced: autocannon + precision defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 16.950416
+  ...
+# Subtest: balanced: autocannon + rocket defeats ordinary and armored targets with admitted ammunition
+ok 164 - balanced: autocannon + rocket defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 17.551708
+  ...
+# Subtest: balanced: scatter + precision defeats ordinary and armored targets with admitted ammunition
+ok 165 - balanced: scatter + precision defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 15.114959
+  ...
+# Subtest: balanced: scatter + rocket defeats ordinary and armored targets with admitted ammunition
+ok 166 - balanced: scatter + rocket defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 16.976292
+  ...
+# Subtest: balanced: precision + rocket defeats ordinary and armored targets with admitted ammunition
+ok 167 - balanced: precision + rocket defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 16.217292
+  ...
+# Subtest: arcade: autocannon + scatter defeats ordinary and armored targets with admitted ammunition
+ok 168 - arcade: autocannon + scatter defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 14.003875
+  ...
+# Subtest: arcade: autocannon + precision defeats ordinary and armored targets with admitted ammunition
+ok 169 - arcade: autocannon + precision defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 16.23375
+  ...
+# Subtest: arcade: autocannon + rocket defeats ordinary and armored targets with admitted ammunition
+ok 170 - arcade: autocannon + rocket defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 17.162083
+  ...
+# Subtest: arcade: scatter + precision defeats ordinary and armored targets with admitted ammunition
+ok 171 - arcade: scatter + precision defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 15.184417
+  ...
+# Subtest: arcade: scatter + rocket defeats ordinary and armored targets with admitted ammunition
+ok 172 - arcade: scatter + rocket defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 16.115625
+  ...
+# Subtest: arcade: precision + rocket defeats ordinary and armored targets with admitted ammunition
+ok 173 - arcade: precision + rocket defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 15.506083
+  ...
+# Subtest: tactical: autocannon + scatter defeats ordinary and armored targets with admitted ammunition
+ok 174 - tactical: autocannon + scatter defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 14.353542
+  ...
+# Subtest: tactical: autocannon + precision defeats ordinary and armored targets with admitted ammunition
+ok 175 - tactical: autocannon + precision defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 16.0565
+  ...
+# Subtest: tactical: autocannon + rocket defeats ordinary and armored targets with admitted ammunition
+ok 176 - tactical: autocannon + rocket defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 17.057917
+  ...
+# Subtest: tactical: scatter + precision defeats ordinary and armored targets with admitted ammunition
+ok 177 - tactical: scatter + precision defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 14.901334
+  ...
+# Subtest: tactical: scatter + rocket defeats ordinary and armored targets with admitted ammunition
+ok 178 - tactical: scatter + rocket defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 16.301083
+  ...
+# Subtest: tactical: precision + rocket defeats ordinary and armored targets with admitted ammunition
+ok 179 - tactical: precision + rocket defeats ordinary and armored targets with admitted ammunition
+  ---
+  duration_ms: 14.721875
+  ...
+# Subtest: accepted Survival thresholds, formation relief, support cap and supply times are deterministic
+ok 180 - accepted Survival thresholds, formation relief, support cap and supply times are deterministic
+  ---
+  duration_ms: 64.627
+  ...
+# Subtest: Endless continues after six minutes while Timed stops ordinary arrivals
+ok 181 - Endless continues after six minutes while Timed stops ordinary arrivals
+  ---
+  duration_ms: 35.025875
+  ...
+# Subtest: Strike commit-time crash retains already deployed bomb and accepts delayed objective success
+ok 182 - Strike commit-time crash retains already deployed bomb and accepts delayed objective success
+  ---
+  duration_ms: 13.063708
+  ...
+# Subtest: crossing projectiles are tested against swept actor bounds in the broadphase
+ok 183 - crossing projectiles are tested against swept actor bounds in the broadphase
+  ---
+  duration_ms: 11.065
+  ...
+# Subtest: surface archive stays outside ordinary snapshots and restores without replay effects
+ok 184 - surface archive stays outside ordinary snapshots and restores without replay effects
+  ---
+  duration_ms: 12.501416
+  ...
+# Subtest: v2 rejects forged actor attack powers, component grants and ordinary-game victory with a live roster
+ok 185 - v2 rejects forged actor attack powers, component grants and ordinary-game victory with a live roster
+  ---
+  duration_ms: 12.916917
+  ...
+# Subtest: repeated Hunting lives alternate distinct admitted route points, including duplicate route anchors
+ok 186 - repeated Hunting lives alternate distinct admitted route points, including duplicate route anchors
+  ---
+  duration_ms: 70.245958
+  ...
+# Subtest: final UAV attack has an advertised windup, finite salvo and recovery interval
+ok 187 - final UAV attack has an advertised windup, finite salvo and recovery interval
+  ---
+  duration_ms: 28.462292
+  ...
+# Subtest: Survival pursues the player and falls back to its route when pursuit has no support
+ok 188 - Survival pursues the player and falls back to its route when pursuit has no support
+  ---
+  duration_ms: 25.599166
+  ...
+# Subtest: Survival validates full-height pursuit clearance and rejected steps do not move actors
+ok 189 - Survival validates full-height pursuit clearance and rejected steps do not move actors
+  ---
+  duration_ms: 11.340666
+  ...
+# Subtest: Survival keeps readable ground lanes and UAV height bands around a stationary player
+ok 190 - Survival keeps readable ground lanes and UAV height bands around a stationary player
+  ---
+  duration_ms: 640.614959
+  ...
+# Subtest: crowd separation uses overlapping upright bodies rather than only their centres
+ok 191 - crowd separation uses overlapping upright bodies rather than only their centres
+  ---
+  duration_ms: 13.858917
+  ...
+# Subtest: older v2 definitions retain their exact legacy crowd motion and identity
+ok 192 - older v2 definitions retain their exact legacy crowd motion and identity
+  ---
+  duration_ms: 15.316
+  ...
+# Subtest: contact-only UAVs retain a staggered attack approach through their stand-off lanes
+ok 193 - contact-only UAVs retain a staggered attack approach through their stand-off lanes
+  ---
+  duration_ms: 21.421208
+  ...
+# Subtest: slow contact rovers cross their outer lane after a readable warning under shield-front pressure
+ok 194 - slow contact rovers cross their outer lane after a readable warning under shield-front pressure
+  ---
+  duration_ms: 63.511584
+  ...
+# Subtest: actual native wall hits publish finite positions and unit normals for surface effects
+ok 195 - actual native wall hits publish finite positions and unit normals for surface effects
+  ---
+  duration_ms: 11.9675
+  ...
+# Subtest: regional hit normalization, full-area coverage and airborne hazard admission share exact geometry
+ok 196 - regional hit normalization, full-area coverage and airborne hazard admission share exact geometry
+  ---
+  duration_ms: 0.436209
+  ...
+# Subtest: unavailable geometry rejects prepare or commit without consuming state, ammo or command identity
+ok 197 - unavailable geometry rejects prepare or commit without consuming state, ammo or command identity
+  ---
+  duration_ms: 10.8435
+  ...
+# Subtest: earned aerial supplies settle on supported ground and wait when support is unavailable
+ok 198 - earned aerial supplies settle on supported ground and wait when support is unavailable
+  ---
+  duration_ms: 25.30725
+  ...
+# Subtest: Arcade payload recharge restarts on deployment and never consumes a second armed drone charge
+ok 199 - Arcade payload recharge restarts on deployment and never consumes a second armed drone charge
+  ---
+  duration_ms: 79.965959
+  ...
+# Subtest: accepted physical destruction overrides a simultaneous Elimination victory
+ok 200 - accepted physical destruction overrides a simultaneous Elimination victory
+  ---
+  duration_ms: 11.451375
+  ...
+# Subtest: smaller Survival population preserves its reserved final enemy and nonempty opening roster
+ok 201 - smaller Survival population preserves its reserved final enemy and nonempty opening roster
+  ---
+  duration_ms: 26.113875
+  ...
+# Subtest: Advanced muzzle obstruction starts at the admitted aircraft centre instead of its bounding radius
+ok 202 - Advanced muzzle obstruction starts at the admitted aircraft centre instead of its bounding radius
+  ---
+  duration_ms: 11.000875
+  ...
+# Subtest: regional service pads resolve supported floors below an airborne restart and retain exact identities
+ok 203 - regional service pads resolve supported floors below an airborne restart and retain exact identities
+  ---
+  duration_ms: 0.359458
+  ...
+# Subtest: Tactical rejects missing service support and preserves a validated pad through recovery
+ok 204 - Tactical rejects missing service support and preserves a validated pad through recovery
+  ---
+  duration_ms: 53.990541
+  ...
+# Subtest: native service admission grounds an elevated launch and rejects unsupported pads
+ok 205 - native service admission grounds an elevated launch and rejects unsupported pads
+  ---
+  duration_ms: 0.324833
+  ...
+# Subtest: uncovered muzzle and payload release block only weapons, without consuming ammo or the accepted interval
+ok 206 - uncovered muzzle and payload release block only weapons, without consuming ammo or the accepted interval
+  ---
+  duration_ms: 12.04275
+  ...
+# Subtest: payload and secondary explosions never create a null shot identity or invalidate recovery
+ok 207 - payload and secondary explosions never create a null shot identity or invalidate recovery
+  ---
+  duration_ms: 12.539917
+  ...
+# Subtest: a rocket blocked at its muzzle counts its splash victims as one trigger hit
+ok 208 - a rocket blocked at its muzzle counts its splash victims as one trigger hit
+  ---
+  duration_ms: 12.153334
+  ...
+# Subtest: surface marks use the actual wall contact, not the swept projectile centre
+ok 209 - surface marks use the actual wall contact, not the swept projectile centre
+  ---
+  duration_ms: 13.653791
+  ...
+# Subtest: impact self-damage uses actual inflicted health rather than overkill power
+ok 210 - impact self-damage uses actual inflicted health rather than overkill power
+  ---
+  duration_ms: 23.248375
+  ...
+# Subtest: v2 native admission rejects sealed targets but accepts a visible supported route point
+ok 211 - v2 native admission rejects sealed targets but accepts a visible supported route point
+  ---
+  duration_ms: 1.411541
+  ...
+# Subtest: v2 regional admission proves a firing line to at least one complete supported route point
+ok 212 - v2 regional admission proves a firing line to at least one complete supported route point
+  ---
+  duration_ms: 0.969
+  ...
+# Subtest: Academy prepares a saved aircraft and waits for a pending flight step before explicit resume
+ok 213 - Academy prepares a saved aircraft and waits for a pending flight step before explicit resume
+  ---
+  duration_ms: 599.042959
+  ...
+# Subtest: SIM world selection freezes on first arm and applies queued preference only on reset
+ok 214 - SIM world selection freezes on first arm and applies queued preference only on reset
+  ---
+  duration_ms: 69.40725
+  ...
+# Subtest: a superseded appearance preparation cannot arm or overwrite the newer flight appearance
+ok 215 - a superseded appearance preparation cannot arm or overwrite the newer flight appearance
+  ---
+  duration_ms: 62.743
+  ...
+# Subtest: unavailable recorded appearance remains visible after graphics preparation without altering its proof
+ok 216 - unavailable recorded appearance remains visible after graphics preparation without altering its proof
+  ---
+  duration_ms: 69.381042
+  ...
+# Subtest: Academy explicit keyboard resume keeps consumed throttle and releases held keys
+    # Subtest: button
+    ok 1 - button
+      ---
+      duration_ms: 86.819583
+      ...
+    # Subtest: shortcut
+    ok 2 - shortcut
+      ---
+      duration_ms: 86.978666
+      ...
+    1..2
+ok 217 - Academy explicit keyboard resume keeps consumed throttle and releases held keys
+  ---
+  duration_ms: 174.027041
+  ...
+# Subtest: native optional shell lists twelve drills, uses exclusive keyboard input, and neutralizes blur/dialog/reset
+ok 218 - native optional shell lists twelve drills, uses exclusive keyboard input, and neutralizes blur/dialog/reset
+  ---
+  duration_ms: 131.051583
+  ...
+# Subtest: synthetic USB samples drive the real shell/model to one verified practice completion; reviewing and demonstrations never deliver evidence
+ok 219 - synthetic USB samples drive the real shell/model to one verified practice completion; reviewing and demonstrations never deliver evidence
+  ---
+  duration_ms: 767.001416
+  ...
+# Subtest: radio switch edges while blurred or hidden cannot rearm; return requires a fresh visible OFF then ON
+ok 220 - radio switch edges while blurred or hidden cannot rearm; return requires a fresh visible OFF then ON
+  ---
+  duration_ms: 88.270333
+  ...
+# Subtest: six switches in Academy open pause, change View, confirm Retry and guard nested resume
+ok 221 - six switches in Academy open pause, change View, confirm Retry and guard nested resume
+  ---
+  duration_ms: 79.7775
+  ...
+# Subtest: immediate Retry preserves the completed proof while notebook verification yields
+ok 222 - immediate Retry preserves the completed proof while notebook verification yields
+  ---
+  duration_ms: 310.662083
+  ...
+# Subtest: Controls camera chooser and toolbar stay synchronized for the narrow layout
+ok 223 - Controls camera chooser and toolbar stay synchronized for the narrow layout
+  ---
+  duration_ms: 63.531625
+  ...
+# Subtest: Analog camera controls default off and preserve older immersion preferences
+ok 224 - Analog camera controls default off and preserve older immersion preferences
+  ---
+  duration_ms: 0.403042
+  ...
+# Subtest: Analog camera toggle and strength persist independently and release their listeners
+ok 225 - Analog camera toggle and strength persist independently and release their listeners
+  ---
+  duration_ms: 0.439875
+  ...
+# Subtest: Analog camera preferences clamp stored intensity and remain usable when storage fails
+ok 226 - Analog camera preferences clamp stored intensity and remain usable when storage fails
+  ---
+  duration_ms: 0.365
+  ...
+# Subtest: Camera knife, guidance, route and instrument preferences persist independently without changing radio calibration
+ok 227 - Camera knife, guidance, route and instrument preferences persist independently without changing radio calibration
+  ---
+  duration_ms: 0.8005
+  ...
+# Subtest: Camera presentation preferences reject malformed saved choices and accept every supported accent
+ok 228 - Camera presentation preferences reject malformed saved choices and accept every supported accent
+  ---
+  duration_ms: 1.198
+  ...
+# Subtest: Studio preview runs the actual course as authoring and never reaches the notebook earning callback
+ok 229 - Studio preview runs the actual course as authoring and never reaches the notebook earning callback
+  ---
+  duration_ms: 310.996834
+  ...
+# Subtest: radio loss pauses instead of borrowing keyboard and reset drops old throttle pickup
+ok 230 - radio loss pauses instead of borrowing keyboard and reset drops old throttle pickup
+  ---
+  duration_ms: 72.503333
+  ...
+# Subtest: graphics failure leaves readable choices and never advances; context loss freezes an existing attempt
+ok 231 - graphics failure leaves readable choices and never advances; context loss freezes an existing attempt
+  ---
+  duration_ms: 125.840583
+  ...
+# Subtest: replay owns a verified clone, rejects forged course data and cannot be used as a practice source
+ok 232 - replay owns a verified clone, rejects forged course data and cannot be used as a practice source
+  ---
+  duration_ms: 103.686541
+  ...
+# Subtest: Academy shared menu resumes paused playback without restarting or granting practice evidence
+ok 233 - Academy shared menu resumes paused playback without restarting or granting practice evidence
+  ---
+  duration_ms: 87.046166
+  ...
+# Subtest: Academy exhausted unfinished playback offers Results instead of a nonfunctional Continue
+ok 234 - Academy exhausted unfinished playback offers Results instead of a nonfunctional Continue
+  ---
+  duration_ms: 75.778542
+  ...
+# Subtest: touch release holds throttle, centers yaw, and cancellation clears all input and listener ownership
+ok 235 - touch release holds throttle, centers yaw, and cancellation clears all input and listener ownership
+  ---
+  duration_ms: 0.424792
+  ...
+# Subtest: input diagnostics retain raw touch and controller values separately from shaping and never invent hardware cadence
+ok 236 - input diagnostics retain raw touch and controller values separately from shaping and never invent hardware cadence
+  ---
+  duration_ms: 0.397792
+  ...
+# Subtest: committed diagnostics separate input owners, new attempts and a live radio preview from achieved flight response
+ok 237 - committed diagnostics separate input owners, new attempts and a live radio preview from achieved flight response
+  ---
+  duration_ms: 0.121541
+  ...
+# Subtest: full-length replay admission yields through the shared verifier and cannot earn a practice receipt
+ok 238 - full-length replay admission yields through the shared verifier and cannot earn a practice receipt
+  ---
+  duration_ms: 1027.857708
+  ...
+# Subtest: pending review aborts on reset, input change, dialog close and disposal without late playback
+ok 239 - pending review aborts on reset, input change, dialog close and disposal without late playback
+  ---
+  duration_ms: 240.1045
+  ...
+# Subtest: closing a replay import during file reading prevents verification and late playback
+ok 240 - closing a replay import during file reading prevents verification and late playback
+  ---
+  duration_ms: 57.243792
+  ...
+# Subtest: actual renderer detects unavailable WebGL without allocating a running fallback simulation
+ok 241 - actual renderer detects unavailable WebGL without allocating a running fallback simulation
+  ---
+  duration_ms: 0.935667
+  ...
+# Subtest: disposing releases generated course callbacks; retained old buttons are inert and unrelated host content remains
+ok 242 - disposing releases generated course callbacks; retained old buttons are inert and unrelated host content remains
+  ---
+  duration_ms: 63.372875
+  ...
+# Subtest: stale queued animation timestamps cannot advance after a long execution gap; explicit resume keeps input ownership
+ok 243 - stale queued animation timestamps cannot advance after a long execution gap; explicit resume keeps input ownership
+  ---
+  duration_ms: 306.075833
+  ...
+# Subtest: cached Back restore preserves paused flight and requires explicit resume without duplicate frames
+ok 244 - cached Back restore preserves paused flight and requires explicit resume without duplicate frames
+  ---
+  duration_ms: 59.09875
+  ...
+# Subtest: cached radio restore requires a fresh arm edge and matching control pickup
+ok 245 - cached radio restore requires a fresh arm edge and matching control pickup
+  ---
+  duration_ms: 68.702
+  ...
+# Subtest: game return keeps scoped offline controls available and serializes preparation/removal
+ok 246 - game return keeps scoped offline controls available and serializes preparation/removal
+  ---
+  duration_ms: 62.256541
+  ...
+# Subtest: disposing Academy cancels an owned offline verification and releases its progress panel
+ok 247 - disposing Academy cancels an owned offline verification and releases its progress panel
+  ---
+  duration_ms: 60.441209
+  ...
+# Subtest: unavailable offline capability stays explanatory and a failed prepare never reports ready
+ok 248 - unavailable offline capability stays explanatory and a failed prepare never reports ready
+  ---
+  duration_ms: 152.783541
+  ...
+# Subtest: ordinary unload disposes permanently and a late pageshow cannot revive it
+ok 249 - ordinary unload disposes permanently and a late pageshow cannot revive it
+  ---
+  duration_ms: 48.47725
+  ...
+# Subtest: selecting USB radio restores saved axis arm and button reset after reload
+ok 250 - selecting USB radio restores saved axis arm and button reset after reload
+  ---
+  duration_ms: 74.099458
+  ...
+# Subtest: tested TX15 default loads without saved calibration and does not auto-arm
+ok 251 - tested TX15 default loads without saved calibration and does not auto-arm
+  ---
+  duration_ms: 72.784667
+  ...
+# Subtest: TX15 default does not match an unrelated joystick
+ok 252 - TX15 default does not match an unrelated joystick
+  ---
+  duration_ms: 64.515875
+  ...
+# Subtest: Academy radio setup saves through guided controls and activates radio flight
+ok 253 - Academy radio setup saves through guided controls and activates radio flight
+  ---
+  duration_ms: 74.904
+  ...
+# Subtest: Academy radio setup saves through manual controls and activates radio flight
+ok 254 - Academy radio setup saves through manual controls and activates radio flight
+  ---
+  duration_ms: 79.951209
+  ...
+# Subtest: camera focus preserves global pause for keyboard, touch and radio owners without resuming held input
+ok 255 - camera focus preserves global pause for keyboard, touch and radio owners without resuming held input
+  ---
+  duration_ms: 428.388167
+  ...
+# Subtest: pause shortcuts release local controls but preserve text, dialogs and modified browser keys
+ok 256 - pause shortcuts release local controls but preserve text, dialogs and modified browser keys
+  ---
+  duration_ms: 0.369667
+  ...
+# Subtest: Academy title focus loss before flight initialization keeps the menu usable and disarmed
+ok 257 - Academy title focus loss before flight initialization keeps the menu usable and disarmed
+  ---
+  duration_ms: 64.349125
+  ...
+# Subtest: Academy Home context stays localized with its current flight while browsing and returning
+ok 258 - Academy Home context stays localized with its current flight while browsing and returning
+  ---
+  duration_ms: 93.804375
+  ...
+# Subtest: Academy shell keeps menu input out of native flight and requires explicit Start
+ok 259 - Academy shell keeps menu input out of native flight and requires explicit Start
+  ---
+  duration_ms: 71.9565
+  ...
+# Subtest: Academy native tool dialogs retain instructions across blur and focus
+    # Subtest: help-dialog
+    ok 1 - help-dialog
+      ---
+      duration_ms: 110.381208
+      ...
+    # Subtest: notebook-dialog
+    ok 2 - notebook-dialog
+      ---
+      duration_ms: 65.713416
+      ...
+    1..2
+ok 260 - Academy native tool dialogs retain instructions across blur and focus
+  ---
+  duration_ms: 176.443667
+  ...
+# Subtest: Academy existing HUD guidance controls are reachable in Accessibility in EN and UK
+ok 261 - Academy existing HUD guidance controls are reachable in Accessibility in EN and UK
+  ---
+  duration_ms: 129.494208
+  ...
+# Subtest: Academy categories retain every authored preference control and restore nested dialog focus
+ok 262 - Academy categories retain every authored preference control and restore nested dialog focus
+  ---
+  duration_ms: 83.422042
+  ...
+# Subtest: Academy global settings bind canonical records without startup writes or duplicate fields
+ok 263 - Academy global settings bind canonical records without startup writes or duplicate fields
+  ---
+  duration_ms: 196.304834
+  ...
+# Subtest: Academy shared tool iframe retains D-pad focus and controller Back restores paused Settings
+ok 264 - Academy shared tool iframe retains D-pad focus and controller Back restores paused Settings
+  ---
+  duration_ms: 85.95175
+  ...
+# Subtest: fresh Ukrainian Academy launch localizes shared Appearance and cue controls before any language change
+ok 265 - fresh Ukrainian Academy launch localizes shared Appearance and cue controls before any language change
+  ---
+  duration_ms: 70.314625
+  ...
+# Subtest: Academy flight feedback and shared menu sound retain separate sliders and preference records
+ok 266 - Academy flight feedback and shared menu sound retain separate sliders and preference records
+  ---
+  duration_ms: 62.843709
+  ...
+# Subtest: Academy result shortcuts choose once and launch a random prepared lesson directly
+ok 267 - Academy result shortcuts choose once and launch a random prepared lesson directly
+  ---
+  duration_ms: 72.778167
+  ...
+# Subtest: Academy cancels an imminent auto-next before a stalled animation timestamp
+ok 268 - Academy cancels an imminent auto-next before a stalled animation timestamp
+  ---
+  duration_ms: 480.457459
+  ...
+# Subtest: Academy cancels an imminent auto-next before a stalled callback execution
+ok 269 - Academy cancels an imminent auto-next before a stalled callback execution
+  ---
+  duration_ms: 472.181375
+  ...
+# Subtest: Academy shared library shows every course, previews the selected flight mode, and launches once
+ok 270 - Academy shared library shows every course, previews the selected flight mode, and launches once
+  ---
+  duration_ms: 70.993458
+  ...
+# Subtest: Academy mission library owns controller navigation and isolated pinned goals
+ok 271 - Academy mission library owns controller navigation and isolated pinned goals
+  ---
+  duration_ms: 74.472959
+  ...
+# Subtest: Academy Apply & restart retains Legacy settings and waits for explicit Arm
+ok 272 - Academy Apply & restart retains Legacy settings and waits for explicit Arm
+  ---
+  duration_ms: 103.106708
+  ...
+# Subtest: Academy Apply & restart retains Actual settings and waits for explicit Arm
+ok 273 - Academy Apply & restart retains Actual settings and waits for explicit Arm
+  ---
+  duration_ms: 109.829167
+  ...
+# Subtest: Academy mode, reset and input changes preserve the tested draft until a normal course launch
+ok 274 - Academy mode, reset and input changes preserve the tested draft until a normal course launch
+  ---
+  duration_ms: 157.367875
+  ...
+# Subtest: Academy tuning diagnostics follow keyboard ownership with a different calibrated radio connected
+ok 275 - Academy tuning diagnostics follow keyboard ownership with a different calibrated radio connected
+  ---
+  duration_ms: 88.865084
+  ...
+# Subtest: Academy tuning diagnostics follow touch ownership with a different calibrated radio connected
+ok 276 - Academy tuning diagnostics follow touch ownership with a different calibrated radio connected
+  ---
+  duration_ms: 89.634375
+  ...
+# Subtest: Academy tuning diagnostics follow controller ownership with a different calibrated radio connected
+ok 277 - Academy tuning diagnostics follow controller ownership with a different calibrated radio connected
+  ---
+  duration_ms: 89.70225
+  ...
+# Subtest: Academy tuning diagnostics follow radio ownership with a different calibrated radio connected
+ok 278 - Academy tuning diagnostics follow radio ownership with a different calibrated radio connected
+  ---
+  duration_ms: 87.888875
+  ...
+# Subtest: Academy tuning saves new rates for reset while the active recording retains its frozen legacy configuration
+ok 279 - Academy tuning saves new rates for reset while the active recording retains its frozen legacy configuration
+  ---
+  duration_ms: 94.085708
+  ...
+# Subtest: Academy draft flight is unscored, cannot export a recording, and returns to its unchanged editor draft
+ok 280 - Academy draft flight is unscored, cannot export a recording, and returns to its unchanged editor draft
+  ---
+  duration_ms: 93.000166
+  ...
+# Subtest: Academy tuning owns menu navigation and Back closes it before the underlying settings
+ok 281 - Academy tuning owns menu navigation and Back closes it before the underlying settings
+  ---
+  duration_ms: 80.968291
+  ...
+# Subtest: Academy tuning keeps its hint through pointer blur and releases it after closing
+ok 282 - Academy tuning keeps its hint through pointer blur and releases it after closing
+  ---
+  duration_ms: 71.388959
+  ...
+# Subtest: Academy captures legacy camera before its first tuning configuration
+ok 283 - Academy captures legacy camera before its first tuning configuration
+  ---
+  duration_ms: 65.540333
+  ...
+# Subtest: Academy captures saved drone camera before its first tuning configuration
+ok 284 - Academy captures saved drone camera before its first tuning configuration
+  ---
+  duration_ms: 69.485625
+  ...
+# Subtest: Academy captures unreadable camera before its first tuning configuration
+ok 285 - Academy captures unreadable camera before its first tuning configuration
+  ---
+  duration_ms: 68.431583
+  ...
+# Subtest: Academy captures missing camera before its first tuning configuration
+ok 286 - Academy captures missing camera before its first tuning configuration
+  ---
+  duration_ms: 67.446917
+  ...
+# Subtest: explicit keyboard resume restores only the accepted throttle for the same flight
+ok 287 - explicit keyboard resume restores only the accepted throttle for the same flight
+  ---
+  duration_ms: 0.221667
+  ...
+# Subtest: keyboard pause shortcut can retain explicit host eligibility after releasing its keys
+ok 288 - keyboard pause shortcut can retain explicit host eligibility after releasing its keys
+  ---
+  duration_ms: 0.113083
+  ...
+# Subtest: lost ownership, reset and a different flight invalidate keyboard resume eligibility
+ok 289 - lost ownership, reset and a different flight invalidate keyboard resume eligibility
+  ---
+  duration_ms: 0.187541
+  ...
+# Subtest: keyboard resume never grants another input owner throttle or changes checkpoint seeding
+ok 290 - keyboard resume never grants another input owner throttle or changes checkpoint seeding
+  ---
+  duration_ms: 0.063916
+  ...
+# Subtest: actual Academy settings keep an unsaved menu animation choice and Retry the same checkbox
+ok 291 - actual Academy settings keep an unsaved menu animation choice and Retry the same checkbox
+  ---
+  duration_ms: 76.321792
+  ...
+# Subtest: Academy expired result retains terminal meaning through native language changes after all 36000 model ticks
+ok 292 - Academy expired result retains terminal meaning through native language changes after all 36000 model ticks
+  ---
+  duration_ms: 32082.934166
+  ...
+# Subtest: Academy unscored terminal retains draft-test meaning through native language changes after a real public-course objective
+ok 293 - Academy unscored terminal retains draft-test meaning through native language changes after a real public-course objective
+  ---
+  duration_ms: 144.922959
+  ...
+# Subtest: Academy ordinary verified success retains current course copy and one admission across native language changes
+ok 294 - Academy ordinary verified success retains current course copy and one admission across native language changes
+  ---
+  duration_ms: 396.492834
+  ...
+# Subtest: optional combat D-pad commands require release and retain controller flight ownership
+ok 295 - optional combat D-pad commands require release and retain controller flight ownership
+  ---
+  duration_ms: 0.539125
+  ...
+# Subtest: Flight guidance can be dismissed, restored and remembered in en
+ok 296 - Flight guidance can be dismissed, restored and remembered in en
+  ---
+  duration_ms: 2.874584
+  ...
+# Subtest: Flight guidance can be dismissed, restored and remembered in uk
+ok 297 - Flight guidance can be dismissed, restored and remembered in uk
+  ---
+  duration_ms: 0.513958
+  ...
+# Subtest: World renderer objective indices identify the next preview and keep occluded goals hidden
+ok 298 - World renderer objective indices identify the next preview and keep occluded goals hidden
+  ---
+  duration_ms: 9.137458
+  ...
+# Subtest: Shared stick trails retain movement direction and reset for unavailable inputs
+ok 299 - Shared stick trails retain movement direction and reset for unavailable inputs
+  ---
+  duration_ms: 0.517083
+  ...
+# Subtest: objective plates pair readable text with every collection panel while authored profiles retain the old path
+ok 300 - objective plates pair readable text with every collection panel while authored profiles retain the old path
+  ---
+  duration_ms: 3.195083
+  ...
+# Subtest: active label projection uses the current lens and CSS height, caps world size, and fixes the original lower edge
+ok 301 - active label projection uses the current lens and CSS height, caps world size, and fixes the original lower edge
+  ---
+  duration_ms: 1.276542
+  ...
+# Subtest: inactive, behind-camera and invalid viewport labels retain original bounds
+ok 302 - inactive, behind-camera and invalid viewport labels retain original bounds
+  ---
+  duration_ms: 0.407208
+  ...
+# Subtest: native defeat presentation retains visible actor identity without changing accepted facts or combat appearances
+ok 303 - native defeat presentation retains visible actor identity without changing accepted facts or combat appearances
+  ---
+  duration_ms: 131.269
+  ...
+# Subtest: real renderer keeps current and next objective labels readable on every collection and camera
+ok 304 - real renderer keeps current and next objective labels readable on every collection and camera
+  ---
+  duration_ms: 68.422042
+  ...
+# Subtest: active gate bracket geometry stays outside the original frame on both axes with bounded paired contrast
+ok 305 - active gate bracket geometry stays outside the original frame on both axes with bounded paired contrast
+  ---
+  duration_ms: 6.089375
+  ...
+# Subtest: renderer exposes current and next semantic guides at every quality and releases each resource once
+ok 306 - renderer exposes current and next semantic guides at every quality and releases each resource once
+  ---
+  duration_ms: 297.666084
+  ...
+# Subtest: renderer requires a branded native environment before replacing its accepted scene
+ok 307 - renderer requires a branded native environment before replacing its accepted scene
+  ---
+  duration_ms: 30.377875
+  ...
+# Subtest: new guidance rails border the exact accepted aperture on every crossing axis
+ok 308 - new guidance rails border the exact accepted aperture on every crossing axis
+  ---
+  duration_ms: 2.454417
+  ...
+# Subtest: hold, landing and manoeuvre regions have distinct honest cues; unsupported landing pads stay hidden
+ok 309 - hold, landing and manoeuvre regions have distinct honest cues; unsupported landing pads stay hidden
+  ---
+  duration_ms: 0.363541
+  ...
+# Subtest: guidance labels cap near and distant CSS pixels without changing the opening or label lower edge
+ok 310 - guidance labels cap near and distant CSS pixels without changing the opening or label lower edge
+  ---
+  duration_ms: 0.299042
+  ...
+# Subtest: current objective cue reports wrong-side entry, occlusion and one next preview without revealing a hidden gate
+ok 311 - current objective cue reports wrong-side entry, occlusion and one next preview without revealing a hidden gate
+  ---
+  duration_ms: 21.369458
+  ...
+# Subtest: validated route visuals follow only authored consecutive segments, can be hidden independently and are released on omission
+ok 312 - validated route visuals follow only authored consecutive segments, can be hidden independently and are released on omission
+  ---
+  duration_ms: 19.691541
+  ...
+# Subtest: explicit imported actor ownership hides whole matching subtrees and restores visibility without name heuristics
+ok 313 - explicit imported actor ownership hides whole matching subtrees and restores visibility without name heuristics
+  ---
+  duration_ms: 0.369583
+  ...
+# Subtest: flight instruments use actual heading, horizontal speed and map-relative height
+ok 314 - flight instruments use actual heading, horizontal speed and map-relative height
+  ---
+  duration_ms: 0.837417
+  ...
+# Subtest: instruments stay independent of lesson guidance and do not invent battery telemetry
+ok 315 - instruments stay independent of lesson guidance and do not invent battery telemetry
+  ---
+  duration_ms: 0.981792
+  ...
+# Subtest: replacement warnings use accepted ticks and take priority over missing route trails
+ok 316 - replacement warnings use accepted ticks and take priority over missing route trails
+  ---
+  duration_ms: 0.332958
+  ...
+# Subtest: radio setup help follows the adopted layout in both languages
+ok 317 - radio setup help follows the adopted layout in both languages
+  ---
+  duration_ms: 0.558208
+  ...
+# Subtest: paused playback offers combat speeds and removes them for historical lessons
+ok 318 - paused playback offers combat speeds and removes them for historical lessons
+  ---
+  duration_ms: 1.440167
+  ...
+# Subtest: six-switch host requires ready root and shows airborne pickup positions
+ok 319 - six-switch host requires ready root and shows airborne pickup positions
+  ---
+  duration_ms: 0.707416
+  ...
+# Subtest: paused View and Settings share switches; Retry needs a separate confirmation
+ok 320 - paused View and Settings share switches; Retry needs a separate confirmation
+  ---
+  duration_ms: 0.634042
+  ...
+# Subtest: capture cannot use menu shortcuts and playback resume has no live input owner
+ok 321 - capture cannot use menu shortcuts and playback resume has no live input owner
+  ---
+  duration_ms: 0.2555
+  ...
+# Subtest: queued radio resume is cancelled on disposal or a newer menu context
+ok 322 - queued radio resume is cancelled on disposal or a newer menu context
+  ---
+  duration_ms: 0.150875
+  ...
+# Subtest: a menu-staged radio action needs fresh Fire and never also emits a shot
+ok 323 - a menu-staged radio action needs fresh Fire and never also emits a shot
+  ---
+  duration_ms: 0.178917
+  ...
+# Subtest: staged radio actions are cancelled by direct input, attempt changes and input loss
+ok 324 - staged radio actions are cancelled by direct input, attempt changes and input loss
+  ---
+  duration_ms: 0.128375
+  ...
+# Subtest: an unavailable staged action waits for another deliberate Fire activation
+ok 325 - an unavailable staged action waits for another deliberate Fire activation
+  ---
+  duration_ms: 0.099167
+  ...
+# Subtest: explicit adoption and undo preserve calibrated axes and legacy switch bindings
+ok 326 - explicit adoption and undo preserve calibrated axes and legacy switch bindings
+  ---
+  duration_ms: 18.929792
+  ...
+# Subtest: guided six-role capture does not dirty calibration or adopt its draft
+ok 327 - guided six-role capture does not dirty calibration or adopt its draft
+  ---
+  duration_ms: 38.293209
+  ...
+# Subtest: capture rejects alias reuse, times out and exposes independent Back cancellation
+ok 328 - capture rejects alias reuse, times out and exposes independent Back cancellation
+  ---
+  duration_ms: 124.079791
+  ...
+# Subtest: practice reports paused shortcuts but cannot arm or fire
+ok 329 - practice reports paused shortcuts but cannot arm or fire
+  ---
+  duration_ms: 31.117333
+  ...
+# Subtest: storage denial leaves the explicit layout session-only and calibration untouched
+ok 330 - storage denial leaves the explicit layout session-only and calibration untouched
+  ---
+  duration_ms: 3.176
+  ...
+# Subtest: Flight and Fire can adopt a reduced layout while absent actions remain in the menu
+ok 331 - Flight and Fire can adopt a reduced layout while absent actions remain in the menu
+  ---
+  duration_ms: 4.132416
+  ...
+# Subtest: bootstrap requires repeated device nomination and two Select/Back round trips
+ok 332 - bootstrap requires repeated device nomination and two Select/Back round trips
+  ---
+  duration_ms: 1.222792
+  ...
+# Subtest: bootstrap rejects simultaneous devices, duplicate Back and timed-out capture
+ok 333 - bootstrap rejects simultaneous devices, duplicate Back and timed-out capture
+  ---
+  duration_ms: 1.064916
+  ...
+# Subtest: unknown setup starts the axis guide only after provisional Select and Back verification
+ok 334 - unknown setup starts the axis guide only after provisional Select and Back verification
+  ---
+  duration_ms: 21.982125
+  ...
+# Subtest: bootstrap axes finish at verification without legacy Arm or Reset capture
+ok 335 - bootstrap axes finish at verification without legacy Arm or Reset capture
+  ---
+  duration_ms: 44.706916
+  ...
+# Subtest: model proposal preserves verified calibration and requires explicit switch check and adoption
+ok 336 - model proposal preserves verified calibration and requires explicit switch check and adoption
+  ---
+  duration_ms: 10.206417
+  ...
+# Subtest: unknown receiver needs an explicit firmware preset and keeps suggestions unverified
+ok 337 - unknown receiver needs an explicit firmware preset and keeps suggestions unverified
+  ---
+  duration_ms: 3.599333
+  ...
+# Subtest: six-switch layout is separate, bounded, explicit and stored by full radio identity
+ok 338 - six-switch layout is separate, bounded, explicit and stored by full radio identity
+  ---
+  duration_ms: 4.559208
+  ...
+# Subtest: six-switch Flight requires a fresh edge at the resume root and cannot arm from nested menus
+ok 339 - six-switch Flight requires a fresh edge at the resume root and cannot arm from nested menus
+  ---
+  duration_ms: 0.905125
+  ...
+# Subtest: Flight OFF opens menu once and resume preserves airborne pickup instead of demanding low throttle
+ok 340 - Flight OFF opens menu once and resume preserves airborne pickup instead of demanding low throttle
+  ---
+  duration_ms: 1.099875
+  ...
+# Subtest: menu switch samples cannot deliver combat and every resumed weapon requires a fresh release
+ok 341 - menu switch samples cannot deliver combat and every resumed weapon requires a fresh release
+  ---
+  duration_ms: 0.915333
+  ...
+# Subtest: capture and menu key changes consume Flight edges without deferred arming
+ok 342 - capture and menu key changes consume Flight edges without deferred arming
+  ---
+  duration_ms: 0.556291
+  ...
+# Subtest: disconnect never reconnects armed and restoring layout does not consume calibration
+ok 343 - disconnect never reconnects armed and restoring layout does not consume calibration
+  ---
+  duration_ms: 0.578458
+  ...
+# Subtest: last verified navigation remains available during edits but never enables flight
+ok 344 - last verified navigation remains available during edits but never enables flight
+  ---
+  duration_ms: 0.663792
+  ...
+# Subtest: provisional Select/Back has copied raw device data and no flight ownership
+ok 345 - provisional Select/Back has copied raw device data and no flight ownership
+  ---
+  duration_ms: 0.722917
+  ...
+# Subtest: playback Flight edges request resume once without arming or returning controls
+ok 346 - playback Flight edges request resume once without arming or returning controls
+  ---
+  duration_ms: 0.63125
+  ...
+# Subtest: legacy Reset and Pause held across freeze cannot replay until released
+ok 347 - legacy Reset and Pause held across freeze cannot replay until released
+  ---
+  duration_ms: 0.413208
+  ...
+# Subtest: verified restoration loads saved layout once and preserves explicit session disable
+ok 348 - verified restoration loads saved layout once and preserves explicit session disable
+  ---
+  duration_ms: 0.870833
+  ...
+# Subtest: disabling six-switch mode exits its captured context and restores legacy fresh arming
+ok 349 - disabling six-switch mode exits its captured context and restores legacy fresh arming
+  ---
+  duration_ms: 0.421083
+  ...
+# Subtest: known model names propose six configurable channels without certifying a radio
+ok 350 - known model names propose six configurable channels without certifying a radio
+  ---
+  duration_ms: 6.37425
+  ...
+# Subtest: Squid supplied firmware and upstream CRSF firmware use distinct documented candidates
+ok 351 - Squid supplied firmware and upstream CRSF firmware use distinct documented candidates
+  ---
+  duration_ms: 1.438625
+  ...
+# Subtest: radio model and transport choices persist per exact device without changing calibration
+ok 352 - radio model and transport choices persist per exact device without changing calibration
+  ---
+  duration_ms: 0.638833
+  ...
+# Subtest: session restoration proposes unfamiliar radios without replacing saved exact-device calibrations
+ok 353 - session restoration proposes unfamiliar radios without replacing saved exact-device calibrations
+  ---
+  duration_ms: 1.177292
+  ...
+# Subtest: six-switch menus require pickup, first Confirm joins, then fresh complete cycles act
+ok 354 - six-switch menus require pickup, first Confirm joins, then fresh complete cycles act
+  ---
+  duration_ms: 2.63575
+  ...
+# Subtest: all stick modes use the centering gimbal; six-switch yaw never confirms
+ok 355 - all stick modes use the centering gimbal; six-switch yaw never confirms
+  ---
+  duration_ms: 1.872417
+  ...
+# Subtest: adopted radio footer keeps its switch instructions across joined menu contexts
+ok 356 - adopted radio footer keeps its switch instructions across joined menu contexts
+  ---
+  duration_ms: 0.61825
+  ...
+# Subtest: held switches, chords, arm transitions, disconnect and changed contexts never leak actions
+ok 357 - held switches, chords, arm transitions, disconnect and changed contexts never leak actions
+  ---
+  duration_ms: 0.989958
+  ...
+# Subtest: camera, retry and settings shortcuts execute on release without requiring Confirm join
+ok 358 - camera, retry and settings shortcuts execute on release without requiring Confirm join
+  ---
+  duration_ms: 0.670625
+  ...
+# Subtest: capture cancel uses only a fresh known Weapon cycle despite blocked devices and deflected sticks
+ok 359 - capture cancel uses only a fresh known Weapon cycle despite blocked devices and deflected sticks
+  ---
+  duration_ms: 0.32375
+  ...
+# Subtest: radio Back is available before join, and Confirm cannot follow a focus handoff while held
+ok 360 - radio Back is available before join, and Confirm cannot follow a focus handoff while held
+  ---
+  duration_ms: 0.126417
+  ...
+# Subtest: embedded frame Back is forwarded without invoking host shortcuts or flight actions
+ok 361 - embedded frame Back is forwarded without invoking host shortcuts or flight actions
+  ---
+  duration_ms: 0.357042
+  ...
+# Subtest: explicit provisional setup buttons work without axes and cannot borrow gamepad navigation
+ok 362 - explicit provisional setup buttons work without axes and cannot borrow gamepad navigation
+  ---
+  duration_ms: 0.302667
+  ...
+# Subtest: radio text keyboard edits only its draft, enforces bounds, commits once and cancels
+ok 363 - radio text keyboard edits only its draft, enforces bounds, commits once and cancels
+  ---
+  duration_ms: 1.693958
+  ...
+# Subtest: localized keyboard supports Ukrainian, Latin, multiline, maxlength and focus-loss cancellation
+ok 364 - localized keyboard supports Ukrainian, Latin, multiline, maxlength and focus-loss cancellation
+  ---
+  duration_ms: 0.881791
+  ...
+# Subtest: numeric editor provides coarse/fine steps, validates ranges and commits with one change
+ok 365 - numeric editor provides coarse/fine steps, validates ranges and commits with one change
+  ---
+  duration_ms: 0.650292
+  ...
+# Subtest: editor pointer keys preserve the draft and Tab stays inside; shortcuts cancel without changes
+ok 366 - editor pointer keys preserve the draft and Tab stays inside; shortcuts cancel without changes
+  ---
+  duration_ms: 0.755833
+  ...
+# Subtest: capture Escape cannot complete across a gap, disconnect or device replacement
+ok 367 - capture Escape cannot complete across a gap, disconnect or device replacement
+  ---
+  duration_ms: 0.290375
+  ...
+# Subtest: native files retain a host-gesture explanation without launching a picker
+ok 368 - native files retain a host-gesture explanation without launching a picker
+  ---
+  duration_ms: 0.150792
+  ...
+# Subtest: select and range values keep existing commit/cancel semantics through radio cycles
+ok 369 - select and range values keep existing commit/cancel semantics through radio cycles
+  ---
+  duration_ms: 0.748792
+  ...
+# Subtest: legacy controller and calibrated yaw menus still join without activating and confirm normally
+ok 370 - legacy controller and calibrated yaw menus still join without activating and confirm normally
+  ---
+  duration_ms: 0.636834
+  ...
+1..370
+# tests 374
+# suites 0
+# pass 374
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 55115.281875

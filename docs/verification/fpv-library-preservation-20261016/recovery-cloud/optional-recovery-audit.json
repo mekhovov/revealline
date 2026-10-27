@@ -1,0 +1,30 @@
+{
+  "capturedAt": "2026-10-16T02:59:53.244930+00:00",
+  "sourceRevision": "8ab04b8d948203090b9ae32da3b2d4e7c1f16bf3",
+  "artifactId": 12020917390,
+  "artifactDigestRehashed": "e75ad312329bfe2a8e004855a080f7de0f612de91f209748dddaf75ce2bc29d1",
+  "githubMetadataMatches": true,
+  "allSixArchiveMembersReverified": true,
+  "originalMemberReceiptUnchanged": true,
+  "fourExactSourceTestFilesMatchGitHub": true,
+  "testsNotRepeated": "Recovered24/24 result retained; no new source changes or test concern required repetition",
+  "recoveredEvidence": [
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/qualification-receipt.json",
+      "sha256": "00c9df15c65930ebfb9f5e5f7c7bb7ed413bc94af9149561c6c550e9a5e17d97"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/all-package-members-receipt.json",
+      "sha256": "53e7a8d615095f16e70f74a5aeb1eb1f20af75ea470826e2b3ec695c00dc8003"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/archive-import-closure-receipt.json",
+      "sha256": "07ee8288be6b84d1afe9ecb6566bb894714f710f95b1e757e14278ba30525e8a"
+    },
+    {
+      "path": "/Volumes/alex/CodexMigrationStaging/fpv-package-qualification-20261014/regional-family-library-8ab04b8d/packaged-family-label-checks-with-host-bootstrap.tap",
+      "sha256": "91b8f3ec78b49483513abdb4a7037cc77e14a19d1c7eacd16ce7366e7d1029b4"
+    }
+  ],
+  "scope": "Recovery integrity audit of original optional package and retained source/software receipts; no native/player storage/physical/public acceptance"
+}

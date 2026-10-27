@@ -6,12 +6,12 @@ import { createDefaultThemeBundle } from '../presentation/catalog.mjs';
 import { PRESENTATION_METADATA_LIMITS } from '../presentation/document-codec.mjs';
 import { canonicalJSON } from '../data-json.mjs';
 
-test('serialized metadata stays at 5MiB and logical ownership at 8MiB; other limits stay bounded', async () => {
+test('serialized metadata stays at 5MiB and logical ownership at 12MiB; other limits stay bounded', async () => {
   assert.equal(LIMITS.manifestBytes, 5 * 1024 * 1024);
   assert.equal(LIMITS.bundleBytes, 32 * 1024 * 1024);
   assert.equal(LIMITS.assetBytes, 4 * 1024 * 1024);
   assert.equal(LIMITS.assets, 4096);
-  assert.equal(PRESENTATION_METADATA_LIMITS.logicalBytes, 8 * 1024 * 1024);
+  assert.equal(PRESENTATION_METADATA_LIMITS.logicalBytes, 12 * 1024 * 1024);
   assert.equal(LIMITS.slots, 512);
   const source = structuredClone(createDefaultThemeBundle());
   // Valid, bounded individual evidence strings aggregate beyond the document cap.
