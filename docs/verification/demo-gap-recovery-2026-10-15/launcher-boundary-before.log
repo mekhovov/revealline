@@ -1,0 +1,10 @@
+file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/scripts/offline-launcher.mjs:92
+          throw new Error(
+                ^
+
+Error: Launcher translation is missing: en/errors:dataJson.
+    at buildLauncherCatalog (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/scripts/offline-launcher.mjs:92:17)
+    at async buildLauncherNavigationFiles (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/scripts/offline-launcher.mjs:126:34)
+    at async file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/[eval1]:1:78
+
+Node.js v20.19.5

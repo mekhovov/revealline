@@ -1,0 +1,47 @@
+TAP version 13
+# Subtest: an unavailable objective approach still permits normal capture search
+not ok 1 - an unavailable objective approach still permits normal capture search
+  ---
+  duration_ms: 389.12375
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-improv-player.test.mjs:22:1'
+  failureType: 'testCodeFailure'
+  error: 'An unavailable optional approach must not consume a search attempt.'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: ~
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/demo-improv-player.test.mjs:28:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: immediate: purposeful routes vary, close cuts and only lose to believable hazards
+ok 2 - immediate: purposeful routes vary, close cuts and only lose to believable hazards # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.344167
+  ...
+# Subtest: grid-center: purposeful routes vary, close cuts and only lose to believable hazards
+ok 3 - grid-center: purposeful routes vary, close cuts and only lose to believable hazards # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.039875
+  ...
+# Subtest: improvised preparation respects cancellation before it owns a player
+ok 4 - improvised preparation respects cancellation before it owns a player # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.102208
+  ...
+# Subtest: cancellation during route planning stops before publishing a recording
+ok 5 - cancellation during route planning stops before publishing a recording # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.035584
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 0
+# fail 1
+# cancelled 0
+# skipped 4
+# todo 0
+# duration_ms 476.141958

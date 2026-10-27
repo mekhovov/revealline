@@ -1,0 +1,346 @@
+TAP version 13
+# Subtest: exact JSON byte boundary accepts null and booleans and rejects one byte less
+ok 1 - exact JSON byte boundary accepts null and booleans and rejects one byte less
+  ---
+  duration_ms: 5.307167
+  ...
+# Subtest: exact JSON byte boundary accepts numbers including zero and exponents and rejects one byte less
+ok 2 - exact JSON byte boundary accepts numbers including zero and exponents and rejects one byte less
+  ---
+  duration_ms: 0.217042
+  ...
+# Subtest: exact JSON byte boundary accepts empty and nested containers and rejects one byte less
+ok 3 - exact JSON byte boundary accepts empty and nested containers and rejects one byte less
+  ---
+  duration_ms: 0.340667
+  ...
+# Subtest: exact JSON byte boundary accepts Unicode text and keys and rejects one byte less
+ok 4 - exact JSON byte boundary accepts Unicode text and keys and rejects one byte less
+  ---
+  duration_ms: 0.174458
+  ...
+# Subtest: exact JSON byte boundary accepts escaped text and keys and rejects one byte less
+ok 5 - exact JSON byte boundary accepts escaped text and keys and rejects one byte less
+  ---
+  duration_ms: 0.176875
+  ...
+# Subtest: exact JSON byte boundary accepts lone surrogate text and keys and rejects one byte less
+ok 6 - exact JSON byte boundary accepts lone surrogate text and keys and rejects one byte less
+  ---
+  duration_ms: 0.175334
+  ...
+# Subtest: many short array values use their serialized bytes without charging index keys
+ok 7 - many short array values use their serialized bytes without charging index keys
+  ---
+  duration_ms: 5.072125
+  ...
+# Subtest: repeated scalar byte accounting remains exact across cache saturation and Unicode escapes
+ok 8 - repeated scalar byte accounting remains exact across cache saturation and Unicode escapes
+  ---
+  duration_ms: 23.113792
+  ...
+# Subtest: repeated text never gives mutable or caller-frozen objects validation authority
+ok 9 - repeated text never gives mutable or caller-frozen objects validation authority
+  ---
+  duration_ms: 0.58125
+  ...
+# Subtest: repeated field names do not require per-field UTF-8 encoding
+ok 10 - repeated field names do not require per-field UTF-8 encoding
+  ---
+  duration_ms: 6.657208
+  ...
+# Subtest: the default 4 MiB ceiling still accepts exactly the limit and rejects one byte over
+ok 11 - the default 4 MiB ceiling still accepts exactly the limit and rejects one byte over
+  ---
+  duration_ms: 124.9245
+  ...
+# Subtest: untrusted getters and toJSON hooks are rejected without invocation
+ok 12 - untrusted getters and toJSON hooks are rejected without invocation
+  ---
+  duration_ms: 1.272375
+  ...
+# Subtest: exact byte accounting retains structural and shape protections
+ok 13 - exact byte accounting retains structural and shape protections
+  ---
+  duration_ms: 1.242041
+  ...
+# Subtest: shared JSON boundary reports owned validation errors in the active locale
+ok 14 - shared JSON boundary reports owned validation errors in the active locale
+  ---
+  duration_ms: 3.387625
+  ...
+# Subtest: live whitelist pins actual standard maps, rules and roster while allowing translated names
+ok 15 - live whitelist pins actual standard maps, rules and roster while allowing translated names
+  ---
+  duration_ms: 10.213375
+  ...
+# Subtest: orchard-crossing/immediate: three qualified seeds finish varied no-loss performances with exact recordings
+ok 16 - orchard-crossing/immediate: three qualified seeds finish varied no-loss performances with exact recordings
+  ---
+  duration_ms: 18074.409833
+  ...
+# {"seed":1,"ticks":4798,"status":"won","coverage":0.6868600682593856,"captures":7,"bends":10,"maxPlanningMs":978}
+# {"seed":2,"ticks":3899,"status":"won","coverage":0.7039249146757679,"captures":6,"bends":7,"maxPlanningMs":1600}
+# {"seed":3,"ticks":5227,"status":"won","coverage":0.7158703071672355,"captures":8,"bends":12,"maxPlanningMs":2964}
+# Subtest: orchard-crossing/grid-center: three qualified seeds finish varied no-loss performances with exact recordings
+ok 17 - orchard-crossing/grid-center: three qualified seeds finish varied no-loss performances with exact recordings
+  ---
+  duration_ms: 14484.422625
+  ...
+# {"seed":1,"ticks":5366,"status":"won","coverage":0.7133105802047781,"captures":8,"bends":11,"maxPlanningMs":939}
+# {"seed":2,"ticks":5122,"status":"won","coverage":0.7103242320819113,"captures":10,"bends":14,"maxPlanningMs":694}
+# {"seed":3,"ticks":5231,"status":"won","coverage":0.7047781569965871,"captures":8,"bends":12,"maxPlanningMs":1190}
+# Subtest: courtyard-exits/immediate: three qualified seeds finish varied no-loss performances with exact recordings
+ok 18 - courtyard-exits/immediate: three qualified seeds finish varied no-loss performances with exact recordings
+  ---
+  duration_ms: 21880.351958
+  ...
+# {"seed":1,"ticks":6895,"status":"won","coverage":0.7772491349480969,"captures":13,"bends":19,"maxPlanningMs":800}
+# {"seed":2,"ticks":5659,"status":"won","coverage":0.759083044982699,"captures":9,"bends":13,"maxPlanningMs":807}
+# {"seed":3,"ticks":5374,"status":"won","coverage":0.7811418685121108,"captures":10,"bends":13,"maxPlanningMs":1478}
+# Subtest: courtyard-exits/grid-center: three qualified seeds finish varied no-loss performances with exact recordings
+ok 19 - courtyard-exits/grid-center: three qualified seeds finish varied no-loss performances with exact recordings
+  ---
+  duration_ms: 21338.233958
+  ...
+# {"seed":1,"ticks":4325,"status":"won","coverage":0.8858131487889274,"captures":7,"bends":11,"maxPlanningMs":848}
+# {"seed":2,"ticks":6245,"status":"won","coverage":0.8853806228373703,"captures":11,"bends":15,"maxPlanningMs":1362}
+# {"seed":3,"ticks":5867,"status":"won","coverage":0.7508650519031141,"captures":9,"bends":11,"maxPlanningMs":1219}
+# Subtest: planning is deterministic and declines an exposed cut without changing it
+ok 20 - planning is deterministic and declines an exposed cut without changing it
+  ---
+  duration_ms: 1537.162417
+  ...
+# Subtest: actual Worker player records frame-independent live inputs, pauses exactly, forks and resets
+ok 21 - actual Worker player records frame-independent live inputs, pauses exactly, forks and resets
+  ---
+  duration_ms: 5612.883417
+  ...
+# Subtest: background advancement budget waits before a pending boundary, preserves fractional time and exact replay
+ok 22 - background advancement budget waits before a pending boundary, preserves fractional time and exact replay
+  ---
+  duration_ms: 1563.155375
+  ...
+# Subtest: background budget releases a rejected stale result to the unchanged fault boundary
+ok 23 - background budget releases a rejected stale result to the unchanged fault boundary
+  ---
+  duration_ms: 940.764
+  ...
+# Subtest: background budget never bypasses the existing planning watchdog
+ok 24 - background budget never bypasses the existing planning watchdog
+  ---
+  duration_ms: 1558.539917
+  ...
+# Subtest: missing Worker, abort and planning watchdog fail closed and release every worker
+ok 25 - missing Worker, abort and planning watchdog fail closed and release every worker
+  ---
+  duration_ms: 28.048208
+  ...
+# Subtest: future search exhaustion ends only after the current safe macro, never runs an old heading
+ok 26 - future search exhaustion ends only after the current safe macro, never runs an old heading
+  ---
+  duration_ms: 1027.553041
+  ...
+# Subtest: a stale future plan remains a fault, not a successful exhaustion handoff
+ok 27 - a stale future plan remains a fault, not a successful exhaustion handoff
+  ---
+  duration_ms: 884.032583
+  ...
+# Subtest: live playback crosses the old 60 second cutoff without claiming completion
+ok 28 - live playback crosses the old 60 second cutoff without claiming completion
+  ---
+  duration_ms: 1096.779875
+  ...
+# Subtest: full live admission now finishes the formerly exhausted seed and resets before display
+ok 29 - full live admission now finishes the formerly exhausted seed and resets before display
+  ---
+  duration_ms: 10746.244084
+  ...
+# Subtest: immediate: purposeful routes vary, close cuts and only lose to believable hazards
+ok 30 - immediate: purposeful routes vary, close cuts and only lose to believable hazards
+  ---
+  duration_ms: 28383.681458
+  ...
+# {"seed":123,"captures":12,"losses":3,"causes":["enemy-trail","enemy-trail","enemy-trail"],"bends":20,"ticks":8262}
+# {"seed":987654321,"captures":4,"losses":3,"causes":["enemy-trail","enemy-trail","enemy-trail"],"bends":9,"ticks":3270}
+# Subtest: grid-center: purposeful routes vary, close cuts and only lose to believable hazards
+ok 31 - grid-center: purposeful routes vary, close cuts and only lose to believable hazards
+  ---
+  duration_ms: 50503.71375
+  ...
+# {"seed":123,"captures":5,"losses":3,"causes":["enemy-trail","enemy-trail","enemy-trail"],"bends":10,"ticks":4888}
+# {"seed":987654321,"captures":25,"losses":3,"causes":["enemy-trail","enemy-trail","enemy-trail"],"bends":24,"ticks":14910}
+# Subtest: improvised preparation respects cancellation before it owns a player
+ok 32 - improvised preparation respects cancellation before it owns a player
+  ---
+  duration_ms: 2.746625
+  ...
+# Subtest: cancellation during route planning stops before publishing a recording
+ok 33 - cancellation during route planning stops before publishing a recording
+  ---
+  duration_ms: 81.795833
+  ...
+# Subtest: curated complete routes reproduce current Standard tuning without scripted reversal excerpts
+ok 34 - curated complete routes reproduce current Standard tuning without scripted reversal excerpts
+  ---
+  duration_ms: 10086.854458
+  ...
+# Subtest: personal replay compatibility reconstructs tuning from installed originals and rejects admin or forged recipes
+ok 35 - personal replay compatibility reconstructs tuning from installed originals and rejects admin or forged recipes
+  ---
+  duration_ms: 60.051417
+  ...
+# Subtest: frozen browser variants preserve the exact reviewed trace and every non-enemy outcome
+ok 36 - frozen browser variants preserve the exact reviewed trace and every non-enemy outcome
+  ---
+  duration_ms: 22.37875
+  ...
+# Subtest: Linux variants pin independently observed checkpoints without changing reviewed inputs or results
+ok 37 - Linux variants pin independently observed checkpoints without changing reviewed inputs or results
+  ---
+  duration_ms: 11.61025
+  ...
+# Subtest: catalogue admits only matching installed content and local bundled replay URLs
+ok 38 - catalogue admits only matching installed content and local bundled replay URLs
+  ---
+  duration_ms: 23.751083
+  ...
+# Subtest: immediate: practice forks match all four core branches and own every mutable value
+ok 39 - immediate: practice forks match all four core branches and own every mutable value
+  ---
+  duration_ms: 888.539833
+  ...
+# Subtest: grid-center: practice forks match all four core branches and own every mutable value
+ok 40 - grid-center: practice forks match all four core branches and own every mutable value
+  ---
+  duration_ms: 964.939042
+  ...
+# Subtest: practice preparation rejects stale, cancelled, terminal or altered playback and owns exports
+ok 41 - practice preparation rejects stale, cancelled, terminal or altered playback and owns exports
+  ---
+  duration_ms: 240.310084
+  ...
+# Subtest: practice forks preserve live-cut releases at exact RLE boundaries and a trailing pause
+ok 42 - practice forks preserve live-cut releases at exact RLE boundaries and a trailing pause
+  ---
+  duration_ms: 102.865625
+  ...
+# Subtest: disposing replay playback cancels pending practice and prevents an abandoned player from advancing
+ok 43 - disposing replay playback cancels pending practice and prevents an abandoned player from advancing
+  ---
+  duration_ms: 52.623166
+  ...
+# Subtest: a takeover retains both hangar loadouts, a live support field and impact recovery timing
+ok 44 - a takeover retains both hangar loadouts, a live support field and impact recovery timing
+  ---
+  duration_ms: 175.334791
+  ...
+# Subtest: immediate: staged encounter takeover preserves warning, active and transition authority
+ok 45 - immediate: staged encounter takeover preserves warning, active and transition authority
+  ---
+  duration_ms: 174.04025
+  ...
+# Subtest: grid-center: staged encounter takeover preserves warning, active and transition authority
+ok 46 - grid-center: staged encounter takeover preserves warning, active and transition authority
+  ---
+  duration_ms: 98.302167
+  ...
+# Subtest: actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily
+ok 47 - actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily
+  ---
+  duration_ms: 2285.066292
+  ...
+# Subtest: same map IDs in separately installed themed owners do not collide
+ok 48 - same map IDs in separately installed themed owners do not collide
+  ---
+  duration_ms: 96.714125
+  ...
+# Subtest: current main Journey host adds every installed Journey level without pretending base clips belong to Journey
+ok 49 - current main Journey host adds every installed Journey level without pretending base clips belong to Journey
+  ---
+  duration_ms: 4449.007625
+  ...
+# Subtest: actual public company editions expose only their own isolated installed levels
+ok 50 - actual public company editions expose only their own isolated installed levels
+  ---
+  duration_ms: 3847.126917
+  ...
+# Subtest: missing Worker and uninstalled content filter sources without downloading or installing packs
+ok 51 - missing Worker and uninstalled content filter sources without downloading or installing packs
+  ---
+  duration_ms: 36.085209
+  ...
+# Subtest: manually kept local recordings join the catalogue without enabling automatic collection
+ok 52 - manually kept local recordings join the catalogue without enabling automatic collection
+  ---
+  duration_ms: 141.900959
+  ...
+# Subtest: uncached optional bundled replays fall back to a retained recording or stay unavailable offline
+ok 53 - uncached optional bundled replays fall back to a retained recording or stay unavailable offline
+  ---
+  duration_ms: 175.2905
+  ...
+# Subtest: scene creation rejects a valid but wrong bundled recording and respects cancellation
+ok 54 - scene creation rejects a valid but wrong bundled recording and respects cancellation
+  ---
+  duration_ms: 17.760334
+  ...
+# Subtest: cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation
+ok 55 - cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation
+  ---
+  duration_ms: 0.377
+  ...
+# Subtest: a missing primary recording uses an available pinned variant without changing its inputs
+ok 56 - a missing primary recording uses an available pinned variant without changing its inputs
+  ---
+  duration_ms: 145.530209
+  ...
+# Subtest: frozen variants stay strict and reviewed routes qualify only an enemy checkpoint difference
+ok 57 - frozen variants stay strict and reviewed routes qualify only an enemy checkpoint difference
+  ---
+  duration_ms: 531.052333
+  ...
+# Subtest: the ordinary game build includes every dynamic demo asset and Worker module
+ok 58 - the ordinary game build includes every dynamic demo asset and Worker module
+  ---
+  duration_ms: 1242.060833
+  ...
+# Subtest: a personal cache that never settles times out without discarding bundled sources
+ok 59 - a personal cache that never settles times out without discarding bundled sources
+  ---
+  duration_ms: 9.745791
+  ...
+# Subtest: a never-settling catalogue falls through to local sources and cancellation settles a hung cache
+ok 60 - a never-settling catalogue falls through to local sources and cancellation settles a hung cache
+  ---
+  duration_ms: 0.44325
+  ...
+# Subtest: installed Pressure Lines keeps playing a complete recording when live Worker preparation fails
+ok 61 - installed Pressure Lines keeps playing a complete recording when live Worker preparation fails
+  ---
+  duration_ms: 530.203042
+  ...
+# Subtest: standalone planner loads without bootstrapping UI translations and retains validation errors
+ok 62 - standalone planner loads without bootstrapping UI translations and retains validation errors
+  ---
+  duration_ms: 53.217333
+  ...
+# Subtest: lightweight defaults stay identical to the English catalogue
+ok 63 - lightweight defaults stay identical to the English catalogue
+  ---
+  duration_ms: 4.187792
+  ...
+# Subtest: a booted validator follows live Ukrainian/English locale changes
+ok 64 - a booted validator follows live Ukrainian/English locale changes
+  ---
+  duration_ms: 221.048
+  ...
+1..64
+# tests 64
+# suites 0
+# pass 64
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 209558.753041

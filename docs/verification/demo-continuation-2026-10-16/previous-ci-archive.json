@@ -1,0 +1,11 @@
+{
+  "run": 38829629623,
+  "job": 116745263633,
+  "sourceHead": "8f36ad96957361652094efa86c74d447aff39fff",
+  "original": "previous-ci-focused-failure.log",
+  "originalBytes": 913764,
+  "originalSHA256": "932f345bad3862fb7e19468811eaa737b512a8260e501c88137b3f5a013b22c8",
+  "archive": "previous-ci-focused-failure.log.gz",
+  "archiveBytes": 143744,
+  "archiveSHA256": "090a1717ed66af098663c01d5a19d38b0da3b6fa603a82b80207bb1eb34f7c2c"
+}

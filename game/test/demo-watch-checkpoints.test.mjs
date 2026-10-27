@@ -62,15 +62,30 @@ function clock() {
 }
 function database() {
   const model = managedIndexedDB(),
-    opens = [];
+    opens = [],
+    connections = [];
   return {
     model,
     opens,
+    connections,
     indexedDB: {
       open(name, version) {
         opens.push({ name, version });
         assert.equal(name, OBSERVATION_DATABASE, 'Only the dedicated observer database may open.');
-        return model.indexedDB.open(name, version);
+        const request = model.indexedDB.open(name, version);
+        let onSuccess;
+        Object.defineProperty(request, 'onsuccess', {
+          get:
+            () =>
+            (...args) => {
+              connections.push(request.result);
+              onSuccess?.(...args);
+            },
+          set: (listener) => {
+            onSuccess = listener;
+          },
+        });
+        return request;
       },
     },
   };
@@ -338,6 +353,39 @@ test('quota failure is bounded and leaves current DOM/download observation avail
   await page.owner.dispose();
 });
 
+test('a failed final checkpoint write stays visible in the exact finalized DOM report', async () => {
+  const db = database(),
+    real = createObservationCheckpointStore({ indexedDB: db.indexedDB });
+  const page = fixture({
+    db,
+    checkpointStore: {
+      read: () => real.read(),
+      clear: () => real.clear(),
+      close: () => real.close(),
+      write: (slot, text) =>
+        slot === 'final'
+          ? Promise.reject(new DOMException('Final report quota exhausted', 'QuotaExceededError'))
+          : real.write(slot, text),
+    },
+  });
+  await page.start();
+  await page.time.advance(30000);
+  await until(() => page.$('observation-clear-saved').disabled === false);
+  await page.owner.flush();
+  const report = page.current();
+  assert.equal(report.status, 'finalized');
+  assert.equal(report.checkpointStorageAvailable, false);
+  assert.ok(
+    report.diagnostics.some(
+      (d) => d.type === 'checkpoint-storage-unavailable' && /Final report quota/.test(d.message),
+    ),
+  );
+  assert.equal((await real.read()).final, null);
+  page.$('observation-download').click();
+  assert.deepEqual(JSON.parse(await page.downloads[0].text()), report);
+  await page.owner.dispose();
+});
+
 test('disabled IndexedDB and a failed terminal inventory never prevent export or imply completion', async () => {
   let reads = 0;
   const page = fixture({
@@ -392,6 +440,130 @@ test('store enforces serialized byte budget before opening and closes late opens
   assert.equal(closed, 1, 'Late successful opens cannot leak an observer connection.');
   assert.equal(time.timers.size, 0);
   stuck.close();
+});
+
+for (const notify of [true, false])
+  test(`observer storage reopens a closed connection, close notification ${notify}`, async () => {
+    const db = database(),
+      store = createObservationCheckpointStore({ indexedDB: db.indexedDB }),
+      text = JSON.stringify({
+        format: 'revealline-demo-browser-observation.v1',
+        initialInventory: { files: [] },
+        samples: [],
+        events: [],
+        diagnostics: [],
+        status: 'incomplete',
+        startedAt: '2026-10-16T00:00:00.000Z',
+      });
+    await store.write('checkpoint', text);
+    const connection = db.connections.at(-1);
+    connection.close();
+    if (notify) connection.onclose?.();
+    const recovered = await store.read();
+    assert.equal(recovered.checkpoint.startedAt, '2026-10-16T00:00:00.000Z');
+    assert.equal(db.opens.length, 2, 'Reopen only the dedicated observer database once.');
+    assert.equal(db.model.allPuts.length, 1, 'Reconnection must not repeat a committed write.');
+    store.close();
+    await assert.rejects(store.read(), /storage closed/);
+    assert.equal(db.opens.length, 2, 'Disposal permanently revokes reconnection.');
+  });
+
+test('repeated transaction-creation failure has one bounded reconnect and no failing write retries', async () => {
+  let opens = 0,
+    closes = 0;
+  const store = createObservationCheckpointStore({
+    indexedDB: {
+      open() {
+        opens++;
+        const request = {};
+        queueMicrotask(() => {
+          request.result = {
+            close() {
+              closes++;
+            },
+            transaction() {
+              throw new DOMException('Connection is closing', 'InvalidStateError');
+            },
+          };
+          request.onsuccess();
+        });
+        return request;
+      },
+    },
+  });
+  await assert.rejects(store.read(), /Connection is closing/);
+  assert.equal(opens, 2);
+  assert.equal(closes, 2, 'Both unusable handles are retired.');
+  store.close();
+});
+
+test('child navigation finalizes invalid evidence immediately and retains only bounded control intent', async () => {
+  const page = fixture();
+  await page.start();
+  await page.time.advance(5000);
+  const click = page.child.getElementById('demo-watch-pause').emit('click', { isTrusted: true });
+  const key = page.child.body.emit('keydown', { key: 'Escape', isTrusted: true });
+  const input = page.child.createElement('input');
+  input.setAttribute('id', 'private-field');
+  input.value = 'private-typed-value';
+  page.child.body.append(input);
+  input.emit('keydown', { key: 'a', isTrusted: true });
+  page.child.defaultView.location.href = 'https://observer.test/game/couch/?private=secret-query';
+  const replacement = new Document();
+  replacement.defaultView.Node = Events;
+  page.$('observed-game').contentDocument = replacement;
+  page.$('observed-game').emit('load');
+  await until(() => page.$('observation-report').value.includes('"status": "finalized"'));
+  await page.owner.flush();
+  const report = page.current();
+  assert.equal(report.stopReason, 'child-navigation');
+  assert.equal(report.timing.elapsedSeconds, 5);
+  assert.equal(report.childNavigationsDuringObservation, 1);
+  assert.equal(report.observationComplete, false);
+  assert.equal(report.requestedDurationReached, false);
+  assert.equal(report.observationValidForPinnedSources, false);
+  assert.equal(report.finalGamePath, '/game/couch/');
+  assert.ok(
+    report.events.some(
+      (e) => e.type === 'observed-control-input' && e.controlId === 'demo-watch-pause' && e.trusted,
+    ),
+  );
+  assert.ok(report.events.some((e) => e.type === 'observed-control-input' && e.key === 'Escape'));
+  assert.doesNotMatch(JSON.stringify(report), /private-typed-value|secret-query|private-field/);
+  assert.equal(click.defaultPrevented, false);
+  assert.equal(key.defaultPrevented, false);
+  assert.equal(page.gameActions(), 0, 'Observation may not steer or reopen the game.');
+  assert.equal(
+    page.time.timers.size,
+    0,
+    'Navigation cannot leave a pretend observation clock running.',
+  );
+  await page.owner.dispose();
+});
+
+test('leaving the demo ends its observation without blocking the game or certifying another session', async () => {
+  const page = fixture();
+  await page.start();
+  await page.time.advance(5000);
+  page.child.getElementById('demo-dialog').open = false;
+  page.observers.at(-1).callback([{ type: 'childList' }]);
+  await until(() => page.$('observation-report').value.includes('"status": "finalized"'));
+  await page.owner.flush();
+  const report = page.current();
+  assert.equal(report.stopReason, 'demo-ended');
+  assert.equal(report.demoEndedDuringObservation, true);
+  assert.equal(report.childNavigationsDuringObservation, 0);
+  assert.equal(report.observerComplete, true);
+  assert.equal(report.observationValidForPinnedSources, false);
+  assert.equal(report.observationComplete, false);
+  assert.equal(page.time.timers.size, 0);
+  assert.equal(page.gameActions(), 0);
+  assert.equal(
+    page.child.getElementById('demo-dialog').open,
+    false,
+    'Never reopen a closed game session.',
+  );
+  await page.owner.dispose();
 });
 
 test('disposal during preparation aborts the source request and detaches listeners without a late start', async () => {

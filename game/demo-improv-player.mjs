@@ -52,6 +52,9 @@ export async function prepareImprovPlayer(level, options = {}, { signal, perform
       // simulated sustained cut caught by a real hazard, never steering jitter.
       allowRisk: captures > 0,
       preferSafe: losses > 0,
+      // A distant remaining relay can lie beyond the local cut shortlist.
+      // Alternate a fully simulated safe approach with fresh capture attempts.
+      seekFrontier: misses % 2 === 1,
       signal,
     });
     // Try a different shortlist without changing the real run. Bounded

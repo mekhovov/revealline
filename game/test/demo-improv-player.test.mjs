@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { prepareImprovPlayer } from '../demo-improv-player.mjs';
+import { planImprovMacro } from '../demo-bot.mjs';
 import { applyGameplayTuning, resolveGameplayTuning } from '../gameplay-tuning.mjs';
 import { verifyReplay } from '../replay.mjs';
 import { createRun, stepRun, FIXED_DT } from '../core/index.mjs';
@@ -16,6 +17,23 @@ const options = (seed) => ({
   turnPolicy: 'immediate',
   classId: 'scout',
   classRecipes: pack.classRecipes,
+});
+
+test('an unavailable objective approach still permits normal capture search', async () => {
+  const run = createRun(level, options(123));
+  assert.equal(run.objectives.length, 0);
+  const ordinary = await planImprovMacro(run, { plannerSeed: 123 });
+  assert.ok(ordinary, 'The ordinary search has a complete useful capture.');
+  const fallback = await planImprovMacro(run, { plannerSeed: 123, seekFrontier: true });
+  assert.ok(fallback, 'An unavailable optional approach must not consume a search attempt.');
+  assert.ok(fallback.state.coverage > run.coverage);
+  assert.equal(fallback.state.player.cutting, false);
+  const reconstructed = structuredClone(run);
+  for (const segment of fallback.segments)
+    for (let tick = 0; tick < segment.ticks; tick++)
+      stepRun(reconstructed, segment.input, FIXED_DT);
+  assert.deepEqual(reconstructed, fallback.state);
+  assert.equal(run.tick, 0, 'Candidate planning cannot advance the displayed run.');
 });
 
 for (const policy of ['immediate', 'grid-center'])

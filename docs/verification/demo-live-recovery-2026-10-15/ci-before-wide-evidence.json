@@ -1,0 +1,140 @@
+{
+  "headRefOid": "481562b73d8b79a1343550e1bd8747b3c80992d8",
+  "isDraft": true,
+  "labels": [
+    {
+      "id": "LA_kwDOUYDvKM8AAAAC4ZUPbA",
+      "name": "release-train-hold",
+      "description": "Unallocated product PR blocked from merge until a release milestone is assigned",
+      "color": "B60205"
+    }
+  ],
+  "milestone": {
+    "number": 57,
+    "title": "v0.150.0 — Unified native experience",
+    "description": "Scheduled aggregate for the preserved Demo, native-menu/controller, signal presentation, authoring navigation, edition branding, menu-scene, community, desktop and iOS work after public acceptance of the v0.142.4 mission-selector release and v0.143.0 Audio persistence release. The former v0.144.0–v0.149.0 inputs are already integrated into published v0.142.3 and do not consume additional release slots. This milestone is planning authority only: owner-scoped slices must be rebased onto accepted main, reviewed and qualified before one canonical release candidate is promoted.",
+    "dueOn": null
+  },
+  "statusCheckRollup": [
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-15T19:09:24Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/38789127936/job/116609199797",
+      "name": "optional-practice",
+      "startedAt": "2026-10-15T19:06:37Z",
+      "status": "COMPLETED",
+      "workflowName": "Company edition candidates"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-15T19:08:54Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/38789128178/job/116608800280",
+      "name": "feature (gameplay)",
+      "startedAt": "2026-10-15T19:02:33Z",
+      "status": "COMPLETED",
+      "workflowName": "Industrial feature verification"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-15T19:04:23Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/38789127938/job/116611044844",
+      "name": "preflight",
+      "startedAt": "2026-10-15T19:04:07Z",
+      "status": "COMPLETED",
+      "workflowName": "Validate source for continuous main"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-15T19:06:52Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/38789128178/job/116608800253",
+      "name": "feature (creator)",
+      "startedAt": "2026-10-15T19:03:41Z",
+      "status": "COMPLETED",
+      "workflowName": "Industrial feature verification"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-15T19:03:39Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/38789128178/job/116608800242",
+      "name": "feature (presentation)",
+      "startedAt": "2026-10-15T18:59:10Z",
+      "status": "COMPLETED",
+      "workflowName": "Industrial feature verification"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-15T19:10:03Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/38789128178/job/116608800080",
+      "name": "feature (recordings)",
+      "startedAt": "2026-10-15T19:07:05Z",
+      "status": "COMPLETED",
+      "workflowName": "Industrial feature verification"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "0001-01-01T00:00:00Z",
+      "conclusion": "",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/38789128178/job/116608799909",
+      "name": "feature (rooms)",
+      "startedAt": "2026-10-15T18:51:49Z",
+      "status": "QUEUED",
+      "workflowName": "Industrial feature verification"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "0001-01-01T00:00:00Z",
+      "conclusion": "",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/38789128178/job/116608800335",
+      "name": "feature (local-ux)",
+      "startedAt": "2026-10-15T18:51:49Z",
+      "status": "QUEUED",
+      "workflowName": "Industrial feature verification"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "0001-01-01T00:00:00Z",
+      "conclusion": "",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/38789127938/job/116614774923",
+      "name": "focused",
+      "startedAt": "2026-10-15T19:04:23Z",
+      "status": "QUEUED",
+      "workflowName": "Validate source for continuous main"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "0001-01-01T00:00:00Z",
+      "conclusion": "",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/38789127936/job/116609199142",
+      "name": "candidate",
+      "startedAt": "2026-10-15T19:06:16Z",
+      "status": "IN_PROGRESS",
+      "workflowName": "Company edition candidates"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-15T19:04:23Z",
+      "conclusion": "SKIPPED",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/38789127938/job/116614777367",
+      "name": "test",
+      "startedAt": "2026-10-15T19:04:24Z",
+      "status": "COMPLETED",
+      "workflowName": "Validate source for continuous main"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-15T19:04:23Z",
+      "conclusion": "SKIPPED",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/38789127938/job/116614777408",
+      "name": "build",
+      "startedAt": "2026-10-15T19:04:24Z",
+      "status": "COMPLETED",
+      "workflowName": "Validate source for continuous main"
+    }
+  ]
+}

@@ -1,0 +1,184 @@
+{
+  "format": "revealline-demo-wide-playback-summary.v1",
+  "codeHead": "b4913830eea74d033088a3c239796b20353b5210",
+  "documentationHeadAtStart": "481562b73d8b79a1343550e1bd8747b3c80992d8",
+  "scope": "Node real-core complete outcomes and exact replay reconstruction; no rendered theme, browser, device, audio or viewing acceptance. Recorded sources retain authored steering.",
+  "sourceChanges": [],
+  "rows": [
+    {
+      "owner": "journey",
+      "selection": "immediate",
+      "report": "journey-immediate-playback.json",
+      "summary": {
+        "registered": 105,
+        "registeredLevels": 103,
+        "usableLevels": 100,
+        "verified": 102,
+        "failed": 3,
+        "notExercised": 0,
+        "remainingWorkers": 0,
+        "uncoveredLevels": 0
+      },
+      "outcomes": {
+        "won": 92,
+        "lost": 10,
+        "failed": 3
+      },
+      "gaps": [
+        {
+          "executionKey": "fractured-grid/candidate-74ee7683b9167b78/3e8dc32f3f10a9f3",
+          "levelId": "staggered-reserve"
+        },
+        {
+          "executionKey": "sentinel-crown/candidate-a022a0a6b5972e71/4431545b1c079801",
+          "levelId": "first-relay"
+        },
+        {
+          "executionKey": "sentinel-crown/candidate-a022a0a6b5972e71/4431545b1c079801",
+          "levelId": "relay-perimeter"
+        }
+      ],
+      "elapsedSeconds": 406.211775042,
+      "sourceHashCount": 100,
+      "contentSHA256": "a7f3a4700de765aa5a01d7e38563a05e382282f9e24b5914be7742618081d8c1"
+    },
+    {
+      "owner": "journey",
+      "selection": "grid-center",
+      "report": "journey-grid-center-playback.json",
+      "summary": {
+        "registered": 105,
+        "registeredLevels": 103,
+        "usableLevels": 100,
+        "verified": 102,
+        "failed": 3,
+        "notExercised": 0,
+        "remainingWorkers": 0,
+        "uncoveredLevels": 0
+      },
+      "outcomes": {
+        "won": 92,
+        "lost": 10,
+        "failed": 3
+      },
+      "gaps": [
+        {
+          "executionKey": "fractured-grid/candidate-74ee7683b9167b78/3e8dc32f3f10a9f3",
+          "levelId": "staggered-reserve"
+        },
+        {
+          "executionKey": "sentinel-crown/candidate-a022a0a6b5972e71/4431545b1c079801",
+          "levelId": "first-relay"
+        },
+        {
+          "executionKey": "sentinel-crown/candidate-a022a0a6b5972e71/4431545b1c079801",
+          "levelId": "crown-audience"
+        }
+      ],
+      "elapsedSeconds": 335.84366570799995,
+      "sourceHashCount": 100,
+      "contentSHA256": "a7f3a4700de765aa5a01d7e38563a05e382282f9e24b5914be7742618081d8c1"
+    },
+    {
+      "owner": "droneaid",
+      "selection": "immediate",
+      "report": "droneaid-immediate-playback.json",
+      "summary": {
+        "registered": 42,
+        "registeredLevels": 42,
+        "usableLevels": 41,
+        "verified": 41,
+        "failed": 1,
+        "notExercised": 0,
+        "remainingWorkers": 0,
+        "uncoveredLevels": 0
+      },
+      "outcomes": {
+        "won": 38,
+        "lost": 3,
+        "failed": 1
+      },
+      "gaps": [
+        {
+          "executionKey": "droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4",
+          "levelId": "droneaid-nl-signals-of-support-04"
+        }
+      ],
+      "elapsedSeconds": 130.241846,
+      "sourceHashCount": 111,
+      "contentSHA256": "11d27573a564497ef0424e839f527e0a58a45d0b5638d573aa4f23fa51d61740"
+    },
+    {
+      "owner": "droneaid",
+      "selection": "grid-center",
+      "report": "droneaid-grid-center-playback.json",
+      "summary": {
+        "registered": 42,
+        "registeredLevels": 42,
+        "usableLevels": 41,
+        "verified": 41,
+        "failed": 1,
+        "notExercised": 0,
+        "remainingWorkers": 0,
+        "uncoveredLevels": 0
+      },
+      "outcomes": {
+        "won": 37,
+        "lost": 4,
+        "failed": 1
+      },
+      "gaps": [
+        {
+          "executionKey": "droneaid-nl-signals-of-support/candidate-19619aa8c685e91d/386d61fa386a65d4",
+          "levelId": "droneaid-nl-signals-of-support-06"
+        }
+      ],
+      "elapsedSeconds": 140.034849959,
+      "sourceHashCount": 111,
+      "contentSHA256": "11d27573a564497ef0424e839f527e0a58a45d0b5638d573aa4f23fa51d61740"
+    },
+    {
+      "selection": "immediate",
+      "summary": {
+        "registered": 36,
+        "registeredLevels": 36,
+        "usableLevels": 36,
+        "verified": 36,
+        "failed": 0,
+        "notExercised": 0,
+        "remainingWorkers": 0,
+        "uncoveredLevels": 0
+      },
+      "outcomes": {
+        "won": 34,
+        "lost": 2
+      },
+      "gaps": [],
+      "elapsedSeconds": 88.97931687500001,
+      "sourceHashCount": 115,
+      "contentSHA256": "239ae962d94f53a3ebc4ba50b83409675314af95aa6caba9d38d5ae0422d91a8"
+    },
+    {
+      "selection": "grid-center",
+      "summary": {
+        "registered": 36,
+        "registeredLevels": 36,
+        "usableLevels": 35,
+        "verified": 35,
+        "failed": 1,
+        "notExercised": 0,
+        "remainingWorkers": 0,
+        "uncoveredLevels": 0
+      },
+      "outcomes": {
+        "won": 32,
+        "lost": 3,
+        "failed": 1
+      },
+      "gaps": [],
+      "elapsedSeconds": 92.377892042,
+      "sourceHashCount": 115,
+      "contentSHA256": "239ae962d94f53a3ebc4ba50b83409675314af95aa6caba9d38d5ae0422d91a8"
+    }
+  ]
+}

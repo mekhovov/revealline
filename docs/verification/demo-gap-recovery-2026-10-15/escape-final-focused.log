@@ -1,0 +1,231 @@
+# Retained historical excerpt after an ownership migration. Exact originals are preserved separately. This excerpt is not the original complete record or a release qualification.
+
+TAP version 13
+# Subtest: exact JSON byte boundary accepts null and booleans and rejects one byte less
+ok 1 - exact JSON byte boundary accepts null and booleans and rejects one byte less
+  ---
+  duration_ms: 2.404542
+  ...
+# Subtest: exact JSON byte boundary accepts numbers including zero and exponents and rejects one byte less
+ok 2 - exact JSON byte boundary accepts numbers including zero and exponents and rejects one byte less
+  ---
+  duration_ms: 0.633292
+  ...
+# Subtest: exact JSON byte boundary accepts empty and nested containers and rejects one byte less
+ok 3 - exact JSON byte boundary accepts empty and nested containers and rejects one byte less
+  ---
+  duration_ms: 0.334667
+  ...
+# Subtest: exact JSON byte boundary accepts Unicode text and keys and rejects one byte less
+ok 4 - exact JSON byte boundary accepts Unicode text and keys and rejects one byte less
+  ---
+  duration_ms: 0.129083
+  ...
+# Subtest: exact JSON byte boundary accepts escaped text and keys and rejects one byte less
+ok 5 - exact JSON byte boundary accepts escaped text and keys and rejects one byte less
+  ---
+  duration_ms: 0.150417
+  ...
+# Subtest: exact JSON byte boundary accepts lone surrogate text and keys and rejects one byte less
+ok 6 - exact JSON byte boundary accepts lone surrogate text and keys and rejects one byte less
+  ---
+  duration_ms: 0.143666
+  ...
+# Subtest: many short array values use their serialized bytes without charging index keys
+ok 7 - many short array values use their serialized bytes without charging index keys
+  ---
+  duration_ms: 5.383208
+  ...
+# Subtest: repeated scalar byte accounting remains exact across cache saturation and Unicode escapes
+ok 8 - repeated scalar byte accounting remains exact across cache saturation and Unicode escapes
+  ---
+  duration_ms: 19.794834
+  ...
+# Subtest: repeated text never gives mutable or caller-frozen objects validation authority
+ok 9 - repeated text never gives mutable or caller-frozen objects validation authority
+  ---
+  duration_ms: 0.566083
+  ...
+# Subtest: repeated field names do not require per-field UTF-8 encoding
+ok 10 - repeated field names do not require per-field UTF-8 encoding
+  ---
+  duration_ms: 8.353625
+  ...
+# Subtest: the default 4 MiB ceiling still accepts exactly the limit and rejects one byte over
+ok 11 - the default 4 MiB ceiling still accepts exactly the limit and rejects one byte over
+  ---
+  duration_ms: 94.709708
+  ...
+# Subtest: untrusted getters and toJSON hooks are rejected without invocation
+ok 12 - untrusted getters and toJSON hooks are rejected without invocation
+  ---
+  duration_ms: 0.720833
+  ...
+# Subtest: exact byte accounting retains structural and shape protections
+ok 13 - exact byte accounting retains structural and shape protections
+  ---
+  duration_ms: 1.074458
+  ...
+# Subtest: shared JSON boundary reports owned validation errors in the active locale
+ok 14 - shared JSON boundary reports owned validation errors in the active locale
+  ---
+  duration_ms: 1.130417
+  ...
+# Subtest: an unavailable objective approach still permits normal capture search
+ok 15 - an unavailable objective approach still permits normal capture search
+  ---
+  duration_ms: 1134.385459
+  ...
+# Subtest: immediate: purposeful routes vary, close cuts and only lose to believable hazards
+ok 16 - immediate: purposeful routes vary, close cuts and only lose to believable hazards
+  ---
+  duration_ms: 14233.980667
+  ...
+# {"seed":123,"captures":17,"losses":3,"causes":["enemy-trail","enemy-trail","enemy-trail"],"bends":19,"ticks":11331}
+# {"seed":987654321,"captures":4,"losses":3,"causes":["enemy-trail","enemy-trail","enemy-trail"],"bends":10,"ticks":3854}
+# Subtest: grid-center: purposeful routes vary, close cuts and only lose to believable hazards
+ok 17 - grid-center: purposeful routes vary, close cuts and only lose to believable hazards
+  ---
+  duration_ms: 19465.325458
+  ...
+# {"seed":123,"captures":11,"losses":3,"causes":["enemy-trail","enemy-trail","enemy-trail"],"bends":17,"ticks":8151}
+# {"seed":987654321,"captures":29,"losses":2,"causes":["enemy-trail","boss-lane"],"bends":32,"ticks":16270}
+# Subtest: improvised preparation respects cancellation before it owns a player
+ok 18 - improvised preparation respects cancellation before it owns a player
+  ---
+  duration_ms: 0.760542
+  ...
+# Subtest: cancellation during route planning stops before publishing a recording
+ok 19 - cancellation during route planning stops before publishing a recording
+  ---
+  duration_ms: 58.769041
+  ...
+# Subtest: journey/neutral-ground/immediate: formerly stalled performance reaches a real result
+ok 20 - journey/neutral-ground/immediate: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 6802.231542
+  ...
+# Subtest: journey/neutral-ground/grid-center: formerly stalled performance reaches a real result
+ok 21 - journey/neutral-ground/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 7074.029834
+  ...
+# Subtest: journey/crossbar-depot/immediate: formerly stalled performance reaches a real result
+ok 22 - journey/crossbar-depot/immediate: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 3088.623
+  ...
+# Subtest: journey/crossbar-depot/grid-center: formerly stalled performance reaches a real result
+ok 23 - journey/crossbar-depot/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 3429.777375
+  ...
+# Subtest: journey/staggered-reserve/immediate: formerly stalled performance reaches a real result
+ok 26 - journey/staggered-reserve/immediate: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 12459.651542
+  ...
+# Subtest: journey/staggered-reserve/grid-center: formerly stalled performance reaches a real result
+ok 27 - journey/staggered-reserve/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 12074.159
+  ...
+# Subtest: journey/first-relay/immediate: formerly stalled performance reaches a real result
+ok 28 - journey/first-relay/immediate: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 9248.310875
+  ...
+# Subtest: journey/first-relay/grid-center: formerly stalled performance reaches a real result
+ok 29 - journey/first-relay/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 8097.745667
+  ...
+# Subtest: journey/relay-perimeter/immediate: formerly stalled performance reaches a real result
+ok 30 - journey/relay-perimeter/immediate: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 6032.761333
+  ...
+# Subtest: journey/crown-audience/grid-center: formerly stalled performance reaches a real result
+ok 31 - journey/crown-audience/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 4481.410958
+  ...
+# Subtest: droneaid/droneaid-nl-signals-of-support-04/immediate: formerly stalled performance reaches a real result
+ok 32 - droneaid/droneaid-nl-signals-of-support-04/immediate: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 3878.099375
+  ...
+# Subtest: droneaid/droneaid-nl-signals-of-support-06/grid-center: formerly stalled performance reaches a real result
+ok 33 - droneaid/droneaid-nl-signals-of-support-06/grid-center: formerly stalled performance reaches a real result
+  ---
+  duration_ms: 4268.487541
+  ...
+# Subtest: reset joins retiring Worker before creating its replacement
+ok 35 - reset joins retiring Worker before creating its replacement
+  ---
+  duration_ms: 627.217708
+  ...
+# Subtest: disposing during an asynchronous reset cannot revive a Worker
+ok 36 - disposing during an asynchronous reset cannot revive a Worker
+  ---
+  duration_ms: 252.427625
+  ...
+# Subtest: only the newest overlapping reset may create a replacement Worker
+ok 37 - only the newest overlapping reset may create a replacement Worker
+  ---
+  duration_ms: 593.757166
+  ...
+# Subtest: standalone planner loads without bootstrapping UI translations and retains validation errors
+ok 38 - standalone planner loads without bootstrapping UI translations and retains validation errors
+  ---
+  duration_ms: 50.022792
+  ...
+# Subtest: lightweight defaults stay identical to the English catalogue
+ok 39 - lightweight defaults stay identical to the English catalogue
+  ---
+  duration_ms: 3.730041
+  ...
+# Subtest: a booted validator follows live Ukrainian/English locale changes
+ok 40 - a booted validator follows live Ukrainian/English locale changes
+  ---
+  duration_ms: 222.838417
+  ...
+# Subtest: translation-key scanning accepts complete keys and rejects concatenation prefixes
+ok 41 - translation-key scanning accepts complete keys and rejects concatenation prefixes
+  ---
+  duration_ms: 1.899459
+  ...
+# Subtest: catalog validation checks Ukrainian-only plural forms and rejects orphan translations
+ok 42 - catalog validation checks Ukrainian-only plural forms and rejects orphan translations
+  ---
+  duration_ms: 1.0595
+  ...
+# Subtest: compact classic catalogs reconstruct every original namespace and plural without filling missing values
+ok 43 - compact classic catalogs reconstruct every original namespace and plural without filling missing values
+  ---
+  duration_ms: 1639.883792
+  ...
+# Subtest: compact content registry preserves identity and original-text guards while sharing repeated records
+ok 44 - compact content registry preserves identity and original-text guards while sharing repeated records
+  ---
+  duration_ms: 2.821958
+  ...
+# Subtest: the bundled catalog decoder is pinned, synchronous and isolated from host module registries
+ok 45 - the bundled catalog decoder is pinned, synchronous and isolated from host module registries
+  ---
+  duration_ms: 6.108709
+  ...
+# Subtest: launcher includes complete JSON validation messages without treating prefixes as keys
+ok 46 - launcher includes complete JSON validation messages without treating prefixes as keys
+  ---
+  duration_ms: 82.840833
+  ...
+1..46
+# tests 46
+# suites 0
+# pass 46
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 138724.101333

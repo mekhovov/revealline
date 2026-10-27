@@ -1,0 +1,338 @@
+{
+  "format": "revealline-demo-runtime-variants.v1",
+  "provenance": "Exact independently generated and replay-reconstructed checkpoints from GitHub Actions run 38692623491. The input traces and installed level definitions were unchanged. Strict verification must select an exact committed checkpoint; no tolerance is added to playback or player imports.",
+  "runtime": "v20.19.6/linux/x64",
+  "sourceRun": "https://github.com/mekhovov/revealline/actions/runs/38692623491",
+  "variants": [
+    {
+      "id": "first-signal-right",
+      "replayURL": "./demo-data/first-signal-right.node20-linux-x64.replay.json",
+      "inputTraceIdentity": "0d05c1be36470add",
+      "sourceCheckpoint": "2451aa6bc58d0614",
+      "checkpoint": "9b66591b55769ea8",
+      "changedSections": ["enemies"],
+      "sourceSummary": {
+        "ruleset": "xonix-core.v2",
+        "levelId": "signal-01",
+        "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-c6166fbf97fb6d66",
+        "seed": 5,
+        "turnPolicy": "grid-center",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "won",
+        "won": true,
+        "tick": 3829,
+        "time": 31.90086726998364,
+        "lives": 3,
+        "score": 7930,
+        "coverage": 0.5070332480818415,
+        "claimedCount": 793,
+        "totalClaimable": 1564,
+        "medal": "gold",
+        "objectives": {
+          "captured": 0,
+          "total": 0,
+          "required": 0
+        }
+      },
+      "runtimeSummary": {
+        "ruleset": "xonix-core.v2",
+        "levelId": "signal-01",
+        "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-c6166fbf97fb6d66",
+        "seed": 5,
+        "turnPolicy": "grid-center",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "won",
+        "won": true,
+        "tick": 3829,
+        "time": 31.90086726998364,
+        "lives": 3,
+        "score": 7930,
+        "coverage": 0.5070332480818415,
+        "claimedCount": 793,
+        "totalClaimable": 1564,
+        "medal": "gold",
+        "objectives": {
+          "captured": 0,
+          "total": 0,
+          "required": 0
+        }
+      }
+    },
+    {
+      "id": "hidden-frequency-search",
+      "replayURL": "./demo-data/hidden-frequency-search.node20-linux-x64.replay.json",
+      "inputTraceIdentity": "806c350fdb164271",
+      "sourceCheckpoint": "1bd018399cd068be",
+      "checkpoint": "4014a9351894e345",
+      "changedSections": ["enemies"],
+      "sourceSummary": {
+        "ruleset": "xonix-core.v2",
+        "levelId": "signal-06",
+        "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-f2fd952c2f9eb5e2",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "won",
+        "won": true,
+        "tick": 5327,
+        "time": 44.38510558069194,
+        "lives": 3,
+        "score": 13780,
+        "coverage": 0.8491048593350383,
+        "claimedCount": 1328,
+        "totalClaimable": 1564,
+        "medal": "gold",
+        "objectives": {
+          "captured": 1,
+          "total": 2,
+          "required": 1
+        }
+      },
+      "runtimeSummary": {
+        "ruleset": "xonix-core.v2",
+        "levelId": "signal-06",
+        "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-f2fd952c2f9eb5e2",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "won",
+        "won": true,
+        "tick": 5327,
+        "time": 44.38510558069194,
+        "lives": 3,
+        "score": 13780,
+        "coverage": 0.8491048593350383,
+        "claimedCount": 1328,
+        "totalClaimable": 1564,
+        "medal": "gold",
+        "objectives": {
+          "captured": 1,
+          "total": 2,
+          "required": 1
+        }
+      }
+    },
+    {
+      "id": "orchard-crossing-circuit",
+      "replayURL": "./demo-data/orchard-crossing-circuit.node20-linux-x64.replay.json",
+      "inputTraceIdentity": "4ea122c1ae9928d6",
+      "sourceCheckpoint": "461e0d5d7e60f374",
+      "checkpoint": "ceabb600677d27b4",
+      "changedSections": ["player", "enemies", "clock", "result", "classic"],
+      "sourceSummary": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "orchard-crossing",
+        "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-2ce04258d6021b8b",
+        "seed": 2,
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-25103a34",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "2",
+            "loadoutHash": "loadout-v1-8360440c",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "2",
+        "loadoutHash": "loadout-v1-8360440c",
+        "status": "won",
+        "won": true,
+        "tick": 3770,
+        "time": 31.409766214176777,
+        "lives": 3,
+        "livesLost": 0,
+        "score": 19990,
+        "coverage": 0.8528156996587031,
+        "claimedCount": 1999,
+        "totalClaimable": 2344,
+        "medal": "gold",
+        "objectives": {
+          "captured": 0,
+          "total": 0,
+          "required": 0
+        }
+      },
+      "runtimeSummary": {
+        "ruleset": "xonix-core.v5",
+        "levelId": "orchard-crossing",
+        "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-2ce04258d6021b8b",
+        "seed": 2,
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-25103a34",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "2",
+            "loadoutHash": "loadout-v1-8360440c",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": null,
+        "classRevision": "2",
+        "loadoutHash": "loadout-v1-8360440c",
+        "status": "won",
+        "won": true,
+        "tick": 3770,
+        "time": 31.40976621417678,
+        "lives": 3,
+        "livesLost": 0,
+        "score": 19990,
+        "coverage": 0.8528156996587031,
+        "claimedCount": 1999,
+        "totalClaimable": 2344,
+        "medal": "gold",
+        "objectives": {
+          "captured": 0,
+          "total": 0,
+          "required": 0
+        }
+      }
+    },
+    {
+      "id": "supply-circuit-recovery",
+      "replayURL": "./demo-data/supply-circuit-recovery.node20-linux-x64.replay.json",
+      "inputTraceIdentity": "db9100dd8c09fafd",
+      "sourceCheckpoint": "b1df0c8b60d0a44a",
+      "checkpoint": "cf8ca923b46e4766",
+      "changedSections": ["enemies"],
+      "sourceSummary": {
+        "ruleset": "xonix-core.v2",
+        "levelId": "signal-10",
+        "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-3fad63fe98ab68e3",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": "enemy-player",
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "lost",
+        "won": false,
+        "tick": 6356,
+        "time": 52.96539215686047,
+        "lives": 0,
+        "score": 7460,
+        "coverage": 0.44501278772378516,
+        "claimedCount": 696,
+        "totalClaimable": 1564,
+        "medal": null,
+        "objectives": {
+          "captured": 1,
+          "total": 1,
+          "required": 1
+        }
+      },
+      "runtimeSummary": {
+        "ruleset": "xonix-core.v2",
+        "levelId": "signal-10",
+        "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-3fad63fe98ab68e3",
+        "seed": 1,
+        "turnPolicy": "immediate",
+        "classId": "scout",
+        "activeClassId": "scout",
+        "rosterHash": "roster-v1-e159e435",
+        "classHistory": [
+          {
+            "classId": "scout",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "tick": 0
+          }
+        ],
+        "switches": 0,
+        "failureCause": "enemy-player",
+        "classRevision": "1",
+        "loadoutHash": "loadout-v1-aaa4aadd",
+        "status": "lost",
+        "won": false,
+        "tick": 6356,
+        "time": 52.96539215686047,
+        "lives": 0,
+        "score": 7460,
+        "coverage": 0.44501278772378516,
+        "claimedCount": 696,
+        "totalClaimable": 1564,
+        "medal": null,
+        "objectives": {
+          "captured": 1,
+          "total": 1,
+          "required": 1
+        }
+      }
+    }
+  ]
+}

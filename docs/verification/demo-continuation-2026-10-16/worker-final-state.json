@@ -1,0 +1,20 @@
+{
+  "startedAt": "2026-10-16T06:50:50.663456+00:00",
+  "sourceCommit": "1dc0320462cd6dd14a4538b001da03218e86dd29",
+  "command": [
+    "node",
+    "--expose-gc",
+    "scripts/soak-demo.mjs",
+    "--simulation-seconds",
+    "7200",
+    "--report",
+    "docs/verification/demo-continuation-2026-10-16/worker-final-qualification.json"
+  ],
+  "browserFinalSHA256": "44bbe549164fe116ae43b59c840259189c79663235368ca6a46e65a4fda29333",
+  "browserTabClosed": true,
+  "viewportReset": true,
+  "port8834ListenerReleased": true,
+  "status": "finished",
+  "exitCode": 0,
+  "finishedAt": "2026-10-16T06:54:01.694004+00:00"
+}

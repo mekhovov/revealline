@@ -1,0 +1,159 @@
+{
+  "sourceCommit": "f0136c2b0f2916af142f6e27a86b3ed2141b844a",
+  "scope": "One sequential final-source audit; Node real-core preparation and exact replay verification, not browser or device acceptance.",
+  "owners": {
+    "base": {
+      "summary": {
+        "registered": 46,
+        "registeredLevels": 30,
+        "usableLevels": 30,
+        "verified": 46,
+        "failed": 0,
+        "notExercised": 0,
+        "remainingWorkers": 0,
+        "uncoveredLevels": 0
+      },
+      "policies": {
+        "immediate": {
+          "verified": 23,
+          "sources": 23,
+          "usableMaps": 15,
+          "maps": 15,
+          "wins": 20,
+          "losses": 3
+        },
+        "grid-center": {
+          "verified": 23,
+          "sources": 23,
+          "usableMaps": 15,
+          "maps": 15,
+          "wins": 20,
+          "losses": 3
+        }
+      },
+      "mapsUsableUnderBothSelections": 15,
+      "distinctMaps": 15,
+      "failedCases": [],
+      "elapsedWallSeconds": 92.891147084,
+      "changedDuringAudit": [],
+      "changedAtCollection": [],
+      "contentSHA256": "68fc7bf921f4b8f00e89f238708856d2cb9ba01c5a41114e7a1d15305f59b2ce",
+      "cleanup": {
+        "ownersBeforeForcedCleanup": 0,
+        "listeners": 0
+      },
+      "errors": []
+    },
+    "journey": {
+      "summary": {
+        "registered": 210,
+        "registeredLevels": 206,
+        "usableLevels": 204,
+        "verified": 208,
+        "failed": 2,
+        "notExercised": 0,
+        "remainingWorkers": 0,
+        "uncoveredLevels": 0
+      },
+      "policies": {
+        "immediate": {
+          "verified": 104,
+          "sources": 105,
+          "usableMaps": 102,
+          "maps": 103,
+          "wins": 101,
+          "losses": 3
+        },
+        "grid-center": {
+          "verified": 104,
+          "sources": 105,
+          "usableMaps": 102,
+          "maps": 103,
+          "wins": 102,
+          "losses": 2
+        }
+      },
+      "mapsUsableUnderBothSelections": 101,
+      "distinctMaps": 103,
+      "failedCases": [
+        {
+          "id": "improv-fractured-grid/candidate-74ee7683b9167b78/3e8dc32f3f10a9f3-staggered-reserve",
+          "levelKey": "fractured-grid/candidate-74ee7683b9167b78/3e8dc32f3f10a9f3/staggered-reserve",
+          "kind": "improv",
+          "turnPolicy": "immediate",
+          "status": "failed",
+          "error": {
+            "name": "DemoLoadingTimeoutError",
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline."
+          },
+          "elapsedMs": 15001
+        },
+        {
+          "id": "improv-neon-contours/candidate-a904a9907d403af6/584714fbd981ed3c-side-door-bays",
+          "levelKey": "neon-contours/candidate-a904a9907d403af6/584714fbd981ed3c/side-door-bays",
+          "kind": "improv",
+          "turnPolicy": "grid-center",
+          "status": "failed",
+          "error": {
+            "name": "DemoLoadingTimeoutError",
+            "code": "demo-load-timeout",
+            "message": "Demo preparation exceeded its loading deadline."
+          },
+          "elapsedMs": 15097
+        }
+      ],
+      "elapsedWallSeconds": 1079.689493458,
+      "changedDuringAudit": [],
+      "changedAtCollection": [],
+      "contentSHA256": "a7f3a4700de765aa5a01d7e38563a05e382282f9e24b5914be7742618081d8c1",
+      "cleanup": {
+        "ownersBeforeForcedCleanup": 0,
+        "listeners": 0
+      },
+      "errors": []
+    },
+    "droneaid": {
+      "summary": {
+        "registered": 84,
+        "registeredLevels": 84,
+        "usableLevels": 84,
+        "verified": 84,
+        "failed": 0,
+        "notExercised": 0,
+        "remainingWorkers": 0,
+        "uncoveredLevels": 0
+      },
+      "policies": {
+        "immediate": {
+          "verified": 42,
+          "sources": 42,
+          "usableMaps": 42,
+          "maps": 42,
+          "wins": 41,
+          "losses": 1
+        },
+        "grid-center": {
+          "verified": 42,
+          "sources": 42,
+          "usableMaps": 42,
+          "maps": 42,
+          "wins": 36,
+          "losses": 6
+        }
+      },
+      "mapsUsableUnderBothSelections": 42,
+      "distinctMaps": 42,
+      "failedCases": [],
+      "elapsedWallSeconds": 293.7478575,
+      "changedDuringAudit": [],
+      "changedAtCollection": [],
+      "contentSHA256": "11d27573a564497ef0424e839f527e0a58a45d0b5638d573aa4f23fa51d61740",
+      "cleanup": {
+        "ownersBeforeForcedCleanup": 0,
+        "listeners": 0
+      },
+      "errors": []
+    }
+  }
+}

@@ -326,7 +326,8 @@ export function attachDemoHost({
         (current.quality ?? 'full') === 'full' &&
         !interrupted &&
         !loading &&
-        ['demo:tipClose', 'demo:tipPowerup', 'demo:tipObjective'].includes(caption)
+        (captions.reacting ||
+          ['demo:tipClose', 'demo:tipPowerup', 'demo:tipObjective'].includes(caption))
           ? 'react'
           : 'idle'
       ];
@@ -615,18 +616,20 @@ export function attachDemoHost({
       nextPainter = null,
       nextActors = null,
       nextPresentation = null,
+      retirement,
       released = false;
     const release = () => {
-      if (released) return;
+      if (released) return retirement;
       released = true;
       owner.released = true;
       resourceOwners.delete(owner);
       owner.losses.clear();
-      player.dispose?.();
+      retirement = player.dispose?.();
       nextPicture?.dispose();
       nextPainter?.dispose?.();
       nextActors?.release();
       nextPresentation?.release();
+      return retirement;
     };
     const check = () => {
       if (signal.aborted) throw new DOMException('Cancelled', 'AbortError');
@@ -1151,7 +1154,11 @@ export function attachDemoHost({
           source,
         });
     }
-    if (!practice && !interrupted) caption = captions.advance(seconds, result?.events);
+    if (!practice && !interrupted)
+      caption = captions.advance(seconds, result?.events, {
+        reactions: guidePreferences.snapshot().enabled,
+        fresh: fresh && !doc.hidden,
+      });
     if (!doc.hidden) refreshReadout();
     if (!practice && !interrupted && director.phase === 'complete') {
       dwell += Math.min(seconds, 0.25);
@@ -1332,7 +1339,11 @@ export function attachDemoHost({
   });
   const unsubscribe = onLocaleChange(preferencesChanged);
   const unsubscribeAudio = audio?.subscribe?.(audioChanged);
-  const unsubscribeGuide = guidePreferences.subscribe(renderControls);
+  const unsubscribeGuide = guidePreferences.subscribe(() => {
+    if (!guidePreferences.snapshot().enabled)
+      caption = captions.advance(0, [], { reactions: false });
+    renderControls();
+  });
   return {
     get active() {
       return active;

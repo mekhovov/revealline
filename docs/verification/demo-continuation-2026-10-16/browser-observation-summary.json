@@ -1,0 +1,125 @@
+{
+  "sourceCommit": "1dc0320462cd6dd14a4538b001da03218e86dd29",
+  "reportBytes": 3210404,
+  "reportSHA256": "44bbe549164fe116ae43b59c840259189c79663235368ca6a46e65a4fda29333",
+  "startedAt": "2026-10-16T04:40:12.842Z",
+  "finishedAt": "2026-10-16T06:40:18.200Z",
+  "stopReason": "requested-duration",
+  "elapsedWallSeconds": 7205.1419,
+  "calendarElapsedSeconds": 7205.358,
+  "exactSimulationSeconds": null,
+  "simulationScope": "DOM timers are scene-local observations, not an authoritative cumulative simulation clock. No exact simulated duration is inferred from wall time.",
+  "sampleCount": 1414,
+  "levels": [
+    "Courtyard Exits",
+    "Crosswind",
+    "First Signal",
+    "Hidden Frequency",
+    "Last Light",
+    "Night Crossfire",
+    "Night Patrol",
+    "Orchard Crossing",
+    "Relay Orchard",
+    "Relay Storm",
+    "Short Fuse",
+    "Signal Garden",
+    "Stone Lanes",
+    "Supply Circuit",
+    "The Crossing"
+  ],
+  "sourceSampleCounts": {
+    "Recorded play": 735,
+    "Live autoplay": 441,
+    "Live player": 190
+  },
+  "observedSceneEntries": 122,
+  "sceneEntryCounts": {
+    "Recorded play": 71,
+    "Live autoplay": 34,
+    "Live player": 17
+  },
+  "visibilitySamples": [
+    {
+      "parent": "visible",
+      "child": "visible",
+      "count": 1414
+    }
+  ],
+  "parentUnfocusedSamples": 1265,
+  "firstParentUnfocusedElapsedSeconds": 553.9010999999996,
+  "lastParentUnfocusedElapsedSeconds": 7205.1419,
+  "hiddenPageExecutionEstablished": false,
+  "unfocusedExecutionObserved": true,
+  "focusScope": "Actual DOM samples show continued playback and scene rotation with parent focus false; all visibility samples remain visible. No hidden-page, browser minimization or OS-freeze claim.",
+  "canvasSamples": 1414,
+  "uniqueCanvasChecksums": 1344,
+  "heapBytes": {
+    "first": 398400100,
+    "last": 316535665,
+    "minimum": 154665998,
+    "maximum": 732577610
+  },
+  "memoryScope": "Sampled browser heap changes include shared/runtime allocation and garbage collection; not a leak-free or native-media resource proof.",
+  "timing": {
+    "elapsedSeconds": 7205.1419,
+    "sampledIntervalSeconds": 7205.1419,
+    "unobservedLongGapSeconds": 0,
+    "calendarDiscontinuitySeconds": 0,
+    "longGaps": 0,
+    "maxGapSeconds": 6.673800000000745,
+    "droppedSamples": 0,
+    "droppedEvents": 0,
+    "calendarElapsedSeconds": 7205.358
+  },
+  "audioSampleCounts": [
+    {
+      "status": "playing",
+      "title": "Carol of the Bells (Metal Version)",
+      "count": 1406
+    },
+    {
+      "status": "paused",
+      "title": "Carol of the Bells (Metal Version)",
+      "count": 3
+    },
+    {
+      "status": "loading",
+      "title": "Carol of the Bells (Metal Version)",
+      "count": 5
+    }
+  ],
+  "audioScope": "Independent pause/resume is observed through DOM controls. Only one song title was observed; physical audibility and track-boundary rotation are not established.",
+  "observerHealth": {
+    "attached": true,
+    "targets": 5,
+    "failures": 0,
+    "error": null
+  },
+  "diagnostics": [],
+  "childNavigationsDuringObservation": 0,
+  "demoEndedDuringObservation": false,
+  "sourceInventoryFiles": 327,
+  "sourceInventoryStable": true,
+  "localServedInventoryHashMismatches": [],
+  "storageChanges": {
+    "changed": [],
+    "removed": [],
+    "added": []
+  },
+  "storageScope": "Seven redacted localStorage entries sampled at both ends have identical hashes; no inference about every write, IndexedDB game writes or other stores. Observer-only IndexedDB checkpoints were intentionally written.",
+  "finalizedCheckpointSavedAt": "2026-10-16T06:40:18.976Z",
+  "releaseQualified": false,
+  "preservedBlockers": [
+    "Orchard Crossing live seed 3 / immediate admission",
+    "DroneAid Careful Handoff 06 / immediate loading deadline"
+  ],
+  "deferred": ["physical iPhone/input/audio acceptance", "three first-time viewers"],
+  "cleanup": {
+    "ownedObserverTab": "2/2 closed after exact evidence saved",
+    "viewport": "1200x900 override reset",
+    "server": "exec 95863 ended; verified listener PID50467 / port8834 released",
+    "browserPresentation": "prior false retained",
+    "otherBrowserTabs": "historical tab2/1 retained",
+    "limits": "Process/tab cleanup does not establish every native media allocation freed; ports8779/8820 and shared checkout untouched."
+  }
+}

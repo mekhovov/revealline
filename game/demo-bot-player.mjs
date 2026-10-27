@@ -10,6 +10,10 @@ import {
 import { supportsDemoBot, BOT_LIMITS } from './demo-bot.mjs';
 
 const MAX_FRAME_SECONDS = 0.25;
+// One scene's disposed adapter may still own a real retiring thread. The next
+// live source in this realm must join it, including cancelled/late preparations.
+// Native browser Worker.terminate() returns void and adds no asynchronous wait.
+const retiringWorkers = new Set();
 const abortError = () => Object.assign(new Error('Autoplay cancelled.'), { name: 'AbortError' });
 function checkAbort(signal) {
   if (signal?.aborted) throw abortError();
@@ -27,19 +31,36 @@ function workerTransport(WorkerClass, watchdogMs, onWorker) {
   } catch {
     // Optional diagnostics cannot change the worker's lifetime or gameplay.
   }
-  const terminate = () => {
-    worker.terminate();
-    const release = releaseObservation;
-    releaseObservation = null;
-    try {
-      release?.();
-    } catch {
-      // A diagnostic observer never prevents ordinary owner cleanup.
-    }
-  };
   let serial = 0,
-    stopped = false;
+    stopped = false,
+    terminated = false,
+    termination;
   const waiting = new Map();
+  function retire() {
+    if (!terminated) {
+      terminated = true;
+      try {
+        termination = worker.terminate();
+      } finally {
+        const release = releaseObservation;
+        releaseObservation = null;
+        try {
+          release?.();
+        } catch {
+          // A diagnostic observer never prevents ordinary owner cleanup.
+        }
+      }
+      if (termination && typeof termination.then === 'function') {
+        termination = Promise.resolve(termination);
+        retiringWorkers.add(termination);
+        termination.then(
+          () => retiringWorkers.delete(termination),
+          () => {}, // Keep an unacknowledged retirement as a failed startup barrier.
+        );
+      }
+    }
+    return termination;
+  }
   function finish(id, error, result) {
     const ticket = waiting.get(id);
     if (!ticket) return;
@@ -66,7 +87,7 @@ function workerTransport(WorkerClass, watchdogMs, onWorker) {
         const timer = setTimeout(() => {
           finish(id, new Error('Autoplay planning deadline reached.'));
           // A stuck search must not retain a CPU owner after the watchdog fires.
-          terminate();
+          retire();
           stopped = true;
         }, watchdogMs);
         waiting.set(id, { resolve, reject, timer });
@@ -82,7 +103,7 @@ function workerTransport(WorkerClass, watchdogMs, onWorker) {
       worker.removeEventListener('message', message);
       worker.removeEventListener('error', error);
       for (const id of waiting.keys()) finish(id, abortError());
-      terminate();
+      return retire();
     },
   };
 }
@@ -166,6 +187,7 @@ export async function prepareBotPlayer(
     segmentTick = 0,
     decision = 0,
     disposed = false,
+    disposal,
     ready = false,
     finalCheckpoint = null,
     pending = null;
@@ -234,8 +256,13 @@ export async function prepareBotPlayer(
     decision = 0;
     state = createRun(sourceLevel, sourceOptions);
     recorder = createRecorder(sourceLevel, sourceOptions, 'revealline-live-demo.v1');
-    transport = workerTransport(WorkerClass, watchdogMs, onWorker);
     try {
+      // Native browser termination is synchronous. Adapters with a retirement
+      // acknowledgement must finish before reset starts another CPU owner.
+      if (retiringWorkers.size) await Promise.all([...retiringWorkers]);
+      checkAbort(signal);
+      if (disposed || generation !== version) throw abortError();
+      transport = workerTransport(WorkerClass, watchdogMs, onWorker);
       const result = await transport.request(state, plannerSeed, decision);
       checkAbort(signal);
       if (disposed || generation !== version) throw abortError();
@@ -365,13 +392,14 @@ export async function prepareBotPlayer(
     };
   }
   function dispose() {
-    if (disposed) return;
+    if (disposed) return disposal;
     disposed = true;
     generation++;
     ready = false;
     pause();
-    transport?.dispose();
+    disposal = transport?.dispose();
     signal?.removeEventListener('abort', dispose);
+    return disposal;
   }
   signal?.addEventListener('abort', dispose, { once: true });
   try {
