@@ -87,6 +87,32 @@
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr));
     gap: 1rem;
   }
+  .community-removal-review {
+    box-sizing: border-box;
+    width: min(38rem, calc(100vw - 2rem));
+    max-height: calc(100dvh - 2rem);
+    overflow: auto;
+    padding: 1.25rem;
+    border: 1px solid #34454d;
+    border-radius: 16px;
+    background: #17252e;
+    color: #edf5f2;
+    overflow-wrap: anywhere;
+  }
+  .community-removal-review::backdrop {
+    background: #0009;
+  }
+  .community-removal-review dt {
+    font-weight: 700;
+    margin-top: 1rem;
+  }
+  .community-removal-review dd {
+    margin: 0.35rem 0 0;
+  }
+  .community-removal-review button {
+    min-height: 44px;
+    white-space: normal;
+  }
   .moderation-list {
     display: grid;
     gap: 1rem;

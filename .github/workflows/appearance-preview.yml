@@ -4,6 +4,15 @@ on:
   pull_request:
     paths:
       - '.github/workflows/appearance-preview.yml'
+      - 'game/community/community.css'
+      - 'game/community/page.mjs'
+      - 'game/community/removal-review.mjs'
+      - 'game/test/community-readiness-host.test.mjs'
+      - 'game/test/community-removal-review.test.mjs'
+      - 'game/locales/en/interface.json'
+      - 'game/locales/uk/interface.json'
+      - 'game/i18n/catalogs.mjs'
+      - 'publishing/focused-test-map.json'
       - 'docs/appearance-preview-testing.md'
       - 'docs/offline-pwa/readiness-dashboard.md'
       - 'game/downloads.css'
