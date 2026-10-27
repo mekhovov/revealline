@@ -12,6 +12,13 @@ import { audioHarness } from './soundtrack-audio.mjs';
 import { memoryIndexedDB } from './soundtrack-fixtures.mjs';
 import { waitFor } from './wait-for.mjs';
 
+const remoteTeamDisplayURLs = new Set(
+  ['cultural', 'expedition', 'hunt'].map(
+    (target) =>
+      new URL(`../../content-design/runtime/remote-team-${target}.json`, import.meta.url).href,
+  ),
+);
+
 // Model only the known theme stylesheet's asynchronous native load boundary.
 // CSS bytes remain real; this host makes no parsing, layout or font claim.
 export function installSoloStylesheets(document, { read = readFile } = {}) {
@@ -132,9 +139,7 @@ class SoloDocument extends Document {
     return new SoloElement(this, tag);
   }
   createTextNode(value) {
-    const node = new SoloElement(this, 'span');
-    node.textContent = value;
-    return node;
+    return super.createTextNode(value);
   }
 }
 function mount(document, html) {
@@ -227,8 +232,9 @@ export async function settle(
   // The focused gate runs independent host processes concurrently. Its runner
   // can schedule a valid asynchronous handoff later than the interactive
   // fixture's five-second default; retain the fast local feedback while
-  // giving CI a deterministic scheduler allowance.
-  const timeoutMs = options.timeoutMs ?? (process.env.CI ? 20_000 : 5_000);
+  // giving CI a bounded allowance for image decoding and shared-runner
+  // scheduling. This is a functional predicate, not a latency benchmark.
+  const timeoutMs = options.timeoutMs ?? (process.env.CI ? 60_000 : 5_000);
   await waitFor(
     () => {
       // A real browser continues to submit paused preparation frames while an
@@ -272,7 +278,7 @@ export async function soloPage(
     animationFrames = false,
     automaticPreparationFrames = true,
     loadStylesheets = true,
-    initialReadyTimeoutMs = 5000,
+    initialReadyTimeoutMs = process.env.CI ? 30_000 : 5000,
     browserSetup,
     readPads = () => [],
   } = {},
@@ -415,6 +421,12 @@ export async function soloPage(
     fetch: async (path, options) => {
       const custom = await fetchResponse?.(path, options);
       if (custom !== undefined && custom !== null) return custom;
+      if (remoteTeamDisplayURLs.has(String(path))) {
+        if (options?.signal?.aborted) throw new DOMException('Cancelled.', 'AbortError');
+        const bytes = await readFile(new URL(String(path)));
+        if (options?.signal?.aborted) throw new DOMException('Cancelled.', 'AbortError');
+        return new Response(bytes);
+      }
       const presentation = String(path).match(/(?:^|\/)presentation\/(.+)$/);
       if (presentation) {
         if (options?.signal?.aborted) throw new DOMException('Cancelled.', 'AbortError');
@@ -539,18 +551,21 @@ export async function soloPage(
         return this;
       }
     };
-  const codecBlobs = new Map();
+  const codecBlobs = new Map(),
+    audioURLs = new Set();
   globals.URL = class extends globalThis.URL {
     static createObjectURL(blob) {
-      const url = audio?.URLImpl
-        ? audio.URLImpl.createObjectURL(blob)
-        : super.createObjectURL(blob);
+      // Image codecs read actual Blob bytes through Node's native URL registry.
+      // Only non-image sources keep the existing deterministic audio URL owner.
+      const useAudio = audio?.URLImpl && !blob.type.startsWith('image/');
+      const url = useAudio ? audio.URLImpl.createObjectURL(blob) : super.createObjectURL(blob);
+      if (useAudio) audioURLs.add(url);
       codecBlobs.set(url, blob);
       return url;
     }
     static revokeObjectURL(url) {
       codecBlobs.delete(url);
-      if (audio?.URLImpl) audio.URLImpl.revokeObjectURL(url);
+      if (audioURLs.delete(url)) audio.URLImpl.revokeObjectURL(url);
       else super.revokeObjectURL(url);
     }
   };
@@ -623,8 +638,14 @@ export async function soloPage(
     } else if (!rendering) BoardPainter.prototype[key] = () => {};
   }
   t.after(async () => {
-    win.emit('pagehide', { persisted: false });
-    await new Promise((resolve) => setImmediate(resolve));
+    try {
+      win.emit('pagehide', { persisted: false });
+      await new Promise((resolve) => setImmediate(resolve));
+    } finally {
+      // Model document destruction even if an owner never adopted a created URL.
+      // The creating registry decides whether native image or audio cleanup owns it.
+      for (const url of codecBlobs.keys()) globals.URL.revokeObjectURL(url);
+    }
     db.close();
     // Model the retired page, not a still-connected document in the next host's
     // JavaScript realm. Live locale bindings must not refresh detached controls.
@@ -646,7 +667,8 @@ export async function soloPage(
     `${$('overlay-title').textContent}: ${$('overlay-copy').textContent}\n${errors.map((e) => e.stack).join('\n')}`,
   );
   // Bulk installed-original fixtures can declare their existing bounded
-  // inventory allowance. Ordinary hosts retain the same five-second deadline.
+  // inventory allowance. Ordinary local hosts retain five seconds; CI allows
+  // the same finite decoding work to finish on a shared runner.
   async function initialReady(predicate, phase) {
     const started = hrtime.bigint();
     try {

@@ -64,5 +64,8 @@ import './test-solo-demo-trusted-close-admission.mjs';
 import './test-solo-demo-activation-admission.mjs';
 
 // Named bounded task/frame successor retains all executed v1 owner and history controls.
+import './solo-frame-trace-tasks-admission.test.mjs';
+
+import './test-solo-demo-geometry-admission.mjs';
 import './solo-frame-trace-heap-tooling-admission.test.mjs';
 import './solo-retry-heap-retainers-admission.test.mjs';

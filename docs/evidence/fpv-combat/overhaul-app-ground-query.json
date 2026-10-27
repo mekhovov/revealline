@@ -1,0 +1,934 @@
+{
+  "started": "2026-10-20T01:41:12.068Z",
+  "browser": "155.0.8059.85",
+  "hardware": {
+    "platform": "darwin",
+    "release": "25.6.0",
+    "cpu": "Apple M4 Pro",
+    "logicalCpus": 14,
+    "memoryBytes": 51539607552
+  },
+  "scope": "Full local application, native stadium-01, actual simulation and renderer, scripted keyboard yaw, vertical hover control and sustained firing near the starting point. Assisted invulnerability and Balanced resources. This is not a human gameplay or physical radio qualification.",
+  "timing": "Aggregated synchronous requestAnimationFrame callback CPU work per display frame; asynchronous worker CPU and GPU execution excluded. Frame intervals include scheduling/GL presentation. Ten-minute wall-clock windows are not guaranteed ten minutes accepted simulation when frames are slow.",
+  "runs": [
+    {
+      "population": 20,
+      "seconds": 10,
+      "started": "2026-10-20T01:41:13.063Z",
+      "samples": [
+        {
+          "status": "active",
+          "ticks": 363,
+          "encounterTicks": 363,
+          "health": 100,
+          "kills": 6,
+          "shots": 55,
+          "hits": 6,
+          "wave": 1,
+          "active": 14,
+          "waiting": 0,
+          "position": {
+            "x": 0,
+            "y": 1789,
+            "z": 18000
+          },
+          "velocity": {
+            "x": 0,
+            "y": 76,
+            "z": 0
+          },
+          "geometryWaiting": false,
+          "phase": "wave",
+          "heapBytes": 98990700,
+          "resources": {
+            "renderer": {
+              "calls": 83,
+              "triangles": 14672,
+              "geometries": 82,
+              "textures": 21,
+              "programs": 18,
+              "contextLost": false
+            },
+            "actors": {
+              "actors": 14,
+              "instances": 291,
+              "calls": 4,
+              "skinnedActors": 0,
+              "skinnedCalls": 0,
+              "templates": 20,
+              "capacity": 128,
+              "healthBars": 0,
+              "appearanceReady": false,
+              "appearanceHash": null,
+              "appearanceCharacters": 0,
+              "equipmentCalls": 0,
+              "maxSkinnedActors": 20
+            },
+            "effects": {
+              "moving": 0,
+              "settled": 0,
+              "marks": 0,
+              "bursts": 0,
+              "calls": 0,
+              "triangles": 0,
+              "tier": "high",
+              "runId": "encounter-de65989630acacb9",
+              "tick": 363,
+              "stored": 6,
+              "storedImpacts": 17,
+              "capacity": 1024,
+              "impactCapacity": 1024,
+              "evicted": 0,
+              "presentationClock": 7.26,
+              "pendingFragments": 45,
+              "maxDrawCalls": 24,
+              "registeredPools": 11,
+              "appearanceReady": false,
+              "appearanceHash": null,
+              "appearanceDrawCalls": 0,
+              "appearanceCharacters": 0,
+              "maxAppearanceTriangles": 600000
+            }
+          },
+          "statusText": "Continuous combat · Active · local practice",
+          "seconds": 5
+        },
+        {
+          "status": "active",
+          "ticks": 613,
+          "encounterTicks": 613,
+          "health": 100,
+          "kills": 6,
+          "shots": 87,
+          "hits": 6,
+          "wave": 1,
+          "active": 14,
+          "waiting": 0,
+          "position": {
+            "x": 0,
+            "y": 2034,
+            "z": 18000
+          },
+          "velocity": {
+            "x": 0,
+            "y": 1,
+            "z": 0
+          },
+          "geometryWaiting": false,
+          "phase": "wave",
+          "heapBytes": 104207522,
+          "resources": {
+            "renderer": {
+              "calls": 84,
+              "triangles": 14890,
+              "geometries": 82,
+              "textures": 21,
+              "programs": 18,
+              "contextLost": false
+            },
+            "actors": {
+              "actors": 14,
+              "instances": 289,
+              "calls": 4,
+              "skinnedActors": 0,
+              "skinnedCalls": 0,
+              "templates": 20,
+              "capacity": 128,
+              "healthBars": 0,
+              "appearanceReady": false,
+              "appearanceHash": null,
+              "appearanceCharacters": 0,
+              "equipmentCalls": 0,
+              "maxSkinnedActors": 20
+            },
+            "effects": {
+              "moving": 6,
+              "settled": 0,
+              "marks": 0,
+              "bursts": 1,
+              "calls": 1,
+              "triangles": 0,
+              "tier": "high",
+              "runId": "encounter-de65989630acacb9",
+              "tick": 613,
+              "stored": 6,
+              "storedImpacts": 32,
+              "capacity": 1024,
+              "impactCapacity": 1024,
+              "evicted": 0,
+              "presentationClock": 12.26,
+              "pendingFragments": 45,
+              "maxDrawCalls": 24,
+              "registeredPools": 11,
+              "appearanceReady": false,
+              "appearanceHash": null,
+              "appearanceDrawCalls": 0,
+              "appearanceCharacters": 0,
+              "maxAppearanceTriangles": 600000
+            }
+          },
+          "statusText": "Continuous combat · Active · local practice",
+          "seconds": 10
+        }
+      ],
+      "errors": [],
+      "consoleErrors": {
+        "THREE.Sprite: \"Raycaster.camera\" needs to be set in order to raycast against sprites.": 2683
+      },
+      "hardware": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+        "hardwareConcurrency": 14,
+        "pixelRatio": 1,
+        "width": 1920,
+        "height": 1080,
+        "gpu": "ANGLE (Apple, ANGLE Metal Renderer: Apple M4 Pro, Unspecified Version)",
+        "gpuTimingAvailable": true,
+        "gpuTimingMeasured": false
+      },
+      "profileSelfTime": [
+        {
+          "function": "(idle)",
+          "url": "",
+          "line": 0,
+          "ms": 5144.964
+        },
+        {
+          "function": "(program)",
+          "url": "",
+          "line": 0,
+          "ms": 1690.151
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 470.532
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 170.988
+        },
+        {
+          "function": "clone",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 3023,
+          "ms": 101.425
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-model.mjs",
+          "line": 1026,
+          "ms": 94.392
+        },
+        {
+          "function": "(garbage collector)",
+          "url": "",
+          "line": 0,
+          "ms": 80.226
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 71.337
+        },
+        {
+          "function": "flight.stageEncounterActors",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-model.mjs",
+          "line": 1634,
+          "ms": 65.581
+        },
+        {
+          "function": "refresh",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 15831,
+          "ms": 60.135
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 56.7
+        },
+        {
+          "function": "error",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js",
+          "line": 2041,
+          "ms": 54.338
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 54.264
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 52.243
+        },
+        {
+          "function": "getBoundingClientRect",
+          "url": "",
+          "line": 0,
+          "ms": 51.65
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 50.763
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 49.684
+        },
+        {
+          "function": "querySelector",
+          "url": "",
+          "line": 0,
+          "ms": 48.276
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 45.492
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 44.214
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 44.177
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-model.mjs",
+          "line": 1026,
+          "ms": 41.732
+        },
+        {
+          "function": "raycast",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js",
+          "line": 22561,
+          "ms": 40.378
+        },
+        {
+          "function": "querySelector",
+          "url": "",
+          "line": 0,
+          "ms": 39.254
+        },
+        {
+          "function": "",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 18808,
+          "ms": 37.748
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 37.081
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 5088,
+          "ms": 36.739
+        },
+        {
+          "function": "update",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 18812,
+          "ms": 35.44
+        },
+        {
+          "function": "error",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js",
+          "line": 2041,
+          "ms": 34.609
+        },
+        {
+          "function": "querySelector",
+          "url": "",
+          "line": 0,
+          "ms": 33.057
+        },
+        {
+          "function": "raycast",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js",
+          "line": 22561,
+          "ms": 32.002
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-model.mjs",
+          "line": 1026,
+          "ms": 26.708
+        },
+        {
+          "function": "querySelector",
+          "url": "",
+          "line": 0,
+          "ms": 24.587
+        },
+        {
+          "function": "update",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs",
+          "line": 17329,
+          "ms": 23.453
+        },
+        {
+          "function": "paintCombatHUD",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs",
+          "line": 2510,
+          "ms": 22.774
+        },
+        {
+          "function": "bufferSubData",
+          "url": "",
+          "line": 0,
+          "ms": 22.762
+        },
+        {
+          "function": "",
+          "url": "",
+          "line": 2,
+          "ms": 20.287
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-model.mjs",
+          "line": 1026,
+          "ms": 19.016
+        },
+        {
+          "function": "texturesOf",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs",
+          "line": 1457,
+          "ms": 18.821
+        },
+        {
+          "function": "snapshot",
+          "url": "http://127.0.0.1:8768/optional-practice/civilian-fpv/world-model.mjs",
+          "line": 1026,
+          "ms": 12.827
+        }
+      ],
+      "actualSeconds": 10.022,
+      "pilotCPU": 76.0000000372529,
+      "groundProbe": {
+        "calls": 2683,
+        "nulls": 0,
+        "clear": 0,
+        "contacts": 0,
+        "errors": 2683,
+        "examples": [
+          {
+            "args": [
+              {
+                "x": 207.42227701704417,
+                "y": 7,
+                "z": 12000.207410851339
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              }
+            ],
+            "error": "TypeError: Cannot read properties of null (reading 'matrixWorld')\n    at Sprite.raycast (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:22571:43)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56754:25)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56766:4)\n    at Raycaster.intersectObjects (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56730:4)\n    at combatGroundInner (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1071:8)\n    at combatGround (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1091:157)\n    at http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs:17741:21\n    at Array.every (<anonymous>)\n    at http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs:17735:14\n    at Array.every (<anonymous>)"
+          },
+          {
+            "args": [
+              {
+                "x": 365.6226020010831,
+                "y": 6.999999999999983,
+                "z": 12705.574277567524
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              }
+            ],
+            "error": "TypeError: Cannot read properties of null (reading 'matrixWorld')\n    at Sprite.raycast (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:22571:43)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56754:25)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56766:4)\n    at Raycaster.intersectObjects (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56730:4)\n    at combatGroundInner (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1071:8)\n    at combatGround (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1091:157)\n    at http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs:17741:21\n    at Array.every (<anonymous>)\n    at http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs:17735:14\n    at Array.every (<anonymous>)"
+          },
+          {
+            "args": [
+              {
+                "x": 444.2278829807465,
+                "y": 6.999999999999965,
+                "z": 12856.755438184236
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              }
+            ],
+            "error": "TypeError: Cannot read properties of null (reading 'matrixWorld')\n    at Sprite.raycast (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:22571:43)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56754:25)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56766:4)\n    at Raycaster.intersectObjects (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56730:4)\n    at combatGroundInner (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1071:8)\n    at combatGround (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1091:157)\n    at http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs:17741:21\n    at Array.every (<anonymous>)\n    at http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs:17735:14\n    at Array.every (<anonymous>)"
+          },
+          {
+            "args": [
+              {
+                "x": 196.08093568435814,
+                "y": 6.999999999999999,
+                "z": 13012.453306359328
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              }
+            ],
+            "error": "TypeError: Cannot read properties of null (reading 'matrixWorld')\n    at Sprite.raycast (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:22571:43)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56754:25)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56766:4)\n    at Raycaster.intersectObjects (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56730:4)\n    at combatGroundInner (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1071:8)\n    at combatGround (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1091:157)\n    at http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs:17741:21\n    at Array.every (<anonymous>)\n    at http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs:17735:14\n    at Array.every (<anonymous>)"
+          },
+          {
+            "args": [
+              {
+                "x": 161.09606276697696,
+                "y": 1108.3516013146937,
+                "z": 12777.501912769592
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              },
+              {
+                "fromMm": {
+                  "x": 96,
+                  "y": 1073,
+                  "z": 12831
+                },
+                "toMm": {
+                  "x": 161.09606276697696,
+                  "y": 1108.3516013146937,
+                  "z": 12777.501912769592
+                },
+                "radiusMm": 190
+              }
+            ],
+            "error": "TypeError: Cannot read properties of null (reading 'matrixWorld')\n    at Sprite.raycast (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:22571:43)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56754:25)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56766:4)\n    at Raycaster.intersectObjects (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56730:4)\n    at combatGroundInner (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1071:8)\n    at combatGround (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1091:157)\n    at Object.update (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs:17616:14)\n    at drawCombat (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1454:25)\n    at Object.draw (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:3722:5)\n    at drawFlight (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs:7911:28)"
+          },
+          {
+            "args": [
+              {
+                "x": 427.7689771855931,
+                "y": 799.2559419562668,
+                "z": 12781.712650582203
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              },
+              {
+                "fromMm": {
+                  "x": 386,
+                  "y": 763,
+                  "z": 12796
+                },
+                "toMm": {
+                  "x": 427.7689771855931,
+                  "y": 799.2559419562668,
+                  "z": 12781.712650582203
+                },
+                "radiusMm": 60
+              }
+            ],
+            "error": "TypeError: Cannot read properties of null (reading 'matrixWorld')\n    at Sprite.raycast (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:22571:43)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56754:25)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56766:4)\n    at Raycaster.intersectObjects (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56730:4)\n    at combatGroundInner (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1071:8)\n    at combatGround (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1091:157)\n    at Object.update (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs:17616:14)\n    at drawCombat (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1454:25)\n    at Object.draw (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:3722:5)\n    at drawFlight (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs:7911:28)"
+          },
+          {
+            "args": [
+              {
+                "x": 161.09606276697696,
+                "y": 1108.3516013146937,
+                "z": 12777.501912769592
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              },
+              {
+                "fromMm": {
+                  "x": 96,
+                  "y": 1073,
+                  "z": 12831
+                },
+                "toMm": {
+                  "x": 161.09606276697696,
+                  "y": 1108.3516013146937,
+                  "z": 12777.501912769592
+                },
+                "radiusMm": 190
+              }
+            ],
+            "error": "TypeError: Cannot read properties of null (reading 'matrixWorld')\n    at Sprite.raycast (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:22571:43)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56754:25)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56766:4)\n    at Raycaster.intersectObjects (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56730:4)\n    at combatGroundInner (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1071:8)\n    at combatGround (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1091:157)\n    at Object.update (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs:17616:14)\n    at drawCombat (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1454:25)\n    at Object.draw (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:3722:5)\n    at drawFlight (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs:7911:28)"
+          },
+          {
+            "args": [
+              {
+                "x": 427.7689771855931,
+                "y": 799.2559419562668,
+                "z": 12781.712650582203
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              },
+              {
+                "fromMm": {
+                  "x": 386,
+                  "y": 763,
+                  "z": 12796
+                },
+                "toMm": {
+                  "x": 427.7689771855931,
+                  "y": 799.2559419562668,
+                  "z": 12781.712650582203
+                },
+                "radiusMm": 60
+              }
+            ],
+            "error": "TypeError: Cannot read properties of null (reading 'matrixWorld')\n    at Sprite.raycast (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:22571:43)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56754:25)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56766:4)\n    at Raycaster.intersectObjects (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56730:4)\n    at combatGroundInner (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1071:8)\n    at combatGround (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1091:157)\n    at Object.update (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs:17616:14)\n    at drawCombat (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1454:25)\n    at Object.draw (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:3722:5)\n    at drawFlight (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs:7911:28)"
+          },
+          {
+            "args": [
+              {
+                "x": 161.09606276697696,
+                "y": 1108.3516013146937,
+                "z": 12777.501912769592
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              },
+              {
+                "fromMm": {
+                  "x": 96,
+                  "y": 1073,
+                  "z": 12831
+                },
+                "toMm": {
+                  "x": 161.09606276697696,
+                  "y": 1108.3516013146937,
+                  "z": 12777.501912769592
+                },
+                "radiusMm": 190
+              }
+            ],
+            "error": "TypeError: Cannot read properties of null (reading 'matrixWorld')\n    at Sprite.raycast (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:22571:43)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56754:25)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56766:4)\n    at Raycaster.intersectObjects (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56730:4)\n    at combatGroundInner (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1071:8)\n    at combatGround (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1091:157)\n    at Object.update (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs:17616:14)\n    at drawCombat (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1454:25)\n    at Object.draw (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:3722:5)\n    at drawFlight (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs:7911:28)"
+          },
+          {
+            "args": [
+              {
+                "x": 427.7689771855931,
+                "y": 799.2559419562668,
+                "z": 12781.712650582203
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              },
+              {
+                "fromMm": {
+                  "x": 386,
+                  "y": 763,
+                  "z": 12796
+                },
+                "toMm": {
+                  "x": 427.7689771855931,
+                  "y": 799.2559419562668,
+                  "z": 12781.712650582203
+                },
+                "radiusMm": 60
+              }
+            ],
+            "error": "TypeError: Cannot read properties of null (reading 'matrixWorld')\n    at Sprite.raycast (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:22571:43)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56754:25)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56766:4)\n    at Raycaster.intersectObjects (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56730:4)\n    at combatGroundInner (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1071:8)\n    at combatGround (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1091:157)\n    at Object.update (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs:17616:14)\n    at drawCombat (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1454:25)\n    at Object.draw (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:3722:5)\n    at drawFlight (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs:7911:28)"
+          },
+          {
+            "args": [
+              {
+                "x": 10162,
+                "y": 0,
+                "z": -5207
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              }
+            ],
+            "error": "TypeError: Cannot read properties of null (reading 'matrixWorld')\n    at Sprite.raycast (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:22571:43)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56754:25)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56766:4)\n    at Raycaster.intersectObjects (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56730:4)\n    at combatGroundInner (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1071:8)\n    at combatGround (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1091:157)\n    at http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs:17854:21\n    at Array.every (<anonymous>)\n    at Object.update (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs:17844:3)\n    at drawCombat (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1454:25)"
+          },
+          {
+            "args": [
+              {
+                "x": 12592,
+                "y": 0,
+                "z": -6265
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              }
+            ],
+            "error": "TypeError: Cannot read properties of null (reading 'matrixWorld')\n    at Sprite.raycast (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:22571:43)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56754:25)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56766:4)\n    at Raycaster.intersectObjects (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56730:4)\n    at combatGroundInner (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1071:8)\n    at combatGround (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1091:157)\n    at http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs:17854:21\n    at Array.every (<anonymous>)\n    at Object.update (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs:17844:3)\n    at drawCombat (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1454:25)"
+          },
+          {
+            "args": [
+              {
+                "x": 11086.960283879069,
+                "y": 510.0641529345513,
+                "z": -5278.03936105712
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              },
+              {
+                "fromMm": {
+                  "x": 11072,
+                  "y": 463,
+                  "z": -5207
+                },
+                "toMm": {
+                  "x": 11086.960283879069,
+                  "y": 510.0641529345513,
+                  "z": -5278.03936105712
+                },
+                "radiusMm": 102.85714285714288
+              }
+            ],
+            "error": "TypeError: Cannot read properties of null (reading 'matrixWorld')\n    at Sprite.raycast (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:22571:43)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56754:25)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56766:4)\n    at Raycaster.intersectObjects (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56730:4)\n    at combatGroundInner (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1071:8)\n    at combatGround (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1091:157)\n    at Object.update (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs:17616:14)\n    at drawCombat (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1454:25)\n    at Object.draw (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:3722:5)\n    at drawFlight (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs:7911:28)"
+          },
+          {
+            "args": [
+              {
+                "x": 11645.959465797985,
+                "y": 523.2393507277221,
+                "z": -5230.115019863913
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              },
+              {
+                "fromMm": {
+                  "x": 11714.857142857141,
+                  "y": 463,
+                  "z": -5207
+                },
+                "toMm": {
+                  "x": 11645.959465797985,
+                  "y": 523.2393507277221,
+                  "z": -5230.115019863913
+                },
+                "radiusMm": 77.14285714285715
+              }
+            ],
+            "error": "TypeError: Cannot read properties of null (reading 'matrixWorld')\n    at Sprite.raycast (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:22571:43)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56754:25)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56766:4)\n    at Raycaster.intersectObjects (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56730:4)\n    at combatGroundInner (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1071:8)\n    at combatGround (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1091:157)\n    at Object.update (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs:17616:14)\n    at drawCombat (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1454:25)\n    at Object.draw (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:3722:5)\n    at drawFlight (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs:7911:28)"
+          },
+          {
+            "args": [
+              {
+                "x": 10519.017098429937,
+                "y": 490.42641620986166,
+                "z": -4782.236211516284
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              },
+              {
+                "fromMm": {
+                  "x": 10597.978552298782,
+                  "y": 463,
+                  "z": -4772.754708440389
+                },
+                "toMm": {
+                  "x": 10519.017098429937,
+                  "y": 490.42641620986166,
+                  "z": -4782.236211516284
+                },
+                "radiusMm": 77.14285714285715
+              }
+            ],
+            "error": "TypeError: Cannot read properties of null (reading 'matrixWorld')\n    at Sprite.raycast (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:22571:43)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56754:25)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56766:4)\n    at Raycaster.intersectObjects (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56730:4)\n    at combatGroundInner (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1071:8)\n    at combatGround (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1091:157)\n    at Object.update (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs:17616:14)\n    at drawCombat (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1454:25)\n    at Object.draw (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:3722:5)\n    at drawFlight (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs:7911:28)"
+          },
+          {
+            "args": [
+              {
+                "x": 11176.403710968632,
+                "y": 498.68358551427724,
+                "z": -5902.883714585688
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              },
+              {
+                "fromMm": {
+                  "x": 11128.198114994102,
+                  "y": 463,
+                  "z": -5847.396032150074
+                },
+                "toMm": {
+                  "x": 11176.403710968632,
+                  "y": 498.68358551427724,
+                  "z": -5902.883714585688
+                },
+                "radiusMm": 77.14285714285715
+              }
+            ],
+            "error": "TypeError: Cannot read properties of null (reading 'matrixWorld')\n    at Sprite.raycast (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:22571:43)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56754:25)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56766:4)\n    at Raycaster.intersectObjects (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56730:4)\n    at combatGroundInner (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1071:8)\n    at combatGround (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1091:157)\n    at Object.update (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs:17616:14)\n    at drawCombat (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1454:25)\n    at Object.draw (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:3722:5)\n    at drawFlight (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs:7911:28)"
+          },
+          {
+            "args": [
+              {
+                "x": 11473.021457592793,
+                "y": 492.4656920777261,
+                "z": -4747.013304548869
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              },
+              {
+                "fromMm": {
+                  "x": 11463.144210904286,
+                  "y": 463,
+                  "z": -4696.831878300387
+                },
+                "toMm": {
+                  "x": 11473.021457592793,
+                  "y": 492.4656920777261,
+                  "z": -4747.013304548869
+                },
+                "radiusMm": 77.14285714285715
+              }
+            ],
+            "error": "TypeError: Cannot read properties of null (reading 'matrixWorld')\n    at Sprite.raycast (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:22571:43)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56754:25)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56766:4)\n    at Raycaster.intersectObjects (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56730:4)\n    at combatGroundInner (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1071:8)\n    at combatGround (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1091:157)\n    at Object.update (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs:17616:14)\n    at drawCombat (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1454:25)\n    at Object.draw (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:3722:5)\n    at drawFlight (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs:7911:28)"
+          },
+          {
+            "args": [
+              {
+                "x": 10506.130542604174,
+                "y": 526.7180760753901,
+                "z": -5339.891240922053
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              },
+              {
+                "fromMm": {
+                  "x": 10438.968455766071,
+                  "y": 463,
+                  "z": -5318.965932887007
+                },
+                "toMm": {
+                  "x": 10506.130542604174,
+                  "y": 526.7180760753901,
+                  "z": -5339.891240922053
+                },
+                "radiusMm": 77.14285714285715
+              }
+            ],
+            "error": "TypeError: Cannot read properties of null (reading 'matrixWorld')\n    at Sprite.raycast (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:22571:43)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56754:25)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56766:4)\n    at Raycaster.intersectObjects (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56730:4)\n    at combatGroundInner (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1071:8)\n    at combatGround (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1091:157)\n    at Object.update (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs:17616:14)\n    at drawCombat (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1454:25)\n    at Object.draw (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:3722:5)\n    at drawFlight (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs:7911:28)"
+          },
+          {
+            "args": [
+              {
+                "x": 11632.275004714094,
+                "y": 519.3758673118056,
+                "z": -5536.229093471924
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              },
+              {
+                "fromMm": {
+                  "x": 11614.408546103768,
+                  "y": 463,
+                  "z": -5552.048221609742
+                },
+                "toMm": {
+                  "x": 11632.275004714094,
+                  "y": 519.3758673118056,
+                  "z": -5536.229093471924
+                },
+                "radiusMm": 77.14285714285715
+              }
+            ],
+            "error": "TypeError: Cannot read properties of null (reading 'matrixWorld')\n    at Sprite.raycast (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:22571:43)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56754:25)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56766:4)\n    at Raycaster.intersectObjects (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56730:4)\n    at combatGroundInner (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1071:8)\n    at combatGround (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1091:157)\n    at Object.update (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs:17616:14)\n    at drawCombat (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1454:25)\n    at Object.draw (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:3722:5)\n    at drawFlight (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs:7911:28)"
+          },
+          {
+            "args": [
+              {
+                "x": 10985.472953955812,
+                "y": 495.13106689691546,
+                "z": -4622.830266816906
+              },
+              {
+                "x": 0,
+                "y": 1,
+                "z": 0
+              },
+              {
+                "fromMm": {
+                  "x": 10905.12354872844,
+                  "y": 463,
+                  "z": -4586.179932562212
+                },
+                "toMm": {
+                  "x": 10985.472953955812,
+                  "y": 495.13106689691546,
+                  "z": -4622.830266816906
+                },
+                "radiusMm": 77.14285714285715
+              }
+            ],
+            "error": "TypeError: Cannot read properties of null (reading 'matrixWorld')\n    at Sprite.raycast (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:22571:43)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56754:25)\n    at intersect (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56766:4)\n    at Raycaster.intersectObjects (http://127.0.0.1:8768/optional-practice/civilian-fpv/vendor/three.core.js:56730:4)\n    at combatGroundInner (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1071:8)\n    at combatGround (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1091:157)\n    at Object.update (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-reaction-runtime.mjs:17616:14)\n    at drawCombat (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:1454:25)\n    at Object.draw (http://127.0.0.1:8768/optional-practice/civilian-fpv/renderer.mjs:3722:5)\n    at drawFlight (http://127.0.0.1:8768/optional-practice/civilian-fpv/world-app.mjs:7911:28)"
+          }
+        ]
+      },
+      "frames": 601,
+      "cpuP50": 5.5,
+      "cpuP95": 7.8,
+      "cpuP99": 8.5,
+      "intervalP50": 16.7,
+      "intervalP95": 16.7,
+      "intervalP99": 16.8,
+      "averageFps": 58.825836307306176
+    }
+  ],
+  "finished": "2026-10-20T01:41:26.767Z"
+}

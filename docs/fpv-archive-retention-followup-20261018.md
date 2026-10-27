@@ -28,6 +28,77 @@ The existing [16 October storage-owner audit](fpv-public-storage-owner-audit-202
 
 A separate [finite memory-only transaction experiment](fpv-archive-retention-memory-20261018.json) populated sixteen archives with thirty-two segments. An injected final-budget-write failure rolled back the selected deletion; reopening retained all original manifests and segments exactly. Ten later explicit successful deletions and reopening retained exactly the six other archives and twelve segments. This supports transaction isolation in the modeled implementation; it does not reproduce native disk, eviction, storage-context replacement or the public inventory loss.
 
+## Later non-destructive local observation
+
+A separate source-preview tab on `cf13bcad9a59a387be7c31c9af8d30d74e7c1860`
+saved a Cetus X archive labeled
+`World · 2026-10-18T18:50:32.960Z · 0:00–1:04 · finished` and verified it from
+reset. After an ordinary reload of that same tab, its manifest remained visible
+and complete verification passed again. Opening the recording controls in an
+unarmed draft created no additional archive. No deletion or tuning-library save
+was performed. [Flight receipt](fpv-flight-continuation-20261018.md).
+
+That newly opened tab initially required the password again and exposed a
+different inventory from a previously closed local test tab. Their native
+storage-context relationship is unknown. This positive same-tab result does not
+account for the six protected public records or establish durability across
+contexts, interruption, eviction or disk pressure.
+
+### Later local timing-panel acceptance
+
+A fresh local tab at `http://127.0.0.1:8786/optional-practice/fpv-worlds/index.html`
+on `a113208ce8e4076c19b2acc99332c3172e53bfcc` displayed a full sixteen-entry
+archive inventory, with entries from 17:57–18:09 UTC. It did not display the later
+Cetus archive described above. The initial setup export had revision 0; this
+check restored its exact pre-test content after temporary Meteor75 selection
+(the expected revision then became 2). The relationship between this tab and
+other local tabs, including any `localhost` versus `127.0.0.1` origin difference,
+was not established. This is not evidence that the missing public inventory was
+recovered, nor proof of data loss within one persistent native context.
+
+The Meteor75 lesson completed while archive saving remained stopped for full
+storage. Separate checkpoint recovery succeeded at 20.00 seconds. No archive
+was deleted. Same-tab recovery and earlier same-tab archive verification remain
+positive observations; cross-context durability remains unqualified.
+
+### Same public tab rechecked without mutation
+
+At 22:12 CEST on 18 October, the existing paused public tab still showed the
+single `2026-10-18T17:50:35.065Z` open/incomplete session. **Refresh saved
+sessions** completed and retained that same one-entry inventory. The flight
+remained paused at 5.30 seconds; no new flight, reload, save or deletion was
+performed. This read-only refresh does not recover or account for the six
+protected archives.
+
+## Later same-tab local recurrence — reviewed 19 October
+
+On isolated `127.0.0.1:8873`, frozen runtime `7d4e043d7`, the completed Meteor75
+archive `World · 2026-10-18T20:44:29.447Z` verified twice and supplied the 14.48 s
+course reference. After a later Retry → Practice, autosave reported storage
+unavailable at 15.98 s. Restore exposed a closing `IDBDatabase` connection.
+The failed restore kept the paused flight and reference intact. A further Retry
+and course verification reported **Aircraft archive was not found**, although
+the cached picker still displayed the archive. No archive deletion, import,
+explicit inventory refresh or page reload occurred in this sequence.
+
+The separately opened emitted Academy build on `127.0.0.1:8874` showed no archived
+sessions where preceding acceptance had a 3.88-second record. It remained
+unarmed at 0.00 s; no save/import/deletion was attempted. Browser warning/error
+logs for the World sequence were empty. These observations broaden the failure
+evidence but do not identify eviction, context replacement, disk pressure or a
+specific deletion mechanism. The user’s public tab was not touched.
+
+Recovery controls use a different one-slot host database. A separately reviewed
+fix invalidates its closed handle and permits one reopen only when transaction
+creation fails before requests can be issued. It never retries an admitted write
+or creates a substitute for a missing record. Five new regressions fail before
+that fix and the complete focused controls suite passes 77/77 afterward. Its
+19 package checks and ordinary packaged-browser checkpoint save/paused restore
+now also pass. [R19 acceptance](fpv-recovery-handle-20261019.md) remains resilience
+work, with publication pending; it does not reproduce the native close event or
+explain retention. R13 remains open and the six protected public records remain
+unaccounted for.
+
 ## Remaining diagnostic gates
 
 The UI correction now removes only a confirmed deleted row from its cached list

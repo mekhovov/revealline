@@ -213,6 +213,11 @@ test('fixed native workflow source controls run exact Node before main-only manu
       job.includes('            /' + historicalCatalogPath + '\n'),
       'Both source and actual native rows require the frozen Node catalog',
     );
+  const pinnedModulesPath =
+    'docs/performance/fixtures/solo-replay-portability/node-1255-modules.json.gz';
+  assert(workflow.includes("      - '" + pinnedModulesPath + "'\n"));
+  for (const job of [source, native])
+    assert(job.includes('            /' + pinnedModulesPath + '\n'));
   const config = await readFile(new URL('../eslint.config.mjs', import.meta.url), 'utf8');
   const lintInputs = [
     'eslint.config.mjs',

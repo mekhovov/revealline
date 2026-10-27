@@ -988,6 +988,118 @@
     background: #f6ca7533;
     box-shadow: 0 0 0 5px #f6ca7522;
   }
+  .radio-setup .radio-stick i {
+    z-index: 4;
+    background: #d9ffed;
+    border: 2px solid #18352a;
+    box-shadow: 0 0 0 2px #d9ffed88;
+    transition: transform 80ms linear;
+  }
+  .radio-setup .radio-stick.is-guided {
+    border-color: var(--fk-amber);
+  }
+  .radio-setup .radio-stick-target {
+    z-index: 2;
+  }
+  .radio-setup .radio-stick-ghost {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 14px;
+    height: 14px;
+    margin: -7px;
+    border: 2px dashed #f6ca75;
+    border-radius: 50%;
+    z-index: 3;
+    pointer-events: none;
+    animation: radio-stick-follow 2.2s ease-in-out infinite;
+  }
+  .radio-setup .radio-stick-trail {
+    position: absolute;
+    height: 2px;
+    transform-origin: 0 50%;
+    background: #f6ca7599;
+    z-index: 1;
+    pointer-events: none;
+  }
+  .radio-setup .radio-stick-trail::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: -3px;
+    width: 7px;
+    height: 7px;
+    border-top: 2px solid #f6ca75;
+    border-right: 2px solid #f6ca75;
+    transform: rotate(45deg);
+  }
+  .radio-setup .radio-stick-circuit {
+    position: absolute;
+    inset: 16%;
+    border: 2px dashed #f6ca7588;
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .radio-setup .radio-stick.is-sweeping .radio-stick-ghost {
+    animation: radio-stick-circle 3.2s linear infinite;
+  }
+  @keyframes radio-stick-circle {
+    0%,
+    100% {
+      transform: translate(0, calc(-1 * var(--guide-radius)));
+    }
+    12.5% {
+      transform: translate(calc(0.707 * var(--guide-radius)), calc(-0.707 * var(--guide-radius)));
+    }
+    25% {
+      transform: translate(var(--guide-radius), 0);
+    }
+    37.5% {
+      transform: translate(calc(0.707 * var(--guide-radius)), calc(0.707 * var(--guide-radius)));
+    }
+    50% {
+      transform: translate(0, var(--guide-radius));
+    }
+    62.5% {
+      transform: translate(calc(-0.707 * var(--guide-radius)), calc(0.707 * var(--guide-radius)));
+    }
+    75% {
+      transform: translate(calc(-1 * var(--guide-radius)), 0);
+    }
+    87.5% {
+      transform: translate(calc(-0.707 * var(--guide-radius)), calc(-0.707 * var(--guide-radius)));
+    }
+  }
+  .radio-stick-legend {
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 0 0 14px;
+  }
+  @keyframes radio-stick-follow {
+    0%,
+    12% {
+      transform: translate(var(--guide-from-x), var(--guide-from-y));
+      opacity: 0.55;
+    }
+    55%,
+    85% {
+      transform: translate(var(--guide-to-x), var(--guide-to-y));
+      opacity: 1;
+    }
+    100% {
+      transform: translate(var(--guide-from-x), var(--guide-from-y));
+      opacity: 0.55;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .radio-setup .radio-stick-ghost {
+      display: none;
+    }
+  }
+  [data-effects='reduced'] .radio-setup .radio-stick-ghost,
+  [data-theme-motion='reduced'] .radio-setup .radio-stick-ghost {
+    display: none;
+  }
   .radio-values {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -2896,7 +3008,110 @@
       --flight-touch-size: clamp(112px, 14.2vw, 128px);
     }
   }
+}
 
+/* Setup previews name the action each physical switch actually activates. */
+html body .radio-setup .radio-six-switch fieldset {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-content: start;
+}
+.radio-six-switch fieldset > p {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  min-height: 2.8em;
+}
+.radio-six-switch fieldset > details {
+  grid-column: 1;
+  grid-row: 2;
+  min-width: 0;
+}
+.radio-six-switch fieldset > .radio-switch-live {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: start;
+  margin: 0;
+}
+.radio-six-switch fieldset > button {
+  grid-column: 1 / -1;
+  grid-row: 3;
+  min-height: 44px;
+  width: 100%;
+}
+.radio-six-switch .radio-action-preview {
+  margin: 0;
+  padding: 10px 12px;
+  border: 1px solid #a0cab8;
+  border-radius: 6px;
+  background: #10251b;
+  color: #f3fff7;
+  font: 600 15px/1.4 system-ui, sans-serif;
+}
+.radio-six-switch fieldset > details {
+  margin: 8px 0;
+  font-size: 13px;
+}
+
+.radio-six-switch .radio-switch-live {
+  display: inline-block;
+  margin: 8px;
+  padding: 3px 8px;
+  border: 1px solid #aab5a4;
+  border-radius: 4px;
+  font: 600 13px/1.4 system-ui, sans-serif;
+}
+.radio-six-switch [data-switch-active='true'] {
+  outline: 2px solid #9be5c5;
+  outline-offset: -2px;
+}
+.radio-six-switch [data-switch-active='true'] .radio-switch-live {
+  color: #10251b;
+  background: #9be5c5;
+  border-color: #9be5c5;
+}
+
+/* Shared camera/weapon aim point: fixed CSS pixels, open centre and a hard
+   light/dark edge remain readable against sky, terrain and analog noise. */
+:is(#world-viewport, #viewport) :is(.aim-reticle, .crosshair) {
+  width: 30px;
+  height: 30px;
+  font-size: 0;
+  line-height: 0;
+  color: #fafff5;
+  text-shadow: none;
+  pointer-events: none;
+  z-index: 3;
+}
+:is(#world-viewport, #viewport) :is(.aim-reticle, .crosshair)::before,
+:is(#world-viewport, #viewport) :is(.aim-reticle, .crosshair)::after {
+  content: '';
+  position: absolute;
+  pointer-events: none;
+}
+:is(#world-viewport, #viewport) :is(.aim-reticle, .crosshair)::before {
+  inset: 0;
+  background:
+    linear-gradient(currentColor 0 0) center top / 2px 8px no-repeat,
+    linear-gradient(currentColor 0 0) center bottom / 2px 8px no-repeat,
+    linear-gradient(currentColor 0 0) left center / 8px 2px no-repeat,
+    linear-gradient(currentColor 0 0) right center / 8px 2px no-repeat;
+  filter: drop-shadow(1px 0 #071219) drop-shadow(-1px 0 #071219)
+    drop-shadow(0 1px #071219) drop-shadow(0 -1px #071219);
+}
+:is(#world-viewport, #viewport) :is(.aim-reticle, .crosshair)::after {
+  width: 3px;
+  height: 3px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 0 1px #071219;
+}
+:is(#world-viewport, #viewport)[data-hud-widget-reticle='false']
+  :is(.aim-reticle, .crosshair) {
+  display: none;
 }
 
 /* BEGIN SHARED SIM FULLSCREEN */
@@ -3245,7 +3460,7 @@ html body.sim-worlds #flight-dialog[open]:not([data-flight-menu-open='true']) #w
   .mode-play-name {
     flex: 1;
     min-width: 0;
-    font-size: 0.85rem;
+    font-size: calc(0.85rem * var(--overflight-text-scale, 1) * var(--primary-text-scale, 1));
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -3321,7 +3536,11 @@ html body.sim-worlds #flight-dialog[open]:not([data-flight-menu-open='true']) #w
   }
   .mode-play-dialog h1 {
     font: inherit;
-    font-size: clamp(1.25rem, 3vw, 2rem);
+    font-size: clamp(
+      calc(1.25rem * var(--overflight-text-scale, 1) * var(--primary-text-scale, 1)),
+      calc(3vw * var(--overflight-text-scale, 1) * var(--primary-text-scale, 1)),
+      calc(2rem * var(--overflight-text-scale, 1) * var(--primary-text-scale, 1))
+    );
     font-weight: 800;
     margin: 0;
   }
@@ -3373,7 +3592,11 @@ html body.sim-worlds #flight-dialog[open]:not([data-flight-menu-open='true']) #w
     padding-top: 0;
   }
   .mode-play-home .mode-play-wordmark {
-    font-size: clamp(2rem, 7vw, 4rem);
+    font-size: clamp(
+      calc(2rem * var(--overflight-text-scale, 1) * var(--primary-text-scale, 1)),
+      calc(7vw * var(--overflight-text-scale, 1) * var(--primary-text-scale, 1)),
+      calc(4rem * var(--overflight-text-scale, 1) * var(--primary-text-scale, 1))
+    );
   }
   .mode-play-wordmark img {
     display: block;
@@ -3387,7 +3610,7 @@ html body.sim-worlds #flight-dialog[open]:not([data-flight-menu-open='true']) #w
   .mode-play-mission,
   .mode-play-version {
     color: var(--fk-text-muted, var(--muted, #aebdc4));
-    font-size: 0.9rem;
+    font-size: calc(0.9rem * var(--overflight-text-scale, 1) * var(--primary-text-scale, 1));
     margin: 8px 0 16px;
   }
   .mode-play-edition {
@@ -3480,7 +3703,7 @@ html body.sim-worlds #flight-dialog[open]:not([data-flight-menu-open='true']) #w
   }
   .mode-play-mission {
     margin: 0 0 12px;
-    font-size: 0.8rem;
+    font-size: calc(0.8rem * var(--overflight-text-scale, 1) * var(--primary-text-scale, 1));
   }
   .mode-play-utilities {
     display: grid;
@@ -3494,7 +3717,11 @@ html body.sim-worlds #flight-dialog[open]:not([data-flight-menu-open='true']) #w
     min-width: 0;
     min-height: 44px;
     padding: 8px;
-    font-size: clamp(12px, 3.3vw, 16px);
+    font-size: clamp(
+      calc(12px * var(--overflight-text-scale, 1) * var(--primary-text-scale, 1)),
+      calc(3.3vw * var(--overflight-text-scale, 1) * var(--primary-text-scale, 1)),
+      calc(16px * var(--overflight-text-scale, 1) * var(--primary-text-scale, 1))
+    );
     line-height: 1.2;
   }
   .mode-play-utilities > [hidden] + .button {
@@ -3511,7 +3738,7 @@ html body.sim-worlds #flight-dialog[open]:not([data-flight-menu-open='true']) #w
     border: 0;
   }
   .mode-play-dialog[data-mode-surface='pause'] h1 {
-    font-size: 1rem;
+    font-size: calc(1rem * var(--overflight-text-scale, 1) * var(--primary-text-scale, 1));
     text-transform: uppercase;
     letter-spacing: 0.08em;
   }
@@ -3571,7 +3798,11 @@ html body .mode-play-home {
 }
 .mode-play-shell .mode-play-utilities .button {
   padding-inline: 6px;
-  font-size: clamp(12px, 3.3vw, 16px);
+  font-size: clamp(
+    calc(12px * var(--overflight-text-scale, 1) * var(--primary-text-scale, 1)),
+    calc(3.3vw * var(--overflight-text-scale, 1) * var(--primary-text-scale, 1)),
+    calc(16px * var(--overflight-text-scale, 1) * var(--primary-text-scale, 1))
+  );
   overflow-wrap: normal;
   word-break: normal;
   --ui-action-fill: var(--iw-button-default-background, var(--fk-panel-raised, #182431));
@@ -3611,7 +3842,7 @@ html body .mode-play-home {
 }
 
 .mode-play-dialog[data-mode-surface='pause'] h1 {
-  font: 600 18px/1.3 var(--fk-font-ui, sans-serif);
+  font: 600 calc(18px * var(--overflight-text-scale, 1) * var(--primary-text-scale, 1)) / 1.3 var(--fk-font-ui, sans-serif);
   text-transform: none;
   letter-spacing: normal;
 }
@@ -3689,7 +3920,7 @@ body :is(.shared-pause-menu, #shared-pause-menu) .pause-command-section {
 body :is(.shared-pause-menu, #shared-pause-menu) .pause-command-section > h3 {
   margin: 0;
   color: var(--fk-muted, #bec6c5);
-  font: 600 11px/1.2 var(--fk-font-ui, sans-serif);
+  font: 600 calc(11px * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1)) / 1.2 var(--fk-font-ui, sans-serif);
   text-transform: uppercase;
   letter-spacing: 0.09em;
 }
@@ -3713,7 +3944,7 @@ body :is(.shared-pause-menu, #shared-pause-menu) :is(button, a, summary) {
   height: auto;
   margin: 0;
   padding: 8px 6px;
-  font-size: 14px;
+  font-size: calc(14px * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
   line-height: 1.25;
   text-align: center;
   white-space: normal;
@@ -3723,7 +3954,7 @@ body :is(.shared-pause-menu, #shared-pause-menu) :is(button, a, summary) {
 body :is(.shared-pause-menu, #shared-pause-menu) [data-pause-group='missions'] :is(button, a) {
   flex-direction: column;
   gap: 4px;
-  font-size: clamp(11px, 2.8vw, 14px);
+  font-size: calc(clamp(11px, 2.8vw, 14px) * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
   white-space: nowrap;
   min-height: 58px;
 }
@@ -3805,7 +4036,7 @@ body[data-text-size='large']
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 body[data-text-size='large'] :is(.shared-pause-menu, #shared-pause-menu) :is(button, a, summary) {
-  font-size: 20px;
+  font-size: calc(20px * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
 }
 
 body.field-kit[data-coop-paused='true'] #coop-overlay {
@@ -3833,7 +4064,7 @@ body.field-kit[data-coop-paused='true'] #coop-overlay .overlay-actions {
 body.field-kit[data-coop-paused='true'] #coop-overlay-title,
 body.field-kit[data-couch-status='paused'] #race-title {
   margin: 0 0 12px;
-  font: 600 18px/1.25 var(--fk-font-ui, sans-serif);
+  font: 600 calc(18px * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1)) / 1.25 var(--fk-font-ui, sans-serif);
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -3847,7 +4078,7 @@ body.field-kit[data-coop-paused='true'] #coop-pause-core:empty {
   }
   body :is(.shared-pause-menu, #shared-pause-menu) [data-pause-group='missions'] :is(button, a) {
     padding-inline: 2px;
-    font-size: 11px;
+    font-size: calc(11px * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
   }
 }
 
@@ -3926,13 +4157,13 @@ body :is(.shared-pause-menu, #shared-pause-menu) .pause-command-notice {
   border: 1px solid var(--fk-line, #46504f);
   background: transparent !important;
   color: var(--fk-muted, #bec6c5) !important;
-  font-size: 12px;
+  font-size: calc(12px * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
 }
 body[data-text-size='large']
   :is(.shared-pause-menu, #shared-pause-menu)
   [data-pause-group='missions']
   :is(button, a) {
-  font-size: 20px;
+  font-size: calc(20px * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
   white-space: normal;
 }
 @media (forced-colors: active) {
@@ -4023,7 +4254,8 @@ body .mode-settings-view[open] {
 
 .mode-settings-view > header :is(h1, h2) {
   margin: 0;
-  font: 600 22px/1.3 var(--fk-font-ui, 'Exo 2', system-ui, sans-serif);
+  font: 600 calc(22px * var(--overflight-text-scale, 1) * var(--primary-text-scale, 1)) / 1.3
+    var(--fk-font-ui, 'Exo 2', system-ui, sans-serif);
   letter-spacing: normal;
 }
 
@@ -4052,7 +4284,8 @@ body .mode-settings-view[open] [data-settings-back] {
   min-height: 44px;
   height: auto;
   padding: 8px 12px;
-  font: 600 14px/1.3 var(--fk-font-ui, 'Exo 2', system-ui, sans-serif);
+  font: 600 calc(14px * var(--overflight-text-scale, 1) * var(--primary-text-scale, 1)) / 1.3
+    var(--fk-font-ui, 'Exo 2', system-ui, sans-serif);
 }
 
 body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
@@ -4193,7 +4426,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
   }
 
   .mode-settings-view > header :is(h1, h2) {
-    font-size: 18px;
+    font-size: calc(18px * var(--overflight-text-scale, 1) * var(--primary-text-scale, 1));
   }
 
   .mode-settings-view .mode-settings-layout {
@@ -4223,7 +4456,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
 }
 .global-settings-group > .global-settings-heading {
   margin: 0 0 12px;
-  font: 600 12px/1.4 var(--fk-font-ui, sans-serif);
+  font: 600 calc(12px * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1)) / 1.4 var(--fk-font-ui, sans-serif);
   color: var(--fk-muted, #b8c4ca);
 }
 .global-settings-option {
@@ -4274,7 +4507,60 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
 .global-settings-option [hidden] {
   display: none !important;
 }
+.global-settings-save-retry {
+  min-height: 44px;
+  max-width: 100%;
+  white-space: normal;
+}
 
+@layer legacy {
+  .comfort-presets {
+    border: 1px solid var(--fk-border, #7b8491);
+    border-radius: 12px;
+    padding: 12px;
+    margin-block: 16px;
+    min-width: 0;
+  }
+  .comfort-presets :is(h4, h5, p, ul) {
+    margin-block: 8px;
+    overflow-wrap: anywhere;
+  }
+  .comfort-presets label {
+    display: grid;
+    gap: 6px;
+  }
+  .comfort-presets select {
+    min-width: 0;
+    max-width: 100%;
+    width: 100%;
+  }
+  .comfort-preset-sample {
+    border-inline-start: 3px solid currentColor;
+    padding: 10px;
+    font-size: 18px;
+  }
+  .comfort-preset-sample[data-text-face='plain'] {
+    font-family:
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      sans-serif;
+  }
+  .comfort-preset-sample[data-text-size='large'] {
+    font-size: 22px;
+  }
+  .comfort-preset-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .comfort-preset-actions button {
+    white-space: normal;
+    min-height: 44px;
+    max-width: 100%;
+  }
+}
 /* Legacy layout and paint share one cascade layer. Theme recipes own opt-in appearance. */
 @layer legacy {
   #journey-chooser {
@@ -4296,7 +4582,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
   }
   .journey-chooser h2 {
     margin: 0;
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    font-size: calc(clamp(1.5rem, 4vw, 2.5rem) * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
   }
   .journey-filters {
     display: flex;
@@ -4372,7 +4658,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     grid-column: 1 / -1;
     overflow: hidden;
     color: #94c6b0;
-    font-size: 0.72rem;
+    font-size: calc(0.72rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
     font-weight: 700;
     letter-spacing: 0.08em;
     text-overflow: ellipsis;
@@ -4397,10 +4683,10 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     }
     #journey-chooser > p {
       margin: 0.25rem 0;
-      font-size: 0.85rem;
+      font-size: calc(0.85rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
     }
     #journey-chooser h2 {
-      font-size: 1.35rem;
+      font-size: calc(1.35rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
       line-height: 1.1;
     }
     #journey-chooser .journey-filters {
@@ -4415,12 +4701,12 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
   }
   .journey-card-number {
     grid-row: span 3;
-    font-size: 2rem;
+    font-size: calc(2rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
     color: #c7e78e;
   }
   .journey-card strong {
     min-width: 0;
-    font-size: 1.1rem;
+    font-size: calc(1.1rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
     overflow-wrap: anywhere;
   }
   .journey-card-campaign {
@@ -4430,7 +4716,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
   }
   .journey-card-progress {
     color: #c7e78e;
-    font-size: 0.85rem;
+    font-size: calc(0.85rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
   }
   .journey-card-edition,
   .journey-card-tags,
@@ -4504,10 +4790,10 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
   }
   .journey-card-edition {
     color: #bacdc0;
-    font-size: 0.85rem;
+    font-size: calc(0.85rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
   }
   .journey-card-tags {
-    font-size: 0.85rem;
+    font-size: calc(0.85rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
     color: #f5ffba;
   }
   .journey-card-action {
@@ -4592,7 +4878,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
   .journey-card-picture-status {
     grid-column: 1 / -1;
     color: #bacdc0;
-    font-size: 0.75rem;
+    font-size: calc(0.75rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
     line-height: 1.25;
   }
   .journey-card-challenge,
@@ -4603,16 +4889,16 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
   }
   .journey-card-challenge {
     color: #f5ffba;
-    font-size: 0.8rem;
+    font-size: calc(0.8rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
     letter-spacing: 0.04em;
   }
   .journey-card-route {
-    font-size: 0.95rem;
+    font-size: calc(0.95rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
   }
   .journey-card-mastery {
     padding-top: 0.35rem;
     color: #bacdc0;
-    font-size: 0.8rem;
+    font-size: calc(0.8rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
   }
   @media (max-height: 480px) and (min-width: 600px) {
     .journey-cards {
@@ -4778,7 +5064,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
   #journey-chooser #coop-library-status p,
   #journey-chooser #race-library-status p {
     margin: 0;
-    font-size: 0.8rem;
+    font-size: calc(0.8rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
     line-height: 1.25;
   }
   #journey-chooser #coop-library-remote-feedback {
@@ -4828,7 +5114,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     }
     #journey-chooser.mission-library-chooser h2 {
       margin: 0;
-      font-size: 1.25rem;
+      font-size: calc(1.25rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
       line-height: 1.2;
     }
     .mission-library-chooser .journey-library-copy {
@@ -4915,7 +5201,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     }
     #journey-chooser.mission-library-chooser #journey-chooser-status {
       margin: 0;
-      font-size: 0.8rem;
+      font-size: calc(0.8rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
       line-height: 1.25;
     }
     #journey-chooser.mission-library-chooser .journey-cards {
@@ -4931,15 +5217,15 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
       gap: 0.2rem 0.5rem;
     }
     .mission-library-chooser .journey-card-number {
-      font-size: 1.35rem;
+      font-size: calc(1.35rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
     }
     .mission-library-chooser .journey-card strong {
-      font-size: 1rem;
+      font-size: calc(1rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
     }
     .mission-library-chooser .journey-card-edition,
     .mission-library-chooser .journey-card-tags,
     .mission-library-chooser .journey-card-progress {
-      font-size: 0.75rem;
+      font-size: calc(0.75rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
       line-height: 1.2;
     }
     #journey-chooser.mission-library-chooser .journey-card-map {
@@ -5115,7 +5401,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     background: transparent;
     border: 0;
     font-family: var(--fk-font-mono, monospace);
-    font-size: 0.78rem;
+    font-size: calc(0.78rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
     letter-spacing: 0.08em;
     line-height: 1.2;
     text-overflow: ellipsis;
@@ -5188,7 +5474,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     right: 0.45rem;
     display: none;
     color: var(--level-card-award);
-    font-size: 0.9rem;
+    font-size: calc(0.9rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
     font-weight: 900;
   }
   #journey-chooser .journey-card[data-completion-state='completed'] .journey-card-check {
@@ -5208,7 +5494,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     grid-row: 1;
     color: var(--level-card-focus);
     font-family: var(--fk-font-mono, monospace);
-    font-size: 0.78rem;
+    font-size: calc(0.78rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
     font-weight: 800;
     letter-spacing: 0.05em;
     line-height: 1.25;
@@ -5219,7 +5505,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     grid-row: 2;
     display: -webkit-box;
     overflow: hidden;
-    font-size: 0.94rem;
+    font-size: calc(0.94rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
     line-height: 1.2;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
@@ -5230,7 +5516,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     display: block;
     overflow: hidden;
     color: var(--level-card-muted);
-    font-size: 0.7rem;
+    font-size: calc(0.7rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
     line-height: 1.2;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -5240,7 +5526,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     grid-row: 3;
     color: var(--level-card-muted);
     font-family: var(--fk-font-mono, monospace);
-    font-size: 0.7rem;
+    font-size: calc(0.7rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
     font-variant-numeric: tabular-nums;
   }
   #journey-chooser .journey-card-progress {
@@ -5248,7 +5534,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     grid-row: 4;
     overflow: hidden;
     color: var(--level-card-muted);
-    font-size: 0.68rem;
+    font-size: calc(0.68rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
     line-height: 1.2;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -5258,7 +5544,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     grid-row: 4;
     color: var(--level-card-award);
     font-family: var(--fk-font-mono, monospace);
-    font-size: 0.82rem;
+    font-size: calc(0.82rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
     letter-spacing: 0.03em;
     line-height: 1;
     white-space: nowrap;
@@ -5297,7 +5583,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     overflow: hidden;
     color: var(--fk-bg, #070b12);
     background: var(--level-card-award);
-    font-size: 0.65rem;
+    font-size: calc(0.65rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
     line-height: 1.2;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -5506,7 +5792,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     margin: 0;
     overflow-wrap: anywhere;
     color: var(--level-card-muted);
-    font-size: 0.78rem;
+    font-size: calc(0.78rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
     line-height: 1.25;
   }
   #journey-chooser.mission-library-chooser #journey-goal-status::before {
@@ -5550,7 +5836,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
       min-height: 44px;
       margin: 0;
       padding: 0.35rem 0.5rem;
-      font-size: 0.78rem;
+      font-size: calc(0.78rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
       line-height: 1.15;
     }
     #journey-chooser.mission-library-chooser .journey-footer > .mission-library-setup {
@@ -5560,7 +5846,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
       justify-content: center;
       min-height: 44px;
       padding: 0.35rem 0.5rem;
-      font-size: 0.78rem;
+      font-size: calc(0.78rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
       line-height: 1.15;
       text-align: center;
     }
@@ -5610,7 +5896,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     }
     #journey-chooser.mission-library-chooser #journey-search-clear::before {
       content: '×';
-      font-size: 1.35rem;
+      font-size: calc(1.35rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
       line-height: 1;
     }
     #journey-chooser.mission-library-chooser #journey-search::-webkit-search-cancel-button {
@@ -5632,7 +5918,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
       min-width: 0;
       min-height: 44px;
       padding: 0.3rem;
-      font-size: 0.72rem;
+      font-size: calc(0.72rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
       line-height: 1.1;
     }
     #journey-chooser.mission-library-chooser .journey-footer > .mission-library-setup {
@@ -5647,7 +5933,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     }
     #journey-chooser.mission-library-chooser .mission-library-setup > summary::before {
       content: '⚙';
-      font-size: 1.1rem;
+      font-size: calc(1.1rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
       line-height: 1;
     }
     #journey-chooser.mission-library-chooser .journey-goal {
@@ -5666,7 +5952,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     #journey-chooser.mission-library-chooser .journey-goal-actions > button {
       min-width: 44px;
       padding: 0.25rem 0.4rem;
-      font-size: 0.68rem;
+      font-size: calc(0.68rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
     }
     #journey-chooser.mission-library-chooser
       .journey-goal-actions
@@ -5751,7 +6037,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
   }
   #journey-backup h2 {
     margin: 0;
-    font-size: 1.5rem;
+    font-size: calc(1.5rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
   }
   .journey-backup-content {
     overflow: auto;
@@ -5804,7 +6090,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
     height: 1em;
     color: #080d1c;
     background: #f3c84b;
-    font-size: 1rem;
+    font-size: calc(1rem * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
     font-weight: bold;
     line-height: 1;
   }
@@ -5844,7 +6130,7 @@ body .mode-settings-view[open] [data-settings-back][data-menu-icon]::before {
 @layer legacy {
   .game-mode-destinations {
     min-width: 0;
-    font-size: var(--fk-text-secondary, 14px);
+    font-size: calc(var(--fk-text-secondary, 14px) * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
   }
   .game-mode-destinations > summary {
     min-height: 44px;
@@ -5888,7 +6174,8 @@ body.field-kit #couch-app .game-mode-choice > :is(a, button) {
   min-height: 76px;
   padding: 15px 3px 7px;
   margin: 0;
-  font: 600 clamp(11px, 2.6vw, 16px) / 1.2 var(--fk-font-ui, sans-serif);
+  font: 600 calc(clamp(11px, 2.6vw, 16px) * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1)) / 1.2
+    var(--fk-font-ui, sans-serif);
   text-align: center;
   white-space: nowrap;
   text-decoration: none;
@@ -5902,7 +6189,7 @@ body.field-kit #couch-app .game-mode-choice > :is(a, button) {
   position: absolute;
   top: 4px;
   right: 5px;
-  font: 600 9px/1 var(--fk-font-ui, sans-serif);
+  font: 600 calc(9px * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1)) / 1 var(--fk-font-ui, sans-serif);
   letter-spacing: 0.02em;
   opacity: 0.8;
 }
@@ -5926,7 +6213,7 @@ body.field-kit #couch-app .game-mode-choice > :is(a, button) {
 @media (max-width: 360px) {
   body.field-kit .game-mode-choice > :is(a, button),
   body.field-kit #couch-app .game-mode-choice > :is(a, button) {
-    font-size: 11px;
+    font-size: calc(11px * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
   }
 }
 @media (max-width: 299px) {
@@ -6060,7 +6347,7 @@ html body .landing-layout :is(.native-menu-actions, .mode-play-main-menu) > :is(
   margin: 0;
   padding: 10px 12px;
   gap: 12px;
-  font: 600 16px/1.3 var(--fk-font-ui, sans-serif);
+  font: 600 calc(16px * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1)) / 1.3 var(--fk-font-ui, sans-serif);
   justify-content: flex-start;
   text-align: start;
   white-space: normal;
@@ -6085,7 +6372,7 @@ html body .landing-layout .native-menu-utilities > :is(button, a) {
   margin: 0;
   padding: 8px;
   justify-content: center;
-  font: 600 14px/1.3 var(--fk-font-ui, sans-serif);
+  font: 600 calc(14px * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1)) / 1.3 var(--fk-font-ui, sans-serif);
 }
 html body .landing-layout .native-menu-utilities:has(> button[hidden]) {
   grid-template-columns: minmax(0, 1fr);
@@ -6097,7 +6384,7 @@ html body .native-landing:has(.landing-layout) .native-menu-footer {
   width: 100%;
   margin-top: 0;
   padding-top: 16px;
-  font-size: 12px;
+  font-size: calc(12px * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
 }
 /* The legacy containers retain their hidden hooks and ownership, not layout. */
 html body .native-landing:has(.landing-layout) > :is(.home-content, .menu-copy) {
@@ -6149,7 +6436,7 @@ html body dialog:is(.native-landing, .mode-play-home)[open] {
   inset: 0;
 }
 html body[data-text-size='large'] .landing-layout :is(button, a) {
-  font-size: 20px;
+  font-size: calc(20px * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
 }
 
 html body #coop-menu.native-landing:has(.landing-layout) > .menu-copy {
@@ -6157,11 +6444,11 @@ html body #coop-menu.native-landing:has(.landing-layout) > .menu-copy {
 }
 
 html body .landing-layout .game-mode-choice > :is(a, button) {
-  font-size: clamp(12px, 3.5vw, 16px);
+  font-size: calc(clamp(12px, 3.5vw, 16px) * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
 }
 html body .landing-layout :is(.home-status, #race-preparation) {
   margin: 12px 0 0;
-  font-size: 14px;
+  font-size: calc(14px * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
 }
 html body .landing-identity .mode-play-dialog-head {
   background: transparent;
@@ -6170,7 +6457,7 @@ html body .landing-identity .mode-play-dialog-head {
   box-shadow: none;
 }
 html body[data-text-size='large'] .landing-layout .game-mode-choice > :is(a, button) {
-  font-size: 20px;
+  font-size: calc(20px * var(--primary-text-scale, 1) * var(--overflight-text-scale, 1));
   white-space: normal;
 }
 /* END SHARED MODE SHELL */
@@ -6245,7 +6532,9 @@ html
     :is([data-sim-hud-active='true'], [data-sim-flight-compact='true'])
   )
   > .mode-play-bar
-  > :not([data-mode-action='pause']):not([data-mode-action='camera']) {
+  > :not([data-mode-action='menu']):not([data-mode-action='pause']):not(
+    [data-mode-action='camera']
+  ):not([data-mode-action='hud']) {
   display: none !important;
 }
 html
@@ -6254,7 +6543,12 @@ html
     :is([data-sim-hud-active='true'], [data-sim-flight-compact='true'])
   )
   > .mode-play-bar
-  :is([data-mode-action='pause'], [data-mode-action='camera']) {
+  :is(
+    [data-mode-action='menu'],
+    [data-mode-action='pause'],
+    [data-mode-action='camera'],
+    [data-mode-action='hud']
+  ) {
   min-height: 44px !important;
   min-width: 44px !important;
   margin: 0 !important;
@@ -6321,6 +6615,54 @@ html body.sim-worlds #flight-dialog.learning-replay > #world-replay-controls lab
 html body.sim-worlds #flight-dialog.learning-replay > #world-replay-controls label {
   margin: 0 !important;
   padding: 0 !important;
+}
+
+/* Combat playback exposes its speed without opening the paused-flight menu. */
+@layer legacy {
+  html
+    body.sim-worlds
+    #flight-dialog.combat-playback:not(:has(#result-panel:not([hidden])))
+    > #world-replay-controls:not([hidden]) {
+    display: flex !important;
+  }
+}
+html
+  body.sim-worlds
+  #flight-dialog.combat-playback:not(:has(#result-panel:not([hidden])))
+  > #world-replay-controls:not([hidden]) {
+  position: absolute;
+  z-index: 25;
+  left: 50%;
+  bottom: max(16px, env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: calc(100% - 24px);
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: #0d1822ed;
+  font: 600 12px/1.2 var(--fk-font-ui, sans-serif);
+}
+html body.sim-worlds #flight-dialog.combat-playback > #world-replay-controls label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+}
+html body.sim-worlds #flight-dialog.combat-playback > #world-replay-controls select {
+  min-width: 64px;
+  min-height: 44px;
+  padding: 6px 8px;
+  border: 1px solid #8799a5;
+  border-radius: 4px;
+  background: #192833;
+  color: #fff;
+  font: inherit;
+}
+html body.sim-worlds #flight-dialog.combat-playback #fly-after-replay {
+  display: none;
 }
 
 /* Camera remains a compact flight action rather than a themed menu panel. */
@@ -6446,11 +6788,11 @@ html body .sim-flight-comfort :is(small, p) {
   overflow-wrap: anywhere;
 }
 html body :is(#viewport, #world-viewport)[data-stick-size='compact'] {
-  --sim-monitor-stick-size: 64px;
+  --sim-monitor-stick-size: 80px;
   --sim-touch-stick-size: 104px;
 }
 html body :is(#viewport, #world-viewport)[data-stick-size='large'] {
-  --sim-monitor-stick-size: 112px;
+  --sim-monitor-stick-size: 144px;
   --sim-touch-stick-size: 144px;
 }
 html body :is(#viewport, #world-viewport)[data-stick-opacity='quiet'] {
@@ -6582,4 +6924,1181 @@ html body.sim-worlds #flight-dialog[data-sim-flight-compact='true'] > header:not
     bottom: var(--flight-safe-bottom);
   }
 }
+
+/* Flight overlay controls stay compact across all material themes. */
+html body.field-kit .sim-drone-response .sim-response-close {
+  flex: 0 0 44px !important;
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px !important;
+  min-height: 44px !important;
+  max-width: 44px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-image: none !important;
+  border-radius: 6px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  font:
+    24px/1 system-ui,
+    sans-serif !important;
+  opacity: 0.9;
+  transform: none !important;
+}
+html body.field-kit .sim-drone-response .sim-response-close::before,
+html body.field-kit .sim-drone-response .sim-response-close::after {
+  content: none !important;
+}
+html body.field-kit .sim-drone-response .sim-response-close:focus-visible {
+  outline: 2px solid var(--fk-amber);
+  outline-offset: -4px;
+}
+html body.field-kit .sim-drone-response[data-display='compact'] .sim-response-close {
+  top: 0;
+  right: 0;
+}
+
+html body.field-kit .sim-radio-flight-notice:not([hidden]) {
+  position: absolute;
+  left: 50%;
+  bottom: max(24px, env(safe-area-inset-bottom));
+  transform: translateX(-50%);
+  z-index: 20;
+  width: max-content;
+  max-width: min(420px, calc(100% - 32px));
+  margin: 0;
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: #0d1822e8;
+  color: #f4f7fb;
+  font: 600 14px/1.4 var(--fk-font-ui, sans-serif);
+  text-align: center;
+  pointer-events: none;
+}
+@media (max-width: 1100px) {
+  html body.field-kit .sim-radio-flight-notice:not([hidden]) {
+    bottom: max(152px, env(safe-area-inset-bottom));
+  }
+}
+html body.field-kit .sim-stick-trace-path {
+  stroke-opacity: 0.65;
+  stroke-width: 1.75;
+}
+html body.field-kit .sim-stick-trace-arrow {
+  stroke-opacity: 0.9;
+  stroke-width: 1.75;
+}
+
+html body.field-kit #world-viewport > .sim-drone-response {
+  left: max(12px, env(safe-area-inset-left));
+  bottom: max(12px, env(safe-area-inset-bottom));
+  transform: none;
+}
+
+/* Radio input helpers live inside the currently owned menu. */
+html body .sim-radio-ready {
+  margin: 16px 0 0;
+  padding: 14px 18px;
+  border: 1px solid #64767e;
+  border-radius: 8px;
+  background: #18252d;
+  color: #f3f3ed;
+  font: 500 14px/1.5 var(--fk-font-ui, sans-serif);
+}
+html body .sim-radio-ready[hidden],
+html body .sim-radio-ready__axes[hidden] {
+  display: none;
+}
+html body .sim-radio-ready p {
+  margin: 6px 0 10px;
+  font: inherit;
+}
+html body .sim-radio-ready__axes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+html body .sim-radio-ready__axes span {
+  padding: 4px 8px;
+  color: #ffd38b;
+  border: 1px solid currentColor;
+  border-radius: 4px;
+  font-variant-numeric: tabular-nums;
+}
+html body .sim-radio-ready__axes [data-ready='true'] {
+  color: #a7e4bf;
+}
+html body .sim-radio-confirm {
+  width: min(560px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  overflow: auto;
+  padding: 24px;
+  border: 1px solid #d5bd82;
+  border-radius: 12px;
+  background: #18252d;
+  color: #f3f3ed;
+}
+html body .sim-radio-confirm::backdrop {
+  background: #071015c9;
+}
+html body .sim-radio-confirm button {
+  margin: 8px 8px 0 0;
+}
+html body .sim-radio-actions {
+  margin: 12px 0;
+  padding: 14px;
+  border: 1px solid #75838e;
+  border-radius: 10px;
+}
+html body .sim-radio-actions h3 {
+  margin: 0;
+}
+html body .sim-radio-actions__choices {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+html body .sim-radio-actions__choices [aria-pressed='true'] {
+  outline: 3px solid #ffd37a;
+}
+html body .sim-radio-action-pending {
+  position: absolute;
+  bottom: 110px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  padding: 10px 14px;
+  border-radius: 8px;
+  max-width: min(80%, 520px);
+  background: #18252ef0;
+  color: #ffe1a0;
+  font: 600 15px/1.4 system-ui;
+  pointer-events: none;
+}
+html body .sim-radio-actions[hidden],
+html body .sim-radio-action-pending[hidden] {
+  display: none;
+}
+html body .radio-six-switch {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  padding: 16px 0;
+  border-top: 1px solid #75838e;
+}
+html body .radio-six-switch > :not(fieldset) {
+  grid-column: 1 / -1;
+}
+html body .radio-six-switch fieldset {
+  min-width: 0;
+  margin: 0;
+  padding: 14px;
+  border: 1px solid #75838e;
+  border-radius: 8px;
+}
+html body .radio-six-switch fieldset p {
+  margin: 4px 0 10px;
+}
+html body .radio-six-switch output {
+  display: block;
+  margin: 8px 0;
+  font-size: 14px;
+}
+html body .studio-view-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+@media (max-width: 600px) {
+  html body .radio-six-switch {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+html body .fpv-menu-editor {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  box-sizing: border-box;
+  width: min(100%, 760px);
+  max-height: min(76dvh, 650px);
+  overflow: auto;
+  overscroll-behavior: contain;
+  margin: 16px auto;
+  padding: 16px;
+  border: 2px solid #e8bd62;
+  border-radius: 12px;
+  background: #18252d;
+  color: #f3f3ed;
+  box-shadow: 0 8px 32px #0009;
+}
+html body .fpv-menu-editor__preview {
+  min-height: 2em;
+  padding: 10px;
+  overflow-wrap: anywhere;
+  background: #080f14;
+  border: 1px solid #64767e;
+  font-variant-numeric: tabular-nums;
+}
+html body .fpv-menu-editor__keys {
+  display: grid;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+  gap: 6px;
+  margin-top: 12px;
+}
+html body .fpv-menu-editor__keys button {
+  min-width: 0;
+  min-height: 44px;
+  padding: 4px;
+  text-align: center;
+  background-image: none;
+}
+/* Combat vitals are an overlay, never a flow item after the full-height canvas.
+   This canonical sheet is projected into style.css by the presentation refresh. */
+html body #world-viewport > .combat-vitals {
+  position: absolute;
+  inset: auto auto max(9%, env(safe-area-inset-bottom, 0px)) 50%;
+  z-index: 6;
+  display: grid;
+  grid-template-columns: minmax(94px, 0.8fr) minmax(0, 1.7fr);
+  gap: 8px 14px;
+  box-sizing: border-box;
+  width: min(400px, calc(100% - 24px));
+  min-width: 0;
+  margin: 0;
+  padding: 10px 12px;
+  transform: translateX(-50%);
+  border: 1px solid #93a6b966;
+  border-radius: 9px;
+  background: #101a24ed;
+  color: #f5f8fb;
+  box-shadow: 0 2px 10px #0006;
+  font: 600 12px/1.25 var(--fk-font-ui, system-ui, sans-serif);
+  text-align: left;
+  pointer-events: none;
+}
+html body #world-viewport > .combat-vitals[data-health-hidden='true'],
+html body #world-viewport > .combat-vitals[data-ammo-hidden='true'] {
+  grid-template-columns: minmax(0, 1fr);
+  width: min(300px, calc(100% - 24px));
+}
+html body #world-viewport .combat-vitals[hidden],
+html body #world-viewport .combat-vitals [hidden],
+html body #world-viewport:has(#result-panel:not([hidden])) > .combat-vitals,
+html body:has(dialog[open]:not(#flight-dialog)) #world-viewport > .combat-vitals {
+  display: none !important;
+}
+html body #world-viewport .combat-vitals__card {
+  --vital-color: #8be2c1;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+}
+html body #world-viewport .combat-vitals__card[data-vital='ammo'] {
+  --vital-color: #a8d7ff;
+}
+html body #world-viewport .combat-vitals__card[data-tone='damaged'],
+html body #world-viewport .combat-vitals__card[data-tone='reloading'],
+html body #world-viewport .combat-vitals__card[data-tone='recharging'],
+html body #world-viewport .combat-vitals__card[data-tone='waiting'] {
+  --vital-color: #ffd387;
+}
+html body #world-viewport .combat-vitals__card[data-tone='low'] {
+  --vital-color: #ffb16e;
+}
+html body #world-viewport .combat-vitals__card[data-tone='critical'],
+html body #world-viewport .combat-vitals__card[data-tone='destroyed'],
+html body #world-viewport .combat-vitals__card[data-tone='empty'] {
+  --vital-color: #ff9494;
+}
+html body #world-viewport .combat-vitals__card[data-tone='invulnerable'] {
+  --vital-color: #b8b5ff;
+}
+html body #world-viewport .combat-vitals__heading,
+html body #world-viewport .combat-vitals__numbers {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+html body #world-viewport .combat-vitals__icon {
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
+  color: var(--vital-color);
+}
+html body #world-viewport .combat-vitals__label {
+  font: inherit;
+  overflow-wrap: anywhere;
+}
+html body #world-viewport .combat-vitals__numbers {
+  align-items: baseline;
+  margin: 3px 0 5px;
+  font-variant-numeric: tabular-nums;
+}
+html body #world-viewport .combat-vitals__value {
+  color: var(--vital-color);
+  font: 750 32px/1 var(--fk-font-ui, system-ui, sans-serif);
+}
+html body #world-viewport .combat-vitals__max {
+  color: #c7d3df;
+  font-size: 14px;
+  line-height: 1;
+}
+html body #world-viewport .combat-vitals__meter {
+  height: 6px;
+  overflow: hidden;
+  border-radius: 3px;
+  background: #ffffff25;
+}
+html body #world-viewport .combat-vitals__fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--vital-color);
+  transform-origin: left center;
+}
+html body #world-viewport .combat-vitals__status {
+  margin-top: 5px;
+  color: var(--vital-color);
+  overflow-wrap: anywhere;
+}
+html body #world-viewport .combat-vitals__footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px 10px;
+  margin-top: 4px;
+  color: #d5dfe8;
+  font-size: 11px;
+  overflow-wrap: anywhere;
+}
+html body #world-viewport .combat-vitals__reserve {
+  white-space: nowrap;
+}
+html body #world-viewport .combat-vitals__warning {
+  grid-column: 1 / -1;
+  padding-top: 5px;
+  border-top: 1px solid #ffffff25;
+  color: #ffb1a0;
+  font-size: 12px;
+}
+/* Leave the lower corner monitors and touch sticks available on narrow views. */
+html body #world-viewport {
+  --combat-vitals-floor: max(9%, env(safe-area-inset-bottom, 0px));
+}
+@media (max-width: 1100px) {
+  html body #world-viewport:has(.world-touch:not([hidden])) {
+    --combat-vitals-floor: max(9%, calc(224px + env(safe-area-inset-bottom, 0px)));
+  }
+  html body #world-viewport:has(> .sim-drone-response:not([hidden])) {
+    --combat-vitals-floor: max(9%, calc(140px + env(safe-area-inset-bottom, 0px)));
+  }
+  html
+    body
+    #world-viewport:has(.world-touch:not([hidden])):has(> .sim-drone-response:not([hidden])) {
+    --combat-vitals-floor: max(9%, calc(224px + env(safe-area-inset-bottom, 0px)));
+  }
+  html body #world-viewport > .combat-vitals {
+    bottom: var(--combat-vitals-floor);
+  }
+}
+/* Short landscape has no room above the sticks: reserve a separate top column. */
+@media (min-width: 600px) and (max-width: 1100px) and (max-height: 480px) {
+  html body #world-viewport > .combat-vitals[data-combat-vitals] {
+    inset: max(60px, env(safe-area-inset-top, 0px)) max(12px, env(safe-area-inset-right, 0px)) auto
+      auto;
+    width: min(360px, calc(50% - 24px));
+    transform: none;
+  }
+  html body #world-viewport:has(> .combat-vitals:not([hidden])) > [data-combat-overlay] {
+    max-width: calc(50% - 24px) !important;
+  }
+}
+/* Only ready/paused combat uses two content-sized rows. Resume precedes vitals
+   even when warning/localized text grows; active flight retains its overlay. */
+html
+  body
+  #flight-dialog:not(
+    [data-flight-state='active'],
+    [data-flight-state='complete'],
+    [data-flight-state='failed']
+  )
+  #world-viewport:has(> .combat-vitals:not([hidden])) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto auto var(--combat-vitals-floor);
+}
+html
+  body
+  #flight-dialog:not(
+    [data-flight-state='active'],
+    [data-flight-state='complete'],
+    [data-flight-state='failed']
+  )
+  #world-viewport:has(> .combat-vitals:not([hidden]))
+  > canvas {
+  position: absolute;
+  inset: 0;
+}
+html
+  body
+  #flight-dialog:not(
+    [data-flight-state='active'],
+    [data-flight-state='complete'],
+    [data-flight-state='failed']
+  )
+  #world-viewport:has(> .combat-vitals:not([hidden]))
+  > .handheld-flight-actions {
+  display: contents;
+}
+html
+  body
+  #flight-dialog:not(
+    [data-flight-state='active'],
+    [data-flight-state='complete'],
+    [data-flight-state='failed']
+  )
+  #world-viewport:has(> .combat-vitals:not([hidden]))
+  > .handheld-flight-actions
+  > .handheld-flight-resume {
+  position: relative;
+  inset: auto;
+  grid-area: 2 / 1;
+  justify-self: center;
+  max-width: min(240px, calc(100% - 24px));
+  margin: 0 0 12px;
+  transform: none;
+  z-index: 20;
+}
+html
+  body
+  #flight-dialog:not(
+    [data-flight-state='active'],
+    [data-flight-state='complete'],
+    [data-flight-state='failed']
+  )
+  #world-viewport:has(> .combat-vitals:not([hidden]))
+  > .combat-vitals {
+  position: relative;
+  inset: auto;
+  grid-area: 3 / 1;
+  justify-self: center;
+  transform: none;
+}
+/* This legacy counter was below the canvas; do not give it an implicit HUD row.
+   Collection and result statistics remain in their existing containers. */
+html
+  body
+  #flight-dialog:not(
+    [data-flight-state='active'],
+    [data-flight-state='complete'],
+    [data-flight-state='failed']
+  )
+  #world-viewport:has(> .combat-vitals:not([hidden]))
+  > .enemy-stats[data-variant='hud'] {
+  display: none;
+}
+@media (min-width: 600px) and (max-width: 1100px) and (max-height: 480px) {
+  html
+    body
+    #flight-dialog:not(
+      [data-flight-state='active'],
+      [data-flight-state='complete'],
+      [data-flight-state='failed']
+    )
+    #world-viewport:has(> .combat-vitals:not([hidden])) {
+    grid-template-columns: minmax(0, 1fr) min(360px, calc(50% - 24px)) max(
+        12px,
+        env(safe-area-inset-right, 0px)
+      );
+    grid-template-rows:
+      max(60px, env(safe-area-inset-top, 0px))
+      auto auto minmax(0, 1fr);
+  }
+  html
+    body
+    #flight-dialog:not(
+      [data-flight-state='active'],
+      [data-flight-state='complete'],
+      [data-flight-state='failed']
+    )
+    #world-viewport:has(> .combat-vitals:not([hidden]))
+    > .handheld-flight-actions
+    > .handheld-flight-resume {
+    grid-area: 2 / 2;
+  }
+  html
+    body
+    #flight-dialog:not(
+      [data-flight-state='active'],
+      [data-flight-state='complete'],
+      [data-flight-state='failed']
+    )
+    #world-viewport:has(> .combat-vitals:not([hidden]))
+    > .combat-vitals {
+    grid-area: 3 / 2;
+    width: 100%;
+  }
+}
+
+html body .fpv-menu-editor__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+html body .fpv-menu-editor [data-fpv-menu-focus] {
+  outline: 3px solid #e8bd62;
+  outline-offset: 2px;
+}
+@media (max-width: 600px) {
+  html body .fpv-menu-editor__keys {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+/* Camera instruments have their own visibility owner, including in combat. */
+.sim-flight-instruments {
+  position: absolute;
+  inset: 0;
+  z-index: 17;
+  pointer-events: none;
+  color: #f7fafc;
+  font:
+    600 14px/1.35 system-ui,
+    sans-serif;
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 1px 2px #000;
+}
+.sim-flight-instruments[hidden],
+.sim-flight-instruments [hidden] {
+  display: none !important;
+}
+.sim-flight-compass,
+.sim-flight-readouts,
+.sim-flight-extra,
+.sim-flight-notice {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 5px;
+  padding: 5px 9px;
+  background: #101a24ed;
+  max-width: calc(100% - 24px);
+  box-sizing: border-box;
+  text-align: center;
+}
+.sim-flight-compass {
+  top: 12px;
+  min-width: 150px;
+  letter-spacing: 3px;
+}
+.sim-flight-readouts {
+  bottom: 12%;
+  white-space: nowrap;
+}
+.sim-flight-instruments[data-combat='true'] .sim-flight-readouts {
+  bottom: calc(12% + 196px);
+}
+.sim-flight-extra {
+  bottom: calc(12% + 30px);
+}
+.sim-flight-instruments[data-combat='true'] .sim-flight-extra {
+  bottom: calc(12% + 230px);
+}
+.sim-flight-notice {
+  top: 50px;
+  font-size: 13px;
+}
+body:has(.sim-radio-flight-notice:not([hidden])) .sim-flight-notice {
+  display: none;
+}
+[data-hud-navigation='true'] [data-wrong-side='true'] {
+  --hud-accent: #ffd378;
+}
+[data-sim-hud='flight'][data-hud-component]:not([data-hud-navigation]) {
+  --hud-left: var(--flight-safe-left, 12px);
+  --hud-top: 110px;
+}
+html body #world-viewport {
+  --combat-vitals-floor: max(12%, env(safe-area-inset-bottom, 0px));
+}
+html body #world-viewport > .combat-vitals {
+  bottom: max(12%, env(safe-area-inset-bottom, 0px));
+}
+@media (max-width: 720px) {
+  .sim-flight-readouts {
+    font-size: 12px;
+    white-space: normal;
+    width: min(340px, calc(100% - 24px));
+  }
+  .sim-flight-readouts,
+  .sim-flight-instruments[data-combat='true'] .sim-flight-readouts {
+    bottom: 188px;
+  }
+  .sim-flight-extra,
+  .sim-flight-instruments[data-combat='true'] .sim-flight-extra {
+    top: calc(100% - 132px);
+    bottom: auto;
+    left: 12px;
+    transform: none;
+    max-width: calc(50% - 24px);
+    font-size: 12px;
+  }
+  html body #world-viewport {
+    --combat-vitals-floor: max(12%, 224px);
+  }
+  html body #world-viewport > .combat-vitals {
+    bottom: var(--combat-vitals-floor);
+  }
+  #flight-dialog[data-flight-state='active'] .sim-flight-compass {
+    top: 64px;
+  }
+  html body #flight-dialog[data-flight-state='active'] #world-viewport > [data-combat-overlay] {
+    top: 104px !important;
+  }
+  #flight-dialog[data-flight-state='active'] .sim-flight-notice {
+    top: auto;
+    bottom: 140px;
+  }
+}
+@media (max-height: 540px) and (min-width: 600px) {
+  .sim-flight-compass {
+    top: 12px;
+    font-size: 12px;
+    padding: 2px 8px;
+  }
+  .sim-flight-readouts,
+  .sim-flight-instruments[data-combat='true'] .sim-flight-readouts {
+    bottom: 50px;
+    left: 50%;
+    font-size: 11px;
+    padding: 2px 6px;
+  }
+  .sim-flight-notice {
+    top: 42px;
+    font-size: 11px;
+  }
+}
+@media (min-width: 600px) and (max-width: 1100px) and (max-height: 480px) {
+  html
+    body
+    #flight-dialog:not(
+      [data-flight-state='active'],
+      [data-flight-state='complete'],
+      [data-flight-state='failed']
+    )
+    #world-viewport:has(> .combat-vitals:not([hidden])) {
+    grid-template-rows: 30px auto auto minmax(0, 1fr);
+  }
+  html body #world-viewport #world-touch:not(.touch-active) .touch-stick {
+    width: 64px !important;
+    height: 64px !important;
+    min-width: 64px;
+    min-height: 64px;
+  }
+  html body #world-viewport > .sim-drone-response {
+    top: 4px;
+    bottom: auto;
+    width: 60px;
+    height: 48px;
+  }
+  html body.field-kit .sim-radio-flight-notice:not([hidden]) {
+    bottom: 90px;
+    max-width: 220px;
+  }
+}
+
+/* Flight-first HUD: shared by Worlds and Academy. Widget switches never hide
+   live touch input, recovery notices, or the pause/menu escape route. */
+html
+  body
+  :is(#world-viewport, #viewport)[data-hud-widget-activity='false']
+  :is([data-combat-hud], [data-combat-summary]),
+html body :is(#world-viewport, #viewport)[data-hud-widget-vitals='false'] > .combat-vitals,
+html
+  body
+  :is(#world-viewport, #viewport)[data-hud-widget-lesson='false']
+  [data-sim-hud='flight']:not([data-hud-navigation]),
+html
+  body
+  :is(#world-viewport, #viewport)[data-hud-widget-actions='false']
+  [data-combat-weapon-actions],
+html
+  body
+  :is(#world-viewport, #viewport)[data-hud-widget-sticks='false']
+  :is(#sticks, #world-touch:not(.touch-active)),
+html body :is(#world-viewport, #viewport)[data-hud-widget-drone='false'] > .sim-drone-response,
+html body :is(#world-viewport, #viewport)[data-hud-widget-compass='false'] .sim-flight-compass,
+html
+  body
+  :is(#world-viewport, #viewport)[data-hud-widget-readouts='false']
+  :is(.sim-flight-readouts, .sim-flight-extra) {
+  display: none !important;
+}
+.sim-hud-settings {
+  grid-column: 1 / -1;
+  padding: 10px 0;
+  border-block: 1px solid #ffffff30;
+}
+.sim-hud-settings > summary {
+  cursor: pointer;
+  min-height: 44px;
+  align-content: center;
+  font-weight: 700;
+}
+.sim-hud-settings > label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: 44px;
+}
+.sim-hud-settings input[type='checkbox'] {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+}
+.sim-hud-settings select {
+  max-width: 50%;
+}
+.sim-hud-settings p {
+  font-size: 13px;
+  line-height: 1.5;
+  max-width: 50ch;
+}
+html body [data-combat-weapon-actions] {
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+html body [data-combat-summary] {
+  display: none;
+}
+html body [data-hud-density='detailed'] [data-combat-weapon-summary] {
+  display: none;
+}
+html body :is(#world-viewport, #viewport)[data-hud-density='compact'] {
+  --compact-hud-bottom: max(8px, env(safe-area-inset-bottom, 0px));
+}
+html
+  body
+  :is(#world-viewport, #viewport)[data-hud-density='compact']:has(
+    #world-touch.touch-active:not([hidden])
+  ),
+html body #viewport[data-hud-density='compact']:has(#touch-controls:not([hidden])),
+html
+  body
+  :is(#world-viewport, #viewport)[data-hud-density='compact'][data-hud-widget-sticks='true'] {
+  --compact-hud-bottom: max(140px, env(safe-area-inset-bottom, 0px));
+}
+html body :is(#world-viewport, #viewport)[data-hud-density='compact'] > [data-combat-overlay] {
+  display: contents !important;
+}
+html body [data-hud-density='compact'] [data-combat-hud] {
+  display: none !important;
+}
+html body [data-hud-density='compact'] [data-combat-summary]:not([hidden]) {
+  display: block;
+  position: absolute;
+  left: max(8px, env(safe-area-inset-left));
+  top: 60px;
+  max-width: calc(100% - 112px);
+  padding: 5px 8px;
+  border-radius: 5px;
+  background: #101a24d9;
+  color: #f5f8fb;
+  font:
+    600 12px/1.5 system-ui,
+    sans-serif;
+  white-space: pre-line;
+  pointer-events: none;
+  z-index: 17;
+}
+html body [data-hud-density='compact'] [data-combat-actions] {
+  position: absolute;
+  left: 8px;
+  top: 112px;
+  z-index: 18;
+}
+html body [data-hud-density='compact'] [data-combat-weapon-actions]:not([hidden]) {
+  display: block !important;
+  position: absolute;
+  right: max(8px, env(safe-area-inset-right));
+  top: 60px;
+  margin: 0;
+  padding: 0;
+  width: max-content;
+  max-width: min(280px, calc(100% - 16px));
+  background: #101a24ed;
+  border-radius: 6px;
+  color: #f5f8fb;
+  z-index: 22;
+}
+html body [data-hud-density='compact'] [data-combat-weapon-actions] > summary {
+  list-style-position: inside;
+  min-height: 44px;
+  padding: 0 10px;
+  align-content: center;
+  cursor: pointer;
+  font:
+    600 13px/1.3 system-ui,
+    sans-serif;
+}
+html body [data-hud-density='compact'] [data-combat-weapon-actions] > button {
+  display: block;
+  min-height: 44px !important;
+  width: 100%;
+  padding: 8px 12px !important;
+  font:
+    600 13px/1.3 system-ui,
+    sans-serif !important;
+  border: 0 !important;
+  border-image: none !important;
+  border-top: 1px solid #ffffff30 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: #f5f8fb !important;
+  box-shadow: none !important;
+}
+html body #world-viewport[data-hud-density='compact'] > .combat-vitals[data-combat-vitals] {
+  position: absolute;
+  inset: auto auto var(--compact-hud-bottom) 50%;
+  transform: translateX(-50%);
+  display: grid;
+  grid-area: auto;
+  width: min(320px, calc(100% - 16px));
+  max-width: calc(100% - 16px);
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: 8px;
+  margin: 0;
+  padding: 6px 8px;
+  border-radius: 6px;
+  box-shadow: none;
+  z-index: 18;
+}
+html body #world-viewport[data-hud-density='compact'] > .combat-vitals[hidden] {
+  display: none !important;
+}
+html body #world-viewport[data-hud-density='compact'] .combat-vitals__card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 3px 6px;
+}
+html body #world-viewport[data-hud-density='compact'] .combat-vitals__card[data-vital='ammo'] {
+  border: 0;
+  padding-left: 0;
+}
+html body #world-viewport[data-hud-density='compact'] .combat-vitals__heading {
+  gap: 3px;
+}
+html body #world-viewport[data-hud-density='compact'] .combat-vitals__label {
+  font-size: 11px;
+  line-height: 1.2;
+}
+html body #world-viewport[data-hud-density='compact'] .combat-vitals__icon {
+  width: 14px;
+  height: 14px;
+}
+html body #world-viewport[data-hud-density='compact'] .combat-vitals__value {
+  font-size: 22px;
+  line-height: 1;
+}
+html body #world-viewport[data-hud-density='compact'] .combat-vitals__max {
+  display: none;
+}
+html body #world-viewport[data-hud-density='compact'] .combat-vitals__meter {
+  grid-column: 1 / -1;
+  height: 4px;
+  margin: 0;
+}
+html
+  body
+  #world-viewport[data-hud-density='compact']
+  :is(.combat-vitals__status, .combat-vitals__footer) {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: 10px;
+  line-height: 1.3;
+}
+html
+  body
+  #world-viewport[data-hud-density='compact']
+  .combat-vitals__card:is([data-tone='healthy'], [data-tone='ready'])
+  .combat-vitals__status {
+  display: none;
+}
+html body #world-viewport[data-hud-density='compact'] .combat-vitals__warning {
+  padding-top: 2px;
+  font-size: 11px;
+}
+html body :is(#world-viewport, #viewport)[data-hud-density='compact'] .sim-flight-compass {
+  top: 12px;
+  left: 8px;
+  transform: none;
+  min-width: 90px;
+  padding: 4px 6px;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+html body [data-hud-density='compact'] .sim-flight-readouts,
+html
+  body
+  [data-hud-density='compact']
+  .sim-flight-instruments[data-combat='true']
+  .sim-flight-readouts {
+  top: auto;
+  bottom: calc(var(--compact-hud-bottom) + 84px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: max-content;
+  max-width: calc(100% - 16px);
+  padding: 2px 6px;
+  font-size: 11px;
+}
+html body [data-hud-density='compact'] .sim-flight-extra,
+html
+  body
+  [data-hud-density='compact']
+  .sim-flight-instruments[data-combat='true']
+  .sim-flight-extra {
+  top: auto;
+  bottom: calc(var(--compact-hud-bottom) + 105px);
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: calc(100% - 16px);
+  font-size: 10px;
+  padding: 2px 6px;
+}
+html
+  body
+  [data-hud-density='compact']:not(:has(.combat-vitals:not([hidden])))
+  .sim-flight-readouts {
+  bottom: var(--compact-hud-bottom);
+}
+html
+  body
+  [data-hud-density='compact']
+  [data-sim-hud='flight']:not([data-hud-navigation])
+  [data-hud-part='card'] {
+  top: 60px;
+  left: 8px;
+  width: min(210px, calc(100% - 80px));
+  height: auto;
+  min-height: 48px;
+  grid-template-rows: auto auto;
+  padding: 5px 8px;
+  gap: 2px;
+}
+html body [data-hud-density='compact'] [data-sim-hud='flight'] [data-hud-part='checks'] {
+  display: none;
+}
+html body [data-hud-density='compact'] [data-sim-hud='flight'] [data-hud-part='action'] {
+  font-size: 13px;
+}
+html body [data-hud-density='compact'] [data-sim-hud='flight'] [data-hud-part='value'] {
+  font-size: 16px;
+}
+html
+  body
+  [data-hud-density='compact']
+  [data-sim-hud='flight']
+  :is([data-hud-part='explain'], [data-hud-part='hide']) {
+  top: 60px;
+  left: min(226px, calc(100% - 60px));
+  transform: none;
+}
+html body [data-hud-density='compact'] [data-sim-hud='flight'] [data-hud-part='hide'] {
+  display: none;
+}
+html body [data-hud-density='compact'] :is(#sticks, #world-touch:not(.touch-active)) {
+  bottom: 8px;
+  right: 8px;
+  width: auto;
+  padding: 4px;
+}
+html body [data-hud-density='compact'] #sticks > div,
+html body [data-hud-density='compact'] #world-touch:not(.touch-active) .touch-stick {
+  width: 72px !important;
+  height: 72px !important;
+  min-width: 72px;
+  min-height: 72px;
+}
+html body [data-hud-density='compact'] .sim-drone-response {
+  width: 72px !important;
+  height: 60px !important;
+  left: 8px;
+  bottom: 8px;
+}
+html body [data-hud-density='compact'] .sim-radio-flight-notice:not([hidden]) {
+  bottom: calc(var(--compact-hud-bottom) + 116px);
+  max-width: calc(100% - 24px);
+  font-size: 12px;
+  padding: 4px 8px;
+}
+@media (max-width: 900px), (max-height: 600px) {
+  html body :is(.mode-play-bar, .mode-play-floating-actions) {
+    gap: 4px !important;
+  }
+  html body :is(.mode-play-bar, .mode-play-floating-actions) > :is(button, a),
+  html body .sim-camera-quick {
+    min-height: 44px !important;
+    min-width: 44px !important;
+    padding: 6px 8px !important;
+    font-size: 12px !important;
+    border-width: 1px !important;
+    border-radius: 5px !important;
+    border-image: none !important;
+    box-shadow: none !important;
+  }
+  html body .mode-play-floating-actions .mode-play-home-label {
+    display: none;
+  }
+}
+@media (max-width: 900px), (max-height: 600px) {
+  html body :is(.mode-play-shell, #flight-dialog) > .mode-play-bar .mode-play-brand-button {
+    width: 44px !important;
+    max-width: 44px !important;
+    padding: 0 !important;
+    background-image: none !important;
+  }
+  html body .mode-play-bar .mode-play-brand-button img,
+  html body .mode-play-bar .mode-play-brand-button::before {
+    display: none !important;
+  }
+  html body .mode-play-bar .mode-play-brand-button::after {
+    content: '☰';
+    display: block !important;
+    font:
+      22px/1 system-ui,
+      sans-serif;
+  }
+}
+html
+  body
+  #flight-dialog:not([data-flight-state='active'])
+  #world-viewport[data-hud-density='compact']
+  [data-sim-hud='flight']:not([data-hud-navigation]) {
+  display: none;
+}
+html body #world-viewport[data-hud-density='compact'] #world-touch.touch-active .touch-stick,
+html body #viewport[data-hud-density='compact'] #touch-controls .touch-stick {
+  width: clamp(96px, 24vw, 132px) !important;
+  height: clamp(96px, 24vw, 132px) !important;
+  min-width: 96px;
+  min-height: 96px;
+}
+html body #world-viewport[data-hud-density='compact'] #world-touch.touch-active .touch-stick > span,
+html body #viewport[data-hud-density='compact'] #touch-controls > div > span {
+  display: none;
+}
+@media (min-aspect-ratio: 4/3) and (max-height: 600px) {
+  html body :is(#world-viewport, #viewport)[data-hud-density='compact'] {
+    --compact-hud-bottom: max(8px, env(safe-area-inset-bottom, 0px));
+  }
+}
+
+@media (max-width: 350px) {
+  html body :is(#world-viewport, #viewport)[data-hud-density='compact'] .sim-flight-compass {
+    top: 112px;
+  }
+}
 /* END SHARED SIM FULLSCREEN */
+
+/* Radio setup: manual mapping and its live monitor share the same workspace. */
+@layer legacy {
+  .radio-setup .radio-channels fieldset { display: grid; grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center; gap: 8px; padding: 12px; }
+  .radio-setup .radio-channels fieldset > :is(p, output, details, .radio-channel-meter) { grid-column: 1 / -1; }
+  .radio-setup .radio-channels fieldset > label { grid-column: 2; grid-row: 5; display: flex; align-items: center; gap: 8px; margin: 0; padding: 4px; }
+  .radio-setup .radio-channels fieldset > button { grid-column: 1; grid-row: 5; justify-self: start; margin: 0; }
+  .radio-setup .radio-channels fieldset > details { grid-row: 6; margin: 0; }
+  .radio-setup .radio-channels fieldset > details > label { margin: 0; }
+  .radio-setup .radio-channel-hint,
+  .radio-setup .radio-channel-reading {
+    flex-basis: 100%;
+    margin: 0;
+  }
+  .radio-setup .radio-channel-hint {
+    font-size: 13px;
+  }
+  .radio-setup .radio-channel-reading {
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+  }
+  .radio-setup .radio-channel-meter {
+    position: relative;
+    flex: 1 0 100%;
+    height: 12px;
+    margin: 4px 0 10px;
+    border: 1px solid currentColor;
+    border-radius: 8px;
+  }
+  .radio-channel-meter::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    height: 100%;
+    border-left: 1px solid currentColor;
+    opacity: 0.4;
+  }
+  .radio-channel-meter i {
+    position: absolute;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--fk-amber, #edbd61);
+    transform: translate(-50%, -50%);
+  }
+  .radio-setup .radio-channels fieldset > details {
+    flex-basis: 100%;
+  }
+  .radio-setup .radio-channels fieldset > details[open] {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .radio-setup .radio-channels fieldset > details > summary {
+    flex-basis: 100%;
+    padding: 8px 0;
+  }
+  .radio-setup .radio-channels fieldset.is-listening {
+    border-width: 2px;
+    border-color: var(--fk-amber, #edbd61);
+  }
+  .radio-guide[data-radio-guide-phase='manual'] .radio-monitor {
+    align-self: start;
+    position: sticky;
+    top: 8px;
+  }
+  .radio-guide[data-radio-guide-phase='manual'] .radio-extra-manual > summary {
+    display: none;
+  }
+  .radio-guide[data-radio-guide-phase='manual'] .radio-task .radio-extra-manual {
+    border: 0;
+  }
+  @media (max-width: 620px) {
+    .radio-guide[data-radio-guide-phase='manual'] .radio-task {
+      display: block;
+      grid-row: 2;
+    }
+    .radio-guide[data-radio-guide-phase='manual'] .radio-monitor {
+      grid-row: 1;
+      z-index: 2;
+      top: 0;
+      padding: 10px;
+      background: var(--fk-panel, #101923);
+    }
+    .radio-guide[data-radio-guide-phase='manual'] .radio-monitor h3 {
+      margin: 0;
+      font-size: 15px;
+    }
+    .radio-guide[data-radio-guide-phase='manual'] .radio-monitor .radio-monitor-caption,
+    .radio-guide[data-radio-guide-phase='manual'] .radio-values,
+    .radio-guide[data-radio-guide-phase='manual'] .radio-arm-hint {
+      display: none;
+    }
+  }
+}

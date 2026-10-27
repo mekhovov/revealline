@@ -1,0 +1,20 @@
+{
+  "format": "revealline-production-source-migration.v1",
+  "scope": "Catalog projection of the recorded compiler source. Historical execution claims are not transferred to these derived bytes.",
+  "items": [
+    {
+      "sourcePath": "authoring/library/route-worlds/build.mjs",
+      "previousSHA256": "8cb7ec2e3bf6cf334517ad056568110af4f7bc70a0143ad37bc33b10ff733d43",
+      "sha256": "4c58707b50a13b4b9a6086065d027143d106b234ff066ff5f98fcc4872e61664",
+      "previousBytes": 13370,
+      "bytes": 13335
+    },
+    {
+      "sourcePath": "authoring/library/sentinel-circuit-external/build.mjs",
+      "previousSHA256": "ee481bcaef80d86778fdda295f8660d0bfa2d6e0950bd24fddc59e051d463e88",
+      "sha256": "06bca8ebd9572d52671a336c02db986f5a50dae266ad5b5bff4097ca5f319cfb",
+      "previousBytes": 10172,
+      "bytes": 10172
+    }
+  ]
+}

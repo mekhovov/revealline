@@ -1,0 +1,1124 @@
+{
+  "base": "f80709e1df12e8a9b7cd48cfd6713c636bf77c33",
+  "capability": "overflight",
+  "scaleProperty": "--overflight-text-scale",
+  "defaultScale": 1,
+  "extraLargeScale": 2,
+  "stylesheetCount": 17,
+  "totalDeclarations": 161,
+  "files": [
+    {
+      "path": "game/access-gate.css",
+      "baseSha256": "18a5079bf8211a4546db46ee76c518fcdef2ce24ea5fb51efb9b6e8a27b632bd",
+      "declarations": [
+        {
+          "line": 26,
+          "property": "font",
+          "before": "17px/1.5 'Field Kit UI',\n      system-ui,\n      sans-serif",
+          "after": "calc(17px * var(--overflight-text-scale, 1))/1.5 'Field Kit UI',\n      system-ui,\n      sans-serif"
+        },
+        {
+          "line": 43,
+          "property": "font-size",
+          "before": "clamp(2rem, 8vw, 3.4rem)",
+          "after": "clamp(calc(2rem * var(--overflight-text-scale, 1)), calc(8vw * var(--overflight-text-scale, 1)), calc(3.4rem * var(--overflight-text-scale, 1)))"
+        }
+      ]
+    },
+    {
+      "path": "game/overflight/style.css",
+      "baseSha256": "2fc835add26f6df1c08909f7f74d26dfc15400a3f364e319e9c390025865abf2",
+      "declarations": [
+        {
+          "line": 164,
+          "property": "font-size",
+          "before": "14px",
+          "after": "calc(14px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 191,
+          "property": "font-size",
+          "before": "18px",
+          "after": "calc(18px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 201,
+          "property": "font-size",
+          "before": "11px",
+          "after": "calc(11px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 209,
+          "property": "font-size",
+          "before": "12px",
+          "after": "calc(12px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 237,
+          "property": "font-size",
+          "before": "clamp(24px, 3vw, 40px)",
+          "after": "clamp(calc(24px * var(--overflight-text-scale, 1)), calc(3vw * var(--overflight-text-scale, 1)), calc(40px * var(--overflight-text-scale, 1)))"
+        },
+        {
+          "line": 259,
+          "property": "font-size",
+          "before": "21px",
+          "after": "calc(21px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 276,
+          "property": "font-size",
+          "before": "12px",
+          "after": "calc(12px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 291,
+          "property": "font-size",
+          "before": "15px",
+          "after": "calc(15px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 305,
+          "property": "font-size",
+          "before": "12px",
+          "after": "calc(12px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 326,
+          "property": "font-size",
+          "before": "18px",
+          "after": "calc(18px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 329,
+          "property": "font-size",
+          "before": "15px",
+          "after": "calc(15px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 347,
+          "property": "font",
+          "before": "12px var(--fk-font-mono, monospace)",
+          "after": "calc(12px * var(--overflight-text-scale, 1)) var(--fk-font-mono, monospace)"
+        },
+        {
+          "line": 366,
+          "property": "font-size",
+          "before": "12px",
+          "after": "calc(12px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 393,
+          "property": "font-size",
+          "before": "11px",
+          "after": "calc(11px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 436,
+          "property": "font-size",
+          "before": "18px",
+          "after": "calc(18px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 439,
+          "property": "font-size",
+          "before": "16px",
+          "after": "calc(16px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 467,
+          "property": "font",
+          "before": "11px var(--fk-font-mono, monospace)",
+          "after": "calc(11px * var(--overflight-text-scale, 1)) var(--fk-font-mono, monospace)"
+        },
+        {
+          "line": 498,
+          "property": "font",
+          "before": "600 11px var(--fk-font-mono, monospace)",
+          "after": "600 calc(11px * var(--overflight-text-scale, 1)) var(--fk-font-mono, monospace)"
+        },
+        {
+          "line": 505,
+          "property": "font-size",
+          "before": "clamp(20px, 2vw, 29px)",
+          "after": "clamp(calc(20px * var(--overflight-text-scale, 1)), calc(2vw * var(--overflight-text-scale, 1)), calc(29px * var(--overflight-text-scale, 1)))"
+        },
+        {
+          "line": 512,
+          "property": "font-size",
+          "before": "11px",
+          "after": "calc(11px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 517,
+          "property": "font-size",
+          "before": "16px",
+          "after": "calc(16px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 522,
+          "property": "font-size",
+          "before": "12px",
+          "after": "calc(12px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 527,
+          "property": "font-size",
+          "before": "11px",
+          "after": "calc(11px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 583,
+          "property": "font-size",
+          "before": "13px",
+          "after": "calc(13px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 639,
+          "property": "font-size",
+          "before": "64px",
+          "after": "calc(64px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 727,
+          "property": "font-size",
+          "before": "10px",
+          "after": "calc(10px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 733,
+          "property": "font-size",
+          "before": "16px",
+          "after": "calc(16px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 767,
+          "property": "font-size",
+          "before": "64px",
+          "after": "calc(64px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 771,
+          "property": "font",
+          "before": "36px var(--fk-font-display, inherit)",
+          "after": "calc(36px * var(--overflight-text-scale, 1)) var(--fk-font-display, inherit)"
+        },
+        {
+          "line": 790,
+          "property": "font-size",
+          "before": "12px",
+          "after": "calc(12px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 794,
+          "property": "font",
+          "before": "700 clamp(22px, 3vw, 36px) var(--fk-font-mono, monospace)",
+          "after": "700 clamp(calc(22px * var(--overflight-text-scale, 1)), calc(3vw * var(--overflight-text-scale, 1)), calc(36px * var(--overflight-text-scale, 1))) var(--fk-font-mono, monospace)"
+        },
+        {
+          "line": 801,
+          "property": "font",
+          "before": "600 clamp(16px, 1.6vw, 20px) / 1.45 var(--fk-font-ui, 'Exo 2', sans-serif)",
+          "after": "600 clamp(calc(16px * var(--overflight-text-scale, 1)), calc(1.6vw * var(--overflight-text-scale, 1)), calc(20px * var(--overflight-text-scale, 1))) / 1.45 var(--fk-font-ui, 'Exo 2', sans-serif)"
+        },
+        {
+          "line": 805,
+          "property": "font-size",
+          "before": "22px",
+          "after": "calc(22px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 818,
+          "property": "font-size",
+          "before": "12px",
+          "after": "calc(12px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 835,
+          "property": "font-size",
+          "before": "12px",
+          "after": "calc(12px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 941,
+          "property": "font-size",
+          "before": "12px",
+          "after": "calc(12px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 945,
+          "property": "font-size",
+          "before": "10px",
+          "after": "calc(10px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 963,
+          "property": "font-size",
+          "before": "48px",
+          "after": "calc(48px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 980,
+          "property": "font-size",
+          "before": "44px",
+          "after": "calc(44px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 983,
+          "property": "font-size",
+          "before": "28px",
+          "after": "calc(28px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 996,
+          "property": "font-size",
+          "before": "clamp(0.65rem, 1.4vw, 0.95rem)",
+          "after": "clamp(calc(0.65rem * var(--overflight-text-scale, 1)), calc(1.4vw * var(--overflight-text-scale, 1)), calc(0.95rem * var(--overflight-text-scale, 1)))"
+        },
+        {
+          "line": 1112,
+          "property": "font-size",
+          "before": "1rem",
+          "after": "calc(1rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 1151,
+          "property": "font-size",
+          "before": "1.2rem",
+          "after": "calc(1.2rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 1156,
+          "property": "font-size",
+          "before": "0.9rem",
+          "after": "calc(0.9rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 1172,
+          "property": "font-size",
+          "before": "0.8rem",
+          "after": "calc(0.8rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 1182,
+          "property": "font-size",
+          "before": "0.65rem",
+          "after": "calc(0.65rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 1244,
+          "property": "font-size",
+          "before": "clamp(0.75rem, 3.5vw, 0.9rem)",
+          "after": "clamp(calc(0.75rem * var(--overflight-text-scale, 1)), calc(3.5vw * var(--overflight-text-scale, 1)), calc(0.9rem * var(--overflight-text-scale, 1)))"
+        },
+        {
+          "line": 1249,
+          "property": "font-size",
+          "before": "0.75rem",
+          "after": "calc(0.75rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 1285,
+          "property": "font-size",
+          "before": "0.9rem",
+          "after": "calc(0.9rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 1299,
+          "property": "font-size",
+          "before": "0.8rem",
+          "after": "calc(0.8rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 1303,
+          "property": "font-size",
+          "before": "0.75rem",
+          "after": "calc(0.75rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 1322,
+          "property": "font-size",
+          "before": "1.1rem",
+          "after": "calc(1.1rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 1325,
+          "property": "font-size",
+          "before": "0.75rem",
+          "after": "calc(0.75rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 1335,
+          "property": "font-size",
+          "before": "0.7rem",
+          "after": "calc(0.7rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 1367,
+          "property": "font",
+          "before": "12px/1.3 system-ui,\n    sans-serif",
+          "after": "calc(12px * var(--overflight-text-scale, 1))/1.3 system-ui,\n    sans-serif"
+        }
+      ]
+    },
+    {
+      "path": "game/presentation/industrial-workshop.css",
+      "baseSha256": "91ce430661a02939b276e069559cc767978275bca24b32a5349a2d6a621bb00d",
+      "declarations": [
+        {
+          "line": 416,
+          "property": "font-size",
+          "before": "var(--iw-text-size)",
+          "after": "calc(var(--iw-text-size) * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 587,
+          "property": "font-size",
+          "before": "var(--iw-text-size)",
+          "after": "calc(var(--iw-text-size) * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 960,
+          "property": "font-size",
+          "before": "max(18px, 1em)",
+          "after": "max(calc(18px * var(--overflight-text-scale, 1)), 1em)"
+        },
+        {
+          "line": 1144,
+          "property": "font-size",
+          "before": "13px",
+          "after": "calc(13px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 1208,
+          "property": "font-size",
+          "before": "var(--iw-text-size, 16px)",
+          "after": "calc(var(--iw-text-size, 16px) * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 1297,
+          "property": "font-size",
+          "before": "12px",
+          "after": "calc(12px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 1315,
+          "property": "font-size",
+          "before": "16px",
+          "after": "calc(16px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 1502,
+          "property": "font-size",
+          "before": "0.75rem",
+          "after": "calc(0.75rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 1580,
+          "property": "font-size",
+          "before": "var(--fk-text-secondary)",
+          "after": "calc(var(--fk-text-secondary) * var(--overflight-text-scale, 1))"
+        }
+      ]
+    },
+    {
+      "path": "game/ui/controller-field-editor.css",
+      "baseSha256": "8c9a57a82c6f877039fa56394356cc2aa554017a2cbd58ef9b584917b58f9fc0",
+      "declarations": [
+        {
+          "line": 17,
+          "property": "font",
+          "before": "16px/1.4 var(--fk-font-ui, sans-serif)",
+          "after": "calc(16px * var(--overflight-text-scale, 1))/1.4 var(--fk-font-ui, sans-serif)"
+        },
+        {
+          "line": 36,
+          "property": "font",
+          "before": "16px/1.4 monospace",
+          "after": "calc(16px * var(--overflight-text-scale, 1))/1.4 monospace"
+        },
+        {
+          "line": 51,
+          "property": "font-size",
+          "before": "clamp(12px, 2vw, 18px)",
+          "after": "clamp(calc(12px * var(--overflight-text-scale, 1)), calc(2vw * var(--overflight-text-scale, 1)), calc(18px * var(--overflight-text-scale, 1)))"
+        }
+      ]
+    },
+    {
+      "path": "game/ui/global-settings-tools.css",
+      "baseSha256": "5adf034ecf6f20d84dacd55cabf0058369f05f8a254301eac72c532bb6456eac",
+      "declarations": [
+        {
+          "line": 23,
+          "property": "font-size",
+          "before": "18px",
+          "after": "calc(18px * var(--overflight-text-scale, 1))"
+        }
+      ]
+    },
+    {
+      "path": "game/ui/global-settings-view.css",
+      "baseSha256": "457aac6fe231491ba10eddf65dd3ca0d635c5e22e2e3e3ef3aaf133d69bd97d3",
+      "declarations": [
+        {
+          "line": 9,
+          "property": "font",
+          "before": "600 12px/1.4 var(--fk-font-ui, sans-serif)",
+          "after": "600 calc(12px * var(--overflight-text-scale, 1))/1.4 var(--fk-font-ui, sans-serif)"
+        }
+      ]
+    },
+    {
+      "path": "game/ui/install-offline-panel.css",
+      "baseSha256": "973ae9ac8266e79df81ff205ca996030652a75fb1c2cac11cdcd55727aca0c16",
+      "declarations": [
+        {
+          "line": 30,
+          "property": "font-size",
+          "before": "1.1rem",
+          "after": "calc(1.1rem * var(--overflight-text-scale, 1))"
+        }
+      ]
+    },
+    {
+      "path": "game/ui/journey.css",
+      "baseSha256": "4cbad1caafc772dff3a0997dd97d01badda82ffaa1ab74d7665923cb90cf1477",
+      "declarations": [
+        {
+          "line": 22,
+          "property": "font-size",
+          "before": "clamp(1.5rem, 4vw, 2.5rem)",
+          "after": "clamp(calc(1.5rem * var(--overflight-text-scale, 1)), calc(4vw * var(--overflight-text-scale, 1)), calc(2.5rem * var(--overflight-text-scale, 1)))"
+        },
+        {
+          "line": 98,
+          "property": "font-size",
+          "before": "0.72rem",
+          "after": "calc(0.72rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 123,
+          "property": "font-size",
+          "before": "0.85rem",
+          "after": "calc(0.85rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 126,
+          "property": "font-size",
+          "before": "1.35rem",
+          "after": "calc(1.35rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 141,
+          "property": "font-size",
+          "before": "2rem",
+          "after": "calc(2rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 146,
+          "property": "font-size",
+          "before": "1.1rem",
+          "after": "calc(1.1rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 156,
+          "property": "font-size",
+          "before": "0.85rem",
+          "after": "calc(0.85rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 230,
+          "property": "font-size",
+          "before": "0.85rem",
+          "after": "calc(0.85rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 233,
+          "property": "font-size",
+          "before": "0.85rem",
+          "after": "calc(0.85rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 318,
+          "property": "font-size",
+          "before": "0.75rem",
+          "after": "calc(0.75rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 329,
+          "property": "font-size",
+          "before": "0.8rem",
+          "after": "calc(0.8rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 333,
+          "property": "font-size",
+          "before": "0.95rem",
+          "after": "calc(0.95rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 338,
+          "property": "font-size",
+          "before": "0.8rem",
+          "after": "calc(0.8rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 504,
+          "property": "font-size",
+          "before": "0.8rem",
+          "after": "calc(0.8rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 554,
+          "property": "font-size",
+          "before": "1.25rem",
+          "after": "calc(1.25rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 641,
+          "property": "font-size",
+          "before": "0.8rem",
+          "after": "calc(0.8rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 657,
+          "property": "font-size",
+          "before": "1.35rem",
+          "after": "calc(1.35rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 660,
+          "property": "font-size",
+          "before": "1rem",
+          "after": "calc(1rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 665,
+          "property": "font-size",
+          "before": "0.75rem",
+          "after": "calc(0.75rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 841,
+          "property": "font-size",
+          "before": "0.78rem",
+          "after": "calc(0.78rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 914,
+          "property": "font-size",
+          "before": "0.9rem",
+          "after": "calc(0.9rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 934,
+          "property": "font-size",
+          "before": "0.78rem",
+          "after": "calc(0.78rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 945,
+          "property": "font-size",
+          "before": "0.94rem",
+          "after": "calc(0.94rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 956,
+          "property": "font-size",
+          "before": "0.7rem",
+          "after": "calc(0.7rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 966,
+          "property": "font-size",
+          "before": "0.7rem",
+          "after": "calc(0.7rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 974,
+          "property": "font-size",
+          "before": "0.68rem",
+          "after": "calc(0.68rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 984,
+          "property": "font-size",
+          "before": "0.82rem",
+          "after": "calc(0.82rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 1023,
+          "property": "font-size",
+          "before": "0.65rem",
+          "after": "calc(0.65rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 1232,
+          "property": "font-size",
+          "before": "0.78rem",
+          "after": "calc(0.78rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 1276,
+          "property": "font-size",
+          "before": "0.78rem",
+          "after": "calc(0.78rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 1286,
+          "property": "font-size",
+          "before": "0.78rem",
+          "after": "calc(0.78rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 1336,
+          "property": "font-size",
+          "before": "1.35rem",
+          "after": "calc(1.35rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 1358,
+          "property": "font-size",
+          "before": "0.72rem",
+          "after": "calc(0.72rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 1373,
+          "property": "font-size",
+          "before": "1.1rem",
+          "after": "calc(1.1rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 1392,
+          "property": "font-size",
+          "before": "0.68rem",
+          "after": "calc(0.68rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 1477,
+          "property": "font-size",
+          "before": "1.5rem",
+          "after": "calc(1.5rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 1530,
+          "property": "font-size",
+          "before": "1rem",
+          "after": "calc(1rem * var(--overflight-text-scale, 1))"
+        }
+      ]
+    },
+    {
+      "path": "game/ui/mode-choice.css",
+      "baseSha256": "bdfa47a370c30ac0ea5775e29bd6e63e65432265302ccce023a990bf688487e4",
+      "declarations": [
+        {
+          "line": 6,
+          "property": "font-size",
+          "before": "var(--fk-text-secondary, 14px)",
+          "after": "calc(var(--fk-text-secondary, 14px) * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 50,
+          "property": "font",
+          "before": "600 clamp(11px, 2.6vw, 16px) / 1.2 var(--fk-font-ui, sans-serif)",
+          "after": "600 clamp(calc(11px * var(--overflight-text-scale, 1)), calc(2.6vw * var(--overflight-text-scale, 1)), calc(16px * var(--overflight-text-scale, 1))) / 1.2 var(--fk-font-ui, sans-serif)"
+        },
+        {
+          "line": 64,
+          "property": "font",
+          "before": "600 9px/1 var(--fk-font-ui, sans-serif)",
+          "after": "600 calc(9px * var(--overflight-text-scale, 1))/1 var(--fk-font-ui, sans-serif)"
+        },
+        {
+          "line": 88,
+          "property": "font-size",
+          "before": "11px",
+          "after": "calc(11px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 222,
+          "property": "font",
+          "before": "600 16px/1.3 var(--fk-font-ui, sans-serif)",
+          "after": "600 calc(16px * var(--overflight-text-scale, 1))/1.3 var(--fk-font-ui, sans-serif)"
+        },
+        {
+          "line": 247,
+          "property": "font",
+          "before": "600 14px/1.3 var(--fk-font-ui, sans-serif)",
+          "after": "600 calc(14px * var(--overflight-text-scale, 1))/1.3 var(--fk-font-ui, sans-serif)"
+        },
+        {
+          "line": 259,
+          "property": "font-size",
+          "before": "12px",
+          "after": "calc(12px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 311,
+          "property": "font-size",
+          "before": "20px",
+          "after": "calc(20px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 319,
+          "property": "font-size",
+          "before": "clamp(12px, 3.5vw, 16px)",
+          "after": "clamp(calc(12px * var(--overflight-text-scale, 1)), calc(3.5vw * var(--overflight-text-scale, 1)), calc(16px * var(--overflight-text-scale, 1)))"
+        },
+        {
+          "line": 323,
+          "property": "font-size",
+          "before": "14px",
+          "after": "calc(14px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 332,
+          "property": "font-size",
+          "before": "20px",
+          "after": "calc(20px * var(--overflight-text-scale, 1))"
+        }
+      ]
+    },
+    {
+      "path": "game/ui/mode-play-shell.css",
+      "baseSha256": "0de38784cc592c06596b27c64fc1ea75fbf0458a09326cc8760b22dba795ef85",
+      "declarations": [
+        {
+          "line": 43,
+          "property": "font-size",
+          "before": "0.85rem",
+          "after": "calc(0.85rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 119,
+          "property": "font-size",
+          "before": "clamp(1.25rem, 3vw, 2rem)",
+          "after": "clamp(calc(1.25rem * var(--overflight-text-scale, 1)), calc(3vw * var(--overflight-text-scale, 1)), calc(2rem * var(--overflight-text-scale, 1)))"
+        },
+        {
+          "line": 171,
+          "property": "font-size",
+          "before": "clamp(2rem, 7vw, 4rem)",
+          "after": "clamp(calc(2rem * var(--overflight-text-scale, 1)), calc(7vw * var(--overflight-text-scale, 1)), calc(4rem * var(--overflight-text-scale, 1)))"
+        },
+        {
+          "line": 185,
+          "property": "font-size",
+          "before": "0.9rem",
+          "after": "calc(0.9rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 278,
+          "property": "font-size",
+          "before": "0.8rem",
+          "after": "calc(0.8rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 292,
+          "property": "font-size",
+          "before": "clamp(12px, 3.3vw, 16px)",
+          "after": "clamp(calc(12px * var(--overflight-text-scale, 1)), calc(3.3vw * var(--overflight-text-scale, 1)), calc(16px * var(--overflight-text-scale, 1)))"
+        },
+        {
+          "line": 309,
+          "property": "font-size",
+          "before": "1rem",
+          "after": "calc(1rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 369,
+          "property": "font-size",
+          "before": "clamp(12px, 3.3vw, 16px)",
+          "after": "clamp(calc(12px * var(--overflight-text-scale, 1)), calc(3.3vw * var(--overflight-text-scale, 1)), calc(16px * var(--overflight-text-scale, 1)))"
+        },
+        {
+          "line": 409,
+          "property": "font",
+          "before": "600 18px/1.3 var(--fk-font-ui, sans-serif)",
+          "after": "600 calc(18px * var(--overflight-text-scale, 1))/1.3 var(--fk-font-ui, sans-serif)"
+        }
+      ]
+    },
+    {
+      "path": "game/ui/mode-settings-view.css",
+      "baseSha256": "cc7854f20bbfff00c07888f5336a6666c42e15805a83f312a8bdc47be5bdf163",
+      "declarations": [
+        {
+          "line": 49,
+          "property": "font",
+          "before": "600 22px/1.3 var(--fk-font-ui, 'Exo 2', system-ui, sans-serif)",
+          "after": "600 calc(22px * var(--overflight-text-scale, 1))/1.3 var(--fk-font-ui, 'Exo 2', system-ui, sans-serif)"
+        },
+        {
+          "line": 78,
+          "property": "font",
+          "before": "600 14px/1.3 var(--fk-font-ui, 'Exo 2', system-ui, sans-serif)",
+          "after": "600 calc(14px * var(--overflight-text-scale, 1))/1.3 var(--fk-font-ui, 'Exo 2', system-ui, sans-serif)"
+        },
+        {
+          "line": 219,
+          "property": "font-size",
+          "before": "18px",
+          "after": "calc(18px * var(--overflight-text-scale, 1))"
+        }
+      ]
+    },
+    {
+      "path": "game/ui/optional-practice-panel.css",
+      "baseSha256": "700745359dcdc5538b090467d1a6632065615e777c945ed013c5ef31c1249774",
+      "declarations": [
+        {
+          "line": 40,
+          "property": "font-size",
+          "before": "1.25rem",
+          "after": "calc(1.25rem * var(--overflight-text-scale, 1))"
+        }
+      ]
+    },
+    {
+      "path": "game/ui/pause-menu.css",
+      "baseSha256": "56a8d2867438b07144f3476101f60483b622b127ee362d047329ec0608b9c6a6",
+      "declarations": [
+        {
+          "line": 25,
+          "property": "font",
+          "before": "600 11px/1.2 var(--fk-font-ui, sans-serif)",
+          "after": "600 calc(11px * var(--overflight-text-scale, 1))/1.2 var(--fk-font-ui, sans-serif)"
+        },
+        {
+          "line": 49,
+          "property": "font-size",
+          "before": "14px",
+          "after": "calc(14px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 59,
+          "property": "font-size",
+          "before": "clamp(11px, 2.8vw, 14px)",
+          "after": "clamp(calc(11px * var(--overflight-text-scale, 1)), calc(2.8vw * var(--overflight-text-scale, 1)), calc(14px * var(--overflight-text-scale, 1)))"
+        },
+        {
+          "line": 141,
+          "property": "font-size",
+          "before": "20px",
+          "after": "calc(20px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 169,
+          "property": "font",
+          "before": "600 18px/1.25 var(--fk-font-ui, sans-serif)",
+          "after": "600 calc(18px * var(--overflight-text-scale, 1))/1.25 var(--fk-font-ui, sans-serif)"
+        },
+        {
+          "line": 183,
+          "property": "font-size",
+          "before": "11px",
+          "after": "calc(11px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 262,
+          "property": "font-size",
+          "before": "12px",
+          "after": "calc(12px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 268,
+          "property": "font-size",
+          "before": "20px",
+          "after": "calc(20px * var(--overflight-text-scale, 1))"
+        }
+      ]
+    },
+    {
+      "path": "game/ui/profile-recovery-dialog.css",
+      "baseSha256": "fc7c71c89eda0ee8ae05ca164c1eb5661cdc395343331fa3e36ef4eeba1f00f4",
+      "declarations": [
+        {
+          "line": 14,
+          "property": "font-size",
+          "before": "22px",
+          "after": "calc(22px * var(--overflight-text-scale, 1))"
+        }
+      ]
+    },
+    {
+      "path": "game/ui/quick-music-controls.css",
+      "baseSha256": "180733204148033593eec45f4f29ea690525386617c3fe25ea568714f761669a",
+      "declarations": [
+        {
+          "line": 51,
+          "property": "font-size",
+          "before": "0.8rem",
+          "after": "calc(0.8rem * var(--overflight-text-scale, 1))"
+        }
+      ]
+    },
+    {
+      "path": "game/ui/soundtrack-panel.css",
+      "baseSha256": "c5b77233195ed0f844bef0df7e0cd07e2a140f38a0b5576d0c240fefaa8c580e",
+      "declarations": [
+        {
+          "line": 17,
+          "property": "font",
+          "before": "14px/1.5 var(--fk-font-mono, monospace)",
+          "after": "calc(14px * var(--overflight-text-scale, 1))/1.5 var(--fk-font-mono, monospace)"
+        },
+        {
+          "line": 31,
+          "property": "font-size",
+          "before": "clamp(20px, 3vw, 30px)",
+          "after": "clamp(calc(20px * var(--overflight-text-scale, 1)), calc(3vw * var(--overflight-text-scale, 1)), calc(30px * var(--overflight-text-scale, 1)))"
+        },
+        {
+          "line": 37,
+          "property": "font-size",
+          "before": "16px",
+          "after": "calc(16px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 44,
+          "property": "font-size",
+          "before": "12px",
+          "after": "calc(12px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 86,
+          "property": "font-size",
+          "before": "18px",
+          "after": "calc(18px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 212,
+          "property": "font-size",
+          "before": "0.8rem",
+          "after": "calc(0.8rem * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 226,
+          "property": "font-size",
+          "before": "12px",
+          "after": "calc(12px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 251,
+          "property": "font-size",
+          "before": "16px",
+          "after": "calc(16px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 256,
+          "property": "font-size",
+          "before": "12px",
+          "after": "calc(12px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 267,
+          "property": "font-size",
+          "before": "11px",
+          "after": "calc(11px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 347,
+          "property": "font-size",
+          "before": "23px",
+          "after": "calc(23px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 358,
+          "property": "font-size",
+          "before": "14px",
+          "after": "calc(14px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 364,
+          "property": "font-size",
+          "before": "11px",
+          "after": "calc(11px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 381,
+          "property": "font-size",
+          "before": "12px",
+          "after": "calc(12px * var(--overflight-text-scale, 1))"
+        },
+        {
+          "line": 406,
+          "property": "font-size",
+          "before": "12px",
+          "after": "calc(12px * var(--overflight-text-scale, 1))"
+        }
+      ]
+    },
+    {
+      "path": "game/ui/touch-controls-view.css",
+      "baseSha256": "ef70b8df91880719d6f0a5f00cff64c5ec5120d3a494e7087f78423e52bd4dd4",
+      "declarations": [
+        {
+          "line": 38,
+          "property": "font",
+          "before": "13px/1.4 var(--fk-font-ui, sans-serif)",
+          "after": "calc(13px * var(--overflight-text-scale, 1))/1.4 var(--fk-font-ui, sans-serif)"
+        },
+        {
+          "line": 41,
+          "property": "font",
+          "before": "54px/1.3 var(--fk-font-ui, sans-serif)",
+          "after": "calc(54px * var(--overflight-text-scale, 1))/1.3 var(--fk-font-ui, sans-serif)"
+        },
+        {
+          "line": 64,
+          "property": "font",
+          "before": "bold 25px/1 var(--fk-font-ui, sans-serif)",
+          "after": "bold calc(25px * var(--overflight-text-scale, 1))/1 var(--fk-font-ui, sans-serif)"
+        }
+      ]
+    }
+  ],
+  "inlineOwners": [
+    {
+      "path": "game/ui/continuous-play.mjs",
+      "before": "font-size:.85rem;",
+      "after": "font-size:calc(.85rem * var(--overflight-text-scale, 1));",
+      "baseSha256": "47197f333ad6a115eb7c3e3c51d7da4149b5220c3e1f1006deda8c91fd50a3dc"
+    },
+    {
+      "path": "game/ui/contextual-reactions.mjs",
+      "before": "caption.style.fontSize = `${state.scale}rem`;",
+      "after": "caption.style.fontSize = `calc(${state.scale}rem * var(--overflight-text-scale, 1))`;",
+      "baseSha256": "e02752554b2651b19713c4039e31b4570c480bb0fad3c1093b953edfdfee1113"
+    },
+    {
+      "path": "game/ui/reaction-caption.mjs",
+      "before": "node.style.fontSize = `${options.scale}rem`;",
+      "after": "node.style.fontSize = `calc(${options.scale}rem * var(--overflight-text-scale, 1))`;",
+      "baseSha256": "5b7edf3006681a02b40134ff4eee2b1f7da3770eec2b5e9b9ae70c39332a5890"
+    }
+  ],
+  "exemptStylesheets": [
+    "game/i18n/style.css",
+    "game/ui/brand-identity.css",
+    "game/ui/field-kit-fonts.css"
+  ],
+  "runtimeExclusions": ["Raid", "Time Attack", "Marathon", "renderer/camera/arena geometry"],
+  "qualification": "Source declaration inventory; actual rendered typography and viewport qualification are separate.",
+  "integrationBase": "cdbda99ac881eb9cac62d536543d9078b92ac081",
+  "reviewedFoundationUnion": "50c2b888c179bbbe42cabe6979b9c226c194dd77",
+  "currentLoadedSources": {
+    "moduleReferences": 387,
+    "moduleBytesApprox": 6290000,
+    "stylesheetCountIncludingConservativeLazySources": 21,
+    "additionalStylesheet": "game/overflight/text-scaling.css",
+    "newMainOwner": "game/overflight/suspend-view.mjs; inherited/em text, existing save/readback and modal ownership retained",
+    "absentFromNativeImportClosure": "game/ui/comfort-presets.css",
+    "basis": "Read-only current-main import closure; original per-declaration base/hash/before values above remain f807 evidence."
+  },
+  "extraLargePresentation": {
+    "persistentCopy": "Existing Pause content owns build, HUD operation context, music credit and descriptive Riy title/roles; exact nodes restore on Standard/Large/disposal.",
+    "liveCopy": "Critical instruments, Riy focus/cooldown/actions, Boost, timed cache/reward/reaction and review actions remain live.",
+    "upgradeCaptions": "Existing NOW/NEXT facts have 24px visible DOM rows; original SVG text is visually hidden only at Extra large, diagram geometry retained.",
+    "nonTextGlyphs": "Direction glyphs, insignia and upgrade celebration keep their authored geometry; instruction/action text scales.",
+    "qualification": "Source-only inventory, arithmetic parity and planned native/browser acceptance are distinct. No rendered/device/200% pass claim."
+  }
+}

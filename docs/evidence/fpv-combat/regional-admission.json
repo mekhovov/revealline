@@ -1,0 +1,1013 @@
+{
+  "created": "2026-10-19T21:21:58.931Z",
+  "rows": [
+    {
+      "region": "railway-valley-expanse",
+      "spawn": "freight-hall",
+      "sha256": "38bddc6a19c8ba5965992b68ed9b80398cb515dc99de7ce07cac11c9436606c7",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "railway-valley-expanse",
+      "spawn": "viaduct-river-gap",
+      "sha256": "38bddc6a19c8ba5965992b68ed9b80398cb515dc99de7ce07cac11c9436606c7",
+      "actors": 12,
+      "requiredTargets": 12,
+      "moved": 12
+    },
+    {
+      "region": "railway-valley-expanse",
+      "spawn": "quarry-under-conveyor",
+      "sha256": "38bddc6a19c8ba5965992b68ed9b80398cb515dc99de7ce07cac11c9436606c7",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "railway-valley-expanse",
+      "spawn": "station-canopy",
+      "sha256": "38bddc6a19c8ba5965992b68ed9b80398cb515dc99de7ce07cac11c9436606c7",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "railway-valley-expanse",
+      "spawn": "foundry-gantries",
+      "sha256": "38bddc6a19c8ba5965992b68ed9b80398cb515dc99de7ce07cac11c9436606c7",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "railway-valley-expanse",
+      "spawn": "timber-crane-line",
+      "sha256": "38bddc6a19c8ba5965992b68ed9b80398cb515dc99de7ce07cac11c9436606c7",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "railway-valley-study",
+      "spawn": "freight-yard",
+      "sha256": "431b2dfb4be228e094174f1ccdd8eb72f906f09eb39a62c31b16e2bfb1239f15",
+      "actors": 12,
+      "requiredTargets": 11,
+      "moved": 12
+    },
+    {
+      "region": "railway-valley-study",
+      "spawn": "trestle-approach",
+      "sha256": "431b2dfb4be228e094174f1ccdd8eb72f906f09eb39a62c31b16e2bfb1239f15",
+      "actors": 12,
+      "requiredTargets": 11,
+      "moved": 12
+    },
+    {
+      "region": "railway-valley-study",
+      "spawn": "maintenance-entry",
+      "sha256": "431b2dfb4be228e094174f1ccdd8eb72f906f09eb39a62c31b16e2bfb1239f15",
+      "actors": 12,
+      "requiredTargets": 11,
+      "moved": 12
+    },
+    {
+      "region": "railway-valley-study",
+      "spawn": "field-recovery",
+      "sha256": "431b2dfb4be228e094174f1ccdd8eb72f906f09eb39a62c31b16e2bfb1239f15",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "glacial-valley",
+      "sha256": "92b7ed6acb426a04b007006a72536b8178bd0ad59bba7182637e25fd0d4cf804",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "switchback-pass",
+      "sha256": "92b7ed6acb426a04b007006a72536b8178bd0ad59bba7182637e25fd0d4cf804",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "snow-saddle",
+      "sha256": "92b7ed6acb426a04b007006a72536b8178bd0ad59bba7182637e25fd0d4cf804",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "summit-station",
+      "sha256": "92b7ed6acb426a04b007006a72536b8178bd0ad59bba7182637e25fd0d4cf804",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "viaduct-gorge",
+      "sha256": "92b7ed6acb426a04b007006a72536b8178bd0ad59bba7182637e25fd0d4cf804",
+      "actors": 12,
+      "requiredTargets": 9,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "reservoir-dam",
+      "sha256": "92b7ed6acb426a04b007006a72536b8178bd0ad59bba7182637e25fd0d4cf804",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "glacial-valley",
+      "sha256": "32c5338bb3ac7a4279de1f1cf77ddd36bd050c6b5bd971467f9cf5ef0898d2aa",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "switchback-pass",
+      "sha256": "32c5338bb3ac7a4279de1f1cf77ddd36bd050c6b5bd971467f9cf5ef0898d2aa",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "snow-saddle",
+      "sha256": "32c5338bb3ac7a4279de1f1cf77ddd36bd050c6b5bd971467f9cf5ef0898d2aa",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "summit-station",
+      "sha256": "32c5338bb3ac7a4279de1f1cf77ddd36bd050c6b5bd971467f9cf5ef0898d2aa",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "viaduct-gorge",
+      "sha256": "32c5338bb3ac7a4279de1f1cf77ddd36bd050c6b5bd971467f9cf5ef0898d2aa",
+      "actors": 12,
+      "requiredTargets": 9,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "reservoir-dam",
+      "sha256": "32c5338bb3ac7a4279de1f1cf77ddd36bd050c6b5bd971467f9cf5ef0898d2aa",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "lunar-basin-study",
+      "spawn": "mare-apron",
+      "sha256": "e3ec1ebf203e391741e64d218ac2554db3d5b0327dbdc9940e7190726f27ba65",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "lunar-basin-study",
+      "spawn": "ejecta-fan",
+      "sha256": "e3ec1ebf203e391741e64d218ac2554db3d5b0327dbdc9940e7190726f27ba65",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "lunar-basin-study",
+      "spawn": "sinuous-rille",
+      "sha256": "e3ec1ebf203e391741e64d218ac2554db3d5b0327dbdc9940e7190726f27ba65",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "lunar-basin-study",
+      "spawn": "terraced-crater",
+      "sha256": "e3ec1ebf203e391741e64d218ac2554db3d5b0327dbdc9940e7190726f27ba65",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "lunar-basin-study",
+      "spawn": "fractured-highland",
+      "sha256": "e3ec1ebf203e391741e64d218ac2554db3d5b0327dbdc9940e7190726f27ba65",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "lunar-basin-study",
+      "spawn": "observatory-ridge",
+      "sha256": "e3ec1ebf203e391741e64d218ac2554db3d5b0327dbdc9940e7190726f27ba65",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "glacial-valley",
+      "sha256": "0096934874cb5ad3a8355471242aadbb92a660607d3c04481f6b06eb0937062f",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "switchback-pass",
+      "sha256": "0096934874cb5ad3a8355471242aadbb92a660607d3c04481f6b06eb0937062f",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "snow-saddle",
+      "sha256": "0096934874cb5ad3a8355471242aadbb92a660607d3c04481f6b06eb0937062f",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "summit-station",
+      "sha256": "0096934874cb5ad3a8355471242aadbb92a660607d3c04481f6b06eb0937062f",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "viaduct-gorge",
+      "sha256": "0096934874cb5ad3a8355471242aadbb92a660607d3c04481f6b06eb0937062f",
+      "actors": 12,
+      "requiredTargets": 9,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "reservoir-dam",
+      "sha256": "0096934874cb5ad3a8355471242aadbb92a660607d3c04481f6b06eb0937062f",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "glacial-valley",
+      "sha256": "c60fd92ed1dc00136fb8df55bf02bcc211b932c4bbe018917a1f37b549ac3c8d",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "switchback-pass",
+      "sha256": "c60fd92ed1dc00136fb8df55bf02bcc211b932c4bbe018917a1f37b549ac3c8d",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "snow-saddle",
+      "sha256": "c60fd92ed1dc00136fb8df55bf02bcc211b932c4bbe018917a1f37b549ac3c8d",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "summit-station",
+      "sha256": "c60fd92ed1dc00136fb8df55bf02bcc211b932c4bbe018917a1f37b549ac3c8d",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "viaduct-gorge",
+      "sha256": "c60fd92ed1dc00136fb8df55bf02bcc211b932c4bbe018917a1f37b549ac3c8d",
+      "actors": 12,
+      "requiredTargets": 9,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "reservoir-dam",
+      "sha256": "c60fd92ed1dc00136fb8df55bf02bcc211b932c4bbe018917a1f37b549ac3c8d",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "lunar-basin-study",
+      "spawn": "mare-apron",
+      "sha256": "1ec74a074029002f6595bb614ac63a2a52a67e1092c6baf1e45480ffdbb7619a",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "lunar-basin-study",
+      "spawn": "ejecta-fan",
+      "sha256": "1ec74a074029002f6595bb614ac63a2a52a67e1092c6baf1e45480ffdbb7619a",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "lunar-basin-study",
+      "spawn": "sinuous-rille",
+      "sha256": "1ec74a074029002f6595bb614ac63a2a52a67e1092c6baf1e45480ffdbb7619a",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "lunar-basin-study",
+      "spawn": "terraced-crater",
+      "sha256": "1ec74a074029002f6595bb614ac63a2a52a67e1092c6baf1e45480ffdbb7619a",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "lunar-basin-study",
+      "spawn": "fractured-highland",
+      "sha256": "1ec74a074029002f6595bb614ac63a2a52a67e1092c6baf1e45480ffdbb7619a",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "lunar-basin-study",
+      "spawn": "observatory-ridge",
+      "sha256": "1ec74a074029002f6595bb614ac63a2a52a67e1092c6baf1e45480ffdbb7619a",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "glacial-valley",
+      "sha256": "a442a07717d09c703231279db41dd23c9447e0cc7f5f53aa3964eef4f74573ec",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "switchback-pass",
+      "sha256": "a442a07717d09c703231279db41dd23c9447e0cc7f5f53aa3964eef4f74573ec",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "snow-saddle",
+      "sha256": "a442a07717d09c703231279db41dd23c9447e0cc7f5f53aa3964eef4f74573ec",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "summit-station",
+      "sha256": "a442a07717d09c703231279db41dd23c9447e0cc7f5f53aa3964eef4f74573ec",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "viaduct-gorge",
+      "sha256": "a442a07717d09c703231279db41dd23c9447e0cc7f5f53aa3964eef4f74573ec",
+      "actors": 12,
+      "requiredTargets": 9,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "reservoir-dam",
+      "sha256": "a442a07717d09c703231279db41dd23c9447e0cc7f5f53aa3964eef4f74573ec",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "glacial-valley",
+      "sha256": "8b49b885b05976b4a114a17d88d9af1b352418cbac16866a5249ae32b43c191a",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "switchback-pass",
+      "sha256": "8b49b885b05976b4a114a17d88d9af1b352418cbac16866a5249ae32b43c191a",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "snow-saddle",
+      "sha256": "8b49b885b05976b4a114a17d88d9af1b352418cbac16866a5249ae32b43c191a",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "summit-station",
+      "sha256": "8b49b885b05976b4a114a17d88d9af1b352418cbac16866a5249ae32b43c191a",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "viaduct-gorge",
+      "sha256": "8b49b885b05976b4a114a17d88d9af1b352418cbac16866a5249ae32b43c191a",
+      "actors": 12,
+      "requiredTargets": 9,
+      "moved": 11
+    },
+    {
+      "region": "alpine-highlands-study",
+      "spawn": "reservoir-dam",
+      "sha256": "8b49b885b05976b4a114a17d88d9af1b352418cbac16866a5249ae32b43c191a",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "canal-city-study",
+      "spawn": "north-arch",
+      "sha256": "891835944510139a7bed6a99305c0e22b71ba9ccfe84801a07ea6e215ca25c87",
+      "actors": 12,
+      "requiredTargets": 11,
+      "moved": 11
+    },
+    {
+      "region": "canal-city-study",
+      "spawn": "warehouse-passage",
+      "sha256": "891835944510139a7bed6a99305c0e22b71ba9ccfe84801a07ea6e215ca25c87",
+      "actors": 12,
+      "requiredTargets": 12,
+      "moved": 11
+    },
+    {
+      "region": "canal-city-study",
+      "spawn": "highwalk",
+      "sha256": "891835944510139a7bed6a99305c0e22b71ba9ccfe84801a07ea6e215ca25c87",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "canal-city-study",
+      "spawn": "lock-bend",
+      "sha256": "891835944510139a7bed6a99305c0e22b71ba9ccfe84801a07ea6e215ca25c87",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "canal-city-study",
+      "spawn": "courtyard",
+      "sha256": "891835944510139a7bed6a99305c0e22b71ba9ccfe84801a07ea6e215ca25c87",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "canal-city-study",
+      "spawn": "turning-basin",
+      "sha256": "891835944510139a7bed6a99305c0e22b71ba9ccfe84801a07ea6e215ca25c87",
+      "actors": 12,
+      "requiredTargets": 11,
+      "moved": 11
+    },
+    {
+      "region": "desert-expedition-study",
+      "spawn": "crescent-dunes",
+      "sha256": "fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "desert-expedition-study",
+      "spawn": "dry-wash",
+      "sha256": "fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "desert-expedition-study",
+      "spawn": "salt-basin",
+      "sha256": "fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "desert-expedition-study",
+      "spawn": "sunrise-escarpment",
+      "sha256": "fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "desert-expedition-study",
+      "spawn": "mesa-corridor",
+      "sha256": "fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "desert-expedition-study",
+      "spawn": "rocky-plain",
+      "sha256": "fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "desert-expedition-study",
+      "spawn": "crescent-dunes",
+      "sha256": "6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "desert-expedition-study",
+      "spawn": "dry-wash",
+      "sha256": "6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "desert-expedition-study",
+      "spawn": "salt-basin",
+      "sha256": "6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "desert-expedition-study",
+      "spawn": "sunrise-escarpment",
+      "sha256": "6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "desert-expedition-study",
+      "spawn": "mesa-corridor",
+      "sha256": "6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "desert-expedition-study",
+      "spawn": "rocky-plain",
+      "sha256": "6ecb919762a9d3fac6519ca80600489cab0cb6b3cb3e0804d01d5f7e8791029d",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "tropical-coastal-districts",
+      "spawn": "covered-harbour",
+      "sha256": "44aa0de26f4b4aa79fb0ca8f4b6c7d39bdd62debbdc5e4c51a3a12368a0f42ce",
+      "actors": 12,
+      "requiredTargets": 12,
+      "moved": 12
+    },
+    {
+      "region": "tropical-coastal-districts",
+      "spawn": "lagoon-piers",
+      "sha256": "44aa0de26f4b4aa79fb0ca8f4b6c7d39bdd62debbdc5e4c51a3a12368a0f42ce",
+      "actors": 12,
+      "requiredTargets": 12,
+      "moved": 12
+    },
+    {
+      "region": "tropical-coastal-districts",
+      "spawn": "reef-rocks",
+      "sha256": "44aa0de26f4b4aa79fb0ca8f4b6c7d39bdd62debbdc5e4c51a3a12368a0f42ce",
+      "actors": 12,
+      "requiredTargets": 12,
+      "moved": 12
+    },
+    {
+      "region": "tropical-coastal-districts",
+      "spawn": "palm-valley",
+      "sha256": "44aa0de26f4b4aa79fb0ca8f4b6c7d39bdd62debbdc5e4c51a3a12368a0f42ce",
+      "actors": 12,
+      "requiredTargets": 12,
+      "moved": 12
+    },
+    {
+      "region": "tropical-coastal-districts",
+      "spawn": "hillside-huts",
+      "sha256": "44aa0de26f4b4aa79fb0ca8f4b6c7d39bdd62debbdc5e4c51a3a12368a0f42ce",
+      "actors": 12,
+      "requiredTargets": 12,
+      "moved": 12
+    },
+    {
+      "region": "tropical-coastal-districts",
+      "spawn": "bamboo-grove",
+      "sha256": "44aa0de26f4b4aa79fb0ca8f4b6c7d39bdd62debbdc5e4c51a3a12368a0f42ce",
+      "actors": 12,
+      "requiredTargets": 12,
+      "moved": 12
+    },
+    {
+      "region": "coaster-gardens-study",
+      "spawn": "arrival-gardens",
+      "sha256": "935a4a4034c206d5bbce77e333f72530812a50c60135117616887a6dac70b53a",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 12
+    },
+    {
+      "region": "coaster-gardens-study",
+      "spawn": "loop-meadow",
+      "sha256": "935a4a4034c206d5bbce77e333f72530812a50c60135117616887a6dac70b53a",
+      "actors": 12,
+      "requiredTargets": 9,
+      "moved": 11
+    },
+    {
+      "region": "coaster-gardens-study",
+      "spawn": "ridge-station",
+      "sha256": "935a4a4034c206d5bbce77e333f72530812a50c60135117616887a6dac70b53a",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "coaster-gardens-study",
+      "spawn": "service-courts",
+      "sha256": "935a4a4034c206d5bbce77e333f72530812a50c60135117616887a6dac70b53a",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "coaster-gardens-study",
+      "spawn": "woodland-promenade",
+      "sha256": "935a4a4034c206d5bbce77e333f72530812a50c60135117616887a6dac70b53a",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "coaster-gardens-study",
+      "spawn": "river-gardens",
+      "sha256": "935a4a4034c206d5bbce77e333f72530812a50c60135117616887a6dac70b53a",
+      "actors": 12,
+      "requiredTargets": 11,
+      "moved": 11
+    },
+    {
+      "region": "coaster-gardens-study",
+      "spawn": "arrival-gardens",
+      "sha256": "4800da2f8a06134333fad8def9615a96c94b2fb76f7fb3ef41bfa69b4a9872b5",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 12
+    },
+    {
+      "region": "coaster-gardens-study",
+      "spawn": "loop-meadow",
+      "sha256": "4800da2f8a06134333fad8def9615a96c94b2fb76f7fb3ef41bfa69b4a9872b5",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "coaster-gardens-study",
+      "spawn": "ridge-station",
+      "sha256": "4800da2f8a06134333fad8def9615a96c94b2fb76f7fb3ef41bfa69b4a9872b5",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "coaster-gardens-study",
+      "spawn": "service-courts",
+      "sha256": "4800da2f8a06134333fad8def9615a96c94b2fb76f7fb3ef41bfa69b4a9872b5",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "coaster-gardens-study",
+      "spawn": "woodland-promenade",
+      "sha256": "4800da2f8a06134333fad8def9615a96c94b2fb76f7fb3ef41bfa69b4a9872b5",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "coaster-gardens-study",
+      "spawn": "river-gardens",
+      "sha256": "4800da2f8a06134333fad8def9615a96c94b2fb76f7fb3ef41bfa69b4a9872b5",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "hillside-town-study",
+      "spawn": "lower-square",
+      "sha256": "f6717cb5833932f4ab1be27705802ba0600384e0f4fc2f4d0e2e8f4b06bdf573",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "hillside-town-study",
+      "spawn": "middle-courtyard",
+      "sha256": "f6717cb5833932f4ab1be27705802ba0600384e0f4fc2f4d0e2e8f4b06bdf573",
+      "actors": 12,
+      "requiredTargets": 9,
+      "moved": 11
+    },
+    {
+      "region": "hillside-town-study",
+      "spawn": "upper-terrace",
+      "sha256": "f6717cb5833932f4ab1be27705802ba0600384e0f4fc2f4d0e2e8f4b06bdf573",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "hillside-town-study",
+      "spawn": "elevated-pad",
+      "sha256": "f6717cb5833932f4ab1be27705802ba0600384e0f4fc2f4d0e2e8f4b06bdf573",
+      "actors": 12,
+      "requiredTargets": 12,
+      "moved": 12
+    },
+    {
+      "region": "hillside-town-study",
+      "spawn": "lower-square",
+      "sha256": "de1dc4726724bf4851e5976191585e04205f81ba3b83f14442e0c94f18b907d9",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "hillside-town-study",
+      "spawn": "middle-courtyard",
+      "sha256": "de1dc4726724bf4851e5976191585e04205f81ba3b83f14442e0c94f18b907d9",
+      "actors": 12,
+      "requiredTargets": 9,
+      "moved": 11
+    },
+    {
+      "region": "hillside-town-study",
+      "spawn": "upper-terrace",
+      "sha256": "de1dc4726724bf4851e5976191585e04205f81ba3b83f14442e0c94f18b907d9",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "hillside-town-study",
+      "spawn": "elevated-pad",
+      "sha256": "de1dc4726724bf4851e5976191585e04205f81ba3b83f14442e0c94f18b907d9",
+      "actors": 12,
+      "requiredTargets": 12,
+      "moved": 12
+    },
+    {
+      "region": "tropical-coastal-districts",
+      "spawn": "covered-harbour",
+      "sha256": "dab4be6dd5b782d38c6c01f510137d048b9646d1f14e80c4dc40c6d848720f49",
+      "actors": 12,
+      "requiredTargets": 12,
+      "moved": 12
+    },
+    {
+      "region": "tropical-coastal-districts",
+      "spawn": "lagoon-piers",
+      "sha256": "dab4be6dd5b782d38c6c01f510137d048b9646d1f14e80c4dc40c6d848720f49",
+      "actors": 12,
+      "requiredTargets": 12,
+      "moved": 12
+    },
+    {
+      "region": "tropical-coastal-districts",
+      "spawn": "reef-rocks",
+      "sha256": "dab4be6dd5b782d38c6c01f510137d048b9646d1f14e80c4dc40c6d848720f49",
+      "actors": 12,
+      "requiredTargets": 12,
+      "moved": 12
+    },
+    {
+      "region": "tropical-coastal-districts",
+      "spawn": "palm-valley",
+      "sha256": "dab4be6dd5b782d38c6c01f510137d048b9646d1f14e80c4dc40c6d848720f49",
+      "actors": 12,
+      "requiredTargets": 12,
+      "moved": 12
+    },
+    {
+      "region": "tropical-coastal-districts",
+      "spawn": "hillside-huts",
+      "sha256": "dab4be6dd5b782d38c6c01f510137d048b9646d1f14e80c4dc40c6d848720f49",
+      "actors": 12,
+      "requiredTargets": 12,
+      "moved": 12
+    },
+    {
+      "region": "tropical-coastal-districts",
+      "spawn": "bamboo-grove",
+      "sha256": "dab4be6dd5b782d38c6c01f510137d048b9646d1f14e80c4dc40c6d848720f49",
+      "actors": 12,
+      "requiredTargets": 12,
+      "moved": 12
+    },
+    {
+      "region": "canyon-expanse-study",
+      "spawn": "braided-basin",
+      "sha256": "d2c3dce6c39227e85a10256fb3d1082fec2a6c7a47f6347fd664e2840eb57003",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "canyon-expanse-study",
+      "spawn": "high-mesa",
+      "sha256": "d2c3dce6c39227e85a10256fb3d1082fec2a6c7a47f6347fd664e2840eb57003",
+      "actors": 12,
+      "requiredTargets": 12,
+      "moved": 12
+    },
+    {
+      "region": "canyon-expanse-study",
+      "spawn": "red-escarpment",
+      "sha256": "d2c3dce6c39227e85a10256fb3d1082fec2a6c7a47f6347fd664e2840eb57003",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "canyon-expanse-study",
+      "spawn": "confluence",
+      "sha256": "d2c3dce6c39227e85a10256fb3d1082fec2a6c7a47f6347fd664e2840eb57003",
+      "actors": 12,
+      "requiredTargets": 12,
+      "moved": 12
+    },
+    {
+      "region": "canyon-expanse-study",
+      "spawn": "hoodoo-flats",
+      "sha256": "d2c3dce6c39227e85a10256fb3d1082fec2a6c7a47f6347fd664e2840eb57003",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "canyon-expanse-study",
+      "spawn": "amphitheatre",
+      "sha256": "d2c3dce6c39227e85a10256fb3d1082fec2a6c7a47f6347fd664e2840eb57003",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "tropical-coastal-study",
+      "spawn": "shore-overlook",
+      "sha256": "ddd62d4662b873bc97243a414dc4ddc291eeb7e9c084f15af661b449ddcc3443",
+      "actors": 12,
+      "requiredTargets": 12,
+      "moved": 12
+    },
+    {
+      "region": "tropical-coastal-study",
+      "spawn": "covered-pier",
+      "sha256": "ddd62d4662b873bc97243a414dc4ddc291eeb7e9c084f15af661b449ddcc3443",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "tropical-coastal-study",
+      "spawn": "hut-approach",
+      "sha256": "ddd62d4662b873bc97243a414dc4ddc291eeb7e9c084f15af661b449ddcc3443",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "canyon-arrival-landmarks-study",
+      "spawn": "basin",
+      "sha256": "f69cc4d315c254d5b825e2cfbde21d8509da1c8e3ae2a3e743de95782c5300c8",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "canyon-arrival-landmarks-study",
+      "spawn": "mesa",
+      "sha256": "f69cc4d315c254d5b825e2cfbde21d8509da1c8e3ae2a3e743de95782c5300c8",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "canyon-arrival-landmarks-study",
+      "spawn": "gorge",
+      "sha256": "f69cc4d315c254d5b825e2cfbde21d8509da1c8e3ae2a3e743de95782c5300c8",
+      "actors": 12,
+      "requiredTargets": 11,
+      "moved": 12
+    },
+    {
+      "region": "canyon-arrival-landmarks-study",
+      "spawn": "buttes",
+      "sha256": "f69cc4d315c254d5b825e2cfbde21d8509da1c8e3ae2a3e743de95782c5300c8",
+      "actors": 12,
+      "requiredTargets": 12,
+      "moved": 12
+    },
+    {
+      "region": "canyon-arrival-landmarks-study",
+      "spawn": "fork",
+      "sha256": "f69cc4d315c254d5b825e2cfbde21d8509da1c8e3ae2a3e743de95782c5300c8",
+      "actors": 12,
+      "requiredTargets": 11,
+      "moved": 12
+    },
+    {
+      "region": "canyon-arrival-landmarks-study",
+      "spawn": "shelf",
+      "sha256": "f69cc4d315c254d5b825e2cfbde21d8509da1c8e3ae2a3e743de95782c5300c8",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "canyon-arrival-landmarks-study",
+      "spawn": "basin",
+      "sha256": "5cd92029c88179e94231b4ec4f799372b075cd187421e9feec3fb6ee2eabf6d0",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "urban-earthworks-study",
+      "spawn": "mill-court",
+      "sha256": "9a7d157d2d5fd197c632b870bd9b9ebacd62015ad0084605712185064c8ae73a",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    },
+    {
+      "region": "urban-earthworks-study",
+      "spawn": "tower-court",
+      "sha256": "9a7d157d2d5fd197c632b870bd9b9ebacd62015ad0084605712185064c8ae73a",
+      "actors": 12,
+      "requiredTargets": 10,
+      "moved": 11
+    }
+  ]
+}

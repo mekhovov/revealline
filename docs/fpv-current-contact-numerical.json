@@ -1,0 +1,4378 @@
+{
+  "format": "AircraftCurrentContactQualification.v1",
+  "revision": "965962775858f7d21aa4f62265fba6fc1a2ad182",
+  "startedAt": "2026-10-18T22:52:14.231Z",
+  "finishedAt": "2026-10-18T22:52:46.942Z",
+  "runtime": {
+    "node": "v20.19.5",
+    "architecture": "arm64",
+    "platform": "darwin",
+    "processor": "Apple M4 Pro"
+  },
+  "selectedSourceSha256": {
+    "optional-practice/civilian-fpv/advanced-aircraft-runtime.mjs": "2a38134de98562ae426e22737684c6e690321b148a1ed3e4f3209527ca0585b2",
+    "optional-practice/civilian-fpv/advanced-simulation.mjs": "b1bd0944ae095ab05ffb85e78deddee757ab9641053b981f4f78a52c2640d69c",
+    "optional-practice/civilian-fpv/aircraft-physics.mjs": "7bc651f151e0729541a9323c075ea40a1bcccb0fb9cd0379c202b1a77421351a",
+    "optional-practice/civilian-fpv/aircraft-response.mjs": "c89d28ca2b504b880c1b8e77fe1be9d197129b18d4273f8d72b548bba5169303",
+    "optional-practice/civilian-fpv/aircraft-presets.mjs": "c3bceb64f9cfef85c6894c2b69814c70886b6f30b7301e2659382e24bbee56e6",
+    "optional-practice/civilian-fpv/aircraft-recording.mjs": "79bf6f61f982c1c45186e494f64a0ee0a55d07dbf6e405f121f2d8ec0b665cce",
+    "optional-practice/civilian-fpv/aircraft-course-session.mjs": "0d71939840f1e09b5328581a267bce1df732dc948756bf9d96f82eb97ceeec6e",
+    "optional-practice/civilian-fpv/advanced-worker.mjs": "46cbbb5b3a79cd2f973bf9ac1ee2b637e0d44027143b7de115623a6fdc13b4e9",
+    "game/test/helpers/fpv-aircraft-qualification.mjs": "22591e833a502ef5cf0defc0c78c655e56471c921dfa9adfe930db200683cdf3"
+  },
+  "sourceStable": true,
+  "sourceCoverage": "Selected source hashes, not the complete transitive dependency graph",
+  "timing": {
+    "format": "AircraftTimingQualification.v1",
+    "referenceHz": 2000,
+    "repetitions": 2,
+    "selectedHzOnThisRuntime": 1000,
+    "aircraft": [
+      {
+        "preset": "air65-ii-racing-2026",
+        "reference": {
+          "frequency": 2000,
+          "axes": {
+            "roll": {
+              "elapsedMs": 189.600958,
+              "capacity": 15.822704862071426,
+              "finalHash": "ea79464b",
+              "metrics": {
+                "steadyRate": 100.76448778589085,
+                "riseTime": 0.21626987492229677,
+                "peakRate": 100.9423275547081,
+                "absoluteError": 12.469343806918152
+              }
+            },
+            "pitch": {
+              "elapsedMs": 190.820875,
+              "capacity": 15.721550380690791,
+              "finalHash": "d6a82e3f",
+              "metrics": {
+                "steadyRate": 100.76407370479245,
+                "riseTime": 0.21620479547821392,
+                "peakRate": 100.94070196984214,
+                "absoluteError": 12.46737674638511
+              }
+            },
+            "yaw": {
+              "elapsedMs": 156.4380000000001,
+              "capacity": 19.176926322249056,
+              "finalHash": "c0d4a606",
+              "metrics": {
+                "steadyRate": 102.78590873687796,
+                "riseTime": 0.386633919403904,
+                "peakRate": 102.85000622068613,
+                "absoluteError": 21.336532702786716
+              }
+            }
+          },
+          "contact": {
+            "minimumZ": 0.06999343633651733,
+            "blocked": true,
+            "finalZ": 2.5374755859375
+          },
+          "landing": {
+            "grounded": true,
+            "support": "course-boundary-y-min",
+            "minimumSupportY": -0.00018915635048104978,
+            "finalSupportY": -0.000017581272771164183,
+            "capacity": 6.317160417188305,
+            "finalHash": "5fb6d391"
+          }
+        },
+        "candidates": [
+          {
+            "frequency": 250,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.70766061110888,
+                  "riseTime": 0.2166085889429228,
+                  "peakRate": 100.86646464375313,
+                  "absoluteError": 12.239206815179973
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0005639603399038882,
+                  "riseTime": 0.0015661636681840898,
+                  "peakRate": 0.0007515470743811769,
+                  "absoluteError": 0.018456223142271248
+                },
+                "minimumCapacity": 73.52415694995899,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.70784417245031,
+                  "riseTime": 0.21659905235076082,
+                  "peakRate": 100.86593871918718,
+                  "absoluteError": 12.23907449733947
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0005580315510752265,
+                  "riseTime": 0.001823534356279498,
+                  "peakRate": 0.0007406650557798822,
+                  "absoluteError": 0.018311971611176033
+                },
+                "minimumCapacity": 96.7944891670833,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.65537272284185,
+                  "riseTime": 0.38762264332182095,
+                  "peakRate": 102.71534904073975,
+                  "absoluteError": 21.09053421744992
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0012699796658924318,
+                  "riseTime": 0.0025572611928133646,
+                  "peakRate": 0.00130925786875927,
+                  "absoluteError": 0.011529449923448228
+                },
+                "minimumCapacity": 100.02250506363936,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.06988190859556198,
+              "blocked": true,
+              "finalZ": 0.5190750360488892
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.00012932907014781211,
+              "finalSupportY": -0.000012560728480983871,
+              "capacity": 30.837679664433338,
+              "finalHash": "5157db09"
+            },
+            "minimumLandingCapacity": 30.837679664433338,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          },
+          {
+            "frequency": 500,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.71910587367738,
+                  "riseTime": 0.21666772834663606,
+                  "peakRate": 100.87957177679722,
+                  "absoluteError": 12.3530968898739
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.00045037605222488105,
+                  "riseTime": 0.0018396155473906551,
+                  "peakRate": 0.0006216993349679582,
+                  "absoluteError": 0.009322617039379177
+                },
+                "minimumCapacity": 55.95844809167512,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.71905678174653,
+                  "riseTime": 0.21665661797397928,
+                  "peakRate": 100.87964007866223,
+                  "absoluteError": 12.352710147485634
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0004467556877246411,
+                  "riseTime": 0.0020897894275008905,
+                  "peakRate": 0.0006049283389979497,
+                  "absoluteError": 0.009197331662630861
+                },
+                "minimumCapacity": 73.28400912385945,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.67789100268381,
+                  "riseTime": 0.387693185524959,
+                  "peakRate": 102.73836677825281,
+                  "absoluteError": 21.2076043172002
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0010509002208723406,
+                  "riseTime": 0.0027397133771608416,
+                  "peakRate": 0.0010854587815363806,
+                  "absoluteError": 0.006042611861189457
+                },
+                "minimumCapacity": 74.38185701545879,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.06853697448968887,
+              "blocked": true,
+              "finalZ": 0.5268638134002686
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.0016288510332430062,
+              "finalSupportY": -0.000029472399966071552,
+              "capacity": 21.835743155062254,
+              "finalHash": "f854afae"
+            },
+            "minimumLandingCapacity": 21.835743155062254,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          },
+          {
+            "frequency": 1000,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.73490538189237,
+                  "riseTime": 0.21655238397270993,
+                  "peakRate": 100.90168792923396,
+                  "absoluteError": 12.418838416847066
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.00029357965934718197,
+                  "riseTime": 0.001306280176629603,
+                  "peakRate": 0.0004026024211906223,
+                  "absoluteError": 0.00405036470668688
+                },
+                "minimumCapacity": 45.323011208894314,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.7348366531634,
+                  "riseTime": 0.21651665980114876,
+                  "peakRate": 100.90200211800484,
+                  "absoluteError": 12.417741181120542
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.00029015352946833736,
+                  "riseTime": 0.0014424486850305126,
+                  "peakRate": 0.0003833919428146605,
+                  "absoluteError": 0.003981235690094923
+                },
+                "minimumCapacity": 44.141691947226754,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.71478768456086,
+                  "riseTime": 0.3874564513101112,
+                  "peakRate": 102.77578255449794,
+                  "absoluteError": 21.27748861859067
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.000691933876842586,
+                  "riseTime": 0.0021274178620316743,
+                  "peakRate": 0.0007216690490900569,
+                  "absoluteError": 0.002767276437016131
+                },
+                "minimumCapacity": 40.46671612598626,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.07364420592784882,
+              "blocked": true,
+              "finalZ": 2.7505767345428467
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.0004808148383105282,
+              "finalSupportY": -0.00004610548603723244,
+              "capacity": 14.676337877593939,
+              "finalHash": "5ea0974d"
+            },
+            "minimumLandingCapacity": 14.225835980777232,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          }
+        ]
+      },
+      {
+        "preset": "meteor75-analog-2022",
+        "reference": {
+          "frequency": 2000,
+          "axes": {
+            "roll": {
+              "elapsedMs": 114.07583399999976,
+              "capacity": 26.29829557064651,
+              "finalHash": "38144174",
+              "metrics": {
+                "steadyRate": 100.76315291000023,
+                "riseTime": 0.20817590698938948,
+                "peakRate": 100.95553031049931,
+                "absoluteError": 12.514063498645518
+              }
+            },
+            "pitch": {
+              "elapsedMs": 128.99058399999967,
+              "capacity": 23.257511571542366,
+              "finalHash": "e988cf79",
+              "metrics": {
+                "steadyRate": 100.76329036747201,
+                "riseTime": 0.20813020204262267,
+                "peakRate": 100.95377495191354,
+                "absoluteError": 12.512715492513756
+              }
+            },
+            "yaw": {
+              "elapsedMs": 114.09050000000025,
+              "capacity": 26.2949150016872,
+              "finalHash": "f1b29579",
+              "metrics": {
+                "steadyRate": 102.78390791881722,
+                "riseTime": 0.37943674803809546,
+                "peakRate": 102.86197271175642,
+                "absoluteError": 21.42342523406741
+              }
+            }
+          },
+          "contact": {
+            "minimumZ": 0.07665017247200012,
+            "blocked": true,
+            "finalZ": 1.7592954635620117
+          },
+          "landing": {
+            "grounded": true,
+            "support": "course-boundary-y-min",
+            "minimumSupportY": -0.000108854871642243,
+            "finalSupportY": -0.000026270036629045396,
+            "capacity": 7.162196471664226,
+            "finalHash": "c4289ca0"
+          }
+        },
+        "candidates": [
+          {
+            "frequency": 250,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.70572339870895,
+                  "riseTime": 0.2081607681323775,
+                  "peakRate": 100.87929856923701,
+                  "absoluteError": 12.280898940395835
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0005699455568105339,
+                  "riseTime": 0.00007272146537475464,
+                  "peakRate": 0.0007551021823950218,
+                  "absoluteError": 0.01863220194423021
+                },
+                "minimumCapacity": 112.8310873114412,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.70563759446158,
+                  "riseTime": 0.20815049445402822,
+                  "peakRate": 100.87862921066507,
+                  "absoluteError": 12.280502123470114
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0005721604842416195,
+                  "riseTime": 0.00009749863886356075,
+                  "peakRate": 0.0007443579131564954,
+                  "absoluteError": 0.0185581913999861
+                },
+                "minimumCapacity": 106.78468224989717,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.65764802956406,
+                  "riseTime": 0.380425183832633,
+                  "peakRate": 102.7301432305026,
+                  "absoluteError": 21.178010603286914
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0012284013306138137,
+                  "riseTime": 0.0026050080801301766,
+                  "peakRate": 0.0012816153314814832,
+                  "absoluteError": 0.011455433857991942
+                },
+                "minimumCapacity": 107.0568293335711,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.081348717212677,
+              "blocked": true,
+              "finalZ": 0.6019626259803772
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.0002921319230583391,
+              "finalSupportY": -0.00004104275572950136,
+              "capacity": 36.098983122931315,
+              "finalHash": "c277e1f6"
+            },
+            "minimumLandingCapacity": 32.76572825402518,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          },
+          {
+            "frequency": 500,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.71746150567544,
+                  "riseTime": 0.208338045796994,
+                  "peakRate": 100.89349853253248,
+                  "absoluteError": 12.396273061513462
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0004534534996696225,
+                  "riseTime": 0.0007788548153787134,
+                  "peakRate": 0.0006144465565784427,
+                  "absoluteError": 0.009412644992955759
+                },
+                "minimumCapacity": 68.59710348730549,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.71688563536411,
+                  "riseTime": 0.20831849992365992,
+                  "peakRate": 100.89250815505854,
+                  "absoluteError": 12.39510574802545
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0004605321237394048,
+                  "riseTime": 0.0009047119504486228,
+                  "peakRate": 0.0006068797019644997,
+                  "absoluteError": 0.009399218303866204
+                },
+                "minimumCapacity": 72.27856041538375,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.68004891557536,
+                  "riseTime": 0.3805589402012177,
+                  "peakRate": 102.7535024774529,
+                  "absoluteError": 21.295802935792096
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0010104597630584088,
+                  "riseTime": 0.0029575210332806025,
+                  "peakRate": 0.0010545222052807009,
+                  "absoluteError": 0.005957137893728045
+                },
+                "minimumCapacity": 74.34222556387789,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.0767468512058258,
+              "blocked": true,
+              "finalZ": 0.6031662821769714
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.000028380143527160367,
+              "finalSupportY": -0.000028380143527160367,
+              "capacity": 19.777742215932214,
+              "finalHash": "04539cf8"
+            },
+            "minimumLandingCapacity": 19.08759173687469,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          },
+          {
+            "frequency": 1000,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.73399483233516,
+                  "riseTime": 0.2083688572623803,
+                  "peakRate": 100.91418717549888,
+                  "absoluteError": 12.462567697204978
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0002893724225870218,
+                  "riseTime": 0.0009268616901025735,
+                  "peakRate": 0.00040951827872407273,
+                  "absoluteError": 0.004115034372816913
+                },
+                "minimumCapacity": 43.61881015824522,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.73380657525918,
+                  "riseTime": 0.20833863663774133,
+                  "peakRate": 100.91403008113325,
+                  "absoluteError": 12.461640635636344
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.00029260450016375527,
+                  "riseTime": 0.0010014625127590618,
+                  "peakRate": 0.0003936937553769324,
+                  "absoluteError": 0.004081836345433504
+                },
+                "minimumCapacity": 43.501587807955154,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.7166719631601,
+                  "riseTime": 0.380348373445636,
+                  "peakRate": 102.79070651797082,
+                  "absoluteError": 21.3671878895379
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0006541486602185894,
+                  "riseTime": 0.0024025754285902775,
+                  "peakRate": 0.0006928332396006909,
+                  "absoluteError": 0.0026250398297692295
+                },
+                "minimumCapacity": 45.79450582553443,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.07666739076375961,
+              "blocked": true,
+              "finalZ": 0.7124246954917908
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.00015555963403771078,
+              "finalSupportY": -0.0000688941046674274,
+              "capacity": 13.319973932278199,
+              "finalHash": "c27fa37e"
+            },
+            "minimumLandingCapacity": 13.319973932278199,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          }
+        ]
+      },
+      {
+        "preset": "meteor75-pro-matrix",
+        "reference": {
+          "frequency": 2000,
+          "axes": {
+            "roll": {
+              "elapsedMs": 116.71637499999997,
+              "capacity": 25.703334257939392,
+              "finalHash": "18b0548d",
+              "metrics": {
+                "steadyRate": 100.76169466474784,
+                "riseTime": 0.20429138833399707,
+                "peakRate": 100.96589170748516,
+                "absoluteError": 12.539833326054097
+              }
+            },
+            "pitch": {
+              "elapsedMs": 113.13899999999921,
+              "capacity": 26.51605547158823,
+              "finalHash": "f96f4943",
+              "metrics": {
+                "steadyRate": 100.76176894283437,
+                "riseTime": 0.20425038213581115,
+                "peakRate": 100.96468959420723,
+                "absoluteError": 12.537872207852667
+              }
+            },
+            "yaw": {
+              "elapsedMs": 115.02662500000042,
+              "capacity": 26.080918222194114,
+              "finalHash": "1c744942",
+              "metrics": {
+                "steadyRate": 102.78961155319409,
+                "riseTime": 0.3759043590832831,
+                "peakRate": 102.87606339192698,
+                "absoluteError": 21.472324231556367
+              }
+            }
+          },
+          "contact": {
+            "minimumZ": 0.08284452557563782,
+            "blocked": true,
+            "finalZ": 3.1803362369537354
+          },
+          "landing": {
+            "grounded": true,
+            "support": "course-boundary-y-min",
+            "minimumSupportY": -0.00007297130417080466,
+            "finalSupportY": -0.000019117483850611405,
+            "capacity": 6.168779865145291,
+            "finalHash": "ea6a8d4c"
+          }
+        },
+        "candidates": [
+          {
+            "frequency": 250,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.70553727606621,
+                  "riseTime": 0.2040873170426991,
+                  "peakRate": 100.88662736218568,
+                  "absoluteError": 12.304299766132454
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0005573287435118266,
+                  "riseTime": 0.0009989226318454544,
+                  "peakRate": 0.0007850606175907406,
+                  "absoluteError": 0.01878283018581067
+                },
+                "minimumCapacity": 105.7049861922868,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.70553642228448,
+                  "riseTime": 0.20408105997304693,
+                  "peakRate": 100.88750162639691,
+                  "absoluteError": 12.304426705189169
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0005580739713073751,
+                  "riseTime": 0.00082899312595475,
+                  "peakRate": 0.0007645045819538295,
+                  "absoluteError": 0.018619228110914026
+                },
+                "minimumCapacity": 99.27186732566446,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.66843545955507,
+                  "riseTime": 0.37669058240432207,
+                  "peakRate": 102.74901504315176,
+                  "absoluteError": 21.22643822397364
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0011788749058197663,
+                  "riseTime": 0.002091551486543834,
+                  "peakRate": 0.0012349651083673626,
+                  "absoluteError": 0.01145129912025847
+                },
+                "minimumCapacity": 103.70202040226519,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.08377597481012344,
+              "blocked": true,
+              "finalZ": 0.6626012325286865
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.00017905606351724043,
+              "finalSupportY": -0.000013178614517883602,
+              "capacity": 34.45041957625384,
+              "finalHash": "e2e0c3dd"
+            },
+            "minimumLandingCapacity": 34.45041957625384,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          },
+          {
+            "frequency": 500,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.7175951212974,
+                  "riseTime": 0.2044448715119398,
+                  "peakRate": 100.90123713684257,
+                  "absoluteError": 12.420650775075643
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0004376617880153349,
+                  "riseTime": 0.0007512953883880581,
+                  "peakRate": 0.0006403605172913565,
+                  "absoluteError": 0.009504316993657955
+                },
+                "minimumCapacity": 75.3835136255711,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.71734838068039,
+                  "riseTime": 0.20442419340166418,
+                  "peakRate": 100.90067706130587,
+                  "absoluteError": 12.420049940383793
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0004408473830900591,
+                  "riseTime": 0.000850971557729858,
+                  "peakRate": 0.0006340091091116594,
+                  "absoluteError": 0.00939730964836921
+                },
+                "minimumCapacity": 77.80150377858541,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.69046794239813,
+                  "riseTime": 0.37688292081002206,
+                  "peakRate": 102.77091945988037,
+                  "absoluteError": 21.345509347243638
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0009645294820931941,
+                  "riseTime": 0.0026032199496844126,
+                  "peakRate": 0.0010220446679227487,
+                  "absoluteError": 0.0059059691417270195
+                },
+                "minimumCapacity": 64.96342245325987,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.08138809353113174,
+              "blocked": true,
+              "finalZ": 0.6513916850090027
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.00007765346061292325,
+              "finalSupportY": -0.00005376414860911241,
+              "capacity": 20.695637781746637,
+              "finalHash": "df3f2c75"
+            },
+            "minimumLandingCapacity": 20.695637781746637,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          },
+          {
+            "frequency": 1000,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.73269752332672,
+                  "riseTime": 0.20449200668480838,
+                  "peakRate": 100.92423438375835,
+                  "absoluteError": 12.486725905546399
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.00028777941377022164,
+                  "riseTime": 0.0009820205954218597,
+                  "peakRate": 0.00041258808318652573,
+                  "absoluteError": 0.004235097798098881
+                },
+                "minimumCapacity": 38.55173964725153,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.73265483461037,
+                  "riseTime": 0.20446131291701286,
+                  "peakRate": 100.9227863836492,
+                  "absoluteError": 12.485926705117217
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0002889400268519564,
+                  "riseTime": 0.0010327069109787976,
+                  "peakRate": 0.00041502837008114743,
+                  "absoluteError": 0.0041430875888905086
+                },
+                "minimumCapacity": 41.35207501266423,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.7249262465778,
+                  "riseTime": 0.37663651828818134,
+                  "peakRate": 102.80561682090473,
+                  "absoluteError": 21.41511951893317
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0006292980938333698,
+                  "riseTime": 0.0019477273599160542,
+                  "peakRate": 0.0006847712548434589,
+                  "absoluteError": 0.0026641136751803856
+                },
+                "minimumCapacity": 43.89719277452237,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.08095034211874008,
+              "blocked": true,
+              "finalZ": 0.9512357711791992
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.00020317528508369265,
+              "finalSupportY": -0.000022024734267156454,
+              "capacity": 11.559320242922107,
+              "finalHash": "aaaf255f"
+            },
+            "minimumLandingCapacity": 11.330595916753843,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          }
+        ]
+      },
+      {
+        "preset": "meteor85-analog",
+        "reference": {
+          "frequency": 2000,
+          "axes": {
+            "roll": {
+              "elapsedMs": 117.52904099999978,
+              "capacity": 25.525606049997513,
+              "finalHash": "b21479a5",
+              "metrics": {
+                "steadyRate": 100.76147311077446,
+                "riseTime": 0.20045508667830614,
+                "peakRate": 100.97574084042063,
+                "absoluteError": 12.570488461584441
+              }
+            },
+            "pitch": {
+              "elapsedMs": 117.52904099999978,
+              "capacity": 25.525606049997513,
+              "finalHash": "1d3121d4",
+              "metrics": {
+                "steadyRate": 100.76110513382442,
+                "riseTime": 0.2004084110552855,
+                "peakRate": 100.9741494062077,
+                "absoluteError": 12.567937744352575
+              }
+            },
+            "yaw": {
+              "elapsedMs": 115.8774169999997,
+              "capacity": 25.88942761815279,
+              "finalHash": "9620ae02",
+              "metrics": {
+                "steadyRate": 102.80642961368504,
+                "riseTime": 0.3721174736331313,
+                "peakRate": 102.90116433682337,
+                "absoluteError": 21.529692127632966
+              }
+            }
+          },
+          "contact": {
+            "minimumZ": 0.08581266552209854,
+            "blocked": true,
+            "finalZ": 1.3669922351837158
+          },
+          "landing": {
+            "grounded": true,
+            "support": "course-boundary-y-min",
+            "minimumSupportY": -0.000059039915920978264,
+            "finalSupportY": -0.00005903989475106869,
+            "capacity": 5.331121121835077,
+            "finalHash": "ec1f181a"
+          }
+        },
+        "candidates": [
+          {
+            "frequency": 250,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.70503653786142,
+                  "riseTime": 0.20013320460427897,
+                  "peakRate": 100.89556807978862,
+                  "absoluteError": 12.331103342535185
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0005601007128091317,
+                  "riseTime": 0.0016057565779995938,
+                  "peakRate": 0.0007939804151445925,
+                  "absoluteError": 0.019043422201199253
+                },
+                "minimumCapacity": 84.68675470362966,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.70476461090828,
+                  "riseTime": 0.20012641161152445,
+                  "peakRate": 100.89532219299657,
+                  "absoluteError": 12.3307305849501
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0005591495135082391,
+                  "riseTime": 0.0014071237942366956,
+                  "peakRate": 0.000780667266569529,
+                  "absoluteError": 0.01887399223544566
+                },
+                "minimumCapacity": 94.23318951359416,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.67867519377137,
+                  "riseTime": 0.3729654294406056,
+                  "peakRate": 102.76759998789129,
+                  "absoluteError": 21.275914288884703
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.001242669552806504,
+                  "riseTime": 0.0022787314962541003,
+                  "peakRate": 0.00129798676033335,
+                  "absoluteError": 0.011787341743848904
+                },
+                "minimumCapacity": 102.61950657257468,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.10304155200719833,
+              "blocked": true,
+              "finalZ": 2.681273937225342
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.000019613953459726025,
+              "finalSupportY": -0.000014097620397272859,
+              "capacity": 34.102373688900094,
+              "finalHash": "b91e9e9f"
+            },
+            "minimumLandingCapacity": 31.940377961138836,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          },
+          {
+            "frequency": 500,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.71643441600403,
+                  "riseTime": 0.20053817306900157,
+                  "peakRate": 100.91025298648759,
+                  "absoluteError": 12.447534862313002
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0004469832901401874,
+                  "riseTime": 0.0004144888117943794,
+                  "peakRate": 0.0006485503685140644,
+                  "absoluteError": 0.009781131389379673
+                },
+                "minimumCapacity": 74.3721761194605,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.71641221787725,
+                  "riseTime": 0.20052417766246544,
+                  "peakRate": 100.90958362798357,
+                  "absoluteError": 12.446931517544739
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.00044355325289265393,
+                  "riseTime": 0.0005776534356534503,
+                  "peakRate": 0.0006394287904758166,
+                  "absoluteError": 0.0096281688586666
+                },
+                "minimumCapacity": 77.38981489671983,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.70099155630675,
+                  "riseTime": 0.37314369088825095,
+                  "peakRate": 102.79027621593724,
+                  "absoluteError": 21.395331796660795
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0010255978908566069,
+                  "riseTime": 0.002757777658491216,
+                  "peakRate": 0.0010776177470952972,
+                  "absoluteError": 0.006240699131954723
+                },
+                "minimumCapacity": 76.75873450432921,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.09359858930110931,
+              "blocked": true,
+              "finalZ": 2.938957452774048
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.0000799849261872293,
+              "finalSupportY": -0.000011629807506404605,
+              "capacity": 20.50943130300356,
+              "finalHash": "0acbb786"
+            },
+            "minimumLandingCapacity": 20.50943130300356,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          },
+          {
+            "frequency": 1000,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.73252847613811,
+                  "riseTime": 0.20062501596996363,
+                  "peakRate": 100.93346879957046,
+                  "absoluteError": 12.515739901949798
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.00028725894672585096,
+                  "riseTime": 0.0008477175335051216,
+                  "peakRate": 0.00041863560988346973,
+                  "absoluteError": 0.004355324759412085
+                },
+                "minimumCapacity": 45.58447848507561,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.7330501318086,
+                  "riseTime": 0.2005947629797432,
+                  "peakRate": 100.9306001200597,
+                  "absoluteError": 12.514810603459777
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.00027843086852370204,
+                  "riseTime": 0.0009298607951454606,
+                  "peakRate": 0.0004312914384929674,
+                  "absoluteError": 0.00422719637648353
+                },
+                "minimumCapacity": 45.27720971648864,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.73814906627662,
+                  "riseTime": 0.37288330744567244,
+                  "peakRate": 102.82863455857488,
+                  "absoluteError": 21.467415820320603
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0006641661194246098,
+                  "riseTime": 0.002058043136389157,
+                  "peakRate": 0.0007048489559465506,
+                  "absoluteError": 0.002892577698890194
+                },
+                "minimumCapacity": 43.81502249747975,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.08731566369533539,
+              "blocked": true,
+              "finalZ": 1.9626784324645996
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.00030629060185027174,
+              "finalSupportY": -0.000014402167431815105,
+              "capacity": 13.895236181312827,
+              "finalHash": "527520a5"
+            },
+            "minimumLandingCapacity": 13.895236181312827,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          }
+        ]
+      },
+      {
+        "preset": "mobula8-analog-2023",
+        "reference": {
+          "frequency": 2000,
+          "axes": {
+            "roll": {
+              "elapsedMs": 112.32958299999882,
+              "capacity": 26.70712309151928,
+              "finalHash": "6d581f09",
+              "metrics": {
+                "steadyRate": 100.7740756630902,
+                "riseTime": 0.20040436415971452,
+                "peakRate": 100.98171725589894,
+                "absoluteError": 12.577706554158212
+              }
+            },
+            "pitch": {
+              "elapsedMs": 136.95183299999917,
+              "capacity": 21.905511845175656,
+              "finalHash": "cee2456a",
+              "metrics": {
+                "steadyRate": 100.77402144843174,
+                "riseTime": 0.20037482060776357,
+                "peakRate": 100.97949061413864,
+                "absoluteError": 12.57612884871471
+              }
+            },
+            "yaw": {
+              "elapsedMs": 159.0749999999989,
+              "capacity": 18.859028760018987,
+              "finalHash": "cb5dab87",
+              "metrics": {
+                "steadyRate": 102.81152450803513,
+                "riseTime": 0.37205744857632905,
+                "peakRate": 102.90626648827805,
+                "absoluteError": 21.53298768541355
+              }
+            }
+          },
+          "contact": {
+            "minimumZ": 0.08755515515804291,
+            "blocked": true,
+            "finalZ": 2.398742914199829
+          },
+          "landing": {
+            "grounded": true,
+            "support": "course-boundary-y-min",
+            "minimumSupportY": -0.00026523834398992086,
+            "finalSupportY": -0.000039012280364035534,
+            "capacity": 7.012804384988794,
+            "finalHash": "c4b5297c"
+          }
+        },
+        "candidates": [
+          {
+            "frequency": 250,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.70556587763696,
+                  "riseTime": 0.2001320941188357,
+                  "peakRate": 100.89661309875711,
+                  "absoluteError": 12.331799543758045
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0006798354140432663,
+                  "riseTime": 0.0013586033518802542,
+                  "peakRate": 0.0008427679728020905,
+                  "absoluteError": 0.019551021431555782
+                },
+                "minimumCapacity": 59.40643113825446,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.70548220765795,
+                  "riseTime": 0.20011939372099263,
+                  "peakRate": 100.89629207985872,
+                  "absoluteError": 12.331300000745731
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0006801280705946715,
+                  "riseTime": 0.0012747454295714085,
+                  "peakRate": 0.0008239151710304499,
+                  "absoluteError": 0.01946774328683825
+                },
+                "minimumCapacity": 84.58408048096555,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.67955415372295,
+                  "riseTime": 0.37294120981913126,
+                  "peakRate": 102.76869281817316,
+                  "absoluteError": 21.27623453937578
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0012836144094125702,
+                  "riseTime": 0.00237533543861009,
+                  "peakRate": 0.0013368833094392358,
+                  "absoluteError": 0.011923712110405132
+                },
+                "minimumCapacity": 49.705906718582085,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.08807402849197388,
+              "blocked": true,
+              "finalZ": 0.5216419100761414
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.000049498604263557844,
+              "finalSupportY": -0.000023080782249624426,
+              "capacity": 25.739510728966092,
+              "finalHash": "b38d9b60"
+            },
+            "minimumLandingCapacity": 23.860511450063157,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          },
+          {
+            "frequency": 500,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.71794047271845,
+                  "riseTime": 0.2005264979596474,
+                  "peakRate": 100.91161902439752,
+                  "absoluteError": 12.44872510815718
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0005570399927003072,
+                  "riseTime": 0.0006094368276108524,
+                  "peakRate": 0.0006941675523677415,
+                  "absoluteError": 0.010254766673530775
+                },
+                "minimumCapacity": 62.379788948379876,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.71736076039826,
+                  "riseTime": 0.20051242000279534,
+                  "peakRate": 100.91095649600673,
+                  "absoluteError": 12.448021257151343
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0005622549067615515,
+                  "riseTime": 0.0006867100098426339,
+                  "peakRate": 0.0006786934427485779,
+                  "absoluteError": 0.0101865679895972
+                },
+                "minimumCapacity": 66.9293644220232,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.70278021220771,
+                  "riseTime": 0.3730608936706653,
+                  "peakRate": 102.791874480211,
+                  "absoluteError": 21.395292360900314
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.001057705314144254,
+                  "riseTime": 0.002697016544557613,
+                  "peakRate": 0.0011116136263681564,
+                  "absoluteError": 0.006394622359186584
+                },
+                "minimumCapacity": 64.10684474123539,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.08675264567136765,
+              "blocked": true,
+              "finalZ": 0.5200007557868958
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.0003016106430711145,
+              "finalSupportY": -0.00004796477898988058,
+              "capacity": 15.827515200297308,
+              "finalHash": "e84ef226"
+            },
+            "minimumLandingCapacity": 15.827515200297308,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          },
+          {
+            "frequency": 1000,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.73861972438085,
+                  "riseTime": 0.20060375917073636,
+                  "peakRate": 100.93619404503126,
+                  "absoluteError": 12.519340436270815
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.00035183591093293026,
+                  "riseTime": 0.000994963417378132,
+                  "peakRate": 0.00045080646383071894,
+                  "absoluteError": 0.004640442010320328
+                },
+                "minimumCapacity": 36.915807348706885,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.73801269112742,
+                  "riseTime": 0.20057446187199324,
+                  "peakRate": 100.93475287507506,
+                  "absoluteError": 12.517984438687812
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.00035732182547406255,
+                  "riseTime": 0.0009963390790525863,
+                  "peakRate": 0.0004430378762211142,
+                  "absoluteError": 0.004623394903658338
+                },
+                "minimumCapacity": 44.03750527532573,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.74020068407938,
+                  "riseTime": 0.3728006950292694,
+                  "peakRate": 102.83083387920561,
+                  "absoluteError": 21.468090992943917
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0006937337452882237,
+                  "riseTime": 0.001997665833016772,
+                  "peakRate": 0.0007330225033577392,
+                  "absoluteError": 0.003013826665288629
+                },
+                "minimumCapacity": 41.79395887549643,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.08682996034622192,
+              "blocked": true,
+              "finalZ": 1.422288417816162
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.00023036392331689942,
+              "finalSupportY": -0.000019808250398805488,
+              "capacity": 11.826878157530002,
+              "finalHash": "a3f34d0d"
+            },
+            "minimumLandingCapacity": 11.59153740492527,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          }
+        ]
+      },
+      {
+        "preset": "cetus-x-betaflight-2022",
+        "reference": {
+          "frequency": 2000,
+          "axes": {
+            "roll": {
+              "elapsedMs": 112.87154200000077,
+              "capacity": 26.578887351428047,
+              "finalHash": "1e7121b7",
+              "metrics": {
+                "steadyRate": 100.77266053427913,
+                "riseTime": 0.19654340372408918,
+                "peakRate": 100.99746084178103,
+                "absoluteError": 12.609034175146563
+              }
+            },
+            "pitch": {
+              "elapsedMs": 107.87404100000094,
+              "capacity": 27.810212468076298,
+              "finalHash": "b8824702",
+              "metrics": {
+                "steadyRate": 100.77230920538418,
+                "riseTime": 0.19649812172459724,
+                "peakRate": 100.99567816247158,
+                "absoluteError": 12.607069197488046
+              }
+            },
+            "yaw": {
+              "elapsedMs": 112.24220800000148,
+              "capacity": 26.72791326414356,
+              "finalHash": "c1319aa8",
+              "metrics": {
+                "steadyRate": 102.78624555056153,
+                "riseTime": 0.3688074066097994,
+                "peakRate": 102.88893829846076,
+                "absoluteError": 21.56786233237118
+              }
+            }
+          },
+          "contact": {
+            "minimumZ": 0.08878487348556519,
+            "blocked": true,
+            "finalZ": 1.8140732049942017
+          },
+          "landing": {
+            "grounded": true,
+            "support": "course-boundary-y-min",
+            "minimumSupportY": -0.00011996722604349502,
+            "finalSupportY": -0.0000420252106018322,
+            "capacity": 5.924107257178334,
+            "finalHash": "fc2a505a"
+          }
+        },
+        "candidates": [
+          {
+            "frequency": 250,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.7049648208273,
+                  "riseTime": 0.19643665214754602,
+                  "peakRate": 100.90587483526772,
+                  "absoluteError": 12.359162681719459
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0006717666586643165,
+                  "riseTime": 0.0005431450484750034,
+                  "peakRate": 0.0009068149411873394,
+                  "absoluteError": 0.019816862255764314
+                },
+                "minimumCapacity": 109.73301080606358,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.70439151182484,
+                  "riseTime": 0.19642767284396045,
+                  "peakRate": 100.90582019375088,
+                  "absoluteError": 12.35874313734024
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0006739717894219769,
+                  "riseTime": 0.0003585219035097158,
+                  "peakRate": 0.0008897209301980124,
+                  "absoluteError": 0.019697366315502264
+                },
+                "minimumCapacity": 111.95717981207903,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.67059977577392,
+                  "riseTime": 0.36951658091389017,
+                  "peakRate": 102.76787319548326,
+                  "absoluteError": 21.320598299994135
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.001125109436269094,
+                  "riseTime": 0.001922885200733233,
+                  "peakRate": 0.0011766581031899682,
+                  "absoluteError": 0.011464466369758303
+                },
+                "minimumCapacity": 107.01895594660861,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.10794737935066223,
+              "blocked": true,
+              "finalZ": 3.6864359378814697
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.00008547989498998432,
+              "finalSupportY": -0.000012531191614723741,
+              "capacity": 35.98779984794984,
+              "finalHash": "7a8fffcb"
+            },
+            "minimumLandingCapacity": 32.40639030684221,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          },
+          {
+            "frequency": 500,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.71805274416093,
+                  "riseTime": 0.1966328233238156,
+                  "peakRate": 100.92163208168648,
+                  "absoluteError": 12.477337146437147
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0005418909238743562,
+                  "riseTime": 0.0004549610825502104,
+                  "peakRate": 0.00075079867813056,
+                  "absoluteError": 0.010444656337675865
+                },
+                "minimumCapacity": 63.064238368356584,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.7175814608858,
+                  "riseTime": 0.19661829840961975,
+                  "peakRate": 100.92163891186864,
+                  "absoluteError": 12.47669973591008
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0005430831637175095,
+                  "riseTime": 0.0006115920293169249,
+                  "peakRate": 0.0007330932565632142,
+                  "absoluteError": 0.010340980884275862
+                },
+                "minimumCapacity": 68.49217334227559,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.69192661453481,
+                  "riseTime": 0.3697117298937551,
+                  "peakRate": 102.78951806494204,
+                  "absoluteError": 21.439381599024372
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0009176221538350445,
+                  "riseTime": 0.0024520203980407376,
+                  "peakRate": 0.0009662869027797261,
+                  "absoluteError": 0.0059570453189499535
+                },
+                "minimumCapacity": 72.72800794131538,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.09454363584518433,
+              "blocked": true,
+              "finalZ": 1.7807787656784058
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.002182753369080373,
+              "finalSupportY": -0.000010746971513205666,
+              "capacity": 27.267129578908268,
+              "finalHash": "51d739e5"
+            },
+            "minimumLandingCapacity": 26.16811545274836,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          },
+          {
+            "frequency": 1000,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.73735058975537,
+                  "riseTime": 0.19672109978245467,
+                  "peakRate": 100.94800344204245,
+                  "absoluteError": 12.548009200637997
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.00035039210373679887,
+                  "riseTime": 0.0009041059379175945,
+                  "peakRate": 0.0004896895360177799,
+                  "absoluteError": 0.004839781831097837
+                },
+                "minimumCapacity": 39.018638071866235,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.73721825474958,
+                  "riseTime": 0.19669993085635706,
+                  "peakRate": 100.94699257406772,
+                  "absoluteError": 12.546952980149655
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.00034822016991868464,
+                  "riseTime": 0.0010270282992458776,
+                  "peakRate": 0.00048205615616081856,
+                  "absoluteError": 0.004768453031920352
+                },
+                "minimumCapacity": 38.44299464521079,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.72399093763791,
+                  "riseTime": 0.36950008763932696,
+                  "peakRate": 102.82225516158042,
+                  "absoluteError": 21.509327124527765
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0006056706574908456,
+                  "riseTime": 0.0018781646385438143,
+                  "peakRate": 0.0006481079305814984,
+                  "absoluteError": 0.002714001366540662
+                },
+                "minimumCapacity": 40.95404747008189,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.09094156324863434,
+              "blocked": true,
+              "finalZ": 2.0182740688323975
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.00008502678827598809,
+              "finalSupportY": -0.000019654704803844653,
+              "capacity": 9.77851927637541,
+              "finalHash": "44a47ba9"
+            },
+            "minimumLandingCapacity": 9.50592426310737,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          }
+        ]
+      },
+      {
+        "preset": "protos-16-aio-1-0",
+        "reference": {
+          "frequency": 2000,
+          "axes": {
+            "roll": {
+              "elapsedMs": 103.464833,
+              "capacity": 28.995359225100184,
+              "finalHash": "98f5a531",
+              "metrics": {
+                "steadyRate": 100.77181999302289,
+                "riseTime": 0.19325389138567395,
+                "peakRate": 101.00837548419936,
+                "absoluteError": 12.642997142690344
+              }
+            },
+            "pitch": {
+              "elapsedMs": 102.66341699999975,
+              "capacity": 29.2217041636166,
+              "finalHash": "8f6f5339",
+              "metrics": {
+                "steadyRate": 100.77154208976302,
+                "riseTime": 0.19321384857416068,
+                "peakRate": 101.00548631411971,
+                "absoluteError": 12.640764797808572
+              }
+            },
+            "yaw": {
+              "elapsedMs": 119.30949999999939,
+              "capacity": 25.144686718157526,
+              "finalHash": "2d9b6c78",
+              "metrics": {
+                "steadyRate": 102.79264159629852,
+                "riseTime": 0.3652511926012494,
+                "peakRate": 102.90435403581695,
+                "absoluteError": 21.621875817825384
+              }
+            }
+          },
+          "contact": {
+            "minimumZ": 0.0779745802283287,
+            "blocked": true,
+            "finalZ": 1.5198038816452026
+          },
+          "landing": {
+            "grounded": true,
+            "support": "course-boundary-y-min",
+            "minimumSupportY": -0.00014816833573380941,
+            "finalSupportY": -0.00001252302846396422,
+            "capacity": 6.169772621379768,
+            "finalHash": "61a818ca"
+          }
+        },
+        "candidates": [
+          {
+            "frequency": 250,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.70434370058094,
+                  "riseTime": 0.193188749135613,
+                  "peakRate": 100.91619525111773,
+                  "absoluteError": 12.391843872538912
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.000669594857437569,
+                  "riseTime": 0.00033708118161993955,
+                  "peakRate": 0.0009125998971843129,
+                  "absoluteError": 0.019865010433593167
+                },
+                "minimumCapacity": 112.2644201308802,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.70392962028225,
+                  "riseTime": 0.19318186338778232,
+                  "peakRate": 100.91611328883009,
+                  "absoluteError": 12.391415056165712
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0006709480482152166,
+                  "riseTime": 0.0001655429288035353,
+                  "peakRate": 0.0008848333744136835,
+                  "absoluteError": 0.019725842987450205
+                },
+                "minimumCapacity": 110.21797404594767,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.66363469033149,
+                  "riseTime": 0.3661062047637542,
+                  "peakRate": 102.76844693139029,
+                  "absoluteError": 21.366514894827027
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0012550208260401104,
+                  "riseTime": 0.002340888078737259,
+                  "peakRate": 0.0013207128668176692,
+                  "absoluteError": 0.01181030383995792
+                },
+                "minimumCapacity": 114.65278226569139,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.09670822322368622,
+              "blocked": true,
+              "finalZ": 3.239734411239624
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.00030303548915396397,
+              "finalSupportY": -0.000011994998667577,
+              "capacity": 35.211370925384266,
+              "finalHash": "658ce4bc"
+            },
+            "minimumLandingCapacity": 33.84683342113975,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          },
+          {
+            "frequency": 500,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.7167033546121,
+                  "riseTime": 0.1934162419580816,
+                  "peakRate": 100.93208227109838,
+                  "absoluteError": 12.510418227529682
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0005469449536051893,
+                  "riseTime": 0.000840089538397206,
+                  "peakRate": 0.0007553157125362974,
+                  "absoluteError": 0.010486351745900225
+                },
+                "minimumCapacity": 74.99515718772554,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.71573517537578,
+                  "riseTime": 0.19340587593346714,
+                  "peakRate": 100.93181589373195,
+                  "absoluteError": 12.509599458619846
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0005537963717725252,
+                  "riseTime": 0.0009938591913754655,
+                  "peakRate": 0.0007293704834868758,
+                  "absoluteError": 0.010376376847978793
+                },
+                "minimumCapacity": 72.10065251090475,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.68626524158,
+                  "riseTime": 0.36625685673317043,
+                  "peakRate": 102.79177202740398,
+                  "absoluteError": 21.486315695730788
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.001034863518113449,
+                  "riseTime": 0.002753349345032657,
+                  "peakRate": 0.0010940451399538062,
+                  "absoluteError": 0.0062695819380683875
+                },
+                "minimumCapacity": 72.31514825907081,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.08285733312368393,
+              "blocked": true,
+              "finalZ": 1.5854448080062866
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.000018494749792253434,
+              "finalSupportY": -0.00001849473281818198,
+              "capacity": 20.060214075917617,
+              "finalHash": "02004a96"
+            },
+            "minimumLandingCapacity": 18.718101080091667,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          },
+          {
+            "frequency": 1000,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.73659030432853,
+                  "riseTime": 0.19342287505781564,
+                  "peakRate": 100.95819408426698,
+                  "absoluteError": 12.581494525040497
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0003495986149381534,
+                  "riseTime": 0.0008744127785993652,
+                  "peakRate": 0.0004968043460934007,
+                  "absoluteError": 0.004864559958032184
+                },
+                "minimumCapacity": 41.77211224166544,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.73650193866038,
+                  "riseTime": 0.1934008653453736,
+                  "peakRate": 100.95623382001475,
+                  "absoluteError": 12.580205582938362
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.00034771871478777737,
+                  "riseTime": 0.0009679263292616889,
+                  "peakRate": 0.0004876219688878155,
+                  "absoluteError": 0.004790787253688065
+                },
+                "minimumCapacity": 44.74361884032742,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.72226161907881,
+                  "riseTime": 0.3660546134396746,
+                  "peakRate": 102.82871652061665,
+                  "absoluteError": 21.559506244067816
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0006846791377939461,
+                  "riseTime": 0.0021996391926975166,
+                  "peakRate": 0.0007350273553437047,
+                  "absoluteError": 0.002884558873756441
+                },
+                "minimumCapacity": 44.33011608993467,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.07973691076040268,
+              "blocked": true,
+              "finalZ": 2.311410427093506
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.0006763897849021358,
+              "finalSupportY": -0.00001560310642216914,
+              "capacity": 14.740855755812838,
+              "finalHash": "320e1686"
+            },
+            "minimumLandingCapacity": 14.740855755812838,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          }
+        ]
+      },
+      {
+        "preset": "pavo20-pro-ii-o4-4s",
+        "reference": {
+          "frequency": 2000,
+          "axes": {
+            "roll": {
+              "elapsedMs": 124.36499999999978,
+              "capacity": 24.122542515981227,
+              "finalHash": "e8476388",
+              "metrics": {
+                "steadyRate": 100.77287440400659,
+                "riseTime": 0.19326083406453232,
+                "peakRate": 101.00583465372814,
+                "absoluteError": 12.642990935922167
+              }
+            },
+            "pitch": {
+              "elapsedMs": 111.53912499999933,
+              "capacity": 26.89639173698035,
+              "finalHash": "95de77a5",
+              "metrics": {
+                "steadyRate": 100.77240824312716,
+                "riseTime": 0.1932355005447468,
+                "peakRate": 101.00141552137438,
+                "absoluteError": 12.64088189286416
+              }
+            },
+            "yaw": {
+              "elapsedMs": 112.63583400000061,
+              "capacity": 26.634507806813804,
+              "finalHash": "970c02cd",
+              "metrics": {
+                "steadyRate": 102.79647802788405,
+                "riseTime": 0.3650579623416371,
+                "peakRate": 102.90994113010387,
+                "absoluteError": 21.624862369132714
+              }
+            }
+          },
+          "contact": {
+            "minimumZ": 0.09357701241970062,
+            "blocked": true,
+            "finalZ": 3.6716573238372803
+          },
+          "landing": {
+            "grounded": true,
+            "support": "course-boundary-y-min",
+            "minimumSupportY": -0.00003896288563981151,
+            "finalSupportY": -0.00003748528475232618,
+            "capacity": 5.946398167919472,
+            "finalHash": "9927e247"
+          }
+        },
+        "candidates": [
+          {
+            "frequency": 250,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.70398853078137,
+                  "riseTime": 0.1931946646287651,
+                  "peakRate": 100.91616793033091,
+                  "absoluteError": 12.39190286833902
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0006835755517803716,
+                  "riseTime": 0.0003423840949848642,
+                  "peakRate": 0.0008877380569610476,
+                  "absoluteError": 0.019859862975123866
+                },
+                "minimumCapacity": 113.33799278415103,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.70358426884232,
+                  "riseTime": 0.19318767923867852,
+                  "peakRate": 100.9158400812633,
+                  "absoluteError": 12.391513837776586
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0006829644689922696,
+                  "riseTime": 0.0002474768142161925,
+                  "peakRate": 0.0008472697107198056,
+                  "absoluteError": 0.019727109010356594
+                },
+                "minimumCapacity": 107.47696079086683,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.68266914689632,
+                  "riseTime": 0.3657774698386288,
+                  "peakRate": 102.78982542344869,
+                  "absoluteError": 21.376604723473687
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0011071282126695226,
+                  "riseTime": 0.0019709404292306103,
+                  "peakRate": 0.0011671924532861999,
+                  "absoluteError": 0.01148019540755042
+                },
+                "minimumCapacity": 110.34753477906115,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.09734269976615906,
+              "blocked": true,
+              "finalZ": 3.055757761001587
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.00010659974448595788,
+              "finalSupportY": -0.000033527755907810514,
+              "capacity": 27.524324621884414,
+              "finalHash": "78536494"
+            },
+            "minimumLandingCapacity": 27.524324621884414,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          },
+          {
+            "frequency": 500,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.71570572028537,
+                  "riseTime": 0.19342150992376017,
+                  "peakRate": 100.93126264841275,
+                  "absoluteError": 12.509884328791868
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0005673023029195502,
+                  "riseTime": 0.0008313938000195258,
+                  "peakRate": 0.0007382940358944543,
+                  "absoluteError": 0.010528094800108379
+                },
+                "minimumCapacity": 72.47303206004047,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.71626408814964,
+                  "riseTime": 0.1934097090018837,
+                  "peakRate": 100.93139925219259,
+                  "absoluteError": 12.509466218704603
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0005571381686350233,
+                  "riseTime": 0.0009015344315396753,
+                  "peakRate": 0.0006932206724070625,
+                  "absoluteError": 0.010396084329665474
+                },
+                "minimumCapacity": 72.99455134604541,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.70397891021193,
+                  "riseTime": 0.36588854912996105,
+                  "peakRate": 102.8107531231084,
+                  "absoluteError": 21.495622946885682
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0008998276929976962,
+                  "riseTime": 0.0022752189350868863,
+                  "peakRate": 0.0009638330943176579,
+                  "absoluteError": 0.005976427504644294
+                },
+                "minimumCapacity": 74.22504414843763,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.09727007150650024,
+              "blocked": true,
+              "finalZ": 3.2225570678710938
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.0002067209708308329,
+              "finalSupportY": -0.00001356542668511096,
+              "capacity": 20.136063948273012,
+              "finalHash": "e74ad222"
+            },
+            "minimumLandingCapacity": 20.136063948273012,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          },
+          {
+            "frequency": 1000,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.73676788930258,
+                  "riseTime": 0.1934369263074206,
+                  "peakRate": 100.95697148043686,
+                  "absoluteError": 12.581627910159884
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0003582959692034619,
+                  "riseTime": 0.0009111636288886249,
+                  "peakRate": 0.00048376584836703004,
+                  "absoluteError": 0.004853521296763254
+                },
+                "minimumCapacity": 40.85266316809107,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.73672733490301,
+                  "riseTime": 0.19341422886002269,
+                  "peakRate": 100.9563567634198,
+                  "absoluteError": 12.58047507658981
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0003540741840570695,
+                  "riseTime": 0.0009249248444102041,
+                  "peakRate": 0.0004461200639811104,
+                  "absoluteError": 0.004778686865862563
+                },
+                "minimumCapacity": 43.057874361629885,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.73712496459812,
+                  "riseTime": 0.36574345212878245,
+                  "peakRate": 102.84492455950846,
+                  "absoluteError": 21.567336074148095
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0005773842102822413,
+                  "riseTime": 0.0018777560219432258,
+                  "peakRate": 0.000631781243691713,
+                  "absoluteError": 0.0026601924212351085
+                },
+                "minimumCapacity": 44.668836857438485,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.0948055163025856,
+              "blocked": true,
+              "finalZ": 2.221112012863159
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.0004703322259433096,
+              "finalSupportY": -0.000026120997857755762,
+              "capacity": 15.073489592629539,
+              "finalHash": "75927709"
+            },
+            "minimumLandingCapacity": 13.50210970464135,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          }
+        ]
+      },
+      {
+        "preset": "smart35-analog",
+        "reference": {
+          "frequency": 2000,
+          "axes": {
+            "roll": {
+              "elapsedMs": 117.12104199999885,
+              "capacity": 25.61452620956044,
+              "finalHash": "bb540c9b",
+              "metrics": {
+                "steadyRate": 100.77266309455933,
+                "riseTime": 0.19173761676851064,
+                "peakRate": 101.00689333307766,
+                "absoluteError": 12.660803846872604
+              }
+            },
+            "pitch": {
+              "elapsedMs": 105.93008300000292,
+              "capacity": 28.320566878059722,
+              "finalHash": "da1c3711",
+              "metrics": {
+                "steadyRate": 100.77136535861823,
+                "riseTime": 0.1917046666750689,
+                "peakRate": 101.00602589906414,
+                "absoluteError": 12.658525927592164
+              }
+            },
+            "yaw": {
+              "elapsedMs": 101.04216699999961,
+              "capacity": 29.69057462910521,
+              "finalHash": "b5a9a8b8",
+              "metrics": {
+                "steadyRate": 102.77021210842675,
+                "riseTime": 0.36374990571004095,
+                "peakRate": 102.88615158134307,
+                "absoluteError": 21.635344320814898
+              }
+            }
+          },
+          "contact": {
+            "minimumZ": 0.13031578063964844,
+            "blocked": true,
+            "finalZ": 1.9885365962982178
+          },
+          "landing": {
+            "grounded": true,
+            "support": "course-boundary-y-min",
+            "minimumSupportY": -0.000038007594433814296,
+            "finalSupportY": -0.00003207248857166334,
+            "capacity": 12.043533423045298,
+            "finalHash": "2e654e9b"
+          }
+        },
+        "candidates": [
+          {
+            "frequency": 250,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.70291149525536,
+                  "riseTime": 0.19161908566105101,
+                  "peakRate": 100.92065536462736,
+                  "absoluteError": 12.40743783264614
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0006921678673760878,
+                  "riseTime": 0.0006181943296120916,
+                  "peakRate": 0.0008537830003930044,
+                  "absoluteError": 0.02001184263580928
+                },
+                "minimumCapacity": 101.68127272957355,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.70279580888003,
+                  "riseTime": 0.191614172940328,
+                  "peakRate": 100.92032068535882,
+                  "absoluteError": 12.407165734962298
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.000680446766739533,
+                  "riseTime": 0.0004720476361396408,
+                  "peakRate": 0.0008485158478660485,
+                  "absoluteError": 0.019856987619859323
+                },
+                "minimumCapacity": 100.23764675417492,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.65966549666982,
+                  "riseTime": 0.3644815885725965,
+                  "peakRate": 102.76940315785025,
+                  "absoluteError": 21.389403415584155
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.001075667836904915,
+                  "riseTime": 0.002011499799916899,
+                  "peakRate": 0.0011347340890724218,
+                  "absoluteError": 0.011367552167594967
+                },
+                "minimumCapacity": 113.99619868276244,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.12929978966712952,
+              "blocked": true,
+              "finalZ": 0.46391916275024414
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.00016683403410235748,
+              "finalSupportY": -0.00003415252034680294,
+              "capacity": 59.36215365893331,
+              "finalHash": "086ff735"
+            },
+            "minimumLandingCapacity": 59.36215365893331,
+            "accuracyPass": false,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          },
+          {
+            "frequency": 500,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.71532451029972,
+                  "riseTime": 0.19187124275653578,
+                  "peakRate": 100.93643993180157,
+                  "absoluteError": 12.525817996846412
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0005689894709422113,
+                  "riseTime": 0.0006969210855815636,
+                  "peakRate": 0.000697510822788677,
+                  "absoluteError": 0.010661712451973214
+                },
+                "minimumCapacity": 76.61334879833467,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.71443359745207,
+                  "riseTime": 0.19185801295754434,
+                  "peakRate": 100.9364057808542,
+                  "absoluteError": 12.525139656599418
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.000564959708182476,
+                  "riseTime": 0.0007999089700583339,
+                  "peakRate": 0.0006892669777891452,
+                  "absoluteError": 0.010537267273909062
+                },
+                "minimumCapacity": 76.35295916582908,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.67958232828103,
+                  "riseTime": 0.36457206300942735,
+                  "peakRate": 102.78912874415698,
+                  "absoluteError": 21.50760368115412
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0008818681822909974,
+                  "riseTime": 0.002260226838496469,
+                  "peakRate": 0.0009430116268794536,
+                  "absoluteError": 0.005904257300766979
+                },
+                "minimumCapacity": 77.11875885274956,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.12934258580207825,
+              "blocked": true,
+              "finalZ": 0.5099930167198181
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.0000513695406671455,
+              "finalSupportY": -0.000033840321227780745,
+              "capacity": 38.53791467952147,
+              "finalHash": "7d083ddb"
+            },
+            "minimumLandingCapacity": 35.199423743195624,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          },
+          {
+            "frequency": 1000,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.73528872650772,
+                  "riseTime": 0.19189092817441467,
+                  "peakRate": 100.96160234869974,
+                  "absoluteError": 12.597681106558298
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.00037087804275397256,
+                  "riseTime": 0.0007995896083819505,
+                  "peakRate": 0.0004483949845736127,
+                  "absoluteError": 0.004985681879108961
+                },
+                "minimumCapacity": 45.40899335406069,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.7331039195483,
+                  "riseTime": 0.1918729687488382,
+                  "peakRate": 100.96021582030087,
+                  "absoluteError": 12.595619040100443
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.00037968562729864006,
+                  "riseTime": 0.0008779237182292606,
+                  "peakRate": 0.0004535380771147815,
+                  "absoluteError": 0.004969527088031704
+                },
+                "minimumCapacity": 39.65899870943106,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.71171196520685,
+                  "riseTime": 0.36436809131269876,
+                  "peakRate": 102.822275652227,
+                  "absoluteError": 21.57859496843662
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0005692324849751417,
+                  "riseTime": 0.0016994797605544548,
+                  "peakRate": 0.000620840882220813,
+                  "absoluteError": 0.0026229927999658438
+                },
+                "minimumCapacity": 42.6740759483617,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.131935715675354,
+              "blocked": true,
+              "finalZ": 1.7348840236663818
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.0004304082856818048,
+              "finalSupportY": -0.000033414321673766456,
+              "capacity": 20.82211512961149,
+              "finalHash": "fffe7473"
+            },
+            "minimumLandingCapacity": 20.82211512961149,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          }
+        ]
+      },
+      {
+        "preset": "nazgul-eco-xl5-v11",
+        "reference": {
+          "frequency": 2000,
+          "axes": {
+            "roll": {
+              "elapsedMs": 105.52845800000068,
+              "capacity": 28.42835057819172,
+              "finalHash": "65c356bb",
+              "metrics": {
+                "steadyRate": 100.76862005009772,
+                "riseTime": 0.1845862150938159,
+                "peakRate": 101.05807194053313,
+                "absoluteError": 12.77272355079911
+              }
+            },
+            "pitch": {
+              "elapsedMs": 102.87716699999874,
+              "capacity": 29.160989629506776,
+              "finalHash": "566ea5f1",
+              "metrics": {
+                "steadyRate": 100.76955621226183,
+                "riseTime": 0.18461714462144252,
+                "peakRate": 101.05664443100311,
+                "absoluteError": 12.77397642918295
+              }
+            },
+            "yaw": {
+              "elapsedMs": 102.52137500000026,
+              "capacity": 29.262190445650894,
+              "finalHash": "74f677d4",
+              "metrics": {
+                "steadyRate": 102.73879067747178,
+                "riseTime": 0.35585382495413,
+                "peakRate": 102.87901403332059,
+                "absoluteError": 21.757653638772904
+              }
+            }
+          },
+          "contact": {
+            "minimumZ": 0.1822057068347931,
+            "blocked": true,
+            "finalZ": 2.490060329437256
+          },
+          "landing": {
+            "grounded": true,
+            "support": "course-boundary-y-min",
+            "minimumSupportY": -0.00041853669932073734,
+            "finalSupportY": -0.00002897496655177023,
+            "capacity": 13.818219825823597,
+            "finalHash": "0d332513"
+          }
+        },
+        "candidates": [
+          {
+            "frequency": 250,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.7008244455389,
+                  "riseTime": 0.1843973827146187,
+                  "peakRate": 100.96511989612857,
+                  "absoluteError": 12.51733680956664
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0006727848860599621,
+                  "riseTime": 0.0010230036901792872,
+                  "peakRate": 0.0009197884208522404,
+                  "absoluteError": 0.019994697310777753
+                },
+                "minimumCapacity": 80.99607241945515,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.70079285590592,
+                  "riseTime": 0.18439271598620743,
+                  "peakRate": 100.96502427347656,
+                  "absoluteError": 12.517050821005176
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0006823822485738879,
+                  "riseTime": 0.001215643518348615,
+                  "peakRate": 0.0009066218064375078,
+                  "absoluteError": 0.02011320512466354
+                },
+                "minimumCapacity": 96.12740187531216,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.62147193259005,
+                  "riseTime": 0.35663227006914033,
+                  "peakRate": 102.75368006239403,
+                  "absoluteError": 21.502012353574834
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0011419128462396243,
+                  "riseTime": 0.002187541795035345,
+                  "peakRate": 0.0012182656696726156,
+                  "absoluteError": 0.011749487763814225
+                },
+                "minimumCapacity": 111.42888979683269,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.1815042495727539,
+              "blocked": true,
+              "finalZ": 0.6246986389160156
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.0002933170064646773,
+              "finalSupportY": -0.00003354370730858369,
+              "capacity": 62.54049757803758,
+              "finalHash": "e4792734"
+            },
+            "minimumLandingCapacity": 54.47941954575687,
+            "accuracyPass": false,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          },
+          {
+            "frequency": 500,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.71265646759534,
+                  "riseTime": 0.18472507084413647,
+                  "peakRate": 100.98131427465154,
+                  "absoluteError": 12.637190356563503
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0005553671616676249,
+                  "riseTime": 0.0007522541715804906,
+                  "peakRate": 0.0007595401773225441,
+                  "absoluteError": 0.010611142854268403
+                },
+                "minimumCapacity": 71.39252160480778,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.71251047231388,
+                  "riseTime": 0.18471760881941957,
+                  "peakRate": 100.98101374632355,
+                  "absoluteError": 12.63652471194819
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0005661009345698678,
+                  "riseTime": 0.00054417588454771,
+                  "peakRate": 0.000748398931167655,
+                  "absoluteError": 0.01076029206698253
+                },
+                "minimumCapacity": 66.44131985681535,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.64146475015609,
+                  "riseTime": 0.3567122415267653,
+                  "peakRate": 102.77359689389638,
+                  "absoluteError": 21.620786406268127
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0009473143169577469,
+                  "riseTime": 0.002412272996492175,
+                  "peakRate": 0.0010246709731302642,
+                  "absoluteError": 0.006290532737448978
+                },
+                "minimumCapacity": 51.05966505676702,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.1814524382352829,
+              "blocked": true,
+              "finalZ": 0.6244139075279236
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.0040846251155782914,
+              "finalSupportY": -0.00003302799526794242,
+              "capacity": 40.02161167029957,
+              "finalHash": "6f22ea97"
+            },
+            "minimumLandingCapacity": 37.92847322091644,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": false,
+            "repetitionPass": true
+          },
+          {
+            "frequency": 1000,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.73354489367448,
+                  "riseTime": 0.18478136799679767,
+                  "peakRate": 101.00848476717755,
+                  "absoluteError": 12.711752552109814
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0003480761809163303,
+                  "riseTime": 0.0010572452709027608,
+                  "peakRate": 0.0004906799863028769,
+                  "absoluteError": 0.004773531537483352
+                },
+                "minimumCapacity": 41.03345042775334,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.73263733225062,
+                  "riseTime": 0.1847650773473839,
+                  "peakRate": 101.00774027654582,
+                  "absoluteError": 12.71041082970994
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.00036636938177486754,
+                  "riseTime": 0.0008012946264807417,
+                  "peakRate": 0.00048392814478101384,
+                  "absoluteError": 0.004976179486897349
+                },
+                "minimumCapacity": 35.61107337722159,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.67473929719918,
+                  "riseTime": 0.35649756198301275,
+                  "peakRate": 102.80973542491317,
+                  "absoluteError": 21.694313546333426
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.000623439110488254,
+                  "riseTime": 0.0018089928609471633,
+                  "peakRate": 0.0006733988370551227,
+                  "absoluteError": 0.0029111637445411024
+                },
+                "minimumCapacity": 32.51960536548337,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.18165820837020874,
+              "blocked": true,
+              "finalZ": 0.594294011592865
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.0004280796566962092,
+              "finalSupportY": -0.00003200230352242567,
+              "capacity": 19.196908099908917,
+              "finalHash": "95878cc7"
+            },
+            "minimumLandingCapacity": 16.5924767254838,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          }
+        ]
+      },
+      {
+        "preset": "mach-r5-sport-2050",
+        "reference": {
+          "frequency": 2000,
+          "axes": {
+            "roll": {
+              "elapsedMs": 153.57187499999782,
+              "capacity": 19.53482693364291,
+              "finalHash": "4058651a",
+              "metrics": {
+                "steadyRate": 100.76178559149719,
+                "riseTime": 0.1966319719289158,
+                "peakRate": 100.98128695392082,
+                "absoluteError": 12.59793208640668
+              }
+            },
+            "pitch": {
+              "elapsedMs": 124.29291699999885,
+              "capacity": 24.136532253081064,
+              "finalHash": "8503be72",
+              "metrics": {
+                "steadyRate": 100.76163191216415,
+                "riseTime": 0.19659734215254832,
+                "peakRate": 100.97999604813722,
+                "absoluteError": 12.596342428148635
+              }
+            },
+            "yaw": {
+              "elapsedMs": 125.36449999999968,
+              "capacity": 23.930219479996392,
+              "finalHash": "1ae9bbe9",
+              "metrics": {
+                "steadyRate": 102.79356666022825,
+                "riseTime": 0.3687728601280099,
+                "peakRate": 102.89738724260344,
+                "absoluteError": 21.573458109184642
+              }
+            }
+          },
+          "contact": {
+            "minimumZ": 0.16766683757305145,
+            "blocked": true,
+            "finalZ": 1.7151434421539307
+          },
+          "landing": {
+            "grounded": true,
+            "support": "course-boundary-y-min",
+            "minimumSupportY": -0.000226193576824546,
+            "finalSupportY": -0.00002848176471473285,
+            "capacity": 13.334701414433138,
+            "finalHash": "a21903e3"
+          }
+        },
+        "candidates": [
+          {
+            "frequency": 250,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.70354926411432,
+                  "riseTime": 0.19644516891569141,
+                  "peakRate": 100.90390091060566,
+                  "absoluteError": 12.357656956522185
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0005779604543628311,
+                  "riseTime": 0.0009500134255476528,
+                  "peakRate": 0.0007663404344457469,
+                  "absoluteError": 0.019072584947791113
+                },
+                "minimumCapacity": 92.17002998690447,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.70333539382445,
+                  "riseTime": 0.19643877245136487,
+                  "peakRate": 100.90329302375798,
+                  "absoluteError": 12.357460486131302
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0005785586957396678,
+                  "riseTime": 0.0008065709304472738,
+                  "peakRate": 0.0007595863277978101,
+                  "absoluteError": 0.0189643893360275
+                },
+                "minimumCapacity": 102.80427443724284,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.66920001385371,
+                  "riseTime": 0.3695743401156867,
+                  "peakRate": 102.76556459152893,
+                  "absoluteError": 21.320688133052414
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.001209867994809625,
+                  "riseTime": 0.0021733703163474517,
+                  "peakRate": 0.001281107855185027,
+                  "absoluteError": 0.011716711101805898
+                },
+                "minimumCapacity": 68.0802779944696,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.1680159568786621,
+              "blocked": true,
+              "finalZ": 0.5702609419822693
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.00015349407896984857,
+              "finalSupportY": -0.00003306873146771,
+              "capacity": 58.27496545168463,
+              "finalHash": "58e23fa2"
+            },
+            "minimumLandingCapacity": 58.27496545168463,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          },
+          {
+            "frequency": 500,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.71514222963148,
+                  "riseTime": 0.19665707463022208,
+                  "peakRate": 100.91846970413113,
+                  "absoluteError": 12.47465171083413
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0004629072578646419,
+                  "riseTime": 0.00012766337569642406,
+                  "peakRate": 0.0006220682235744607,
+                  "absoluteError": 0.009785762832105553
+                },
+                "minimumCapacity": 53.185359843282995,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.71425857385458,
+                  "riseTime": 0.19664208574324704,
+                  "peakRate": 100.91732223231318,
+                  "absoluteError": 12.473662170046744
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.00047015255122967225,
+                  "riseTime": 0.0002275900081294458,
+                  "peakRate": 0.0006206557563555931,
+                  "absoluteError": 0.009739355594822613
+                },
+                "minimumCapacity": 61.43779806931789,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.69080219473986,
+                  "riseTime": 0.3697333039422469,
+                  "peakRate": 102.78817934794587,
+                  "absoluteError": 21.43949550856002
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.000999716896953941,
+                  "riseTime": 0.002604431936513971,
+                  "peakRate": 0.0010613281598695083,
+                  "absoluteError": 0.006209602556374013
+                },
+                "minimumCapacity": 67.81212650352306,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.1723403036594391,
+              "blocked": true,
+              "finalZ": 2.7155356407165527
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.000032736142968017856,
+              "finalSupportY": -0.00003259561721988963,
+              "capacity": 40.812856049656446,
+              "finalHash": "41991e40"
+            },
+            "minimumLandingCapacity": 40.812856049656446,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          },
+          {
+            "frequency": 1000,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.73191930863035,
+                  "riseTime": 0.19677213060127408,
+                  "peakRate": 100.94029898873148,
+                  "absoluteError": 12.542739445098796
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.00029640485915877223,
+                  "riseTime": 0.0007127969626879911,
+                  "peakRate": 0.00040589664110771286,
+                  "absoluteError": 0.004381087382383707
+                },
+                "minimumCapacity": 41.00893405600688,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.7318838770078,
+                  "riseTime": 0.19675252278738264,
+                  "peakRate": 100.93915834708972,
+                  "absoluteError": 12.541495992037966
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0002952317721717428,
+                  "riseTime": 0.0007893323131190525,
+                  "peakRate": 0.000404413771496292,
+                  "absoluteError": 0.00435415569428355
+                },
+                "minimumCapacity": 42.008397982858924,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 102.72768009354316,
+                  "riseTime": 0.36956690189086094,
+                  "peakRate": 102.82536972805343,
+                  "absoluteError": 21.513405779551668
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0006409600213880544,
+                  "riseTime": 0.0021532001096159752,
+                  "peakRate": 0.0006998964354674514,
+                  "absoluteError": 0.0027836209349954635
+                },
+                "minimumCapacity": 31.002264457066868,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.17231830954551697,
+              "blocked": true,
+              "finalZ": 2.489506244659424
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.00022635313853022754,
+              "finalSupportY": -0.000030244504332574418,
+              "capacity": 20.07624502800024,
+              "finalHash": "4e875446"
+            },
+            "minimumLandingCapacity": 8.685588220605151,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          }
+        ]
+      },
+      {
+        "preset": "rekon7-pro-o3",
+        "reference": {
+          "frequency": 2000,
+          "axes": {
+            "roll": {
+              "elapsedMs": 186.11270800000057,
+              "capacity": 16.11926467697193,
+              "finalHash": "e93e808b",
+              "metrics": {
+                "steadyRate": 101.07811427768725,
+                "riseTime": 0.24182849978842225,
+                "peakRate": 101.46058864866725,
+                "absoluteError": 16.881848467146764
+              }
+            },
+            "pitch": {
+              "elapsedMs": 121.87537499999962,
+              "capacity": 24.615308875972765,
+              "finalHash": "8d28d99a",
+              "metrics": {
+                "steadyRate": 101.07720628861263,
+                "riseTime": 0.24175182088146874,
+                "peakRate": 101.45974170524975,
+                "absoluteError": 16.87948935796985
+              }
+            },
+            "yaw": {
+              "elapsedMs": 110.05295900000056,
+              "capacity": 27.259603260644585,
+              "finalHash": "5ef1d7b0",
+              "metrics": {
+                "steadyRate": 103.58116601835289,
+                "riseTime": 0.4616588283663017,
+                "peakRate": 103.6173028416386,
+                "absoluteError": 27.912035101519425
+              }
+            }
+          },
+          "contact": {
+            "minimumZ": 0.2334635853767395,
+            "blocked": true,
+            "finalZ": 1.5279582738876343
+          },
+          "landing": {
+            "grounded": true,
+            "support": "course-boundary-y-min",
+            "minimumSupportY": -0.00007881461765851805,
+            "finalSupportY": -0.00002927651569380879,
+            "capacity": 13.736263736263645,
+            "finalHash": "07e2d585"
+          }
+        },
+        "candidates": [
+          {
+            "frequency": 250,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.98036530523672,
+                  "riseTime": 0.2420010538113142,
+                  "peakRate": 101.33416867737652,
+                  "absoluteError": 16.60010290600183
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0009670636729726731,
+                  "riseTime": 0.0007135388221112337,
+                  "peakRate": 0.0012460007671401432,
+                  "absoluteError": 0.016689260165628793
+                },
+                "minimumCapacity": 110.92965074502011,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.98011771088181,
+                  "riseTime": 0.24199256394675484,
+                  "peakRate": 101.33440773398002,
+                  "absoluteError": 16.599747351957735
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0009605387930251242,
+                  "riseTime": 0.000995827309214495,
+                  "peakRate": 0.0012353074151701157,
+                  "absoluteError": 0.016572895072802105
+                },
+                "minimumCapacity": 111.6408884754011,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 103.42446909879096,
+                  "riseTime": 0.46299379698784104,
+                  "peakRate": 103.46100762257574,
+                  "absoluteError": 27.67126056408316
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0015127935471797983,
+                  "riseTime": 0.0028916778787995818,
+                  "peakRate": 0.0015083891857496027,
+                  "absoluteError": 0.008626190693746991
+                },
+                "minimumCapacity": 104.17149183229972,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.25259315967559814,
+              "blocked": true,
+              "finalZ": 2.8470444679260254
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.00003398518901039094,
+              "finalSupportY": -0.00003384297068396991,
+              "capacity": 63.60086741406966,
+              "finalHash": "5809d59a"
+            },
+            "minimumLandingCapacity": 63.60086741406966,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          },
+          {
+            "frequency": 500,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 100.99679062964621,
+                  "riseTime": 0.24217685736461936,
+                  "peakRate": 101.35666049029248,
+                  "absoluteError": 16.72534184803781
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0008045623785344728,
+                  "riseTime": 0.0014405149785980242,
+                  "peakRate": 0.001024320475161525,
+                  "absoluteError": 0.009270703940597822
+                },
+                "minimumCapacity": 73.12911410684077,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 100.9965054691348,
+                  "riseTime": 0.24216072397184352,
+                  "peakRate": 101.3557315845688,
+                  "absoluteError": 16.724576277695878
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0007984076968589309,
+                  "riseTime": 0.001691416796298982,
+                  "peakRate": 0.0010251368565781802,
+                  "absoluteError": 0.009177592816267696
+                },
+                "minimumCapacity": 73.67922257220904,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 103.44964005348461,
+                  "riseTime": 0.46309631893589753,
+                  "peakRate": 103.48650471885821,
+                  "absoluteError": 27.790142580729743
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0012697864865217853,
+                  "riseTime": 0.003113750850780404,
+                  "peakRate": 0.0012623193153395757,
+                  "absoluteError": 0.0043670237711562285
+                },
+                "minimumCapacity": 68.88218563174968,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.23822671175003052,
+              "blocked": true,
+              "finalZ": 1.52932870388031
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.00017341164153947264,
+              "finalSupportY": -0.00003326474496329057,
+              "capacity": 37.94202458643227,
+              "finalHash": "b26d1346"
+            },
+            "minimumLandingCapacity": 37.94202458643227,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          },
+          {
+            "frequency": 1000,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 101.02321961957566,
+                  "riseTime": 0.24213928229046333,
+                  "peakRate": 101.39172668147987,
+                  "absoluteError": 16.805442029146548
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.000543091434816277,
+                  "riseTime": 0.0012851359633500228,
+                  "peakRate": 0.0006787065608877932,
+                  "absoluteError": 0.004525952128341173
+                },
+                "minimumCapacity": 49.78919090606363,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 101.02272955356625,
+                  "riseTime": 0.2421078737343133,
+                  "peakRate": 101.39230724757421,
+                  "absoluteError": 16.80465100361456
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0005389616219786239,
+                  "riseTime": 0.0014728031894293014,
+                  "peakRate": 0.0006646425128052213,
+                  "absoluteError": 0.004433685923084748
+                },
+                "minimumCapacity": 50.83837392986495,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 103.49292552353437,
+                  "riseTime": 0.46271084637291804,
+                  "peakRate": 103.52963053308594,
+                  "absoluteError": 27.85790968570137
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0008518970987726318,
+                  "riseTime": 0.0022787780542163527,
+                  "peakRate": 0.0008461164897011588,
+                  "absoluteError": 0.001939142582086751
+                },
+                "minimumCapacity": 47.111261504216905,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.23538151383399963,
+              "blocked": true,
+              "finalZ": 2.2463951110839844
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.00006911517024180136,
+              "finalSupportY": -0.00003216812195536156,
+              "capacity": 25.506896427122506,
+              "finalHash": "2d21d668"
+            },
+            "minimumLandingCapacity": 25.46555966407403,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          }
+        ]
+      },
+      {
+        "preset": "chimera7-pro-v2-o4",
+        "reference": {
+          "frequency": 2000,
+          "axes": {
+            "roll": {
+              "elapsedMs": 104.42566699999952,
+              "capacity": 28.72856919362568,
+              "finalHash": "e0abb229",
+              "metrics": {
+                "steadyRate": 101.20885964012653,
+                "riseTime": 0.2686952919519425,
+                "peakRate": 101.58940657423874,
+                "absoluteError": 18.55760819191981
+              }
+            },
+            "pitch": {
+              "elapsedMs": 114.42941699999938,
+              "capacity": 26.217034733297787,
+              "finalHash": "fe7fe8b3",
+              "metrics": {
+                "steadyRate": 101.21594920188357,
+                "riseTime": 0.26867979812110665,
+                "peakRate": 101.59455597908746,
+                "absoluteError": 18.56830842948123
+              }
+            },
+            "yaw": {
+              "elapsedMs": 106.12054200000057,
+              "capacity": 28.269738765563257,
+              "finalHash": "7b6c7b7f",
+              "metrics": {
+                "steadyRate": 103.74149860522891,
+                "riseTime": 0.5081743241167732,
+                "peakRate": 103.87131490684497,
+                "absoluteError": 30.350932641749136
+              }
+            }
+          },
+          "contact": {
+            "minimumZ": 0.21032291650772095,
+            "blocked": true,
+            "finalZ": 1.5399267673492432
+          },
+          "landing": {
+            "grounded": true,
+            "support": "course-boundary-y-min",
+            "minimumSupportY": -0.00004144339090977889,
+            "finalSupportY": -0.00002942396109285178,
+            "capacity": 13.970512904097244,
+            "finalHash": "e7100602"
+          }
+        },
+        "candidates": [
+          {
+            "frequency": 250,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 101.10651772587696,
+                  "riseTime": 0.26881463610739775,
+                  "peakRate": 101.45138212535693,
+                  "absoluteError": 18.27573380195129
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0010111952116986656,
+                  "riseTime": 0.00044416169181174476,
+                  "peakRate": 0.0013586500161406436,
+                  "absoluteError": 0.015189155146149323
+                },
+                "minimumCapacity": 110.60876297924715,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 101.1131339374205,
+                  "riseTime": 0.2687741721316522,
+                  "peakRate": 101.45939336560208,
+                  "absoluteError": 18.285904051383095
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0010158010202325086,
+                  "riseTime": 0.0003512508614549196,
+                  "peakRate": 0.001330411971220187,
+                  "absoluteError": 0.015208944808874305
+                },
+                "minimumCapacity": 113.70689205898539,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 103.57549542327558,
+                  "riseTime": 0.5097845940614762,
+                  "peakRate": 103.7079956399693,
+                  "absoluteError": 30.122648646334348
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.001600161788533886,
+                  "riseTime": 0.003168735349826553,
+                  "peakRate": 0.0015723230905678308,
+                  "absoluteError": 0.007521482061502545
+                },
+                "minimumCapacity": 108.68876067639997,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.23031936585903168,
+              "blocked": true,
+              "finalZ": 0.6331120133399963
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.00004187978954096894,
+              "finalSupportY": -0.00003384256914650691,
+              "capacity": 58.1016269501358,
+              "finalHash": "7708cd34"
+            },
+            "minimumLandingCapacity": 58.1016269501358,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          },
+          {
+            "frequency": 500,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 101.12494389368071,
+                  "riseTime": 0.26909348076450823,
+                  "peakRate": 101.47635328428694,
+                  "absoluteError": 18.402510776368235
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0008291343934138652,
+                  "riseTime": 0.001481934460678682,
+                  "peakRate": 0.001112845263735022,
+                  "absoluteError": 0.008357618823912226
+                },
+                "minimumCapacity": 75.76642474026173,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 101.1314858019467,
+                  "riseTime": 0.26905684289739173,
+                  "peakRate": 101.48396155604662,
+                  "absoluteError": 18.4125463539261
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0008344870606154207,
+                  "riseTime": 0.0014033238781694074,
+                  "peakRate": 0.0010885861154174637,
+                  "absoluteError": 0.00838859803232399
+                },
+                "minimumCapacity": 74.24540313298657,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 103.59955964669824,
+                  "riseTime": 0.5098817558310381,
+                  "peakRate": 103.73395758246099,
+                  "absoluteError": 30.239416430412085
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0013681984590448069,
+                  "riseTime": 0.003359933064765697,
+                  "peakRate": 0.0013223797591006778,
+                  "absoluteError": 0.0036742268401879397
+                },
+                "minimumCapacity": 79.97342962774525,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.22984227538108826,
+              "blocked": true,
+              "finalZ": 0.6277136206626892
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.00003352339349720068,
+              "finalSupportY": -0.0000333929080731446,
+              "capacity": 43.25192043573054,
+              "finalHash": "8be7c00b"
+            },
+            "minimumLandingCapacity": 42.2975570538364,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          },
+          {
+            "frequency": 1000,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 101.154569414193,
+                  "riseTime": 0.26905508355701435,
+                  "peakRate": 101.51468432710051,
+                  "absoluteError": 18.48233188806007
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0005364177219916353,
+                  "riseTime": 0.0013390320405620455,
+                  "peakRate": 0.0007355318793364629,
+                  "absoluteError": 0.004056358075957096
+                },
+                "minimumCapacity": 49.58855303131167,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 101.16120651634634,
+                  "riseTime": 0.2690221209661391,
+                  "peakRate": 101.52205352104778,
+                  "absoluteError": 18.492536786772682
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0005408503893793086,
+                  "riseTime": 0.0012740922370283229,
+                  "peakRate": 0.000713645109631694,
+                  "absoluteError": 0.004080697118766355
+                },
+                "minimumCapacity": 51.101630206732416,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 103.64521072828867,
+                  "riseTime": 0.5094313985633798,
+                  "peakRate": 103.77987003292985,
+                  "absoluteError": 30.3034009869761
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0009281519761599508,
+                  "riseTime": 0.0024737071255842256,
+                  "peakRate": 0.000880366961726952,
+                  "absoluteError": 0.0015660690013740495
+                },
+                "minimumCapacity": 50.12255717066632,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.22947368025779724,
+              "blocked": true,
+              "finalZ": 0.6576681733131409
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.00007807805256310196,
+              "finalSupportY": -0.00003240746213212936,
+              "capacity": 24.189841879066872,
+              "finalHash": "108b7fca"
+            },
+            "minimumLandingCapacity": 21.323729656220326,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          }
+        ]
+      },
+      {
+        "preset": "helion-pro-o4",
+        "reference": {
+          "frequency": 2000,
+          "axes": {
+            "roll": {
+              "elapsedMs": 113.90104199999769,
+              "capacity": 26.338652810569204,
+              "finalHash": "493e1904",
+              "metrics": {
+                "steadyRate": 101.63570786872307,
+                "riseTime": 0.34695805606306185,
+                "peakRate": 101.92269875738566,
+                "absoluteError": 23.474793845591016
+              }
+            },
+            "pitch": {
+              "elapsedMs": 105.53837500000009,
+              "capacity": 28.42567928490464,
+              "finalHash": "a2eaf569",
+              "metrics": {
+                "steadyRate": 101.63621501038266,
+                "riseTime": 0.34696373071837283,
+                "peakRate": 101.9213532101159,
+                "absoluteError": 23.473970790763644
+              }
+            },
+            "yaw": {
+              "elapsedMs": 103.03949999999895,
+              "capacity": 29.115048112617302,
+              "finalHash": "9f5d6a9f",
+              "metrics": {
+                "steadyRate": 103.4609000473965,
+                "riseTime": 0.6417166382909905,
+                "peakRate": 104.25296122697765,
+                "absoluteError": 37.37388973951497
+              }
+            }
+          },
+          "contact": {
+            "minimumZ": 0.3047877848148346,
+            "blocked": true,
+            "finalZ": 2.88663649559021
+          },
+          "landing": {
+            "grounded": true,
+            "support": "course-boundary-y-min",
+            "minimumSupportY": -0.00002698564737525777,
+            "finalSupportY": -0.00002372910658929306,
+            "capacity": 13.89903428305213,
+            "finalHash": "eacf0d8e"
+          }
+        },
+        "candidates": [
+          {
+            "frequency": 250,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 101.51094891435511,
+                  "riseTime": 0.3475271831865471,
+                  "peakRate": 101.77548086000296,
+                  "absoluteError": 23.199063057629488
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0012275110488639115,
+                  "riseTime": 0.0016403340794075181,
+                  "peakRate": 0.0014444073712484467,
+                  "absoluteError": 0.011745823617246182
+                },
+                "minimumCapacity": 105.5777313759743,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 101.51034785747085,
+                  "riseTime": 0.34751862092983743,
+                  "peakRate": 101.77511202979674,
+                  "absoluteError": 23.19846543733576
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0012384085032972841,
+                  "riseTime": 0.001599274397689127,
+                  "peakRate": 0.0014348433935886628,
+                  "absoluteError": 0.011736631858479127
+                },
+                "minimumCapacity": 109.80346972375652,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 103.24585196804902,
+                  "riseTime": 0.6445217725057927,
+                  "peakRate": 104.0304609843483,
+                  "absoluteError": 37.18748551490949
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0020785444476992465,
+                  "riseTime": 0.004371297310091269,
+                  "peakRate": 0.0021342342702854065,
+                  "absoluteError": 0.0049875521628780116
+                },
+                "minimumCapacity": 107.51499726697739,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.3041750192642212,
+              "blocked": true,
+              "finalZ": 1.0159152746200562
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.00010678840556291314,
+              "finalSupportY": -0.00003352429037893623,
+              "capacity": 56.00654514889124,
+              "finalHash": "e06fd645"
+            },
+            "minimumLandingCapacity": 56.00654514889124,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          },
+          {
+            "frequency": 500,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 101.53295194159436,
+                  "riseTime": 0.34775771427331803,
+                  "peakRate": 101.80194784296633,
+                  "absoluteError": 23.326291420141686
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0010110219064094637,
+                  "riseTime": 0.002304769110508387,
+                  "peakRate": 0.0011847303485042616,
+                  "absoluteError": 0.0063260374692159895
+                },
+                "minimumCapacity": 41.0320237848975,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 101.53358159970627,
+                  "riseTime": 0.34773858792873447,
+                  "peakRate": 101.8010189373186,
+                  "absoluteError": 23.325774362072877
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.001009811420721494,
+                  "riseTime": 0.002233251322140581,
+                  "peakRate": 0.0011806581153727303,
+                  "absoluteError": 0.006313223698356056
+                },
+                "minimumCapacity": 71.95071433628362,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 103.2687463352567,
+                  "riseTime": 0.6445456195707427,
+                  "peakRate": 104.05902483513485,
+                  "absoluteError": 37.301106725609515
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0018572592356318719,
+                  "riseTime": 0.0044084586731090265,
+                  "peakRate": 0.00186024828033961,
+                  "absoluteError": 0.0019474294597841893
+                },
+                "minimumCapacity": 66.80720824835771,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.3037435710430145,
+              "blocked": true,
+              "finalZ": 0.7345417737960815
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.000033016245015088375,
+              "finalSupportY": -0.00003262560923830704,
+              "capacity": 37.54748254642871,
+              "finalHash": "a211d388"
+            },
+            "minimumLandingCapacity": 36.917775303357416,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          },
+          {
+            "frequency": 1000,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 101.56838440186344,
+                  "riseTime": 0.347534923278242,
+                  "peakRate": 101.84204105342232,
+                  "absoluteError": 23.403642185603562
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0006623997438635587,
+                  "riseTime": 0.0016626425157145886,
+                  "peakRate": 0.000791361541115932,
+                  "absoluteError": 0.0030309812497380925
+                },
+                "minimumCapacity": 47.53692720003356,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 101.57089791134985,
+                  "riseTime": 0.34757718130448734,
+                  "peakRate": 101.84419256306226,
+                  "absoluteError": 23.40544620928335
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0006426557603127804,
+                  "riseTime": 0.0017680539255338988,
+                  "peakRate": 0.0007570606612194478,
+                  "absoluteError": 0.002919172989141479
+                },
+                "minimumCapacity": 50.690731336640084,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 103.32862916494942,
+                  "riseTime": 0.6437628072772346,
+                  "peakRate": 104.12157570742322,
+                  "absoluteError": 37.35395650316897
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.001278462514693892,
+                  "riseTime": 0.0031885864634793107,
+                  "peakRate": 0.0012602569558516196,
+                  "absoluteError": 0.0005333465819299931
+                },
+                "minimumCapacity": 48.58034075060657,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.30360838770866394,
+              "blocked": true,
+              "finalZ": 1.0043962001800537
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.0000309677362648475,
+              "finalSupportY": -0.000030493433292547167,
+              "capacity": 22.886277568007774,
+              "finalHash": "6e23d6ff"
+            },
+            "minimumLandingCapacity": 22.886277568007774,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          }
+        ]
+      },
+      {
+        "preset": "holybro-x650-v2",
+        "reference": {
+          "frequency": 2000,
+          "axes": {
+            "roll": {
+              "elapsedMs": 108.81045799999993,
+              "capacity": 27.570879262359156,
+              "finalHash": "e15cdd7a",
+              "metrics": {
+                "steadyRate": 102.48049085183935,
+                "riseTime": 0.5007068926007288,
+                "peakRate": 102.51398140395169,
+                "absoluteError": 32.87204532906088
+              }
+            },
+            "pitch": {
+              "elapsedMs": 104.79987500000061,
+              "capacity": 28.62598834206608,
+              "finalHash": "015beeee",
+              "metrics": {
+                "steadyRate": 102.48238409476708,
+                "riseTime": 0.5007509404515019,
+                "peakRate": 102.51596898868969,
+                "absoluteError": 32.871959055218504
+              }
+            },
+            "yaw": {
+              "elapsedMs": 103.30733399999735,
+              "capacity": 29.039564606323854,
+              "finalHash": "aeb8611a",
+              "metrics": {
+                "steadyRate": 98.73222646919868,
+                "riseTime": 0.904585895285908,
+                "peakRate": 101.27204810701161,
+                "absoluteError": 51.198128668999644
+              }
+            }
+          },
+          "contact": {
+            "minimumZ": 0.4517221748828888,
+            "blocked": true,
+            "finalZ": 3.0310230255126953
+          },
+          "landing": {
+            "grounded": true,
+            "support": "course-boundary-y-min",
+            "minimumSupportY": -0.000017978981403266037,
+            "finalSupportY": -0.000014691694119661758,
+            "capacity": 15.148652362252076,
+            "finalHash": "037b4c81"
+          }
+        },
+        "candidates": [
+          {
+            "frequency": 250,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 102.27382170719326,
+                  "riseTime": 0.5022648218247063,
+                  "peakRate": 102.30544206794204,
+                  "absoluteError": 32.614442219486904
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.002016668176822806,
+                  "riseTime": 0.003111459512541379,
+                  "peakRate": 0.002034252627335881,
+                  "absoluteError": 0.007836540348958485
+                },
+                "minimumCapacity": 110.12087160522677,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 102.273773042042,
+                  "riseTime": 0.502265963664413,
+                  "peakRate": 102.30564014338832,
+                  "absoluteError": 32.61438711264286
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0020355796224664677,
+                  "riseTime": 0.0030255024814233233,
+                  "peakRate": 0.002051669094837128,
+                  "absoluteError": 0.007835612783009793
+                },
+                "minimumCapacity": 107.73008227884573,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 98.60389447174379,
+                  "riseTime": 0.9069805142933509,
+                  "peakRate": 101.1200900581988,
+                  "absoluteError": 51.11789543309024
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0012997984755760432,
+                  "riseTime": 0.0026471991437430173,
+                  "peakRate": 0.001500493489104174,
+                  "absoluteError": 0.0015671126659358712
+                },
+                "minimumCapacity": 92.0983456834604,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.4503363370895386,
+              "blocked": true,
+              "finalZ": 0.8787764310836792
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.00020156569427409732,
+              "finalSupportY": -0.000012668268528664983,
+              "capacity": 43.602643413164685,
+              "finalHash": "04724dc2"
+            },
+            "minimumLandingCapacity": 34.51737518373475,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          },
+          {
+            "frequency": 500,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 102.31069320268338,
+                  "riseTime": 0.5024282546914839,
+                  "peakRate": 102.34245486295382,
+                  "absoluteError": 32.74143858406889
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0016568777895633938,
+                  "riseTime": 0.003437863780572659,
+                  "peakRate": 0.001673201437001862,
+                  "absoluteError": 0.003973185838744551
+                },
+                "minimumCapacity": 15.438289805538393,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 102.31171858486279,
+                  "riseTime": 0.5024192156032041,
+                  "peakRate": 102.34369112725446,
+                  "absoluteError": 32.74161734079412
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0016653155702006219,
+                  "riseTime": 0.00333154671701266,
+                  "peakRate": 0.0016804978105824718,
+                  "absoluteError": 0.003965133754438961
+                },
+                "minimumCapacity": 40.556616854623506,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 98.56345036032305,
+                  "riseTime": 0.9084066568241157,
+                  "peakRate": 101.0876739803629,
+                  "absoluteError": 51.203715453743165
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0017094328256467102,
+                  "riseTime": 0.004223768641672267,
+                  "peakRate": 0.0018205825802386905,
+                  "absoluteError": 0.00010912087782817166
+                },
+                "minimumCapacity": 55.7454172203487,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.4503273665904999,
+              "blocked": true,
+              "finalZ": 0.8778189420700073
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.00004043462221969829,
+              "finalSupportY": -0.00003222773496566744,
+              "capacity": 45.182934405675056,
+              "finalHash": "cfa16302"
+            },
+            "minimumLandingCapacity": 44.83824647422855,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          },
+          {
+            "frequency": 1000,
+            "axes": {
+              "roll": {
+                "metrics": {
+                  "steadyRate": 102.37048595940863,
+                  "riseTime": 0.5019526064600686,
+                  "peakRate": 102.40334599942716,
+                  "absoluteError": 32.81508693442436
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0010734227706789784,
+                  "riseTime": 0.002487910347847267,
+                  "peakRate": 0.001079222590024827,
+                  "absoluteError": 0.0017327304725443876
+                },
+                "minimumCapacity": 46.86111885794788,
+                "repeatHashesAgree": true
+              },
+              "pitch": {
+                "metrics": {
+                  "steadyRate": 102.36830286015497,
+                  "riseTime": 0.5019677165809889,
+                  "peakRate": 102.40047732001395,
+                  "absoluteError": 32.81355159326233
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.0011131789684617646,
+                  "riseTime": 0.0024299028343110077,
+                  "peakRate": 0.0011265724727089733,
+                  "absoluteError": 0.0017768171911524552
+                },
+                "minimumCapacity": 44.5570470333959,
+                "repeatHashesAgree": true
+              },
+              "yaw": {
+                "metrics": {
+                  "steadyRate": 98.60027617897632,
+                  "riseTime": 0.9075352083760169,
+                  "peakRate": 101.13188579498237,
+                  "absoluteError": 51.25108950496145
+                },
+                "relativeErrors": {
+                  "steadyRate": 0.001336446011004599,
+                  "riseTime": 0.0032604013676077086,
+                  "peakRate": 0.001384017748719183,
+                  "absoluteError": 0.0010344291351779993
+                },
+                "minimumCapacity": 53.095935506138424,
+                "repeatHashesAgree": true
+              }
+            },
+            "contact": {
+              "minimumZ": 0.453718900680542,
+              "blocked": true,
+              "finalZ": 2.7439560890197754
+            },
+            "landing": {
+              "grounded": true,
+              "support": "course-boundary-y-min",
+              "minimumSupportY": -0.00003385620917903398,
+              "finalSupportY": -0.0000043660238906728654,
+              "capacity": 24.73794966232974,
+              "finalHash": "522439aa"
+            },
+            "minimumLandingCapacity": 24.73794966232974,
+            "accuracyPass": true,
+            "capacityPass": true,
+            "contactsPass": true,
+            "repetitionPass": true
+          }
+        ]
+      }
+    ],
+    "limitation": "Local numerical and performance evidence; not real-aircraft fidelity or the complete platform matrix."
+  },
+  "determinism": {
+    "frequency": 1000,
+    "worker": false,
+    "cases": [
+      {
+        "preset": "air65-ii-racing-2026",
+        "mode": "acro",
+        "identity": "485c2c5a4b5c02a0",
+        "finalHash": "e3369e7a",
+        "continuationHash": "e3369e7a",
+        "recordedFinalHash": "e3369e7a",
+        "consumedSequence": 79,
+        "consumedTimestampUs": 1580000
+      },
+      {
+        "preset": "air65-ii-racing-2026",
+        "mode": "self-level",
+        "identity": "f106fc8e9607ea1a",
+        "finalHash": "be01e61f",
+        "continuationHash": "be01e61f",
+        "recordedFinalHash": "be01e61f",
+        "consumedSequence": 79,
+        "consumedTimestampUs": 1580000
+      },
+      {
+        "preset": "meteor75-analog-2022",
+        "mode": "acro",
+        "identity": "5ac1966a0012b595",
+        "finalHash": "30a5d779",
+        "continuationHash": "30a5d779",
+        "recordedFinalHash": "30a5d779",
+        "consumedSequence": 79,
+        "consumedTimestampUs": 1580000
+      },
+      {
+        "preset": "meteor75-analog-2022",
+        "mode": "self-level",
+        "identity": "868ff64f55cd50d3",
+        "finalHash": "42fc00f7",
+        "continuationHash": "42fc00f7",
+        "recordedFinalHash": "42fc00f7",
+        "consumedSequence": 79,
+        "consumedTimestampUs": 1580000
+      },
+      {
+        "preset": "meteor75-pro-matrix",
+        "mode": "acro",
+        "identity": "2e9a60de2064cece",
+        "finalHash": "fc4c7f66",
+        "continuationHash": "fc4c7f66",
+        "recordedFinalHash": "fc4c7f66",
+        "consumedSequence": 79,
+        "consumedTimestampUs": 1580000
+      },
+      {
+        "preset": "meteor75-pro-matrix",
+        "mode": "self-level",
+        "identity": "97ac500be812c638",
+        "finalHash": "e5348a2e",
+        "continuationHash": "e5348a2e",
+        "recordedFinalHash": "e5348a2e",
+        "consumedSequence": 79,
+        "consumedTimestampUs": 1580000
+      },
+      {
+        "preset": "meteor85-analog",
+        "mode": "acro",
+        "identity": "470f3ce997f2e4ca",
+        "finalHash": "934ccb2c",
+        "continuationHash": "934ccb2c",
+        "recordedFinalHash": "934ccb2c",
+        "consumedSequence": 79,
+        "consumedTimestampUs": 1580000
+      },
+      {
+        "preset": "meteor85-analog",
+        "mode": "self-level",
+        "identity": "194f2405d3f45024",
+        "finalHash": "93494fdf",
+        "continuationHash": "93494fdf",
+        "recordedFinalHash": "93494fdf",
+        "consumedSequence": 79,
+        "consumedTimestampUs": 1580000
+      },
+      {
+        "preset": "mobula8-analog-2023",
+        "mode": "acro",
+        "identity": "abbcc3c798ca45fa",
+        "finalHash": "41876a1d",
+        "continuationHash": "41876a1d",
+        "recordedFinalHash": "41876a1d",
+        "consumedSequence": 79,
+        "consumedTimestampUs": 1580000
+      },
+      {
+        "preset": "mobula8-analog-2023",
+        "mode": "self-level",
+        "identity": "2c3056ca714e5774",
+        "finalHash": "10f4973c",
+        "continuationHash": "10f4973c",
+        "recordedFinalHash": "10f4973c",
+        "consumedSequence": 79,
+        "consumedTimestampUs": 1580000
+      },
+      {
+        "preset": "cetus-x-betaflight-2022",
+        "mode": "acro",
+        "identity": "bffbd0c75863b9df",
+        "finalHash": "d5a32804",
+        "continuationHash": "d5a32804",
+        "recordedFinalHash": "d5a32804",
+        "consumedSequence": 79,
+        "consumedTimestampUs": 1580000
+      },
+      {
+        "preset": "cetus-x-betaflight-2022",
+        "mode": "self-level",
+        "identity": "1fb7d89d6992860d",
+        "finalHash": "bc0d894d",
+        "continuationHash": "bc0d894d",
+        "recordedFinalHash": "bc0d894d",
+        "consumedSequence": 79,
+        "consumedTimestampUs": 1580000
+      },
+      {
+        "preset": "protos-16-aio-1-0",
+        "mode": "acro",
+        "identity": "d52dee11cecac01d",
+        "finalHash": "6455be83",
+        "continuationHash": "6455be83",
+        "recordedFinalHash": "6455be83",
+        "consumedSequence": 79,
+        "consumedTimestampUs": 1580000
+      },
+      {
+        "preset": "protos-16-aio-1-0",
+        "mode": "self-level",
+        "identity": "b106a17f0c0f4f4b",
+        "finalHash": "61a0b90c",
+        "continuationHash": "61a0b90c",
+        "recordedFinalHash": "61a0b90c",
+        "consumedSequence": 79,
+        "consumedTimestampUs": 1580000
+      },
+      {
+        "preset": "pavo20-pro-ii-o4-4s",
+        "mode": "acro",
+        "identity": "84c78d12bb5f0c17",
+        "finalHash": "76d05f01",
+        "continuationHash": "76d05f01",
+        "recordedFinalHash": "76d05f01",
+        "consumedSequence": 79,
+        "consumedTimestampUs": 1580000
+      },
+      {
+        "preset": "pavo20-pro-ii-o4-4s",
+        "mode": "self-level",
+        "identity": "224b8f5e92c6eedd",
+        "finalHash": "d92e1c3b",
+        "continuationHash": "d92e1c3b",
+        "recordedFinalHash": "d92e1c3b",
+        "consumedSequence": 79,
+        "consumedTimestampUs": 1580000
+      },
+      {
+        "preset": "smart35-analog",
+        "mode": "acro",
+        "identity": "8192794f3da256e1",
+        "finalHash": "dcaa0739",
+        "continuationHash": "dcaa0739",
+        "recordedFinalHash": "dcaa0739",
+        "consumedSequence": 79,
+        "consumedTimestampUs": 1580000
+      },
+      {
+        "preset": "smart35-analog",
+        "mode": "self-level",
+        "identity": "4e85309d120fee43",
+        "finalHash": "7475590a",
+        "continuationHash": "7475590a",
+        "recordedFinalHash": "7475590a",
+        "consumedSequence": 79,
+        "consumedTimestampUs": 1580000
+      },
+      {
+        "preset": "nazgul-eco-xl5-v11",
+        "mode": "acro",
+        "identity": "1974a41245bc9937",
+        "finalHash": "106a1c6d",
+        "continuationHash": "106a1c6d",
+        "recordedFinalHash": "106a1c6d",
+        "consumedSequence": 79,
+        "consumedTimestampUs": 1580000
+      },
+      {
+        "preset": "nazgul-eco-xl5-v11",
+        "mode": "self-level",
+        "identity": "ec9f60ae28f37579",
+        "finalHash": "a078591b",
+        "continuationHash": "a078591b",
+        "recordedFinalHash": "a078591b",
+        "consumedSequence": 79,
+        "consumedTimestampUs": 1580000
+      },
+      {
+        "preset": "mach-r5-sport-2050",
+        "mode": "acro",
+        "identity": "cc5e2e78a03b6635",
+        "finalHash": "c8593e1e",
+        "continuationHash": "c8593e1e",
+        "recordedFinalHash": "c8593e1e",
+        "consumedSequence": 79,
+        "consumedTimestampUs": 1580000
+      },
+      {
+        "preset": "mach-r5-sport-2050",
+        "mode": "self-level",
+        "identity": "300ec272ea5316fb",
+        "finalHash": "125722c5",
+        "continuationHash": "125722c5",
+        "recordedFinalHash": "125722c5",
+        "consumedSequence": 79,
+        "consumedTimestampUs": 1580000
+      },
+      {
+        "preset": "rekon7-pro-o3",
+        "mode": "acro",
+        "identity": "148b363b51907a00",
+        "finalHash": "15df67b1",
+        "continuationHash": "15df67b1",
+        "recordedFinalHash": "15df67b1",
+        "consumedSequence": 79,
+        "consumedTimestampUs": 1580000
+      },
+      {
+        "preset": "rekon7-pro-o3",
+        "mode": "self-level",
+        "identity": "6fd1aa8936ca75ea",
+        "finalHash": "3f4b4d1e",
+        "continuationHash": "3f4b4d1e",
+        "recordedFinalHash": "3f4b4d1e",
+        "consumedSequence": 79,
+        "consumedTimestampUs": 1580000
+      },
+      {
+        "preset": "chimera7-pro-v2-o4",
+        "mode": "acro",
+        "identity": "52aed184e323b329",
+        "finalHash": "c6e443cd",
+        "continuationHash": "c6e443cd",
+        "recordedFinalHash": "c6e443cd",
+        "consumedSequence": 79,
+        "consumedTimestampUs": 1580000
+      },
+      {
+        "preset": "chimera7-pro-v2-o4",
+        "mode": "self-level",
+        "identity": "0b1e3aec2ded8387",
+        "finalHash": "238f5791",
+        "continuationHash": "238f5791",
+        "recordedFinalHash": "238f5791",
+        "consumedSequence": 79,
+        "consumedTimestampUs": 1580000
+      },
+      {
+        "preset": "helion-pro-o4",
+        "mode": "acro",
+        "identity": "895c1365e1aa5094",
+        "finalHash": "4ca0c28b",
+        "continuationHash": "4ca0c28b",
+        "recordedFinalHash": "4ca0c28b",
+        "consumedSequence": 79,
+        "consumedTimestampUs": 1580000
+      },
+      {
+        "preset": "helion-pro-o4",
+        "mode": "self-level",
+        "identity": "2b3e064ad10eb2be",
+        "finalHash": "7ff7466e",
+        "continuationHash": "7ff7466e",
+        "recordedFinalHash": "7ff7466e",
+        "consumedSequence": 79,
+        "consumedTimestampUs": 1580000
+      },
+      {
+        "preset": "holybro-x650-v2",
+        "mode": "acro",
+        "identity": "fd2c379337fabedd",
+        "finalHash": "25493172",
+        "continuationHash": "25493172",
+        "recordedFinalHash": "25493172",
+        "consumedSequence": 79,
+        "consumedTimestampUs": 1580000
+      },
+      {
+        "preset": "holybro-x650-v2",
+        "mode": "self-level",
+        "identity": "25e922973eeeedd7",
+        "finalHash": "3927fe18",
+        "continuationHash": "3927fe18",
+        "recordedFinalHash": "3927fe18",
+        "consumedSequence": 79,
+        "consumedTimestampUs": 1580000
+      }
+    ]
+  },
+  "scoredEligible": false,
+  "fullPlatformMatrixQualified": false,
+  "limitation": "Local Node numerical/capacity and replay evidence only; not real-aircraft, physical-radio, browser/native/mobile or cross-architecture qualification."
+}

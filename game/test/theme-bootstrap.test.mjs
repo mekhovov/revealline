@@ -24,6 +24,9 @@ function seed(
   records = {},
   {
     studio = false,
+    primaryTextScaling = false,
+    overflightTextScaling = false,
+    textScaling,
     coarse = false,
     reduced = false,
     brokenStorage = false,
@@ -39,6 +42,9 @@ function seed(
           appearanceRevision: appearanceDefault.revision,
         }
       : {};
+  if (primaryTextScaling) dataset.textScaling = 'solo';
+  if (textScaling) dataset.textScaling = textScaling;
+  if (overflightTextScaling) dataset.textScaling = 'overflight';
   const document = {
     documentElement: { dataset, style: { setProperty: (key, value) => variables.set(key, value) } },
     currentScript: { dataset: { themeDensity: studio ? 'studio' : 'player' } },
@@ -440,5 +446,129 @@ test('profile-owned players seed appearance without acquiring an auxiliary host 
     const html = await fs.readFile(path.join(root, file), 'utf8');
     assert.ok(html.includes('theme-bootstrap.mjs'), file);
     assert.ok(!html.includes('presentation/theme-entry.mjs'), `${file}: keeps runtime authority`);
+  }
+});
+
+test('unqualified extra size paints established Large before modules without overwriting desired intent', () => {
+  const display = { textFace: 'plain', textSize: 'extra-large', reducedEffects: false };
+  const records = { 'revealline.display.v1': raw(display) };
+  const before = structuredClone(records);
+  const boot = seed(records, { studio: true });
+  assert.equal(boot.dataset.themeTextSize, 'large');
+  assert.equal(boot.variables.get('--iw-text-size'), '20px');
+  assert.equal(boot.variables.get('--iw-target'), '44px');
+  const resolved = resolvePresentation({ accessibility: display, density: 'studio' });
+  assert.equal(resolved.accessibility.textSize, 'large');
+  assert.equal(presentationThemeVariables(resolved)['--iw-text-size'], '20px');
+  assert.deepEqual(records, before);
+});
+
+test('qualified primary extra-large seeds its multiplier before deferred styles or modules', async () => {
+  const { variables, dataset } = seed(
+    {
+      'revealline.display.v1': raw({
+        textSize: 'extra-large',
+        textFace: 'plain',
+        reducedEffects: false,
+      }),
+    },
+    { primaryTextScaling: true },
+  );
+  assert.equal(dataset.themeTextSize, 'extra-large');
+  assert.equal(variables.get('--iw-text-size'), '16px');
+  assert.equal(variables.get('--primary-text-scale'), '2');
+  const html = await fs.readFile(path.join(root, 'game/index.html'), 'utf8');
+  const inlineStyles = [...html.matchAll(/<style>([\s\S]*?)<\/style>/g)]
+    .map((match) => match[1])
+    .join('\n');
+  assert.match(
+    inlineStyles,
+    /#boot-screen\s*\{[^}]*calc\(18px \* var\(--primary-text-scale, 1\)\)/,
+  );
+  for (const textSize of ['standard', 'large']) {
+    const primary = seed(
+      { 'revealline.display.v1': raw({ textSize }) },
+      { primaryTextScaling: true },
+    );
+    assert.equal(primary.variables.get('--primary-text-scale'), '1');
+  }
+  const other = seed({ 'revealline.display.v1': raw({ textSize: 'extra-large' }) });
+  assert.equal(other.variables.get('--primary-text-scale'), '1');
+  assert.equal(other.variables.get('--overflight-text-scale'), '1');
+  assert.equal(other.dataset.themeTextSize, 'large');
+  const resolved = resolvePresentation({
+    accessibility: { textSize: 'extra-large', textFace: 'plain', extraLarge: true },
+  });
+  assert.equal(resolved.accessibility.textSize, 'extra-large');
+  assert.equal(
+    presentationThemeVariables(resolved)['--iw-text-size'],
+    variables.get('--iw-text-size'),
+  );
+});
+
+test('primary and Overflight first-paint scale factors remain independent across every stored size', () => {
+  for (const textSize of ['standard', 'large', 'extra-large']) {
+    for (const host of ['primary', 'snake', 'overflight', 'other']) {
+      const result = seed(
+        { 'revealline.display.v1': raw({ textSize }) },
+        { primaryTextScaling: host === 'primary', overflightTextScaling: host === 'overflight', textScaling: host === 'snake' ? 'snake' : undefined },
+      );
+      const extra = textSize === 'extra-large';
+      assert.equal(result.variables.get('--primary-text-scale'), ['primary', 'snake'].includes(host) && extra ? '2' : '1');
+      assert.equal(result.variables.get('--overflight-text-scale'), host === 'overflight' && extra ? '2' : '1');
+      assert.ok(Number(result.variables.get('--primary-text-scale')) * Number(result.variables.get('--overflight-text-scale')) <= 2);
+      assert.equal(result.dataset.themeTextSize, extra && host === 'other' ? 'large' : textSize);
+    }
+  }
+});
+
+test('Classic Snake first paint and Standard/Large reset agree while its hub remains unqualified', () => {
+  for (const textSize of ['standard', 'large', 'extra-large']) {
+    const record = {
+      'revealline.display.v1': raw({ textFace: 'pixel', textSize, reducedEffects: false }),
+    };
+    const snake = seed(record, { textScaling: 'snake' });
+    assert.equal(snake.dataset.themeTextSize, textSize);
+    assert.equal(
+      snake.variables.get('--primary-text-scale'),
+      textSize === 'extra-large' ? '2' : '1',
+    );
+    assert.equal(snake.variables.get('--iw-text-size'), textSize === 'large' ? '20px' : '16px');
+    const hub = seed(record);
+    assert.equal(hub.dataset.themeTextSize, textSize === 'extra-large' ? 'large' : textSize);
+    assert.equal(hub.variables.get('--primary-text-scale'), '1');
+    assert.equal(hub.variables.get('--overflight-text-scale'), '1');
+  }
+});
+
+test('Duel first paint opts in independently while unqualified hosts retain Large fallback', () => {
+  for (const textSize of ['standard', 'large', 'extra-large']) {
+    const record = { 'revealline.display.v1': raw({ textSize }) };
+    const duel = seed(record, { textScaling: 'versus' });
+    assert.equal(duel.dataset.themeTextSize, textSize);
+    assert.equal(
+      duel.variables.get('--primary-text-scale'),
+      textSize === 'extra-large' ? '2' : '1',
+    );
+    assert.equal(duel.variables.get('--iw-text-size'), textSize === 'large' ? '20px' : '16px');
+    const team = seed(record, { textScaling: 'unqualified' });
+    assert.equal(team.dataset.themeTextSize, textSize === 'extra-large' ? 'large' : textSize);
+    assert.equal(team.variables.get('--primary-text-scale'), '1');
+  }
+});
+
+test('actual Team first paint/reset opts in without changing other family fallback', () => {
+  for (const textSize of ['standard', 'large', 'extra-large']) {
+    const records = { 'revealline.display.v1': raw({ textSize }) };
+    const team = seed(records, { textScaling: 'team' });
+    assert.equal(team.dataset.themeTextSize, textSize);
+    assert.equal(
+      team.variables.get('--primary-text-scale'),
+      textSize === 'extra-large' ? '2' : '1',
+    );
+    assert.equal(team.variables.get('--iw-text-size'), textSize === 'large' ? '20px' : '16px');
+    const other = seed(records, { textScaling: 'unqualified' });
+    assert.equal(other.dataset.themeTextSize, textSize === 'extra-large' ? 'large' : textSize);
+    assert.equal(other.variables.get('--primary-text-scale'), '1');
   }
 });

@@ -13,6 +13,7 @@ import { CURRENT_PICTURES } from '../presentation/current-pictures.mjs';
 import { FORMATS, TOKEN_DEFAULTS } from '../presentation/model.mjs';
 import { COMPILED_PRESENTATION_FORMAT } from '../presentation/host.mjs';
 import { hashPresentationBytes } from '../presentation/bundle.mjs';
+import { RasterImage as Picture } from './helpers/raster-image.mjs';
 
 const campaign = JSON.parse(await readFile(new URL('../content/campaign.json', import.meta.url)));
 const sessionKey = 'revealline.suspended.dev.v1';
@@ -33,21 +34,6 @@ class Locks {
     } finally {
       this.held.delete(key);
     }
-  }
-}
-class Picture {
-  constructor() {
-    this.width = this.height = this.naturalWidth = this.naturalHeight = 1;
-  }
-  set src(value) {
-    this.url = value;
-    if (value) queueMicrotask(() => this.onload?.());
-  }
-  decode() {
-    return Promise.resolve();
-  }
-  removeAttribute() {
-    this.url = '';
   }
 }
 async function pageFor(
@@ -347,7 +333,8 @@ test('history cancellation preserves selected pins while a new explicit Start re
   let decodes = 0,
     originalStored = false;
   class HeldPicture extends Picture {
-    decode() {
+    async decode() {
+      await super.decode();
       // Original validation happens before durable history exists; hold the
       // selected-picture display only after that actual commit completes.
       if (!originalStored) return Promise.resolve();

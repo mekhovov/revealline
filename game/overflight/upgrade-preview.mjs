@@ -237,6 +237,20 @@ function caption(system, state, locale) {
   ];
 }
 
+const platingDiagramText = (state) => `−${20 * (1 - (state.damageReduction ?? 0))}`;
+function previewCaptions(model, locale) {
+  return [model.before, model.after].map((state, index) => ({
+    label: index ? choose(locale, 'NEXT', 'ДАЛІ') : choose(locale, 'NOW', 'ЗАРАЗ'),
+    lines: caption(model.system, state, locale),
+    diagramText: model.system === 'plating' ? platingDiagramText(state) : '',
+  }));
+}
+
+/** Visible text and SVG captions project the same current/next parameters. */
+export function overflightUpgradePreviewCaptions(offer, { locale = 'en', ...options } = {}) {
+  return previewCaptions(overflightUpgradePreviewModel(offer, options), locale);
+}
+
 const diagramDrone = (x, y, extra = '') =>
   `<g transform="translate(${x} ${y})" ${extra}><path d="M-8-7 8 7M-8 7 8-7" stroke="#81938c" stroke-width="3"/><path d="M-11-9h6v4h-6zm16 0h6v4H5zM-11 5h6v4h-6zm16 0h6v4H5z" fill="#98e6d5" stroke="#142c30"/><path d="M-4-5h8V5h-8z" fill="#eef3d8" stroke="#07171c" stroke-width="2"/><path d="m4-3 5 3-5 3" fill="#f4ce70"/></g>`;
 // The enemy silhouette has no animation: warnings and geometry remain legible.
@@ -460,7 +474,7 @@ function scene(model, state, id, reducedEffects, sprites) {
     body += `<g ${animate('incoming', 1.6, '0%{transform:translateX(0px);opacity:1}45%{transform:translateX(25px);opacity:1}55%,100%{transform:translateX(25px);opacity:0}')}><rect x="40" y="62" width="7" height="4" fill="#f9a275"/></g>`;
     if (state.rank)
       body += `<path d="M68 51v26M92 51v26" stroke="#f4c765" stroke-width="${2 + state.rank}"/>`;
-    body += `<rect x="43" y="93" width="70" height="6" fill="#31483f"/><rect x="43" y="93" width="${number(70 * (1 - damage / 100))}" height="6" fill="#9ad5ac"/><text x="78" y="88" text-anchor="middle" font-size="12" fill="#f9a275">−${damage}</text>`;
+    body += `<rect x="43" y="93" width="70" height="6" fill="#31483f"/><rect x="43" y="93" width="${number(70 * (1 - damage / 100))}" height="6" fill="#9ad5ac"/><text x="78" y="88" text-anchor="middle" font-size="12" fill="#f9a275">${platingDiagramText(state)}</text>`;
   } else if (system === 'recovery') {
     body +=
       circle(72, 66, state.collectionRadius * 0.145, '#8fdcbd', 'stroke-dasharray="2 3"') +
@@ -507,10 +521,10 @@ export function overflightUpgradePreview(
   const scope = `of-preview-${model.system}-${model.branch ?? 'base'}-${model.after.rank}`;
   let styles = '',
     panels = '';
-  const descriptions = [];
+  const descriptions = [],
+    captions = previewCaptions(model, locale);
   for (const [index, state] of [model.before, model.after].entries()) {
-    const label = index ? choose(locale, 'NEXT', 'ДАЛІ') : choose(locale, 'NOW', 'ЗАРАЗ');
-    const lines = caption(model.system, state, locale);
+    const { label, lines } = captions[index];
     const picture = scene(model, state, `${scope}-${index}`, reducedEffects, sprites);
     styles += picture.styles;
     descriptions.push(`${label}: ${lines.join('; ')}`);

@@ -1,0 +1,10 @@
+{
+  "format": "FPVPortableRestoreNotYetRun.v1",
+  "workflowRun": 38854603462,
+  "sourceHead": "39856085fd13c77ce70bb076fe09e5a6d744143e",
+  "finalIndexJob": "success",
+  "actualRestoreJob": "skipped",
+  "reason": "No root-confirmed final index has been published; no payload was restored by this run.",
+  "payloadRestorationClaimed": false,
+  "overallDisconnectSafetyClaimed": false
+}
