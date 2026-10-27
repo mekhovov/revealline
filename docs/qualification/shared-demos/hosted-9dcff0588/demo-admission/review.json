@@ -1,0 +1,19 @@
+{
+  "observedAt": "2026-10-19T10:44:33.618663+00:00",
+  "head": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "node": "v22.13.1",
+  "strictPass": true,
+  "stats": {
+    "tests": 85,
+    "pass": 85,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "proofSHA256": "da1d7b76e3d33fcf6332dc0064c5c49cd2e33ab6e91f9112e5b9d78243c48618",
+  "tapSHA256": "f837e4ac8a1e6d63cc2b065f7ea30283289f014e5e1a4ce6c8a8670d72ac1d53",
+  "artifactID": 12180875870,
+  "jobID": 118015088225,
+  "noJobActions": true
+}

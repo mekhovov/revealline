@@ -1,0 +1,141 @@
+TAP version 13
+# Subtest: visible unfocused watch advances independently and close retires its clock without changing an ordinary cut
+ok 1 - visible unfocused watch advances independently and close retires its clock without changing an ordinary cut
+  ---
+  duration_ms: 3583.712041
+  ...
+# Subtest: hidden timer wake consumes bounded elapsed replay time exactly and return paints the current tick
+ok 2 - hidden timer wake consumes bounded elapsed replay time exactly and return paints the current tick
+  ---
+  duration_ms: 3215.519583
+  ...
+# Subtest: explicit watch pause survives hidden time, blur and return until Keep watching
+ok 3 - explicit watch pause survives hidden time, blur and return until Keep watching
+  ---
+  duration_ms: 3207.957208
+  ...
+# Subtest: hidden playback completes a real recorded level, retains its recap and adopts the next scene without RAF
+ok 4 - hidden playback completes a real recorded level, retains its recap and adopts the next scene without RAF
+  ---
+  duration_ms: 6292.490333
+  ...
+# Subtest: blur during pending watch source loading preserves adoption and continuous playback
+ok 5 - blur during pending watch source loading preserves adoption and continuous playback
+  ---
+  duration_ms: 2286.2195
+  ...
+# Subtest: withheld visible RAF recovers real replay completion and rotation while preserving explicit pause and the ordinary save
+ok 6 - withheld visible RAF recovers real replay completion and rotation while preserving explicit pause and the ordinary save
+  ---
+  duration_ms: 14038.602208
+  ...
+# Subtest: demo and takeover use current ordinary gore, remains, grid and font settings
+ok 7 - demo and takeover use current ordinary gore, remains, grid and font settings
+  ---
+  duration_ms: 2420.522125
+  ...
+# Subtest: Standard: live clear-picture toggle previews unearned art without resetting playback, practice or progress
+ok 8 - Standard: live clear-picture toggle previews unearned art without resetting playback, practice or progress
+  ---
+  duration_ms: 2394.692041
+  ...
+# Subtest: Journey: live clear-picture toggle previews unearned art without resetting playback, practice or progress
+ok 9 - Journey: live clear-picture toggle previews unearned art without resetting playback, practice or progress
+  ---
+  duration_ms: 4695.733292
+  ...
+# Subtest: the settings choice persists across a mounted app reload and privacy remains mutually exclusive
+    # Subtest: save from Settings
+    ok 1 - save from Settings
+      ---
+      duration_ms: 1255.949875
+      ...
+    # Subtest: restore in the next app instance
+    ok 2 - restore in the next app instance
+      ---
+      duration_ms: 1791.587792
+      ...
+    1..2
+ok 10 - the settings choice persists across a mounted app reload and privacy remains mutually exclusive
+  ---
+  duration_ms: 3047.872792
+  ...
+# Subtest: watching Demo Back commits a pure Gamepad tap or five-second hold only on release
+ok 11 - watching Demo Back commits a pure Gamepad tap or five-second hold only on release
+  ---
+  duration_ms: 2616.729375
+  ...
+# Subtest: watching Demo Back release does not send a simultaneous UI edge into Home
+ok 12 - watching Demo Back release does not send a simultaneous UI edge into Home
+  ---
+  duration_ms: 3914.726833
+  ...
+# Subtest: practice Demo Back commits a pure Gamepad tap or five-second hold only on release
+ok 13 - practice Demo Back commits a pure Gamepad tap or five-second hold only on release
+  ---
+  duration_ms: 2398.456167
+  ...
+# Subtest: practice Demo Back release does not send a simultaneous UI edge into Home
+ok 14 - practice Demo Back release does not send a simultaneous UI edge into Home
+  ---
+  duration_ms: 2182.931084
+  ...
+# Subtest: watching Demo Back uses one release commit for gamepad-first Enter/Space echoes
+ok 15 - watching Demo Back uses one release commit for gamepad-first Enter/Space echoes
+  ---
+  duration_ms: 2863.259583
+  ...
+# Subtest: watching Demo Back uses one release commit for native-before-RAF Enter/Space echoes
+ok 16 - watching Demo Back uses one release commit for native-before-RAF Enter/Space echoes
+  ---
+  duration_ms: 2926.62
+  ...
+# Subtest: practice Demo Back uses one release commit for gamepad-first Enter/Space echoes
+ok 17 - practice Demo Back uses one release commit for gamepad-first Enter/Space echoes
+  ---
+  duration_ms: 3102.351708
+  ...
+# Subtest: practice Demo Back uses one release commit for native-before-RAF Enter/Space echoes
+ok 18 - practice Demo Back uses one release commit for native-before-RAF Enter/Space echoes
+  ---
+  duration_ms: 3230.598292
+  ...
+# Subtest: native-first watching Demo Back stays the winner after Home restores and A is held for five seconds
+ok 19 - native-first watching Demo Back stays the winner after Home restores and A is held for five seconds
+  ---
+  duration_ms: 2372.520541
+  ...
+# Subtest: native-first practice Demo Back stays the winner after Home restores and A is held for five seconds
+ok 20 - native-first practice Demo Back stays the winner after Home restores and A is held for five seconds
+  ---
+  duration_ms: 2413.866792
+  ...
+# Subtest: touch-derived Demo Back uses the same Confirm owner and native-only touch still exits
+ok 21 - touch-derived Demo Back uses the same Confirm owner and native-only touch still exits
+  ---
+  duration_ms: 2436.363959
+  ...
+# Subtest: practice advances between throttled diagnostic readout updates
+ok 22 - practice advances between throttled diagnostic readout updates
+  ---
+  duration_ms: 2108.388458
+  ...
+# Subtest: paused Demo retains its board and controls, invalidates on visible changes, and resumes normally
+ok 23 - paused Demo retains its board and controls, invalidates on visible changes, and resumes normally
+  ---
+  duration_ms: 1669.738458
+  ...
+# Subtest: Demo takeover has one native paint owner and preserves the recorded spectator state
+ok 24 - Demo takeover has one native paint owner and preserves the recorded spectator state
+  ---
+  duration_ms: 1613.40775
+  ...
+1..24
+# tests 26
+# suites 0
+# pass 26
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 82499.881875

@@ -1,0 +1,253 @@
+{
+  "format": "SharedDemoReadOnlyTimeoutAuditV1",
+  "recordedAt": "2026-10-18T18:37:37.159826+00:00",
+  "method": "Single read of the running report plus source inspection only. No browser attachment, simulation, replay, timing benchmark, production or harness modification.",
+  "productionFingerprint": "02f749f71e0a77272e3d9e2ba555469125bbc7a8e8ce4375a3781776df454611",
+  "runningReportSnapshot": {
+    "file": "docs/qualification/shared-demos/rotation-chromium-461ace-two-hour.json",
+    "bytes": 129965,
+    "sha256": "cc09d4a08dc6e3781fc5bc5031c362a853faeb3a9e081e2680dc75f3eab18654",
+    "started": "2026-10-18T18:26:29.202Z",
+    "enduranceStarted": "2026-10-18T18:27:57.185Z",
+    "complete": false,
+    "samples": 54,
+    "firstSampleAt": "2026-10-18T18:28:07.227Z",
+    "lastSampleAt": "2026-10-18T18:36:58.164Z",
+    "pageErrors": 0
+  },
+  "deduplicationKey": [
+    "failureDetails.event",
+    "failureDetails.at",
+    "failureDetails.sourceId"
+  ],
+  "distinctFailures": [
+    {
+      "event": "failed",
+      "at": 1792348051098,
+      "atISO": "2026-10-18T18:27:31.098000+00:00",
+      "sourceId": "survival:river-port-twin-docks:standard",
+      "phaseOfRun": "preflight",
+      "code": "demo-load-timeout",
+      "loadingMs": 15081.599999999627,
+      "preparation": {
+        "status": "failed",
+        "stage": "renderer",
+        "elapsedMs": 15081.4,
+        "durationsMs": {
+          "preparation": 0,
+          "prefetch": 3.599999999627471,
+          "retirement": 0.10000000055879354,
+          "adapter": 0,
+          "source": 0,
+          "payload": 0,
+          "verification": 14684.399999999441,
+          "scene-import": 9.100000000558794,
+          "artwork": 227,
+          "renderer": 157.2,
+          "mount": 0
+        },
+        "candidates": [
+          {
+            "variant": "chromium",
+            "engineHint": "chromium",
+            "prefetched": true,
+            "status": "verified",
+            "code": null,
+            "tick": 19460,
+            "totalTicks": 19460,
+            "elapsedMs": 14684.3
+          }
+        ]
+      },
+      "firstObservedIn": "checks",
+      "firstObservedIndex": 21,
+      "diagnosticCopiesInSnapshot": 2
+    },
+    {
+      "event": "failed",
+      "at": 1792348070084,
+      "atISO": "2026-10-18T18:27:50.084000+00:00",
+      "sourceId": "survival:freight-depot-dispatch-junction:standard",
+      "phaseOfRun": "preflight",
+      "code": "demo-load-timeout",
+      "loadingMs": 15105.599999999627,
+      "preparation": {
+        "status": "failed",
+        "stage": "verification",
+        "elapsedMs": 15105.5,
+        "durationsMs": {
+          "preparation": 0,
+          "prefetch": 0,
+          "retirement": 4.400000000372529,
+          "adapter": 0,
+          "source": 0.09999999962747097,
+          "payload": 4.2000000001862645,
+          "verification": 15096.8,
+          "scene-import": 0,
+          "artwork": 0,
+          "renderer": 0,
+          "mount": 0
+        },
+        "candidates": [
+          {
+            "variant": "chromium",
+            "engineHint": "chromium",
+            "prefetched": false,
+            "status": "loading",
+            "code": null,
+            "tick": 18720,
+            "totalTicks": 19561,
+            "elapsedMs": 15101.1
+          }
+        ]
+      },
+      "firstObservedIn": "checks",
+      "firstObservedIndex": 23,
+      "diagnosticCopiesInSnapshot": 5
+    },
+    {
+      "event": "failed",
+      "at": 1792348100597,
+      "atISO": "2026-10-18T18:28:20.597000+00:00",
+      "sourceId": "survival:field-crossing-supply-orchard-edge:standard",
+      "phaseOfRun": "endurance",
+      "code": "demo-load-timeout",
+      "loadingMs": 15315.299999999814,
+      "preparation": {
+        "status": "failed",
+        "stage": "verification",
+        "elapsedMs": 15315.3,
+        "durationsMs": {
+          "preparation": 0.10000000055879354,
+          "prefetch": 3.5,
+          "retirement": 0,
+          "adapter": 0,
+          "source": 0.19999999925494194,
+          "payload": 0,
+          "verification": 15311.5,
+          "scene-import": 0,
+          "artwork": 0,
+          "renderer": 0,
+          "mount": 0
+        },
+        "candidates": [
+          {
+            "variant": "chromium",
+            "engineHint": "chromium",
+            "prefetched": true,
+            "status": "loading",
+            "code": null,
+            "tick": 19200,
+            "totalTicks": 19446,
+            "elapsedMs": 15311.5
+          }
+        ]
+      },
+      "firstObservedIn": "samples",
+      "firstObservedIndex": 2,
+      "diagnosticCopiesInSnapshot": 52
+    }
+  ],
+  "distinctPreflightFailures": 2,
+  "distinctEnduranceFailures": 1,
+  "observedPlaybackTransitions": [
+    {
+      "at": "2026-10-18T18:28:37.443Z",
+      "mode": "solo",
+      "source": "solo-qualified-8abdfdb8249526a1",
+      "phase": "playing",
+      "tick": "1080"
+    },
+    {
+      "at": "2026-10-18T18:29:07.475Z",
+      "mode": "sim",
+      "source": "sim:native-pursuit-meeting-yard-self-level-bf364ae9edd1d98f",
+      "phase": "playing",
+      "tick": "157"
+    },
+    {
+      "at": "2026-10-18T18:29:27.492Z",
+      "mode": "snake",
+      "source": "snake:classic-snake-elbow-exchange:standard",
+      "phase": "playing",
+      "tick": "15"
+    },
+    {
+      "at": "2026-10-18T18:30:17.546Z",
+      "mode": "survival",
+      "source": "survival:chalk-quarry-survey-basin:standard",
+      "phase": "playing",
+      "tick": "300"
+    },
+    {
+      "at": "2026-10-18T18:36:08.126Z",
+      "mode": "sim",
+      "source": "sim:snake-hunt-approach-windows-three-yard-finale-self-level-3a59b447f6ecb47b",
+      "phase": "playing",
+      "tick": "429"
+    }
+  ],
+  "sampledResources": {
+    "maximumOwnedNativeScenes": 1,
+    "maximumPracticeWorlds": 0,
+    "maximumWorkers": 0,
+    "hostListenerCounts": [
+      34
+    ]
+  },
+  "assessment": {
+    "classification": "Supported bounded source recovery with a real strict-verification startup-performance risk; no observed starvation, mismatch fallback, accumulating owned scenes or aggregate recovery timeout.",
+    "orchardCauseBoundary": "The recorded stage is verification: 15311.5ms, one preferred Chromium candidate, payload prefetched with 0ms payload stage, progress19200/19446 ticks (98.735%). The source times out before artwork/renderer/mount. This isolates the expensive stage but does not separate CPU stepping, checkpoint hashing, garbage collection, event-loop scheduling or yield wait.",
+    "preflightContext": "Twin Docks completed verification in14684.4ms and expired during renderer preparation after artwork; Dispatch Junction expired in verification with a4.2ms payload stage. These are separate preflight events, not additional endurance failures.",
+    "fifteenSecondDeadline": "withDemoLoadingDeadline uses a monotonic expiry check and rejects overdue adoption even if the timer callback is late. The observed15315.3ms reporting time includes315.3ms over the nominal source deadline. JavaScript timer delivery cannot preempt the current synchronous verification chunk; the report does not identify the cause of that scheduling delay.",
+    "thirtySecondBudget": "createDemoDirector starts the aggregate monotonic deadline before retirement, aborts child preparation on aggregate timeout, and checks expiry before each candidate and before adoption. No demo-recovery-timeout or unavailable phase was observed in this snapshot. Ten-second samples do not independently establish the exact ready-adoption timestamp: Orchard failure is18:28:20.597Z, a sample remains loading at18:28:27.437Z, and Solo is playing by18:28:37.443Z. The source code and prior deterministic deadline tests support bounded adoption; this sampling alone is not a precise30-second stopwatch proof.",
+    "rotation": "A timed-out source ID is excluded for the active director until Retry/new session; it does not suspend the entire mode. defer marks that mode/entry for the current selection cycle so another mode can be tried. The sampled sequence after recovery includes Solo, SIM, Snake and another Survival scenario. Sample counts are viewing time, not a fairness metric; this short partial run is not an exhaustive fairness proof.",
+    "qualification": "Runtime skipping of these slow sources is not successful runtime playback coverage for them. It does not invalidate independent complete native/browser replay qualification, and it must remain visible in final endurance diagnostics.",
+    "cancellationRisk": "The verifier checks cancellation before each240-tick yield and after the loop, but not immediately after await yieldTask. A cancellation that occurs during the yield could therefore execute up to one further240-tick chunk before the next check. Outer deadline/adoption guards still reject late results. This is a source-inspected potential extra-work window, not evidence that it caused this timeout.",
+    "nextStep": "Keep the frozen two-hour run intact. At completion deduplicate event records and assess final recovery, resource and persistence results. Any later targeted optimization should measure native stepping/checkpoint hashing separately from yield waits; these data do not justify weakening strict verification or raising the deadlines."
+  },
+  "sourceFiles": [
+    {
+      "path": "game/demo-loading.mjs",
+      "sha256": "2f9ab4efe38398cfe08dba89c328cacec2cae559c591d6e85770f5bfce744ba4"
+    },
+    {
+      "path": "game/demo-director.mjs",
+      "sha256": "d443705445734492a01a76466cd2f9f8ba3f18904c57c6612fe86f7801654dfc"
+    },
+    {
+      "path": "game/demo-preparation.mjs",
+      "sha256": "3805b1e8c3cd64566f6263d09dd74c4b71a66dc7cd918ba8b07861acd8ab6268"
+    },
+    {
+      "path": "game/demo-rotation.mjs",
+      "sha256": "48d4e542335137e54bc78a3a5f498e686ed51248e9c44b5f1f685887b0c8f37c"
+    },
+    {
+      "path": "game/demo-prefetch.mjs",
+      "sha256": "f350a9a13e7a97dbf9a1f2efba2651abfa2e0a4318fca5e39be60cacccfdb724"
+    },
+    {
+      "path": "game/demo-modes/survival.mjs",
+      "sha256": "44fa423bb6e154d196cf17fd29fc812180f2bca9f4648fb08763f5b4c16b49b1"
+    },
+    {
+      "path": "game/demo-modes/survival-replay.mjs",
+      "sha256": "4a2bbdc38fcd55551c7a9221b3d7bf05bb87896a140efcd870107f8bebb3ac0e"
+    },
+    {
+      "path": "game/ui/demo-host.mjs",
+      "sha256": "d6d57b78d4a04ac91df0e19d4a340b8e73d2c526e85d8ab5a37a4951112e2a99"
+    },
+    {
+      "path": "scripts/qualify-shared-demo-browser.mjs",
+      "sha256": "0448d04f1507eb9fe51b929e11afa888c988eb6bf06cbf49d10b32ca122f280a"
+    }
+  ],
+  "limitations": [
+    "Partial run only; complete remains false.",
+    "Last-failure diagnostics persist across later healthy samples and must not be counted as new failures.",
+    "No final teardown/persistence result exists at this audit snapshot.",
+    "No historical timeout cause is inferred from unrelated system contention or disk history."
+  ]
+}

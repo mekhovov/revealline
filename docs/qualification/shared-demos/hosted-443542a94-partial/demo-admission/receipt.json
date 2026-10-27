@@ -1,0 +1,22 @@
+{
+  "observedAt": "2026-10-19T11:58:38.007758+00:00",
+  "head": "443542a94d424187b9397c09773ab9d8eb6df6bd",
+  "job": 118044483722,
+  "conclusion": "success",
+  "name": "demo_admission",
+  "startedAt": "2026-10-19T11:54:04Z",
+  "completedAt": "2026-10-19T11:56:28Z",
+  "files": [
+    {
+      "path": ".cache/hosted-443542a94-demo-admission/job.json",
+      "bytes": 2984,
+      "sha256": "1dd813d7bce78b8eacab3223c7ff24e6cf4c21c4ec253fc13abd2b1548e4629a"
+    },
+    {
+      "path": ".cache/hosted-443542a94-demo-admission/original.log.txt",
+      "bytes": 75262,
+      "sha256": "a76bd119125760d2bc0d920dad50c5ef0aae77637fe0117d94dc1e8705e082a3"
+    }
+  ],
+  "scope": "Original exact-head hosted demo_admission success; not full catalog/Linux browser qualification."
+}

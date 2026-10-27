@@ -1,0 +1,45 @@
+{
+  "created": "2026-10-19T10:36:19.931886+00:00",
+  "complete": true,
+  "checks": [
+    {
+      "kind": "format",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "node_modules/prettier/bin/prettier.cjs",
+        "--check",
+        "game/demo-modes/survival-runtime-variants.mjs",
+        "game/test/demo-survival.test.mjs",
+        "scripts/test-demo-tick-survival.mjs",
+        "scripts/qualify-survival-native.mjs",
+        "scripts/generate-survival-demos.mjs",
+        "scripts/generate-survival-browser-demos.mjs"
+      ],
+      "exit": 0,
+      "output": {
+        "path": ".cache/survival-native-final-style-3f84.format.log",
+        "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+        "bytes": 66
+      }
+    },
+    {
+      "kind": "lint",
+      "argv": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "node_modules/eslint/bin/eslint.js",
+        "game/demo-modes/survival-runtime-variants.mjs",
+        "game/test/demo-survival.test.mjs",
+        "scripts/test-demo-tick-survival.mjs",
+        "scripts/qualify-survival-native.mjs",
+        "scripts/generate-survival-demos.mjs",
+        "scripts/generate-survival-browser-demos.mjs"
+      ],
+      "exit": 0,
+      "output": {
+        "path": ".cache/survival-native-final-style-3f84.lint.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "bytes": 0
+      }
+    }
+  ]
+}

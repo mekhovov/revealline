@@ -1,0 +1,163 @@
+TAP version 13
+# Subtest: Team recording verification retains its owning build after page retirement and locale changes
+not ok 1 - Team recording verification retains its owning build after page retirement and locale changes
+  ---
+  duration_ms: 244.102458
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/localization-couch-host.test.mjs:11:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Got unwanted exception.
+    Actual message: "document is not defined"
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual:
+  error: 'document is not defined'
+  name: 'ReferenceError'
+  stack: |-
+    $ (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/couch/relay-rescue.mjs?host-test=1:199:28)
+    file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/couch/relay-rescue.mjs?host-test=1:922:46
+    Array.find (<anonymous>)
+    selectedLevel (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/couch/relay-rescue.mjs?host-test=1:922:17)
+    teamNavigationContext (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/couch/relay-rescue.mjs?host-test=1:6526:40)
+    file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/couch/relay-rescue.mjs?host-test=1:6560:55
+    render (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/i18n/bootstrap.mjs:94:52)
+    apply (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/i18n/bootstrap.mjs:116:18)
+    refresh (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/i18n/bootstrap.mjs:243:69)
+    setLocale (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/i18n/bootstrap.mjs:281:5)
+  operator: 'doesNotThrow'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/localization-couch-host.test.mjs:34:14)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: Solo legacy → selected Team owner retains source route and exact mission
+not ok 2 - Solo legacy → selected Team owner retains source route and exact mission
+  ---
+  duration_ms: 8156.211125
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/mission-library-return-intent-host.test.mjs:402:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    116 !== 14
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 14
+  actual: 116
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/mission-library-return-intent-host.test.mjs:408:12)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+  ...
+# Subtest: Versus legacy Team cards use saved Expert and retain source edition
+not ok 3 - Versus legacy Team cards use saved Expert and retain source edition
+  ---
+  duration_ms: 509.13025
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/mission-library-return-intent-host.test.mjs:454:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    The visible Missions action owns preparation.
+    
+    0 !== 1
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 1
+  actual: 0
+  operator: 'strictEqual'
+  stack: |-
+    open (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/mission-library-return-intent-host.test.mjs:120:12)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/mission-library-return-intent-host.test.mjs:458:25)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: unfinished Legacy library departure checks its saved attempt before minting the Team return token
+not ok 4 - unfinished Legacy library departure checks its saved attempt before minting the Team return token
+  ---
+  duration_ms: 1736.639209
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/mission-library-return-intent-host.test.mjs:595:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    23 !== 24
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 24
+  actual: 23
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/mission-library-return-intent-host.test.mjs:604:10)
+    async Test.run (node:internal/test_runner/test:1054:7)
+    async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+  ...
+# Subtest: late Classic checked return without saved browse state uses the retained mission as a focus fallback
+    # Subtest: play the late selectable Base mission and depart through its actual library
+    not ok 1 - play the late selectable Base mission and depart through its actual library
+      ---
+      duration_ms: 17887.172292
+      type: 'test'
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/mission-library-return-intent-host.test.mjs:667:11'
+      failureType: 'testCodeFailure'
+      error: 'Asynchronous test action did not settle.'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: true
+      actual: false
+      operator: '=='
+      stack: |-
+        waitFor (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/helpers/wait-for.mjs:15:12)
+        async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/mission-library-return-intent-host.test.mjs:676:7)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/mission-library-return-intent-host.test.mjs:667:3)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+      ...
+    # Subtest: checked return focuses that exact late edition, keeping progress bytes and attempt untouched
+    not ok 2 - checked return focuses that exact late edition, keeping progress bytes and attempt untouched
+      ---
+      duration_ms: 0.423167
+      type: 'test'
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/mission-library-return-intent-host.test.mjs:699:11'
+      failureType: 'testCodeFailure'
+      error: 'Invalid URL'
+      code: 'ERR_INVALID_URL'
+      name: 'TypeError'
+      stack: |-
+        new URL (node:internal/url:818:25)
+        teamReturnHref (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/mode-return.mjs:139:19)
+        TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/mission-library-return-intent-host.test.mjs:703:30)
+        Test.runInAsyncScope (node:async_hooks:214:14)
+        Test.run (node:internal/test_runner/test:1047:25)
+        Test.start (node:internal/test_runner/test:944:17)
+        TestContext.test (node:internal/test_runner/test:373:20)
+        TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/mission-library-return-intent-host.test.mjs:699:11)
+        async Test.run (node:internal/test_runner/test:1054:7)
+        async Test.processPendingSubtests (node:internal/test_runner/test:744:7)
+      ...
+    1..2
+not ok 5 - late Classic checked return without saved browse state uses the retained mission as a focus fallback
+  ---
+  duration_ms: 17887.853458
+  type: 'test'
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/mission-library-return-intent-host.test.mjs:663:1'
+  failureType: 'subtestsFailed'
+  error: '2 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+1..5
+# tests 7
+# suites 0
+# pass 0
+# fail 7
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 37255.280833

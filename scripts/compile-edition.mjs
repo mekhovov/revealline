@@ -51,6 +51,8 @@ import {
   projectEditionRuntimeIndentation,
   projectEditionMenuResourcePaths,
   editionMenuSceneResources,
+  editionDemoResources,
+  projectEditionDemoCatalog,
   projectEditionMenuScenes,
   DEFAULT_GAME_WORDMARK,
   projectEditionBrandIdentity,
@@ -490,6 +492,23 @@ export async function compileEdition({
   // An edition home follows edition identity, independent of gameplay theme.
   // Its own scene is also the fallback; unrelated home artwork otherwise
   // consumes several MiB of the deliberately bounded offline package.
+  const demoCatalogPath = 'game/demo-data/catalog.json';
+  const selectedDemoCatalog = sourceFiles.has(demoCatalogPath)
+    ? projectEditionDemoCatalog(
+        readJSON(sourceFiles.get(demoCatalogPath)),
+        runtimeCatalog.campaigns.map((campaign) => campaign.id),
+      )
+    : null;
+  const demoResources = selectedDemoCatalog ? editionDemoResources(selectedDemoCatalog) : [];
+  const allDemoResources = new Set(
+    sourceFiles.has(demoCatalogPath)
+      ? editionDemoResources(readJSON(sourceFiles.get(demoCatalogPath)))
+      : [],
+  );
+  const selectedDemoResources = new Set(demoResources);
+  enginePaths = enginePaths.filter(
+    (name) => !allDemoResources.has(name) || selectedDemoResources.has(name),
+  );
   required(menuSceneResources === null || (Array.isArray(menuSceneResources) &&
     menuSceneResources.every(editionRelativePath) && new Set(menuSceneResources).size === menuSceneResources.length),
     'Local menu scenes require unique relative resource paths.');
@@ -605,6 +624,8 @@ export async function compileEdition({
             : Buffer.from(bytes),
     );
   }
+  if (selectedDemoCatalog && files.has(demoCatalogPath))
+    files.set(demoCatalogPath, jsonBytes(selectedDemoCatalog));
   ({ files, catalog: runtimeCatalog } = projectSelectedEditionThemes(runtimeCatalog, files));
   const guidePath = 'game/content/scenarios/line-impact-demo.json';
   if (files.has(guidePath)) {
@@ -786,11 +807,13 @@ html[data-edition-id] .edition-boot-logo{display:inline-block;width:auto;height:
             ...Object.entries(EDITION_RUNTIME_RESOURCES)
               .filter(([name]) => files.has(name))
               .flatMap(([name, paths]) =>
-                name === 'game/ui/menu-scene-catalog.mjs'
-                  ? menuResources
-                  : name === 'game/ui/brand-identity.mjs' && selectedLogo
-                    ? [selectedLogo.path]
-                    : paths,
+                name === 'game/demo-catalog.mjs'
+                  ? demoResources
+                  : name === 'game/ui/menu-scene-catalog.mjs'
+                    ? menuResources
+                    : name === 'game/ui/brand-identity.mjs' && selectedLogo
+                      ? [selectedLogo.path]
+                      : paths,
               ),
           ]),
         ),

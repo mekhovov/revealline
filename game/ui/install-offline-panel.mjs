@@ -67,6 +67,7 @@ export function attachInstallOfflinePanel({
   };
   doc?.addEventListener?.('visibilitychange', hidden);
   win?.addEventListener?.('pagehide', cancelActivations);
+  const statusLoad = new AbortController();
   let dialog,
     frame,
     closeButton,
@@ -293,6 +294,7 @@ export function attachInstallOfflinePanel({
     dispose() {
       disposed = true;
       cancelActivations();
+      statusLoad.abort();
       stopLocaleStatus();
       if (ownedFrames.get(doc)?.frame === frame) ownedFrames.delete(doc);
       unsubscribe?.();
@@ -312,7 +314,9 @@ export function attachInstallOfflinePanel({
     try {
       const active = readInstalledState(win?.localStorage).active;
       const states = win?.caches
-        ? await createOfficialDownloads({ caches: win.caches, origin }).states()
+        ? await createOfficialDownloads({ caches: win.caches, origin }).states({
+            signal: statusLoad.signal,
+          })
         : [];
       const saved = states.some(
         (state) => state.edition === editionScope && state.group === 'gameplay',

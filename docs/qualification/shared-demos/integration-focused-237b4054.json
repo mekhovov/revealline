@@ -1,0 +1,249 @@
+{
+  "format": "SharedDemoIncomingIntegrationV1",
+  "started": "2026-10-18T21:24:29.076196+00:00",
+  "head": "f14fc786c09fd2b9fcbc7e5b00142e3d07ec7ca6",
+  "upstream": "237b405437def3c41b01165fe057af1ab06f618c",
+  "previousQualifiedHead": "ad9814b8fef98d1840d602baccd71f20891c8d31",
+  "changedPaths": [
+    "docs/fpv-aircraft-archives.md",
+    "docs/fpv-archive-retention-followup-20261018.md",
+    "docs/fpv-archive-retention-memory-20261018.json",
+    "docs/fpv-civilian-candidate-implementation.md",
+    "docs/fpv-civilian-candidate-review.md",
+    "docs/fpv-civilian-source-inventory.md",
+    "docs/fpv-current-completion-plan.md",
+    "docs/fpv-flight-continuation-20261018.md",
+    "docs/fpv-rendered-catalog-20261018.json",
+    "docs/fpv-sustained-flight-qualification.json",
+    "game/app.mjs",
+    "game/capture-flight-limits.mjs",
+    "game/i18n/catalogs.mjs",
+    "game/index.html",
+    "game/library.mjs",
+    "game/locales/en/interface.json",
+    "game/locales/uk/interface.json",
+    "game/test/capture-flight-limits-host.test.mjs",
+    "game/test/capture-flight-limits.test.mjs",
+    "game/test/fpv-aircraft-archive-controls.test.mjs",
+    "game/test/fpv-aircraft-archive.test.mjs",
+    "game/test/fpv-aircraft-presets.test.mjs",
+    "game/test/fpv-aircraft-renderer.test.mjs",
+    "game/test/fpv-flight-ui.test.mjs",
+    "game/test/fpv-tuning-ui.test.mjs",
+    "game/test/fpv-world-appearance-ui.test.mjs",
+    "game/test/helpers/fpv-aircraft-sustained-qualification.mjs",
+    "game/ui/capture-flight-limits.css",
+    "optional-practice/civilian-fpv/aircraft-appearance.mjs",
+    "optional-practice/civilian-fpv/aircraft-archive-controls.mjs",
+    "optional-practice/civilian-fpv/aircraft-archive.mjs",
+    "optional-practice/civilian-fpv/aircraft-presets.mjs",
+    "optional-practice/civilian-fpv/app.mjs",
+    "optional-practice/civilian-fpv/input.mjs",
+    "optional-practice/civilian-fpv/renderer.mjs",
+    "optional-practice/civilian-fpv/tuning-ui.mjs",
+    "optional-practice/civilian-fpv/world-app.mjs",
+    "scripts/qualify-fpv-aircraft-sustained.mjs"
+  ],
+  "runtimeBefore": {
+    "sha256": "8f764d50d0da3d7d5809e7bace015728f181c723d369ad98425df20ce167388d",
+    "files": 9996,
+    "bytes": 404376334
+  },
+  "runtimeFingerprintScope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+  "testFiles": [
+    "game/test/capture-flight-limits.test.mjs",
+    "game/test/capture-flight-limits-host.test.mjs",
+    "game/test/fpv-aircraft-archive-controls.test.mjs",
+    "game/test/fpv-aircraft-archive.test.mjs",
+    "game/test/fpv-aircraft-presets.test.mjs",
+    "game/test/fpv-aircraft-renderer.test.mjs",
+    "game/test/fpv-flight-ui.test.mjs",
+    "game/test/fpv-tuning-ui.test.mjs",
+    "game/test/fpv-world-appearance-ui.test.mjs",
+    "game/test/demo-sim.test.mjs",
+    "game/test/demo-sim-input.test.mjs",
+    "game/test/demo-native-host.test.mjs",
+    "game/test/demo-fresh-handoff.test.mjs",
+    "game/test/demo-host.test.mjs",
+    "game/test/demo-settings.test.mjs",
+    "game/test/demo-background.test.mjs"
+  ],
+  "testedInputHashes": {
+    "game/app.mjs": "04c1a8594312923bb7ed4eae173e4d87d142464f1cff2675671173b169ef1c35",
+    "game/capture-flight-limits.mjs": "913d9f3451193702f5d5764daa6c93deaf03e0f1d51b4b12d5e1450b6fe84c3c",
+    "game/i18n/catalogs.mjs": "e2e9de393024032eee1b979ff7f0f0faab76411dd447f22d56eac018e7119204",
+    "game/index.html": "db2b27811a74399e1f1970a68f1c4e0aee6f4f72883f77f451b6a9dea97a3a97",
+    "game/library.mjs": "a82251dafa5c8d3dfa1e6596f300720af0e112d6e6f66061697ea7b41f1be4a0",
+    "game/locales/en/interface.json": "6bb474a42d8d892cacd6ef70f90e418b58a3d2b3ba28c8445e19a730df58be3e",
+    "game/locales/uk/interface.json": "fa53c4efcb31923fb4694c735cf484bc1699ef9e459f1245ecf87571de0c3086",
+    "game/test/capture-flight-limits-host.test.mjs": "6938588713d0fb16b93d5059b8449aab7292836ab6906ad5ceabf43ff7e5fdd8",
+    "game/test/capture-flight-limits.test.mjs": "80b92317b1bc61541c8bc4794e9e55e99c9c57a3b7ebd4a5d42085bc87940e8a",
+    "game/test/demo-background.test.mjs": "3c11b7917475e578479f3d7ba5d43c2646e979e1c8a825886551b18368d970a6",
+    "game/test/demo-fresh-handoff.test.mjs": "b7195cb839e3b31448cec0ad2f593aa88ceebedf90aa6da1337869eb1ff1775f",
+    "game/test/demo-host.test.mjs": "391881ee926705b8039759c2b4c5bf1bea95e2016bb2ffacfdf2fc6520173268",
+    "game/test/demo-native-host.test.mjs": "b8352f59b6c43bef3468641d8dd5019ef083d5b405ce5b3b21b26597004a9b91",
+    "game/test/demo-settings.test.mjs": "a5eb8b129cf9a191048697aaa1c15c16a5efd06d2cf6ed14fa76485cda6d6cff",
+    "game/test/demo-sim-input.test.mjs": "53698ab040ce043c8ed4b5dec44280a967ab5afe33d851d0124ca35bf82f217c",
+    "game/test/demo-sim.test.mjs": "2ec66e1e729e5f30b85edaff82813bc631bbc6e62b80dc5fe2e1abd5716495a7",
+    "game/test/fpv-aircraft-archive-controls.test.mjs": "8c8994f738e4ad4274d7172a8c42f9b32092fcd145089e4158c3abf7edec1b6d",
+    "game/test/fpv-aircraft-archive.test.mjs": "1cbd4754ab2f6202427f57820f2618d45a10dca14b11db60b90a0a25e2c17a14",
+    "game/test/fpv-aircraft-presets.test.mjs": "40511238962d39cfa23a49fc1ec7e0c7600718df53d067ec3cc345c26bf1de7b",
+    "game/test/fpv-aircraft-renderer.test.mjs": "cebecfb182731f2fb07b5c907bc93f5f7a4860076d20d14089a84e6333a92cfe",
+    "game/test/fpv-flight-ui.test.mjs": "27ae8e02d862acdc482a319baf84b3227f98549e4ac258b365cd9e2ce53925e1",
+    "game/test/fpv-tuning-ui.test.mjs": "9a2580868a09864929c9506664f767d29c95e9ae9370c087686971ca83c72d2c",
+    "game/test/fpv-world-appearance-ui.test.mjs": "37bac673241b4aee4c6a9146a25fa40a5d931c9f327d030b1108c53b39a72fff",
+    "game/test/helpers/fpv-aircraft-sustained-qualification.mjs": "2b0d3290411c25dde735757e2a2597efa13c36c961dd48839c1763c93966c6e6",
+    "game/ui/capture-flight-limits.css": "e43d22d98f30f240f1712cd3c75b231be557eab78129aafdcde2f3b377c13dd7",
+    "optional-practice/civilian-fpv/aircraft-appearance.mjs": "fdccd0030daf1b2407583f62c439f7b19570a3c3211bf550a6fcb447fb02f792",
+    "optional-practice/civilian-fpv/aircraft-archive-controls.mjs": "7dbbbf163e89af3a1f7f4f576b91d0f1e79c230b5341ed1b184306e0283d8da9",
+    "optional-practice/civilian-fpv/aircraft-archive.mjs": "1519bc331b91d9b72bb77110c30f7f8fd5bd0469b6cf06618681f49c6f982bc9",
+    "optional-practice/civilian-fpv/aircraft-presets.mjs": "df46d7ca8359be8415ca6682f62454373d012aa3a6b445ad24cd6bbff9999784",
+    "optional-practice/civilian-fpv/app.mjs": "d9a33643af2a3d6440c19703c6d8c48d98f522cff55c1dc7d1c3b6aad4c89c02",
+    "optional-practice/civilian-fpv/input.mjs": "614636e534a0084c6a5a12e5e5cabea096c71d108085c24f8eec3fa34d3bf050",
+    "optional-practice/civilian-fpv/renderer.mjs": "e4df4176a35b62f2cbc457302b0d9ce23c62d7712dc15e2ac3f5164ee0482115",
+    "optional-practice/civilian-fpv/tuning-ui.mjs": "a1f3f96838e95e0a8acc70a277a7757dfbc664387589d436f07917b1c7e583e1",
+    "optional-practice/civilian-fpv/world-app.mjs": "c4507905b9710d60d03f8bc9f4df7837882ba7fb45ab8ed8eac6b32ea9df9f76",
+    "package.json": "ff422332810d4247928cb64a029cc16c41c2cb30c92960a299ac31804c268b2e",
+    "scripts/localization.mjs": "d66bb70c6a4c7f0ca1f08cf8a313340af5bba4425b001b7e6844b9030687de6b",
+    "scripts/qualify-fpv-aircraft-sustained.mjs": "2a83a957ec579a2870199acc9f9ddc52351ebf3a75fc14377795ea3995af57b3"
+  },
+  "nativeIdentityImpact": {
+    "unchangedGitObjects": [
+      {
+        "path": "game/core",
+        "gitObject": "e8d1c3f8281c1a07664e8a1e10e65f29cfa4cc4d",
+        "sameAsPrevious": true
+      },
+      {
+        "path": "game/snake",
+        "gitObject": "0d7660625f69e4cf623e09af7fef69d6ff80afd2",
+        "sameAsPrevious": true
+      },
+      {
+        "path": "game/overflight",
+        "gitObject": "48dbc4d19564db9e3d4bfaae5291a1add70df1ea",
+        "sameAsPrevious": true
+      },
+      {
+        "path": "game/demo-data",
+        "gitObject": "fe4780393e107e63ee14d122ce1d59024b8ae731",
+        "sameAsPrevious": true
+      },
+      {
+        "path": "game/demo-modes",
+        "gitObject": "4e192209366eeb31de526b38ea9a7dc3790008a0",
+        "sameAsPrevious": true
+      },
+      {
+        "path": "game/replay.mjs",
+        "gitObject": "fa473c568bec333395636541cc82fe3dd8b597f6",
+        "sameAsPrevious": true
+      },
+      {
+        "path": "optional-practice/civilian-fpv/demo-data",
+        "gitObject": "886ca4fe9dbbcb1840017626fd9a85cadaa8ec86",
+        "sameAsPrevious": true
+      },
+      {
+        "path": "optional-practice/civilian-fpv/model.mjs",
+        "gitObject": "4751b15e9028d6f6f62bce561566170ad52e127c",
+        "sameAsPrevious": true
+      },
+      {
+        "path": "optional-practice/civilian-fpv/world-model.mjs",
+        "gitObject": "39005d767a81a050d3389d702f6c3e94a196d5ea",
+        "sameAsPrevious": true
+      },
+      {
+        "path": "optional-practice/civilian-fpv/flight-response.mjs",
+        "gitObject": "13da60e812d47477c2570304468fb4ab8ecde6eb",
+        "sameAsPrevious": true
+      },
+      {
+        "path": "optional-practice/civilian-fpv/world-catalogue.mjs",
+        "gitObject": "46c37f29faade02c6f2a7cf5837d7aa4619eb236",
+        "sameAsPrevious": true
+      },
+      {
+        "path": "optional-practice/civilian-fpv/catalogue.mjs",
+        "gitObject": "87cb9a45ffed9ca4fc8ab7c3400948e2ac4717ea",
+        "sameAsPrevious": true
+      },
+      {
+        "path": "optional-practice/civilian-fpv/snake-hunt-catalogue.mjs",
+        "gitObject": "7e6ce5d5909fa35ac7f16c6c8955c59f0c48b8d6",
+        "sameAsPrevious": true
+      }
+    ],
+    "pathsInScopes": 2679,
+    "changedPaths": [],
+    "meaning": "Exact unchanged committed simulation/core, replay bodies, adapters, authored native catalogs and response-identity source. This is change-impact binding, not a new full replay qualification. Incoming aircraft catalog presets are outside the standard authored-demo variants."
+  },
+  "checks": [
+    {
+      "name": "incoming-and-demo-integration",
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=2",
+        "game/test/capture-flight-limits.test.mjs",
+        "game/test/capture-flight-limits-host.test.mjs",
+        "game/test/fpv-aircraft-archive-controls.test.mjs",
+        "game/test/fpv-aircraft-archive.test.mjs",
+        "game/test/fpv-aircraft-presets.test.mjs",
+        "game/test/fpv-aircraft-renderer.test.mjs",
+        "game/test/fpv-flight-ui.test.mjs",
+        "game/test/fpv-tuning-ui.test.mjs",
+        "game/test/fpv-world-appearance-ui.test.mjs",
+        "game/test/demo-sim.test.mjs",
+        "game/test/demo-sim-input.test.mjs",
+        "game/test/demo-native-host.test.mjs",
+        "game/test/demo-fresh-handoff.test.mjs",
+        "game/test/demo-host.test.mjs",
+        "game/test/demo-settings.test.mjs",
+        "game/test/demo-background.test.mjs"
+      ],
+      "exitCode": 1,
+      "timedOut": false,
+      "durationSeconds": 148.718,
+      "log": "docs/qualification/shared-demos/integration-focused-237b4054.tap.txt",
+      "sha256": "b20fb4134f5beffb9e65c3f956c70f64814b77382c1bf29324f42c4d36190b2e",
+      "stats": {
+        "tests": 325,
+        "pass": 324,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    {
+      "name": "i18n-check",
+      "command": [
+        "npm",
+        "run",
+        "i18n:check"
+      ],
+      "exitCode": null,
+      "timedOut": true,
+      "durationSeconds": 120.05,
+      "log": "docs/qualification/shared-demos/integration-i18n-237b4054.log.txt",
+      "sha256": "1b5184db2cd58e1bed0c4a3fb31fd5a99a71525d5ff43ca129c12c7b1bcb6364",
+      "stats": {}
+    }
+  ],
+  "complete": false,
+  "runtimeAfter": {
+    "sha256": "8f764d50d0da3d7d5809e7bace015728f181c723d369ad98425df20ce167388d",
+    "files": 9996,
+    "bytes": 404376334
+  },
+  "headAfter": "f14fc786c09fd2b9fcbc7e5b00142e3d07ec7ca6",
+  "testedInputHashesUnchanged": true,
+  "sourceUnchanged": true,
+  "finished": "2026-10-18T21:29:05.935634+00:00",
+  "limitations": [
+    "Focused integration and byte-level impact audit only; no browser session or full native corpus replay was performed.",
+    "Final emitted packaging, browser refresh and uninterrupted endurance remain separately qualified."
+  ]
+}

@@ -1,0 +1,1793 @@
+{
+  "format": "SoloNativeCandidateAdoptionV1",
+  "complete": true,
+  "created": "2026-10-19T10:13:24.590263+00:00",
+  "head": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+  "proposal": {
+    "path": ".cache/solo-native-adoption-3f84b51f8/proposal.json",
+    "bytes": 309761,
+    "sha256": "7505f3b5752a3ecba137f2e94eb26595e76ca458a45678c0b9ef1e5357227d3a"
+  },
+  "counts": {
+    "clips": 122,
+    "qualified": 120,
+    "reviewed": 2,
+    "files": 244,
+    "bytes": 2823806,
+    "catalogs": 3,
+    "metadataFiles": 4
+  },
+  "files": [
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/first-signal-right.darwin-x64.replay.json",
+      "destination": "game/demo-data/first-signal-right.node22131-x64.replay.json",
+      "bytes": 6966,
+      "sha256": "e8c63af3440feff2d430b02d93f26c86c58acd94e135f92affcf44bc9c54f22a",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/first-signal-right.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/first-signal-right.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/first-signal-right.node22131-x64.diagnostics.json",
+      "bytes": 2730,
+      "sha256": "be92f9682131a82a0c5f1185d98b425284fbd86b7903a12e808fe483af4e8134",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/first-signal-right.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/hidden-frequency-search.darwin-x64.replay.json",
+      "destination": "game/demo-data/hidden-frequency-search.node22131-x64.replay.json",
+      "bytes": 7370,
+      "sha256": "dac59e429e2e95214f46b3e52059d880d8fab24a3b1697ad5bf7d28395705369",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/hidden-frequency-search.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/hidden-frequency-search.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/hidden-frequency-search.node22131-x64.diagnostics.json",
+      "bytes": 3610,
+      "sha256": "576c3d46a73c1f0707c8cdee03dffe5be9801ae7ceae83b16198a4d30f2b2ea6",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/hidden-frequency-search.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-c8ea742b75efcef6.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-c8ea742b75efcef6.node22131-x64.replay.json",
+      "bytes": 17021,
+      "sha256": "594fc370182c3ade52a2b7925a63bc53741e11351fcf5be5339bb122e200f445",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-c8ea742b75efcef6.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-c8ea742b75efcef6.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-c8ea742b75efcef6.node22131-x64.diagnostics.json",
+      "bytes": 7590,
+      "sha256": "e14c58c81ff48535b0c47cf83abbbd8f556bb6615b578ddfb5ba2ea308230bc5",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-c8ea742b75efcef6.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-ab845a60c1777460.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-ab845a60c1777460.node22131-x64.replay.json",
+      "bytes": 8740,
+      "sha256": "c10dda7dc98780f62a003a02d48ac34e5304d37313c3a90a739a30dfb1b4e897",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-ab845a60c1777460.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-ab845a60c1777460.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-ab845a60c1777460.node22131-x64.diagnostics.json",
+      "bytes": 2090,
+      "sha256": "67a1e6dac0225daa2c5d29ccddcbdba73039b4ab8a3b6a109f5bd7117262cc9a",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-ab845a60c1777460.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-ede2a5c11f561acc.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-ede2a5c11f561acc.node22131-x64.replay.json",
+      "bytes": 9338,
+      "sha256": "a94821cec054549f0cdbb0cd695d9110ee5ea38077e2bd7372b45ff619ff5d03",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-ede2a5c11f561acc.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-ede2a5c11f561acc.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-ede2a5c11f561acc.node22131-x64.diagnostics.json",
+      "bytes": 3610,
+      "sha256": "e698bdfdf606e95ba19b81f774e9af62f42d5c3f6d90f2056eaf49162eb2d53e",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-ede2a5c11f561acc.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-57d61f78dee61bd0.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-57d61f78dee61bd0.node22131-x64.replay.json",
+      "bytes": 9244,
+      "sha256": "825fb99d4204b371fad312b8bed605f68964eea7a565abd01a915f1348fedca5",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-57d61f78dee61bd0.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-57d61f78dee61bd0.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-57d61f78dee61bd0.node22131-x64.diagnostics.json",
+      "bytes": 4050,
+      "sha256": "f6a6f7fd64815bccdbac8024b5aedba7e7f51f57981f5e2b88dcf737205d7a15",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-57d61f78dee61bd0.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-8a91659e300e8ed3.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-8a91659e300e8ed3.node22131-x64.replay.json",
+      "bytes": 12239,
+      "sha256": "095a61e433446672ff3693fbc662ffc27790359ec13c6aeb67e5ad136ac9675d",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-8a91659e300e8ed3.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-8a91659e300e8ed3.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-8a91659e300e8ed3.node22131-x64.diagnostics.json",
+      "bytes": 4050,
+      "sha256": "ae1ff347d67cbc371f8c8a162e557d750656699368e5a4357a17f422f8e30e4c",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-8a91659e300e8ed3.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-d98ec8cfe4477b6c.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-d98ec8cfe4477b6c.node22131-x64.replay.json",
+      "bytes": 12407,
+      "sha256": "621e027eb77f8e5dcf50963345e1957bc1377c7f70121ba5f9aefa289da84bbd",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-d98ec8cfe4477b6c.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-d98ec8cfe4477b6c.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-d98ec8cfe4477b6c.node22131-x64.diagnostics.json",
+      "bytes": 4050,
+      "sha256": "97309ed1a00775f50fa15800f803bc2c795e581ba7bfe6ab71f60b74ee044506",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-d98ec8cfe4477b6c.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-6884a9c1bc511396.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-6884a9c1bc511396.node22131-x64.replay.json",
+      "bytes": 12486,
+      "sha256": "2280d4c47b2123271056d1927f72ced130d9b5b07875a5e416da849000e29597",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-6884a9c1bc511396.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-6884a9c1bc511396.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-6884a9c1bc511396.node22131-x64.diagnostics.json",
+      "bytes": 4050,
+      "sha256": "85b3ee694226fb8735e723f49dd1ce2e929babb9eda89a142f9e43fa188e1150",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-6884a9c1bc511396.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-1317cbb34f9f263d.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-1317cbb34f9f263d.node22131-x64.replay.json",
+      "bytes": 27188,
+      "sha256": "d00a9e9efba4984b047d58a0460307025efd04721574991878af8c02357fbcd2",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-1317cbb34f9f263d.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-1317cbb34f9f263d.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-1317cbb34f9f263d.node22131-x64.diagnostics.json",
+      "bytes": 13958,
+      "sha256": "ae815dba5879c7e390b3e5cec2f44b65f4e8f176a2cccda2dd944fdb69a60806",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-1317cbb34f9f263d.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-6d6735f53cea772c.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-6d6735f53cea772c.node22131-x64.replay.json",
+      "bytes": 22378,
+      "sha256": "8460e75cbd45cbb8cbbc3ecaadb8d67e9f1935717f2443a01971e5a910d3edd3",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-6d6735f53cea772c.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-6d6735f53cea772c.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-6d6735f53cea772c.node22131-x64.diagnostics.json",
+      "bytes": 10754,
+      "sha256": "af5a618a56fd2eac14bb889ed8d671c723b5c4b156092cb2e4ef54cf93e0309e",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-6d6735f53cea772c.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-b48891e1132779ca.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-b48891e1132779ca.node22131-x64.replay.json",
+      "bytes": 22319,
+      "sha256": "a092b638b739fe5d7900a2e28314a1910fafe7a577d878cc8ac93c93ba10af56",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-b48891e1132779ca.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-b48891e1132779ca.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-b48891e1132779ca.node22131-x64.diagnostics.json",
+      "bytes": 7019,
+      "sha256": "ad146b27ff2c7f9c07ba11b48bbcda3922f4644b2c5fc3eeeadc29cf84093507",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-b48891e1132779ca.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-1365c63c29f6f7b0.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-1365c63c29f6f7b0.node22131-x64.replay.json",
+      "bytes": 41938,
+      "sha256": "224789bb5ac7151083d388edd531939bac22a39912b4ed2b94c4b8488e2a843f",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-1365c63c29f6f7b0.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-1365c63c29f6f7b0.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-1365c63c29f6f7b0.node22131-x64.diagnostics.json",
+      "bytes": 13958,
+      "sha256": "bfc654bb1efced25b3731ebfc13c3a50dd759d7ed8f44cd3824258b43dd9f1da",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-1365c63c29f6f7b0.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-0a838d0c1691b31f.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-0a838d0c1691b31f.node22131-x64.replay.json",
+      "bytes": 31850,
+      "sha256": "2dd3af70b71cff66a2bd8ec46187cd9976341d4ffb49b4ff9eabab773a1e5bc7",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-0a838d0c1691b31f.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-0a838d0c1691b31f.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-0a838d0c1691b31f.node22131-x64.diagnostics.json",
+      "bytes": 4887,
+      "sha256": "55648c636bb8b7f4f5af893c99533efea6c6f60541a1fe4bbdb3ac965f9ae750",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-0a838d0c1691b31f.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-539f1ca4cc7249a8.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-539f1ca4cc7249a8.node22131-x64.replay.json",
+      "bytes": 26259,
+      "sha256": "0690102c127accb15dd027a2347e5166cf25a256a9b9326500b4b6e7e6bd5ee6",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-539f1ca4cc7249a8.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-539f1ca4cc7249a8.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-539f1ca4cc7249a8.node22131-x64.diagnostics.json",
+      "bytes": 10754,
+      "sha256": "0d54c5a8f21e06c70a88b292c626e1243f2e0a015023162f0316b86cd81e38a6",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-539f1ca4cc7249a8.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-9f55f7092af5ad15.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-9f55f7092af5ad15.node22131-x64.replay.json",
+      "bytes": 14734,
+      "sha256": "bcbd7e05d4c387595bdc7ffec604038853a6b81d9213dd5770d3980896e6a515",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-9f55f7092af5ad15.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-9f55f7092af5ad15.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-9f55f7092af5ad15.node22131-x64.diagnostics.json",
+      "bytes": 3288,
+      "sha256": "14dd9be7b73758fa2bd059d45a4ea702e0db966164fc5fab57c45827a9996349",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-9f55f7092af5ad15.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-34436b9f24286344.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-34436b9f24286344.node22131-x64.replay.json",
+      "bytes": 25392,
+      "sha256": "a53afa8ff7dfee14465fb203bf7d44db521e23cc2b72c6f42adb867b35af8060",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-34436b9f24286344.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-34436b9f24286344.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-34436b9f24286344.node22131-x64.diagnostics.json",
+      "bytes": 8618,
+      "sha256": "af1d6763fdd6fde84efbe125ff1c9333252a12108e8efb384213edc77ae13b58",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-34436b9f24286344.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-5107ade9c5d366bb.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-5107ade9c5d366bb.node22131-x64.replay.json",
+      "bytes": 21869,
+      "sha256": "72156138908a9b4a27ba5ae15f3683426e77124d6b8e94f133b8e85e7cead6c9",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-5107ade9c5d366bb.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-5107ade9c5d366bb.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-5107ade9c5d366bb.node22131-x64.diagnostics.json",
+      "bytes": 10754,
+      "sha256": "7b7a92b720fd9c0b1859b667fbd168b0f894e0c2e94d6d79f72f00e697f4755d",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-5107ade9c5d366bb.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-9f1b8ec355af25b9.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-9f1b8ec355af25b9.node22131-x64.replay.json",
+      "bytes": 29585,
+      "sha256": "7ed142cd801398aeec690fa9b6767a451122455dc4e1b6b65e9b06821f293e4a",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-9f1b8ec355af25b9.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-9f1b8ec355af25b9.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-9f1b8ec355af25b9.node22131-x64.diagnostics.json",
+      "bytes": 11822,
+      "sha256": "bfe774c9974e7f23f2bcad86272518a480f04b96b9b20e63ea972a5909bf94ad",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-9f1b8ec355af25b9.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-609112f5d34480ec.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-609112f5d34480ec.node22131-x64.replay.json",
+      "bytes": 43416,
+      "sha256": "b39c507f8599fd1dc702a1331a651955a1abb5ab27aa78ec5f3385bab066f0ee",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-609112f5d34480ec.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-609112f5d34480ec.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-609112f5d34480ec.node22131-x64.diagnostics.json",
+      "bytes": 9152,
+      "sha256": "b4e8c849358888ab0a7e92c221179fbc99b60381904855f01311b963f2ddb0d2",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-609112f5d34480ec.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-6e585d1b8ae71b58.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-6e585d1b8ae71b58.node22131-x64.replay.json",
+      "bytes": 60508,
+      "sha256": "7c3275be8a5030abd79121cc2cace582baced9eec21029ca6ef218a51efd9dad",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-6e585d1b8ae71b58.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-6e585d1b8ae71b58.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-6e585d1b8ae71b58.node22131-x64.diagnostics.json",
+      "bytes": 11288,
+      "sha256": "5413498a074d445596912bad069ccc4035809243cd377eaf5b43fbb46a4409fd",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-6e585d1b8ae71b58.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-a6bd03461640ac1f.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-a6bd03461640ac1f.node22131-x64.replay.json",
+      "bytes": 18363,
+      "sha256": "f295097621cafb91fb76f7b4b2e617e24a4713fdfcc421cf33ede40e4840b0ba",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-a6bd03461640ac1f.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-a6bd03461640ac1f.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-a6bd03461640ac1f.node22131-x64.diagnostics.json",
+      "bytes": 9686,
+      "sha256": "26e332601b91b664f7a2a8619372fcedb00113b58c4a519b102e2c6a3b2389b8",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-a6bd03461640ac1f.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-508a8b6278a54af2.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-508a8b6278a54af2.node22131-x64.replay.json",
+      "bytes": 14525,
+      "sha256": "3c23ec466bc38151b35db7f4a75f16d8eb03594d0d9b028a1259b04a6c8f4811",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-508a8b6278a54af2.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-508a8b6278a54af2.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-508a8b6278a54af2.node22131-x64.diagnostics.json",
+      "bytes": 3288,
+      "sha256": "dba9191f36a0a9675e9410e79ab5fc0ec99660954d36193e859867f464d6fdc1",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-508a8b6278a54af2.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-eb610c93d32ff955.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-eb610c93d32ff955.node22131-x64.replay.json",
+      "bytes": 14756,
+      "sha256": "64a4cd9b2c56743c1930a0ef5e0480422ca8ef5a9e3581e97bb40d5a120f43c2",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-eb610c93d32ff955.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-eb610c93d32ff955.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-eb610c93d32ff955.node22131-x64.diagnostics.json",
+      "bytes": 4887,
+      "sha256": "6cc7686456acbb2300222450e8244c08dfe1f0817493eb48c0b87921a9a947d1",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-eb610c93d32ff955.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-6831f1fd6349b2be.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-6831f1fd6349b2be.node22131-x64.replay.json",
+      "bytes": 60557,
+      "sha256": "c3417e194d478d5d9a6024743849ed48fd29638b94f3b8a181e0d447c71b1f61",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-6831f1fd6349b2be.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-6831f1fd6349b2be.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-6831f1fd6349b2be.node22131-x64.diagnostics.json",
+      "bytes": 10754,
+      "sha256": "01045356b3f301cf2d95ad3fd226630eeaebe34c8793bdd20d64340a556b5809",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-6831f1fd6349b2be.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-fc70762275c737c3.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-fc70762275c737c3.node22131-x64.replay.json",
+      "bytes": 15787,
+      "sha256": "3224d849318e040b907586ac1cfb43324a5b0b8034049251ce41612d565567e7",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-fc70762275c737c3.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-fc70762275c737c3.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-fc70762275c737c3.node22131-x64.diagnostics.json",
+      "bytes": 5953,
+      "sha256": "baee3553d6e880157452cc4e21ae6308135e70a805a1ecf633e7882bcbebbe84",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-fc70762275c737c3.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-85b7fe2bd59f4ce6.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-85b7fe2bd59f4ce6.node22131-x64.replay.json",
+      "bytes": 18669,
+      "sha256": "eb56f47a2a8260dbb6789a4926d604bd69dec6886bb7dd5072681f98bce56290",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-85b7fe2bd59f4ce6.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-85b7fe2bd59f4ce6.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-85b7fe2bd59f4ce6.node22131-x64.diagnostics.json",
+      "bytes": 7019,
+      "sha256": "0ad12c97e744474142f96a27ed7211bc58950fd3aea5d8e76c02be43f683375c",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-85b7fe2bd59f4ce6.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-357575c079f7c22a.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-357575c079f7c22a.node22131-x64.replay.json",
+      "bytes": 19031,
+      "sha256": "2b5ac69be2dd94476437eebffb27d8d33d48fc874d016f0a4384bac3d8fe3331",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-357575c079f7c22a.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-357575c079f7c22a.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-357575c079f7c22a.node22131-x64.diagnostics.json",
+      "bytes": 6486,
+      "sha256": "70b083316e4f1ea45c61a8b88c9c97348c6d5446703e741da74b12cd569538b5",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-357575c079f7c22a.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-67de5079eb3bf92d.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-67de5079eb3bf92d.node22131-x64.replay.json",
+      "bytes": 13567,
+      "sha256": "0194423576f48cf47d60fbbe1ee2866d2f29342496784cecebf902b61a263131",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-67de5079eb3bf92d.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-67de5079eb3bf92d.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-67de5079eb3bf92d.node22131-x64.diagnostics.json",
+      "bytes": 4887,
+      "sha256": "5306ed5081fddc803f1dbe919dd3cae9d4b53daaaf489eccfb9daa9d7cbfe196",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-67de5079eb3bf92d.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-958579fbf73ab1f3.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-958579fbf73ab1f3.node22131-x64.replay.json",
+      "bytes": 24681,
+      "sha256": "99e9c92fdf96a0719765fd5c5947a71520709ec7735a56b7a8efd3273f2705e2",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-958579fbf73ab1f3.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-958579fbf73ab1f3.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-958579fbf73ab1f3.node22131-x64.diagnostics.json",
+      "bytes": 9152,
+      "sha256": "d692f44dd6bf8e4ea3c1d3b2ee17e823930d0e3c22b4073213ace65ef5caaeb5",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-958579fbf73ab1f3.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-11bae25f26fd63b2.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-11bae25f26fd63b2.node22131-x64.replay.json",
+      "bytes": 16235,
+      "sha256": "ef41f4a28c5d6b5808ab835362b49bf55a9b0e99b8bbc1c38c35ca671331548a",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-11bae25f26fd63b2.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-11bae25f26fd63b2.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-11bae25f26fd63b2.node22131-x64.diagnostics.json",
+      "bytes": 5420,
+      "sha256": "31cfe6bf3c9a0bbf7de644da93d742222706e4ec7a756008381c9b6facb4fbbc",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-11bae25f26fd63b2.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-d03c65948bb71da1.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-d03c65948bb71da1.node22131-x64.replay.json",
+      "bytes": 19006,
+      "sha256": "bd5c8410069c2b2dfb78fb0b94ba0fa9f98681acc90f68d2f3f8333ae764b7c3",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-d03c65948bb71da1.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-d03c65948bb71da1.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-d03c65948bb71da1.node22131-x64.diagnostics.json",
+      "bytes": 5420,
+      "sha256": "df3f72b29e1efe68278a8dec274be35b65eabc33c0516b6ccf537cbd1062efb1",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-d03c65948bb71da1.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-2d795f9b60e1e9ea.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-2d795f9b60e1e9ea.node22131-x64.replay.json",
+      "bytes": 27095,
+      "sha256": "fdf49e625a4c62a0026b7c0fe22d88621357736ee8fe1f450b90ec7813b6df5e",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-2d795f9b60e1e9ea.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-2d795f9b60e1e9ea.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-2d795f9b60e1e9ea.node22131-x64.diagnostics.json",
+      "bytes": 9686,
+      "sha256": "a8badce575afe33405128644ff352454c45a7aed4e8a1a8aa7a1fbe7fc3fcd0c",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-2d795f9b60e1e9ea.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-6fc96345c2385275.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-6fc96345c2385275.node22131-x64.replay.json",
+      "bytes": 15555,
+      "sha256": "177dc3639ec171ccc2cf279fbeb6dd5c2e31064a0e37be913383ea3103567586",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-6fc96345c2385275.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-6fc96345c2385275.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-6fc96345c2385275.node22131-x64.diagnostics.json",
+      "bytes": 5420,
+      "sha256": "35cdbd95a68171f33315445111ec47c086deecc641d6810b8ac8361fa1f33dad",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-6fc96345c2385275.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-ed2912770fa96724.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-ed2912770fa96724.node22131-x64.replay.json",
+      "bytes": 20390,
+      "sha256": "1a9f7785270b2ed8675e89216b35618e3a89ed976e2362b597c0567df0be7f1a",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-ed2912770fa96724.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-ed2912770fa96724.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-ed2912770fa96724.node22131-x64.diagnostics.json",
+      "bytes": 5953,
+      "sha256": "3b5940921fabe72e42cc5a0ac80a61402d8f6e6fb6ac8b3003e4dcffe4c2cadf",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-ed2912770fa96724.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-1b7c6f1b1a4d7efd.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-1b7c6f1b1a4d7efd.node22131-x64.replay.json",
+      "bytes": 22954,
+      "sha256": "3e5684ff644219b220ba09b58f1b1b988238f589e708290a6e0a6cd6a55fedf5",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-1b7c6f1b1a4d7efd.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-1b7c6f1b1a4d7efd.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-1b7c6f1b1a4d7efd.node22131-x64.diagnostics.json",
+      "bytes": 8618,
+      "sha256": "3f753693670069febb9c272311252e997292cd513c208a12d599c75c79c6b3ad",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-1b7c6f1b1a4d7efd.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-13346d4f3775859d.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-13346d4f3775859d.node22131-x64.replay.json",
+      "bytes": 35298,
+      "sha256": "cbbbcb92e762e35ef754c593a9aaee9f727000e7324c40d24dcc0330490c0a0d",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-13346d4f3775859d.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-13346d4f3775859d.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-13346d4f3775859d.node22131-x64.diagnostics.json",
+      "bytes": 11822,
+      "sha256": "240623c1cb9ccdec64b41ed57034a1d62c0c9dd0432779d7393ac56dc1e994a8",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-13346d4f3775859d.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-0a05fdf1d370e239.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-0a05fdf1d370e239.node22131-x64.replay.json",
+      "bytes": 30221,
+      "sha256": "a2736af784157e74e6b475b637b555660f76308f51b83baa503505289f98071d",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-0a05fdf1d370e239.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-0a05fdf1d370e239.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-0a05fdf1d370e239.node22131-x64.diagnostics.json",
+      "bytes": 11822,
+      "sha256": "caa993c0234de4d61b76fafff98f2c8d78fa547e9aa82bdf9c570601a1e0ad78",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-0a05fdf1d370e239.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-a1ce0aac4a4ba375.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-a1ce0aac4a4ba375.node22131-x64.replay.json",
+      "bytes": 24100,
+      "sha256": "d498809e93c30d5d6e7406fe697aaa18b47e99683f9b6df1d3897dab0e47c2d3",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-a1ce0aac4a4ba375.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-a1ce0aac4a4ba375.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-a1ce0aac4a4ba375.node22131-x64.diagnostics.json",
+      "bytes": 7552,
+      "sha256": "5052c0de0bb840c58a5f2e206ad3aea2ba8f736e33245b958a8e14e9398ab069",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-a1ce0aac4a4ba375.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-1d6d571646ea58e8.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-1d6d571646ea58e8.node22131-x64.replay.json",
+      "bytes": 18654,
+      "sha256": "c7d1bf76d0d09ad9b788cb9def16c4648be97c9bb55b06a008b022a6ba5be41f",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-1d6d571646ea58e8.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-1d6d571646ea58e8.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-1d6d571646ea58e8.node22131-x64.diagnostics.json",
+      "bytes": 4887,
+      "sha256": "dbd9d5e6377d561b67c821f40c9d4730dd93992681d8e26fcd64582f18ce7773",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-1d6d571646ea58e8.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-317c68e1e84b012b.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-317c68e1e84b012b.node22131-x64.replay.json",
+      "bytes": 18988,
+      "sha256": "84bc2e47acd0068da77bff8eea95a955d14928f637c596e5dfa08ebac232ca7d",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-317c68e1e84b012b.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-317c68e1e84b012b.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-317c68e1e84b012b.node22131-x64.diagnostics.json",
+      "bytes": 5420,
+      "sha256": "d5053c586d9960fd44a5fbf4e86d9c28400a91934dd43ed84d8041ee6547c5f6",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-317c68e1e84b012b.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-3edb8b3d29afe4e4.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-3edb8b3d29afe4e4.node22131-x64.replay.json",
+      "bytes": 15611,
+      "sha256": "990410debe78b329169928f0d6aa9eb0267a8712768fb10e1d69317240828da4",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-3edb8b3d29afe4e4.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-3edb8b3d29afe4e4.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-3edb8b3d29afe4e4.node22131-x64.diagnostics.json",
+      "bytes": 3821,
+      "sha256": "3f552ba762bb71a4e080b0e914ea363ff3671416f08d3cdf0da6dbe3c6c00cac",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-3edb8b3d29afe4e4.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-6f9d15c9f157385c.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-6f9d15c9f157385c.node22131-x64.replay.json",
+      "bytes": 29718,
+      "sha256": "47175cf02bd0db7986fdfd87e2e14ff0ad3e79124517535b018d309d7a6b93c6",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-6f9d15c9f157385c.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-6f9d15c9f157385c.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-6f9d15c9f157385c.node22131-x64.diagnostics.json",
+      "bytes": 10754,
+      "sha256": "4f7d2fb1a8ea2d1485bf297b38a7d5edd51821e079ee61df512877a11109b8c4",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-6f9d15c9f157385c.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-63cbda0ed7ddb858.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-63cbda0ed7ddb858.node22131-x64.replay.json",
+      "bytes": 17564,
+      "sha256": "0acc1f3904159975c419d171a0bd74d80cdaabea51282c056e2879f7191af942",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-63cbda0ed7ddb858.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-63cbda0ed7ddb858.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-63cbda0ed7ddb858.node22131-x64.diagnostics.json",
+      "bytes": 3821,
+      "sha256": "8a2743469b1a240e414a256274e40cfdd4a28b952eda93feaaea7fb88607ba96",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-63cbda0ed7ddb858.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-f85650a2f81b67ed.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-f85650a2f81b67ed.node22131-x64.replay.json",
+      "bytes": 26158,
+      "sha256": "16301cc572661b73473c8b940aa41f57ae427ec7b473719440e14d19ae7859cf",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-f85650a2f81b67ed.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-f85650a2f81b67ed.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-f85650a2f81b67ed.node22131-x64.diagnostics.json",
+      "bytes": 9686,
+      "sha256": "f6530a1578c4ffa4e257cf89bc2dcadd2350c2d4b78c269c3b3510a53c1e926c",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-f85650a2f81b67ed.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-014fa419dd4cee2b.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-014fa419dd4cee2b.node22131-x64.replay.json",
+      "bytes": 15874,
+      "sha256": "9faf986d04ff3674f5e87f9acbd282e3f773f961bc41087637164745ff53972e",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-014fa419dd4cee2b.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-014fa419dd4cee2b.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-014fa419dd4cee2b.node22131-x64.diagnostics.json",
+      "bytes": 4354,
+      "sha256": "98b66a7f9decdaf42243422e5bc6456b4dcf7e4d1c931159b148e6624217f2ab",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-014fa419dd4cee2b.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-14d1e5097d455385.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-14d1e5097d455385.node22131-x64.replay.json",
+      "bytes": 22255,
+      "sha256": "a24a11108e08ebc5605111b44ea976240fd6c3b8b68bc01e6fdcd15bbc057bf1",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-14d1e5097d455385.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-14d1e5097d455385.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-14d1e5097d455385.node22131-x64.diagnostics.json",
+      "bytes": 7019,
+      "sha256": "d9e82426d2d036b3f7c66bbbf28ab32ed49b22a5dad79ffeb6d764867be8b190",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-14d1e5097d455385.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-e546fded69fb9336.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-e546fded69fb9336.node22131-x64.replay.json",
+      "bytes": 15647,
+      "sha256": "1c905d0b7ff373a476675e501fc07783159d23e357c75b4dc92ba373ac923fad",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-e546fded69fb9336.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-e546fded69fb9336.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-e546fded69fb9336.node22131-x64.diagnostics.json",
+      "bytes": 5420,
+      "sha256": "908e8f1ae8d71b8d2448e02d541a571615263fee989789187d8b195347eeffff",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-e546fded69fb9336.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-ae4fe97bb5a844f3.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-ae4fe97bb5a844f3.node22131-x64.replay.json",
+      "bytes": 17111,
+      "sha256": "6e65be7e7f5d9794053041ab3659e4c9fa315e2d13300a876cad7f6524a45ead",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-ae4fe97bb5a844f3.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-ae4fe97bb5a844f3.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-ae4fe97bb5a844f3.node22131-x64.diagnostics.json",
+      "bytes": 4354,
+      "sha256": "9797de81532e908edb76a32090dd748d44aecc827f985294a99a3393561512c3",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-ae4fe97bb5a844f3.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-b420aacc8400ae19.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-b420aacc8400ae19.node22131-x64.replay.json",
+      "bytes": 34359,
+      "sha256": "f696b65b388a4bc58b7d97ee93e726f2391c7790da807e072f4d2cf0b2385079",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-b420aacc8400ae19.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-b420aacc8400ae19.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-b420aacc8400ae19.node22131-x64.diagnostics.json",
+      "bytes": 13424,
+      "sha256": "0e788a71219994027821d38f5ad26445452ebb9557ed787827e1c929204b4488",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-b420aacc8400ae19.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-9f0dd1a83a873b3a.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-9f0dd1a83a873b3a.node22131-x64.replay.json",
+      "bytes": 12528,
+      "sha256": "7c87ea520de4b0a4bcf0fa79252516147c25b4593544efcef4ccc4e1540cb40b",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-9f0dd1a83a873b3a.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-9f0dd1a83a873b3a.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-9f0dd1a83a873b3a.node22131-x64.diagnostics.json",
+      "bytes": 3821,
+      "sha256": "20e48f7d0b8f473d098530ef8299152bb5bdfb6fb878ea3c60383690a868d772",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-9f0dd1a83a873b3a.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-6a03bb8315594257.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-6a03bb8315594257.node22131-x64.replay.json",
+      "bytes": 28302,
+      "sha256": "85d9aed7f42c26d3e405160a1e0baf652f4881964b0050e9fbd7627a2257ac5c",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-6a03bb8315594257.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-6a03bb8315594257.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-6a03bb8315594257.node22131-x64.diagnostics.json",
+      "bytes": 9686,
+      "sha256": "af2a89c32fa778bb021a078acf285b2fa8f8a3388b9d170463ba5d466231c842",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-6a03bb8315594257.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-209dd22e35205b41.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-209dd22e35205b41.node22131-x64.replay.json",
+      "bytes": 7733,
+      "sha256": "04bf271f8e641197bd61dd41bb78943e6beedbf2a29a84f8768143bc19675aca",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-209dd22e35205b41.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-209dd22e35205b41.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-209dd22e35205b41.node22131-x64.diagnostics.json",
+      "bytes": 2590,
+      "sha256": "85857cd34025714c0de07c3152c3d3326b7e83a1f64a9b526a8b5d8fe0d4a471",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-209dd22e35205b41.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-5fe1b2d2833db1f9.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-5fe1b2d2833db1f9.node22131-x64.replay.json",
+      "bytes": 7500,
+      "sha256": "cbdd69c0757b7e3807dad8af8780d04e62142e9e27e55a5a3a2bbccf89a9e8c6",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-5fe1b2d2833db1f9.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-5fe1b2d2833db1f9.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-5fe1b2d2833db1f9.node22131-x64.diagnostics.json",
+      "bytes": 2590,
+      "sha256": "27d443eaee74df04f0fe976120226f47e375b7d325a841d23210f725079fd9d0",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-5fe1b2d2833db1f9.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-58fa121c41ee9a76.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-58fa121c41ee9a76.node22131-x64.replay.json",
+      "bytes": 13224,
+      "sha256": "1c1f1e37840cb3b981be2c6d66c2f344c5537d3b76543be07bf54de2e7805779",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-58fa121c41ee9a76.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-58fa121c41ee9a76.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-58fa121c41ee9a76.node22131-x64.diagnostics.json",
+      "bytes": 6090,
+      "sha256": "4ad509ec7c4035d64dfe7b84e76461acad681729c42969ea4439459502e7f2d4",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-58fa121c41ee9a76.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-8c5a7d940162231c.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-8c5a7d940162231c.node22131-x64.replay.json",
+      "bytes": 19712,
+      "sha256": "3d2032ab57b558655a9aca0501149c502d88d8171afc8e84747f3c1b7f3d0a20",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-8c5a7d940162231c.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-8c5a7d940162231c.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-8c5a7d940162231c.node22131-x64.diagnostics.json",
+      "bytes": 9593,
+      "sha256": "0f6314f486bb7d45cb9a31439bba6e0884ce95c6f0ad8ad0a7f8d9dcfd809b2b",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-8c5a7d940162231c.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-ec7912cb8caf199d.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-ec7912cb8caf199d.node22131-x64.replay.json",
+      "bytes": 7682,
+      "sha256": "3f835a9b6b497195f561c1be1e9f2b34e29969dd914a0af93809ad08cc393d39",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-ec7912cb8caf199d.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-ec7912cb8caf199d.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-ec7912cb8caf199d.node22131-x64.diagnostics.json",
+      "bytes": 2590,
+      "sha256": "3fd82097e34adb560ef859de6bd44f367ce1c20fed63b7cfaa2a4c51f8feb9e5",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-ec7912cb8caf199d.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-01c45eb2a92b2a48.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-01c45eb2a92b2a48.node22131-x64.replay.json",
+      "bytes": 11308,
+      "sha256": "903453fc0c1132e18bb696cc804f51a5545f49c672716b1c9c5d239c8206efca",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-01c45eb2a92b2a48.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-01c45eb2a92b2a48.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-01c45eb2a92b2a48.node22131-x64.diagnostics.json",
+      "bytes": 5742,
+      "sha256": "f26495096ebb8f281c96ebf004f987794a2569c85d6c30abb57f2395a1c97045",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-01c45eb2a92b2a48.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-906d14f392635406.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-906d14f392635406.node22131-x64.replay.json",
+      "bytes": 13469,
+      "sha256": "c1f2d245b8861b4013de949676d9f7db0b9c84e42460bee635ca76349975753a",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-906d14f392635406.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-906d14f392635406.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-906d14f392635406.node22131-x64.diagnostics.json",
+      "bytes": 6684,
+      "sha256": "ea348b634c5b80402b55148767ee240dfa645e2c8927022006307e0dd5ea32af",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-906d14f392635406.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-7cf943719a6391a9.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-7cf943719a6391a9.node22131-x64.replay.json",
+      "bytes": 17519,
+      "sha256": "8c08a8736b30f07d2be0cc17d32ce66a1848d5891428424621ee0410b1fb1925",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-7cf943719a6391a9.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-7cf943719a6391a9.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-7cf943719a6391a9.node22131-x64.diagnostics.json",
+      "bytes": 8570,
+      "sha256": "95824cf4aea95b8304b23a8f93e1e880868845802100c4cccf1209ad6c1981be",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-7cf943719a6391a9.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-1d64e506d5980412.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-1d64e506d5980412.node22131-x64.replay.json",
+      "bytes": 10662,
+      "sha256": "e8ffe04eb4c71c15166217ff3fcc97724024213b326437758b6eed7f6d3a6cfc",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-1d64e506d5980412.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-1d64e506d5980412.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-1d64e506d5980412.node22131-x64.diagnostics.json",
+      "bytes": 4887,
+      "sha256": "25c0223afeb6bb171aae132d5928a90021671ca370c599ea3c1dbe4cb7b0afff",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-1d64e506d5980412.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-11133b7849422018.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-11133b7849422018.node22131-x64.replay.json",
+      "bytes": 5830,
+      "sha256": "83f611530ee62fc3e1c1b521d2f7cc7a35bdecaf3fb665e534ee0823123fc03d",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-11133b7849422018.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-11133b7849422018.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-11133b7849422018.node22131-x64.diagnostics.json",
+      "bytes": 1156,
+      "sha256": "42702f17ea51b7858015bd8e53591631785c3414a4b1c2b70d9dabd74cca43b0",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-11133b7849422018.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-5678d483da29e23a.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-5678d483da29e23a.node22131-x64.replay.json",
+      "bytes": 12340,
+      "sha256": "cf52d3feecbbf830e3650001a2160882c8ac9abf311fcc5c1b27289027ae34bc",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-5678d483da29e23a.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-5678d483da29e23a.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-5678d483da29e23a.node22131-x64.diagnostics.json",
+      "bytes": 5953,
+      "sha256": "91a026e3a64a1aaf91e2d7f01c440a2f05996b0fd4e54982e338ed201623ef0c",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-5678d483da29e23a.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-7b3a3b7248f976ce.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-7b3a3b7248f976ce.node22131-x64.replay.json",
+      "bytes": 14752,
+      "sha256": "7ea005840913d47c10147bda484f119cc11190270c758740adae0e92b80b2dd9",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-7b3a3b7248f976ce.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-7b3a3b7248f976ce.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-7b3a3b7248f976ce.node22131-x64.diagnostics.json",
+      "bytes": 7019,
+      "sha256": "e2af6f23b44fab3a204701b7aa3694928fe1616624e4baf3695ececa95ccd662",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-7b3a3b7248f976ce.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-a06599f68a914d16.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-a06599f68a914d16.node22131-x64.replay.json",
+      "bytes": 5474,
+      "sha256": "9d4d92d0e96424ef0f973492269532e8726f55b2fb2a12ce47a158800578150a",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-a06599f68a914d16.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-a06599f68a914d16.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-a06599f68a914d16.node22131-x64.diagnostics.json",
+      "bytes": 1156,
+      "sha256": "21a82e74a2b7d514c64d3a8a292f56bf7e97cb77e0fc02572b8b8c8c2bec734c",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-a06599f68a914d16.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-9dddcc84f7d60f65.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-9dddcc84f7d60f65.node22131-x64.replay.json",
+      "bytes": 5017,
+      "sha256": "ec755f01c253280208c18ccfbf1ce9467348c0d3c5be6a66ac87dc45d35937f7",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-9dddcc84f7d60f65.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-9dddcc84f7d60f65.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-9dddcc84f7d60f65.node22131-x64.diagnostics.json",
+      "bytes": 1156,
+      "sha256": "ab708bff2944bf1405b39c99b42157fd40841af630752471acdff1ac3a6b35df",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-9dddcc84f7d60f65.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-9aa30fcd0b3c8281.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-9aa30fcd0b3c8281.node22131-x64.replay.json",
+      "bytes": 12658,
+      "sha256": "193a5bb8f800384bca9e1e722d283993876da233198acf800fdc4d0442863d73",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-9aa30fcd0b3c8281.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-9aa30fcd0b3c8281.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-9aa30fcd0b3c8281.node22131-x64.diagnostics.json",
+      "bytes": 7019,
+      "sha256": "842893f8853bb76470575a659582ff9e079244a1f3a5edcd7482ab2194219d33",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-9aa30fcd0b3c8281.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-f1f91fa91991d51b.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-f1f91fa91991d51b.node22131-x64.replay.json",
+      "bytes": 8769,
+      "sha256": "347f98b33e1b27742d883d632d53b0aad95e315c4db353b7434c821db1b059fd",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-f1f91fa91991d51b.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-f1f91fa91991d51b.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-f1f91fa91991d51b.node22131-x64.diagnostics.json",
+      "bytes": 3821,
+      "sha256": "ca2c4e8572ad6c0cfd4921e628d513da67e5136cbd05d89ab2dc10d5c7ab4865",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-f1f91fa91991d51b.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-dd5c4beb661682f0.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-dd5c4beb661682f0.node22131-x64.replay.json",
+      "bytes": 14562,
+      "sha256": "f21ca6e06546569055a48759f6d5c26ca925a58ca6741e87cc84a79c6584e829",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-dd5c4beb661682f0.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-dd5c4beb661682f0.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-dd5c4beb661682f0.node22131-x64.diagnostics.json",
+      "bytes": 5953,
+      "sha256": "bd92b7f695fc8411f626497d848a264d7e1bb04603a0b6bd80e2a5ce6afcc20f",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-dd5c4beb661682f0.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-bbd69e7ccb5526d9.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-bbd69e7ccb5526d9.node22131-x64.replay.json",
+      "bytes": 7451,
+      "sha256": "972bc838ba9def318a92bef596b33a0994ac8600f64b14806d18359dde5a6608",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-bbd69e7ccb5526d9.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-bbd69e7ccb5526d9.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-bbd69e7ccb5526d9.node22131-x64.diagnostics.json",
+      "bytes": 4354,
+      "sha256": "d7353696196188d1002c04e2f5f87419c7aaa44c3168792caae5dd57a81bd7ee",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-bbd69e7ccb5526d9.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-0eafd68dc70ee8a8.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-0eafd68dc70ee8a8.node22131-x64.replay.json",
+      "bytes": 11968,
+      "sha256": "a5fd27723b6754827aaed467fb085c3964f229f089adcf79de3004a6e2c5faab",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-0eafd68dc70ee8a8.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-0eafd68dc70ee8a8.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-0eafd68dc70ee8a8.node22131-x64.diagnostics.json",
+      "bytes": 4887,
+      "sha256": "6fb23511c47fc2f017386f4249a704635b8871cfe63336c07e0d0ad81bdd52cd",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-0eafd68dc70ee8a8.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-821bba1882552b03.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-821bba1882552b03.node22131-x64.replay.json",
+      "bytes": 9717,
+      "sha256": "dc67a82dcf21a3945c645fac13f3bcdbd9223340b0a06a994062ccd9b4143d6f",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-821bba1882552b03.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-821bba1882552b03.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-821bba1882552b03.node22131-x64.diagnostics.json",
+      "bytes": 3821,
+      "sha256": "d47efc79f9a64a71963d1a9f130f83c9c0b3c9d10af371602c05ddc10d4a8596",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-821bba1882552b03.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-bbe0c5897adb725d.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-bbe0c5897adb725d.node22131-x64.replay.json",
+      "bytes": 10934,
+      "sha256": "f16e6d929fc80827e76cb1b072ab3f392600c65f5361e49a847efc5c7b5a0146",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-bbe0c5897adb725d.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-bbe0c5897adb725d.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-bbe0c5897adb725d.node22131-x64.diagnostics.json",
+      "bytes": 5420,
+      "sha256": "045b5725b2dab1fab0ba6dcc3fab4c1a4ea94dd4ad82904444409f8a9508e9da",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-bbe0c5897adb725d.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-dc59e6e76ae9df8b.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-dc59e6e76ae9df8b.node22131-x64.replay.json",
+      "bytes": 6014,
+      "sha256": "270a7b7d3c575f14ed52b830c173b00fb5c7d430c02173a13a0353af7f519805",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-dc59e6e76ae9df8b.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-dc59e6e76ae9df8b.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-dc59e6e76ae9df8b.node22131-x64.diagnostics.json",
+      "bytes": 2222,
+      "sha256": "9462af43cceeeb8f722f54412f52937e31ddbe065f48c46242a9d4ed74b76048",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-dc59e6e76ae9df8b.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-08bfbce48d50a5c0.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-08bfbce48d50a5c0.node22131-x64.replay.json",
+      "bytes": 10944,
+      "sha256": "4f46b82be4ceb5411f0b0c93bb75f94e018945c2bbfed18a6baa462078cc44bc",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-08bfbce48d50a5c0.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-08bfbce48d50a5c0.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-08bfbce48d50a5c0.node22131-x64.diagnostics.json",
+      "bytes": 4354,
+      "sha256": "b8b2d1ffec7dfb3a66f6d94af63fb9a76638f48304137c21814deade2cd8eb6f",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-08bfbce48d50a5c0.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-614567e280b3c780.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-614567e280b3c780.node22131-x64.replay.json",
+      "bytes": 12904,
+      "sha256": "236000a7a45d95607fdf29debbb8204645d60eb81c2954803363860f0bbb7493",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-614567e280b3c780.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-614567e280b3c780.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-614567e280b3c780.node22131-x64.diagnostics.json",
+      "bytes": 6486,
+      "sha256": "35013745f435afe5f23e5bd06c65708161ec865f0dabd51e2a25a121458f9cc7",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-614567e280b3c780.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-2df382183e2f00d6.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-2df382183e2f00d6.node22131-x64.replay.json",
+      "bytes": 7169,
+      "sha256": "d58c8a368261b4501dde8d7f5edf685eaaa520010b61fd4551766047748e1e71",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-2df382183e2f00d6.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-2df382183e2f00d6.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-2df382183e2f00d6.node22131-x64.diagnostics.json",
+      "bytes": 3288,
+      "sha256": "3057392bfaecce9b2c9efbd1033bd5f53935038935aba881b7d9a97e2ba4f474",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-2df382183e2f00d6.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-7e1cae99ddeff5f9.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-7e1cae99ddeff5f9.node22131-x64.replay.json",
+      "bytes": 7735,
+      "sha256": "0bd86ff9117bbcb975f6a57f665d92c9edc6c321dbb3c323b6a0a84518eb7201",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-7e1cae99ddeff5f9.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-7e1cae99ddeff5f9.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-7e1cae99ddeff5f9.node22131-x64.diagnostics.json",
+      "bytes": 3288,
+      "sha256": "5db95d66ac564fd6a9e1f560aa557571dd67d837cf836900f2826fe0564f2a8b",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-7e1cae99ddeff5f9.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-10d16d94f297eb0c.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-10d16d94f297eb0c.node22131-x64.replay.json",
+      "bytes": 18659,
+      "sha256": "66146a6365fbb0c3f80f9d812245134c9dc50b224bfcc6e16b2c3e568c2d97a0",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-10d16d94f297eb0c.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-10d16d94f297eb0c.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-10d16d94f297eb0c.node22131-x64.diagnostics.json",
+      "bytes": 9152,
+      "sha256": "cdd621ca96b83bc788ad4f0e4659c8a387114639a66d2798f30f15e3a114abba",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-10d16d94f297eb0c.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-8f766bd89a83be7e.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-8f766bd89a83be7e.node22131-x64.replay.json",
+      "bytes": 12376,
+      "sha256": "2d23cabc5374f76124e1d5ab16e0abf278ab303f86555f8a91696923eb285d84",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-8f766bd89a83be7e.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-8f766bd89a83be7e.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-8f766bd89a83be7e.node22131-x64.diagnostics.json",
+      "bytes": 5420,
+      "sha256": "e8a4bed5f25eee39c0cc7ee84ce4a825c83362570eda84888f693ba7b7ae67cf",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-8f766bd89a83be7e.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-7ff2d0d3f752cf2b.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-7ff2d0d3f752cf2b.node22131-x64.replay.json",
+      "bytes": 5676,
+      "sha256": "413c159a96ff79dfd8e2d053f16a9276cd8363bbacdc2d1fd94aed5e79f71b99",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-7ff2d0d3f752cf2b.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-7ff2d0d3f752cf2b.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-7ff2d0d3f752cf2b.node22131-x64.diagnostics.json",
+      "bytes": 2222,
+      "sha256": "e321df7b13e332823499a4528860c0f8b6381bc250e2449363bc2db4d0ebba60",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-7ff2d0d3f752cf2b.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-a99c5711c5c1839d.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-a99c5711c5c1839d.node22131-x64.replay.json",
+      "bytes": 19008,
+      "sha256": "2f5db213af72e214e3671617ca07d80db27c8980b0f6bf87e3d99bd53fdcb785",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-a99c5711c5c1839d.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-a99c5711c5c1839d.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-a99c5711c5c1839d.node22131-x64.diagnostics.json",
+      "bytes": 9686,
+      "sha256": "dc0a971643ea7da96de953596abb31667eaf80c66ffc42624c0d8c9ced1b9912",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-a99c5711c5c1839d.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-8812ad38e87d1a3e.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-8812ad38e87d1a3e.node22131-x64.replay.json",
+      "bytes": 18113,
+      "sha256": "49be7d99e04065cddc62db742b518bd2240e5984db079f772855dad85a6613dd",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-8812ad38e87d1a3e.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-8812ad38e87d1a3e.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-8812ad38e87d1a3e.node22131-x64.diagnostics.json",
+      "bytes": 8618,
+      "sha256": "374d92f48a00c53933ac91c51c4adf66758d9389cc543098c0967332641b6cc1",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-8812ad38e87d1a3e.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-2e72fe1d788ce165.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-2e72fe1d788ce165.node22131-x64.replay.json",
+      "bytes": 17104,
+      "sha256": "3223269882a19747dbe9766d876407ce0d83efa386821be00cf2c33ae4629c5f",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-2e72fe1d788ce165.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-2e72fe1d788ce165.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-2e72fe1d788ce165.node22131-x64.diagnostics.json",
+      "bytes": 7019,
+      "sha256": "94c106a198ed2e7b183f55a45375202daf549769f151a56c93fbcc266da35f01",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-2e72fe1d788ce165.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-e32d403f3f492be1.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-e32d403f3f492be1.node22131-x64.replay.json",
+      "bytes": 15149,
+      "sha256": "2aaa6057b5aecd7a31d8bb4745ae6ca157b22d5919015836dee3e1872f380c79",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-e32d403f3f492be1.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-e32d403f3f492be1.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-e32d403f3f492be1.node22131-x64.diagnostics.json",
+      "bytes": 7019,
+      "sha256": "40ca9ea6f97e104ee9178781fea59c0231d69268952ce6d55350024418a1653d",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-e32d403f3f492be1.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-cd19eddd5888061f.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-cd19eddd5888061f.node22131-x64.replay.json",
+      "bytes": 13307,
+      "sha256": "e6187b816483168c5a7ec4b8d12676725698ec15ee119977ec90805cee9b46b2",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-cd19eddd5888061f.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-cd19eddd5888061f.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-cd19eddd5888061f.node22131-x64.diagnostics.json",
+      "bytes": 5420,
+      "sha256": "06e64dce5a0cbe0963e31abcabd97f620e1c86e6ee7f0fd9bfdf3266d111f146",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-cd19eddd5888061f.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-205560abb7070791.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-205560abb7070791.node22131-x64.replay.json",
+      "bytes": 18238,
+      "sha256": "d17e47523606ba0b403af2dcded8ccc8d9d5d63fddb751967f3d8547fb013c1b",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-205560abb7070791.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-205560abb7070791.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-205560abb7070791.node22131-x64.diagnostics.json",
+      "bytes": 9628,
+      "sha256": "fc607ebf4b8371a1e59c2ee2069251be0b73ae040d45224e9ed1b8cd7803a011",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-205560abb7070791.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-d5027ee8cc9ab251.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-d5027ee8cc9ab251.node22131-x64.replay.json",
+      "bytes": 20257,
+      "sha256": "38cb3f77883f174bd25ad00bf459924a00fba25edf5ea5c346ffd443e61d9c1c",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-d5027ee8cc9ab251.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-d5027ee8cc9ab251.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-d5027ee8cc9ab251.node22131-x64.diagnostics.json",
+      "bytes": 9628,
+      "sha256": "12e10013982c9f38ee2e196bd0d663881ce336252903ef379f52fbefb9fe0663",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-d5027ee8cc9ab251.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-b03217288edf527a.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-b03217288edf527a.node22131-x64.replay.json",
+      "bytes": 9407,
+      "sha256": "576247a0107d730693ab67a618e1012b1324c01907e28c2c340f21ff146f91ce",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-b03217288edf527a.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-b03217288edf527a.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-b03217288edf527a.node22131-x64.diagnostics.json",
+      "bytes": 5700,
+      "sha256": "8086ac1cf2d80b22819244f2da344e93613bc07987b84e5a6754b43b49b86214",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-b03217288edf527a.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-72dfbcf032b5ad25.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-72dfbcf032b5ad25.node22131-x64.replay.json",
+      "bytes": 8370,
+      "sha256": "2284af39428e598ea13c55d84748ded2a6456e67f75c35e7c8f55d42cc3da574",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-72dfbcf032b5ad25.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-72dfbcf032b5ad25.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-72dfbcf032b5ad25.node22131-x64.diagnostics.json",
+      "bytes": 3456,
+      "sha256": "f1b370e419816f879dfa9022b15248d2fc8d05d1ebe08b8d573eff24823da177",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-72dfbcf032b5ad25.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-d4d010be74f4ff34.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-d4d010be74f4ff34.node22131-x64.replay.json",
+      "bytes": 13128,
+      "sha256": "7c4e565f0e1e9282a2d67a8db9b71306798a892ae7d148a37c937053910d8bf2",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-d4d010be74f4ff34.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-d4d010be74f4ff34.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-d4d010be74f4ff34.node22131-x64.diagnostics.json",
+      "bytes": 7290,
+      "sha256": "e229435305400718c5e49b155ab8493d3f87e64d2ad97913588611dc21865ae8",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-d4d010be74f4ff34.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-99b7fe8c6c02e8f5.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-99b7fe8c6c02e8f5.node22131-x64.replay.json",
+      "bytes": 14559,
+      "sha256": "a5e516f34bb419e9f9de0210b5704976f348d14f299d9266e9cd86dbdd7eb46c",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-99b7fe8c6c02e8f5.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-99b7fe8c6c02e8f5.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-99b7fe8c6c02e8f5.node22131-x64.diagnostics.json",
+      "bytes": 6690,
+      "sha256": "4497013da28f1b97c400b4264d3ecb19a0b7d93a654ec6d6a96e8885ad7555fc",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-99b7fe8c6c02e8f5.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-4301d76f85efb491.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-4301d76f85efb491.node22131-x64.replay.json",
+      "bytes": 8443,
+      "sha256": "7de2a5ea80cc5cdf572012a7dece8be7f6b417d5cbdf8ad25e33f030fe374f60",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-4301d76f85efb491.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-4301d76f85efb491.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-4301d76f85efb491.node22131-x64.diagnostics.json",
+      "bytes": 5490,
+      "sha256": "0d7a6c36eed38fa8a04cd33be2d19450a7a00c2689a877c25beba87d566f88cb",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-4301d76f85efb491.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-86e49440668d32eb.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-86e49440668d32eb.node22131-x64.replay.json",
+      "bytes": 17770,
+      "sha256": "5740b85530eb36328e7c46958701abbe5f128c17aa48dcd22f398376aa7e179b",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-86e49440668d32eb.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-86e49440668d32eb.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-86e49440668d32eb.node22131-x64.diagnostics.json",
+      "bytes": 7890,
+      "sha256": "33e0a94815475cd19feb2df91ad96a58ee21debdaebd41be0c689b9ae9229eb3",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-86e49440668d32eb.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-fe13ae38e227f3d4.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-fe13ae38e227f3d4.node22131-x64.replay.json",
+      "bytes": 20055,
+      "sha256": "82c7f128a691b5a9f18e247482914975ce077e8a37faeed6ac75832a41760408",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-fe13ae38e227f3d4.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-fe13ae38e227f3d4.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-fe13ae38e227f3d4.node22131-x64.diagnostics.json",
+      "bytes": 10291,
+      "sha256": "43425cb8b956f1befec565ee48a29c5c3c5eb0efe19d8ccd6a527294c8abbf3e",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-fe13ae38e227f3d4.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-20e853301cb3ac52.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-20e853301cb3ac52.node22131-x64.replay.json",
+      "bytes": 8589,
+      "sha256": "ee56020a8cebf57b3ff69a8706c8f5f2959fefa7e07a27c638827febcc1b4ae3",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-20e853301cb3ac52.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-20e853301cb3ac52.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-20e853301cb3ac52.node22131-x64.diagnostics.json",
+      "bytes": 3090,
+      "sha256": "32c4850a35dab2a74a51c6eac7f1cd52ff941bf8c024032add1430e593016782",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-20e853301cb3ac52.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-b8a409de0207c16a.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-b8a409de0207c16a.node22131-x64.replay.json",
+      "bytes": 15291,
+      "sha256": "41868452407c3310acc66d5d6ee91bd89ac3ee8af5fbb5f0ce016a24b8b9f1b4",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-b8a409de0207c16a.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-b8a409de0207c16a.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-b8a409de0207c16a.node22131-x64.diagnostics.json",
+      "bytes": 7290,
+      "sha256": "14a80f69947d921fe6627bae2ab27a1edfae87f8c79399aa31c3e652fdc215c2",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-b8a409de0207c16a.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-9a05e4f32fe3e8c3.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-9a05e4f32fe3e8c3.node22131-x64.replay.json",
+      "bytes": 15911,
+      "sha256": "cc4919998ebbfd009ece50deab00aa9d73f17e7e162496010a12cb1c0ee8d030",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-9a05e4f32fe3e8c3.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-9a05e4f32fe3e8c3.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-9a05e4f32fe3e8c3.node22131-x64.diagnostics.json",
+      "bytes": 8085,
+      "sha256": "9de2776601dbbbaca94a748fa21327331ba3d69437cf6e3eeccd46f2aba6aaab",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-9a05e4f32fe3e8c3.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-6066cc64f5796336.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-6066cc64f5796336.node22131-x64.replay.json",
+      "bytes": 12363,
+      "sha256": "f67e9bc38c652862f1a1b07491f5ac4194feec1fcd5d5b2ce615e4a3f90b1624",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-6066cc64f5796336.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-6066cc64f5796336.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-6066cc64f5796336.node22131-x64.diagnostics.json",
+      "bytes": 5953,
+      "sha256": "b5cd81ebb97892eb248baebaf1441657c42c64aad9a4344a27f33bf2d9522ccc",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-6066cc64f5796336.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-f420d6e14fbac1ed.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-f420d6e14fbac1ed.node22131-x64.replay.json",
+      "bytes": 17853,
+      "sha256": "67ee21d7db93a056a8d3b3dc8c18d69b718cf1a632f2dc857abd5d78e21c6cf0",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-f420d6e14fbac1ed.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-f420d6e14fbac1ed.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-f420d6e14fbac1ed.node22131-x64.diagnostics.json",
+      "bytes": 8618,
+      "sha256": "88823d9a3bdcca391798a06758d665e0cbe83419bcca0aa43fcfa4c3d34aa697",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-f420d6e14fbac1ed.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-45ff8eaac10d989c.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-45ff8eaac10d989c.node22131-x64.replay.json",
+      "bytes": 17422,
+      "sha256": "5ca0e20426d52120134cde176c44f83dce5b99890c732eb96db3c7362128473c",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-45ff8eaac10d989c.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-45ff8eaac10d989c.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-45ff8eaac10d989c.node22131-x64.diagnostics.json",
+      "bytes": 8085,
+      "sha256": "dd8a7bae9bf5c7c136e48c3c739d09bdda66df301e21255ecf193f18f3871052",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-45ff8eaac10d989c.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-512b66c5e6a7ca41.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-512b66c5e6a7ca41.node22131-x64.replay.json",
+      "bytes": 20357,
+      "sha256": "f0388eac7a4bf1860591aa206776fefc6c4769861098b360191aec5b9047e8cd",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-512b66c5e6a7ca41.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-512b66c5e6a7ca41.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-512b66c5e6a7ca41.node22131-x64.diagnostics.json",
+      "bytes": 10892,
+      "sha256": "25b8d2277be669df85841c6e58471bb0fbef682180050170637e16e94143356f",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-512b66c5e6a7ca41.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-56165d770d83ee1e.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-56165d770d83ee1e.node22131-x64.replay.json",
+      "bytes": 15773,
+      "sha256": "ec4105584b6b4898d5ebabfffa9da28c3d39fce20b57bc6a55edac92f3e1101f",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-56165d770d83ee1e.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-56165d770d83ee1e.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-56165d770d83ee1e.node22131-x64.diagnostics.json",
+      "bytes": 7552,
+      "sha256": "fb0e7845e1bc4832be2a94dcf575ee817ffcbb1249240cc5074941c92251ac5b",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-56165d770d83ee1e.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-a13b85ddde0f9663.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-a13b85ddde0f9663.node22131-x64.replay.json",
+      "bytes": 22309,
+      "sha256": "695b2d8ee2dc5de32a1992a47819d32a431a3e23aecb4b9ca44384a041e60512",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-a13b85ddde0f9663.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-a13b85ddde0f9663.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-a13b85ddde0f9663.node22131-x64.diagnostics.json",
+      "bytes": 10220,
+      "sha256": "e33243666d0c36de01c8b95e8f006548b6ea321eb06d4d114b3a401fc5718cad",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-a13b85ddde0f9663.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-22874d7656ce6c3e.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-22874d7656ce6c3e.node22131-x64.replay.json",
+      "bytes": 21909,
+      "sha256": "4da360fb7b2bce29ab0b15c139def27a8d3e23c91a4b54c21513c6790985edef",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-22874d7656ce6c3e.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-22874d7656ce6c3e.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-22874d7656ce6c3e.node22131-x64.diagnostics.json",
+      "bytes": 9686,
+      "sha256": "f78229a2dbf50068f4657b8f4302c7c271ef0270d84f965815950f49d970f0fa",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-22874d7656ce6c3e.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-dd80d3e78efbf350.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-dd80d3e78efbf350.node22131-x64.replay.json",
+      "bytes": 19189,
+      "sha256": "c09cb3a1296cc2dfa5610f6a0d8da8a155fa03aa091fe4a73b74556182e9da38",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-dd80d3e78efbf350.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-dd80d3e78efbf350.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-dd80d3e78efbf350.node22131-x64.diagnostics.json",
+      "bytes": 9686,
+      "sha256": "b8c5bb9ad59ac7c9cc4bffceac35aded22d0773bd059477742953eaeec82d52f",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-dd80d3e78efbf350.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-11ac088d9288363c.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-11ac088d9288363c.node22131-x64.replay.json",
+      "bytes": 8892,
+      "sha256": "ee9df0c94cb1823578aefe5b59cb78d9e1bc094bddc576473b80ddbb2cc24254",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-11ac088d9288363c.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-11ac088d9288363c.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-11ac088d9288363c.node22131-x64.diagnostics.json",
+      "bytes": 3288,
+      "sha256": "b2cede3015ab98fa142a08edbb351be38a3c4426413331c42486b4a8e7c12d6e",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-11ac088d9288363c.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-c258ed926a320cc2.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-c258ed926a320cc2.node22131-x64.replay.json",
+      "bytes": 14359,
+      "sha256": "802adad92cd829c3ea3c5f062cbe04391aa472c2b4c17ff5204b2c824c2a114f",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-c258ed926a320cc2.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-c258ed926a320cc2.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-c258ed926a320cc2.node22131-x64.diagnostics.json",
+      "bytes": 6486,
+      "sha256": "6578e26bb3a32f583853da3f750116ba16cff2cd7275adfc5abba61abd269303",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-c258ed926a320cc2.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-3ab81dea52f12ba3.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-3ab81dea52f12ba3.node22131-x64.replay.json",
+      "bytes": 15579,
+      "sha256": "d718218f2617c4207fee3703d0fbf0ea93bb14c022011df806070f326cb37151",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-3ab81dea52f12ba3.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-3ab81dea52f12ba3.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-3ab81dea52f12ba3.node22131-x64.diagnostics.json",
+      "bytes": 7290,
+      "sha256": "be1355bf425cfe517c342b53082c81a25e4e6c09edc03f6064def1927ebfb109",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-3ab81dea52f12ba3.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-3e2c476ed99d280e.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-3e2c476ed99d280e.node22131-x64.replay.json",
+      "bytes": 22235,
+      "sha256": "658d7b838752a2db4fbf2760ba954e9c271f5534317a76f2ab59dfab14ae9eff",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-3e2c476ed99d280e.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-3e2c476ed99d280e.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-3e2c476ed99d280e.node22131-x64.diagnostics.json",
+      "bytes": 12094,
+      "sha256": "26f47a8bc3255842eb9a91f8cc9a7f01edaec186bcae8f6428db91e82ad80b2d",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-3e2c476ed99d280e.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-08205883fcfeb6de.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-08205883fcfeb6de.node22131-x64.replay.json",
+      "bytes": 17493,
+      "sha256": "3b1eab7551d29e92dd841c1c00924778cd8dce62a97a539461f76738054eca9b",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-08205883fcfeb6de.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-08205883fcfeb6de.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-08205883fcfeb6de.node22131-x64.diagnostics.json",
+      "bytes": 8085,
+      "sha256": "2a136fb15dfc5fa6284152b8a9c425eb68902ab54b664e71986d4285f91a80d3",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-08205883fcfeb6de.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-29078bd0c9992bd0.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-29078bd0c9992bd0.node22131-x64.replay.json",
+      "bytes": 14154,
+      "sha256": "23ff044fd0f3370f64d30de8c82196de7e87766ea7c997850e92ea1eed2b2990",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-29078bd0c9992bd0.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-29078bd0c9992bd0.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-29078bd0c9992bd0.node22131-x64.diagnostics.json",
+      "bytes": 5953,
+      "sha256": "e3c1aa87e12cfd2383fd61b8e772832c09720f425b35a7def007cc64d7b2a892",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-29078bd0c9992bd0.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-5bd37fe7b93c3853.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-5bd37fe7b93c3853.node22131-x64.replay.json",
+      "bytes": 6605,
+      "sha256": "7278a941bca56382b34068a66a2db4dd9f77361efcd7f12bfd932f4de9b9042f",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-5bd37fe7b93c3853.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-5bd37fe7b93c3853.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-5bd37fe7b93c3853.node22131-x64.diagnostics.json",
+      "bytes": 2222,
+      "sha256": "69afda1de6a9e81090c3289c3f1edc868e03589aeb2eeeed904fa55e16dff752",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-5bd37fe7b93c3853.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-5307e5f38725a0e3.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-5307e5f38725a0e3.node22131-x64.replay.json",
+      "bytes": 6118,
+      "sha256": "b53ad831bfdaa576fae84266579109d35ca15c77cba9ccb90bc66136d13bad2a",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-5307e5f38725a0e3.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-5307e5f38725a0e3.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-5307e5f38725a0e3.node22131-x64.diagnostics.json",
+      "bytes": 2222,
+      "sha256": "115a124c84e7a98ab36b6b1917d636c979e618da8c0bc3d7121d1c93f60b1a9b",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-5307e5f38725a0e3.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-33e6a62cdaa16aaa.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-33e6a62cdaa16aaa.node22131-x64.replay.json",
+      "bytes": 13419,
+      "sha256": "10507840bce3a09d97fc42411a732af50ba9f65a843236daaf0385be4f989a6d",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-33e6a62cdaa16aaa.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-33e6a62cdaa16aaa.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-33e6a62cdaa16aaa.node22131-x64.diagnostics.json",
+      "bytes": 5953,
+      "sha256": "764d893afc2dfc0be7f086c8980fb337f409fc4459f7dc7bde6dc8906efc97c8",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-33e6a62cdaa16aaa.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-8cfed8cf70713745.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-8cfed8cf70713745.node22131-x64.replay.json",
+      "bytes": 14588,
+      "sha256": "d59d37743ba13fd4fcb0794e03e3f7a1a936019bfb46715b99447fb14fb6d277",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-8cfed8cf70713745.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-8cfed8cf70713745.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-8cfed8cf70713745.node22131-x64.diagnostics.json",
+      "bytes": 7019,
+      "sha256": "c0d5e43824374a510da6ecd1b0b401f3684891f3238066ded4e838d437a5cacc",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-8cfed8cf70713745.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-5aa8f6bd6fb84df2.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-5aa8f6bd6fb84df2.node22131-x64.replay.json",
+      "bytes": 10015,
+      "sha256": "d3c7b8569cdf6099c297cce63b12bf17beb36657f238441785755da9e97e07ca",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-5aa8f6bd6fb84df2.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-5aa8f6bd6fb84df2.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-5aa8f6bd6fb84df2.node22131-x64.diagnostics.json",
+      "bytes": 5953,
+      "sha256": "574ff291b81ade13929c7b93c1e676e602cf22282d72f56eeabc5a17a0265010",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-5aa8f6bd6fb84df2.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-8fbfa21663542ea1.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-8fbfa21663542ea1.node22131-x64.replay.json",
+      "bytes": 5157,
+      "sha256": "3b909fb2ddf9b5ba46f95c9c05984d884944fc889291cc54d25e5639d36e9d3d",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-8fbfa21663542ea1.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-8fbfa21663542ea1.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-8fbfa21663542ea1.node22131-x64.diagnostics.json",
+      "bytes": 1689,
+      "sha256": "a00d618b26ec5b6468d79532c3fa088c7712a9a40a8104185ef9100636c6f019",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-8fbfa21663542ea1.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-93ffe1fc5a201d2e.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-93ffe1fc5a201d2e.node22131-x64.replay.json",
+      "bytes": 5447,
+      "sha256": "718fddf2c9353036688baabd3b7ef5c2d4cd7b179b299f4b4129d4c009f0ef49",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-93ffe1fc5a201d2e.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-93ffe1fc5a201d2e.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-93ffe1fc5a201d2e.node22131-x64.diagnostics.json",
+      "bytes": 1156,
+      "sha256": "354e07158dd94304d86f435444575df5b80a46777525861cb22f5765861c0913",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-93ffe1fc5a201d2e.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-27223f09fed82eb2.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-27223f09fed82eb2.node22131-x64.replay.json",
+      "bytes": 15863,
+      "sha256": "ce45ff39094ab21bc5934239a89208c5130c7d5e88764ee83b709b15a8e16bcc",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-27223f09fed82eb2.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-27223f09fed82eb2.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-27223f09fed82eb2.node22131-x64.diagnostics.json",
+      "bytes": 7019,
+      "sha256": "7ddb8e77eb55eea3ffd5d5453b130a91ff3eed8203376cae6a0b6b9bbdd66c73",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-27223f09fed82eb2.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-d3260fe50e480049.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-d3260fe50e480049.node22131-x64.replay.json",
+      "bytes": 5252,
+      "sha256": "98a78a9d20fe4488ac9fb7914fbf21916be6486a87ac93d9ef034fa1b342b765",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-d3260fe50e480049.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-d3260fe50e480049.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-d3260fe50e480049.node22131-x64.diagnostics.json",
+      "bytes": 1689,
+      "sha256": "b14ede1dce22e8b3f7d4bc87359f62b3cb7b2f73e84dfcaa495cd62adf946fdb",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-d3260fe50e480049.node22131-x64.diagnostics.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-9695696535e4ee17.darwin-x64.replay.json",
+      "destination": "game/demo-data/solo-qualified-9695696535e4ee17.node22131-x64.replay.json",
+      "bytes": 6881,
+      "sha256": "a6f915053bfa15359df83a605dd91f0cad45adccecc1633849d4f31edaf8d760",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-9695696535e4ee17.node22131-x64.replay.json"
+    },
+    {
+      "source": ".cache/solo-native-missing-capture-3f84b51f8-x64-candidates/solo-qualified-9695696535e4ee17.darwin-x64.diagnostics.json",
+      "destination": "game/demo-data/solo-qualified-9695696535e4ee17.node22131-x64.diagnostics.json",
+      "bytes": 4354,
+      "sha256": "a027e04bbe58d04e4e3eecc78e4945baf201f08610dbb9e6e3614446b2d73b8c",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/solo-qualified-9695696535e4ee17.node22131-x64.diagnostics.json"
+    }
+  ],
+  "metadata": [
+    {
+      "destination": "game/demo-data/catalog.json",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/catalog.json",
+      "before": {
+        "path": "game/demo-data/catalog.json",
+        "bytes": 165265,
+        "sha256": "9dbec5b1f6d1a02e919d2515f784565cab119db0da0b92a653bec181d6a13421"
+      },
+      "after": {
+        "path": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/catalog.json",
+        "bytes": 172076,
+        "sha256": "871912c169fb553479019460f2615248f81c644652605c33ab3b5bd4ba3cfca6"
+      }
+    },
+    {
+      "destination": "game/demo-data/catalog.journey-current.json",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/catalog.journey-current.json",
+      "before": {
+        "path": "game/demo-data/catalog.journey-current.json",
+        "bytes": 149370,
+        "sha256": "f27228a60fc812a386bb7a198adbd35addd28801083222145dc6773679c8c497"
+      },
+      "after": {
+        "path": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/catalog.journey-current.json",
+        "bytes": 154890,
+        "sha256": "0c35179ef88057aa57ac85c6bdb8f0f5d0b19ef53b2b8d35f38a3756b96cc652"
+      }
+    },
+    {
+      "destination": "game/demo-data/catalog.journey-archive.json",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/catalog.journey-archive.json",
+      "before": {
+        "path": "game/demo-data/catalog.journey-archive.json",
+        "bytes": 80015,
+        "sha256": "2fa99de9d04ae52e5dc9d4737c3c1c0660b08405143c3f8271ebedb6ea24b437"
+      },
+      "after": {
+        "path": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/catalog.journey-archive.json",
+        "bytes": 81625,
+        "sha256": "f537aafe89073bc99c9ba6d1ed27dff675118a53f2359a240c983227e10c016f"
+      }
+    },
+    {
+      "destination": "game/demo-data/variant-provenance.json",
+      "stagedPath": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/variant-provenance.json",
+      "before": {
+        "path": "game/demo-data/variant-provenance.json",
+        "bytes": 4722,
+        "sha256": "701d0c04385779caa7c2660fa30216df9b856738f2da040e02434131e31f39b6"
+      },
+      "after": {
+        "path": ".cache/solo-native-adoption-3f84b51f8/game/demo-data/variant-provenance.json",
+        "bytes": 6339,
+        "sha256": "12a881ac8277cd0aa4b634e3a43496bceb483684abbb187707244ca1f8648151"
+      }
+    }
+  ],
+  "review": "Root independently reviewed capture and adoption code. Genuine full input traces, native strict verification, progress, diagnostics and catalog identity remain required. Reviewed originals retain summaries, non-enemy state and final compatibility fallback. No schema or runtime code changes.",
+  "limitations": [
+    "Actual Linux qualification remains pending.",
+    "Previously verified browser performances remain byte-identical."
+  ]
+}

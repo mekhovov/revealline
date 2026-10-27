@@ -1,0 +1,79 @@
+{
+  "format": "SharedDemoPristineHistoricalDocsSparseOmissionV1",
+  "complete": true,
+  "started": "2026-10-19T11:15:45.452165+00:00",
+  "head": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "worktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos",
+  "excludedPrefixes": [
+    "docs/qualification/overflight",
+    "docs/verification/cross-mode"
+  ],
+  "patterns": "/*\n!/docs/qualification/overflight/\n!/docs/verification/cross-mode/\n",
+  "restorationCommand": "GIT_NO_LAZY_FETCH=1 git -c maintenance.auto=false -c gc.auto=0 sparse-checkout disable",
+  "limitations": [
+    "Only pristine tracked historical documentation is omitted from this managed task worktree. Git objects, the primary checkout, current source/capture, unrelated untracked files and other worktrees remain untouched.",
+    "The restore command rematerializes tracked files from existing local Git objects; it requires sufficient local free space. No fetch or package download is needed.",
+    "Free-space changes are contemporaneous observations, not attribution of every system allocation to this operation."
+  ],
+  "gitDirectory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.git/worktrees/shared-game-demos",
+  "beforeConfig": {
+    "extensions.worktreeConfig": "local\tfile:/Users/oleksandr.mekhovov/work/my_projects/go_test/.git/config\ttrue",
+    "core.sparseCheckout": "worktree\tfile:/Users/oleksandr.mekhovov/work/my_projects/go_test/.git/worktrees/shared-game-demos/config.worktree\tfalse",
+    "core.sparseCheckoutCone": "worktree\tfile:/Users/oleksandr.mekhovov/work/my_projects/go_test/.git/worktrees/shared-game-demos/config.worktree\tfalse"
+  },
+  "preservedPins": {
+    ".cache/shared-demos-emitted-403814d-9dcff0588-native-refresh/manifest.json": {
+      "bytes": 1369724,
+      "sha256": "7f47ad2efa3b7891f142db0c984f46cfd67be41defc4da6516c36fa78b35f4a3"
+    },
+    "docs/qualification/shared-demos/source-freeze-latest.json": {
+      "bytes": 423,
+      "sha256": "a961ce5487f9710cb801d262553fedb6fa6415f7ed2758af9f2fca38e38fb8d5"
+    }
+  },
+  "targets": [
+    {
+      "prefix": "docs/qualification/overflight",
+      "files": 958,
+      "bytes": 237053093,
+      "allocatedBytes": 233705472
+    },
+    {
+      "prefix": "docs/verification/cross-mode",
+      "files": 4627,
+      "bytes": 155237641,
+      "allocatedBytes": 143360000
+    }
+  ],
+  "fileProof": {
+    "path": ".cache/task-worktree-sparse-historical-docs-9dcff0588.files.json",
+    "bytes": 2386899,
+    "sha256": "4ffa75550cd4f81c1758ed0a161281d1c0532dcbaa07208a58408ad34fec0f66"
+  },
+  "freeBytesBefore": 261189632,
+  "command": [
+    "git",
+    "-c",
+    "maintenance.auto=false",
+    "-c",
+    "gc.auto=0",
+    "-c",
+    "core.hooksPath=/dev/null",
+    "sparse-checkout",
+    "set",
+    "--no-cone",
+    "--stdin"
+  ],
+  "afterConfig": {
+    "extensions.worktreeConfig": "local\tfile:/Users/oleksandr.mekhovov/work/my_projects/go_test/.git/config\ttrue",
+    "core.sparseCheckout": "worktree\tfile:/Users/oleksandr.mekhovov/work/my_projects/go_test/.git/worktrees/shared-game-demos/config.worktree\ttrue",
+    "core.sparseCheckoutCone": "worktree\tfile:/Users/oleksandr.mekhovov/work/my_projects/go_test/.git/worktrees/shared-game-demos/config.worktree\tfalse"
+  },
+  "actualPatterns": "/*\n!/docs/qualification/overflight/\n!/docs/verification/cross-mode/\n",
+  "originalPrimaryConfigAndHeadUnchanged": true,
+  "allOtherIndexFlagsUnchanged": true,
+  "trackedAndUntrackedStatusUnchanged": true,
+  "freeBytesAfter": 273207296,
+  "finished": "2026-10-19T11:15:48.774175+00:00",
+  "elapsedSeconds": 3.3218999999990046
+}

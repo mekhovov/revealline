@@ -1,0 +1,162 @@
+{
+  "format": "revealline-demo-final-build-remaining.v1",
+  "prerequisite": {
+    "priorRunner": {
+      "path": "docs/qualification/shared-demos/shared-demos-build-validation-dd337c8-2b8591448.json",
+      "sha256": "6675598048a09198228f4f7925812148f50f0c328aabf43ad89809ee3777f38e",
+      "complete": false
+    },
+    "mainPages": {
+      "path": "docs/qualification/shared-demos/main-pages-demo-final-dd337c8-2b8591448.json",
+      "sha256": "fd90d21a3980015db7271d7ae721811279117e952b605367a43b32658ed3b605",
+      "complete": true
+    },
+    "capture": {
+      "complete": true,
+      "directory": ".cache/shared-demos-emitted-dd337c8-2b8591448",
+      "manifestPath": ".cache/shared-demos-emitted-dd337c8-2b8591448/manifest.json",
+      "manifestSHA256": "f6a3dd91289cb76bf3a5351a8c4866dec32c4edc411ff8d9c9ef50eb90383fbe",
+      "files": 5952,
+      "deltaFiles": 292,
+      "deltaBlobs": 286,
+      "deltaBytes": 140509416,
+      "inventorySHA256": "d6860bb00d082a9e7c6de4dcadaf2c399b815d4a0a395842b6689051bee70f70"
+    },
+    "sourceVerification": {
+      "head": "2b85914484ca3b49305d2a7e8c6451e52c73f339",
+      "runtime": {
+        "sha256": "bf79e86f1404dd426834f8bfb1d6f4e272c907a455f5315984fcca429ba6358d",
+        "files": 9996,
+        "bytes": 404389524
+      },
+      "buildInput": {
+        "sha256": "03bed002af55e4d34202ba2125fc6c75d7ab03cde245f7b419c899e2e0017d89",
+        "files": 9398,
+        "bytes": 348356072
+      }
+    },
+    "reason": "The preceding main-pages audit and full structured report succeeded. Its runner stopped solely because stdout repeated the expanded report beyond its 512 KiB tail-log cap. Preserve that failed wrapper; run only the three unattempted stages on the same admitted candidate."
+  },
+  "started": "2026-10-19T00:01:34.677Z",
+  "expected": {
+    "head": "2b85914484ca3b49305d2a7e8c6451e52c73f339",
+    "base": "dd337c8120fd6f875544c1479713d3aa4299c323",
+    "runtime": {
+      "sha256": "bf79e86f1404dd426834f8bfb1d6f4e272c907a455f5315984fcca429ba6358d",
+      "files": 9996,
+      "bytes": 404389524
+    }
+  },
+  "sourceRevision": "2b85914484ca3b49305d2a7e8c6451e52c73f339",
+  "runtimeFingerprint": {
+    "sha256": "bf79e86f1404dd426834f8bfb1d6f4e272c907a455f5315984fcca429ba6358d",
+    "files": 9996,
+    "bytes": 404389524
+  },
+  "buildInputFingerprint": {
+    "sha256": "03bed002af55e4d34202ba2125fc6c75d7ab03cde245f7b419c899e2e0017d89",
+    "files": 9398,
+    "bytes": 348356072
+  },
+  "wrapper": {
+    "path": ".cache/run-final-build-remaining.mjs",
+    "sha256": "6e5443b008318d4be489f63874658fe7aba12a42ef6cab3fc12f02a1b95c96e9"
+  },
+  "sourceDeclaration": {
+    "path": "docs/qualification/shared-demos/source-freeze-latest.json",
+    "sha256": "2ea299f2fc622dde0b13237ea4d7c889a41d17b4268412f5b16ac24a4760d195",
+    "created": "2026-10-18T23:36:01.411649+00:00",
+    "integrationBase": "dd337c8120fd6f875544c1479713d3aa4299c323",
+    "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "sourceFingerprint": "bf79e86f1404dd426834f8bfb1d6f4e272c907a455f5315984fcca429ba6358d",
+    "files": 9996,
+    "bytes": 404389524
+  },
+  "materializedBuild": false,
+  "deploymentAdmission": false,
+  "complete": true,
+  "stages": [
+    {
+      "name": "full-packaging",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-demo-packaging.mjs",
+        "--report=docs/qualification/shared-demos/shared-demos-packaging-dd337c8-2b8591448.json"
+      ],
+      "started": "2026-10-19T00:01:34.682Z",
+      "logPath": "docs/qualification/shared-demos/final-full-packaging-dd337c8-2b8591448.log.txt",
+      "receivedLogBytes": 2341,
+      "availableDiskBeforeBytes": 2313109504,
+      "pid": 33289,
+      "minimumObservedDiskBytes": 2144100352,
+      "exitCode": 0,
+      "exitSignal": null,
+      "elapsedMs": 409648,
+      "retainedLogBytes": 2341,
+      "logTruncated": false,
+      "logSHA256": "03e3680c40ba7a8010e86c0208138600ed73c2436b1871d7c9be21e55f82189e",
+      "receipt": {
+        "path": "docs/qualification/shared-demos/shared-demos-packaging-dd337c8-2b8591448.json",
+        "sha256": "c0f88e80573a1b467a86ce7601a0a436b134fda9d7671e2231acbaf2eb5dce68",
+        "complete": true
+      }
+    },
+    {
+      "name": "validate",
+      "command": [
+        "npm",
+        "run",
+        "validate"
+      ],
+      "started": "2026-10-19T00:08:24.363Z",
+      "logPath": "docs/qualification/shared-demos/final-validate-dd337c8-2b8591448.log.txt",
+      "receivedLogBytes": 3932,
+      "availableDiskBeforeBytes": 2133069824,
+      "pid": 47976,
+      "minimumObservedDiskBytes": 2125316096,
+      "exitCode": 0,
+      "exitSignal": null,
+      "elapsedMs": 247226,
+      "retainedLogBytes": 3932,
+      "logTruncated": false,
+      "logSHA256": "0be804bcb6823d3029e501033f0c4a0a9e0f47aef68fa6133295d6bfeb6bb4b8"
+    },
+    {
+      "name": "lint",
+      "command": [
+        "npm",
+        "run",
+        "lint"
+      ],
+      "started": "2026-10-19T00:12:31.590Z",
+      "logPath": "docs/qualification/shared-demos/final-lint-dd337c8-2b8591448.log.txt",
+      "receivedLogBytes": 196,
+      "availableDiskBeforeBytes": 2205368320,
+      "pid": 52057,
+      "exitCode": 0,
+      "exitSignal": null,
+      "elapsedMs": 20242,
+      "retainedLogBytes": 196,
+      "logTruncated": false,
+      "logSHA256": "477d1475bb9ca673e11072f786acbee289472583389e9d6964153e4b5337ee4c"
+    }
+  ],
+  "limits": {
+    "logBytesPerStage": 524288,
+    "stopIfAvailableDiskBelowBytes": 209715200,
+    "stageTimeoutMs": 1200000
+  },
+  "updated": "2026-10-19T00:12:56.048Z",
+  "finalSourceRevision": "2b85914484ca3b49305d2a7e8c6451e52c73f339",
+  "finalRuntimeFingerprint": {
+    "sha256": "bf79e86f1404dd426834f8bfb1d6f4e272c907a455f5315984fcca429ba6358d",
+    "files": 9996,
+    "bytes": 404389524
+  },
+  "finalBuildInputFingerprint": {
+    "sha256": "03bed002af55e4d34202ba2125fc6c75d7ab03cde245f7b419c899e2e0017d89",
+    "files": 9398,
+    "bytes": 348356072
+  },
+  "sourceStable": true
+}

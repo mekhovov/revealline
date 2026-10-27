@@ -1,0 +1,11 @@
+{
+  "format": "DemoProductionSourceFingerprintV1",
+  "head": "7e9575053aa59d366785de5b383f43e49a4a5c58",
+  "files": 9988,
+  "bytes": 404257372,
+  "sha256": "16405e05b945729b8530f87bd08ba3454823b7a6a253ef1171332ad55aa4208c",
+  "scope": "game, optional-practice and publishing JS/JSON/CSS/HTML, excluding tests and qualification coverage receipts",
+  "workingTreeChanges": true,
+  "note": "Identifies the game tree under qualification, including preserved pre-existing work. Documentation, tests, and reports may change without changing this digest.",
+  "qualificationStarted": "2026-10-18T05:30:10.453Z"
+}

@@ -1,0 +1,266 @@
+{
+  "format": "HostedFocusedFailureTriageV1",
+  "observedAt": "2026-10-19T09:55:19.486922+00:00",
+  "runId": "39223515689",
+  "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+  "reviewedHead": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+  "readOnly": true,
+  "rerun": false,
+  "jobs": [
+    {
+      "jobId": "117982924078",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39223515689/job/117982924078",
+      "log": {
+        "path": ".cache/hosted-b4688ca21-job-117982924078.log.txt",
+        "bytes": 1055064,
+        "sha256": "aab71272b9fcc30650da9ff46334439a8deacb47618a84769d6c9b6e4118cf8b",
+        "lines": 10025
+      },
+      "failedCommands": [
+        {
+          "line": 2637,
+          "failure": "[focused:changed-test:game/test/demo-solo-coverage.test.mjs] failed {\"id\":\"changed-test:game/test/demo-solo-coverage.test.mjs\",\"command\":\"node\",\"args\":[\"--test\",\"game/test/demo-solo-coverage.test.mjs\"],\"status\":1,\"signal\":null,\"error\":null}"
+        },
+        {
+          "line": 2786,
+          "failure": "[focused:changed-test:game/test/demo-survival.test.mjs] failed {\"id\":\"changed-test:game/test/demo-survival.test.mjs\",\"command\":\"node\",\"args\":[\"--test\",\"game/test/demo-survival.test.mjs\"],\"status\":1,\"signal\":null,\"error\":null}"
+        }
+      ],
+      "failedTests": [
+        {
+          "line": 2591,
+          "test": "not ok 1 - Solo required coverage comes from base, active and archived authored catalogs",
+          "diagnostic": "  ---\n  duration_ms: 98662.811347\n  location: '/home/runner/work/revealline/revealline/source/game/test/demo-solo-coverage.test.mjs:9:1'\n  failureType: 'testCodeFailure'\n  error: 'Replay verification failed: [{\"code\":\"state-mismatch\",\"section\":\"enemies\",\"message\":\"Authoritative enemies differs.\",\"expected\":\"28fc2e7ba2c0539c\",\"actual\":\"c3ba914e89640524\"}]'\n  code: 'ERR_TEST_FAILURE'\n  stack: |-\n    qualifySoloPerformance (file:///home/runner/work/revealline/revealline/source/scripts/qualify-solo-demos.mjs:75:11)\n    TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/source/game/test/demo-solo-coverage.test.mjs:25:19)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)\n  ...\n# Subtest: Solo sparse diagnostics identify the first mismatching checkpoint without replacing full verification\nnot ok 2 - Solo sparse diagnostics identify the first mismatching checkpoint without replacing full verification\n  ---\n  duration_ms: 4120.388915"
+        },
+        {
+          "line": 2605,
+          "test": "not ok 2 - Solo sparse diagnostics identify the first mismatching checkpoint without replacing full verification",
+          "diagnostic": "  ---\n  duration_ms: 4120.388915\n  location: '/home/runner/work/revealline/revealline/source/game/test/demo-solo-coverage.test.mjs:31:1'\n  failureType: 'testCodeFailure'\n  error: 'Replay verification failed: [{\"code\":\"state-mismatch\",\"section\":\"enemies\",\"message\":\"Authoritative enemies differs.\",\"expected\":\"28fc2e7ba2c0539c\",\"actual\":\"c3ba914e89640524\"}]'\n  code: 'ERR_TEST_FAILURE'\n  stack: |-\n    qualifySoloPerformance (file:///home/runner/work/revealline/revealline/source/scripts/qualify-solo-demos.mjs:75:11)\n    TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/source/game/test/demo-solo-coverage.test.mjs:37:27)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)\n  ...\n# Subtest: independent browser performances bind their own exact trace and cannot relax native verification\nok 3 - independent browser performances bind their own exact trace and cannot relax native verification\n  ---\n  duration_ms: 3391.080343"
+        },
+        {
+          "line": 2647,
+          "test": "not ok 2 - verified native playback pauses, forks exactly, and practice cannot mutate the performance",
+          "diagnostic": "  ---\n  duration_ms: 643.220059\n  location: '/home/runner/work/revealline/revealline/source/game/test/demo-survival.test.mjs:58:1'\n  failureType: 'testCodeFailure'\n  error: 'Survival demonstration first mismatching checkpoint at tick 900.'\n  code: 'demo-content-mismatch'\n  stack: |-\n    fail (file:///home/runner/work/revealline/revealline/source/game/demo-modes/survival-replay.mjs:20:17)\n    Object.step (file:///home/runner/work/revealline/revealline/source/game/demo-modes/survival-replay.mjs:177:15)\n    verifySurvivalDemo (file:///home/runner/work/revealline/revealline/source/game/demo-modes/survival-replay.mjs:228:12)\n    prepareSurvivalDemoPlayer (file:///home/runner/work/revealline/revealline/source/game/demo-modes/survival-replay.mjs:243:9)\n    TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/source/game/test/demo-survival.test.mjs:60:24)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)\n  ...\n# Subtest: sparse diagnostics report the first differing checkpoint and reject stale content"
+        },
+        {
+          "line": 2674,
+          "test": "not ok 5 - one prefetched payload can fall back only to another fully verified runtime performance",
+          "diagnostic": "  ---\n  duration_ms: 924.143907\n  location: '/home/runner/work/revealline/revealline/source/game/test/demo-survival.test.mjs:110:1'\n  failureType: 'testCodeFailure'\n  error: 'Survival demonstration data is corrupt or exceeds its budget.'\n  code: 'demo-content-mismatch'\n  stack: |-\n    fail (file:///home/runner/work/revealline/revealline/source/game/demo-modes/survival-replay.mjs:20:17)\n    decode (file:///home/runner/work/revealline/revealline/source/game/demo-modes/survival-replay.mjs:77:25)\n    prepareSurvivalDemoPlayer (file:///home/runner/work/revealline/revealline/source/game/demo-modes/survival-replay.mjs:242:21)\n    Object.create (file:///home/runner/work/revealline/revealline/source/game/demo-modes/survival.mjs:128:36)\n    TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/source/game/test/demo-survival.test.mjs:127:31)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)\n  ...\n# Subtest: a failed preparation diagnostic observer cannot alter native verification"
+        },
+        {
+          "line": 2691,
+          "test": "not ok 6 - a failed preparation diagnostic observer cannot alter native verification",
+          "diagnostic": "  ---\n  duration_ms: 246.869137\n  location: '/home/runner/work/revealline/revealline/source/game/test/demo-survival.test.mjs:148:1'\n  failureType: 'testCodeFailure'\n  error: 'Survival demonstration first mismatching checkpoint at tick 900.'\n  code: 'demo-content-mismatch'\n  stack: |-\n    fail (file:///home/runner/work/revealline/revealline/source/game/demo-modes/survival-replay.mjs:20:17)\n    Object.step (file:///home/runner/work/revealline/revealline/source/game/demo-modes/survival-replay.mjs:177:15)\n    verifySurvivalDemo (file:///home/runner/work/revealline/revealline/source/game/demo-modes/survival-replay.mjs:228:12)\n    TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/source/game/test/demo-survival.test.mjs:150:25)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)\n  ...\n# Subtest: the browser-preferred Survival recording is strictly checked before fallback\nnot ok 7 - the browser-preferred Survival recording is strictly checked before fallback"
+        },
+        {
+          "line": 2707,
+          "test": "not ok 7 - the browser-preferred Survival recording is strictly checked before fallback",
+          "diagnostic": "  ---\n  duration_ms: 1371.92941\n  location: '/home/runner/work/revealline/revealline/source/game/test/demo-survival.test.mjs:161:3'\n  failureType: 'testCodeFailure'\n  error: 'Survival demonstration first mismatching checkpoint at tick 900.'\n  code: 'demo-content-mismatch'\n  stack: |-\n    fail (file:///home/runner/work/revealline/revealline/source/game/demo-modes/survival-replay.mjs:20:17)\n    Object.step (file:///home/runner/work/revealline/revealline/source/game/demo-modes/survival-replay.mjs:177:15)\n    verifySurvivalDemo (file:///home/runner/work/revealline/revealline/source/game/demo-modes/survival-replay.mjs:228:12)\n    async prepareSurvivalDemoPlayer (file:///home/runner/work/revealline/revealline/source/game/demo-modes/survival-replay.mjs:243:3)\n    async Object.create (file:///home/runner/work/revealline/revealline/source/game/demo-modes/survival.mjs:128:30)\n    async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/source/game/test/demo-survival.test.mjs:180:22)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)\n  ..."
+        },
+        {
+          "line": 2725,
+          "test": "not ok 8 - the browser-preferred Survival recording is strictly checked before fallback with prefetch",
+          "diagnostic": "  ---\n  duration_ms: 1210.109724\n  location: '/home/runner/work/revealline/revealline/source/game/test/demo-survival.test.mjs:161:3'\n  failureType: 'testCodeFailure'\n  error: 'Survival demonstration first mismatching checkpoint at tick 900.'\n  code: 'demo-content-mismatch'\n  stack: |-\n    fail (file:///home/runner/work/revealline/revealline/source/game/demo-modes/survival-replay.mjs:20:17)\n    Object.step (file:///home/runner/work/revealline/revealline/source/game/demo-modes/survival-replay.mjs:177:15)\n    verifySurvivalDemo (file:///home/runner/work/revealline/revealline/source/game/demo-modes/survival-replay.mjs:228:12)\n    async prepareSurvivalDemoPlayer (file:///home/runner/work/revealline/revealline/source/game/demo-modes/survival-replay.mjs:243:3)\n    async Object.create (file:///home/runner/work/revealline/revealline/source/game/demo-modes/survival.mjs:128:30)\n    async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/source/game/test/demo-survival.test.mjs:180:22)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)\n  ..."
+        }
+      ]
+    },
+    {
+      "jobId": "117982924112",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39223515689/job/117982924112",
+      "log": {
+        "path": ".cache/hosted-b4688ca21-job-117982924112.log.txt",
+        "bytes": 637961,
+        "sha256": "358f5e85528f4c96af5879d2289504b968f2fec87a2d759449da1b5e5f59be05",
+        "lines": 4928
+      },
+      "failedCommands": [
+        {
+          "line": 3288,
+          "failure": "[focused:changed-test:game/test/demo-sources.test.mjs] failed {\"id\":\"changed-test:game/test/demo-sources.test.mjs\",\"command\":\"node\",\"args\":[\"--test\",\"game/test/demo-sources.test.mjs\"],\"status\":1,\"signal\":null,\"error\":null}"
+        }
+      ],
+      "failedTests": [
+        {
+          "line": 3193,
+          "test": "not ok 1 - actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily",
+          "diagnostic": "  ---\n  duration_ms: 3168.196213\n  location: '/home/runner/work/revealline/revealline/source/game/test/demo-sources.test.mjs:50:1'\n  failureType: 'testCodeFailure'\n  error: 'Replay verification failed. Its inputs do not reproduce the recorded final state.'\n  code: 'ERR_TEST_FAILURE'\n  name: 'ReplayVerificationError'\n  stack: |-\n    preparePlayer (file:///home/runner/work/revealline/revealline/source/game/replay-player.mjs:71:19)\n    async Object.create (file:///home/runner/work/revealline/revealline/source/game/demo-sources.mjs:89:26)\n    async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/source/game/test/demo-sources.test.mjs:76:16)\n    async Test.run (node:internal/test_runner/test:797:9)\n    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)\n  ...\n# {\"sourceId\":\"solo-qualified-478808a96f4fbf5e\",\"levelId\":\"signal-08\",\"campaignId\":\"first-signal\",\"campaignKey\":\"first-signal/2/88639f3aab7b6cc1\",\"attemptedURLs\":[\"file:///home/runner/work/revealline/revealline/source/game/demo-data/solo-qualified-478808a96f4fbf5e.replay.json\",\"file:///home/runner/work/revealline/revealline/source/game/demo-data/solo-qualified-478808a96f4fbf5e.diagnostics.json\",\"file:///home/runner/work/revealline/revealline/source/game/demo-data/solo-qualified-478808a96f4fbf5e.chromium.replay.json\",\"file:///home/runner/work/revealline/revealline/source/game/demo-data/solo-qualified-478808a96f4fbf5e.chromium.diagnostics.json\",\"file:///home/runner/work/revealline/revealline/source/game/demo-data/solo-qualified-478808a96f4fbf5e.firefox.replay.json\",\"file:///home/runner/work/revealline/revealline/source/game/demo-data/solo-qualified-478808a96f4fbf5e.firefox.diagnostics.json\",\"file:///home/runner/work/revealline/revealline/source/game/demo-data/solo-qualified-478808a96f4fbf5e.webkit.replay.json\",\"file:///home/runner/work/revealline/revealline/source/game/demo-data/solo-qualified-478808a96f4fbf5e.webkit.diagnostics.json\"],\"omittedURLs\":0,\"diagnostics\":[{\"code\":\"state-mismatch\",\"section\":\"enemies\",\"message\":\"Authoritative enemies differs.\",\"expected\":\"ed391a595d4e2fb9\",\"actual\":\"c3ba914e89640524\"},{\"code\":\"state-mismatch\",\"section\":\"clock\",\"message\":\"Authoritative clock differs.\",\"expected\":\"ca39e0a04aa6d20e\",\"actual\":\"83be6483dc2b7278\"},{\"code\":\"diagnostic-checkpoint-mismatch\",\"firstMismatchingCheckpointTick\":600,\"expected\":\"a693a2b0126e2de9\",\"actual\":\"2de4810180a47587\"}]}\n# Subtest: same map IDs in separately installed themed owners do not collide"
+        }
+      ]
+    },
+    {
+      "jobId": "117982924058",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39223515689/job/117982924058",
+      "log": {
+        "path": ".cache/hosted-b4688ca21-job-117982924058.log.txt",
+        "bytes": 549658,
+        "sha256": "4ce353a474497c9638f91cf607b4999c3235af5e2b0bd6c239acd47a7ad035fa",
+        "lines": 3350
+      },
+      "failedCommands": [
+        {
+          "line": 1080,
+          "failure": "[focused:localization-runtime] failed {\"id\":\"localization-runtime\",\"command\":\"node\",\"args\":[\"--test\",\"game/test/localization.test.mjs\",\"game/test/localization-couch-host.test.mjs\",\"game/test/localization-gameplay-copy.test.mjs\",\"game/test/localization-team-copy.test.mjs\",\"game/test/about-navigation-host.test.mjs\"],\"status\":1,\"signal\":null,\"error\":null}"
+        },
+        {
+          "line": 3291,
+          "failure": "[focused:changed-test:game/test/mission-library-return-intent-host.test.mjs] failed {\"id\":\"changed-test:game/test/mission-library-return-intent-host.test.mjs\",\"command\":\"node\",\"args\":[\"--test\",\"game/test/mission-library-return-intent-host.test.mjs\"],\"status\":1,\"signal\":null,\"error\":null}"
+        }
+      ],
+      "failedTests": [
+        {
+          "line": 679,
+          "test": "not ok 30 - Team recording verification retains its owning build after page retirement and locale changes",
+          "diagnostic": "  ---\n  duration_ms: 738.21126\n  location: '/home/runner/work/revealline/revealline/source/game/test/localization-couch-host.test.mjs:11:3'\n  failureType: 'testCodeFailure'\n  error: |-\n    Got unwanted exception.\n    Actual message: \"document is not defined\"\n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  actual:\n  error: 'document is not defined'\n  name: 'ReferenceError'\n  stack: |-\n    $ (file:///home/runner/work/revealline/revealline/source/game/couch/relay-rescue.mjs?host-test=1:199:28)\n    file:///home/runner/work/revealline/revealline/source/game/couch/relay-rescue.mjs?host-test=1:922:46\n    Array.find (<anonymous>)"
+        },
+        {
+          "line": 2960,
+          "test": "not ok 8 - Solo legacy \u2192 selected Team owner retains source route and exact mission",
+          "diagnostic": "  ---\n  duration_ms: 19278.479257\n  location: '/home/runner/work/revealline/revealline/source/game/test/mission-library-return-intent-host.test.mjs:402:3'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    \n    116 !== 14\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: 14\n  actual: 116\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/source/game/test/mission-library-return-intent-host.test.mjs:408:12)"
+        },
+        {
+          "line": 3038,
+          "test": "not ok 9 - Solo whole-spatial-v5 \u2192 selected Team owner retains source route and exact mission",
+          "diagnostic": "  ---\n  duration_ms: 15777.433013\n  location: '/home/runner/work/revealline/revealline/source/game/test/mission-library-return-intent-host.test.mjs:402:3'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    \n    116 !== 14\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: 14\n  actual: 116\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/source/game/test/mission-library-return-intent-host.test.mjs:408:12)"
+        },
+        {
+          "line": 3093,
+          "test": "not ok 10 - Solo opening \u2192 selected Team owner retains source route and exact mission",
+          "diagnostic": "  ---\n  duration_ms: 10696.906925\n  location: '/home/runner/work/revealline/revealline/source/game/test/mission-library-return-intent-host.test.mjs:402:3'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    \n    116 !== 14\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: 14\n  actual: 116\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/source/game/test/mission-library-return-intent-host.test.mjs:408:12)"
+        },
+        {
+          "line": 3114,
+          "test": "not ok 11 - Versus legacy Team cards use saved Expert and retain source edition",
+          "diagnostic": "  ---\n  duration_ms: 1199.090991\n  location: '/home/runner/work/revealline/revealline/source/game/test/mission-library-return-intent-host.test.mjs:454:3'\n  failureType: 'testCodeFailure'\n  error: |-\n    The visible Missions action owns preparation.\n    \n    0 !== 1\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: 1\n  actual: 0\n  operator: 'strictEqual'\n  stack: |-\n    open (file:///home/runner/work/revealline/revealline/source/game/test/mission-library-return-intent-host.test.mjs:120:12)"
+        },
+        {
+          "line": 3136,
+          "test": "not ok 12 - Versus opening Team cards use saved Expert and retain source edition",
+          "diagnostic": "  ---\n  duration_ms: 1961.256739\n  location: '/home/runner/work/revealline/revealline/source/game/test/mission-library-return-intent-host.test.mjs:454:3'\n  failureType: 'testCodeFailure'\n  error: |-\n    The visible Missions action owns preparation.\n    \n    0 !== 1\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: 1\n  actual: 0\n  operator: 'strictEqual'\n  stack: |-\n    open (file:///home/runner/work/revealline/revealline/source/game/test/mission-library-return-intent-host.test.mjs:120:12)"
+        },
+        {
+          "line": 3184,
+          "test": "not ok 15 - unfinished Legacy library departure checks its saved attempt before minting the Team return token",
+          "diagnostic": "  ---\n  duration_ms: 3890.792729\n  location: '/home/runner/work/revealline/revealline/source/game/test/mission-library-return-intent-host.test.mjs:595:1'\n  failureType: 'testCodeFailure'\n  error: |-\n    Expected values to be strictly equal:\n    \n    23 !== 24\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: 24\n  actual: 23\n  operator: 'strictEqual'\n  stack: |-\n    TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/source/game/test/mission-library-return-intent-host.test.mjs:604:10)"
+        },
+        {
+          "line": 3210,
+          "test": "not ok 17 - Legacy versus refreshes visible remote preset cards on storage/pageshow without writing or moving focus",
+          "diagnostic": "  ---\n  duration_ms: 2182.755091\n  location: '/home/runner/work/revealline/revealline/source/game/test/mission-library-return-intent-host.test.mjs:630:3'\n  failureType: 'testCodeFailure'\n  error: |-\n    The visible Missions action owns preparation.\n    \n    0 !== 1\n    \n  code: 'ERR_ASSERTION'\n  name: 'AssertionError'\n  expected: 1\n  actual: 0\n  operator: 'strictEqual'\n  stack: |-\n    open (file:///home/runner/work/revealline/revealline/source/game/test/mission-library-return-intent-host.test.mjs:120:12)"
+        },
+        {
+          "line": 3233,
+          "test": "not ok 1 - play the late selectable Base mission and depart through its actual library",
+          "diagnostic": "      ---\n      duration_ms: 32341.010932\n      location: '/home/runner/work/revealline/revealline/source/game/test/mission-library-return-intent-host.test.mjs:667:11'\n      failureType: 'testCodeFailure'\n      error: 'Asynchronous test action did not settle.'\n      code: 'ERR_ASSERTION'\n      name: 'AssertionError'\n      expected: true\n      actual: false\n      operator: '=='\n      stack: |-\n        waitFor (file:///home/runner/work/revealline/revealline/source/game/test/helpers/wait-for.mjs:15:12)\n        async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/source/game/test/mission-library-return-intent-host.test.mjs:676:7)\n        async Test.run (node:internal/test_runner/test:797:9)\n        async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/source/game/test/mission-library-return-intent-host.test.mjs:667:3)\n        async Test.run (node:internal/test_runner/test:797:9)"
+        },
+        {
+          "line": 3253,
+          "test": "not ok 2 - checked return focuses that exact late edition, keeping progress bytes and attempt untouched",
+          "diagnostic": "      ---\n      duration_ms: 0.690078\n      location: '/home/runner/work/revealline/revealline/source/game/test/mission-library-return-intent-host.test.mjs:699:11'\n      failureType: 'testCodeFailure'\n      error: 'Invalid URL'\n      code: 'ERR_INVALID_URL'\n      name: 'TypeError'\n      stack: |-\n        new URL (node:internal/url:806:29)\n        teamReturnHref (file:///home/runner/work/revealline/revealline/source/game/mode-return.mjs:139:19)\n        TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/source/game/test/mission-library-return-intent-host.test.mjs:703:30)\n        Test.runInAsyncScope (node:async_hooks:206:9)\n        Test.run (node:internal/test_runner/test:796:25)\n        Test.start (node:internal/test_runner/test:702:17)\n        TestContext.test (node:internal/test_runner/test:292:20)\n        TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/source/game/test/mission-library-return-intent-host.test.mjs:699:11)"
+        },
+        {
+          "line": 3274,
+          "test": "not ok 18 - late Classic checked return without saved browse state uses the retained mission as a focus fallback",
+          "diagnostic": "  ---\n  duration_ms: 32342.212041\n  location: '/home/runner/work/revealline/revealline/source/game/test/mission-library-return-intent-host.test.mjs:663:1'\n  failureType: 'subtestsFailed'\n  error: '2 subtests failed'\n  code: 'ERR_TEST_FAILURE'\n  ...\n1..18\n# tests 23\n# suites 0\n# pass 13\n# fail 10\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 289813.005731"
+        }
+      ]
+    }
+  ],
+  "sourcePins": [
+    {
+      "path": "game/test/demo-solo-coverage.test.mjs",
+      "hostedSourceBlob": "2a5410116abff01dce8ebdf0af3e9c61f756371e",
+      "currentCommittedBlob": "2a5410116abff01dce8ebdf0af3e9c61f756371e",
+      "same": true,
+      "workingSha256": "ceabd00e1c269237d246f9ca797c8ecc7f62f671412bdff31599a57a4f0d671e"
+    },
+    {
+      "path": "game/test/demo-survival.test.mjs",
+      "hostedSourceBlob": "9574ccd1beb6be4cebe100752e0f45a03fb1f3f5",
+      "currentCommittedBlob": "9574ccd1beb6be4cebe100752e0f45a03fb1f3f5",
+      "same": true,
+      "workingSha256": "16d8aae7b72753b97479be5cf75a134ba7ec8ab7015b40fe4426c399e7d4fdf9"
+    },
+    {
+      "path": "game/test/localization-couch-host.test.mjs",
+      "hostedSourceBlob": "471f0fabd18fee25e03bb482a7299c0da23cd01b",
+      "currentCommittedBlob": "471f0fabd18fee25e03bb482a7299c0da23cd01b",
+      "same": true,
+      "workingSha256": "fe3b1ba2ef73f93897edb500234e4d0502199ded99dceffa4bea1f6c5d09fc3a"
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "hostedSourceBlob": "c13ac034e6e827faf09e49b4d1ceae3845f56378",
+      "currentCommittedBlob": "c13ac034e6e827faf09e49b4d1ceae3845f56378",
+      "same": true,
+      "workingSha256": "293aaaabb73eb3ddd8c6774945e1fdaa9619b41328549ec1c828a5d8ac3fa65c"
+    },
+    {
+      "path": "game/test/mission-library-return-intent-host.test.mjs",
+      "hostedSourceBlob": "539f31ddf5a9e56674e0a483af9ebe58c7d93608",
+      "currentCommittedBlob": "539f31ddf5a9e56674e0a483af9ebe58c7d93608",
+      "same": true,
+      "workingSha256": "dadf16e90ad65e636c377541e78c1d643e470dfea0b1ccfbeb327540186f8c7f"
+    },
+    {
+      "path": "game/demo-modes/survival.mjs",
+      "hostedSourceBlob": "50f505310ea1ac3de72691ebd980e38707080d33",
+      "currentCommittedBlob": "50f505310ea1ac3de72691ebd980e38707080d33",
+      "same": true,
+      "workingSha256": "44fa423bb6e154d196cf17fd29fc812180f2bca9f4648fb08763f5b4c16b49b1"
+    },
+    {
+      "path": "game/demo-modes/survival-replay.mjs",
+      "hostedSourceBlob": "d29d1daa9628c8835e5bb6ebf960a6199f62838f",
+      "currentCommittedBlob": "d29d1daa9628c8835e5bb6ebf960a6199f62838f",
+      "same": true,
+      "workingSha256": "4a2bbdc38fcd55551c7a9221b3d7bf05bb87896a140efcd870107f8bebb3ac0e"
+    }
+  ],
+  "findings": [
+    {
+      "priority": 0,
+      "scope": "Solo strict replay and fixtures",
+      "jobs": [
+        "117982924078",
+        "117982924112"
+      ],
+      "classification": "Known native portability gap plus hardcoded default-body fixtures",
+      "evidence": "Shard3 names signal-08 and reproduces exact prior Linux enemy c3ba914e89640524/clock83be6483dc2b7278/tick6002de4810180a47587. Shard1 both coverage tests directly qualify the original signal-08 proof; expected28fc2e7ba2c0539c, actualc3ba914e89640524. Generic variant adoption alone cannot fix those hardcoded fixtures.",
+      "next": "Use an actually strict verified catalog candidate in behavior-test setup, preserving full verifier and diagnostics assertions; retain full inventory Linux gate for coverage."
+    },
+    {
+      "priority": 0,
+      "scope": "Survival strict replay fixtures",
+      "jobs": [
+        "117982924078"
+      ],
+      "classification": "Default recording divergence at tick900; actual runtime alternative coverage not established by these tests",
+      "evidence": "Four failures directly or indirectly verify inventory[0] default proof. Mocked fallback returns the same default bytes. Corrupt-prefetch case reports retained first corrupt error after alternative attempts. This log does not prove every actual alternate file fails.",
+      "next": "After source freeze, targeted native x64 verify actual available Survival variants, then select a strictly verified real fixture and assess missing runtime coverage without relaxing checkpoints."
+    },
+    {
+      "priority": 1,
+      "scope": "Team retained localization callback",
+      "jobs": [
+        "117982924058"
+      ],
+      "classification": "Separate retirement/global document ownership defect",
+      "evidence": "localization-couch-host.test.mjs:34 deletes global document after page retirement, then setLocale invokes relay-rescue selectedLevel via teamNavigationContext and global document lookup at199/922/6526/6560. Existing source remains identical at current HEAD.",
+      "next": "Retain owning document/selected context in localized callback or properly retire callback, preserving expected retained recording link localization; targeted localization-couch-host test after freeze."
+    },
+    {
+      "priority": 1,
+      "scope": "Mission library return host tests",
+      "jobs": [
+        "117982924058"
+      ],
+      "classification": "Separate mixed fixture/API drift and unresolved readiness failure",
+      "evidence": "3 Solo Team card-count assertions116vs14;3 Versus open helper assertions pendingPromise0vs1;1 expectedtick24actual23; late signal12 readiness timeout and downstream InvalidURL because target unset. Ten failed TAP cases including parent aggregate; no native replay verification stack.",
+      "next": "Review expected authored catalog count and current visible Missions action completion contract. Verify frame scheduling expectation and late Ready/running contract separately. Do not assert count/timing fixes resolve readiness until targeted test passes."
+    }
+  ],
+  "limitations": [
+    "Read-only triage of old exact-source hosted logs; no tests rerun and no production changes.",
+    "Survival actual alternate-file coverage and mission-library readiness causes need focused probes after freeze."
+  ]
+}

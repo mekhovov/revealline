@@ -10,9 +10,11 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { DISPLAY_PREFERENCES_KEY } from '../display-preferences.mjs';
+import { ENEMY_STATS_KEY } from '../enemy-stats.mjs';
+import { t as translate } from '../i18n/index.mjs';
 import { authoritativeCheckpoint, verifyReplay } from '../replay.mjs';
 import { emptyLibrary, updatePreferences, saveLibrary, loadLibrary } from '../library.mjs';
-import { soloPage, memoryStorage, settle } from './helpers/solo-dom.mjs';
+import { soloPage, memoryStorage, settle, installSoloStylesheets } from './helpers/solo-dom.mjs';
 import { couchPage, mountCouch } from './helpers/couch-host.mjs';
 import { Document, Events } from './helpers/couch-dom.mjs';
 import { FIXED_DT } from '../coop/core.mjs';
@@ -21,6 +23,8 @@ const campaign = JSON.parse(await readFile(new URL('../content/campaign.json', i
 const teamHTML = await readFile(new URL('../couch/relay-rescue.html', import.meta.url), 'utf8');
 const profileKey = 'revealline.library.dev.v1';
 const sessionKey = 'revealline.suspended.dev.v1';
+// Isolate display writes from the ordinary first-use statistics writer allocation.
+const existingEnemyStatsWriter = { [`${ENEMY_STATS_KEY}:writer`]: 'display-host-existing-writer' };
 const raw = (store) => JSON.parse(store.getItem(DISPLAY_PREFERENCES_KEY));
 let sequence = 0;
 // Seed the unrelated statistics writer identity before startup snapshots.
@@ -112,6 +116,7 @@ async function teamPage(t, store, { systemReduced = false } = {}) {
   doc.parentNode = win;
   mountCouch(doc, teamHTML);
   modelTeamDialogs(doc);
+  const stopStylesheets = installSoloStylesheets(doc);
   const $ = (id) => doc.getElementById(id),
     frames = new Map(),
     originals = new Map();
@@ -164,6 +169,7 @@ async function teamPage(t, store, { systemReduced = false } = {}) {
     } catch (error) {
       errors.push(error);
     }
+    stopStylesheets();
     frames.clear();
     try {
       doc.documentElement.remove();
@@ -194,6 +200,10 @@ async function teamPage(t, store, { systemReduced = false } = {}) {
   await waitForTeamPicture(
     () => $('coop-picture-status').dataset.state === 'ready',
     () => $('coop-picture-status').textContent,
+  );
+  await waitForTeamPicture(
+    () => !!doc.documentElement.style.getPropertyValue('--iw-font-mono'),
+    () => 'The current interface stylesheet must be accepted.',
   );
   assert.equal(doc.documentElement.dataset.toolState, 'ready');
   const tick = (count = 1) => {
@@ -316,6 +326,9 @@ test('Solo to Team to Versus and back restores one display record without Couch 
       labels.map(({ font }) => font),
       'Theme font replaces Plain while geometry stays exact.',
     );
+    const numericFont = page.doc.documentElement.style.getPropertyValue('--iw-font-mono');
+    assert.ok(numericFont, 'The accepted interface publishes its numeric font.');
+    assert.ok(page.fonts().some((font) => font.includes(numericFont)));
     change(page, 'coop-text-size', 'standard');
     page.tick(120);
     assert.notDeepEqual(page.geometry(), geometry, 'Large changes canvas label geometry');
@@ -336,6 +349,8 @@ test('Solo to Team to Versus and back restores one display record without Couch 
     assert.equal(page.$('coop-clock').textContent, clock);
     assert.match(page.$('coop-overlay-title').textContent, /paused/i);
     assert.equal(page.$('coop-overlay-title').textContent, 'PAUSED');
+    assert.equal(page.$('coop-overlay-title').textContent, translate('interface:paused3'));
+    assert.equal(page.doc.body.dataset.coopPaused, 'true');
     assert.equal(store.getItem(profileKey), profile);
     assert.equal(store.getItem(sessionKey), session);
   });

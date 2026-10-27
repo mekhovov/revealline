@@ -190,6 +190,48 @@ test('cold menu reports saved metadata without treating it as verified readiness
   h.panel.dispose();
 });
 
+for (const boundary of ['open', 'keys', 'match', 'json'])
+  test(`disposing the offline panel during ${boundary} retires its local metadata scan`, async () => {
+    let entered, release;
+    const started = new Promise((resolve) => (entered = resolve)),
+      pending = new Promise((resolve) => (release = resolve)),
+      calls = [];
+    const observe = async (name, value) => {
+      calls.push(name);
+      if (name === boundary) {
+        entered();
+        await pending;
+      }
+      return value;
+    };
+    const cache = {
+      keys: () => observe('keys', [{ url: 'first' }, { url: 'second' }]),
+      match: () =>
+        observe('match', {
+          json: () =>
+            observe('json', {
+              edition: 'https://game.example/revealline/releases/v2.0.0/site/',
+              group: 'gameplay',
+              hashes: [],
+              complete: true,
+            }),
+        }),
+    };
+    const h = setup({ caches: { open: () => observe('open', cache) } });
+    await started;
+    const before = [...calls];
+    h.panel.dispose();
+    release();
+    await new Promise((resolve) => setImmediate(resolve));
+    assert.deepEqual(
+      calls,
+      before,
+      'A retired panel cannot start the next native cache operation.',
+    );
+    assert.deepEqual(h.statuses, [], 'A cancelled scan cannot claim offline readiness.');
+    assert.equal(h.document.querySelector('iframe'), null);
+  });
+
 test('cold menu ignores malformed ownership metadata without claiming saved readiness', async () => {
   for (const hashes of [undefined, null, ['not-a-sha256']]) {
     const h = setup({

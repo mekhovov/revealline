@@ -27,7 +27,7 @@ const deferred = () => {
   });
   return { promise, resolve, reject };
 };
-const text = (n) => [n.textContent, ...n.children.map(text)].join(' ');
+const text = (n) => [n.textContent, ...(n.children ?? []).map(text)].join(' ');
 const findButton = (root, name) => {
   const b = root.querySelectorAll('button').find((n) => n._text === name);
   assert(b, name);

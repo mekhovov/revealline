@@ -1,0 +1,31 @@
+{
+  "engine": "chromium",
+  "started": "2026-10-19T00:55:54.960Z",
+  "checks": [
+    {
+      "type": "fresh-start-exact-authored-setup-ready-disarmed",
+      "origin": "sim",
+      "course": "flight-03",
+      "mode": "self-level",
+      "ticks": 0,
+      "courseIdentity": "1b240bb932f3f649",
+      "responseIdentity": "1dfb9ff688d5a15c",
+      "savedCustomAircraftTuningUnchanged": true
+    },
+    {
+      "type": "fresh-start-exact-authored-setup-ready-disarmed",
+      "origin": "solo",
+      "course": "native-pursuit-meeting-yard",
+      "mode": "acro",
+      "ticks": 0,
+      "courseIdentity": "c582bd2cb5259724",
+      "responseIdentity": "73833493634ba989",
+      "savedCustomAircraftTuningUnchanged": true
+    }
+  ],
+  "errors": [],
+  "complete": true,
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-19T00:56:10.835Z"
+}

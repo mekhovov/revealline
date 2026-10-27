@@ -1,0 +1,11 @@
+{
+  "format": "DemoProductionSourceFingerprintV1",
+  "head": "4f68b924ee74c1a02fa340b1d17ddadf5ffa2c3f",
+  "files": 9988,
+  "bytes": 404257387,
+  "sha256": "96a37acf03b17fde28ad964d86572a3bf761185829ede620f23aac544e3ab214",
+  "scope": "game, optional-practice and publishing JS/JSON/CSS/HTML, excluding tests and qualification coverage receipts",
+  "recordedAt": "2026-10-18T06:39:55.564582+00:00",
+  "workingTreeChanges": true,
+  "note": "Final source after discarding settled retirement history. The two-hour browser was started with source-freeze-before-retirement-fix.json and retained that loaded host; focused regression and packaging receipts qualify this subsequent one-line lifecycle correction."
+}

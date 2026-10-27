@@ -1,0 +1,938 @@
+{
+  "format": "SharedDemoHostedStatusSnapshotV1",
+  "observedAt": "2026-10-19T11:25:13.353042+00:00",
+  "readOnly": true,
+  "head": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "pullRequest": "https://github.com/mekhovov/revealline/pull/1615",
+  "mergeable": "MERGEABLE",
+  "mergeStateStatus": "UNSTABLE",
+  "statusCounts": {
+    "COMPLETED": 28
+  },
+  "checks": [
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-19T10:42:41Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39239035820/job/118015087767",
+      "name": "admission",
+      "startedAt": "2026-10-19T10:39:44Z",
+      "status": "COMPLETED",
+      "workflowName": "Appearance preview"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-19T10:55:45Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39239035791/job/118015087192",
+      "name": "optional-practice",
+      "startedAt": "2026-10-19T10:39:43Z",
+      "status": "COMPLETED",
+      "workflowName": "Company edition candidates"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-19T10:39:57Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39239035769/job/118015087173",
+      "name": "reconcile",
+      "startedAt": "2026-10-19T10:39:43Z",
+      "status": "COMPLETED",
+      "workflowName": "Fastline exact-head auto-merge"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-19T10:41:34Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39239227273/job/118015706954",
+      "name": "reconcile",
+      "startedAt": "2026-10-19T10:41:20Z",
+      "status": "COMPLETED",
+      "workflowName": "Fastline exact-head auto-merge"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-19T11:03:03Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39241767427/job/118024031974",
+      "name": "reconcile",
+      "startedAt": "2026-10-19T11:02:45Z",
+      "status": "COMPLETED",
+      "workflowName": "Fastline exact-head auto-merge"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-19T11:16:08Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39243370382/job/118029271594",
+      "name": "reconcile",
+      "startedAt": "2026-10-19T11:15:50Z",
+      "status": "COMPLETED",
+      "workflowName": "Fastline exact-head auto-merge"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-19T10:47:33Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39239035665/job/118015086920",
+      "name": "feature (gameplay)",
+      "startedAt": "2026-10-19T10:39:44Z",
+      "status": "COMPLETED",
+      "workflowName": "Industrial feature verification"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-19T10:59:10Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39239035807/job/118015086814",
+      "name": "native-catalog-verification (20.19.6)",
+      "startedAt": "2026-10-19T10:39:43Z",
+      "status": "COMPLETED",
+      "workflowName": "Native demo catalog verification"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-19T10:39:58Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39239035764/job/118024522361",
+      "name": "preflight",
+      "startedAt": "2026-10-19T10:39:43Z",
+      "status": "COMPLETED",
+      "workflowName": "Validate source for continuous main"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-19T10:42:53Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39239035665/job/118015086654",
+      "name": "feature (creator)",
+      "startedAt": "2026-10-19T10:39:43Z",
+      "status": "COMPLETED",
+      "workflowName": "Industrial feature verification"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-19T10:57:27Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39239035807/job/118015087099",
+      "name": "native-catalog-verification (22.13.1)",
+      "startedAt": "2026-10-19T10:39:44Z",
+      "status": "COMPLETED",
+      "workflowName": "Native demo catalog verification"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-19T10:43:25Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39239035665/job/118015086988",
+      "name": "feature (presentation)",
+      "startedAt": "2026-10-19T10:39:44Z",
+      "status": "COMPLETED",
+      "workflowName": "Industrial feature verification"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-19T10:46:07Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39239035665/job/118015086909",
+      "name": "feature (recordings)",
+      "startedAt": "2026-10-19T10:42:55Z",
+      "status": "COMPLETED",
+      "workflowName": "Industrial feature verification"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-19T10:46:48Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39239035665/job/118015086901",
+      "name": "feature (rooms)",
+      "startedAt": "2026-10-19T10:43:27Z",
+      "status": "COMPLETED",
+      "workflowName": "Industrial feature verification"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-19T10:53:12Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39239035665/job/118015086966",
+      "name": "feature (local-ux)",
+      "startedAt": "2026-10-19T10:46:14Z",
+      "status": "COMPLETED",
+      "workflowName": "Industrial feature verification"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-19T11:05:46Z",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39239035764/job/118024521796",
+      "name": "focused_shards (1)",
+      "startedAt": "2026-10-19T11:04:00Z",
+      "status": "COMPLETED",
+      "workflowName": "Validate source for continuous main"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-19T10:42:39Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39239035820/job/118015088225",
+      "name": "demo_admission",
+      "startedAt": "2026-10-19T10:39:43Z",
+      "status": "COMPLETED",
+      "workflowName": "Appearance preview"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-19T11:06:50Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39239035791/job/118015087523",
+      "name": "candidate",
+      "startedAt": "2026-10-19T10:39:43Z",
+      "status": "COMPLETED",
+      "workflowName": "Company edition candidates"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-19T10:48:19Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39239035764/job/118024523578",
+      "name": "focused_shards (2)",
+      "startedAt": "2026-10-19T10:40:00Z",
+      "status": "COMPLETED",
+      "workflowName": "Validate source for continuous main"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-19T10:51:12Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39239035764/job/118024587247",
+      "name": "focused_shards (3)",
+      "startedAt": "2026-10-19T10:40:01Z",
+      "status": "COMPLETED",
+      "workflowName": "Validate source for continuous main"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-19T10:49:22Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39239035764/job/118024523521",
+      "name": "focused_shards (4)",
+      "startedAt": "2026-10-19T10:40:01Z",
+      "status": "COMPLETED",
+      "workflowName": "Validate source for continuous main"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-19T10:39:58Z",
+      "conclusion": "SKIPPED",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39239035764/job/118024523445",
+      "name": "test",
+      "startedAt": "2026-10-19T11:03:58Z",
+      "status": "COMPLETED",
+      "workflowName": "Validate source for continuous main"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-19T10:44:07Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39239035820/job/118015087987",
+      "name": "team_admission",
+      "startedAt": "2026-10-19T10:39:43Z",
+      "status": "COMPLETED",
+      "workflowName": "Appearance preview"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-19T10:39:58Z",
+      "conclusion": "SKIPPED",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39239035764/job/118024523319",
+      "name": "build",
+      "startedAt": "2026-10-19T11:03:58Z",
+      "status": "COMPLETED",
+      "workflowName": "Validate source for continuous main"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-19T10:46:18Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39239035820/job/118015088198",
+      "name": "installed_admission",
+      "startedAt": "2026-10-19T10:39:44Z",
+      "status": "COMPLETED",
+      "workflowName": "Appearance preview"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-19T11:05:53Z",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39239035764/job/118025237119",
+      "name": "focused",
+      "startedAt": "2026-10-19T11:05:49Z",
+      "status": "COMPLETED",
+      "workflowName": "Validate source for continuous main"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-19T11:25:07Z",
+      "conclusion": "SUCCESS",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39239035820/job/118017659238",
+      "name": "preview",
+      "startedAt": "2026-10-19T10:46:21Z",
+      "status": "COMPLETED",
+      "workflowName": "Appearance preview"
+    },
+    {
+      "__typename": "CheckRun",
+      "completedAt": "2026-10-19T11:06:00Z",
+      "conclusion": "FAILURE",
+      "detailsUrl": "https://github.com/mekhovov/revealline/actions/runs/39239035764/job/118025285739",
+      "name": "release-ready",
+      "startedAt": "2026-10-19T11:05:56Z",
+      "status": "COMPLETED",
+      "workflowName": "Validate source for continuous main"
+    }
+  ],
+  "jobDetails": [
+    {
+      "id": 118015086814,
+      "run_id": 39239035807,
+      "workflow_name": "Native demo catalog verification",
+      "head_branch": "codex/shared-game-demos",
+      "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39239035807",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOUYDvKM8AAAAbej9Q3g",
+      "head_sha": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+      "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/118015086814",
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39239035807/job/118015086814",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-10-19T10:39:41Z",
+      "started_at": "2026-10-19T10:39:43Z",
+      "completed_at": "2026-10-19T10:59:10Z",
+      "name": "native-catalog-verification (20.19.6)",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-19T10:39:44Z",
+          "completed_at": "2026-10-19T10:39:45Z"
+        },
+        {
+          "name": "Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-19T10:39:45Z",
+          "completed_at": "2026-10-19T10:40:55Z"
+        },
+        {
+          "name": "Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-19T10:40:55Z",
+          "completed_at": "2026-10-19T10:41:00Z"
+        },
+        {
+          "name": "Check strict collector guards",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-19T10:41:00Z",
+          "completed_at": "2026-10-19T10:41:01Z"
+        },
+        {
+          "name": "Verify every published Solo source without generating recordings",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-19T10:41:01Z",
+          "completed_at": "2026-10-19T10:55:20Z"
+        },
+        {
+          "name": "Verify every authored Survival scenario without generating recordings",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-19T10:55:20Z",
+          "completed_at": "2026-10-19T10:59:06Z"
+        },
+        {
+          "name": "Retain strict verification and bounded partial diagnostics",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-19T10:59:06Z",
+          "completed_at": "2026-10-19T10:59:07Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-19T10:59:07Z",
+          "completed_at": "2026-10-19T10:59:07Z"
+        },
+        {
+          "name": "Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-10-19T10:59:07Z",
+          "completed_at": "2026-10-19T10:59:07Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-10-19T10:59:07Z",
+          "completed_at": "2026-10-19T10:59:07Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/118015086814",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000045609,
+      "runner_name": "GitHub Actions 1000045609",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 118015087099,
+      "run_id": 39239035807,
+      "workflow_name": "Native demo catalog verification",
+      "head_branch": "codex/shared-game-demos",
+      "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39239035807",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOUYDvKM8AAAAbej9R-w",
+      "head_sha": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+      "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/118015087099",
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39239035807/job/118015087099",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-10-19T10:39:41Z",
+      "started_at": "2026-10-19T10:39:44Z",
+      "completed_at": "2026-10-19T10:57:27Z",
+      "name": "native-catalog-verification (22.13.1)",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-19T10:39:45Z",
+          "completed_at": "2026-10-19T10:39:46Z"
+        },
+        {
+          "name": "Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-19T10:39:46Z",
+          "completed_at": "2026-10-19T10:40:54Z"
+        },
+        {
+          "name": "Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-19T10:40:54Z",
+          "completed_at": "2026-10-19T10:40:59Z"
+        },
+        {
+          "name": "Check strict collector guards",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-19T10:40:59Z",
+          "completed_at": "2026-10-19T10:41:00Z"
+        },
+        {
+          "name": "Verify every published Solo source without generating recordings",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-19T10:41:00Z",
+          "completed_at": "2026-10-19T10:54:03Z"
+        },
+        {
+          "name": "Verify every authored Survival scenario without generating recordings",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-19T10:54:03Z",
+          "completed_at": "2026-10-19T10:57:22Z"
+        },
+        {
+          "name": "Retain strict verification and bounded partial diagnostics",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-19T10:57:22Z",
+          "completed_at": "2026-10-19T10:57:24Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13,
+          "started_at": "2026-10-19T10:57:24Z",
+          "completed_at": "2026-10-19T10:57:24Z"
+        },
+        {
+          "name": "Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14,
+          "started_at": "2026-10-19T10:57:24Z",
+          "completed_at": "2026-10-19T10:57:24Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-10-19T10:57:24Z",
+          "completed_at": "2026-10-19T10:57:24Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/118015087099",
+      "labels": [
+        "ubuntu-24.04"
+      ],
+      "runner_id": 1000045610,
+      "runner_name": "GitHub Actions 1000045610",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 118024521796,
+      "run_id": 39239035764,
+      "workflow_name": "Validate source for continuous main",
+      "head_branch": "codex/shared-game-demos",
+      "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39239035764",
+      "run_attempt": 2,
+      "node_id": "CR_kwDOUYDvKM8AAAAbes9IRA",
+      "head_sha": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+      "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/118024521796",
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39239035764/job/118024521796",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-10-19T11:03:58Z",
+      "started_at": "2026-10-19T11:04:00Z",
+      "completed_at": "2026-10-19T11:05:46Z",
+      "name": "focused_shards (1)",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-19T11:04:01Z",
+          "completed_at": "2026-10-19T11:04:02Z"
+        },
+        {
+          "name": "Check out exact pull-request source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-19T11:04:02Z",
+          "completed_at": "2026-10-19T11:05:36Z"
+        },
+        {
+          "name": "Check out trusted focused-gate automation",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-19T11:05:36Z",
+          "completed_at": "2026-10-19T11:05:38Z"
+        },
+        {
+          "name": "Set up Node.js",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-19T11:05:38Z",
+          "completed_at": "2026-10-19T11:05:43Z"
+        },
+        {
+          "name": "Download the immutable preflight path inventory",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 5,
+          "started_at": "2026-10-19T11:05:43Z",
+          "completed_at": "2026-10-19T11:05:44Z"
+        },
+        {
+          "name": "Capture the reviewed changed-path set",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 6,
+          "started_at": "2026-10-19T11:05:44Z",
+          "completed_at": "2026-10-19T11:05:44Z"
+        },
+        {
+          "name": "Select the fail-closed focused gate",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 7,
+          "started_at": "2026-10-19T11:05:44Z",
+          "completed_at": "2026-10-19T11:05:44Z"
+        },
+        {
+          "name": "Verify exact tracked source before commands",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 8,
+          "started_at": "2026-10-19T11:05:44Z",
+          "completed_at": "2026-10-19T11:05:44Z"
+        },
+        {
+          "name": "Install dependencies once for selected focused gates",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 9,
+          "started_at": "2026-10-19T11:05:44Z",
+          "completed_at": "2026-10-19T11:05:44Z"
+        },
+        {
+          "name": "Install pinned authoring dependencies for selected focused gates",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 10,
+          "started_at": "2026-10-19T11:05:44Z",
+          "completed_at": "2026-10-19T11:05:44Z"
+        },
+        {
+          "name": "Run selected focused gates",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 11,
+          "started_at": "2026-10-19T11:05:44Z",
+          "completed_at": "2026-10-19T11:05:44Z"
+        },
+        {
+          "name": "Verify exact tracked source after commands",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 12,
+          "started_at": "2026-10-19T11:05:44Z",
+          "completed_at": "2026-10-19T11:05:44Z"
+        },
+        {
+          "name": "Retain available focused shard evidence",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 13,
+          "started_at": "2026-10-19T11:05:44Z",
+          "completed_at": "2026-10-19T11:05:44Z"
+        },
+        {
+          "name": "Post Set up Node.js",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 24,
+          "started_at": "2026-10-19T11:05:44Z",
+          "completed_at": "2026-10-19T11:05:44Z"
+        },
+        {
+          "name": "Post Check out trusted focused-gate automation",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 25,
+          "started_at": "2026-10-19T11:05:44Z",
+          "completed_at": "2026-10-19T11:05:44Z"
+        },
+        {
+          "name": "Post Check out exact pull-request source",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 26,
+          "started_at": "2026-10-19T11:05:44Z",
+          "completed_at": "2026-10-19T11:05:44Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 27,
+          "started_at": "2026-10-19T11:05:44Z",
+          "completed_at": "2026-10-19T11:05:44Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/118024521796",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000045632,
+      "runner_name": "GitHub Actions 1000045632",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 118015088225,
+      "run_id": 39239035820,
+      "workflow_name": "Appearance preview",
+      "head_branch": "codex/shared-game-demos",
+      "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39239035820",
+      "run_attempt": 1,
+      "node_id": "CR_kwDOUYDvKM8AAAAbej9WYQ",
+      "head_sha": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+      "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/118015088225",
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39239035820/job/118015088225",
+      "status": "completed",
+      "conclusion": "success",
+      "created_at": "2026-10-19T10:39:41Z",
+      "started_at": "2026-10-19T10:39:43Z",
+      "completed_at": "2026-10-19T10:42:39Z",
+      "name": "demo_admission",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-19T10:39:44Z",
+          "completed_at": "2026-10-19T10:39:45Z"
+        },
+        {
+          "name": "Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 2,
+          "started_at": "2026-10-19T10:39:45Z",
+          "completed_at": "2026-10-19T10:40:43Z"
+        },
+        {
+          "name": "Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-19T10:40:43Z",
+          "completed_at": "2026-10-19T10:40:47Z"
+        },
+        {
+          "name": "Read exact-source Demo admission policy",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4,
+          "started_at": "2026-10-19T10:40:47Z",
+          "completed_at": "2026-10-19T10:40:48Z"
+        },
+        {
+          "name": "Install Demo admission test dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5,
+          "started_at": "2026-10-19T10:40:48Z",
+          "completed_at": "2026-10-19T10:40:51Z"
+        },
+        {
+          "name": "Run complete Demo ownership, transitions and resources regressions",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6,
+          "started_at": "2026-10-19T10:40:51Z",
+          "completed_at": "2026-10-19T10:42:36Z"
+        },
+        {
+          "name": "Bind exact-source Demo admission proof",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7,
+          "started_at": "2026-10-19T10:42:36Z",
+          "completed_at": "2026-10-19T10:42:36Z"
+        },
+        {
+          "name": "Retain Demo admission proof and partial diagnostics",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-19T10:42:36Z",
+          "completed_at": "2026-10-19T10:42:37Z"
+        },
+        {
+          "name": "Post Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15,
+          "started_at": "2026-10-19T10:42:37Z",
+          "completed_at": "2026-10-19T10:42:37Z"
+        },
+        {
+          "name": "Post Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 16,
+          "started_at": "2026-10-19T10:42:37Z",
+          "completed_at": "2026-10-19T10:42:38Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17,
+          "started_at": "2026-10-19T10:42:38Z",
+          "completed_at": "2026-10-19T10:42:38Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/118015088225",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000045616,
+      "runner_name": "GitHub Actions 1000045616",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 118025237119,
+      "run_id": 39239035764,
+      "workflow_name": "Validate source for continuous main",
+      "head_branch": "codex/shared-game-demos",
+      "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39239035764",
+      "run_attempt": 2,
+      "node_id": "CR_kwDOUYDvKM8AAAAbetoyfw",
+      "head_sha": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+      "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/118025237119",
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39239035764/job/118025237119",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-10-19T11:05:46Z",
+      "started_at": "2026-10-19T11:05:49Z",
+      "completed_at": "2026-10-19T11:05:53Z",
+      "name": "focused",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-19T11:05:50Z",
+          "completed_at": "2026-10-19T11:05:51Z"
+        },
+        {
+          "name": "Require every shard job to succeed",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 2,
+          "started_at": "2026-10-19T11:05:51Z",
+          "completed_at": "2026-10-19T11:05:51Z"
+        },
+        {
+          "name": "Check out trusted focused receipt verifier",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 3,
+          "started_at": "2026-10-19T11:05:51Z",
+          "completed_at": "2026-10-19T11:05:51Z"
+        },
+        {
+          "name": "Set up Node.js",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 4,
+          "started_at": "2026-10-19T11:05:51Z",
+          "completed_at": "2026-10-19T11:05:51Z"
+        },
+        {
+          "name": "Download immutable preflight admission",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 5,
+          "started_at": "2026-10-19T11:05:51Z",
+          "completed_at": "2026-10-19T11:05:51Z"
+        },
+        {
+          "name": "Download all four focused shard receipts",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 6,
+          "started_at": "2026-10-19T11:05:51Z",
+          "completed_at": "2026-10-19T11:05:51Z"
+        },
+        {
+          "name": "Require exact complete command coverage",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 7,
+          "started_at": "2026-10-19T11:05:51Z",
+          "completed_at": "2026-10-19T11:05:51Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8,
+          "started_at": "2026-10-19T11:05:51Z",
+          "completed_at": "2026-10-19T11:05:51Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/118025237119",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000045633,
+      "runner_name": "GitHub Actions 1000045633",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    },
+    {
+      "id": 118025285739,
+      "run_id": 39239035764,
+      "workflow_name": "Validate source for continuous main",
+      "head_branch": "codex/shared-game-demos",
+      "run_url": "https://api.github.com/repos/mekhovov/revealline/actions/runs/39239035764",
+      "run_attempt": 2,
+      "node_id": "CR_kwDOUYDvKM8AAAAbetrwaw",
+      "head_sha": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+      "url": "https://api.github.com/repos/mekhovov/revealline/actions/jobs/118025285739",
+      "html_url": "https://github.com/mekhovov/revealline/actions/runs/39239035764/job/118025285739",
+      "status": "completed",
+      "conclusion": "failure",
+      "created_at": "2026-10-19T11:05:53Z",
+      "started_at": "2026-10-19T11:05:56Z",
+      "completed_at": "2026-10-19T11:06:00Z",
+      "name": "release-ready",
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1,
+          "started_at": "2026-10-19T11:05:57Z",
+          "completed_at": "2026-10-19T11:05:57Z"
+        },
+        {
+          "name": "Apply the selected PR gate policy",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 2,
+          "started_at": "2026-10-19T11:05:57Z",
+          "completed_at": "2026-10-19T11:05:57Z"
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3,
+          "started_at": "2026-10-19T11:05:57Z",
+          "completed_at": "2026-10-19T11:05:57Z"
+        }
+      ],
+      "check_run_url": "https://api.github.com/repos/mekhovov/revealline/check-runs/118025285739",
+      "labels": [
+        "ubuntu-latest"
+      ],
+      "runner_id": 1000045634,
+      "runner_name": "GitHub Actions 1000045634",
+      "runner_group_id": 0,
+      "runner_group_name": "GitHub Actions"
+    }
+  ],
+  "failureLogs": [],
+  "limits": "One bounded25-minute observation of the authorized single focused-job retry at sixty-second intervals; no job actions or source changes."
+}

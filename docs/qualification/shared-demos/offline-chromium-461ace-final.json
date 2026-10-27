@@ -1,0 +1,148 @@
+{
+  "engine": "chromium",
+  "requestedDurationSeconds": 0,
+  "scope": "all",
+  "idleEntry": false,
+  "started": "2026-10-18T18:22:49.653Z",
+  "checks": [
+    {
+      "type": "native-playback",
+      "mode": "solo",
+      "source": "solo-qualified-44273034491a74e4",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "122",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · First return",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "native-playback",
+      "mode": "survival",
+      "source": "survival:field-crossing-broken-crossroads:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "60",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Broken Crossroads",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 18
+        }
+      }
+    },
+    {
+      "type": "native-playback",
+      "mode": "snake",
+      "source": "snake:classic-snake-two-landings:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Twin Islands",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "native-playback",
+      "mode": "sim",
+      "source": "sim:garage-08-acro-3bd218162e169abe",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "3",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Garage extraction",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "pause",
+      "mode": "sim"
+    },
+    {
+      "type": "offline-recovery-budget",
+      "loadingMs": 2597,
+      "mode": "solo",
+      "source": "",
+      "phase": "unavailable",
+      "failure": "sim:garage-01-acro-4ffd496ad72c79b0 : Failed to fetch",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "sim:garage-01-acro-4ffd496ad72c79b0",
+        "modeId": "sim",
+        "at": 1792347784466,
+        "loadingMs": 2.2999999998137355,
+        "preparation": {
+          "status": "failed",
+          "stage": "source",
+          "elapsedMs": 2.3,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 0,
+            "retirement": 1.2000000001862645,
+            "adapter": 0,
+            "source": 1.1,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": "Failed to fetch",
+        "stack": "TypeError: Failed to fetch\n    at read (http://127.0.0.1:8769/game/demo-modes/sim.mjs:24:28)\n    at Object.create (http://127.0.0.1:8769/game/demo-modes/sim.mjs:108:37)\n    at prepareScene (http://127.0.0.1:8769/game/ui/demo-host.mjs:816:33)\n    at async prepare (http://127.0.0.1:8769/game/ui/demo-host.mjs:801:14)"
+      },
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Preparing a real level…",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "return-and-persistence",
+      "workers": 0,
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    }
+  ],
+  "samples": [],
+  "errors": [],
+  "complete": true,
+  "enduranceStarted": "2026-10-18T18:23:04.484Z",
+  "enduranceFinished": "2026-10-18T18:23:04.484Z",
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-18T18:23:05.068Z"
+}

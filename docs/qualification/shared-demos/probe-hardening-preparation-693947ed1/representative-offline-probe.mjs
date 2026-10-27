@@ -1,0 +1,197 @@
+/* global window, document, localStorage, sessionStorage, navigator, location, caches, crypto */
+import assert from 'node:assert/strict';
+import { readFile, lstat } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+import path from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { startProductionPreview } from '../../scripts/serve-production-preview.mjs';
+import { closeOwnedPreview } from '../demo-probe-evidence.mjs';
+import { PUBLIC_SECURITY_HEADERS } from '../../scripts/game-cli.mjs';
+import { openEmittedPreview } from '../../scripts/emitted-preview.mjs';
+import { fingerprintDemoSources } from '../../scripts/demo-source-fingerprint.mjs';
+import { finishQualification, diagnoseQualificationFailure } from '../../scripts/shared-demo-browser-report.mjs';
+const root = fileURLToPath(new URL('../../', import.meta.url));
+const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
+const args = Object.fromEntries(process.argv.slice(2).map((arg) => { const i = arg.indexOf('='); assert(i > 2); return [arg.slice(2, i), arg.slice(i + 1)]; }));
+for (const key of ['audit','runtime','executable','report','head','fingerprint']) assert(args[key], `Missing --${key}`);
+assert.match(args.head, /^[a-f0-9]{40}$/, 'Expected full held HEAD.');
+assert.match(args.fingerprint, /^[a-f0-9]{64}$/, 'Expected canonical runtime fingerprint.');
+const git = (...values) => execFileSync('git', values, {cwd:root,encoding:'utf8',maxBuffer:8*1024*1024}).trim();
+const fingerprint = (directories) => fingerprintDemoSources(root,directories);
+const auxiliaryPaths=['.cache/demo-offline-browser/probe.mjs','.cache/demo-probe-evidence.mjs','scripts/serve-production-preview.mjs','scripts/game-cli.mjs','scripts/emitted-preview.mjs','scripts/demo-source-fingerprint.mjs','scripts/shared-demo-browser-report.mjs','scripts/qualify-demo-main-pages.mjs','game/offline/service-worker.template.js'];
+const auxiliarySnapshot=async()=>Object.fromEntries(await Promise.all(auxiliaryPaths.map(async name=>[name,sha(await readFile(path.join(root,name)))])));
+const output = path.resolve(root, args.report);
+try { await lstat(output); throw new Error('Refusing to overwrite an existing receipt.'); } catch(error) { if(error.code !== 'ENOENT') throw error; }
+const auditBytes = await readFile(path.resolve(root, args.audit)), audit = JSON.parse(auditBytes);
+assert.equal(audit.complete, true, 'Use a successful final emitted audit.');
+assert.equal(audit.demoOfflineSelection?.complete, true);
+assert.equal(audit.headStable, true);
+assert.equal(audit.sourceStable, true);
+assert.equal(audit.sourceFingerprint?.sha256, args.fingerprint);
+assert.deepEqual(audit.finalSourceFingerprint, audit.sourceFingerprint);
+assert.match(audit.sourceRevision, /^[a-f0-9]{40}$/);
+assert.equal(audit.sourceRevision,args.head,'Qualification requires the exact emitted candidate HEAD.');
+const selection = audit.demoOfflineSelection;
+const realCore = new Map(selection.coreDescriptors.map((f) => [f.path, f]));
+const selected = new Map(selection.selectedFiles.map((f) => [f.path, f]));
+const admitted = new Map([...realCore, ...selected]);
+const inventoryPath = args.audit.replace(/\.json$/, '.inventory.json');
+const inventoryBytes = await readFile(path.resolve(root, inventoryPath));
+const nativeInventory = JSON.parse(inventoryBytes);
+assert.equal(nativeInventory.sourceRevision, audit.sourceRevision);
+const emitted = new Map(nativeInventory.files.map((f) => [f.path, f]));
+const selectedHashes = new Set(selection.selectedFiles.map((f) => f.sha256));
+const selectedPaths = new Set([...selection.requiredPaths, ...selection.groups.flatMap((g) => g.files)]);
+for (const f of emitted.values()) if (selectedPaths.has(f.path) && selectedHashes.has(f.sha256) && !realCore.has(f.path)) { selected.set(f.path, f); admitted.set(f.path, f); }
+const report = {
+  format: 'SharedDemoRepresentativeInstalledOfflineBrowserV1', started: new Date().toISOString(), complete: false,
+  sourceRevision: audit.sourceRevision, declaredRuntimeFingerprint: audit.sourceFingerprint,
+  audit: { path: args.audit, sha256: sha(auditBytes), inventory: {path:inventoryPath,sha256:sha(inventoryBytes)} },
+  sourceBinding:{expectedHead:args.head,expectedRuntimeFingerprint:args.fingerprint,auditHead:audit.sourceRevision,canonicalAlgorithm:'sorted rg --files game optional-practice publishing; mjs/js/json/css/html excluding /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + raw SHA256(file bytes))'},
+  probeSHA256: sha(await readFile(fileURLToPath(import.meta.url))), checks: [], errors: [],
+  scope: 'Real Chromium worker, actual emitted file pins, normal official-download API, cold document reload with network disabled, five representative recordings across all four adapters and practice. The fixture shell selects fixed real sources; it does not mount an ordinary game or claim an entire installed distribution.',
+  limitations: ['Full catalog offline dependency ownership is established by the linked emitted audit, not by these five browser performances.', 'This is an explicit small installation with the production worker template and a finite subset of the real core/download inventory; it is not the complete generated worker configuration.', 'Ordinary saved-game recovery and full navigation entry pages are outside this representative adapter/shell fixture.', 'All product bodies come from the audited exact emitted capture or an unchanged source file with its emitted pin; no local route, metadata, version or HTML projection is regenerated.', 'The constructed subset worker is served under a distinct fixture URL; the original emitted worker and original HTML are retained and separately hashed, not replaced by this fixture.']
+};
+let browser, page, context, preview, watchdog, capture;
+const requests = [], sent = new Map(), failures = [];
+let worker = null;
+const fixturePath = 'demo-offline-fixture.html', modulePath = 'demo-offline-fixture.mjs', subsetWorkerPath = 'demo-offline-subset-worker.js';
+const html = Buffer.from('<!doctype html><meta charset="utf-8"><title>Offline demo qualification</title><link rel="stylesheet" href="/game/ui/demo.css"><main><h1>Offline demo qualification</h1></main><script type="module" src="/demo-offline-fixture.mjs"></script>');
+const soloIds = { classic: JSON.parse(await readFile(path.join(root, 'game/demo-data/catalog.json'))).clips[0].id, journey: JSON.parse(await readFile(path.join(root, 'game/demo-data/catalog.journey-current.json'))).clips[0].id };
+const boot = Buffer.from(`
+import { installDemoEntry } from '/game/ui/demo-entry.mjs';
+import { loadStandaloneSoloContext } from '/game/demo-modes/solo-catalog.mjs';
+import { createSnakeDemoAdapter } from '/game/demo-modes/snake.mjs';
+import { createSimDemoAdapter } from '/game/demo-modes/sim.mjs';
+import { createSurvivalDemoAdapter } from '/game/demo-modes/survival.mjs';
+import { createOfficialDownloads } from '/game/official-downloads.mjs';
+window.downloads = createOfficialDownloads();
+const standalone = await loadStandaloneSoloContext();
+window.soloFlavor = 'journey';
+const one = (adapter) => ({ ...adapter, enumerateSources: async (options) => {
+ const sources = await adapter.enumerateSources(options); const chosen = sources.find(s => s.approachable) || sources[0];
+ if (!chosen) throw new Error('Representative source unavailable'); return [chosen];
+}});
+window.demoHost = await installDemoEntry({ document, modeId:'solo', presets: standalone.presets,
+ settingsKey:'revealline.demo.offline-fixture.v1', canWrite:()=>false,
+ getContext:()=>({entries:standalone.entries}),
+ loadSources:async(options)=>{const sources = await standalone.loadSources(options);
+ const chosen = sources.find(s => s.id === ${JSON.stringify(soloIds)}[window.soloFlavor]);
+ if (!chosen) throw new Error('Representative Solo source unavailable: ' + window.soloFlavor); return [chosen];},
+ adapters:{ snake:one(createSnakeDemoAdapter()),sim:one(createSimDemoAdapter()),survival:one(createSurvivalDemoAdapter()) }
+});
+let last=performance.now();
+function frame(now){ window.demoHost.update(Math.min(.05, Math.max(0,(now-last)/1000))); last=now; window.fixtureFrame=requestAnimationFrame(frame); }
+window.fixtureFrame=requestAnimationFrame(frame);
+window.fixtureReady=true;
+`);
+const control = new Map([[fixturePath, html],[modulePath, boot]]);
+const pin = (name,bytes) => ({ path:name, bytes:bytes.length, sha256:sha(bytes) });
+async function body(name) {
+ if(control.has(name)) return control.get(name);
+ const expected = admitted.get(name);
+ if(!expected) throw new Error('Request outside emitted selected/core closure: '+name);
+ const bytes = capture ? await capture.read(name) : await readFile(path.join(root,name));
+ if(!bytes || bytes.length!==expected.bytes || sha(bytes)!==expected.sha256) throw new Error('Cannot reproduce exact emitted bytes: '+name);
+ return bytes;
+}
+const snapshot = () => page.evaluate(() => { const d=document.querySelector('#demo-dialog'); return {mode:d.dataset.demoMode,source:d.dataset.demoSource,phase:d.dataset.demoPhase,tick:d.dataset.demoTick,resources:JSON.parse(d.dataset.demoResources||'{}'),practice:d.classList.contains('is-practice')}; });
+const ready = () => page.waitForFunction(() => document.querySelector('#demo-dialog')?.dataset.demoPhase === 'playing',null,{timeout:31000});
+async function closeDemo(){ await page.evaluate(()=>window.demoHost.close()); await page.waitForFunction(()=>{const d=document.querySelector('#demo-dialog');const r=JSON.parse(d.dataset.demoResources||'{}');return !d.open && !d.querySelector('.demo-native-surface') && !r.ownedSoloScenes && !r.ownedNativeScenes && !r.practiceWorlds;},null,{timeout:6500}); }
+async function cases(stage) {
+ const observed=[];
+ for(const [mode,flavor] of [['solo','journey'],['solo','classic'],['snake',''],['sim',''],['survival','']]) {
+  await page.evaluate(async({mode,flavor})=>{window.soloFlavor=flavor;await window.demoHost.open({modeId:mode,scope:'current'});},{mode,flavor});
+  await ready();const first=await snapshot();assert.equal(first.mode,mode);
+  await page.waitForFunction(tick=>document.querySelector('#demo-dialog').dataset.demoTick!==tick,first.tick,{timeout:3500});
+  await page.locator('#demo-interrupt').click();const checkpoint=await snapshot();
+  await page.locator('#demo-takeover').click();await page.waitForFunction(()=>document.querySelector('#demo-dialog').classList.contains('is-practice'));
+  assert.equal((await snapshot()).tick,checkpoint.tick);
+  await page.keyboard.press('ArrowRight');await page.waitForFunction(tick=>document.querySelector('#demo-dialog').dataset.demoTick!==tick,checkpoint.tick,{timeout:3500});
+  await page.locator('#demo-return').click();await ready();assert.equal((await snapshot()).source,first.source);
+  observed.push({mode,flavor,source:first.source,checkpoint:checkpoint.tick,practiceAdvanced:true});await closeDemo();
+ }
+ report.checks.push({stage,performances:observed});return observed;
+}
+const storeSnapshot = () => page.evaluate(async()=>{
+ const values=[];
+ for(const name of (await caches.keys()).sort()) {const cache=await caches.open(name);for(const req of (await cache.keys()).sort((a,b)=>a.url.localeCompare(b.url))) { const res=await cache.match(req),b=await res.arrayBuffer();const h=[...new Uint8Array(await crypto.subtle.digest('SHA-256',b))].map(v=>v.toString(16).padStart(2,'0')).join('');values.push({name,url:req.url,bytes:b.byteLength,sha256:h});}}
+ return {caches:values,local:{...localStorage},session:{...sessionStorage}};
+});
+try {
+ if(args['emitted-preview']) {
+  capture=await openEmittedPreview(args['emitted-preview'],{root,verifySource:true});
+  assert.equal(capture.manifestSHA256,audit.emittedPreview?.manifestSHA256);
+  assert.equal(capture.manifest.sourceRevision,args.head);
+  assert.deepEqual(capture.manifest.sourceFingerprint,audit.sourceFingerprint);
+  assert.deepEqual(capture.manifest.buildInputFingerprint,audit.buildInputFingerprint);
+  report.emittedPreview={directory:args['emitted-preview'],manifestSHA256:capture.manifestSHA256,sourceVerification:capture.sourceVerification};
+  report.originalProductPins=[];
+  for(const name of ['service-worker.js','game/index.html','game/snake/play.html','optional-practice/fpv-worlds/index.html','game/overflight/play.html']) {
+   const bytes=await capture.read(name), expected=emitted.get(name);
+   assert(expected);assert.equal(bytes.length,expected.bytes);assert.equal(sha(bytes),expected.sha256);
+   report.originalProductPins.push({...expected,role:'Exact emitted original, unchanged; the representative fixture does not claim to exercise this ordinary entry.'});
+  }
+ }
+ report.sourceBinding.before={head:git('rev-parse','HEAD'),runtime:capture?.sourceVerification.runtime??await fingerprint(),buildInput:capture?.sourceVerification.buildInput??await fingerprint(['scripts','authoring']),auxiliary:await auxiliarySnapshot()};
+ assert.equal(report.sourceBinding.before.head,args.head);
+ assert.deepEqual(report.sourceBinding.before.runtime,audit.sourceFingerprint);
+ assert.deepEqual(report.sourceBinding.before.buildInput,audit.buildInputFingerprint);
+ preview=await startProductionPreview({root,port:0,fixtureAccess:false,cache:'no-store'});
+ const native=preview.server.listeners('request')[0];preview.server.removeListener('request',native);
+ preview.server.on('request',(req,res)=>{void(async()=>{
+  const name=new URL(req.url,preview.url).pathname.slice(1);requests.push(name);if(requests.length>3000)throw new Error('Request budget exceeded');
+  if(name==='favicon.ico'){res.writeHead(404);res.end();return;}
+  let bytes;if(name===subsetWorkerPath&&worker)bytes=Buffer.from(worker);else if(name==='service-worker.js'&&capture)bytes=await capture.read(name);else bytes=await body(name);
+  const mime=name.endsWith('.html')?'text/html':/\.(?:mjs|js)$/.test(name)?'text/javascript':name.endsWith('.css')?'text/css':name.endsWith('.json')?'application/json':name.endsWith('.png')?'image/png':name.endsWith('.webp')?'image/webp':name.endsWith('.svg')?'image/svg+xml':name.endsWith('.woff2')?'font/woff2':'application/octet-stream';
+  if(name!==subsetWorkerPath&&name!=='service-worker.js')sent.set(name,pin(name,bytes));
+  res.writeHead(200,{...PUBLIC_SECURITY_HEADERS,'Content-Type':mime,'Cache-Control':'no-store'});res.end(bytes);
+ })().catch(error=>{failures.push(String(error));res.writeHead(503,{'Content-Type':'text/plain'});res.end(String(error));});});
+ const runtime=await import(pathToFileURL(args.runtime).href);
+ browser=await runtime.chromium.launch({executablePath:args.executable,headless:true,args:['--disable-gpu-shader-disk-cache','--disk-cache-size=1048576','--media-cache-size=1048576']});
+ watchdog=setTimeout(()=>{report.failure??='Representative offline proof exceeded 180 seconds';void browser.close().catch(()=>{});},180000);
+ context=await browser.newContext({viewport:{width:1280,height:800}});page=await context.newPage();page.setDefaultTimeout(15000);
+ const captureErrors=p=>p.on('pageerror',e=>{if(report.errors.length<32)report.errors.push({name:e.name,message:e.message,stack:e.stack});});captureErrors(page);
+ await page.goto(preview.url+fixturePath);await page.waitForFunction(()=>window.fixtureReady);
+ const warm=await cases('online dependency observation');
+ assert.deepEqual(failures,[]);
+ const core=[...sent.values()].filter(f=>realCore.has(f.path)||control.has(f.path));
+ const optional=[...sent.values()].filter(f=>selected.has(f.path));
+ assert.equal(core.length+optional.length,sent.size);
+ const config={format:'revealline-offline.v1',version:'representative-demo-fixture',buildId:sha(JSON.stringify([...sent.values()])),files:core,packageConsent:true,downloadFiles:optional};
+ worker=(await readFile(path.join(root,'game/offline/service-worker.template.js'),'utf8')).replace('__XONIX_OFFLINE_CONFIG__',JSON.stringify(config));
+ report.worker={kind:'Constructed representative subset fixture; not the original emitted service worker',path:subsetWorkerPath,originalEmittedWorkerPin:report.originalProductPins?.find(p=>p.path==='service-worker.js')??null,templateSHA256:sha(await readFile(path.join(root,'game/offline/service-worker.template.js'))),fixtureSHA256:sha(worker),coreCount:core.length,optionalCount:optional.length,bytes:[...sent.values()].reduce((n,f)=>n+f.bytes,0),actualPins:[...sent.values()].filter(f=>!control.has(f.path)),fixturePins:[...sent.values()].filter(f=>control.has(f.path))};
+ await page.evaluate(async({files,workerPath})=>{await navigator.serviceWorker.register('/'+workerPath,{scope:'/'});await navigator.serviceWorker.ready;if(!navigator.serviceWorker.controller)await new Promise(resolve=>navigator.serviceWorker.addEventListener('controllerchange',resolve,{once:true}));await window.downloads.download({edition:'representative-demo-fixture',group:'extras:demo',files,baseURL:location.origin+'/'});if(!(await window.downloads.inspect(files,{verify:true})).ready)throw new Error('Installed demo subset is not verified.');},{files:optional.map(f=>({...f,kind:'gameplay'})),workerPath:subsetWorkerPath});
+ report.checks.push({stage:'explicit installed subset',actualCorePins:core.filter(f=>!control.has(f.path)).length,actualSelectedPins:optional.length,bytes:[...sent.values()].reduce((n,f)=>n+f.bytes,0)});
+ await page.evaluate(async()=>{cancelAnimationFrame(window.fixtureFrame);await window.demoHost.destroy();});await page.close();page=await context.newPage();captureErrors(page);await context.setOffline(true);
+ const offlineRequestAt=requests.length;await page.goto(preview.url+fixturePath);await page.waitForFunction(()=>window.fixtureReady);
+ const before=await storeSnapshot();const offline=await cases('cold document offline playback and practice');
+ assert.deepEqual(offline.map(({mode,flavor,source})=>({mode,flavor,source})),warm.map(({mode,flavor,source})=>({mode,flavor,source})));
+ await page.evaluate(()=>{window.soloFlavor='journey';return window.demoHost.open({modeId:'solo',scope:'all'});});
+ const mixed=[];for(let i=0;i<4;i++){await ready();const state=await snapshot();mixed.push(state.mode);await page.waitForFunction(tick=>document.querySelector('#demo-dialog').dataset.demoTick!==tick,state.tick,{timeout:3500});if(i<3)await page.locator('#demo-next').click();}await closeDemo();
+ assert.deepEqual([...new Set(mixed)].sort(),['sim','snake','solo','survival']);report.checks.push({stage:'offline mixed rotation',modes:mixed});
+ const after=await storeSnapshot();assert.deepEqual(after,before,'Watching and practice cannot alter installed cache bodies or player storage.');
+ assert.deepEqual(requests.slice(offlineRequestAt),[],'No server requests may satisfy offline playback.');
+ for(let attempt=0;page.workers().length && attempt<30;attempt++)await page.waitForTimeout(100);
+ assert.equal(page.workers().length,0,'All transient playback workers retire.');
+ const missing=await page.evaluate(async()=>{try{await fetch('/fixture-unselected-demo.json');return false;}catch{return true;}});assert(missing);
+ assert.deepEqual(report.errors,[]);assert.deepEqual(failures,[]);
+ report.checks.push({stage:'offline isolation',cacheAndStorageUnchanged:true,noNetworkRequests:true,unselectedRequestRejected:true,workers:0});
+ await context.setOffline(false);await page.evaluate(async()=>{cancelAnimationFrame(window.fixtureFrame);await window.demoHost.destroy();for(const r of await navigator.serviceWorker.getRegistrations())await r.unregister();});
+ report.sourceBodiesBoundToEmittedPins=true;report.complete=true;
+} catch(error) { await diagnoseQualificationFailure({report,error,page,screenshotPath:output.replace(/\.json$/,'.png')});report.serverFailures=failures; }
+finally {
+ clearTimeout(watchdog);
+ try {
+  report.sourceBinding.after={head:git('rev-parse','HEAD'),runtime:await fingerprint(),buildInput:await fingerprint(['scripts','authoring']),auxiliary:await auxiliarySnapshot()};
+  assert.deepEqual(report.sourceBinding.after,report.sourceBinding.before,'Held runtime, HEAD and probe/producer bytes must remain unchanged.');
+  if(capture)assert.equal(sha(await readFile(path.resolve(root,args['emitted-preview'],'manifest.json'))),capture.manifestSHA256,'Emitted capture changed during probe.');
+  assert.equal(sha(await readFile(path.resolve(root,args.audit))),report.audit.sha256,'Emitted audit changed during probe.');
+  assert.equal(sha(await readFile(path.resolve(root,inventoryPath))),report.audit.inventory.sha256,'Emitted inventory changed during probe.');
+ } catch(error) {report.complete=false;report.failure??=String(error.stack||error);(report.secondaryDiagnostics??=[]).push({stage:'final-source-binding',error:String(error.stack||error).slice(0,2048)});}
+ const summary=await finishQualification({report,reportPath:output,browser,writeReport:async(filename,value,options)=>{
+  await closeOwnedPreview(preview, report);
+  const {writeQualificationReport}=await import('../../scripts/shared-demo-browser-report.mjs');await writeQualificationReport(filename,value,options);
+ }});if(!summary.complete)process.exitCode=1;
+}

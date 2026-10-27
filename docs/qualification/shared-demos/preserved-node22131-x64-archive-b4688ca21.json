@@ -1,0 +1,49 @@
+{
+  "format": "OwnedNodeArchivePreservationV1",
+  "complete": true,
+  "preservedAt": "2026-10-19T09:35:26.651526+00:00",
+  "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/node-v22.13.1-darwin-x64.tar.xz",
+  "sourceBefore": {
+    "device": 16777235,
+    "inode": 148264118,
+    "uid": 502,
+    "mode": 33188,
+    "bytes": 26749892,
+    "mtimeNs": 1792401803538732865,
+    "nlink": 1
+  },
+  "destination": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/preserved-node22131-x64-archive-20261019T093524Z-eeb12134/node-v22.13.1-darwin-x64.tar.xz",
+  "destinationIdentity": {
+    "device": 905969668,
+    "inode": 37572326,
+    "uid": 502,
+    "mode": 33188,
+    "bytes": 26749892,
+    "mtimeNs": 1792402526226981500,
+    "nlink": 1
+  },
+  "sha256": "cbc49a2f179ec51f3a7d49f91b05e16db2ea8ea4ca586e1e370d19661becf0eb",
+  "sourceAndDestinationRehashed": true,
+  "sourceStableBeforeRemoval": true,
+  "noOpenHandlesBeforeRemoval": true,
+  "removedOnlyExactArchive": true,
+  "activeNodeExecutablePreserved": true,
+  "externalParent": {
+    "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412",
+    "identity": {
+      "device": 905969668,
+      "inode": 37530202,
+      "uid": 502,
+      "mode": 16832,
+      "bytes": 16384,
+      "mtimeNs": 1792399548504868100,
+      "nlink": 1
+    }
+  },
+  "freeBeforeBytes": 203444224,
+  "freeAfterBytes": 230219776,
+  "limitations": [
+    "Observed free-space delta includes concurrent filesystem activity.",
+    "The archive was already verified against the official Node22.13.1 checksum; no executable, checksum file, runtime provenance, current capture or Git pack was removed."
+  ]
+}

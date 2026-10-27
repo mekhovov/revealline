@@ -116,7 +116,7 @@ for (const phase of ['watching', 'practice']) {
       assert.equal(page.$('shell-home').open, true, 'the old Demo frame cannot dismiss Home');
       assert.equal(
         page.doc.activeElement,
-        page.$('shell-options'),
+        page.$('shell-demo'),
         'the old Demo direction cannot move the restored Home focus',
       );
       pad.buttons[secondary] = { pressed: false, value: 0 };

@@ -1,0 +1,532 @@
+{
+  "format": "SurvivalNativeValidationReviewV1",
+  "created": "2026-10-19T10:37:55.387778+00:00",
+  "complete": true,
+  "head": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+  "scope": "Read-only local macOS Node22.13.1 x64 and Node20.19.5 ARM admission, affected tests and canonical --check. No Linux, browser, packaging or complete PR gate claim.",
+  "nativeTests": {
+    "distinctCasesPassed": 21,
+    "attempts": [
+      17,
+      4
+    ],
+    "caseNames": [
+      "Survival sources lazily cover exactly the ordinary authored mission inventory",
+      "verified native playback pauses, forks exactly, and practice cannot mutate the performance",
+      "sparse diagnostics report the first differing checkpoint and reject stale content",
+      "cancelled preparation cannot adopt a Survival player",
+      "one prefetched payload can fall back only to another fully verified runtime performance",
+      "a failed preparation diagnostic observer cannot alter native verification",
+      "the browser-preferred Survival recording is strictly checked before fallback",
+      "the browser-preferred Survival recording is strictly checked before fallback with prefetch",
+      "fresh keyboard or neutral-then-moved controller input is required for takeover",
+      "fresh movement resumes paused native practice through the shared host",
+      "the initiating key remains owned through host handoff and its release stops movement",
+      "a takeover touch keeps its origin through reconstruction and releases normally",
+      "release during reconstruction updates movement and retains only the initiating action",
+      "foreground loss fully clears a handoff gesture even during the synchronous interrupt",
+      "practice consumes the initiating boost once despite controller samples before its first tick",
+      "Survival exact trace independently verifies and observes every native tick, upgrade and reroll",
+      "a rejected five-second checkpoint still emits the actual advanced boundary tick",
+      "a rejected upgrade does not fabricate a tick after its failed action",
+      "the observer is awaited and cancellation retires observation before another native tick",
+      "a comparator failure at a checkpoint boundary remains the exact observer failure",
+      "tick diagnosis rejects stale content, unknown missions and nonstandard variants"
+    ],
+    "qualification": "Combined case coverage across the preserved interrupted first attempt and the completed filtered followup; not a single successful 21-test native suite."
+  },
+  "armTests": {
+    "tests": 21,
+    "passed": 21,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "elapsedMs": 281701.439333
+  },
+  "inventoryAndCanonicalChecks": [
+    {
+      "kind": "x64-catalog-retry",
+      "receipt": {
+        "path": ".cache/survival-native-admission-3f84-x64-catalog-retry.json",
+        "sha256": "27cff02a6eeebceab342877e35cd086f678a568c1f78f8cc816e2226853f9aa6",
+        "bytes": 6139
+      },
+      "supervision": {
+        "path": ".cache/survival-native-admission-3f84-x64-catalog-retry.supervision.json",
+        "sha256": "60bb9dc3e9ada121039d5bebbe8a8f77196573348b9a9e8bee4f3f2d08f6ea2f",
+        "bytes": 12463
+      },
+      "elapsedMs": 129772.402834,
+      "counts": {
+        "required": 18,
+        "checked": 18,
+        "verified": 18
+      },
+      "environment": {
+        "node": "v22.13.1",
+        "v8": "12.4.254.21-node.22",
+        "platform": "darwin",
+        "arch": "x64"
+      },
+      "variants": [
+        "node22131-x64"
+      ],
+      "catalogReceipt": {
+        "path": ".cache/survival-native-admission-3f84-x64-catalog-retry.node22131-x64.catalog.json",
+        "sha256": "83253d11722bcef42d9e182a7bdf88b5ff81d5cfafd2d20d9ca458d6bab0d5c7",
+        "bytes": 21129
+      }
+    },
+    {
+      "kind": "arm-catalog-retry",
+      "receipt": {
+        "path": ".cache/survival-native-admission-3f84-arm-catalog-retry.json",
+        "sha256": "e36a46b89af94c591d661560f959e4405574d59e047524b01daceee8be97da5a",
+        "bytes": 6063
+      },
+      "supervision": {
+        "path": ".cache/survival-native-admission-3f84-arm-catalog-retry.supervision.json",
+        "sha256": "d6fffff7c50dc618d20be390c59478b9feb17ba460ad296a6441c30e54bfdd32",
+        "bytes": 12451
+      },
+      "elapsedMs": 98026.512083,
+      "counts": {
+        "required": 18,
+        "checked": 18,
+        "verified": 18
+      },
+      "environment": {
+        "node": "v20.19.5",
+        "v8": "11.3.244.8-node.30",
+        "platform": "darwin",
+        "arch": "arm64"
+      },
+      "variants": [
+        "default"
+      ],
+      "catalogReceipt": {
+        "path": ".cache/survival-native-admission-3f84-arm-catalog-retry.node20195-arm64.catalog.json",
+        "sha256": "b765543100bc7be64356e1dc4b34767276dcc4a7c459a51faea79c10f83173c8",
+        "bytes": 13339
+      }
+    },
+    {
+      "kind": "canonical-check",
+      "receipt": {
+        "path": ".cache/survival-native-admission-3f84-canonical-check.json",
+        "sha256": "2ddfaccb5f5081102bd0e0e8af997c8f57e0c4b38d81d400020a1ebc178c377f",
+        "bytes": 5646
+      },
+      "supervision": {
+        "path": ".cache/survival-native-admission-3f84-canonical-check.supervision.json",
+        "sha256": "10b9f061c9547f50425da4bec30073fe093e42de74e7391781e7aacef8b25c0a",
+        "bytes": 15155
+      },
+      "elapsedMs": 182736.07112500002,
+      "counts": {
+        "required": 18,
+        "verified": 18
+      }
+    }
+  ],
+  "sourcePins": [
+    {
+      "path": "game/demo-modes/survival-runtime-variants.mjs",
+      "sha256": "066751a50ba1aa8284bcf02140e69a68635a3fcbfee82bcba65b6c5a915dbca7",
+      "bytes": 178
+    },
+    {
+      "path": "game/test/demo-survival.test.mjs",
+      "sha256": "e0e9ac81b26a2bbaf29bc8bc4b5fcd38e5c4fe7387ffc2f662fd1954eaddb556",
+      "bytes": 15602
+    },
+    {
+      "path": "scripts/test-demo-tick-survival.mjs",
+      "sha256": "429f31968c4d7d40df119621ff7f95a6724caa4077b9bd41012b0d9f1fd2c7c1",
+      "bytes": 5367
+    },
+    {
+      "path": "scripts/qualify-survival-native.mjs",
+      "sha256": "2ccb266116081ef76e816d8758134e73950e85b2d9fb6e7c9f2e885920d8dbf6",
+      "bytes": 7832
+    },
+    {
+      "path": "scripts/generate-survival-demos.mjs",
+      "sha256": "05d670f4fabbd95fdd842f2cb58f5309b30dfa6bd9fee90b1f7cf3ebcd597149",
+      "bytes": 4167
+    },
+    {
+      "path": "scripts/generate-survival-browser-demos.mjs",
+      "sha256": "fc13fbb45a4a1a14e5692204aadf6eb0c3a161003144baee58de9fe137b5d0fd",
+      "bytes": 4525
+    }
+  ],
+  "style": {
+    "created": "2026-10-19T10:36:19.931886+00:00",
+    "complete": true,
+    "checks": [
+      {
+        "kind": "format",
+        "argv": [
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+          "node_modules/prettier/bin/prettier.cjs",
+          "--check",
+          "game/demo-modes/survival-runtime-variants.mjs",
+          "game/test/demo-survival.test.mjs",
+          "scripts/test-demo-tick-survival.mjs",
+          "scripts/qualify-survival-native.mjs",
+          "scripts/generate-survival-demos.mjs",
+          "scripts/generate-survival-browser-demos.mjs"
+        ],
+        "exit": 0,
+        "output": {
+          "path": ".cache/survival-native-final-style-3f84.format.log",
+          "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+          "bytes": 66
+        }
+      },
+      {
+        "kind": "lint",
+        "argv": [
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+          "node_modules/eslint/bin/eslint.js",
+          "game/demo-modes/survival-runtime-variants.mjs",
+          "game/test/demo-survival.test.mjs",
+          "scripts/test-demo-tick-survival.mjs",
+          "scripts/qualify-survival-native.mjs",
+          "scripts/generate-survival-demos.mjs",
+          "scripts/generate-survival-browser-demos.mjs"
+        ],
+        "exit": 0,
+        "output": {
+          "path": ".cache/survival-native-final-style-3f84.lint.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "bytes": 0
+        }
+      }
+    ]
+  },
+  "retainedFailures": [
+    "First combined native attempt hit its 330-second bound after 17 individual passing cases, including the full every-tick trace. It remains incomplete and exited 1.",
+    "Followup aggregate remains failed: both inventory CLI launches failed in Apple Git/libxcrun before replay verification, and the harness expected Node22 filtering to report two skips whereas actual TAP correctly contained four passing selected tests. Full ARM 21-case child passed.",
+    "Only the affected inventory CLIs were retried with a pinned ignored Git shim selecting the installed ARM Git. Production CLI behavior was not changed for this local environment issue."
+  ],
+  "formattingEquivalence": {
+    "path": ".cache/survival-native-format-equivalence-3f84.json",
+    "sha256": "e39778e9d46ef4207bf2f3e3695c83189b1b86d66ffdcad857c266d3b73d5fcf",
+    "bytes": 712
+  },
+  "review": "Root independently reviewed the canonical checker change: only check-mode resolver import/selection changed; simulation identity guard and second full verifier retained; generation unchanged. Acceptance reviewer independently agreed.",
+  "independentReview": {
+    "path": "docs/qualification/shared-demos/survival-canonical-check-independent-review-3f84.json",
+    "sha256": "d8d5e2851d9237a7d8e0f6430dba1818cea72845e114014b9f19522556225ab8",
+    "bytes": 1069
+  },
+  "limitations": [
+    "macOS x64 under Rosetta is not Linux x64 evidence. Hosted Node20.19.6/22.13.1 strict gate remains required.",
+    "Browser preferred recordings, full verifier and native simulation were not changed; fresh emitted packaging/browser refresh remains separate.",
+    "No source/HEAD drift or owned child left active in accepted retry receipts."
+  ],
+  "preserved": [
+    {
+      "original": ".cache/survival-native-admission-3f84-arm-catalog-retry.json",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84-arm-catalog-retry.json",
+      "sha256": "e36a46b89af94c591d661560f959e4405574d59e047524b01daceee8be97da5a",
+      "bytes": 6063
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84-arm-catalog-retry.log",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84-arm-catalog-retry.log",
+      "sha256": "956effe1f63941bc56cfbacfe7af81f36a63792ea7a08b507b3a8cf853f7a764",
+      "bytes": 140
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84-arm-catalog-retry.mjs.txt",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84-arm-catalog-retry.mjs.txt",
+      "sha256": "8868e1fd99511b6dbfc2f5e2de4129f64111679212f5b7fe48d72f97ffe7a9a2",
+      "bytes": 7082
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84-arm-catalog-retry.node20195-arm64.catalog.json",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84-arm-catalog-retry.node20195-arm64.catalog.json",
+      "sha256": "b765543100bc7be64356e1dc4b34767276dcc4a7c459a51faea79c10f83173c8",
+      "bytes": 13339
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84-arm-catalog-retry.node20195-arm64.catalog.log",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84-arm-catalog-retry.node20195-arm64.catalog.log",
+      "sha256": "256d21e4a4974e76a29fc9ed60585bcf532b545c3847c142271f029b0091a2f4",
+      "bytes": 4393
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84-arm-catalog-retry.supervision.json",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84-arm-catalog-retry.supervision.json",
+      "sha256": "d6fffff7c50dc618d20be390c59478b9feb17ba460ad296a6441c30e54bfdd32",
+      "bytes": 12451
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84-arm-catalog-retry.supervisor.py.txt",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84-arm-catalog-retry.supervisor.py.txt",
+      "sha256": "22b67543869dbeabfa540648d142671f33997689ddc949858c9032eff52bde8e",
+      "bytes": 11270
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84-canonical-check.json",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84-canonical-check.json",
+      "sha256": "2ddfaccb5f5081102bd0e0e8af997c8f57e0c4b38d81d400020a1ebc178c377f",
+      "bytes": 5646
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84-canonical-check.log",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84-canonical-check.log",
+      "sha256": "ace0d88f88a3809f1d8a8f82c00a42982cc13e6060df02401fe4e10ff6dcdc11",
+      "bytes": 135
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84-canonical-check.mjs.txt",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84-canonical-check.mjs.txt",
+      "sha256": "8868e1fd99511b6dbfc2f5e2de4129f64111679212f5b7fe48d72f97ffe7a9a2",
+      "bytes": 7082
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84-canonical-check.node20195-arm64.canonical.log",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84-canonical-check.node20195-arm64.canonical.log",
+      "sha256": "123e640edb323d63fd0ac5bc5e8826d68bf14a64b7014072e25ac7f726fc2d4c",
+      "bytes": 1559
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84-canonical-check.supervision.json",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84-canonical-check.supervision.json",
+      "sha256": "10b9f061c9547f50425da4bec30073fe093e42de74e7391781e7aacef8b25c0a",
+      "bytes": 15155
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84-canonical-check.supervisor.py.txt",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84-canonical-check.supervisor.py.txt",
+      "sha256": "22b67543869dbeabfa540648d142671f33997689ddc949858c9032eff52bde8e",
+      "bytes": 11270
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84-followup.json",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84-followup.json",
+      "sha256": "63fac6b2a27bfbf9de8e425b6e73171793474ba023e1817886b1ba761ea6e75b",
+      "bytes": 9100
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84-followup.log",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84-followup.log",
+      "sha256": "7a607d0b4bcd52f2cf2bfcd4cf283946ea878b6b815ac04e4b513c2ee8fad338",
+      "bytes": 516
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84-followup.mjs.txt",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84-followup.mjs.txt",
+      "sha256": "e0d07334cb3f083abb905de9b289c30b64d32f7daf9e3b3f28666c2ccb979939",
+      "bytes": 6580
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84-followup.node20195-arm64.catalog.log",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84-followup.node20195-arm64.catalog.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84-followup.node20195-arm64.catalog.log.stderr.txt",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84-followup.node20195-arm64.catalog.log.stderr.txt",
+      "sha256": "56a5efe40c97dc621cf439333d607a206658420c7258f75ee3c448d8255af1f5",
+      "bytes": 2875
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84-followup.node20195-arm64.tests.tap.txt",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84-followup.node20195-arm64.tests.tap.txt",
+      "sha256": "7e40bd55784adb086ac2275a4a3cd6c7abbc11430fe6bc7e701554efd0a072d6",
+      "bytes": 4713
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84-followup.node22131-x64.catalog.log",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84-followup.node22131-x64.catalog.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84-followup.node22131-x64.catalog.log.stderr.txt",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84-followup.node22131-x64.catalog.log.stderr.txt",
+      "sha256": "4f06cab6b17d37e33052e344b052e7c181030d842d77e7967ef65d24478864ea",
+      "bytes": 2875
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84-followup.node22131-x64.remaining-tests.tap.txt",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84-followup.node22131-x64.remaining-tests.tap.txt",
+      "sha256": "933e490e48e12aad59a4d16c6394cbb1e234e7ac0b49bee76822b6bdcacb2890",
+      "bytes": 981
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84-followup.supervision.json",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84-followup.supervision.json",
+      "sha256": "76445b7eaa70e380728307e8d148192e87b872873eb16f74f64a3fd70189f262",
+      "bytes": 23414
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84-followup.supervisor.py.txt",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84-followup.supervisor.py.txt",
+      "sha256": "d315fe4e7c43ff00578ecee8187148744c12494cd7b44628a268632b5706189b",
+      "bytes": 11154
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84-x64-catalog-retry.json",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84-x64-catalog-retry.json",
+      "sha256": "27cff02a6eeebceab342877e35cd086f678a568c1f78f8cc816e2226853f9aa6",
+      "bytes": 6139
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84-x64-catalog-retry.log",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84-x64-catalog-retry.log",
+      "sha256": "9ae63c2dbb1ab7b3c2696816e33dd8d991c642cc4a0a33807e91ae92367909b9",
+      "bytes": 139
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84-x64-catalog-retry.mjs.txt",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84-x64-catalog-retry.mjs.txt",
+      "sha256": "8868e1fd99511b6dbfc2f5e2de4129f64111679212f5b7fe48d72f97ffe7a9a2",
+      "bytes": 7082
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84-x64-catalog-retry.node22131-x64.catalog.json",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84-x64-catalog-retry.node22131-x64.catalog.json",
+      "sha256": "83253d11722bcef42d9e182a7bdf88b5ff81d5cfafd2d20d9ca458d6bab0d5c7",
+      "bytes": 21129
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84-x64-catalog-retry.node22131-x64.catalog.log",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84-x64-catalog-retry.node22131-x64.catalog.log",
+      "sha256": "037776bde80039f1348b75eead45ff036f95b5c8e23cb44f979c9a2f66843258",
+      "bytes": 4475
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84-x64-catalog-retry.supervision.json",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84-x64-catalog-retry.supervision.json",
+      "sha256": "60bb9dc3e9ada121039d5bebbe8a8f77196573348b9a9e8bee4f3f2d08f6ea2f",
+      "bytes": 12463
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84-x64-catalog-retry.supervisor.py.txt",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84-x64-catalog-retry.supervisor.py.txt",
+      "sha256": "22b67543869dbeabfa540648d142671f33997689ddc949858c9032eff52bde8e",
+      "bytes": 11270
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84.json",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84.json",
+      "sha256": "02cbb6963041e60fa44d60fbefc918dd96869b4b00416f03ebd6a3d6b2967eac",
+      "bytes": 5838
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84.log",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84.log",
+      "sha256": "1a75775133f24444c59f7a4fee43ef7e982397f80620b2a5e806f76ece01946e",
+      "bytes": 86
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84.mjs.txt",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84.mjs.txt",
+      "sha256": "32d919c57a85a2e24f6f9d0327f58bda64dbc09f8bfa021704fed92d58dacea5",
+      "bytes": 6205
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84.node22131-x64.tests.tap.txt",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84.node22131-x64.tests.tap.txt",
+      "sha256": "aab9178cd4bb9c349baa605edbb3cef973be8af522865be79eb6b2660ffa54f9",
+      "bytes": 3742
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84.supervision.json",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84.supervision.json",
+      "sha256": "f693eeff7616f978b29a5e72cab73078541a1e5d633738b7fce290b3704ac413",
+      "bytes": 17454
+    },
+    {
+      "original": ".cache/survival-native-admission-3f84.supervisor.py.txt",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-admission-3f84.supervisor.py.txt",
+      "sha256": "6f1bf823f08a87ca5b9e77cc24f6950934fc5bedff9177f3c1fc27069a795981",
+      "bytes": 11155
+    },
+    {
+      "original": ".cache/survival-native-final-style-3f84.format.log",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-final-style-3f84.format.log",
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+      "bytes": 66
+    },
+    {
+      "original": ".cache/survival-native-final-style-3f84.json",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-final-style-3f84.json",
+      "sha256": "4e8f74c4c2c7da55887abb988272f8ee171b6f6cf88f78e93b1bd87392c98566",
+      "bytes": 1525
+    },
+    {
+      "original": ".cache/survival-native-final-style-3f84.lint.log",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-final-style-3f84.lint.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "original": ".cache/survival-native-format-equivalence-3f84.json",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-native-format-equivalence-3f84.json",
+      "sha256": "e39778e9d46ef4207bf2f3e3695c83189b1b86d66ffdcad857c266d3b73d5fcf",
+      "bytes": 712
+    },
+    {
+      "original": ".cache/survival-native-git-bin/git",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/git.txt",
+      "sha256": "fce4446c9fe5d49f79c6ba4a176075f92c04d7f56d474bc7cfbd51a26f868fc6",
+      "bytes": 54
+    },
+    {
+      "original": ".cache/survival-runtime-variants.formatted.mjs",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-runtime-variants.formatted.mjs.txt",
+      "sha256": "066751a50ba1aa8284bcf02140e69a68635a3fcbfee82bcba65b6c5a915dbca7",
+      "bytes": 178
+    },
+    {
+      "original": ".cache/survival-runtime-variants.pre-format.mjs",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-runtime-variants.pre-format.mjs.txt",
+      "sha256": "ad4abcea2c87b2146e48ec1742f6e1dc88c4b00bb5d85fd051c18e40d2679564",
+      "bytes": 189
+    },
+    {
+      "original": "game/demo-modes/survival-runtime-variants.mjs",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/survival-runtime-variants.mjs.txt",
+      "sha256": "066751a50ba1aa8284bcf02140e69a68635a3fcbfee82bcba65b6c5a915dbca7",
+      "bytes": 178
+    },
+    {
+      "original": "game/test/demo-survival.test.mjs",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/demo-survival.test.mjs.txt",
+      "sha256": "e0e9ac81b26a2bbaf29bc8bc4b5fcd38e5c4fe7387ffc2f662fd1954eaddb556",
+      "bytes": 15602
+    },
+    {
+      "original": "scripts/generate-survival-browser-demos.mjs",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/generate-survival-browser-demos.mjs.txt",
+      "sha256": "fc13fbb45a4a1a14e5692204aadf6eb0c3a161003144baee58de9fe137b5d0fd",
+      "bytes": 4525
+    },
+    {
+      "original": "scripts/generate-survival-demos.mjs",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/generate-survival-demos.mjs.txt",
+      "sha256": "05d670f4fabbd95fdd842f2cb58f5309b30dfa6bd9fee90b1f7cf3ebcd597149",
+      "bytes": 4167
+    },
+    {
+      "original": "scripts/qualify-survival-native.mjs",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/qualify-survival-native.mjs.txt",
+      "sha256": "2ccb266116081ef76e816d8758134e73950e85b2d9fb6e7c9f2e885920d8dbf6",
+      "bytes": 7832
+    },
+    {
+      "original": "scripts/test-demo-tick-survival.mjs",
+      "path": "docs/qualification/shared-demos/survival-native-validation-3f84/test-demo-tick-survival.mjs.txt",
+      "sha256": "429f31968c4d7d40df119621ff7f95a6724caa4077b9bd41012b0d9f1fd2c7c1",
+      "bytes": 5367
+    }
+  ]
+}

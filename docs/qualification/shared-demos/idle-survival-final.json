@@ -1,0 +1,64 @@
+{
+  "engine": "chromium",
+  "requestedDurationSeconds": 0,
+  "scope": "current",
+  "idleEntry": true,
+  "started": "2026-10-18T04:43:23.331Z",
+  "checks": [
+    {
+      "type": "idle-current-mode-entry",
+      "elapsedMs": 63418
+    },
+    {
+      "type": "native-playback",
+      "mode": "survival",
+      "source": "survival:field-crossing-broken-crossroads:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "63",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Broken Crossroads",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 25,
+        "renderer": {
+          "allocatedSprites": 18
+        }
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "survival",
+      "caption": "Виживіть у вильоті, збирайте ресурси та обирайте поліпшення, щоб знищити фінальну ціль."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "survival"
+    },
+    {
+      "type": "pause",
+      "mode": "survival"
+    },
+    {
+      "type": "narrow-controls"
+    },
+    {
+      "type": "return-and-persistence",
+      "workers": 0,
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 25,
+        "renderer": {}
+      }
+    }
+  ],
+  "samples": [],
+  "errors": [],
+  "complete": true,
+  "enduranceStarted": "2026-10-18T04:44:35.503Z",
+  "enduranceFinished": "2026-10-18T04:44:35.503Z",
+  "finished": "2026-10-18T04:44:36.059Z"
+}

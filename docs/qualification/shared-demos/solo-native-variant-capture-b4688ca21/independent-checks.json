@@ -1,0 +1,70 @@
+{
+  "format": "SoloNativeCandidateIndependentChecksV1",
+  "complete": true,
+  "started": "2026-10-19T09:38:13.844Z",
+  "finished": "2026-10-19T09:38:16.200Z",
+  "environment": {
+    "version": "v22.13.1",
+    "platform": "darwin",
+    "arch": "x64"
+  },
+  "captureSHA256": "da4698832c55f3e712482b38868aa31a958d2be27dcf8385deda9989f4b265b3",
+  "helperSHA256": "6a200c9f701adf5695d27b16e67885191dc9e710c15a2e6ed2b67fb7a768c242",
+  "checks": [
+    {
+      "id": "solo-qualified-478808a96f4fbf5e",
+      "levelId": "signal-08",
+      "admittedURL": "./demo-data/solo-qualified-478808a96f4fbf5e.node22131-x64.replay.json",
+      "outcome": "won",
+      "ticks": 7322,
+      "durationSeconds": 61.016666666666666,
+      "captures": 12,
+      "capturedCells": 1183,
+      "inputTraceIdentity": "353aaa5366229bfa",
+      "finalCheckpoint": "a6a49980b08ebcab",
+      "sidecarCheckpoints": 12,
+      "ordinaryRecorderExact": true,
+      "fullVerification": true,
+      "playerComplete": true,
+      "diagnosticMatch": true,
+      "hypotheticalCatalogValid": true
+    },
+    {
+      "id": "solo-qualified-d0257fa131665b79",
+      "levelId": "signal-12",
+      "admittedURL": "./demo-data/solo-qualified-d0257fa131665b79.node22131-x64.replay.json",
+      "outcome": "lost",
+      "ticks": 10731,
+      "durationSeconds": 89.425,
+      "captures": 15,
+      "capturedCells": 1171,
+      "inputTraceIdentity": "7cc26937cd6ebd85",
+      "finalCheckpoint": "d3e215a5ed153307",
+      "sidecarCheckpoints": 17,
+      "ordinaryRecorderExact": true,
+      "fullVerification": true,
+      "playerComplete": true,
+      "diagnosticMatch": true,
+      "hypotheticalCatalogValid": true
+    },
+    {
+      "id": "solo-qualified-cc8994b6f3d0482f",
+      "levelId": "courtyard-exits",
+      "admittedURL": "./demo-data/solo-qualified-cc8994b6f3d0482f.node22131-x64.replay.json",
+      "outcome": "won",
+      "ticks": 8274,
+      "durationSeconds": 68.95,
+      "captures": 10,
+      "capturedCells": 1722,
+      "inputTraceIdentity": "68eae2229dbec184",
+      "finalCheckpoint": "cc7ac42ba44694fe",
+      "sidecarCheckpoints": 13,
+      "ordinaryRecorderExact": true,
+      "fullVerification": true,
+      "playerComplete": true,
+      "diagnosticMatch": true,
+      "hypotheticalCatalogValid": true
+    }
+  ],
+  "scope": "Independent same-native-runtime normal recorder reconstruction, sidecar checkpoint comparison, strict full verification and actual replay-player terminal playback. No catalog adoption; no Linux or browser qualification claim."
+}

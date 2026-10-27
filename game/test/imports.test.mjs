@@ -266,6 +266,41 @@ test('browser decoder validates headers before allocating Image and clears its t
   assert.equal(images[0].onload, null);
   assert.equal(images[0].onerror, null);
 });
+test('browser decode cancellation clears pending Image work and preserves abort identity', async (t) => {
+  const images = fakeImage(t);
+  const controller = new AbortController();
+  const reason = new DOMException('Scene retired', 'AbortError');
+  let complete;
+  globalThis.Image.prototype.decode = () =>
+    new Promise((resolve) => {
+      complete = resolve;
+    });
+  const decoding = browserDecodeImage(png, { signal: controller.signal });
+  await Promise.resolve();
+  controller.abort(reason);
+  await assert.rejects(decoding, (error) => error === reason);
+  assert.equal(images[0].removed, true);
+  assert.equal(images[0].onload, null);
+  assert.equal(images[0].onerror, null);
+  complete();
+  await assert.rejects(
+    browserDecodeImage(png, { signal: controller.signal }),
+    (error) => error === reason,
+  );
+  assert.equal(images.length, 1, 'An already cancelled decode allocates no Image.');
+});
+test('browser cancellation rejects even when the abort reason is falsy', async (t) => {
+  const images = fakeImage(t);
+  const controller = new AbortController();
+  const pending = browserDecodeImage(png, { signal: controller.signal });
+  controller.abort(false);
+  const result = await pending.then(
+    () => ({ resolved: true }),
+    (error) => ({ rejected: error }),
+  );
+  assert.deepEqual(result, { rejected: false });
+  assert.equal(images[0].removed, true);
+});
 test('browser load failure rejects and cleans callbacks', async (t) => {
   const images = fakeImage(t, { fail: true });
   await assert.rejects(browserDecodeImage(png), (error) => error.code === 'image-decode-failed');

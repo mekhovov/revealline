@@ -1,0 +1,889 @@
+{
+  "format": "SharedDemoBrowserRestorationV2",
+  "engine": "webkit",
+  "started": "2026-10-18T23:18:28.873Z",
+  "complete": false,
+  "source": {
+    "binding": "The declared frozen manifest is checked before and after; this probe does not independently recompute the complete source tree fingerprint.",
+    "head": "9b1a2b23c5a4b5eab23b4c48ead7a4afe6d1b60d",
+    "manifestPath": "docs/qualification/shared-demos/source-freeze-latest.json",
+    "created": "2026-10-18T23:07:40.544951+00:00",
+    "integrationBase": "dd337c8120fd6f875544c1479713d3aa4299c323",
+    "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "sourceFingerprint": "8b351dfd4ea92f83da4c3bca4d526c5e5522f290f5f8bc404dd2cca1bc295e04",
+    "files": 9996,
+    "bytes": 404389002
+  },
+  "probe": {
+    "path": ".cache/qualify-readiness-webkit-dd337c8.mjs",
+    "durableQualifierSHA256": "be9965575a15bb736e81646a870291519e3accb74c8d78ca30ca6727cbcfffb2",
+    "sha256": "ac6a3396d6ebdcd7923cbc394f331c7bc83707daf5a7582df15c127f90f0fd54",
+    "helperSHA256": "55161bdeeab6b08134728686bea76496819a44a89903d31f63b854088f22d749"
+  },
+  "observationOnly": true,
+  "functionalComplete": false,
+  "strictDiagnosticGate": false,
+  "checks": [],
+  "errors": [],
+  "bfcache": [],
+  "instrumentation": "Ephemeral init observers wrap Storage mutations and IndexedDB object-store writes without changing arguments/results. A context binding retains bounded mutation/lifecycle metadata across reload. A separate task-owned preview serves unchanged frozen runtime with fixture credentials and public,max-age=0,must-revalidate headers. No Playwright routing is installed; a minimal away page is served by this test-only server.",
+  "limitations": [
+    "Observation-only clone adds bounded boot transitions and failure/success snapshot fields for menu geometry, hit targets, warnings and focus. Runtime, flow, conditions and all existing timeouts are unchanged. This diagnostic is not a replacement qualification pass.",
+    "Reload is not browser discard; no actual discard is claimed.",
+    "BFCache is proved only by pageshow.persisted=true and the original document identity; failed admission is reported separately.",
+    "Solo explicitly suspends Demo on pagehide, including persisted history navigation, in inherited upstream app.mjs behavior. A paused watching return documents that policy; it does not prove preservation of playing intent through freeze/resume.",
+    "Fresh ephemeral test profiles exercise ordinary entry and compare a control reload. This does not replay every possible saved-game recovery state.",
+    "Read/write observers detect API calls, not every browser-internal storage mechanism. Existing persistence and saved-flight tests remain complementary.",
+    "Background managed-media asset-cache writes (game/managed-media-store.mjs) are recorded separately from player progress, saves, recovery and tuning; the ordinary app can preload those assets independently of Demo."
+  ],
+  "preview": {
+    "port": 8771,
+    "cache": "revalidate",
+    "mode": "source",
+    "headers": "PUBLIC_SECURITY_HEADERS",
+    "fixtureAccess": true,
+    "observedCacheControl": "public, max-age=0, must-revalidate"
+  },
+  "browserVersion": "26.5",
+  "failure": "page.waitForFunction: Timeout 30000ms exceeded.\n    at ordinaryEntry (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/qualify-readiness-webkit-dd337c8.mjs:183:14)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/qualify-readiness-webkit-dd337c8.mjs:405:23",
+  "activeStage": {
+    "mode": "solo",
+    "stage": "ordinary-control-reload-1"
+  },
+  "events": [
+    {
+      "mode": "solo",
+      "stage": "boot",
+      "id": "1792365510318-0.48152837867762277",
+      "path": "blank",
+      "at": 1792365510321,
+      "kind": "readiness-observation",
+      "observation": {
+        "kind": "init",
+        "at": 1792365510319,
+        "monotonicAt": 165,
+        "bootState": null,
+        "flightState": null,
+        "hidden": false,
+        "focused": true,
+        "activeId": "",
+        "attribute": null,
+        "previous": null,
+        "value": null
+      }
+    },
+    {
+      "mode": "solo",
+      "stage": "boot",
+      "id": "1792365510318-0.48152837867762277",
+      "path": "blank",
+      "at": 1792365510339,
+      "kind": "readiness-observation",
+      "observation": {
+        "kind": "pagehide",
+        "at": 1792365510339,
+        "monotonicAt": 185,
+        "bootState": null,
+        "flightState": null,
+        "hidden": false,
+        "focused": true,
+        "activeId": "",
+        "attribute": null,
+        "previous": null,
+        "value": null
+      }
+    },
+    {
+      "mode": "solo",
+      "stage": "boot",
+      "id": "1792365510318-0.48152837867762277",
+      "path": "blank",
+      "at": 1792365510341,
+      "kind": "lifecycle",
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "mode": "solo",
+      "stage": "boot",
+      "id": "1792365510345-0.8868529422178048",
+      "path": "/game/",
+      "at": 1792365510345,
+      "kind": "readiness-observation",
+      "observation": {
+        "kind": "init",
+        "at": 1792365510345,
+        "monotonicAt": 20,
+        "bootState": null,
+        "flightState": null,
+        "hidden": false,
+        "focused": true,
+        "activeId": null,
+        "attribute": null,
+        "previous": null,
+        "value": null
+      }
+    },
+    {
+      "mode": "solo",
+      "stage": "boot",
+      "id": "1792365510345-0.8868529422178048",
+      "path": "/game/",
+      "at": 1792365510370,
+      "kind": "readiness-observation",
+      "observation": {
+        "kind": "DOMContentLoaded",
+        "at": 1792365510370,
+        "monotonicAt": 44,
+        "bootState": "loading",
+        "flightState": null,
+        "hidden": false,
+        "focused": true,
+        "activeId": "",
+        "attribute": null,
+        "previous": null,
+        "value": null
+      }
+    },
+    {
+      "mode": "solo",
+      "stage": "boot",
+      "id": "1792365510345-0.8868529422178048",
+      "path": "/game/",
+      "at": 1792365510386,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "solo",
+      "stage": "boot",
+      "id": "1792365510345-0.8868529422178048",
+      "path": "/game/",
+      "at": 1792365510513,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "localStorage",
+      "method": "setItem",
+      "key": "revealline.access.revealline.v1",
+      "absentRemoval": false
+    },
+    {
+      "mode": "solo",
+      "stage": "boot",
+      "id": "1792365512258-0.10956797514328398",
+      "path": "blank",
+      "at": 1792365512258,
+      "kind": "readiness-observation",
+      "observation": {
+        "kind": "init",
+        "at": 1792365512258,
+        "monotonicAt": 0,
+        "bootState": null,
+        "flightState": null,
+        "hidden": false,
+        "focused": false,
+        "activeId": null,
+        "attribute": null,
+        "previous": null,
+        "value": null
+      }
+    },
+    {
+      "mode": "solo",
+      "stage": "boot",
+      "id": "1792365512258-0.10956797514328398",
+      "path": "blank",
+      "at": 1792365512259,
+      "kind": "readiness-observation",
+      "observation": {
+        "kind": "DOMContentLoaded",
+        "at": 1792365512259,
+        "monotonicAt": 1,
+        "bootState": null,
+        "flightState": null,
+        "hidden": false,
+        "focused": false,
+        "activeId": "",
+        "attribute": null,
+        "previous": null,
+        "value": null
+      }
+    },
+    {
+      "mode": "solo",
+      "stage": "boot",
+      "id": "1792365512258-0.10956797514328398",
+      "path": "blank",
+      "at": 1792365512259,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "solo",
+      "stage": "boot",
+      "id": "1792365510345-0.8868529422178048",
+      "path": "/game/",
+      "at": 1792365512570,
+      "kind": "readiness-observation",
+      "observation": {
+        "kind": "attribute",
+        "at": 1792365512570,
+        "monotonicAt": 2245,
+        "bootState": "ready",
+        "flightState": "briefing",
+        "hidden": false,
+        "focused": true,
+        "activeId": "shell-featured",
+        "attribute": "data-flight-state",
+        "previous": null,
+        "value": "briefing"
+      }
+    },
+    {
+      "mode": "solo",
+      "stage": "boot",
+      "id": "1792365510345-0.8868529422178048",
+      "path": "/game/",
+      "at": 1792365512571,
+      "kind": "readiness-observation",
+      "observation": {
+        "kind": "attribute",
+        "at": 1792365512571,
+        "monotonicAt": 2245,
+        "bootState": "ready",
+        "flightState": "briefing",
+        "hidden": false,
+        "focused": true,
+        "activeId": "shell-featured",
+        "attribute": "data-boot-state",
+        "previous": "loading",
+        "value": "ready"
+      }
+    },
+    {
+      "mode": "solo",
+      "stage": "boot",
+      "id": "1792365510345-0.8868529422178048",
+      "path": "/game/",
+      "at": 1792365512571,
+      "kind": "readiness-observation",
+      "observation": {
+        "kind": "attribute",
+        "at": 1792365512571,
+        "monotonicAt": 2245,
+        "bootState": "ready",
+        "flightState": "briefing",
+        "hidden": false,
+        "focused": true,
+        "activeId": "shell-featured",
+        "attribute": "data-boot-state",
+        "previous": "interactive",
+        "value": "ready"
+      }
+    },
+    {
+      "mode": "solo",
+      "stage": "boot",
+      "id": "1792365510345-0.8868529422178048",
+      "path": "/game/",
+      "at": 1792365512598,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "sessionStorage",
+      "method": "removeItem",
+      "key": "revealline.accepted-appearance-context.v1",
+      "absentRemoval": true
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792365510345-0.8868529422178048",
+      "path": "/game/",
+      "at": 1792365513140,
+      "kind": "readiness-observation",
+      "observation": {
+        "kind": "attribute",
+        "at": 1792365513140,
+        "monotonicAt": 2815,
+        "bootState": "ready",
+        "flightState": "briefing",
+        "hidden": false,
+        "focused": true,
+        "activeId": "shell-featured",
+        "attribute": "data-flight-state",
+        "previous": "briefing",
+        "value": "briefing"
+      }
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792365510345-0.8868529422178048",
+      "path": "/game/",
+      "at": 1792365513141,
+      "kind": "readiness-observation",
+      "observation": {
+        "kind": "pagehide",
+        "at": 1792365513141,
+        "monotonicAt": 2815,
+        "bootState": "ready",
+        "flightState": "briefing",
+        "hidden": false,
+        "focused": true,
+        "activeId": "shell-featured",
+        "attribute": null,
+        "previous": null,
+        "value": null
+      }
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792365510345-0.8868529422178048",
+      "path": "/game/",
+      "at": 1792365513141,
+      "kind": "lifecycle",
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792365512258-0.10956797514328398",
+      "path": "blank",
+      "at": 1792365513144,
+      "kind": "readiness-observation",
+      "observation": {
+        "kind": "pagehide",
+        "at": 1792365513144,
+        "monotonicAt": 886,
+        "bootState": null,
+        "flightState": null,
+        "hidden": false,
+        "focused": false,
+        "activeId": "",
+        "attribute": null,
+        "previous": null,
+        "value": null
+      }
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792365512258-0.10956797514328398",
+      "path": "blank",
+      "at": 1792365513144,
+      "kind": "lifecycle",
+      "type": "pagehide",
+      "persisted": false
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792365513170-0.3530326092960867",
+      "path": "/game/",
+      "at": 1792365513170,
+      "kind": "readiness-observation",
+      "observation": {
+        "kind": "init",
+        "at": 1792365513170,
+        "monotonicAt": 49,
+        "bootState": null,
+        "flightState": null,
+        "hidden": false,
+        "focused": true,
+        "activeId": null,
+        "attribute": null,
+        "previous": null,
+        "value": null
+      }
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792365513170-0.3530326092960867",
+      "path": "/game/",
+      "at": 1792365513177,
+      "kind": "readiness-observation",
+      "observation": {
+        "kind": "DOMContentLoaded",
+        "at": 1792365513177,
+        "monotonicAt": 56,
+        "bootState": "loading",
+        "flightState": null,
+        "hidden": false,
+        "focused": true,
+        "activeId": "",
+        "attribute": null,
+        "previous": null,
+        "value": null
+      }
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792365513170-0.3530326092960867",
+      "path": "/game/",
+      "at": 1792365513427,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792365514315-0.8770066933755416",
+      "path": "blank",
+      "at": 1792365514315,
+      "kind": "readiness-observation",
+      "observation": {
+        "kind": "init",
+        "at": 1792365514315,
+        "monotonicAt": 0,
+        "bootState": null,
+        "flightState": null,
+        "hidden": false,
+        "focused": false,
+        "activeId": null,
+        "attribute": null,
+        "previous": null,
+        "value": null
+      }
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792365514315-0.8770066933755416",
+      "path": "blank",
+      "at": 1792365514316,
+      "kind": "readiness-observation",
+      "observation": {
+        "kind": "DOMContentLoaded",
+        "at": 1792365514316,
+        "monotonicAt": 1,
+        "bootState": null,
+        "flightState": null,
+        "hidden": false,
+        "focused": false,
+        "activeId": "",
+        "attribute": null,
+        "previous": null,
+        "value": null
+      }
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792365514315-0.8770066933755416",
+      "path": "blank",
+      "at": 1792365514316,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792365513170-0.3530326092960867",
+      "path": "/game/",
+      "at": 1792365514536,
+      "kind": "readiness-observation",
+      "observation": {
+        "kind": "attribute",
+        "at": 1792365514536,
+        "monotonicAt": 1415,
+        "bootState": "interactive",
+        "flightState": "briefing",
+        "hidden": false,
+        "focused": true,
+        "activeId": "",
+        "attribute": "data-flight-state",
+        "previous": null,
+        "value": "briefing"
+      }
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792365513170-0.3530326092960867",
+      "path": "/game/",
+      "at": 1792365514536,
+      "kind": "readiness-observation",
+      "observation": {
+        "kind": "attribute",
+        "at": 1792365514536,
+        "monotonicAt": 1415,
+        "bootState": "interactive",
+        "flightState": "briefing",
+        "hidden": false,
+        "focused": true,
+        "activeId": "",
+        "attribute": "data-boot-state",
+        "previous": "loading",
+        "value": "interactive"
+      }
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-reload-1",
+      "id": "1792365513170-0.3530326092960867",
+      "path": "/game/",
+      "at": 1792365514560,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "sessionStorage",
+      "method": "removeItem",
+      "key": "revealline.accepted-appearance-context.v1",
+      "absentRemoval": true
+    }
+  ],
+  "failedState": {
+    "bootState": "interactive",
+    "accessState": "unlocked",
+    "readyState": "complete",
+    "hasBootAPI": true,
+    "url": "http://127.0.0.1:8771/game/?journey=legacy&library-mission=%5B%22%5B%5C%22classic%5C%22%2C%5C%22base%5C%22%2Cnull%5D%22%2C%22fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718%22%2C%22first-signal%2F2%2F88639f3aab7b6cc1%22%2C%22signal-01%22%2C%221%22%5D",
+    "hidden": false,
+    "focused": true,
+    "activeElement": {
+      "tag": "BODY",
+      "id": "",
+      "className": "field-kit game-shell",
+      "text": "Find your line.\n        Reading your saved flight and installed chapters…\n        <p class=\"launch-notice\">\n            JavaScript is disabled. Enable JavaScrip"
+    },
+    "bootTransitions": [
+      {
+        "kind": "init",
+        "at": 1792365513170,
+        "monotonicAt": 49,
+        "bootState": null,
+        "flightState": null,
+        "hidden": false,
+        "focused": true,
+        "activeId": null,
+        "attribute": null,
+        "previous": null,
+        "value": null
+      },
+      {
+        "kind": "DOMContentLoaded",
+        "at": 1792365513177,
+        "monotonicAt": 56,
+        "bootState": "loading",
+        "flightState": null,
+        "hidden": false,
+        "focused": true,
+        "activeId": "",
+        "attribute": null,
+        "previous": null,
+        "value": null
+      },
+      {
+        "kind": "attribute",
+        "at": 1792365514536,
+        "monotonicAt": 1415,
+        "bootState": "interactive",
+        "flightState": "briefing",
+        "hidden": false,
+        "focused": true,
+        "activeId": "",
+        "attribute": "data-flight-state",
+        "previous": null,
+        "value": "briefing"
+      },
+      {
+        "kind": "attribute",
+        "at": 1792365514536,
+        "monotonicAt": 1415,
+        "bootState": "interactive",
+        "flightState": "briefing",
+        "hidden": false,
+        "focused": true,
+        "activeId": "",
+        "attribute": "data-boot-state",
+        "previous": "loading",
+        "value": "interactive"
+      }
+    ],
+    "bootTransitionOverflow": 0,
+    "menus": [
+      {
+        "selector": "#shell-menu",
+        "present": true,
+        "hidden": false,
+        "inert": false,
+        "disabled": false,
+        "ariaBusy": null,
+        "visibleRects": 1,
+        "blockedAncestor": null,
+        "rect": {
+          "x": 12,
+          "y": 3,
+          "width": 184.3125,
+          "height": 44
+        },
+        "style": {
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "pointerEvents": "auto",
+          "zIndex": "auto"
+        },
+        "centerInViewport": true,
+        "hit": {
+          "tag": "IMG",
+          "id": "",
+          "className": "fpv-line-wordmark",
+          "text": ""
+        },
+        "hitOwned": true
+      },
+      {
+        "selector": "#overlay-menu",
+        "present": true,
+        "hidden": false,
+        "inert": false,
+        "disabled": false,
+        "ariaBusy": null,
+        "visibleRects": 1,
+        "blockedAncestor": null,
+        "rect": {
+          "x": 190,
+          "y": 520.078125,
+          "width": 644,
+          "height": 44
+        },
+        "style": {
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "pointerEvents": "auto",
+          "zIndex": "auto"
+        },
+        "centerInViewport": true,
+        "hit": {
+          "tag": "BUTTON",
+          "id": "overlay-menu",
+          "className": "button secondary",
+          "text": "Home"
+        },
+        "hitOwned": true
+      },
+      {
+        "selector": "#shell-demo",
+        "present": true,
+        "hidden": false,
+        "inert": false,
+        "disabled": false,
+        "ariaBusy": null,
+        "visibleRects": 0,
+        "blockedAncestor": null,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "style": {
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "pointerEvents": "auto",
+          "zIndex": "auto"
+        },
+        "centerInViewport": true,
+        "hit": null,
+        "hitOwned": false
+      },
+      {
+        "selector": "#start-button",
+        "present": true,
+        "hidden": false,
+        "inert": false,
+        "disabled": false,
+        "ariaBusy": null,
+        "visibleRects": 1,
+        "blockedAncestor": null,
+        "rect": {
+          "x": 190,
+          "y": 416.078125,
+          "width": 644,
+          "height": 44
+        },
+        "style": {
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "pointerEvents": "auto",
+          "zIndex": "auto"
+        },
+        "centerInViewport": true,
+        "hit": {
+          "tag": "BUTTON",
+          "id": "start-button",
+          "className": "button primary",
+          "text": "Start mission ↗"
+        },
+        "hitOwned": true
+      },
+      {
+        "selector": "#game-overlay",
+        "present": true,
+        "hidden": false,
+        "inert": false,
+        "disabled": null,
+        "ariaBusy": null,
+        "visibleRects": 1,
+        "blockedAncestor": null,
+        "rect": {
+          "x": 0,
+          "y": 52,
+          "width": 1024,
+          "height": 716
+        },
+        "style": {
+          "display": "flex",
+          "visibility": "visible",
+          "opacity": "1",
+          "pointerEvents": "auto",
+          "zIndex": "40"
+        },
+        "centerInViewport": true,
+        "hit": {
+          "tag": "DIV",
+          "id": "overlay-reading",
+          "className": "overlay-message",
+          "text": "MISSION 01\n                  Clear a path. Reveal a world.\n                  Leave safe ground, draw a line and return.\nReveal 45% by enclosing regions without "
+        },
+        "hitOwned": true
+      },
+      {
+        "selector": "#shell-home",
+        "present": true,
+        "hidden": false,
+        "inert": false,
+        "disabled": null,
+        "ariaBusy": null,
+        "visibleRects": 0,
+        "blockedAncestor": null,
+        "rect": {
+          "x": 0,
+          "y": 0,
+          "width": 0,
+          "height": 0
+        },
+        "style": {
+          "display": "none",
+          "visibility": "visible",
+          "opacity": "1",
+          "pointerEvents": "auto",
+          "zIndex": "auto"
+        },
+        "centerInViewport": true,
+        "hit": null,
+        "hitOwned": false
+      }
+    ],
+    "preparation": [
+      {
+        "id": "boot-status",
+        "present": true,
+        "hidden": false,
+        "state": null,
+        "stage": null,
+        "text": "Reading your saved flight and installed chapters…"
+      },
+      {
+        "id": "boot-detail",
+        "present": true,
+        "hidden": true,
+        "state": null,
+        "stage": null,
+        "text": ""
+      },
+      {
+        "id": "overlay-title",
+        "present": true,
+        "hidden": false,
+        "state": null,
+        "stage": null,
+        "text": "Clear a path. Reveal a world."
+      },
+      {
+        "id": "overlay-copy",
+        "present": true,
+        "hidden": false,
+        "state": null,
+        "stage": null,
+        "text": "Leave safe ground, draw a line and return.\nReveal 45% by enclosing regions without a field enemy."
+      },
+      {
+        "id": "run-message",
+        "present": true,
+        "hidden": false,
+        "state": null,
+        "stage": null,
+        "text": "Your first route: fly down from the marked start to the opposite border."
+      },
+      {
+        "id": "flight-preparation-status",
+        "present": true,
+        "hidden": true,
+        "state": null,
+        "stage": null,
+        "text": ""
+      },
+      {
+        "id": "presentation-preparation-status",
+        "present": true,
+        "hidden": false,
+        "state": "busy",
+        "stage": "verifying",
+        "text": "Verifying release artwork and fonts…"
+      },
+      {
+        "id": "theme-preparation-status",
+        "present": true,
+        "hidden": true,
+        "state": null,
+        "stage": null,
+        "text": ""
+      },
+      {
+        "id": "craft-preparation-status",
+        "present": true,
+        "hidden": true,
+        "state": "ready",
+        "stage": "decoding",
+        "text": ""
+      }
+    ],
+    "documentId": "1792365513170-0.3530326092960867",
+    "open": false,
+    "practice": false,
+    "phase": null,
+    "mode": null,
+    "tick": null,
+    "bodyState": "briefing",
+    "dialogs": [],
+    "nativeSurfaces": 0,
+    "lifecycle": [
+      {
+        "type": "pageshow",
+        "persisted": false
+      }
+    ],
+    "navigation": [
+      {
+        "type": "reload",
+        "notRestoredReasons": null
+      }
+    ]
+  },
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-18T23:19:17.660Z",
+  "previewClosed": true
+}

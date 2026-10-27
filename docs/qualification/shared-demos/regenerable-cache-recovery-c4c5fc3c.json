@@ -1,0 +1,47 @@
+{
+  "format": "revealline-demo-regenerable-cache-recovery.v1",
+  "started": "2026-10-19T02:35:57.371354+00:00",
+  "availableBeforeBytes": 123994112,
+  "scope": "Only regenerable Chrome HTTP/compiled-code cache and npm content-addressed download cache. No profile history, cookies, preferences, sessions, installed dependencies or other worktrees.",
+  "rows": [
+    {
+      "path": "/Users/oleksandr.mekhovov/Library/Caches/Google/Chrome/Default/Cache",
+      "files": 2706,
+      "bytes": 262163302,
+      "allocatedBytes": 268136448,
+      "openPathsObserved": 0,
+      "identity": [
+        16777231,
+        141757118
+      ],
+      "removed": true
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/Library/Caches/Google/Chrome/Default/Code Cache",
+      "files": 486,
+      "bytes": 4117116,
+      "allocatedBytes": 5156864,
+      "openPathsObserved": 0,
+      "identity": [
+        16777231,
+        141757117
+      ],
+      "removed": true
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/.npm/_cacache",
+      "files": 234,
+      "bytes": 41635207,
+      "allocatedBytes": 42262528,
+      "openPathsObserved": 0,
+      "identity": [
+        16777231,
+        146618259
+      ],
+      "removed": true
+    }
+  ],
+  "complete": true,
+  "availableAfterBytes": 442806272,
+  "finished": "2026-10-19T02:35:59.290898+00:00"
+}

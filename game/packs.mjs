@@ -791,7 +791,9 @@ export async function inspectPackLibraryMetadata(candidate) {
 export function isPackLibraryMetadata(value) {
   return metadataLibraries.has(value);
 }
-function campaignMetadata(pack, source) {
+/** Read-only projection for validated runtime packs and trusted authoring tools.
+ * This creates no prepared-pack authority and never decodes artwork. */
+export function campaignMetadata(pack, source) {
   const campaign = campaignData(pack, source);
   return {
     campaign,

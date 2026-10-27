@@ -1,0 +1,115 @@
+{
+  "format": "revealline-offline-demo-catalog-ownership-review.v1",
+  "started": "2026-10-18T23:51:46Z",
+  "sourceRevision": "0b8ca8b059e5ec382d9718b219523fe31fdec322",
+  "sourceHashes": {
+    "scripts/demo-native-dependencies.mjs": "9a126a95fd643e4312c115d6382649961ab6e8c1250036989bb2f1ecf24db624",
+    "scripts/offline-content.mjs": "0c22169d29b779432ed95b79fde136657e974df509246c33e9716181b79d14ca",
+    "scripts/qualify-demo-main-pages.mjs": "b6d92d87064ffcd8876e6d6a3599cb58f3a2bd659b8b38e696e715f94bb2193a",
+    "scripts/test-demo-native-dependencies.mjs": "a082b06ad73176c84545406844d826e808ec13b0dfc3c52b2022962a089e419c",
+    "scripts/test-qualify-demo-main-pages.mjs": "fac70ecb6bc6614f13d3bbcc60381853de66c5cfca4bd36830364493e83f0bf2",
+    "scripts/test-offline-publication.mjs": "580138ee2fcbd9b42445f0119b9006781fbc6867731a9762dfcec97db1f44d14",
+    "game/download-catalogue.mjs": "ea47c830901de0db5121657f9f1700386e1e263bb7527665a74b21fbf73f776c",
+    "game/offline-download-session.mjs": "410d68e0ea31750d5cdcc62d3b17e2f34caf893d860361528ae76ba077880459"
+  },
+  "scope": "Finite catalog ownership fix, actual shipped Snake/Survival recording inventory, existing native dependency/audit/offline publication regressions. No full build or browser run.",
+  "steps": [
+    {
+      "name": "regressions",
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "scripts/test-demo-native-dependencies.mjs",
+        "scripts/test-qualify-demo-main-pages.mjs",
+        "scripts/test-offline-publication.mjs"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 12.612,
+      "log": "docs/qualification/shared-demos/offline-demo-catalog-ownership-dd337c8-regressions.tap.txt"
+    },
+    {
+      "name": "lint",
+      "command": [
+        "node_modules/.bin/eslint",
+        "scripts/demo-native-dependencies.mjs",
+        "scripts/offline-content.mjs",
+        "scripts/qualify-demo-main-pages.mjs",
+        "scripts/test-demo-native-dependencies.mjs",
+        "--max-warnings",
+        "0"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.343,
+      "log": "docs/qualification/shared-demos/offline-demo-catalog-ownership-dd337c8-lint.log.txt"
+    },
+    {
+      "name": "format",
+      "command": [
+        "node_modules/.bin/prettier",
+        "--check",
+        "scripts/demo-native-dependencies.mjs",
+        "scripts/offline-content.mjs",
+        "scripts/qualify-demo-main-pages.mjs",
+        "scripts/test-demo-native-dependencies.mjs"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.342,
+      "log": "docs/qualification/shared-demos/offline-demo-catalog-ownership-dd337c8-format.log.txt"
+    },
+    {
+      "name": "diff",
+      "command": [
+        "git",
+        "diff",
+        "--check",
+        "--",
+        "scripts/demo-native-dependencies.mjs",
+        "scripts/offline-content.mjs",
+        "scripts/qualify-demo-main-pages.mjs",
+        "scripts/test-demo-native-dependencies.mjs"
+      ],
+      "exitCode": 0,
+      "elapsedSeconds": 0.04,
+      "log": "docs/qualification/shared-demos/offline-demo-catalog-ownership-dd337c8-diff.log.txt"
+    }
+  ],
+  "finalSourceHashes": {
+    "scripts/demo-native-dependencies.mjs": "9a126a95fd643e4312c115d6382649961ab6e8c1250036989bb2f1ecf24db624",
+    "scripts/offline-content.mjs": "0c22169d29b779432ed95b79fde136657e974df509246c33e9716181b79d14ca",
+    "scripts/qualify-demo-main-pages.mjs": "b6d92d87064ffcd8876e6d6a3599cb58f3a2bd659b8b38e696e715f94bb2193a",
+    "scripts/test-demo-native-dependencies.mjs": "a082b06ad73176c84545406844d826e808ec13b0dfc3c52b2022962a089e419c",
+    "scripts/test-qualify-demo-main-pages.mjs": "fac70ecb6bc6614f13d3bbcc60381853de66c5cfca4bd36830364493e83f0bf2",
+    "scripts/test-offline-publication.mjs": "580138ee2fcbd9b42445f0119b9006781fbc6867731a9762dfcec97db1f44d14",
+    "game/download-catalogue.mjs": "ea47c830901de0db5121657f9f1700386e1e263bb7527665a74b21fbf73f776c",
+    "game/offline-download-session.mjs": "410d68e0ea31750d5cdcc62d3b17e2f34caf893d860361528ae76ba077880459"
+  },
+  "finalRevision": "0b8ca8b059e5ec382d9718b219523fe31fdec322",
+  "sourceStable": true,
+  "headStable": true,
+  "complete": true,
+  "finished": "2026-10-18T23:51:59Z",
+  "redRegression": {
+    "log": "docs/qualification/shared-demos/offline-demo-catalog-ownership-dd337c8-before.tap.txt",
+    "exitCode": 1,
+    "cause": "Actual 312 recording bodies owned, but both primary catalogs absent from extras:demo (expected 314 entries)."
+  },
+  "classification": {
+    "missingPrimaryCatalogs": [
+      "game/demo-data/snake/catalog.json",
+      "game/demo-data/survival/catalog.json"
+    ],
+    "otherPrimaryCatalogs": "Solo base core, Journey catalogs directly owned, SIM index directly owned with existing named native package requirement.",
+    "diagnosticSidecars": "Already excluded from core before tooling classification and selected through shared.",
+    "qualificationOnly": [
+      "game/demo-data/variant-provenance.json",
+      "game/demo-data/survival/catalog.chromium.json",
+      "game/demo-data/survival/catalog.firefox.json",
+      "game/demo-data/survival/catalog.webkit.json"
+    ],
+    "runtimeChanged": false,
+    "limitsChanged": false,
+    "previousFailedBuildPreserved": true,
+    "fullEmittedBuildStillRequired": true
+  }
+}

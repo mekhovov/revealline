@@ -1,0 +1,210 @@
+TAP version 13
+# Subtest: uninstalled authored Solo Fresh preserves exact chooser handoff from ?journey=legacy
+ok 1 - uninstalled authored Solo Fresh preserves exact chooser handoff from ?journey=legacy
+  ---
+  duration_ms: 1685.551709
+  ...
+# Subtest: uninstalled authored Solo Fresh preserves exact chooser handoff from Journey
+ok 2 - uninstalled authored Solo Fresh preserves exact chooser handoff from Journey
+  ---
+  duration_ms: 4000.671875
+  ...
+# Subtest: uninstalled Solo Fresh keeps an unfinished flight behind its ordinary departure guard
+ok 3 - uninstalled Solo Fresh keeps an unfinished flight behind its ordinary departure guard
+  ---
+  duration_ms: 2286.3675
+  ...
+# Subtest: keyboard: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+ok 4 - keyboard: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+  ---
+  duration_ms: 2579.238667
+  ...
+# Subtest: touch: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+ok 5 - touch: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+  ---
+  duration_ms: 2225.391417
+  ...
+# Subtest: actual idle home entry resets on activity and does not write game data
+ok 6 - actual idle home entry resets on activity and does not write game data
+  ---
+  duration_ms: 1864.323542
+  ...
+# Subtest: Watch from Settings restores its dialog and focus on Back, while Fresh leaves Settings closed
+ok 7 - Watch from Settings restores its dialog and focus on Back, while Fresh leaves Settings closed
+  ---
+  duration_ms: 9960.98225
+  ...
+# Subtest: leaving a Journey demo restores exactly one truthful title action without saving
+ok 8 - leaving a Journey demo restores exactly one truthful title action without saving
+  ---
+  duration_ms: 3741.760125
+  ...
+# Subtest: fresh start of an installed locked demonstrated level stays in isolated exact-level practice
+ok 9 - fresh start of an installed locked demonstrated level stays in isolated exact-level practice
+  ---
+  duration_ms: 1603.252542
+  ...
+# Subtest: takeover reconstructs the shown board into practice without advancing the recorded or ordinary owners
+ok 10 - takeover reconstructs the shown board into practice without advancing the recorded or ordinary owners
+  ---
+  duration_ms: 1543.403417
+  ...
+# Subtest: controller gameplay action takes over while preserving one hardware read per frame
+ok 11 - controller gameplay action takes over while preserving one hardware read per frame
+  ---
+  duration_ms: 1486.198083
+  ...
+# Subtest: a single remaining source prepares a new painter on repetition without reusing disposed media
+ok 12 - a single remaining source prepares a new painter on repetition without reusing disposed media
+  ---
+  duration_ms: 3061.583292
+  ...
+# Subtest: unattended playback bounds a visible stall and automatically repeats completed scenes without opening a menu
+ok 13 - unattended playback bounds a visible stall and automatically repeats completed scenes without opening a menu
+  ---
+  duration_ms: 9736.338959
+  ...
+# Subtest: fresh gameplay input on a completed demo starts exact-level practice without a confirmation menu
+ok 14 - fresh gameplay input on a completed demo starts exact-level practice without a confirmation menu
+  ---
+  duration_ms: 1919.446667
+  ...
+# Subtest: a replay fork completing after blur cannot arm hidden practice or replace its current owner
+ok 15 - a replay fork completing after blur cannot arm hidden practice or replace its current owner
+  ---
+  duration_ms: 1595.916042
+  ...
+# Subtest: locked Fresh handoff cancelled by blur remains paused until another explicit choice
+ok 16 - locked Fresh handoff cancelled by blur remains paused until another explicit choice
+  ---
+  duration_ms: 1598.342625
+  ...
+# Subtest: locked Fresh handoff cancelled by hidden remains paused until another explicit choice
+ok 17 - locked Fresh handoff cancelled by hidden remains paused until another explicit choice
+  ---
+  duration_ms: 1602.473
+  ...
+# Subtest: a failed saved-flight write keeps Fresh behind replacement review and Stay retains the ordinary cut
+ok 18 - a failed saved-flight write keeps Fresh behind replacement review and Stay retains the ordinary cut
+  ---
+  duration_ms: 9431.043833
+  ...
+# Subtest: accessible Fresh opens the demonstrated level at Ready and preserves the previous unfinished flight without rewards
+ok 19 - accessible Fresh opens the demonstrated level at Ready and preserves the previous unfinished flight without rewards
+  ---
+  duration_ms: 10103.618042
+  ...
+# Subtest: demo control hints show the saved keyboard bindings in the actual app
+ok 20 - demo control hints show the saved keyboard bindings in the actual app
+  ---
+  duration_ms: 1573.360791
+  ...
+# Subtest: spectator information and play invitation stay visible while details remain optional
+ok 21 - spectator information and play invitation stay visible while details remain optional
+  ---
+  duration_ms: 1571.15325
+  ...
+# Subtest: demo guide respects the shared character-reactions preference without hiding teaching captions
+ok 22 - demo guide respects the shared character-reactions preference without hiding teaching captions
+  ---
+  duration_ms: 1914.761708
+  ...
+# Subtest: native watching advances without Solo effects and practice resumes on its visible surface
+ok 23 - native watching advances without Solo effects and practice resumes on its visible surface
+  ---
+  duration_ms: 25.587125
+  ...
+# Subtest: native readouts use shared playback time when the engine exposes no time field
+ok 24 - native readouts use shared playback time when the engine exposes no time field
+  ---
+  duration_ms: 7.1055
+  ...
+# Subtest: raw SIM-origin controller samples reach Snake practice through the mounted shared host
+ok 25 - raw SIM-origin controller samples reach Snake practice through the mounted shared host
+  ---
+  duration_ms: 13.245459
+  ...
+# Subtest: a quick close and reopen awaits asynchronous scene disposal
+ok 26 - a quick close and reopen awaits asynchronous scene disposal
+  ---
+  duration_ms: 5.634417
+  ...
+# Subtest: renderer disposal failure still retires physics and removes the owned surface
+ok 27 - renderer disposal failure still retires physics and removes the owned surface
+  ---
+  duration_ms: 25.719292
+  ...
+# Subtest: a practice world returned after cancellation is disposed exactly once
+ok 28 - a practice world returned after cancellation is disposed exactly once
+  ---
+  duration_ms: 5.017167
+  ...
+# Subtest: graphics loss retires the native engine and publishes its bounded diagnostic
+ok 29 - graphics loss retires the native engine and publishes its bounded diagnostic
+  ---
+  duration_ms: 9.46925
+  ...
+# Subtest: native preparation forwards one bounded reporter through source and renderer ownership
+ok 30 - native preparation forwards one bounded reporter through source and renderer ownership
+  ---
+  duration_ms: 2.7845
+  ...
+# Subtest: SIM required inventory distinguishes exact revisions and covers every authored allowed variant
+ok 31 - SIM required inventory distinguishes exact revisions and covers every authored allowed variant
+  ---
+  duration_ms: 1.730167
+  ...
+# Subtest: SIM enumeration loads metadata only and identities match the native resolver
+ok 32 - SIM enumeration loads metadata only and identities match the native resolver
+  ---
+  duration_ms: 750.396166
+  ...
+# Subtest: SIM Fresh URL resolves only an exact authored source and its admitted response
+ok 33 - SIM Fresh URL resolves only an exact authored source and its admitted response
+  ---
+  duration_ms: 2432.772709
+  ...
+# Subtest: SIM complete playback and takeover use the same exact native prefix without persistence
+ok 34 - SIM complete playback and takeover use the same exact native prefix without persistence
+  ---
+  duration_ms: 35.47525
+  ...
+# Subtest: SIM admission rejects stale identity, invalid bodies and non-progressing performances
+ok 35 - SIM admission rejects stale identity, invalid bodies and non-progressing performances
+  ---
+  duration_ms: 1.604583
+  ...
+# Subtest: SIM reports its first divergent diagnostic checkpoint without weakening full verification
+ok 36 - SIM reports its first divergent diagnostic checkpoint without weakening full verification
+  ---
+  duration_ms: 18.691125
+  ...
+# Subtest: legacy Academy practice forwards only the four native axes
+ok 37 - legacy Academy practice forwards only the four native axes
+  ---
+  duration_ms: 23.303583
+  ...
+# Subtest: missing SIM metadata is classified as unavailable without probing individual recordings
+ok 38 - missing SIM metadata is classified as unavailable without probing individual recordings
+  ---
+  duration_ms: 0.335958
+  ...
+# Subtest: SIM semantic captions retain identity while current and historical text follow locale
+ok 39 - SIM semantic captions retain identity while current and historical text follow locale
+  ---
+  duration_ms: 0.318209
+  ...
+# Subtest: SIM full verification failures diagnose the first mismatching checkpoint and remain rejected
+ok 40 - SIM full verification failures diagnose the first mismatching checkpoint and remain rejected
+  ---
+  duration_ms: 26.417458
+  ...
+1..40
+# tests 40
+# suites 0
+# pass 40
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 82412.237292

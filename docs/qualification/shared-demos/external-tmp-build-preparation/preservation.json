@@ -1,0 +1,67 @@
+{
+  "format": "SharedDemoExternalTmpBuildEvidencePreservationV1",
+  "complete": true,
+  "preservedAt": "2026-10-19T10:36:49.726471+00:00",
+  "files": [
+    {
+      "source": ".cache/final-build-external-tmp-preparation.json",
+      "preserved": "docs/qualification/shared-demos/external-tmp-build-preparation/final-build-external-tmp-preparation.json",
+      "bytes": 3780,
+      "sha256": "2a2727a6a5e29a8212772992654565ac09d95e4ae660e1747008ea08bd3f7408"
+    },
+    {
+      "source": ".cache/run-final-build-external-tmp.mjs",
+      "preserved": "docs/qualification/shared-demos/external-tmp-build-preparation/run-final-build-external-tmp.mjs.txt",
+      "bytes": 11827,
+      "sha256": "aec32600eb10623ff3c0a25eec6f4d0ccb2db43c50cc5026511048205bb32533"
+    },
+    {
+      "source": ".cache/final-build-external-tmp.mjs",
+      "preserved": "docs/qualification/shared-demos/external-tmp-build-preparation/final-build-external-tmp.mjs.txt",
+      "bytes": 4315,
+      "sha256": "76d87ce26f2ed9c5873e3ee75c9f9ae296aa8fc6c2485ed39c4aa0d16df7480f"
+    },
+    {
+      "source": ".cache/test-final-build-external-tmp.mjs",
+      "preserved": "docs/qualification/shared-demos/external-tmp-build-preparation/test-final-build-external-tmp.mjs.txt",
+      "bytes": 5519,
+      "sha256": "96f13c78a0d798d880db85e370a1c209a2b058ad06d915a267f4ad06c3f0b7c1"
+    },
+    {
+      "source": ".cache/final-build-external-tmp-guards.tap.txt",
+      "preserved": "docs/qualification/shared-demos/external-tmp-build-preparation/final-build-external-tmp-guards.tap.txt",
+      "bytes": 1952,
+      "sha256": "3dc2c21fd969b647daff49579eba0544563b12a592767565d16636d0672a5d66"
+    },
+    {
+      "source": ".cache/run-final-build-current.mjs",
+      "preserved": "docs/qualification/shared-demos/external-tmp-build-preparation/run-final-build-current.mjs.txt",
+      "bytes": 10929,
+      "sha256": "dfbcb74bbff73b4a50af80e35cbbec8e99da7748abb41d83d55ad8d592f4c56d"
+    },
+    {
+      "source": ".cache/final-build-scratch.mjs",
+      "preserved": "docs/qualification/shared-demos/external-tmp-build-preparation/final-build-scratch.mjs.txt",
+      "bytes": 4580,
+      "sha256": "1c8c537e0e9c68a57a5d568fccd641b6c26a7c5458115755c2125afd4546d6e7"
+    },
+    {
+      "source": ".cache/final-build-wrapper-support.mjs",
+      "preserved": "docs/qualification/shared-demos/external-tmp-build-preparation/final-build-wrapper-support.mjs.txt",
+      "bytes": 1742,
+      "sha256": "dfce473c01d09a65f15ae4f22d5936945c262e7fc5af93746da7704e3541b07e"
+    }
+  ],
+  "guardTests": {
+    "pass": 9,
+    "fail": 0,
+    "skipped": 0
+  },
+  "independentReview": {
+    "agent": "acceptance_review",
+    "result": "No actionable issue. Existing stage-close supervision and synchronous filesystem limitations remain explicit."
+  },
+  "preparedOnly": true,
+  "buildLaunched": false,
+  "productionChanges": false
+}

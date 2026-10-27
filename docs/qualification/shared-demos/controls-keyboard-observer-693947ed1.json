@@ -1,0 +1,1758 @@
+{
+  "started": "2026-10-19T01:08:15.527Z",
+  "complete": false,
+  "checks": [
+    {
+      "type": "menu-owns-remapped-key",
+      "origin": "snake",
+      "mode": "snake"
+    }
+  ],
+  "errors": [],
+  "headBefore": "693947ed1373db7a265def126a5eede2bf875013",
+  "sourceBefore": {
+    "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+    "files": 9996,
+    "bytes": 404392393
+  },
+  "buildInputsBefore": {
+    "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+    "files": 9398,
+    "bytes": 348357907
+  },
+  "observerSHA256": "49915f5ba5558fc454bea10255451888bbe279b8d141c19f75aeef93f51f9b65",
+  "format": "SharedDemoControlsKeyboardObservationV1",
+  "scope": "Observation-only first Snake control sequence on unchanged emitted source. Before-app read-only event listeners record only KeyI/ArrowUp plus focus changes; no native API is wrapped. No event is suppressed or rewritten. This diagnostic does not replace either failed qualification receipt.",
+  "preview": {
+    "mode": "generated-build",
+    "headers": "generated _headers (verified)",
+    "cache": "revalidate",
+    "fixtureAccess": true,
+    "emittedPreview": {
+      "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-dd337c8-693947ed1",
+      "manifestSHA256": "061e1017b9251daaae701b5ae34b874039331653630e378c44cc2ac5e73eb474",
+      "inventorySHA256": "69229598ca547a5e01e805b8fac551ec0a45591e366074f4f6a6c1a4745969cd",
+      "files": 5952,
+      "sourceRevision": "693947ed1373db7a265def126a5eede2bf875013",
+      "sourceFingerprint": {
+        "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+        "files": 9996,
+        "bytes": 404392393
+      },
+      "buildInputFingerprint": {
+        "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+        "files": 9398,
+        "bytes": 348357907
+      },
+      "sourceVerified": true,
+      "sourceVerification": {
+        "head": "693947ed1373db7a265def126a5eede2bf875013",
+        "runtime": {
+          "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+          "files": 9996,
+          "bytes": 404392393
+        },
+        "buildInput": {
+          "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+          "files": 9398,
+          "bytes": 348357907
+        }
+      }
+    },
+    "fixtureResponses": [
+      {
+        "path": "game/snake/play.html",
+        "original": {
+          "bytes": 17647,
+          "sha256": "4621069238ed1fa74544623ca83e3119a0e2d1ac21aa99c4dbd3ffccfe9a2741"
+        },
+        "served": {
+          "bytes": 17621,
+          "sha256": "43e0761d95a2575f3d04f92812c39f075e47497748eea1172ee808e8b4bd6b54"
+        },
+        "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+      }
+    ]
+  },
+  "seededProfileKey": "revealline.library.release-0.151.1.v1",
+  "limitations": [
+    "Emitted bytes are verified against the held source; only local HTML access credentials differ. No offline HTML integrity or physical-controller claim."
+  ],
+  "failure": "page.waitForFunction: Timeout 15000ms exceeded.\n    at practiceByRemap (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/diagnose-controls-keyboard-693947ed1.mjs:68:14)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/diagnose-controls-keyboard-693947ed1.mjs:156:35\n    at async bounded (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/diagnose-controls-keyboard-693947ed1.mjs:31:16)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/diagnose-controls-keyboard-693947ed1.mjs:108:3",
+  "visibleText": "SNAKE\nPause\nOpen Loop\nWALLS\nEnemies\nThis run\n0\nLifetime\n0\n\nTurn before the edge. Your drone keeps moving. Catch the enemies.\n\nCAUGHT\n0 / 8\nLENGTH\n4\nTIME\n0:00\nSCORE\n0\nNEXT TURN\n·\nREADY FOR LAUNCH\nStart mission\n\nCatch the humanoid. Grow one segment. Keep moving without hitting a wall or your body.\n\nSolo\n1P\nTeam\n2P\nDuel\n2P\nSnake\nFPV Survivals\nbeta\nSIM\nbeta\nLess\n\nOpen Loop\n\nStart\nSelect Mission\nSettings\nWatch demo\nWatch all modes\nSound: off\nFull screen\n\nDEMO · RECORDED PLAY\n\nSnake Solo · Runner at the Window\nPause\nNext level\nWant to play?\nAudio & details\nFullscreen\nBack\n\nFLIGHT GUIDE\n\nTarget caught. The tail grows, so leave space for the next turn.\n\nTargets: 3 / 8\n\nSOUND OFF\n\nCarol of the Bells (Metal Version) · Alexander Nakarada\n\nSteer to take over · practice, no rewards",
+  "keyboardObservation": {
+    "events": [
+      {
+        "stage": "focus",
+        "at": 63.80000000074506,
+        "type": "focusin",
+        "key": null,
+        "code": null,
+        "repeat": null,
+        "defaultPrevented": false,
+        "isComposing": null,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "INPUT",
+          "id": "",
+          "className": "",
+          "demoUI": false,
+          "dialog": null
+        },
+        "active": {
+          "tag": "INPUT",
+          "id": "",
+          "className": "",
+          "demoUI": false,
+          "dialog": null
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": null,
+        "mode": null,
+        "practice": false
+      },
+      {
+        "stage": "focus",
+        "at": 123.40000000223517,
+        "type": "focusout",
+        "key": null,
+        "code": null,
+        "repeat": null,
+        "defaultPrevented": false,
+        "isComposing": null,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "INPUT",
+          "id": "",
+          "className": "",
+          "demoUI": false,
+          "dialog": null
+        },
+        "active": {
+          "tag": "BODY",
+          "id": "",
+          "className": "field-kit snake-player",
+          "demoUI": false,
+          "dialog": null
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": null,
+        "mode": null,
+        "practice": false
+      },
+      {
+        "stage": "focus",
+        "at": 123.5,
+        "type": "focusin",
+        "key": null,
+        "code": null,
+        "repeat": null,
+        "defaultPrevented": false,
+        "isComposing": null,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "",
+          "className": "",
+          "demoUI": false,
+          "dialog": null
+        },
+        "active": {
+          "tag": "BUTTON",
+          "id": "",
+          "className": "",
+          "demoUI": false,
+          "dialog": null
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": null,
+        "mode": null,
+        "practice": false
+      },
+      {
+        "stage": "focus",
+        "at": 137.80000000074506,
+        "type": "focusout",
+        "key": null,
+        "code": null,
+        "repeat": null,
+        "defaultPrevented": false,
+        "isComposing": null,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "",
+          "className": "",
+          "demoUI": false,
+          "dialog": null
+        },
+        "active": {
+          "tag": "BODY",
+          "id": "",
+          "className": "field-kit snake-player",
+          "demoUI": false,
+          "dialog": null
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": null,
+        "mode": null,
+        "practice": false
+      },
+      {
+        "stage": "focus",
+        "at": 703,
+        "type": "focusin",
+        "key": null,
+        "code": null,
+        "repeat": null,
+        "defaultPrevented": false,
+        "isComposing": null,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "snake-action-menu",
+          "className": "button secondary mode-play-brand-button",
+          "demoUI": false,
+          "dialog": null
+        },
+        "active": {
+          "tag": "BUTTON",
+          "id": "snake-action-menu",
+          "className": "button secondary mode-play-brand-button",
+          "demoUI": false,
+          "dialog": null
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": null,
+        "mode": null,
+        "practice": false
+      },
+      {
+        "stage": "focus",
+        "at": 727.9000000022352,
+        "type": "focusout",
+        "key": null,
+        "code": null,
+        "repeat": null,
+        "defaultPrevented": false,
+        "isComposing": null,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "snake-action-menu",
+          "className": "button secondary mode-play-brand-button",
+          "demoUI": false,
+          "dialog": null
+        },
+        "active": {
+          "tag": "BODY",
+          "id": "",
+          "className": "field-kit snake-player mode-play-page",
+          "demoUI": false,
+          "dialog": null
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": null,
+        "mode": null,
+        "practice": false
+      },
+      {
+        "stage": "focus",
+        "at": 728.2000000029802,
+        "type": "focusin",
+        "key": null,
+        "code": null,
+        "repeat": null,
+        "defaultPrevented": false,
+        "isComposing": null,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "H1",
+          "id": "snake-home-title",
+          "className": "mode-play-wordmark",
+          "demoUI": false,
+          "dialog": "snake-home-dialog"
+        },
+        "active": {
+          "tag": "H1",
+          "id": "snake-home-title",
+          "className": "mode-play-wordmark",
+          "demoUI": false,
+          "dialog": "snake-home-dialog"
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": null,
+        "mode": null,
+        "practice": false
+      },
+      {
+        "stage": "focus",
+        "at": 728.3000000007451,
+        "type": "focusout",
+        "key": null,
+        "code": null,
+        "repeat": null,
+        "defaultPrevented": false,
+        "isComposing": null,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "H1",
+          "id": "snake-home-title",
+          "className": "mode-play-wordmark",
+          "demoUI": false,
+          "dialog": "snake-home-dialog"
+        },
+        "active": {
+          "tag": "BODY",
+          "id": "",
+          "className": "field-kit snake-player mode-play-page",
+          "demoUI": false,
+          "dialog": null
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": null,
+        "mode": null,
+        "practice": false
+      },
+      {
+        "stage": "focus",
+        "at": 728.4000000022352,
+        "type": "focusin",
+        "key": null,
+        "code": null,
+        "repeat": null,
+        "defaultPrevented": false,
+        "isComposing": null,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "snake-action-primary",
+          "className": "button primary",
+          "demoUI": false,
+          "dialog": "snake-home-dialog"
+        },
+        "active": {
+          "tag": "BUTTON",
+          "id": "snake-action-primary",
+          "className": "button primary",
+          "demoUI": false,
+          "dialog": "snake-home-dialog"
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": null,
+        "mode": null,
+        "practice": false
+      },
+      {
+        "stage": "focus",
+        "at": 818.3000000007451,
+        "type": "focusout",
+        "key": null,
+        "code": null,
+        "repeat": null,
+        "defaultPrevented": false,
+        "isComposing": null,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "snake-action-primary",
+          "className": "button primary",
+          "demoUI": false,
+          "dialog": "snake-home-dialog"
+        },
+        "active": {
+          "tag": "BODY",
+          "id": "",
+          "className": "field-kit snake-player mode-play-page",
+          "demoUI": false,
+          "dialog": null
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": null,
+        "mode": null,
+        "practice": false
+      },
+      {
+        "stage": "focus",
+        "at": 818.4000000022352,
+        "type": "focusin",
+        "key": null,
+        "code": null,
+        "repeat": null,
+        "defaultPrevented": false,
+        "isComposing": null,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "demo-all-button",
+          "className": "button secondary",
+          "demoUI": false,
+          "dialog": "snake-home-dialog"
+        },
+        "active": {
+          "tag": "BUTTON",
+          "id": "demo-all-button",
+          "className": "button secondary",
+          "demoUI": false,
+          "dialog": "snake-home-dialog"
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": null,
+        "mode": null,
+        "practice": false
+      },
+      {
+        "stage": "focus",
+        "at": 826.1000000014901,
+        "type": "focusout",
+        "key": null,
+        "code": null,
+        "repeat": null,
+        "defaultPrevented": false,
+        "isComposing": null,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "demo-all-button",
+          "className": "button secondary",
+          "demoUI": false,
+          "dialog": "snake-home-dialog"
+        },
+        "active": {
+          "tag": "BODY",
+          "id": "",
+          "className": "field-kit snake-player mode-play-page",
+          "demoUI": false,
+          "dialog": null
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": null,
+        "mode": null,
+        "practice": false
+      },
+      {
+        "stage": "focus",
+        "at": 826.2000000029802,
+        "type": "focusin",
+        "key": null,
+        "code": null,
+        "repeat": null,
+        "defaultPrevented": false,
+        "isComposing": null,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "demo-watch-pause",
+          "className": "button secondary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "BUTTON",
+          "id": "demo-watch-pause",
+          "className": "button secondary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": null,
+        "mode": null,
+        "practice": false
+      },
+      {
+        "stage": "focus",
+        "at": 826.9000000022352,
+        "type": "focusout",
+        "key": null,
+        "code": null,
+        "repeat": null,
+        "defaultPrevented": false,
+        "isComposing": null,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "demo-watch-pause",
+          "className": "button secondary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "BODY",
+          "id": "",
+          "className": "field-kit snake-player mode-play-page",
+          "demoUI": false,
+          "dialog": null
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": null,
+        "mode": null,
+        "practice": false
+      },
+      {
+        "stage": "focus",
+        "at": 827,
+        "type": "focusin",
+        "key": null,
+        "code": null,
+        "repeat": null,
+        "defaultPrevented": false,
+        "isComposing": null,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "CANVAS",
+          "id": "demo-canvas",
+          "className": "",
+          "demoUI": false,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "CANVAS",
+          "id": "demo-canvas",
+          "className": "",
+          "demoUI": false,
+          "dialog": "demo-dialog"
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": null,
+        "mode": null,
+        "practice": false
+      },
+      {
+        "stage": "focus",
+        "at": 1585.7000000029802,
+        "type": "focusout",
+        "key": null,
+        "code": null,
+        "repeat": null,
+        "defaultPrevented": false,
+        "isComposing": null,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "CANVAS",
+          "id": "demo-canvas",
+          "className": "",
+          "demoUI": false,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "BODY",
+          "id": "",
+          "className": "field-kit snake-player mode-play-page",
+          "demoUI": false,
+          "dialog": null
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": "loading",
+        "mode": "snake",
+        "practice": false
+      },
+      {
+        "stage": "focus",
+        "at": 1589.9000000022352,
+        "type": "focusin",
+        "key": null,
+        "code": null,
+        "repeat": null,
+        "defaultPrevented": false,
+        "isComposing": null,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "CANVAS",
+          "id": "",
+          "className": "demo-sim-canvas",
+          "demoUI": false,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "CANVAS",
+          "id": "",
+          "className": "demo-sim-canvas",
+          "demoUI": false,
+          "dialog": "demo-dialog"
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": "loading",
+        "mode": "snake",
+        "practice": false
+      },
+      {
+        "stage": "focus",
+        "at": 1699.7000000029802,
+        "type": "focusout",
+        "key": null,
+        "code": null,
+        "repeat": null,
+        "defaultPrevented": false,
+        "isComposing": null,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "CANVAS",
+          "id": "",
+          "className": "demo-sim-canvas",
+          "demoUI": false,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "BODY",
+          "id": "",
+          "className": "field-kit snake-player mode-play-page",
+          "demoUI": false,
+          "dialog": null
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": "playing",
+        "mode": "sim",
+        "practice": false
+      },
+      {
+        "stage": "focus",
+        "at": 1699.800000000745,
+        "type": "focusin",
+        "key": null,
+        "code": null,
+        "repeat": null,
+        "defaultPrevented": false,
+        "isComposing": null,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "demo-next",
+          "className": "button secondary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "BUTTON",
+          "id": "demo-next",
+          "className": "button secondary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": "playing",
+        "mode": "sim",
+        "practice": false
+      },
+      {
+        "stage": "focus",
+        "at": 5940.70000000298,
+        "type": "focusout",
+        "key": null,
+        "code": null,
+        "repeat": null,
+        "defaultPrevented": false,
+        "isComposing": null,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "demo-next",
+          "className": "button secondary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "BODY",
+          "id": "",
+          "className": "field-kit snake-player mode-play-page",
+          "demoUI": false,
+          "dialog": null
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": "playing",
+        "mode": "snake",
+        "practice": false
+      },
+      {
+        "stage": "focus",
+        "at": 5940.900000002235,
+        "type": "focusin",
+        "key": null,
+        "code": null,
+        "repeat": null,
+        "defaultPrevented": false,
+        "isComposing": null,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "demo-interrupt",
+          "className": "button primary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "BUTTON",
+          "id": "demo-interrupt",
+          "className": "button primary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": "playing",
+        "mode": "snake",
+        "practice": false
+      },
+      {
+        "stage": "focus",
+        "at": 5943.70000000298,
+        "type": "focusout",
+        "key": null,
+        "code": null,
+        "repeat": null,
+        "defaultPrevented": false,
+        "isComposing": null,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "demo-interrupt",
+          "className": "button primary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "BODY",
+          "id": "",
+          "className": "field-kit snake-player mode-play-page",
+          "demoUI": false,
+          "dialog": null
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": "paused",
+        "mode": "snake",
+        "practice": false
+      },
+      {
+        "stage": "focus",
+        "at": 5947.900000002235,
+        "type": "focusin",
+        "key": null,
+        "code": null,
+        "repeat": null,
+        "defaultPrevented": false,
+        "isComposing": null,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "demo-fresh",
+          "className": "button primary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "BUTTON",
+          "id": "demo-fresh",
+          "className": "button primary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": "paused",
+        "mode": "snake",
+        "practice": false
+      },
+      {
+        "stage": "window-capture-before-app",
+        "at": 5956.20000000298,
+        "type": "keydown",
+        "key": "i",
+        "code": "KeyI",
+        "repeat": false,
+        "defaultPrevented": false,
+        "isComposing": false,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "demo-fresh",
+          "className": "button primary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "BUTTON",
+          "id": "demo-fresh",
+          "className": "button primary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": "paused",
+        "mode": "snake",
+        "practice": false
+      },
+      {
+        "stage": "window-bubble",
+        "at": 5956.900000002235,
+        "type": "keydown",
+        "key": "i",
+        "code": "KeyI",
+        "repeat": false,
+        "defaultPrevented": false,
+        "isComposing": false,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "demo-fresh",
+          "className": "button primary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "BUTTON",
+          "id": "demo-fresh",
+          "className": "button primary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": "paused",
+        "mode": "snake",
+        "practice": false
+      },
+      {
+        "stage": "window-capture-before-app",
+        "at": 5957.70000000298,
+        "type": "keyup",
+        "key": "i",
+        "code": "KeyI",
+        "repeat": false,
+        "defaultPrevented": false,
+        "isComposing": false,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "demo-fresh",
+          "className": "button primary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "BUTTON",
+          "id": "demo-fresh",
+          "className": "button primary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": "paused",
+        "mode": "snake",
+        "practice": false
+      },
+      {
+        "stage": "window-bubble",
+        "at": 5957.900000002235,
+        "type": "keyup",
+        "key": "i",
+        "code": "KeyI",
+        "repeat": false,
+        "defaultPrevented": false,
+        "isComposing": false,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "demo-fresh",
+          "className": "button primary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "BUTTON",
+          "id": "demo-fresh",
+          "className": "button primary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": "paused",
+        "mode": "snake",
+        "practice": false
+      },
+      {
+        "stage": "task-after-dispatch",
+        "at": 5972.20000000298,
+        "type": "keydown",
+        "key": "i",
+        "code": "KeyI",
+        "repeat": false,
+        "defaultPrevented": false,
+        "isComposing": false,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "demo-fresh",
+          "className": "button primary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "BUTTON",
+          "id": "demo-fresh",
+          "className": "button primary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": "paused",
+        "mode": "snake",
+        "practice": false
+      },
+      {
+        "stage": "task-after-dispatch",
+        "at": 5972.300000000745,
+        "type": "keyup",
+        "key": "i",
+        "code": "KeyI",
+        "repeat": false,
+        "defaultPrevented": false,
+        "isComposing": false,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "demo-fresh",
+          "className": "button primary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "BUTTON",
+          "id": "demo-fresh",
+          "className": "button primary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": "paused",
+        "mode": "snake",
+        "practice": false
+      },
+      {
+        "stage": "focus",
+        "at": 6074.800000000745,
+        "type": "focusout",
+        "key": null,
+        "code": null,
+        "repeat": null,
+        "defaultPrevented": false,
+        "isComposing": null,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "demo-fresh",
+          "className": "button primary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "BODY",
+          "id": "",
+          "className": "field-kit snake-player mode-play-page",
+          "demoUI": false,
+          "dialog": null
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": "paused",
+        "mode": "snake",
+        "practice": false
+      },
+      {
+        "stage": "focus",
+        "at": 6075.10000000149,
+        "type": "focusin",
+        "key": null,
+        "code": null,
+        "repeat": null,
+        "defaultPrevented": false,
+        "isComposing": null,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "demo-resume",
+          "className": "button secondary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "BUTTON",
+          "id": "demo-resume",
+          "className": "button secondary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": "paused",
+        "mode": "snake",
+        "practice": false
+      },
+      {
+        "stage": "focus",
+        "at": 6076.70000000298,
+        "type": "focusout",
+        "key": null,
+        "code": null,
+        "repeat": null,
+        "defaultPrevented": false,
+        "isComposing": null,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "demo-resume",
+          "className": "button secondary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "BODY",
+          "id": "",
+          "className": "field-kit snake-player mode-play-page",
+          "demoUI": false,
+          "dialog": null
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": "playing",
+        "mode": "snake",
+        "practice": false
+      },
+      {
+        "stage": "focus",
+        "at": 6076.900000002235,
+        "type": "focusin",
+        "key": null,
+        "code": null,
+        "repeat": null,
+        "defaultPrevented": false,
+        "isComposing": null,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "CANVAS",
+          "id": "",
+          "className": "demo-mode-canvas",
+          "demoUI": false,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "CANVAS",
+          "id": "",
+          "className": "demo-mode-canvas",
+          "demoUI": false,
+          "dialog": "demo-dialog"
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": "playing",
+        "mode": "snake",
+        "practice": false
+      },
+      {
+        "stage": "window-capture-before-app",
+        "at": 6080.300000000745,
+        "type": "keydown",
+        "key": "ArrowUp",
+        "code": "ArrowUp",
+        "repeat": false,
+        "defaultPrevented": false,
+        "isComposing": false,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "CANVAS",
+          "id": "",
+          "className": "demo-mode-canvas",
+          "demoUI": false,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "CANVAS",
+          "id": "",
+          "className": "demo-mode-canvas",
+          "demoUI": false,
+          "dialog": "demo-dialog"
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": "playing",
+        "mode": "snake",
+        "practice": false
+      },
+      {
+        "stage": "focus",
+        "at": 6081.10000000149,
+        "type": "focusout",
+        "key": null,
+        "code": null,
+        "repeat": null,
+        "defaultPrevented": false,
+        "isComposing": null,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "CANVAS",
+          "id": "",
+          "className": "demo-mode-canvas",
+          "demoUI": false,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "BODY",
+          "id": "",
+          "className": "field-kit snake-player mode-play-page",
+          "demoUI": false,
+          "dialog": null
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": "playing",
+        "mode": "snake",
+        "practice": false
+      },
+      {
+        "stage": "focus",
+        "at": 6081.5,
+        "type": "focusin",
+        "key": null,
+        "code": null,
+        "repeat": null,
+        "defaultPrevented": false,
+        "isComposing": null,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "demo-watch-pause",
+          "className": "button secondary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "BUTTON",
+          "id": "demo-watch-pause",
+          "className": "button secondary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": "playing",
+        "mode": "snake",
+        "practice": false
+      },
+      {
+        "stage": "window-bubble",
+        "at": 6081.70000000298,
+        "type": "keydown",
+        "key": "ArrowUp",
+        "code": "ArrowUp",
+        "repeat": false,
+        "defaultPrevented": true,
+        "isComposing": false,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "CANVAS",
+          "id": "",
+          "className": "demo-mode-canvas",
+          "demoUI": false,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "BUTTON",
+          "id": "demo-watch-pause",
+          "className": "button secondary controller-focus",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": "playing",
+        "mode": "snake",
+        "practice": false
+      },
+      {
+        "stage": "window-capture-before-app",
+        "at": 6082.20000000298,
+        "type": "keyup",
+        "key": "ArrowUp",
+        "code": "ArrowUp",
+        "repeat": false,
+        "defaultPrevented": false,
+        "isComposing": false,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "demo-watch-pause",
+          "className": "button secondary controller-focus",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "BUTTON",
+          "id": "demo-watch-pause",
+          "className": "button secondary controller-focus",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": "playing",
+        "mode": "snake",
+        "practice": false
+      },
+      {
+        "stage": "window-bubble",
+        "at": 6082.300000000745,
+        "type": "keyup",
+        "key": "ArrowUp",
+        "code": "ArrowUp",
+        "repeat": false,
+        "defaultPrevented": false,
+        "isComposing": false,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "demo-watch-pause",
+          "className": "button secondary controller-focus",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "BUTTON",
+          "id": "demo-watch-pause",
+          "className": "button secondary controller-focus",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": "playing",
+        "mode": "snake",
+        "practice": false
+      },
+      {
+        "stage": "task-after-dispatch",
+        "at": 6089.300000000745,
+        "type": "keydown",
+        "key": "ArrowUp",
+        "code": "ArrowUp",
+        "repeat": false,
+        "defaultPrevented": true,
+        "isComposing": false,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "CANVAS",
+          "id": "",
+          "className": "demo-mode-canvas",
+          "demoUI": false,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "BUTTON",
+          "id": "demo-watch-pause",
+          "className": "button secondary controller-focus",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": "playing",
+        "mode": "snake",
+        "practice": false
+      },
+      {
+        "stage": "task-after-dispatch",
+        "at": 6089.400000002235,
+        "type": "keyup",
+        "key": "ArrowUp",
+        "code": "ArrowUp",
+        "repeat": false,
+        "defaultPrevented": false,
+        "isComposing": false,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "demo-watch-pause",
+          "className": "button secondary controller-focus",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "BUTTON",
+          "id": "demo-watch-pause",
+          "className": "button secondary controller-focus",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": "playing",
+        "mode": "snake",
+        "practice": false
+      },
+      {
+        "stage": "window-capture-before-app",
+        "at": 6159.300000000745,
+        "type": "keydown",
+        "key": "i",
+        "code": "KeyI",
+        "repeat": false,
+        "defaultPrevented": false,
+        "isComposing": false,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "demo-watch-pause",
+          "className": "button secondary controller-focus",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "BUTTON",
+          "id": "demo-watch-pause",
+          "className": "button secondary controller-focus",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": "playing",
+        "mode": "snake",
+        "practice": false
+      },
+      {
+        "stage": "window-bubble",
+        "at": 6159.5,
+        "type": "keydown",
+        "key": "i",
+        "code": "KeyI",
+        "repeat": false,
+        "defaultPrevented": false,
+        "isComposing": false,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "demo-watch-pause",
+          "className": "button secondary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "BUTTON",
+          "id": "demo-watch-pause",
+          "className": "button secondary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": "playing",
+        "mode": "snake",
+        "practice": false
+      },
+      {
+        "stage": "window-capture-before-app",
+        "at": 6160.10000000149,
+        "type": "keyup",
+        "key": "i",
+        "code": "KeyI",
+        "repeat": false,
+        "defaultPrevented": false,
+        "isComposing": false,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "demo-watch-pause",
+          "className": "button secondary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "BUTTON",
+          "id": "demo-watch-pause",
+          "className": "button secondary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": "playing",
+        "mode": "snake",
+        "practice": false
+      },
+      {
+        "stage": "window-bubble",
+        "at": 6160.10000000149,
+        "type": "keyup",
+        "key": "i",
+        "code": "KeyI",
+        "repeat": false,
+        "defaultPrevented": false,
+        "isComposing": false,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "demo-watch-pause",
+          "className": "button secondary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "BUTTON",
+          "id": "demo-watch-pause",
+          "className": "button secondary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": "playing",
+        "mode": "snake",
+        "practice": false
+      },
+      {
+        "stage": "task-after-dispatch",
+        "at": 6171.60000000149,
+        "type": "keydown",
+        "key": "i",
+        "code": "KeyI",
+        "repeat": false,
+        "defaultPrevented": false,
+        "isComposing": false,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "demo-watch-pause",
+          "className": "button secondary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "BUTTON",
+          "id": "demo-watch-pause",
+          "className": "button secondary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": "playing",
+        "mode": "snake",
+        "practice": false
+      },
+      {
+        "stage": "task-after-dispatch",
+        "at": 6171.60000000149,
+        "type": "keyup",
+        "key": "i",
+        "code": "KeyI",
+        "repeat": false,
+        "defaultPrevented": false,
+        "isComposing": false,
+        "modifiers": {
+          "ctrl": false,
+          "alt": false,
+          "meta": false,
+          "shift": false
+        },
+        "target": {
+          "tag": "BUTTON",
+          "id": "demo-watch-pause",
+          "className": "button secondary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "active": {
+          "tag": "BUTTON",
+          "id": "demo-watch-pause",
+          "className": "button secondary",
+          "demoUI": true,
+          "dialog": "demo-dialog"
+        },
+        "hasFocus": true,
+        "hidden": false,
+        "phase": "playing",
+        "mode": "snake",
+        "practice": false
+      }
+    ],
+    "limit": 256,
+    "dropped": 0,
+    "final": {
+      "activeTag": "BUTTON",
+      "activeId": "demo-watch-pause",
+      "demoUI": true,
+      "hasFocus": true,
+      "hidden": false
+    }
+  },
+  "headAfter": "693947ed1373db7a265def126a5eede2bf875013",
+  "sourceAfter": {
+    "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+    "files": 9996,
+    "bytes": 404392393
+  },
+  "buildInputsAfter": {
+    "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+    "files": 9398,
+    "bytes": 348357907
+  },
+  "observerSHA256After": "49915f5ba5558fc454bea10255451888bbe279b8d141c19f75aeef93f51f9b65",
+  "sourceUnchanged": true,
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-19T01:08:50.115Z",
+  "previewClosed": true
+}

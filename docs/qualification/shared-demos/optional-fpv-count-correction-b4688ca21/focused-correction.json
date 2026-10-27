@@ -1,0 +1,134 @@
+{
+  "format": "SharedDemoFocusedPackagingVerificationV1",
+  "complete": true,
+  "started": "2026-10-19T09:23:19.204181+00:00",
+  "headBefore": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+  "sourceBefore": {
+    "publishing/edition-admission.mjs": "cffaa70c3613e9f0408df59132891c908c52447106e29ccc39c2d87754e3854c",
+    "publishing/edition-candidate.mjs": "2c1823bcb047f171ba16fcf92aa6613731014652b428b62e62e055d510c48d51",
+    "publishing/optional-package-admission.mjs": "552e4aaaa99c7479ffbb29d5663e1f77d6879ae73331eda3b141adaa5da367df",
+    "publishing/optional-package-candidate.mjs": "1c0defba04673d4b43ff31141d5d34257f9be1b088ccdec2ffa67a4fd1dddaf1",
+    "publishing/optional-package-policy.mjs": "d617d8105a6cbf25c691c0ffd1cc0a5f6dcfc0ef40982c83fdd22f26dd3267b3",
+    "scripts/build-optional-practice.mjs": "1b83312718bbc14dbed7c4be0a9e13ae578204a06773ed89bd32d4ec01670789",
+    "scripts/compile-edition.mjs": "5a1ab37ba578fa0d3b91a704b8920ef326395bbfaa8e7e84656caf7dfb42ab6b",
+    "scripts/edition-runtime.mjs": "1e1010ac4ee56154024e13357fec4bcb1b32af726f5f780193d17c2056592049",
+    "scripts/optional-launcher.mjs": "c5c030d44953a8ea0c1d051de536e650a018bb598eb283fffb2a7b3ce0ced325",
+    "game/test/edition-demo-packaging.test.mjs": "ee80cb6ef9635d040b67549f6ab8ce89e7c1e907a137f6b10caf94359e020197",
+    "publishing/optional-package-admission.test.mjs": "05b8745f3ab272e7053e4f06fef7c3ff377cf2d1221aed9142c54b16b7a645c0",
+    "scripts/test-bundle-editions.mjs": "960ac694e9e03c675638a116ce71b1511a493cf81aa1e8060f386845b56f66c5",
+    "scripts/test-optional-practice.mjs": "9c4e412d523422c341557986709c6442e4d91cd0d8f2434a84b484f8f255f973",
+    "scripts/test-optional-fpv-package.mjs": "5a744cc5cd4bdf71cddce76f61f9c9163ec50004d4385133042e11ee21e03617"
+  },
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "--test-timeout=120000",
+    "--test-name-pattern=^(actual FPV application, native notebook and installation launcher close inside admitted runtime/source budgets|explicit FPV package remains independently reproducible with complete pinned runtime and source closures)$",
+    "scripts/test-optional-fpv-package.mjs"
+  ],
+  "nodeVersion": "v22.22.2",
+  "platform": "darwin",
+  "tmpdir": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/optional-fpv-count-correction-b4688ca21-20261019T112319-tmp",
+  "timeoutSeconds": 300,
+  "localStorage": {
+    "freeFloorBytes": 209715200,
+    "allocationCapBytes": 314572800,
+    "freeBeforeBytes": 564985856,
+    "minimumObservedFreeBytes": 530608128,
+    "maximumObservedFixtureBytes": 11210752
+  },
+  "ownerSHA256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c",
+  "wrapperSHA256": "4d93218de6ac049735753b8fdd1439a7aa2d5407e50610ac83899621f47dd2aa",
+  "ownedProcesses": {
+    "rootObserved": true,
+    "identityFields": [
+      "pid",
+      "started",
+      "uid",
+      "argv"
+    ],
+    "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+    "observationLimits": {
+      "ownershipLimit": 256,
+      "ownershipCount": 2,
+      "actionLimit": 1024,
+      "actionCount": 0,
+      "exceeded": false
+    },
+    "observed": [
+      {
+        "pid": 54049,
+        "ppid": 54038,
+        "pgid": 54049,
+        "uid": 502,
+        "started": "Mon Oct 19 11:23:19 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap --test-timeout=120000 --test-name-pattern=^(actual FPV application, native notebook and installation launcher close inside admitted runtime/source budgets|explicit FPV package remains independently reproducible with complete pinned runtime and source closures)$ scripts/test-optional-fpv-package.mjs",
+        "profile": null,
+        "ownership": "exact newly spawned child",
+        "observedAt": "2026-10-19T09:23:19.525471+00:00"
+      },
+      {
+        "pid": 54053,
+        "ppid": 54049,
+        "pgid": 54049,
+        "uid": 502,
+        "started": "Mon Oct 19 11:23:19 2026",
+        "argv": "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test-concurrency=1 --test-timeout=120000 --test-name-pattern=^(actual FPV application, native notebook and installation launcher close inside admitted runtime/source budgets|explicit FPV package remains independently reproducible with complete pinned runtime and source closures)$ scripts/test-optional-fpv-package.mjs",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          54049,
+          "Mon Oct 19 11:23:19 2026",
+          502,
+          "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node --test --test-concurrency=1 --test-reporter=tap --test-timeout=120000 --test-name-pattern=^(actual FPV application, native notebook and installation launcher close inside admitted runtime/source budgets|explicit FPV package remains independently reproducible with complete pinned runtime and source closures)$ scripts/test-optional-fpv-package.mjs"
+        ],
+        "observedAt": "2026-10-19T09:23:19.831368+00:00"
+      }
+    ],
+    "actions": [],
+    "ownershipEvidenceTruncated": false,
+    "actionEvidenceTruncated": false,
+    "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "remaining": [],
+    "remainingCount": 0,
+    "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "remainingEvidenceTruncated": false,
+    "verified": true
+  },
+  "log": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/optional-fpv-count-correction-b4688ca21-20261019T112319.tap.txt",
+    "byteLimit": 4194304,
+    "totalBytes": 696,
+    "writtenBytes": 696,
+    "truncatedBytes": 0,
+    "tailLimit": 32768,
+    "tailBytes": 696,
+    "tailSHA256": "c298f943864be94b3ea13b16d7f48ab97227272d977d8bdbd92330e9141289bc",
+    "tail": "TAP version 13\n# Subtest: actual FPV application, native notebook and installation launcher close inside admitted runtime/source budgets\nok 1 - actual FPV application, native notebook and installation launcher close inside admitted runtime/source budgets\n  ---\n  duration_ms: 4353.258042\n  type: 'test'\n  ...\n# Subtest: explicit FPV package remains independently reproducible with complete pinned runtime and source closures\nok 2 - explicit FPV package remains independently reproducible with complete pinned runtime and source closures\n  ---\n  duration_ms: 1115.183667\n  type: 'test'\n  ...\n1..2\n# tests 2\n# suites 0\n# pass 2\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 5960.427917\n",
+    "limitExceeded": false,
+    "complete": true,
+    "error": null
+  },
+  "childExit": 0,
+  "sourceAfter": {
+    "publishing/edition-admission.mjs": "cffaa70c3613e9f0408df59132891c908c52447106e29ccc39c2d87754e3854c",
+    "publishing/edition-candidate.mjs": "2c1823bcb047f171ba16fcf92aa6613731014652b428b62e62e055d510c48d51",
+    "publishing/optional-package-admission.mjs": "552e4aaaa99c7479ffbb29d5663e1f77d6879ae73331eda3b141adaa5da367df",
+    "publishing/optional-package-candidate.mjs": "1c0defba04673d4b43ff31141d5d34257f9be1b088ccdec2ffa67a4fd1dddaf1",
+    "publishing/optional-package-policy.mjs": "d617d8105a6cbf25c691c0ffd1cc0a5f6dcfc0ef40982c83fdd22f26dd3267b3",
+    "scripts/build-optional-practice.mjs": "1b83312718bbc14dbed7c4be0a9e13ae578204a06773ed89bd32d4ec01670789",
+    "scripts/compile-edition.mjs": "5a1ab37ba578fa0d3b91a704b8920ef326395bbfaa8e7e84656caf7dfb42ab6b",
+    "scripts/edition-runtime.mjs": "1e1010ac4ee56154024e13357fec4bcb1b32af726f5f780193d17c2056592049",
+    "scripts/optional-launcher.mjs": "c5c030d44953a8ea0c1d051de536e650a018bb598eb283fffb2a7b3ce0ced325",
+    "game/test/edition-demo-packaging.test.mjs": "ee80cb6ef9635d040b67549f6ab8ce89e7c1e907a137f6b10caf94359e020197",
+    "publishing/optional-package-admission.test.mjs": "05b8745f3ab272e7053e4f06fef7c3ff377cf2d1221aed9142c54b16b7a645c0",
+    "scripts/test-bundle-editions.mjs": "960ac694e9e03c675638a116ce71b1511a493cf81aa1e8060f386845b56f66c5",
+    "scripts/test-optional-practice.mjs": "9c4e412d523422c341557986709c6442e4d91cd0d8f2434a84b484f8f255f973",
+    "scripts/test-optional-fpv-package.mjs": "5a744cc5cd4bdf71cddce76f61f9c9163ec50004d4385133042e11ee21e03617"
+  },
+  "sourceStable": true,
+  "headAfter": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+  "finished": "2026-10-19T09:23:25.899822+00:00"
+}

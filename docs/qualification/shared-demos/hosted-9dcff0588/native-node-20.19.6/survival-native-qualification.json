@@ -1,0 +1,744 @@
+{
+  "format": "SurvivalNativeQualificationV1",
+  "complete": true,
+  "started": "2026-10-19T10:55:21.251Z",
+  "head": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "environment": {
+    "node": "v20.19.6",
+    "v8": "11.3.244.8-node.33",
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "simulationIdentity": "e5f65192cdc4fd239d231b8e01f71233925dcb1a4e25ec749aeb0fc8390ab01f",
+  "timeoutMs": 300000,
+  "qualification": "Production candidate resolution performs full independent native replay, terminal outcome and meaningful-progress verification before returning a paused player. No renderer, persistence, capture, generation or adoption.",
+  "checks": [
+    {
+      "id": "survival:field-crossing-broken-crossroads:standard",
+      "verified": true,
+      "variant": "node22131-x64",
+      "replayFile": "game/demo-data/survival/field-crossing-broken-crossroads.node22131-x64.replay.json",
+      "recordingSHA256": "f7d5f443063f3b71ac54efa04f081569cd99a41fbfde44968188846e9ea5e669",
+      "contentIdentity": "f58d3caba411de4a",
+      "ticks": 19020,
+      "outcome": "won",
+      "checkpoints": 63,
+      "progress": {
+        "kills": 2681,
+        "xpCollected": 3966,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "chromium",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "firefox",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "webkit",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "node22131-x64",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 9354.953779
+    },
+    {
+      "id": "survival:field-crossing-shelterbelt-gaps:standard",
+      "verified": true,
+      "variant": "node22131-x64",
+      "replayFile": "game/demo-data/survival/field-crossing-shelterbelt-gaps.node22131-x64.replay.json",
+      "recordingSHA256": "9b0f9b78ff7590b9273172d10b34fbe89c2cb3dafb7415e202fc66a2caf9128a",
+      "contentIdentity": "ff669dab0dd8a615",
+      "ticks": 19208,
+      "outcome": "won",
+      "checkpoints": 64,
+      "progress": {
+        "kills": 2856,
+        "xpCollected": 4250,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "chromium",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "firefox",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "webkit",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "node22131-x64",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 11671.524814999999
+    },
+    {
+      "id": "survival:field-crossing-supply-orchard-edge:standard",
+      "verified": true,
+      "variant": "node22131-x64",
+      "replayFile": "game/demo-data/survival/field-crossing-supply-orchard-edge.node22131-x64.replay.json",
+      "recordingSHA256": "5ede98fa4e3f051a49f319374c693a0eff0b05f32af0d46f71ef57b9afb3e338",
+      "contentIdentity": "5070970bf9677397",
+      "ticks": 19446,
+      "outcome": "won",
+      "checkpoints": 64,
+      "progress": {
+        "kills": 2889,
+        "xpCollected": 4266,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "chromium",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "firefox",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "webkit",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "node22131-x64",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 12701.373649000001
+    },
+    {
+      "id": "survival:freight-depot-shunting-yard:standard",
+      "verified": true,
+      "variant": "node22131-x64",
+      "replayFile": "game/demo-data/survival/freight-depot-shunting-yard.node22131-x64.replay.json",
+      "recordingSHA256": "bb9145e7845345687b49af615f124dd904ef63739d98eb447561a56589b2c673",
+      "contentIdentity": "42a985d6fadc7ac5",
+      "ticks": 19028,
+      "outcome": "won",
+      "checkpoints": 63,
+      "progress": {
+        "kills": 2783,
+        "xpCollected": 4242,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "chromium",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "firefox",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "webkit",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "node22131-x64",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 9855.04952
+    },
+    {
+      "id": "survival:freight-depot-loading-loop:standard",
+      "verified": true,
+      "variant": "node22131-x64",
+      "replayFile": "game/demo-data/survival/freight-depot-loading-loop.node22131-x64.replay.json",
+      "recordingSHA256": "5d58d8a733a6a5184f3ed95d2fbc2825b8c7fa7c03fda1cd8aea3d4b9900dd0d",
+      "contentIdentity": "149c35368d7de169",
+      "ticks": 19877,
+      "outcome": "won",
+      "checkpoints": 66,
+      "progress": {
+        "kills": 2956,
+        "xpCollected": 4007,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "chromium",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "firefox",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "webkit",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "node22131-x64",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 11963.403401000003
+    },
+    {
+      "id": "survival:freight-depot-dispatch-junction:standard",
+      "verified": true,
+      "variant": "node22131-x64",
+      "replayFile": "game/demo-data/survival/freight-depot-dispatch-junction.node22131-x64.replay.json",
+      "recordingSHA256": "6d4a7008b1c07e290b31d63382e9ef8849457ce0ae00057f3df98859cd98a4d4",
+      "contentIdentity": "a4e52e3952c1223e",
+      "ticks": 19561,
+      "outcome": "won",
+      "checkpoints": 65,
+      "progress": {
+        "kills": 3055,
+        "xpCollected": 4479,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "chromium",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "firefox",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "webkit",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "node22131-x64",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 13907.184271999999
+    },
+    {
+      "id": "survival:relay-ruins-antenna-court:standard",
+      "verified": true,
+      "variant": "node22131-x64",
+      "replayFile": "game/demo-data/survival/relay-ruins-antenna-court.node22131-x64.replay.json",
+      "recordingSHA256": "ebb6982d148c9a1a07705cee4785469e9538f46862da0b3881851a100f2ecb76",
+      "contentIdentity": "06f791f1fd2e86fb",
+      "ticks": 19188,
+      "outcome": "won",
+      "checkpoints": 63,
+      "progress": {
+        "kills": 2835,
+        "xpCollected": 4282,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "chromium",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "firefox",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "webkit",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "node22131-x64",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 9502.192538999996
+    },
+    {
+      "id": "survival:relay-ruins-split-compound:standard",
+      "verified": true,
+      "variant": "node22131-x64",
+      "replayFile": "game/demo-data/survival/relay-ruins-split-compound.node22131-x64.replay.json",
+      "recordingSHA256": "170142ccdc9b5e1019dc6ffe9b1d71f58bd509fd864ff214a2123bdd1ca99954",
+      "contentIdentity": "fbc5b19faa30dff3",
+      "ticks": 19272,
+      "outcome": "won",
+      "checkpoints": 64,
+      "progress": {
+        "kills": 2661,
+        "xpCollected": 3887,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "chromium",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "firefox",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "webkit",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "node22131-x64",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 14722.660839999997
+    },
+    {
+      "id": "survival:relay-ruins-receiver-gardens:standard",
+      "verified": true,
+      "variant": "node22131-x64",
+      "replayFile": "game/demo-data/survival/relay-ruins-receiver-gardens.node22131-x64.replay.json",
+      "recordingSHA256": "2f7bca7daa6483ca9f0ba3d381b9a0c49f7364c7ffd110c35d7dfca715e926b0",
+      "contentIdentity": "3a083474db46d91d",
+      "ticks": 19598,
+      "outcome": "won",
+      "checkpoints": 65,
+      "progress": {
+        "kills": 3132,
+        "xpCollected": 4342,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "chromium",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "firefox",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "webkit",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "node22131-x64",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 14749.379155000002
+    },
+    {
+      "id": "survival:river-port-pump-apron:standard",
+      "verified": true,
+      "variant": "node22131-x64",
+      "replayFile": "game/demo-data/survival/river-port-pump-apron.node22131-x64.replay.json",
+      "recordingSHA256": "ece032a213abfb469f4b282d0242f01aefabbc28585ec3af2bfa4a4241e3c843",
+      "contentIdentity": "2d6c535ae347334a",
+      "ticks": 19130,
+      "outcome": "won",
+      "checkpoints": 63,
+      "progress": {
+        "kills": 2834,
+        "xpCollected": 4064,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "chromium",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "firefox",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "webkit",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "node22131-x64",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 9798.36151300001
+    },
+    {
+      "id": "survival:river-port-twin-docks:standard",
+      "verified": true,
+      "variant": "node22131-x64",
+      "replayFile": "game/demo-data/survival/river-port-twin-docks.node22131-x64.replay.json",
+      "recordingSHA256": "270caaf551e5f21036c6a392d35935f99cb04ade674d6789b886aa64b9de4fed",
+      "contentIdentity": "4666449a86d20ee4",
+      "ticks": 19460,
+      "outcome": "won",
+      "checkpoints": 64,
+      "progress": {
+        "kills": 3103,
+        "xpCollected": 4471,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "chromium",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "firefox",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "webkit",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "node22131-x64",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 12514.694814000002
+    },
+    {
+      "id": "survival:river-port-floodgate-yard:standard",
+      "verified": true,
+      "variant": "node22131-x64",
+      "replayFile": "game/demo-data/survival/river-port-floodgate-yard.node22131-x64.replay.json",
+      "recordingSHA256": "744f1c683659b85ece90a218442d6c5389b9bddeca1642ed26bd10c42b086283",
+      "contentIdentity": "7fc0528a9d7d6ab9",
+      "ticks": 19478,
+      "outcome": "won",
+      "checkpoints": 64,
+      "progress": {
+        "kills": 3074,
+        "xpCollected": 4580,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "chromium",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "firefox",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "webkit",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "node22131-x64",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 17123.579501
+    },
+    {
+      "id": "survival:chalk-quarry-survey-basin:standard",
+      "verified": true,
+      "variant": "node22131-x64",
+      "replayFile": "game/demo-data/survival/chalk-quarry-survey-basin.node22131-x64.replay.json",
+      "recordingSHA256": "c9b3f80f68669f4e57896e852793654d9bcbba68a5a4745b27f509b21d01ad40",
+      "contentIdentity": "0cc7b58044b11ae5",
+      "ticks": 19357,
+      "outcome": "won",
+      "checkpoints": 64,
+      "progress": {
+        "kills": 2706,
+        "xpCollected": 3923,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "chromium",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "firefox",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "webkit",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "node22131-x64",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 8862.310603999998
+    },
+    {
+      "id": "survival:chalk-quarry-haul-switchbacks:standard",
+      "verified": true,
+      "variant": "node22131-x64",
+      "replayFile": "game/demo-data/survival/chalk-quarry-haul-switchbacks.node22131-x64.replay.json",
+      "recordingSHA256": "46c427ee1bfea2f30919489e6e5a61d95a9f06a24fcae11aa7195c2c952a2d33",
+      "contentIdentity": "f4001a6ab6081cc2",
+      "ticks": 19598,
+      "outcome": "won",
+      "checkpoints": 65,
+      "progress": {
+        "kills": 2966,
+        "xpCollected": 4256,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "chromium",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "firefox",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "webkit",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "node22131-x64",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 10724.975508999982
+    },
+    {
+      "id": "survival:chalk-quarry-reclaimer-court:standard",
+      "verified": true,
+      "variant": "node22131-x64",
+      "replayFile": "game/demo-data/survival/chalk-quarry-reclaimer-court.node22131-x64.replay.json",
+      "recordingSHA256": "ae5232f47b9c56bf0e3e2db15d118d4a24f0182e9bce5001e2b765bed399ebde",
+      "contentIdentity": "2c942f0944b184e2",
+      "ticks": 19274,
+      "outcome": "won",
+      "checkpoints": 64,
+      "progress": {
+        "kills": 2746,
+        "xpCollected": 4127,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "chromium",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "firefox",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "webkit",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "node22131-x64",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 14077.444277000002
+    },
+    {
+      "id": "survival:orchard-strongpoint-harvest-clearing:standard",
+      "verified": true,
+      "variant": "node22131-x64",
+      "replayFile": "game/demo-data/survival/orchard-strongpoint-harvest-clearing.node22131-x64.replay.json",
+      "recordingSHA256": "7c23674ee8f258cedc718435d02fd1716111a7c9c3e330f90501ca22741fa26c",
+      "contentIdentity": "63fba71d0403a480",
+      "ticks": 19604,
+      "outcome": "won",
+      "checkpoints": 65,
+      "progress": {
+        "kills": 2865,
+        "xpCollected": 4151,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "chromium",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "firefox",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "webkit",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "node22131-x64",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 10622.116821999982
+    },
+    {
+      "id": "survival:orchard-strongpoint-irrigation-courts:standard",
+      "verified": true,
+      "variant": "node22131-x64",
+      "replayFile": "game/demo-data/survival/orchard-strongpoint-irrigation-courts.node22131-x64.replay.json",
+      "recordingSHA256": "275982a4a091deb7033037d96cbaf07e324c9b217001fd2b66073424bd016d2f",
+      "contentIdentity": "9bc8deee90de3d73",
+      "ticks": 19526,
+      "outcome": "won",
+      "checkpoints": 65,
+      "progress": {
+        "kills": 3000,
+        "xpCollected": 4201,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "chromium",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "firefox",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "webkit",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "node22131-x64",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 13837.512497999996
+    },
+    {
+      "id": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+      "verified": true,
+      "variant": "node22131-x64",
+      "replayFile": "game/demo-data/survival/orchard-strongpoint-glasshouse-ruins.node22131-x64.replay.json",
+      "recordingSHA256": "5f5d740e6004f11f6050968ec9dd819209bc24fe19e00b30ae19284cc6a2ba1b",
+      "contentIdentity": "a8bdfbce7e8f185f",
+      "ticks": 19454,
+      "outcome": "won",
+      "checkpoints": 64,
+      "progress": {
+        "kills": 2771,
+        "xpCollected": 4032,
+        "upgrades": 10,
+        "rerolls": 1
+      },
+      "attempts": [
+        {
+          "variant": "default",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "chromium",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "firefox",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "webkit",
+          "failureCode": "demo-content-mismatch"
+        },
+        {
+          "variant": "node22131-x64",
+          "verified": true
+        }
+      ],
+      "elapsedMs": 18459.024321999983
+    }
+  ],
+  "counts": {
+    "required": 18,
+    "checked": 18,
+    "verified": 18
+  },
+  "elapsedMs": 224456.042274,
+  "finished": "2026-10-19T10:59:05.706Z"
+}

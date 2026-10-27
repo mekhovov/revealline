@@ -1,5 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import { OPTIONAL_PACKAGE_POLICIES } from './optional-package-policy.mjs';
+import { validateOptionalModuleClosure } from './optional-module-closure.mjs';
 import { buildOptionalPractice } from '../scripts/build-optional-practice.mjs';
 import { createOptionalPackageCandidate } from './optional-package-candidate.mjs';
 import {
@@ -283,4 +288,120 @@ test('pending human/device gates never become promotion approval and reviewed ev
   );
   f.files.set(review.packages[0].gates[0].evidence.path, Buffer.from('changed'));
   await assert.rejects(verifyOptionalPackageReview(bytes, review, f), /artifact bytes differ/);
+});
+
+for (const packageId of ['civilian-flight', 'civilian-fpv', 'fpv-worlds'])
+  test(
+    packageId + ' retains one complete launcher navigation module with its original input pin',
+    async () => {
+      const b =
+        packageId === 'civilian-flight'
+          ? built
+          : await buildOptionalPractice(root, {
+              packageId,
+              engineCommit: binding.sourceRevision,
+              engineTree: binding.sourceTree,
+            });
+      const f = fixture(b),
+        policy = OPTIONAL_PACKAGE_POLICIES[packageId];
+      assert.equal(
+        (await validateOptionalPackageAdmission(f.envelope, f)).packages[0].id,
+        packageId,
+      );
+      const runtime = readEditionZip(f.files.get(f.package.distribution.path));
+      const source = readEditionZip(f.files.get(f.package.sourceArchive.path));
+      const inventory = JSON.parse(source.get('source-inventory.json'));
+      const input = 'optional-practice/navigation.mjs',
+        output = 'launcher/navigation.mjs';
+      assert.equal(runtime.has(input), false);
+      assert.equal(source.has(input), false);
+      assert.deepEqual(source.get(output), b.inputs.get(input));
+      assert.deepEqual(runtime.get(output), b.inputs.get(input));
+      assert.deepEqual(
+        inventory.inputs.find((row) => row.path === input),
+        editionDescriptor(input, b.inputs.get(input)),
+      );
+      assert.deepEqual(
+        inventory.projections.find((row) => row.kind === 'shared-launcher-source'),
+        {
+          kind: 'shared-launcher-source',
+          output: editionDescriptor(output, b.inputs.get(input)),
+          inputs: [input],
+        },
+      );
+      assert.ok(runtime.size <= policy.limits.files);
+      assert.ok(source.size <= policy.limits.files);
+      assert.ok(validateOptionalModuleClosure(runtime, policy).modules > 0);
+      assert.ok(validateOptionalModuleClosure(source, policy).modules > 0);
+    },
+  );
+
+function changeSourceInventory(f, mutate) {
+  const source = readEditionZip(f.files.get(f.package.sourceArchive.path));
+  const inventory = JSON.parse(source.get('source-inventory.json'));
+  mutate(inventory);
+  const bytes = editionJSON(inventory);
+  source.set('source-inventory.json', bytes);
+  replace(f, 'sourceInventory', bytes);
+  replace(f, 'sourceArchive', createEditionZip(source));
+}
+
+test('launcher alias admission rejects forged canonical input pins and unknown projection inputs', async () => {
+  for (const mutate of [
+    (inventory) => {
+      inventory.inputs.find((row) => row.path === 'optional-practice/navigation.mjs').sha256 =
+        '0'.repeat(64);
+    },
+    (inventory) => {
+      inventory.inputs = inventory.inputs.filter(
+        (row) => row.path !== 'optional-practice/navigation.mjs',
+      );
+    },
+    (inventory) => {
+      inventory.projections.find((row) => row.kind === 'shared-launcher-source').inputs = [
+        'optional-practice/foreign.mjs',
+      ];
+    },
+  ]) {
+    const f = fixture(built);
+    changeSourceInventory(f, mutate);
+    await assert.rejects(
+      validateOptionalPackageAdmission(f.envelope, f),
+      /bytes differ|inventory is incomplete|Unknown optional source projection/,
+    );
+  }
+});
+
+test('source discovery preserves canonical launcher inputs before frozen packaging', async () => {
+  const discovered = await buildOptionalPractice(root);
+  const input = 'optional-practice/navigation.mjs';
+  assert.deepEqual(discovered.inputs.get(input), built.inputs.get(input));
+  const runtime = new Map(discovered.entries.map((entry) => [entry.name, entry.bytes]));
+  assert.equal(runtime.has(input), false, 'Discovery must not restore the duplicate runtime seed.');
+  assert.equal(
+    runtime.has('launcher/navigation.mjs'),
+    false,
+    'Only frozen builds emit a launcher.',
+  );
+});
+
+test('explicit launcher inputs retain the optional-package no-network admission rule', async (t) => {
+  const temporary = await fs.mkdtemp(path.join(os.tmpdir(), 'optional-launcher-input-'));
+  t.after(() => fs.rm(temporary, { recursive: true, force: true }));
+  for (const [name, bytes] of built.inputs) {
+    await fs.mkdir(path.dirname(path.join(temporary, name)), { recursive: true });
+    await fs.writeFile(path.join(temporary, name), bytes);
+  }
+  await fs.appendFile(
+    path.join(temporary, 'optional-practice/navigation.mjs'),
+    "\nfetch('./unadmitted-network.json');\n",
+  );
+  for (const options of [
+    {},
+    { engineCommit: binding.sourceRevision, engineTree: binding.sourceTree },
+  ])
+    await assert.rejects(
+      buildOptionalPractice(temporary, options),
+      /network requests belong only to its generated verified worker/,
+    );
 });

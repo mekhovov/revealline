@@ -1,0 +1,100 @@
+{
+  "format": "SimIncomingStaticImpactV1",
+  "observedAt": "2026-10-19T03:07:20.201011+00:00",
+  "base": "c4c5fc3c8fbdd17ce496005993e58ad45710823c",
+  "incoming": "2476d97a90381cc6cd5af6d1c911337d529dc0ca",
+  "featureHead": "575c10a31287b7ae086bcf373ef4ab3ecbf613a3",
+  "apiInventory": "incoming-main-c4c5fc3c-to-2476d97a-api.json",
+  "localFiles": [
+    {
+      "path": "optional-practice/civilian-fpv/demo-inventory.mjs",
+      "sha256": "18b72d6ec810d85c77ca10392ad73b1d0706a9ba144f0545b32c1a117c19b511",
+      "bytes": 1219
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demo-player.mjs",
+      "sha256": "b3912919d434149e92987d2a930f1e0a4bcd809e7be6750d3a5491efe568d4cd",
+      "bytes": 11383
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demonstration-resolver.mjs",
+      "sha256": "f9a7af1273412134180030076f003a56ec02749a47c1f21d4d5fe1417a36a8b5",
+      "bytes": 3285
+    },
+    {
+      "path": "optional-practice/civilian-fpv/model.mjs",
+      "sha256": "0b10fc11948bbca05e23eb6d096a95b97c02aad0573e17d68ac9404ba6694909",
+      "bytes": 23402
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-model.mjs",
+      "sha256": "1ee223ec4be6ffdfb1e3285a8d0dbf64388d78471570d700485b2d42df6354f2",
+      "bytes": 61725
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-catalogue.mjs",
+      "sha256": "54cbcaea1085548862dfbf3a64a99bac4f27dd8c7529786da3320b2e0248e611",
+      "bytes": 241971
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demo-data/index.json",
+      "sha256": "43e2fa660b9f943bf4d0e5e32acdaf7220a4856756f68ea5367b73b41b9fff6f",
+      "bytes": 317089
+    },
+    {
+      "path": "game/demo-modes/sim.mjs",
+      "sha256": "0f95e638006b3e7a2fa8a3e2a53049be0f34294851fb3b83469ec1abb814ad9e",
+      "bytes": 10536
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "sha256": "28fddbd86ca7101ea40e4adee7c60b4a918488cab65cd31ddd25f7e7d77c529d",
+      "bytes": 418922
+    }
+  ],
+  "known": {
+    "requiredSimIndexEntries": 392,
+    "eligibleInventoryOrStandardSimulationFilesChanged": false,
+    "nativeModelIds": [
+      "civilian-quad-fixed.v1",
+      "civilian-world-fixed.v2"
+    ],
+    "lexicalRelativeModuleClosure": {
+      "roots": [
+        "optional-practice/civilian-fpv/demo-inventory.mjs",
+        "optional-practice/civilian-fpv/demo-player.mjs",
+        "optional-practice/civilian-fpv/demonstration-resolver.mjs"
+      ],
+      "files": 41,
+      "incomingIntersection": [
+        "game/i18n/catalogs.mjs"
+      ],
+      "missing": [],
+      "scope": "Read-only recursive relative .mjs string-reference corroboration, not executed replay."
+    },
+    "incomingPhysicalAircraftChanges": [
+      "aircraft-course-practice.v2 adds versioned floor-contact mission view and preserves v1 recovery identity.",
+      "Aircraft catalog revision3\u21924; Nazgul ECO preset revision2 corrects diameter127\u2192129.54mm while preserving reaction torque.",
+      "withAircraftChallenge identity becomes a getter reflecting the active restored model."
+    ],
+    "demoBoundary": [
+      "Watching and isolated practice instantiate createFlight/createWorldFlight with recorded course/mode/response directly.",
+      "Fresh admits source/course/mode/response identities; startFlight uses demonstratedResponse with advanced:null and challenge:undefined before choosing a simulation.",
+      "Incoming world-app adds navigation context and paused tuning restart; its shown patch does not change the demonstratedResponse branch."
+    ]
+  },
+  "conclusion": "Incoming changes do not alter the standard SIM demo inventory or recorded simulation identity inputs. Preserve existing392 proof evidence, subject to conflict resolution retaining these boundaries.",
+  "limits": [
+    "Static source and complete GitHub changed-path inventory only; no new replay execution or browser qualification.",
+    "Ordinary physical-aircraft lesson/recovery behavior intentionally changes and needs its focused integration tests.",
+    "A mechanically clean world-app merge still requires exact Fresh/Ready-unarmed regression and generated shell check."
+  ],
+  "recommendedFocusedTests": [
+    "fpv-aircraft-mission-adapter.test.mjs",
+    "fpv-nazgul-diameter.test.mjs",
+    "fpv-aircraft-presets.test.mjs",
+    "fpv-tuning-ui.test.mjs",
+    "fpv-world-appearance-ui.test.mjs",
+    "existing SIM Fresh/cancellation/demo identity tests"
+  ]
+}

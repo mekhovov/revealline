@@ -6,6 +6,7 @@ export function demoLoadingClock() {
   return {
     options: {
       timeoutMs: 15000,
+      now: () => time,
       setTimer(callback, delay) {
         const id = ++serial;
         tasks.set(id, { callback, due: time + delay });
@@ -15,6 +16,10 @@ export function demoLoadingClock() {
     },
     get pending() {
       return tasks.size;
+    },
+    elapse(ms) {
+      // Model event-loop blocking without delivering the overdue timers.
+      time += ms;
     },
     advance(ms) {
       time += ms;

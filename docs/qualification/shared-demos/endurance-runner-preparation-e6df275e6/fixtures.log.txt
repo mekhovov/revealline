@@ -1,0 +1,10 @@
+test_detached_descendants_are_retired_without_touching_unrelated_process (__main__.OwnershipTests.test_detached_descendants_are_retired_without_touching_unrelated_process) ... ok
+test_evidence_cap_fails_but_retains_every_live_cleanup_identity (__main__.OwnershipTests.test_evidence_cap_fails_but_retains_every_live_cleanup_identity) ... ok
+test_log_overflow_continues_draining_and_retains_truthful_prefix_and_tail (__main__.OwnershipTests.test_log_overflow_continues_draining_and_retains_truthful_prefix_and_tail) ... ok
+test_normal_child_exit_requires_no_signal (__main__.OwnershipTests.test_normal_child_exit_requires_no_signal) ... ok
+test_reused_pid_or_changed_argv_is_not_signalled (__main__.OwnershipTests.test_reused_pid_or_changed_argv_is_not_signalled) ... ok
+
+----------------------------------------------------------------------
+Ran 5 tests in 2.291s
+
+OK

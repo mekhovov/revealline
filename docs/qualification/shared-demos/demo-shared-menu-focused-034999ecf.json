@@ -1,0 +1,89 @@
+{
+  "format": "SharedDemoControllerMenuFocusedQualificationV1",
+  "created": "2026-10-19T03:45:39.472609+00:00",
+  "scope": "Shared default navigator, native entry propagation, raw SIM menu frames; no browser or physical controller/radio claim.",
+  "node": "v20.19.5",
+  "sources": [
+    {
+      "path": "game/ui/demo-host.mjs",
+      "bytes": 57015,
+      "sha256": "84a1ca7f201ab707cb32bacdaa04264822f407dc849f1f487ef9374333a03f9a"
+    },
+    {
+      "path": "game/ui/demo-entry.mjs",
+      "bytes": 3720,
+      "sha256": "4360f3efd28ff1be05369582b75ab9bbeb93138bc9c5dc37450aca948d60d19a"
+    },
+    {
+      "path": "game/ui/demo-controller.mjs",
+      "bytes": 5277,
+      "sha256": "8e336a4a8a71344ae53d4f1822f6b5e28dc108d91b3d394de5545fd7d60df8a3"
+    },
+    {
+      "path": "game/test/demo-controller.test.mjs",
+      "bytes": 16357,
+      "sha256": "48a1f1c9c2662c56d168035f0fc661173994952547a2695c6309f8ad0d4ab97b"
+    },
+    {
+      "path": "game/test/demo-native-host.test.mjs",
+      "bytes": 15942,
+      "sha256": "b4d083c54b04faf131c291f21be0326ec67c2ec947bf47e84f05acb31dccf0f4"
+    }
+  ],
+  "tests": [
+    {
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=tap",
+        "game/test/demo-controller.test.mjs",
+        "game/test/demo-native-host.test.mjs"
+      ],
+      "tests": 26,
+      "passed": 26,
+      "failed": 0,
+      "cancelled": 0,
+      "exitCode": 0,
+      "log": {
+        "path": "docs/qualification/shared-demos/demo-shared-menu-focused.tap.txt",
+        "bytes": 6021,
+        "sha256": "83304dc8832e7cfed91881929986223810627ebf330c5bc5dd1b753be33de3ad",
+        "originalPath": ".cache/shared-demo-scratch-c4c5fc3c/tmp/demo-shared-menu-focused.tap.txt"
+      }
+    },
+    {
+      "command": [
+        "node",
+        "--test",
+        "--test-reporter=tap",
+        "game/test/demo-host.test.mjs"
+      ],
+      "tests": 19,
+      "passed": 19,
+      "failed": 0,
+      "cancelled": 0,
+      "exitCode": 0,
+      "log": {
+        "path": "docs/qualification/shared-demos/demo-host-shared-menu-regression.tap.txt",
+        "bytes": 4698,
+        "sha256": "ef63727d200d6c499ea30b11f070e93aa05048f2c2ee3f93b14fc734ee9e226a",
+        "originalPath": ".cache/shared-demo-scratch-c4c5fc3c/tmp/demo-host-shared-menu-regression.tap.txt"
+      }
+    }
+  ],
+  "checks": {
+    "eslint": "5 changed files, max-warnings0, exit0",
+    "prettier": "5 changed files, check passed, exit0",
+    "diffWhitespace": "git diff --check on5files passed"
+  },
+  "earlierTestOnlyFailure": {
+    "log": {
+      "path": "docs/qualification/shared-demos/demo-native-menu-host-tests.tap.txt",
+      "bytes": 3289,
+      "sha256": "7f8431a6716b75b253685fa643527e9a8b18c0185089815f986864d8aa0c62ef",
+      "originalPath": ".cache/shared-demo-scratch-c4c5fc3c/tmp/demo-native-menu-host-tests.tap.txt"
+    },
+    "reason": "New test expected click-only takeover to start playing immediately; corrected to the existing paused-until-fresh-input contract. Production behavior unchanged by correction."
+  },
+  "independentReview": "acceptance_review read-only reviewed companion diff: no actionable findings; shared native focus/radio guards preserved."
+}

@@ -1,0 +1,187 @@
+{
+  "engine": "chromium",
+  "requestedDurationSeconds": 0,
+  "scope": "all",
+  "idleEntry": false,
+  "started": "2026-10-19T00:22:50.628Z",
+  "checks": [
+    {
+      "type": "native-playback",
+      "mode": "snake",
+      "source": "snake:classic-snake-open-loop:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Open Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "native-playback",
+      "mode": "survival",
+      "source": "survival:freight-depot-loading-loop:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "60",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Loading Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 17
+        }
+      }
+    },
+    {
+      "type": "native-playback",
+      "mode": "sim",
+      "source": "sim:snake-hunt-heights-04-acro-98231d4fb2bab9aa",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "3",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Over your echo",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "native-playback",
+      "mode": "solo",
+      "source": "solo-qualified-dc59e6e76ae9df8b",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "122",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Split berths",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "real-webgl-loss-recovery",
+      "mode": "survival",
+      "source": "survival:chalk-quarry-survey-basin:standard",
+      "phase": "playing",
+      "failure": "sim:warehouse-05-acro-0913f4dd9f2bd83b demo-mode-unavailable: SIM graphics context was lost.",
+      "failureDetails": {
+        "event": "playback-failed",
+        "sourceId": "sim:warehouse-05-acro-0913f4dd9f2bd83b",
+        "modeId": "sim",
+        "at": 1792369387075,
+        "loadingMs": null,
+        "preparation": null,
+        "code": "demo-mode-unavailable",
+        "message": "SIM graphics context was lost.",
+        "stack": "Error: SIM graphics context was lost.\n    at failMode (http://127.0.0.1:18773/game/demo-modes/sim.mjs:3:17)\n    at onContextLost (http://127.0.0.1:18773/game/demo-modes/sim.mjs:156:23)\n    at HTMLCanvasElement.lost (http://127.0.0.1:18773/optional-practice/civilian-fpv/renderer.mjs:3555:5)"
+      },
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Survey Basin",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "pause",
+      "mode": "survival"
+    },
+    {
+      "type": "return-and-persistence",
+      "workers": 0,
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    }
+  ],
+  "samples": [],
+  "errors": [],
+  "complete": true,
+  "preview": {
+    "url": "http://127.0.0.1:18773/",
+    "mode": "generated-build",
+    "headers": "generated _headers (verified)",
+    "cache": "revalidate",
+    "fixtureAccess": true,
+    "emittedPreview": {
+      "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-dd337c8-2b8591448",
+      "manifestSHA256": "f6a3dd91289cb76bf3a5351a8c4866dec32c4edc411ff8d9c9ef50eb90383fbe",
+      "inventorySHA256": "d6860bb00d082a9e7c6de4dcadaf2c399b815d4a0a395842b6689051bee70f70",
+      "files": 5952,
+      "sourceRevision": "2b85914484ca3b49305d2a7e8c6451e52c73f339",
+      "sourceFingerprint": {
+        "sha256": "bf79e86f1404dd426834f8bfb1d6f4e272c907a455f5315984fcca429ba6358d",
+        "files": 9996,
+        "bytes": 404389524
+      },
+      "buildInputFingerprint": {
+        "sha256": "03bed002af55e4d34202ba2125fc6c75d7ab03cde245f7b419c899e2e0017d89",
+        "files": 9398,
+        "bytes": 348356072
+      },
+      "sourceVerified": true,
+      "sourceVerification": {
+        "head": "2b85914484ca3b49305d2a7e8c6451e52c73f339",
+        "runtime": {
+          "sha256": "bf79e86f1404dd426834f8bfb1d6f4e272c907a455f5315984fcca429ba6358d",
+          "files": 9996,
+          "bytes": 404389524
+        },
+        "buildInput": {
+          "sha256": "03bed002af55e4d34202ba2125fc6c75d7ab03cde245f7b419c899e2e0017d89",
+          "files": 9398,
+          "bytes": 348356072
+        }
+      }
+    },
+    "fixtureResponses": [
+      {
+        "path": "game/index.html",
+        "original": {
+          "bytes": 148313,
+          "sha256": "319f221044f0d91f6a63c9841e63953d4c53f151a790ff98c664fb8b7bdfe64d"
+        },
+        "served": {
+          "bytes": 148287,
+          "sha256": "57d57f75c98772c21dab0cd8141c713f60765c76b50faeab2070d830ae2c4ea6"
+        },
+        "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+      }
+    ]
+  },
+  "limitations": [
+    "The preview serves the verified emitted inventory, with only the declared local HTML access-credential exception. This run does not establish offline HTML integrity. No document routing or service-worker blocking is installed for this preview."
+  ],
+  "enduranceStarted": "2026-10-19T00:23:11.047Z",
+  "enduranceFinished": "2026-10-19T00:23:11.047Z",
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-19T00:23:11.723Z",
+  "previewClosed": true
+}

@@ -1,0 +1,52 @@
+{
+  "started": "2026-10-19T04:36:10.333313+00:00",
+  "head": "c647da2b9de6fb158004f06459afda926ba24028",
+  "nodeVersion": "v20.19.5",
+  "complete": true,
+  "commands": [
+    {
+      "command": [
+        "npm",
+        "run",
+        "i18n:check"
+      ],
+      "started": "2026-10-19T04:36:10.345585+00:00",
+      "logPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/tmp/main-integration-16ebd7b5-generated-0.log.txt",
+      "exitCode": 0,
+      "elapsedSeconds": 141.377,
+      "logBytes": 193,
+      "logSHA256": "3c36ac3a2ecb7ea8220967692e4e868f2de7a7ab8c11ab45a3441d8cf0cac5e5",
+      "trackedStatus": ""
+    },
+    {
+      "command": [
+        "node",
+        "scripts/refresh-fpv-play-shell.mjs",
+        "--check"
+      ],
+      "started": "2026-10-19T04:38:31.883705+00:00",
+      "logPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/tmp/main-integration-16ebd7b5-generated-1.log.txt",
+      "exitCode": 0,
+      "elapsedSeconds": 0.497,
+      "logBytes": 156,
+      "logSHA256": "d6c7b09d4143028ee3b44a6faa6009cc67cc77d37196a7bfc5bd471057ae85ff",
+      "trackedStatus": ""
+    },
+    {
+      "command": [
+        "node",
+        "scripts/refresh-demo-shell.mjs",
+        "--check"
+      ],
+      "started": "2026-10-19T04:38:32.449689+00:00",
+      "logPath": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/tmp/main-integration-16ebd7b5-generated-2.log.txt",
+      "exitCode": 0,
+      "elapsedSeconds": 0.19,
+      "logBytes": 0,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "trackedStatus": ""
+    }
+  ],
+  "headAfter": "c647da2b9de6fb158004f06459afda926ba24028",
+  "completedAt": "2026-10-19T04:38:32.735916+00:00"
+}

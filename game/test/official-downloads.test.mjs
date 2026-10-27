@@ -89,6 +89,153 @@ const job = {
   files: [a, b],
   baseURL: `${origin}/releases/a/site/`,
 };
+function deferred() {
+  let resolve;
+  const promise = new Promise((done) => (resolve = done));
+  return { promise, resolve };
+}
+
+test('cancelled cache inspections and checkpoint reads never start a native request', async () => {
+  const controller = new AbortController(),
+    reason = new Error('Owner retired');
+  controller.abort(reason);
+  let opens = 0;
+  const store = createOfficialDownloads({
+    origin,
+    caches: { open: async () => opens++ },
+  });
+  await assert.rejects(store.inspect([a], { signal: controller.signal }), (e) => e === reason);
+  await assert.rejects(store.states({ signal: controller.signal }), (e) => e === reason);
+  assert.equal(opens, 0);
+});
+
+for (const boundary of ['open', 'match', 'body'])
+  test(`inspection retirement during ${boundary} prevents subsequent cache work and readiness`, async () => {
+    const controller = new AbortController(),
+      reason = new Error('Inspection retired'),
+      entered = deferred(),
+      pending = deferred(),
+      calls = [];
+    const observe = async (name, value) => {
+      calls.push(name);
+      if (name === boundary) {
+        entered.resolve();
+        await pending.promise;
+      }
+      return value;
+    };
+    const cache = {
+      match: async () =>
+        observe('match', {
+          status: 200,
+          headers: new Headers({ 'Content-Length': String(a.bytes) }),
+          arrayBuffer: () => observe('body', new TextEncoder().encode(bodies.get(a.path))),
+        }),
+    };
+    const store = createOfficialDownloads({
+      origin,
+      caches: { open: () => observe('open', cache) },
+    });
+    const result = store.inspect([a, b], { signal: controller.signal, verify: true });
+    await entered.promise;
+    const before = [...calls];
+    controller.abort(reason);
+    pending.resolve();
+    await assert.rejects(result, (e) => e === reason);
+    assert.deepEqual(
+      calls,
+      before,
+      'An already-submitted request settles; no next request starts.',
+    );
+  });
+
+for (const boundary of ['open', 'keys', 'match', 'json'])
+  test(`checkpoint retirement during ${boundary} cannot read another entry or return readiness`, async () => {
+    const controller = new AbortController(),
+      entered = deferred(),
+      pending = deferred(),
+      calls = [];
+    const observe = async (name, value) => {
+      calls.push(name);
+      if (name === boundary) {
+        entered.resolve();
+        await pending.promise;
+      }
+      return value;
+    };
+    const cache = {
+      keys: () => observe('keys', [{ url: 'first' }, { url: 'second' }]),
+      match: () =>
+        observe('match', {
+          json: () =>
+            observe('json', { edition: origin, group: 'gameplay', hashes: [], complete: true }),
+        }),
+    };
+    const store = createOfficialDownloads({
+      origin,
+      caches: { open: () => observe('open', cache) },
+    });
+    const result = store.states({ signal: controller.signal });
+    await entered.promise;
+    const before = [...calls];
+    controller.abort();
+    pending.resolve();
+    await assert.rejects(result, { name: 'AbortError' });
+    assert.deepEqual(calls, before, 'Best-effort metadata handling must not swallow owner abort.');
+  });
+
+test('recording discovery preserves ordinary missing-cache fallback but propagates retirement', async (t) => {
+  for (const [key, value] of Object.entries({ location: { origin }, caches: {} })) {
+    const original = Object.getOwnPropertyDescriptor(globalThis, key);
+    Object.defineProperty(globalThis, key, { configurable: true, value });
+    t.after(() => {
+      if (original) Object.defineProperty(globalThis, key, original);
+      else delete globalThis[key];
+    });
+  }
+  const catalogue = {
+    tracks: [
+      { id: 'first', asset: a },
+      { id: 'second', asset: b },
+    ],
+  };
+  globalThis.caches.open = async () => {
+    throw new Error('Cache unavailable');
+  };
+  assert.deepEqual(await localOfficialRecordingIds(catalogue), []);
+  const controller = new AbortController(),
+    reason = new Error('Soundtrack retired'),
+    entered = deferred(),
+    pending = deferred();
+  let opens = 0,
+    matches = 0;
+  globalThis.caches.open = async () => {
+    opens++;
+    return {
+      async match() {
+        matches++;
+        entered.resolve();
+        await pending.promise;
+        return new Response(bodies.get(a.path), {
+          headers: { 'Content-Length': String(a.bytes) },
+        });
+      },
+    };
+  };
+  const result = localOfficialRecordingIds(catalogue, { signal: controller.signal });
+  await entered.promise;
+  controller.abort(reason);
+  pending.resolve();
+  await assert.rejects(result, (e) => e === reason);
+  assert.equal(opens, 1);
+  assert.equal(matches, 1);
+  await assert.rejects(
+    localOfficialRecordingIds(catalogue, { signal: controller.signal }),
+    (e) => e === reason,
+  );
+  assert.equal(opens, 1, 'Already-retired callers do not re-open the cache.');
+});
+
 test('connection loss preserves committed files and a new downloader resumes only the missing file', async () => {
   const h = setup();
   h.fail(b.path);

@@ -1,0 +1,663 @@
+TAP version 13
+# Subtest: demo audio controls share transport and never own a global keyboard shortcut
+ok 1 - demo audio controls share transport and never own a global keyboard shortcut
+  ---
+  duration_ms: 6.081875
+  ...
+# Subtest: sound toggle and volume preserve the independent paused music intent
+ok 2 - sound toggle and volume preserve the independent paused music intent
+  ---
+  duration_ms: 1.727042
+  ...
+# Subtest: style selection stays a draft until explicit Play style and preserves every supported mode
+ok 3 - style selection stays a draft until explicit Play style and preserves every supported mode
+  ---
+  duration_ms: 1.136542
+  ...
+# Subtest: game sounds choice changes only the demo mode, with no transport or mute mutation
+ok 4 - game sounds choice changes only the demo mode, with no transport or mute mutation
+  ---
+  duration_ms: 0.754833
+  ...
+# Subtest: credits are text-only and source links reject unsafe schemes and credentials
+ok 5 - credits are text-only and source links reject unsafe schemes and credentials
+  ---
+  duration_ms: 2.192209
+  ...
+# Subtest: blocked audio retries inside activation and unavailable audio remains usable UI
+ok 6 - blocked audio retries inside activation and unavailable audio remains usable UI
+  ---
+  duration_ms: 1.447291
+  ...
+# Subtest: new commands and close/reset suppress stale asynchronous errors
+ok 7 - new commands and close/reset suppress stale asynchronous errors
+  ---
+  duration_ms: 1.144291
+  ...
+# Subtest: current command errors surface once and disposal removes subscriptions and handlers
+ok 8 - current command errors surface once and disposal removes subscriptions and handlers
+  ---
+  duration_ms: 0.790167
+  ...
+# Subtest: inactive view cannot change shared listening state
+ok 9 - inactive view cannot change shared listening state
+  ---
+  duration_ms: 0.632083
+  ...
+# Subtest: missing playback capability retains master sound controls without offering inert music actions
+ok 10 - missing playback capability retains master sound controls without offering inert music actions
+  ---
+  duration_ms: 4.237833
+  ...
+# Subtest: demo credits select creator resources rather than licence or provenance and retain their link node
+ok 11 - demo credits select creator resources rather than licence or provenance and retain their link node
+  ---
+  duration_ms: 0.889
+  ...
+# Subtest: closed Demo ignores the real subscribed audio updates and refreshes current state on public-owner render
+ok 12 - closed Demo ignores the real subscribed audio updates and refreshes current state on public-owner render
+  ---
+  duration_ms: 0.9305
+  ...
+# Subtest: Demo progress-only notifications do not rewrite unchanged controls or credits
+ok 13 - Demo progress-only notifications do not rewrite unchanged controls or credits
+  ---
+  duration_ms: 0.868084
+  ...
+# Subtest: hidden active Demo retains pending command failure and current locale until visible return
+ok 14 - hidden active Demo retains pending command failure and current locale until visible return
+  ---
+  duration_ms: 1.03575
+  ...
+# Subtest: explicit action and manual rendering repair native control drafts even when the model did not change
+ok 15 - explicit action and manual rendering repair native control drafts even when the model did not change
+  ---
+  duration_ms: 0.997208
+  ...
+# Subtest: visible spectator clock ignores focus, keeps one owner and emits fresh ordinary frames
+ok 16 - visible spectator clock ignores focus, keeps one owner and emits fresh ordinary frames
+  ---
+  duration_ms: 1.215833
+  ...
+# Subtest: withheld visible RAF cannot stop spectator simulation, recap rotation, audio or painting
+ok 17 - withheld visible RAF cannot stop spectator simulation, recap rotation, audio or painting
+  ---
+  duration_ms: 1.837541
+  ...
+# Subtest: frame wins the visible wake once and retires its queued sibling
+ok 18 - frame wins the visible wake once and retires its queued sibling
+  ---
+  duration_ms: 0.21675
+  ...
+# Subtest: timer wins the visible wake once and retires its queued sibling
+ok 19 - timer wins the visible wake once and retires its queued sibling
+  ---
+  duration_ms: 0.098208
+  ...
+# Subtest: visible timer recovery preserves explicit pause and pumps audio without stale effects
+ok 20 - visible timer recovery preserves explicit pause and pumps audio without stale effects
+  ---
+  duration_ms: 0.232708
+  ...
+# Subtest: reset invalidates both pending visible callbacks
+ok 21 - reset invalidates both pending visible callbacks
+  ---
+  duration_ms: 0.168083
+  ...
+# Subtest: visibilitychange invalidates both pending visible callbacks
+ok 22 - visibilitychange invalidates both pending visible callbacks
+  ---
+  duration_ms: 0.112042
+  ...
+# Subtest: freeze invalidates both pending visible callbacks
+ok 23 - freeze invalidates both pending visible callbacks
+  ---
+  duration_ms: 0.082667
+  ...
+# Subtest: stop invalidates both pending visible callbacks
+ok 24 - stop invalidates both pending visible callbacks
+  ---
+  duration_ms: 0.167083
+  ...
+# Subtest: destroy invalidates both pending visible callbacks
+ok 25 - destroy invalidates both pending visible callbacks
+  ---
+  duration_ms: 0.107875
+  ...
+# Subtest: 1000ms hidden delay admits at most two seconds with one quarter-second per task
+ok 26 - 1000ms hidden delay admits at most two seconds with one quarter-second per task
+  ---
+  duration_ms: 0.157375
+  ...
+# Subtest: 60000ms hidden delay admits at most two seconds with one quarter-second per task
+ok 27 - 60000ms hidden delay admits at most two seconds with one quarter-second per task
+  ---
+  duration_ms: 0.119875
+  ...
+# Subtest: visibility switches invalidate stale RAF and message callbacks without double stepping
+ok 28 - visibility switches invalidate stale RAF and message callbacks without double stepping
+  ---
+  duration_ms: 0.141625
+  ...
+# Subtest: explicit pause stops catch-up while audio and visible painting continue until close
+ok 29 - explicit pause stops catch-up while audio and visible painting continue until close
+  ---
+  duration_ms: 0.109709
+  ...
+# Subtest: loading and freeze discard debt; resume preserves paused intent and resets timestamps
+ok 30 - loading and freeze discard debt; resume preserves paused intent and resets timestamps
+  ---
+  duration_ms: 0.076292
+  ...
+# Subtest: planner budget reserves a boundary without polling or spinning and cannot bank unlimited debt
+ok 31 - planner budget reserves a boundary without polling or spinning and cannot bank unlimited debt
+  ---
+  duration_ms: 0.067625
+  ...
+# Subtest: fallback timer works without RAF or MessageChannel and stale work cannot survive destroy
+ok 32 - fallback timer works without RAF or MessageChannel and stale work cannot survive destroy
+  ---
+  duration_ms: 0.06175
+  ...
+# Subtest: close during an advance cancels the remaining burst and does not schedule another owner
+ok 33 - close during an advance cancels the remaining burst and does not schedule another owner
+  ---
+  duration_ms: 0.140834
+  ...
+# Subtest: clock samples never move its elapsed origin backward
+ok 34 - clock samples never move its elapsed origin backward
+  ---
+  duration_ms: 0.073709
+  ...
+# Subtest: two accelerated hours rotate hidden scenes across focus, pause and freeze generations
+ok 35 - two accelerated hours rotate hidden scenes across focus, pause and freeze generations
+  ---
+  duration_ms: 14.285583
+  ...
+# Subtest: quality samples only ordinary native frame work without changing admitted simulation
+ok 36 - quality samples only ordinary native frame work without changing admitted simulation
+  ---
+  duration_ms: 0.28675
+  ...
+# Subtest: quality sampling excludes fallback, catch-up and hidden or unfocused transport
+ok 37 - quality sampling excludes fallback, catch-up and hidden or unfocused transport
+  ---
+  duration_ms: 0.1375
+  ...
+# Subtest: quality observation cannot cross owner, pause or generation boundaries
+ok 38 - quality observation cannot cross owner, pause or generation boundaries
+  ---
+  duration_ms: 0.08
+  ...
+# Subtest: rotation begins approachable and avoids consecutive same-level replay/bot scenes
+ok 39 - rotation begins approachable and avoids consecutive same-level replay/bot scenes
+  ---
+  duration_ms: 2.799709
+  ...
+# Subtest: failed sources are skipped once for this director session
+ok 40 - failed sources are skipped once for this director session
+  ---
+  duration_ms: 0.960167
+  ...
+# Subtest: late cancelled preparation cannot replace a newer player and releases its ownership
+ok 41 - late cancelled preparation cannot replace a newer player and releases its ownership
+  ---
+  duration_ms: 0.335167
+  ...
+# Subtest: suspension cancels loading and requires an explicit play gesture after lifecycle return
+ok 42 - suspension cancels loading and requires an explicit play gesture after lifecycle return
+  ---
+  duration_ms: 0.298333
+  ...
+# Subtest: completion remains available for a host-owned dwell, pause survives asynchronous load
+ok 43 - completion remains available for a host-owned dwell, pause survives asynchronous load
+  ---
+  duration_ms: 0.123667
+  ...
+# Subtest: visible stalls skip spectator time and repeated completed scenes keep rotating without input
+ok 44 - visible stalls skip spectator time and repeated completed scenes keep rotating without input
+  ---
+  duration_ms: 1.200208
+  ...
+# Subtest: empty or wholly unavailable rotation has a stable terminal state
+ok 45 - empty or wholly unavailable rotation has a stable terminal state
+  ---
+  duration_ms: 0.272791
+  ...
+# Subtest: source exceptions during playback skip only that source and preserve next-source ownership
+ok 46 - source exceptions during playback skip only that source and preserve next-source ownership
+  ---
+  duration_ms: 3.133166
+  ...
+# Subtest: expected bot exhaustion keeps the useful final board then selects a replay without quarantine
+ok 47 - expected bot exhaustion keeps the useful final board then selects a replay without quarantine
+  ---
+  duration_ms: 0.412625
+  ...
+# Subtest: a worker fault quarantines that bot and immediately falls back to a replay, never another bot
+ok 48 - a worker fault quarantines that bot and immediately falls back to a replay, never another bot
+  ---
+  duration_ms: 0.639792
+  ...
+# (node:61566) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the real bot watchdog adopts a verified reviewed replay and cannot revive from a late Worker reply
+ok 49 - the real bot watchdog adopts a verified reviewed replay and cannot revive from a late Worker reply
+  ---
+  duration_ms: 586.645958
+  ...
+# Subtest: no safe first macro falls back without quarantine; missing replay leaves a stable unavailable state
+ok 50 - no safe first macro falls back without quarantine; missing replay leaves a stable unavailable state
+  ---
+  duration_ms: 0.509166
+  ...
+# Subtest: preparation deadline quarantines a hung bot, falls back to replay and preserves explicit Pause
+ok 51 - preparation deadline quarantines a hung bot, falls back to replay and preserves explicit Pause
+  ---
+  duration_ms: 0.262208
+  ...
+# Subtest: Next cancels a preparation which never returns and retains only its newer owner
+ok 52 - Next cancels a preparation which never returns and retains only its newer owner
+  ---
+  duration_ms: 0.277416
+  ...
+# Subtest: dispose settles preparation immediately and disposes its ignored-abort late adapter once
+ok 53 - dispose settles preparation immediately and disposes its ignored-abort late adapter once
+  ---
+  duration_ms: 0.130209
+  ...
+# Subtest: wholly timed-out recordings end unavailable after one bounded attempt per source
+ok 54 - wholly timed-out recordings end unavailable after one bounded attempt per source
+  ---
+  duration_ms: 0.207375
+  ...
+# Subtest: idle countdown counts only contiguous eligible foreground frames
+ok 55 - idle countdown counts only contiguous eligible foreground frames
+  ---
+  duration_ms: 0.544417
+  ...
+# Subtest: reduced-motion default is manual; malformed preferences fail safely
+ok 56 - reduced-motion default is manual; malformed preferences fail safely
+  ---
+  duration_ms: 0.361708
+  ...
+# Subtest: demo sound preference is opt-in and preserves existing v1 settings
+ok 57 - demo sound preference is opt-in and preserves existing v1 settings
+  ---
+  duration_ms: 0.079667
+  ...
+# Subtest: demo picture privacy is opt-in and survives existing v1 settings
+ok 58 - demo picture privacy is opt-in and survives existing v1 settings
+  ---
+  duration_ms: 0.108833
+  ...
+# Subtest: clear picture previews are opt-in, accept v1 booleans, and preserve privacy on conflicting saves
+ok 59 - clear picture previews are opt-in, accept v1 booleans, and preserve privacy on conflicting saves
+  ---
+  duration_ms: 0.123167
+  ...
+# Subtest: malformed clear-picture preferences fail closed without coercion
+ok 60 - malformed clear-picture preferences fail closed without coercion
+  ---
+  duration_ms: 0.143625
+  ...
+# Subtest: practice waits for fresh steering, consumes input at real ticks, and suspends long gaps
+ok 61 - practice waits for fresh steering, consumes input at real ticks, and suspends long gaps
+  ---
+  duration_ms: 6.524916
+  ...
+# Subtest: direct takeover applies its initiating action once at the first real tick without inventing steering
+ok 62 - direct takeover applies its initiating action once at the first real tick without inventing steering
+  ---
+  duration_ms: 14.184583
+  ...
+# Subtest: captions use emitted core events and maintain a six-second reading interval
+ok 63 - captions use emitted core events and maintain a six-second reading interval
+  ---
+  duration_ms: 0.391042
+  ...
+# Subtest: captions distinguish a real scan from other equipment without claiming a revealed objective
+ok 64 - captions distinguish a real scan from other equipment without claiming a revealed objective
+  ---
+  duration_ms: 0.671167
+  ...
+# Subtest: same-tick real cut and relay capture keep distinct captions in order until scene reset
+ok 65 - same-tick real cut and relay capture keep distinct captions in order until scene reset
+  ---
+  duration_ms: 7.513833
+  ...
+# Subtest: signal captions require an actual slowing or blocked-equipment event
+ok 66 - signal captions require an actual slowing or blocked-equipment event
+  ---
+  duration_ms: 1.535542
+  ...
+# Subtest: signal clearing, suppression, resistance and harmless zones never manufacture a jam caption
+ok 67 - signal clearing, suppression, resistance and harmless zones never manufacture a jam caption
+  ---
+  duration_ms: 3.107625
+  ...
+# Subtest: production cache adapter persists across owned connections without opening another database
+ok 68 - production cache adapter persists across owned connections without opening another database
+  ---
+  duration_ms: 1.864875
+  ...
+# Subtest: two production connections serialize read-modify-write updates without losing either recording
+ok 69 - two production connections serialize read-modify-write updates without losing either recording
+  ---
+  duration_ms: 0.553209
+  ...
+# Subtest: abort before opening or while writing rejects and rolls back without retaining signal listeners
+ok 70 - abort before opening or while writing rejects and rolls back without retaining signal listeners
+  ---
+  duration_ms: 0.663959
+  ...
+# Subtest: a cancelled queued update never transforms or overwrites the preceding transaction
+ok 71 - a cancelled queued update never transforms or overwrites the preceding transaction
+  ---
+  duration_ms: 0.32125
+  ...
+# Subtest: quota, invalid documents and transform errors preserve the exact previous cache
+ok 72 - quota, invalid documents and transform errors preserve the exact previous cache
+  ---
+  duration_ms: 0.804667
+  ...
+# Subtest: cancellation after the commit boundary reports the committed result and cleans listeners
+ok 73 - cancellation after the commit boundary reports the committed result and cleans listeners
+  ---
+  duration_ms: 0.547208
+  ...
+# Subtest: closing during initial open rejects late adoption and releases its connection
+ok 74 - closing during initial open rejects late adoption and releases its connection
+  ---
+  duration_ms: 0.142166
+  ...
+# Subtest: versionchange releases the old connection and refuses to downgrade a newer cache schema
+ok 75 - versionchange releases the old connection and refuses to downgrade a newer cache schema
+  ---
+  duration_ms: 0.298958
+  ...
+# Subtest: verified Keep/list/clear uses the production cache, retains exact owners and enforces capacity after reopen
+ok 76 - verified Keep/list/clear uses the production cache, retains exact owners and enforces capacity after reopen
+  ---
+  duration_ms: 690.856333
+  ...
+# Subtest: optional Demo write aborts before library inspection when Start wins the real IDB read callback
+ok 77 - optional Demo write aborts before library inspection when Start wins the real IDB read callback
+  ---
+  duration_ms: 309.859083
+  ...
+# Subtest: storage callback guard preserves default transaction and committed-result semantics
+ok 78 - storage callback guard preserves default transaction and committed-result semantics
+  ---
+  duration_ms: 0.344
+  ...
+# Subtest: real UTF-8 bytes evict the oldest valid replay before the twelve-recording limit
+ok 79 - real UTF-8 bytes evict the oldest valid replay before the twelve-recording limit
+  ---
+  duration_ms: 2500.340125
+  ...
+# {"limit":33554432,"ticks":21462,"replayBytes":2705443,"initialBytes":33548899,"candidateBytes":33554507,"candidateCodeUnits":33553907}
+# Subtest: one oversized library document of valid replays is rejected without any storage mutation
+ok 80 - one oversized library document of valid replays is rejected without any storage mutation
+  ---
+  duration_ms: 694.183542
+  ...
+# Subtest: concurrent production-library writers both survive and every commit obeys the byte cap
+ok 81 - concurrent production-library writers both survive and every commit obeys the byte cap
+  ---
+  duration_ms: 2946.409833
+  ...
+# Subtest: manual retention does not opt into automatic collection; saved clips remain available after disabling
+ok 82 - manual retention does not opt into automatic collection; saved clips remain available after disabling
+  ---
+  duration_ms: 135.322375
+  ...
+# Subtest: practice, incomplete, tampered and stale runs never enter the demo cache
+ok 83 - practice, incomplete, tampered and stale runs never enter the demo cache
+  ---
+  duration_ms: 41.666167
+  ...
+# Subtest: verified local recordings deduplicate, evict oldest beyond twelve, and are owned snapshots
+ok 84 - verified local recordings deduplicate, evict oldest beyond twelve, and are owned snapshots
+  ---
+  duration_ms: 649.533041
+  ...
+# Subtest: retention cancellation, opt-out during verification, and storage failure preserve prior bytes
+ok 85 - retention cancellation, opt-out during verification, and storage failure preserve prior bytes
+  ---
+  duration_ms: 85.13975
+  ...
+# Subtest: quality filtering rejects long idle and short straight-line performances
+ok 86 - quality filtering rejects long idle and short straight-line performances
+  ---
+  duration_ms: 0.236833
+  ...
+# Subtest: missing IndexedDB reports unavailable instead of touching another storage system
+ok 87 - missing IndexedDB reports unavailable instead of touching another storage system
+  ---
+  duration_ms: 0.183167
+  ...
+# Subtest: runtime hints distinguish engine identities without treating iOS browser brands as engines
+ok 88 - runtime hints distinguish engine identities without treating iOS browser brands as engines
+  ---
+  duration_ms: 0.745834
+  ...
+# Subtest: preferred engine partition preserves bounded alternatives and their relative fallback order
+ok 89 - preferred engine partition preserves bounded alternatives and their relative fallback order
+  ---
+  duration_ms: 0.383625
+  ...
+# Subtest: a delayed optional catalog cannot starve available modes or freeze localization
+ok 90 - a delayed optional catalog cannot starve available modes or freeze localization
+  ---
+  duration_ms: 1.210125
+  ...
+# Subtest: prefetch owns one immutable payload and cancels its predecessor without preparing scenes
+ok 91 - prefetch owns one immutable payload and cancels its predecessor without preparing scenes
+  ---
+  duration_ms: 0.456917
+  ...
+# Subtest: the next prefetched recording is consumed once and never creates a second player early
+ok 92 - the next prefetched recording is consumed once and never creates a second player early
+  ---
+  duration_ms: 0.820417
+  ...
+# Subtest: modes and level variants have equal performance weight despite duplicate recordings
+ok 93 - modes and level variants have equal performance weight despite duplicate recordings
+  ---
+  duration_ms: 1.718625
+  ...
+# Subtest: an unavailable graphics engine is attempted once, not once per authored level
+ok 94 - an unavailable graphics engine is attempted once, not once per authored level
+  ---
+  duration_ms: 1.445416
+  ...
+# Subtest: a large corrupt catalog cannot keep healthy unvisited modes behind verified fallback
+ok 95 - a large corrupt catalog cannot keep healthy unvisited modes behind verified fallback
+  ---
+  duration_ms: 1.168125
+  ...
+# Subtest: a deferred mode returns with its next recording while healthy mode cycles keep progressing
+ok 96 - a deferred mode returns with its next recording while healthy mode cycles keep progressing
+  ---
+  duration_ms: 0.454334
+  ...
+# Subtest: duplicate bad recordings cannot hold the next level behind repeated verified fallback
+ok 97 - duplicate bad recordings cannot hold the next level behind repeated verified fallback
+  ---
+  duration_ms: 0.339917
+  ...
+# Subtest: all fallback attempts together stop at thirty seconds
+ok 98 - all fallback attempts together stop at thirty seconds
+  ---
+  duration_ms: 1.621208
+  ...
+# Subtest: replacement waits for asynchronous graphics disposal
+ok 99 - replacement waits for asynchronous graphics disposal
+  ---
+  duration_ms: 0.248417
+  ...
+# Subtest: fallback waits for cleanup of a source rejected after preparation
+ok 100 - fallback waits for cleanup of a source rejected after preparation
+  ---
+  duration_ms: 0.285334
+  ...
+# Subtest: captions retain five explanations, stay six seconds, and discard stale warnings
+ok 101 - captions retain five explanations, stay six seconds, and discard stale warnings
+  ---
+  duration_ms: 0.280958
+  ...
+# Subtest: caption history translates observed events without replaying or dropping their reading interval
+ok 102 - caption history translates observed events without replaying or dropping their reading interval
+  ---
+  duration_ms: 0.07175
+  ...
+# Subtest: natural completion retains the last explanation and the recap for six seconds each
+ok 103 - natural completion retains the last explanation and the recap for six seconds each
+  ---
+  duration_ms: 0.118209
+  ...
+# Subtest: immediate: RLE, release markers, pause and restart preserve the verified final checkpoint
+ok 104 - immediate: RLE, release markers, pause and restart preserve the verified final checkpoint
+  ---
+  duration_ms: 18.783666
+  ...
+# Subtest: immediate: every playback speed changes pacing, not terminal state or events
+ok 105 - immediate: every playback speed changes pacing, not terminal state or events
+  ---
+  duration_ms: 42.129208
+  ...
+# Subtest: grid-center: RLE, release markers, pause and restart preserve the verified final checkpoint
+ok 106 - grid-center: RLE, release markers, pause and restart preserve the verified final checkpoint
+  ---
+  duration_ms: 6.827333
+  ...
+# Subtest: grid-center: every playback speed changes pacing, not terminal state or events
+ok 107 - grid-center: every playback speed changes pacing, not terminal state or events
+  ---
+  duration_ms: 32.188
+  ...
+# Subtest: verification rejects tampering and cancellation before exposing a player
+ok 108 - verification rejects tampering and cancellation before exposing a player
+  ---
+  duration_ms: 9.719208
+  ...
+# Subtest: caller edits during asynchronous verification never replace the adopted command stream
+ok 109 - caller edits during asynchronous verification never replace the adopted command stream
+  ---
+  duration_ms: 33.982125
+  ...
+# Subtest: a long frame gap pauses without chasing backlog or releasing the recorded queued turn
+ok 110 - a long frame gap pauses without chasing backlog or releasing the recorded queued turn
+  ---
+  duration_ms: 4.037459
+  ...
+# Subtest: zero-tick recordings complete correctly and accidental read-model mutation fails closed
+ok 111 - zero-tick recordings complete correctly and accidental read-model mutation fails closed
+  ---
+  duration_ms: 7.029625
+  ...
+# Subtest: accessors and oversize source text are refused without reading user properties
+ok 112 - accessors and oversize source text are refused without reading user properties
+  ---
+  duration_ms: 2.012291
+  ...
+# Subtest: bundled Fieldcraft example 1 is the genuine proof route and reproduces its role interaction
+ok 113 - bundled Fieldcraft example 1 is the genuine proof route and reproduces its role interaction
+  ---
+  duration_ms: 166.137459
+  ...
+# Subtest: bundled Fieldcraft example 2 is the genuine proof route and reproduces its role interaction
+ok 114 - bundled Fieldcraft example 2 is the genuine proof route and reproduces its role interaction
+  ---
+  duration_ms: 159.920625
+  ...
+# Subtest: bundled Fieldcraft example 3 is the genuine proof route and reproduces its role interaction
+ok 115 - bundled Fieldcraft example 3 is the genuine proof route and reproduces its role interaction
+  ---
+  duration_ms: 151.053041
+  ...
+# Subtest: bundled Fieldcraft example 4 is the genuine proof route and reproduces its role interaction
+ok 116 - bundled Fieldcraft example 4 is the genuine proof route and reproduces its role interaction
+  ---
+  duration_ms: 128.373416
+  ...
+# Subtest: RLE merges identical canonical commands, copies input and preserves caller options
+ok 117 - RLE merges identical canonical commands, copies input and preserves caller options
+  ---
+  duration_ms: 8.542167
+  ...
+# Subtest: release re-arms a held Scout action even when the resulting summary is identical
+ok 118 - release re-arms a held Scout action even when the resulting summary is identical
+  ---
+  duration_ms: 22.519833
+  ...
+# Subtest: a trailing pause records speed, queue and latch release without adding a tick
+ok 119 - a trailing pause records speed, queue and latch release without adding a tick
+  ---
+  duration_ms: 3.711041
+  ...
+# Subtest: initial and repeated releases are idempotent and export snapshots remain independent
+ok 120 - initial and repeated releases are idempotent and export snapshots remain independent
+  ---
+  duration_ms: 3.213584
+  ...
+# Subtest: every authoritative section is checksummed while decorative data and events are excluded
+ok 121 - every authoritative section is checksummed while decorative data and events are excluded
+  ---
+  duration_ms: 4.629958
+  ...
+# Subtest: complete win and its final shell release verify; appended terminal commands are rejected
+ok 122 - complete win and its final shell release verify; appended terminal commands are rejected
+  ---
+  duration_ms: 21.250333
+  ...
+# Subtest: modified command and forged summary are diagnosed independently of checkpoint metadata
+ok 123 - modified command and forged summary are diagnosed independently of checkpoint metadata
+  ---
+  duration_ms: 3.625458
+  ...
+# Subtest: export rejects missing tick records, identity mismatch and unrecorded partial core time
+ok 124 - export rejects missing tick records, identity mismatch and unrecorded partial core time
+  ---
+  duration_ms: 1.449583
+  ...
+# Subtest: legacy format, malformed segments, unsupported primitives and inconsistent totals fail validation
+ok 125 - legacy format, malformed segments, unsupported primitives and inconsistent totals fail validation
+  ---
+  duration_ms: 1.813083
+  ...
+# Subtest: bounded JSON rejects prototype keys, accessors, cycles, nonfinite values and excessive nesting
+ok 126 - bounded JSON rejects prototype keys, accessors, cycles, nonfinite values and excessive nesting
+  ---
+  duration_ms: 1.310958
+  ...
+# Subtest: recording and verification reject more than 30 minutes before replaying
+ok 127 - recording and verification reject more than 30 minutes before replaying
+  ---
+  duration_ms: 1.120167
+  ...
+# Subtest: asynchronous verification yields, reports bounded progress and matches synchronous verification
+ok 128 - asynchronous verification yields, reports bounded progress and matches synchronous verification
+  ---
+  duration_ms: 53.205959
+  ...
+# Subtest: asynchronous verification can be cancelled without modifying source data or an existing run
+ok 129 - asynchronous verification can be cancelled without modifying source data or an existing run
+  ---
+  duration_ms: 10.178833
+  ...
+# Subtest: a full 216000-tick stationary recording remains compact and verifies asynchronously
+ok 130 - a full 216000-tick stationary recording remains compact and verifies asynchronously
+  ---
+  duration_ms: 819.319417
+  ...
+1..130
+# tests 130
+# suites 0
+# pass 130
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 7265.269791

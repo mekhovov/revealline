@@ -1,0 +1,212 @@
+{
+  "format": "ExactIncomingBlobHydrationV1",
+  "completedAt": "2026-10-19T08:04:40.988351+00:00",
+  "complete": true,
+  "pins": {
+    "base": "16ebd7b51984387c39622380a8e51a60e745152e",
+    "incoming": "2d24aee29448667a2cbe0381ef1755529f59fb11",
+    "candidate": "318b133362388716590a7399ad91e417837259dc"
+  },
+  "incomingPathCount": 41,
+  "referencedBlobCount": 83,
+  "scope": "Only missing exact Git blobs referenced by41incoming paths at16eb/2d24/318b. Lazy fetch disabled; repository maintenance/gc disabled for writes. No worktree/index/ref/source changes.",
+  "hydrated": [
+    {
+      "oid": "1e48b98479a97a8338f74a0db4dfb7745cdcd592",
+      "references": [
+        {
+          "revisionRole": "incoming",
+          "path": "docs/performance/solo-performance-followup-plan.md"
+        }
+      ],
+      "bytes": 177290,
+      "sha256": "b1e4ec3dc3e6efb8164d4c1ce52d64a9eb50adbc97425f07599efd1565d1608e",
+      "gitBlobSHA1VerifiedBeforeWrite": true,
+      "objectBytesVerifiedAfterWrite": true
+    },
+    {
+      "oid": "417917463f1efc4901e7ed242feeb2d694df502a",
+      "references": [
+        {
+          "revisionRole": "incoming",
+          "path": "game/app.mjs"
+        }
+      ],
+      "bytes": 620593,
+      "sha256": "6c74d9ad957de55ffc7ba9d19cf011c01ce74318f49d4e5bfefdff9554b11bb3",
+      "gitBlobSHA1VerifiedBeforeWrite": true,
+      "objectBytesVerifiedAfterWrite": true
+    },
+    {
+      "oid": "416ab7c8a74fd5f590f31a0279ca54113a6dec72",
+      "references": [
+        {
+          "revisionRole": "incoming",
+          "path": "game/couch/couch.mjs"
+        }
+      ],
+      "bytes": 208434,
+      "sha256": "d8e5f1c84f516f60bbfd81221a6f0e958199674ae1629c7c0cd6d9f2434b5411",
+      "gitBlobSHA1VerifiedBeforeWrite": true,
+      "objectBytesVerifiedAfterWrite": true
+    },
+    {
+      "oid": "c13ac034e6e827faf09e49b4d1ceae3845f56378",
+      "references": [
+        {
+          "revisionRole": "incoming",
+          "path": "game/couch/relay-rescue.mjs"
+        }
+      ],
+      "bytes": 290822,
+      "sha256": "293aaaabb73eb3ddd8c6774945e1fdaa9619b41328549ec1c828a5d8ac3fa65c",
+      "gitBlobSHA1VerifiedBeforeWrite": true,
+      "objectBytesVerifiedAfterWrite": true
+    },
+    {
+      "oid": "0e1ea92f614e796e7fa1ea860f0c2cd7f47bbc0a",
+      "references": [
+        {
+          "revisionRole": "incoming",
+          "path": "game/i18n/catalogs.mjs"
+        }
+      ],
+      "bytes": 1270415,
+      "sha256": "5036a4b16eb467b7270634568788f1feaaf06c121d73241f70021b432c021778",
+      "gitBlobSHA1VerifiedBeforeWrite": true,
+      "objectBytesVerifiedAfterWrite": true
+    },
+    {
+      "oid": "07b497965c6f92994aceaebc8c57f748f69498e5",
+      "references": [
+        {
+          "revisionRole": "incoming",
+          "path": "game/locales/en/interface.json"
+        }
+      ],
+      "bytes": 510918,
+      "sha256": "b55e8412a6ea1e078fdd1000adc1ebbce2c7ba825c0abbd94da94ea27df7659a",
+      "gitBlobSHA1VerifiedBeforeWrite": true,
+      "objectBytesVerifiedAfterWrite": true
+    },
+    {
+      "oid": "3c85d10a8d19ce053b3c9b2e859da78777e8b882",
+      "references": [
+        {
+          "revisionRole": "incoming",
+          "path": "game/locales/uk/interface.json"
+        }
+      ],
+      "bytes": 830481,
+      "sha256": "5118365f3833a6670d00d5318572e6a5574efde8a96413039a5d50f871175ee8",
+      "gitBlobSHA1VerifiedBeforeWrite": true,
+      "objectBytesVerifiedAfterWrite": true
+    },
+    {
+      "oid": "3e128634d2c5e16a7fac7ba2bc530fd3b4eff485",
+      "references": [
+        {
+          "revisionRole": "incoming",
+          "path": "game/snake/classic-app.mjs"
+        }
+      ],
+      "bytes": 103749,
+      "sha256": "37d1578d652820e6333fc55fe5411d72b476f606957edf526e6ac795b34f9482",
+      "gitBlobSHA1VerifiedBeforeWrite": true,
+      "objectBytesVerifiedAfterWrite": true
+    },
+    {
+      "oid": "2931c29fad1fa1115e4a313f0cc8e2c0ad6e30ca",
+      "references": [
+        {
+          "revisionRole": "incoming",
+          "path": "game/test/classic-snake-ui.test.mjs"
+        }
+      ],
+      "bytes": 117815,
+      "sha256": "690768958bc5712756f1145da231d6b9ef9bb02d55a3595008c10f97163d5c81",
+      "gitBlobSHA1VerifiedBeforeWrite": true,
+      "objectBytesVerifiedAfterWrite": true
+    },
+    {
+      "oid": "26a8b1a0ba1fceba1637d841d53015ace82ba2c7",
+      "references": [
+        {
+          "revisionRole": "incoming",
+          "path": "game/test/comfort-presets.test.mjs"
+        }
+      ],
+      "bytes": 19018,
+      "sha256": "a07e99a057d54f815972736fc3b460ceab80f82d8b2ea397e04edd26d6e795f8",
+      "gitBlobSHA1VerifiedBeforeWrite": true,
+      "objectBytesVerifiedAfterWrite": true
+    },
+    {
+      "oid": "1037c465a3e89a6bc7122d69ab5518d12d2c39d5",
+      "references": [
+        {
+          "revisionRole": "incoming",
+          "path": "game/ui/comfort-presets.mjs"
+        }
+      ],
+      "bytes": 15380,
+      "sha256": "dd6fb40ee65c9ef2ba50add97ce6f391b643833a1e6be7a2001f9b65737803ff",
+      "gitBlobSHA1VerifiedBeforeWrite": true,
+      "objectBytesVerifiedAfterWrite": true
+    },
+    {
+      "oid": "5b14f999b6fbe84dc6a25cc029029c83cd006a5e",
+      "references": [
+        {
+          "revisionRole": "incoming",
+          "path": "game/ui/game-shell.mjs"
+        }
+      ],
+      "bytes": 33476,
+      "sha256": "984f3bb3b6ce26d84e92e345f189b35cd83ae0f66354f904c88f65e25abf44e5",
+      "gitBlobSHA1VerifiedBeforeWrite": true,
+      "objectBytesVerifiedAfterWrite": true
+    },
+    {
+      "oid": "440916589ab349cd8b8bccdb1cd426416ddd2316",
+      "references": [
+        {
+          "revisionRole": "incoming",
+          "path": "game/ui/native-menu.css"
+        }
+      ],
+      "bytes": 28759,
+      "sha256": "bf3b49827fbc2fd7489b283e0a4624e8775f6e78f5eded6fcd699609e2c50d9e",
+      "gitBlobSHA1VerifiedBeforeWrite": true,
+      "objectBytesVerifiedAfterWrite": true
+    },
+    {
+      "oid": "694520570c9278d68f01136fa197da181387a298",
+      "references": [
+        {
+          "revisionRole": "incoming",
+          "path": "game/ui/native-menus.mjs"
+        }
+      ],
+      "bytes": 26526,
+      "sha256": "a4f9dc32b2f6d4d6cb5af6fc3e82e4f0615c60b0390dd14b6376bcb3bd7b3b93",
+      "gitBlobSHA1VerifiedBeforeWrite": true,
+      "objectBytesVerifiedAfterWrite": true
+    },
+    {
+      "oid": "f540b774f37a950aa6ce6e6664b217f20b71caea",
+      "references": [
+        {
+          "revisionRole": "incoming",
+          "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs"
+        }
+      ],
+      "bytes": 337667,
+      "sha256": "17f96707b8011beca7a87653e1a008e620357284191ff8fdae2f4ef00bbc2a5d",
+      "gitBlobSHA1VerifiedBeforeWrite": true,
+      "objectBytesVerifiedAfterWrite": true
+    }
+  ],
+  "totalBytes": 4591343,
+  "headAfter": "318b133362388716590a7399ad91e417837259dc"
+}

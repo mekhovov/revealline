@@ -1,0 +1,598 @@
+{
+  "format": "SharedDemoNativeSoloCandidateCaptureV1",
+  "complete": true,
+  "started": "2026-10-19T09:32:51.571Z",
+  "checks": [
+    {
+      "id": "solo-qualified-478808a96f4fbf5e",
+      "levelId": "signal-08",
+      "source": {
+        "path": "game/demo-data/solo-qualified-478808a96f4fbf5e.replay.json",
+        "sha256": "06642a1d92e6405531297802a2eb9632795ce7540029d35f34813525409aad4b",
+        "bytes": 13941
+      },
+      "natural": {
+        "status": "won",
+        "tick": 7322,
+        "captures": 12,
+        "capturedCells": 1183,
+        "sourceTicks": 7322
+      },
+      "genericVariantEligible": true,
+      "trace": {
+        "source": "353aaa5366229bfa",
+        "actual": "353aaa5366229bfa",
+        "exactTrace": true,
+        "sourceTicks": 7322,
+        "actualTicks": 7322,
+        "sourceOutcome": "won",
+        "actualOutcome": "won"
+      },
+      "authoringVerification": {
+        "match": true,
+        "actual": {
+          "summary": {
+            "ruleset": "xonix-core.v2",
+            "levelId": "signal-08",
+            "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-f83d23849bda6546",
+            "seed": 123,
+            "turnPolicy": "immediate",
+            "classId": "scout",
+            "activeClassId": "scout",
+            "rosterHash": "roster-v1-e159e435",
+            "classHistory": [
+              {
+                "classId": "scout",
+                "classRevision": "1",
+                "loadoutHash": "loadout-v1-aaa4aadd",
+                "tick": 0
+              }
+            ],
+            "switches": 0,
+            "failureCause": "enemy-trail",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "status": "won",
+            "won": true,
+            "tick": 7322,
+            "time": 61.010105580691,
+            "lives": 2,
+            "score": 12330,
+            "coverage": 0.7632258064516129,
+            "claimedCount": 1183,
+            "totalClaimable": 1550,
+            "medal": "silver",
+            "objectives": {
+              "captured": 1,
+              "total": 1,
+              "required": 1
+            }
+          },
+          "checkpoint": {
+            "algorithm": "fnv1a64-state-v2",
+            "hash": "a6a49980b08ebcab",
+            "sections": {
+              "identity": "2d88a59f014880bd",
+              "configuration": "786bbd305565a787",
+              "board": "620d2d05315a7608",
+              "player": "fe5606397901f03e",
+              "trail": "f0ca473df9efdcc8",
+              "enemies": "c3ba914e89640524",
+              "objectives": "a77a0767441490cd",
+              "supplies": "e1b45854413ff5f8",
+              "ability": "f6b5aef539d929bb",
+              "clock": "83be6483dc2b7278",
+              "continuation": "a9d828ced6380d30",
+              "result": "4d4888fdb5494cc5"
+            }
+          }
+        }
+      },
+      "candidate": {
+        "path": ".cache/solo-node22131-x64-capture-b4688ca21-candidates/solo-qualified-478808a96f4fbf5e.node22131-x64.replay.json",
+        "sha256": "535e03c1b709735d7b785405b08da3f98e543654e11724ec297059fad63c820a",
+        "bytes": 13941
+      },
+      "diagnostic": {
+        "path": ".cache/solo-node22131-x64-capture-b4688ca21-candidates/solo-qualified-478808a96f4fbf5e.node22131-x64.diagnostics.json",
+        "sha256": "ddb54ef6cecb562a3553ef908b67b38d66174971f2db854dbd3014b8a746bbe0",
+        "bytes": 5370
+      },
+      "independent": {
+        "environment": {
+          "version": "v22.13.1",
+          "platform": "darwin",
+          "arch": "x64"
+        },
+        "candidate": {
+          "path": ".cache/solo-node22131-x64-capture-b4688ca21-candidates/solo-qualified-478808a96f4fbf5e.node22131-x64.replay.json",
+          "sha256": "535e03c1b709735d7b785405b08da3f98e543654e11724ec297059fad63c820a",
+          "bytes": 13941
+        },
+        "match": true,
+        "actual": {
+          "summary": {
+            "ruleset": "xonix-core.v2",
+            "levelId": "signal-08",
+            "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-f83d23849bda6546",
+            "seed": 123,
+            "turnPolicy": "immediate",
+            "classId": "scout",
+            "activeClassId": "scout",
+            "rosterHash": "roster-v1-e159e435",
+            "classHistory": [
+              {
+                "classId": "scout",
+                "classRevision": "1",
+                "loadoutHash": "loadout-v1-aaa4aadd",
+                "tick": 0
+              }
+            ],
+            "switches": 0,
+            "failureCause": "enemy-trail",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "status": "won",
+            "won": true,
+            "tick": 7322,
+            "time": 61.010105580691,
+            "lives": 2,
+            "score": 12330,
+            "coverage": 0.7632258064516129,
+            "claimedCount": 1183,
+            "totalClaimable": 1550,
+            "medal": "silver",
+            "objectives": {
+              "captured": 1,
+              "total": 1,
+              "required": 1
+            }
+          },
+          "checkpoint": {
+            "algorithm": "fnv1a64-state-v2",
+            "hash": "a6a49980b08ebcab",
+            "sections": {
+              "identity": "2d88a59f014880bd",
+              "configuration": "786bbd305565a787",
+              "board": "620d2d05315a7608",
+              "player": "fe5606397901f03e",
+              "trail": "f0ca473df9efdcc8",
+              "enemies": "c3ba914e89640524",
+              "objectives": "a77a0767441490cd",
+              "supplies": "e1b45854413ff5f8",
+              "ability": "f6b5aef539d929bb",
+              "clock": "83be6483dc2b7278",
+              "continuation": "a9d828ced6380d30",
+              "result": "4d4888fdb5494cc5"
+            }
+          }
+        },
+        "phase": "complete",
+        "captures": 12,
+        "capturedCells": 1183,
+        "ticks": 7322,
+        "outcome": "won"
+      },
+      "eligible": true
+    },
+    {
+      "id": "solo-qualified-d0257fa131665b79",
+      "levelId": "signal-12",
+      "source": {
+        "path": "game/demo-data/solo-qualified-d0257fa131665b79.replay.json",
+        "sha256": "a017f0e1bd6d57a8374aa51e24859e434f7225376555e2a1296bdf7e92db55b3",
+        "bytes": 16927
+      },
+      "natural": {
+        "status": "lost",
+        "tick": 10731,
+        "captures": 15,
+        "capturedCells": 1171,
+        "sourceTicks": 10731
+      },
+      "genericVariantEligible": true,
+      "trace": {
+        "source": "7cc26937cd6ebd85",
+        "actual": "7cc26937cd6ebd85",
+        "exactTrace": true,
+        "sourceTicks": 10731,
+        "actualTicks": 10731,
+        "sourceOutcome": "lost",
+        "actualOutcome": "lost"
+      },
+      "authoringVerification": {
+        "match": true,
+        "actual": {
+          "summary": {
+            "ruleset": "xonix-core.v2",
+            "levelId": "signal-12",
+            "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-9c8079284ade3e63",
+            "seed": 123,
+            "turnPolicy": "immediate",
+            "classId": "scout",
+            "activeClassId": "scout",
+            "rosterHash": "roster-v1-e159e435",
+            "classHistory": [
+              {
+                "classId": "scout",
+                "classRevision": "1",
+                "loadoutHash": "loadout-v1-aaa4aadd",
+                "tick": 0
+              }
+            ],
+            "switches": 0,
+            "failureCause": "enemy-trail",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "status": "lost",
+            "won": false,
+            "tick": 10731,
+            "time": 89.41672816692626,
+            "lives": 0,
+            "score": 11710,
+            "coverage": 0.7487212276214834,
+            "claimedCount": 1171,
+            "totalClaimable": 1564,
+            "medal": null,
+            "objectives": {
+              "captured": 0,
+              "total": 1,
+              "required": 1
+            }
+          },
+          "checkpoint": {
+            "algorithm": "fnv1a64-state-v2",
+            "hash": "d3e215a5ed153307",
+            "sections": {
+              "identity": "177a92252274a514",
+              "configuration": "ae19c4603fc193a4",
+              "board": "95acf6788171f92d",
+              "player": "83a95f97d3892437",
+              "trail": "f0ca473df9efdcc8",
+              "enemies": "b88cae6a3194d38b",
+              "objectives": "78aab013f053ee08",
+              "supplies": "e1b45854413ff5f8",
+              "ability": "4b8e29576f3aba69",
+              "clock": "72f282cee72cb15f",
+              "continuation": "a9d828ced6380d30",
+              "result": "2268d69c203b8544"
+            }
+          }
+        }
+      },
+      "candidate": {
+        "path": ".cache/solo-node22131-x64-capture-b4688ca21-candidates/solo-qualified-d0257fa131665b79.node22131-x64.replay.json",
+        "sha256": "dc5b3eb14c36352bd5e7a7d63ac6da64eb687fe6d33735d2383e8b426c02db44",
+        "bytes": 16927
+      },
+      "diagnostic": {
+        "path": ".cache/solo-node22131-x64-capture-b4688ca21-candidates/solo-qualified-d0257fa131665b79.node22131-x64.diagnostics.json",
+        "sha256": "3a2aa4dd2510602f6b3ce92133b923d2c69bac744b8a5c4517c39a13f2f09f10",
+        "bytes": 7571
+      },
+      "independent": {
+        "environment": {
+          "version": "v22.13.1",
+          "platform": "darwin",
+          "arch": "x64"
+        },
+        "candidate": {
+          "path": ".cache/solo-node22131-x64-capture-b4688ca21-candidates/solo-qualified-d0257fa131665b79.node22131-x64.replay.json",
+          "sha256": "dc5b3eb14c36352bd5e7a7d63ac6da64eb687fe6d33735d2383e8b426c02db44",
+          "bytes": 16927
+        },
+        "match": true,
+        "actual": {
+          "summary": {
+            "ruleset": "xonix-core.v2",
+            "levelId": "signal-12",
+            "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-9c8079284ade3e63",
+            "seed": 123,
+            "turnPolicy": "immediate",
+            "classId": "scout",
+            "activeClassId": "scout",
+            "rosterHash": "roster-v1-e159e435",
+            "classHistory": [
+              {
+                "classId": "scout",
+                "classRevision": "1",
+                "loadoutHash": "loadout-v1-aaa4aadd",
+                "tick": 0
+              }
+            ],
+            "switches": 0,
+            "failureCause": "enemy-trail",
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "status": "lost",
+            "won": false,
+            "tick": 10731,
+            "time": 89.41672816692626,
+            "lives": 0,
+            "score": 11710,
+            "coverage": 0.7487212276214834,
+            "claimedCount": 1171,
+            "totalClaimable": 1564,
+            "medal": null,
+            "objectives": {
+              "captured": 0,
+              "total": 1,
+              "required": 1
+            }
+          },
+          "checkpoint": {
+            "algorithm": "fnv1a64-state-v2",
+            "hash": "d3e215a5ed153307",
+            "sections": {
+              "identity": "177a92252274a514",
+              "configuration": "ae19c4603fc193a4",
+              "board": "95acf6788171f92d",
+              "player": "83a95f97d3892437",
+              "trail": "f0ca473df9efdcc8",
+              "enemies": "b88cae6a3194d38b",
+              "objectives": "78aab013f053ee08",
+              "supplies": "e1b45854413ff5f8",
+              "ability": "4b8e29576f3aba69",
+              "clock": "72f282cee72cb15f",
+              "continuation": "a9d828ced6380d30",
+              "result": "2268d69c203b8544"
+            }
+          }
+        },
+        "phase": "complete",
+        "captures": 15,
+        "capturedCells": 1171,
+        "ticks": 10731,
+        "outcome": "lost"
+      },
+      "eligible": true
+    },
+    {
+      "id": "solo-qualified-cc8994b6f3d0482f",
+      "levelId": "courtyard-exits",
+      "source": {
+        "path": "game/demo-data/solo-qualified-cc8994b6f3d0482f.replay.json",
+        "sha256": "7224f7e50e17fb840b1b63d6d4d399fbfdba53a0855d6f07b105a0985c68ec76",
+        "bytes": 13104
+      },
+      "natural": {
+        "status": "won",
+        "tick": 8274,
+        "captures": 10,
+        "capturedCells": 1722,
+        "sourceTicks": 8274
+      },
+      "genericVariantEligible": true,
+      "trace": {
+        "source": "68eae2229dbec184",
+        "actual": "68eae2229dbec184",
+        "exactTrace": true,
+        "sourceTicks": 8274,
+        "actualTicks": 8274,
+        "sourceOutcome": "won",
+        "actualOutcome": "won"
+      },
+      "authoringVerification": {
+        "match": true,
+        "actual": {
+          "summary": {
+            "ruleset": "xonix-core.v5",
+            "levelId": "courtyard-exits",
+            "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-73e82d4f8a1aee76",
+            "seed": 123,
+            "turnPolicy": "immediate",
+            "classId": "scout",
+            "activeClassId": "scout",
+            "rosterHash": "roster-v1-25103a34",
+            "classHistory": [
+              {
+                "classId": "scout",
+                "classRevision": "2",
+                "loadoutHash": "loadout-v1-8360440c",
+                "tick": 0
+              }
+            ],
+            "switches": 0,
+            "failureCause": "enemy-trail",
+            "classRevision": "2",
+            "loadoutHash": "loadout-v1-8360440c",
+            "status": "won",
+            "won": true,
+            "tick": 8274,
+            "time": 68.94600301659219,
+            "lives": 2,
+            "livesLost": 1,
+            "score": 17220,
+            "coverage": 0.7448096885813149,
+            "claimedCount": 1722,
+            "totalClaimable": 2312,
+            "medal": "silver",
+            "objectives": {
+              "captured": 0,
+              "total": 0,
+              "required": 0
+            }
+          },
+          "checkpoint": {
+            "algorithm": "fnv1a64-state-v5",
+            "hash": "cc7ac42ba44694fe",
+            "sections": {
+              "identity": "22e8cd7e3dcf7489",
+              "configuration": "fafc473657b53ad9",
+              "board": "0a0d9151e462fafb",
+              "player": "5284d8e2ee592613",
+              "trail": "f0ca473df9efdcc8",
+              "enemies": "3d9718c3dbf50026",
+              "objectives": "09612b07b5ecb5a5",
+              "supplies": "09612b07b5ecb5a5",
+              "ability": "1b2c860fdc20d639",
+              "clock": "1a214ad85399d610",
+              "continuation": "a9d828ced6380d30",
+              "result": "9fc895556974c471",
+              "encounter": "5b9bc4ba528108e4",
+              "classic": "8e307cf86ea754bd"
+            }
+          }
+        }
+      },
+      "candidate": {
+        "path": ".cache/solo-node22131-x64-capture-b4688ca21-candidates/solo-qualified-cc8994b6f3d0482f.node22131-x64.replay.json",
+        "sha256": "9236667cf96c04697692dcc7047dd570d9ab0e39cb0ccb5d5cdc373c2f626406",
+        "bytes": 13104
+      },
+      "diagnostic": {
+        "path": ".cache/solo-node22131-x64-capture-b4688ca21-candidates/solo-qualified-cc8994b6f3d0482f.node22131-x64.diagnostics.json",
+        "sha256": "c735e57fe3fc77c161dfd26bbf0e6f8bf469a22feff5186e1e3fe804269d067e",
+        "bytes": 6590
+      },
+      "independent": {
+        "environment": {
+          "version": "v22.13.1",
+          "platform": "darwin",
+          "arch": "x64"
+        },
+        "candidate": {
+          "path": ".cache/solo-node22131-x64-capture-b4688ca21-candidates/solo-qualified-cc8994b6f3d0482f.node22131-x64.replay.json",
+          "sha256": "9236667cf96c04697692dcc7047dd570d9ab0e39cb0ccb5d5cdc373c2f626406",
+          "bytes": 13104
+        },
+        "match": true,
+        "actual": {
+          "summary": {
+            "ruleset": "xonix-core.v5",
+            "levelId": "courtyard-exits",
+            "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-73e82d4f8a1aee76",
+            "seed": 123,
+            "turnPolicy": "immediate",
+            "classId": "scout",
+            "activeClassId": "scout",
+            "rosterHash": "roster-v1-25103a34",
+            "classHistory": [
+              {
+                "classId": "scout",
+                "classRevision": "2",
+                "loadoutHash": "loadout-v1-8360440c",
+                "tick": 0
+              }
+            ],
+            "switches": 0,
+            "failureCause": "enemy-trail",
+            "classRevision": "2",
+            "loadoutHash": "loadout-v1-8360440c",
+            "status": "won",
+            "won": true,
+            "tick": 8274,
+            "time": 68.94600301659219,
+            "lives": 2,
+            "livesLost": 1,
+            "score": 17220,
+            "coverage": 0.7448096885813149,
+            "claimedCount": 1722,
+            "totalClaimable": 2312,
+            "medal": "silver",
+            "objectives": {
+              "captured": 0,
+              "total": 0,
+              "required": 0
+            }
+          },
+          "checkpoint": {
+            "algorithm": "fnv1a64-state-v5",
+            "hash": "cc7ac42ba44694fe",
+            "sections": {
+              "identity": "22e8cd7e3dcf7489",
+              "configuration": "fafc473657b53ad9",
+              "board": "0a0d9151e462fafb",
+              "player": "5284d8e2ee592613",
+              "trail": "f0ca473df9efdcc8",
+              "enemies": "3d9718c3dbf50026",
+              "objectives": "09612b07b5ecb5a5",
+              "supplies": "09612b07b5ecb5a5",
+              "ability": "1b2c860fdc20d639",
+              "clock": "1a214ad85399d610",
+              "continuation": "a9d828ced6380d30",
+              "result": "9fc895556974c471",
+              "encounter": "5b9bc4ba528108e4",
+              "classic": "8e307cf86ea754bd"
+            }
+          }
+        },
+        "phase": "complete",
+        "captures": 10,
+        "capturedCells": 1722,
+        "ticks": 8274,
+        "outcome": "won"
+      },
+      "eligible": true
+    }
+  ],
+  "errors": [],
+  "environment": {
+    "version": "v22.13.1",
+    "platform": "darwin",
+    "arch": "x64",
+    "versions": {
+      "node": "22.13.1",
+      "acorn": "8.14.0",
+      "ada": "2.9.2",
+      "amaro": "0.2.0",
+      "ares": "1.34.4",
+      "brotli": "1.1.0",
+      "cjs_module_lexer": "1.4.1",
+      "cldr": "46.0",
+      "icu": "76.1",
+      "llhttp": "9.2.1",
+      "modules": "127",
+      "napi": "9",
+      "nbytes": "0.1.1",
+      "ncrypto": "0.0.1",
+      "nghttp2": "1.64.0",
+      "nghttp3": "1.6.0",
+      "ngtcp2": "1.9.1",
+      "openssl": "3.0.15+quic",
+      "simdjson": "3.10.1",
+      "simdutf": "5.6.4",
+      "sqlite": "3.47.2",
+      "tz": "2024b",
+      "undici": "6.21.1",
+      "unicode": "16.0",
+      "uv": "1.49.2",
+      "uvwasi": "0.0.21",
+      "v8": "12.4.254.21-node.22",
+      "zlib": "1.3.0.1-motley-82a5fec"
+    },
+    "executable": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+      "sha256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd",
+      "bytes": 113991760
+    }
+  },
+  "headBefore": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+  "sourceBefore": {
+    "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+    "files": 10000,
+    "bytes": 404485348
+  },
+  "buildInputsBefore": {
+    "sha256": "6691874c36c2d7a5b6e29d3d849a1af5821245001fd1456380d6867644c69a19",
+    "files": 9406,
+    "bytes": 348401321
+  },
+  "observerSHA256": "be5c3421e72e03f6fa15f04fd2cc3fc81b794f620a2d202a608fe739641b155f",
+  "scope": "Ignored authoring candidates from original normal simulation inputs, createRecorder/recordInput/exportReplay, five-second checkpoints, same-process fullverification and a separate exactNode child strictverification+playerterminalplayback. No production/catalog write, no compatibility relaxation, and no Linux qualification claim.",
+  "directory": ".cache/solo-node22131-x64-capture-b4688ca21-candidates",
+  "headAfter": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+  "sourceAfter": {
+    "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+    "files": 10000,
+    "bytes": 404485348
+  },
+  "buildInputsAfter": {
+    "sha256": "6691874c36c2d7a5b6e29d3d849a1af5821245001fd1456380d6867644c69a19",
+    "files": 9406,
+    "bytes": 348401321
+  },
+  "observerSHA256After": "be5c3421e72e03f6fa15f04fd2cc3fc81b794f620a2d202a608fe739641b155f",
+  "sourceUnchanged": true,
+  "finished": "2026-10-19T09:33:03.731Z"
+}

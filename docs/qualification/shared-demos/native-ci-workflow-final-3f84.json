@@ -1,0 +1,135 @@
+{
+  "format": "NativeDemoWorkflowFinalValidationV1",
+  "observedAt": "2026-10-19T10:18:36.659365+00:00",
+  "head": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+  "complete": true,
+  "sourcePins": {
+    ".github/workflows/solo-native-candidates.yml": {
+      "sha256": "dfda7a500e07fbf2e9298c359b07abdab9ba0eb2e5c59c5fe95db0f5efaa546f",
+      "bytes": 6977
+    },
+    "scripts/capture-solo-native-candidates.mjs": {
+      "sha256": "714061bbb34d3758a1e0dd28280045c6d828ba395bf75e5b7c42825e712558d9",
+      "bytes": 22948
+    },
+    "scripts/test-capture-solo-native-candidates.mjs": {
+      "sha256": "29161366a8b098f0abeacfc8e88dabb89a540ed1db647b18597c5c09d4130c13",
+      "bytes": 11114
+    },
+    "scripts/qualify-survival-native.mjs": {
+      "sha256": "2ccb266116081ef76e816d8758134e73950e85b2d9fb6e7c9f2e885920d8dbf6",
+      "bytes": 7832
+    }
+  },
+  "guardTests": {
+    "requiredFiles": [
+      "scripts/test-capture-solo-native-candidates.mjs",
+      "publishing/source-workflow.test.mjs"
+    ],
+    "tests": 21,
+    "pass": 21,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "elapsedSeconds": 0.947639457997866,
+    "sourceBindingsStable": true,
+    "ownedProcessCleanupVerified": true
+  },
+  "staticValidation": {
+    "bashBlocksChecked": 2,
+    "nodeValidatorsChecked": 2,
+    "prettier": {
+      "exit": 0,
+      "paths": [
+        "scripts/capture-solo-native-candidates.mjs",
+        "scripts/test-capture-solo-native-candidates.mjs",
+        ".github/workflows/solo-native-candidates.yml"
+      ]
+    },
+    "eslint": {
+      "exit": 0,
+      "warnings": 0,
+      "paths": [
+        "scripts/capture-solo-native-candidates.mjs",
+        "scripts/test-capture-solo-native-candidates.mjs"
+      ]
+    }
+  },
+  "workflowContract": {
+    "nodeVersions": [
+      "20.19.6",
+      "22.13.1"
+    ],
+    "exactPullRequestHead": true,
+    "permissions": {
+      "contents": "read"
+    },
+    "checkoutPersistCredentials": false,
+    "jobTimeoutMinutes": 32,
+    "soloScanOnly": true,
+    "survivalRunsAfterSoloFailure": true,
+    "catalogGenerationOrAdoption": false,
+    "linuxProof": false
+  },
+  "retained": [
+    {
+      "original": ".cache/native-ci-guard-verification-20261019T121803.json",
+      "retained": "docs/qualification/shared-demos/native-ci-workflow-final-3f84/native-ci-guard-verification-20261019T121803.json",
+      "sha256": "9696dd8a2af0e3766c212300ad2971b29ab734ea2d15f7e3c5cc69c2ba61cef5",
+      "bytes": 46473
+    },
+    {
+      "original": ".cache/native-ci-guard-verification-20261019T121803.tap.txt",
+      "retained": "docs/qualification/shared-demos/native-ci-workflow-final-3f84/native-ci-guard-verification-20261019T121803.tap.txt",
+      "sha256": "ed04b8027aa6ac018e86b72f786d524f808eb23a544d6c07687f5237a7e31b96",
+      "bytes": 4828
+    },
+    {
+      "original": ".cache/native-ci-guard-verification-20261019T121803.py.txt",
+      "retained": "docs/qualification/shared-demos/native-ci-workflow-final-3f84/native-ci-guard-verification-20261019T121803.py.txt",
+      "sha256": "29e6552b4dd1ee4f5cbbfbde8e156d695138935aafa444621845d9678f9d21be",
+      "bytes": 8901
+    },
+    {
+      "original": ".cache/native-ci-workflow-final-static-3f84/receipt.json",
+      "retained": "docs/qualification/shared-demos/native-ci-workflow-final-3f84/static-receipt.json",
+      "sha256": "7c76799e3bf7add2141ffe303fc1306131561fd797169a898c98838fd28feff9",
+      "bytes": 3031
+    },
+    {
+      "original": ".cache/native-ci-workflow-final-static-3f84/run-0.sh",
+      "retained": "docs/qualification/shared-demos/native-ci-workflow-final-3f84/static-run-0.sh",
+      "sha256": "f55ff23f29e7ba200ff37ea8d527dc7763f0265bf2829cd53634a5cd850b9d7c",
+      "bytes": 1890
+    },
+    {
+      "original": ".cache/native-ci-workflow-final-static-3f84/run-1.sh",
+      "retained": "docs/qualification/shared-demos/native-ci-workflow-final-3f84/static-run-1.sh",
+      "sha256": "f105ba2013e2f6a7b0ed41ec7d20da6a73edacec034c82431bfaa1787bf4b6e0",
+      "bytes": 1792
+    },
+    {
+      "original": ".cache/native-ci-workflow-final-static-3f84/validator-0.mjs",
+      "retained": "docs/qualification/shared-demos/native-ci-workflow-final-3f84/static-validator-0.mjs",
+      "sha256": "3135a52ae00e3edcb183b80961948d3111b174ea61eea645d46593970df28197",
+      "bytes": 1192
+    },
+    {
+      "original": ".cache/native-ci-workflow-final-static-3f84/validator-1.mjs",
+      "retained": "docs/qualification/shared-demos/native-ci-workflow-final-3f84/static-validator-1.mjs",
+      "sha256": "1da13bc19b24a06806f757653b1a0b00238b717e9eb22b5fc98a7f98bb5e826b",
+      "bytes": 1105
+    },
+    {
+      "original": ".github/workflows/solo-native-candidates.yml",
+      "retained": "docs/qualification/shared-demos/native-ci-workflow-final-3f84/solo-native-candidates.yml.txt",
+      "sha256": "dfda7a500e07fbf2e9298c359b07abdab9ba0eb2e5c59c5fe95db0f5efaa546f",
+      "bytes": 6977
+    }
+  ],
+  "limitations": [
+    "This receipt validates the final workflow syntax, existing workflow separation contract, and collector guard behavior. It does not prove Linux replay compatibility or replace full catalog qualification.",
+    "12 native collector guards and 9 existing workflow separation tests ran locally under macOS arm64 Node22.22.2. Hosted Linux Node20.19.6 and22.13.1 jobs remain required.",
+    "Original ignored capture helpers were preserved unchanged before the promoted copies were formatted; historical receipts remain unchanged."
+  ]
+}

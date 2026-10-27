@@ -1,0 +1,141 @@
+{
+  "format": "SharedDemoRebaseIntegrationReceiptV1",
+  "created": "2026-10-18T20:30:43.402706+00:00",
+  "status": "PASS: focused recovery/Demo integration after clean rebase; native corpus unchanged by the incoming delta.",
+  "head": "22497384f2a37a1730b4955f92120bb13ab3c84b",
+  "incomingMain": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+  "preRebaseBackup": {
+    "ref": "codex/shared-game-demos-before-cb8-62e2bc583",
+    "commit": "62e2bc5839d448948eb8b74527caa64c538b6862"
+  },
+  "rebaseImpact": {
+    "exhaustiveChangedPaths": [
+      {
+        "path": "game/test/profile-recovery-dialog.test.mjs",
+        "beforeGitBlob": "9f21caed15511186f791420d8aa377412902df2e",
+        "afterGitBlob": "a1a0fb1e4ecd436e6769a0cc8cb59eef6503b058",
+        "incomingGitBlob": "a1a0fb1e4ecd436e6769a0cc8cb59eef6503b058",
+        "afterSHA256": "d5ea084afe37e888aa7cf22e741fb2112f4abbddbb7e30e62856d6a80279248c"
+      },
+      {
+        "path": "game/test/profile-recovery-settings-host.test.mjs",
+        "beforeGitBlob": "76aa52bd25dce756c849eb82c0f7d68b27dea68a",
+        "afterGitBlob": "065a3d8d49fa27799bcd337f4d369e7fe98ff71a",
+        "incomingGitBlob": "065a3d8d49fa27799bcd337f4d369e7fe98ff71a",
+        "afterSHA256": "0696428d6be0e7e42a0df1496f38c697d147a39c6ebc4135b6e6898658a094f6"
+      },
+      {
+        "path": "game/ui/profile-recovery-dialog.mjs",
+        "beforeGitBlob": "3e1015bdaae28f181eaee9a767e6fcd2b9d60d3a",
+        "afterGitBlob": "d365bbfea3eca77a1fa6371be3158d1b37e725cd",
+        "incomingGitBlob": "d365bbfea3eca77a1fa6371be3158d1b37e725cd",
+        "afterSHA256": "c14495e4084f3284529fa6af4f396a0d969f6667a6ded426e879061895c40c3d"
+      }
+    ],
+    "changedPathAssertion": "Exactly the three pre-audited recovery UI/test paths; each rebased blob equals the incoming-main blob.",
+    "authoredNativeRecordingInputsChanged": false,
+    "coverageApplicability": "The existing890-entry native qualification and three-engine corpus verification remain applicable to this rebase delta. These five UI suites do not constitute a fresh replay of that corpus.",
+    "priorAudit": {
+      "path": "docs/qualification/shared-demos/main-cb8dddd-coverage-impact.json",
+      "sha256": "939156f794c89fe0b935d735cf94dc2966bf7bf7d77f1324ebc8298dbff0ec8a"
+    }
+  },
+  "testRun": {
+    "command": "NODE_DISABLE_COMPILE_CACHE=1 node --test --test-concurrency=2 game/test/profile-recovery-dialog.test.mjs game/test/profile-recovery-settings-host.test.mjs game/test/demo-confirm-settings-host.test.mjs game/test/demo-back-host.test.mjs game/test/demo-classic-fresh-host.test.mjs",
+    "observedExitCode": 0,
+    "counts": {
+      "tests": 42,
+      "suites": 0,
+      "pass": 42,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "durationMilliseconds": 25181.972958,
+    "tap": {
+      "path": "docs/qualification/shared-demos/rebase-cb8-recovery-demo-regressions.tap.txt",
+      "sha256": "c4004e7c41933674d38d67372caaa621842b8c5827beb5c66a47a21f9dc6e97d",
+      "bytes": 9837,
+      "createdAt": "2026-10-18T20:29:50.390985+00:00"
+    },
+    "bindingCapturedDuringEarlyExecutionAt": "2026-10-18T20:30:05.215975+00:00",
+    "sourceBinding": "The exact rebased HEAD plus14 scoped runtime/test/helper files were hashed early in execution and checked byte-identical at completion; all binding paths remain at the committed version.",
+    "before": [
+      {
+        "path": "game/test/profile-recovery-dialog.test.mjs",
+        "sha256": "d5ea084afe37e888aa7cf22e741fb2112f4abbddbb7e30e62856d6a80279248c",
+        "bytes": 11295
+      },
+      {
+        "path": "game/test/profile-recovery-settings-host.test.mjs",
+        "sha256": "0696428d6be0e7e42a0df1496f38c697d147a39c6ebc4135b6e6898658a094f6",
+        "bytes": 10330
+      },
+      {
+        "path": "game/test/demo-confirm-settings-host.test.mjs",
+        "sha256": "700416842ddcd009d48a529c58811354a349f2562ccfc5bb62e2085d5c74bf55",
+        "bytes": 8052
+      },
+      {
+        "path": "game/test/demo-back-host.test.mjs",
+        "sha256": "5e52d3a4f68aa9d2fcda320f94ad44d9ee76b47ab670d875855d9cfdd8a1200c",
+        "bytes": 5711
+      },
+      {
+        "path": "game/test/demo-classic-fresh-host.test.mjs",
+        "sha256": "01c193afcf2cb920514cefb406ada47eeb9ae691decf53d319d4d6c5de3b9122",
+        "bytes": 3799
+      },
+      {
+        "path": "game/ui/profile-recovery-dialog.mjs",
+        "sha256": "c14495e4084f3284529fa6af4f396a0d969f6667a6ded426e879061895c40c3d",
+        "bytes": 8729
+      },
+      {
+        "path": "game/app.mjs",
+        "sha256": "f204c43a9cb83845c01cff516d82312f4befa6c11f2bd8e73a77a5e7b674736e",
+        "bytes": 619151
+      },
+      {
+        "path": "game/ui/demo-host.mjs",
+        "sha256": "d6d57b78d4a04ac91df0e19d4a340b8e73d2c526e85d8ab5a37a4951112e2a99",
+        "bytes": 55605
+      },
+      {
+        "path": "game/demo-director.mjs",
+        "sha256": "d443705445734492a01a76466cd2f9f8ba3f18904c57c6612fe86f7801654dfc",
+        "bytes": 12801
+      },
+      {
+        "path": "game/demo-sources.mjs",
+        "sha256": "c4a33033692dd2b49b040db610777d3e083dc2f7a54bcc993c9a387fad607d80",
+        "bytes": 8049
+      },
+      {
+        "path": "game/demo-modes/solo-classic-builtins.mjs",
+        "sha256": "748eb0a5200a20bdb42688c15490767d0cbbea9657e38fa17b5be9e48027a680",
+        "bytes": 8290
+      },
+      {
+        "path": "game/demo-modes/solo-source-owner.mjs",
+        "sha256": "c0122c017ed20f672e82ce57a5f1a82b7a3e05b47fe6e4f2e0b821a4deb397d6",
+        "bytes": 1959
+      },
+      {
+        "path": "game/test/helpers/demo-host-fixture.mjs",
+        "sha256": "fae1e6fd7d355f527379697be17cd9de57ef9267523fd899d8a5a07ca1e636bd",
+        "bytes": 5157
+      },
+      {
+        "path": "game/test/helpers/solo-dom.mjs",
+        "sha256": "3d2fb5ffdbad7edffca39e2606eddbbabc4757b390c56b44497edfe679071a29",
+        "bytes": 35098
+      }
+    ],
+    "afterMatchesBefore": true
+  },
+  "browserRuns": 0,
+  "productionChangesByAgent": 0,
+  "remaining": "Root must finalize the source manifest and packaging/validation before the final16-job browser refresh. The WebKit restoration strict diagnostic gate and actual two-hour rotation remain separate acceptance work."
+}

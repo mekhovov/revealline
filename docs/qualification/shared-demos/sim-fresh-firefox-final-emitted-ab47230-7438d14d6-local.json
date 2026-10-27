@@ -1,0 +1,31 @@
+{
+  "engine": "firefox",
+  "started": "2026-10-19T04:26:37.500Z",
+  "checks": [
+    {
+      "type": "fresh-start-exact-authored-setup-ready-disarmed",
+      "origin": "sim",
+      "course": "flight-01",
+      "mode": "self-level",
+      "ticks": 0,
+      "courseIdentity": "573db8b71fe99103",
+      "responseIdentity": "1dfb9ff688d5a15c",
+      "savedCustomAircraftTuningUnchanged": true
+    },
+    {
+      "type": "fresh-start-exact-authored-setup-ready-disarmed",
+      "origin": "solo",
+      "course": "snake-hunt-approach-windows-return-slot",
+      "mode": "acro",
+      "ticks": 0,
+      "courseIdentity": "0aa86fa1a2c02273",
+      "responseIdentity": "73833493634ba989",
+      "savedCustomAircraftTuningUnchanged": true
+    }
+  ],
+  "errors": [],
+  "complete": true,
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-19T04:27:02.258Z"
+}

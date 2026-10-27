@@ -17,6 +17,8 @@ for (const [mode, mount, filename, prefix] of [
       href: `https://example.test/revealline/releases/v0.60.8/site/game/couch/${filename}?journey=legacy`,
     });
     const link = f.$(`${prefix}-verify-recording`);
+    const navigation = mode === 'Team' ? f.$('coop-navigation-context') : null;
+    const initialContext = navigation?.textContent;
     const expected =
       'https://example.test/revealline/releases/v0.60.8/site/game/playground/?lang=uk#recording-verification';
     f.win.emit('pagehide', { persisted: false });
@@ -34,6 +36,7 @@ for (const [mode, mount, filename, prefix] of [
       delete globalThis.document;
       assert.doesNotThrow(() => setLocale('en', { persist: false }));
       assert.equal(link.getAttribute('href'), expected.replace('lang=uk', 'lang=en'));
+      if (navigation) assert.equal(navigation.textContent, initialContext);
     } finally {
       Object.defineProperty(globalThis, 'location', location);
       Object.defineProperty(globalThis, 'document', document);

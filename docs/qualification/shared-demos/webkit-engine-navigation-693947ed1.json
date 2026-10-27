@@ -1,0 +1,131 @@
+{
+  "format": "SharedDemoWebKitEngineNavigationObservationV1",
+  "started": "2026-10-19T00:58:38.480Z",
+  "complete": true,
+  "sourceRevision": "693947ed1373db7a265def126a5eede2bf875013",
+  "runtimeBefore": {
+    "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+    "files": 9996,
+    "bytes": 404392393
+  },
+  "probeSHA256": "eb4245f246a4be65068b9f56c9e054d7f6b10d720227fc3e4484cf8aa3d42448",
+  "cells": [
+    {
+      "kind": "control",
+      "id": "0af4d7c9-4b39-446b-9167-40e43d0c8500",
+      "origin": "http://127.0.0.1:53637",
+      "rows": [
+        {
+          "status": 200,
+          "body": "owned asset",
+          "caught": false
+        },
+        {
+          "status": 200,
+          "body": "owned asset",
+          "caught": false
+        },
+        {
+          "status": 200,
+          "body": "owned asset",
+          "caught": false
+        }
+      ],
+      "domEvents": [],
+      "errors": [],
+      "server": [
+        {
+          "path": "/owned-asset",
+          "event": "received",
+          "at": 1792371519535
+        },
+        {
+          "path": "/owned-asset",
+          "event": "received",
+          "at": 1792371519537
+        },
+        {
+          "path": "/owned-asset",
+          "event": "received",
+          "at": 1792371519539
+        }
+      ]
+    },
+    {
+      "kind": "replacement-request-held",
+      "id": "0af4d7c9-4b39-446b-9167-40e43d0c8500",
+      "origin": "http://127.0.0.1:53637",
+      "rows": [
+        {
+          "caught": true,
+          "name": "TypeError",
+          "message": "Load failed"
+        },
+        {
+          "caught": true,
+          "name": "TypeError",
+          "message": "Load failed"
+        },
+        {
+          "caught": true,
+          "name": "TypeError",
+          "message": "Load failed"
+        }
+      ],
+      "domEvents": [],
+      "errors": [
+        {
+          "message": "/127.0.0.1:53637/owned-asset due to access control checks.",
+          "at": 1792371519548
+        },
+        {
+          "message": "/127.0.0.1:53637/owned-asset due to access control checks.",
+          "at": 1792371519548
+        }
+      ],
+      "server": [
+        {
+          "path": "/replacement",
+          "event": "received",
+          "at": 1792371519546
+        }
+      ],
+      "navigation": {
+        "complete": true
+      }
+    }
+  ],
+  "purpose": "A single no-game two-cell Fetch experiment in the installed engine. The navigation cell is attempted only after a valid successful control. Replacement is synchronized by the fixture receiving the replacement request, with no timed retry.",
+  "limitations": [
+    "This observes native engine behavior; it does not replace, waive or relabel the failed game restoration gate. It does not prove that every historical native diagnostic shares this cause."
+  ],
+  "reference": "https://github.com/microsoft/playwright/issues/43120",
+  "browserVersion": "26.5",
+  "executable": {
+    "path": "/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/webkit-2336/pw_run.sh",
+    "sha256": "a85baad3d8c07173ac387a59b41500c382b21ed692afe0964d29aac247ccc63b"
+  },
+  "mechanismReproduced": false,
+  "outcome": "target-not-reproduced",
+  "browserClosed": true,
+  "serverClosed": true,
+  "finalErrors": [
+    {
+      "message": "/127.0.0.1:53637/owned-asset due to access control checks.",
+      "at": 1792371519548
+    },
+    {
+      "message": "/127.0.0.1:53637/owned-asset due to access control checks.",
+      "at": 1792371519548
+    }
+  ],
+  "totalErrors": 2,
+  "fixtureFailure": null,
+  "runtimeAfter": {
+    "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+    "files": 9996,
+    "bytes": 404392393
+  },
+  "sourceStable": true,
+  "finished": "2026-10-19T00:58:41.261Z"
+}

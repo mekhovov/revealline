@@ -1,0 +1,465 @@
+TAP version 13
+# Subtest: World random flight from the shared chooser follows displayed filters, preserves mode and avoids repeats
+ok 1 - World random flight from the shared chooser follows displayed filters, preserves mode and avoids repeats
+  ---
+  duration_ms: 2604.284459
+  ...
+# Subtest: World random flight includes the active installed revision and excludes retained archived courses
+ok 2 - World random flight includes the active installed revision and excludes retained archived courses
+  ---
+  duration_ms: 275.003333
+  ...
+# Subtest: World ordinary results offer a filtered random next flight through unarmed preparation
+ok 3 - World ordinary results offer a filtered random next flight through unarmed preparation
+  ---
+  duration_ms: 250.130875
+  ...
+# Subtest: World disposal retires menu and renderer owners before their reparented controls disappear
+ok 4 - World disposal retires menu and renderer owners before their reparented controls disappear
+  ---
+  duration_ms: 148.651417
+  ...
+# Subtest: World Reset unapplied fields discards Hunt and pursuit drafts without changing the accepted course
+ok 5 - World Reset unapplied fields discards Hunt and pursuit drafts without changing the accepted course
+  ---
+  duration_ms: 177.268625
+  ...
+# Subtest: World app prepares a pinned appearance and queues drone/theme changes after arming
+ok 6 - World app prepares a pinned appearance and queues drone/theme changes after arming
+  ---
+  duration_ms: 401.626375
+  ...
+# Subtest: World route thumbnails share selected palettes without modifying source geometry or authored scene references
+ok 7 - World route thumbnails share selected palettes without modifying source geometry or authored scene references
+  ---
+  duration_ms: 107.677
+  ...
+# Subtest: World recovery retains its saved theme and drone while new appearance choices remain queued
+ok 8 - World recovery retains its saved theme and drone while new appearance choices remain queued
+  ---
+  duration_ms: 147.686667
+  ...
+# Subtest: World replay visibly falls back from an unavailable pinned revision (legacy environment) without changing its record
+ok 9 - World replay visibly falls back from an unavailable pinned revision (legacy environment) without changing its record
+  ---
+  duration_ms: 149.31325
+  ...
+# Subtest: World replay visibly falls back from an unavailable pinned revision (saved authored profile) without changing its record
+ok 10 - World replay visibly falls back from an unavailable pinned revision (saved authored profile) without changing its record
+  ---
+  duration_ms: 147.698208
+  ...
+# Subtest: World pre-arm appearance refresh keeps focus on the control the player is using
+ok 11 - World pre-arm appearance refresh keeps focus on the control the player is using
+  ---
+  duration_ms: 152.195208
+  ...
+# Subtest: World title retains connected catalogue nodes and transfers the common bar into native flight
+ok 12 - World title retains connected catalogue nodes and transfers the common bar into native flight
+  ---
+  duration_ms: 238.936875
+  ...
+# Subtest: World keyboard and native pause actions open the same shared menu without resuming on Back
+ok 13 - World keyboard and native pause actions open the same shared menu without resuming on Back
+  ---
+  duration_ms: 158.232917
+  ...
+# Subtest: World language refresh preserves native mission ownership and menu phase without another animation frame
+ok 14 - World language refresh preserves native mission ownership and menu phase without another animation frame
+  ---
+  duration_ms: 269.861041
+  ...
+# Subtest: World terminal preview offers Retry and prepares a fresh disarmed attempt
+ok 15 - World terminal preview offers Retry and prepares a fresh disarmed attempt
+  ---
+  duration_ms: 171.001875
+  ...
+# Subtest: World native HUD details retain instructions across blur and focus
+ok 16 - World native HUD details retain instructions across blur and focus
+  ---
+  duration_ms: 189.847125
+  ...
+# Subtest: World menu Back dismisses the visible surface without closing its paused native flight
+ok 17 - World menu Back dismisses the visible surface without closing its paused native flight
+  ---
+  duration_ms: 171.175083
+  ...
+# Subtest: World native Hunt guide remains reachable from the shared pause menu without consuming controls or changing the flight
+ok 18 - World native Hunt guide remains reachable from the shared pause menu without consuming controls or changing the flight
+  ---
+  duration_ms: 178.9045
+  ...
+# Subtest: World exhausted unfinished playback keeps native Results reachable without Continue
+ok 19 - World exhausted unfinished playback keeps native Results reachable without Continue
+  ---
+  duration_ms: 176.856958
+  ...
+# Subtest: World exhausted section playback keeps native Results reachable without Continue
+ok 20 - World exhausted section playback keeps native Results reachable without Continue
+  ---
+  duration_ms: 173.898833
+  ...
+# Subtest: native industrial Start and Retry retain source-authenticated art while the next attempt uses changed preferences
+ok 21 - native industrial Start and Retry retain source-authenticated art while the next attempt uses changed preferences
+  ---
+  duration_ms: 202.328666
+  ...
+# Subtest: native host rejects changed retained source before replacing the active renderer
+ok 22 - native host rejects changed retained source before replacing the active renderer
+  ---
+  duration_ms: 160.441542
+  ...
+# Subtest: Studio imports exact retained Acro appearance, exports it, and explicitly detaches on creator-theme change
+ok 23 - Studio imports exact retained Acro appearance, exports it, and explicitly detaches on creator-theme change
+  ---
+  duration_ms: 188.4735
+  ...
+# Subtest: an explicit native mode change prepares a new mode pin while Retry keeps that pin
+ok 24 - an explicit native mode change prepares a new mode pin while Retry keeps that pin
+  ---
+  duration_ms: 199.092917
+  ...
+# Subtest: World categories retain every authored preference and restore Home and Pause openers
+ok 25 - World categories retain every authored preference and restore Home and Pause openers
+  ---
+  duration_ms: 172.971167
+  ...
+# Subtest: Worlds existing HUD guidance controls are reachable in Accessibility in EN and UK
+ok 26 - Worlds existing HUD guidance controls are reachable in Accessibility in EN and UK
+  ---
+  duration_ms: 291.891
+  ...
+# Subtest: World Library records shortcut reaches the existing localized controls and keyboard Back restores its opener
+ok 27 - World Library records shortcut reaches the existing localized controls and keyboard Back restores its opener
+  ---
+  duration_ms: 232.423583
+  ...
+# Subtest: World Library records controller confirmation cannot activate backup or resume its paused flight
+ok 28 - World Library records controller confirmation cannot activate backup or resume its paused flight
+  ---
+  duration_ms: 284.491375
+  ...
+# Subtest: World Library records refuses a foreign settings target and a disposed shortcut cannot reopen the host
+ok 29 - World Library records refuses a foreign settings target and a disposed shortcut cannot reopen the host
+  ---
+  duration_ms: 153.948583
+  ...
+# Subtest: Worlds uses shared display and master settings ahead of old SIM-local preferences
+ok 30 - Worlds uses shared display and master settings ahead of old SIM-local preferences
+  ---
+  duration_ms: 168.540042
+  ...
+# Subtest: World shared tools keep iframe focus through D-pad and return to paused Settings on controller Back
+ok 31 - World shared tools keep iframe focus through D-pad and return to paused Settings on controller Back
+  ---
+  duration_ms: 183.061625
+  ...
+# Subtest: fresh Ukrainian World launch localizes shared Appearance and cue controls immediately
+ok 32 - fresh Ukrainian World launch localizes shared Appearance and cue controls immediately
+  ---
+  duration_ms: 178.06625
+  ...
+# Subtest: World flight feedback and shared menu sound retain separate sliders and preference records
+ok 33 - World flight feedback and shared menu sound retain separate sliders and preference records
+  ---
+  duration_ms: 144.178042
+  ...
+# Subtest: World result shortcuts are immediately available while the result is being verified
+ok 34 - World result shortcuts are immediately available while the result is being verified
+  ---
+  duration_ms: 231.94
+  ...
+# Subtest: World defeat focuses Retry and verification preserves the connected action row and chosen focus
+ok 35 - World defeat focuses Retry and verification preserves the connected action row and chosen focus
+  ---
+  duration_ms: 185.041292
+  ...
+# Subtest: World results embed one compact live statistics disclosure without replacing verified actions
+ok 36 - World results embed one compact live statistics disclosure without replacing verified actions
+  ---
+  duration_ms: 291.522625
+  ...
+# Subtest: Worlds and School share one complete scrollable library with direct native launches
+ok 37 - Worlds and School share one complete scrollable library with direct native launches
+  ---
+  duration_ms: 432.434917
+  ...
+# Subtest: World aircraft class advice narrows browsing and All courses restores every launch
+ok 38 - World aircraft class advice narrows browsing and All courses restores every launch
+  ---
+  duration_ms: 644.884833
+  ...
+# Subtest: World route preview uses the selected Acro route and changes no course geometry
+ok 39 - World route preview uses the selected Acro route and changes no course geometry
+  ---
+  duration_ms: 149.454916
+  ...
+# Subtest: World mission library owns controller navigation and isolated pinned goals
+ok 40 - World mission library owns controller navigation and isolated pinned goals
+  ---
+  duration_ms: 243.614458
+  ...
+# Subtest: World mission launch cannot steal Home focus after deferred scene preparation
+ok 41 - World mission launch cannot steal Home focus after deferred scene preparation
+  ---
+  duration_ms: 301.394166
+  ...
+# Subtest: SIM cancelled Fresh preserves its paused origin after delayed native preparation (resolved)
+ok 42 - SIM cancelled Fresh preserves its paused origin after delayed native preparation (resolved)
+  ---
+  duration_ms: 182.853334
+  ...
+# Subtest: SIM cancelled Fresh preserves its paused origin after delayed native preparation (rejected)
+ok 43 - SIM cancelled Fresh preserves its paused origin after delayed native preparation (rejected)
+  ---
+  duration_ms: 285.619375
+  ...
+# Subtest: World Hunt schemes expose actual targets, patrols and collision footprints without inventing an unordered route
+ok 44 - World Hunt schemes expose actual targets, patrols and collision footprints without inventing an unordered route
+  ---
+  duration_ms: 126.662667
+  ...
+# Subtest: World shared chooser remains usable when native scene loading fails
+ok 45 - World shared chooser remains usable when native scene loading fails
+  ---
+  duration_ms: 307.943375
+  ...
+# Subtest: World tuning retains the committed keyboard sample and never presents radio data for that owner
+ok 46 - World tuning retains the committed keyboard sample and never presents radio data for that owner
+  ---
+  duration_ms: 273.13675
+  ...
+# Subtest: World tuning uses saved rates and camera only in a new flight, retaining the previous attempt configuration
+ok 47 - World tuning uses saved rates and camera only in a new flight, retaining the previous attempt configuration
+  ---
+  duration_ms: 274.31125
+  ...
+# Subtest: SIM demo Fresh preserves exact course and response with saved custom aircraft tuning
+ok 48 - SIM demo Fresh preserves exact course and response with saved custom aircraft tuning
+  ---
+  duration_ms: 338.138958
+  ...
+# Subtest: World draft testing enters unscored free flight and returns to the unsaved camera and rate draft
+ok 49 - World draft testing enters unscored free flight and returns to the unsaved camera and rate draft
+  ---
+  duration_ms: 241.70175
+  ...
+# Subtest: a normal World launch replaces the prior tuning-test origin
+ok 50 - a normal World launch replaces the prior tuning-test origin
+  ---
+  duration_ms: 241.594959
+  ...
+# Subtest: a normal Regional launch replaces the prior tuning-test origin
+ok 51 - a normal Regional launch replaces the prior tuning-test origin
+  ---
+  duration_ms: 281.170291
+  ...
+# Subtest: Regional host freezes its assigned rates and camera until the next flight
+ok 52 - Regional host freezes its assigned rates and camera until the next flight
+  ---
+  duration_ms: 253.69075
+  ...
+# Subtest: World and Regional explicit keyboard resume keeps accepted aircraft throttle only
+    # Subtest: World button
+    ok 1 - World button
+      ---
+      duration_ms: 399.360042
+      ...
+    # Subtest: World shortcut
+    ok 2 - World shortcut
+      ---
+      duration_ms: 333.610625
+      ...
+    # Subtest: World pending-button
+    ok 3 - World pending-button
+      ---
+      duration_ms: 341.144542
+      ...
+    # Subtest: Regional button
+    ok 4 - Regional button
+      ---
+      duration_ms: 418.858208
+      ...
+    # Subtest: Regional shortcut
+    ok 5 - Regional shortcut
+      ---
+      duration_ms: 415.452667
+      ...
+    # Subtest: Regional pending-button
+    ok 6 - Regional pending-button
+      ---
+      duration_ms: 425.561875
+      ...
+    1..6
+ok 53 - World and Regional explicit keyboard resume keeps accepted aircraft throttle only
+  ---
+  duration_ms: 2386.187083
+  ...
+# Subtest: World mode preserves the tested draft aircraft until an explicit normal launch
+ok 54 - World mode preserves the tested draft aircraft until an explicit normal launch
+  ---
+  duration_ms: 312.988042
+  ...
+# Subtest: World retry preserves the tested draft aircraft until an explicit normal launch
+ok 55 - World retry preserves the tested draft aircraft until an explicit normal launch
+  ---
+  duration_ms: 483.4055
+  ...
+# Subtest: Regional mode preserves the tested draft aircraft until an explicit normal launch
+ok 56 - Regional mode preserves the tested draft aircraft until an explicit normal launch
+  ---
+  duration_ms: 452.947208
+  ...
+# Subtest: Regional retry preserves the tested draft aircraft until an explicit normal launch
+ok 57 - Regional retry preserves the tested draft aircraft until an explicit normal launch
+  ---
+  duration_ms: 650.400167
+  ...
+# Subtest: Flight School explicit practice uses the selected aircraft and exact customized rates and PID tune
+    # Subtest: meteor75-analog-2022
+    ok 1 - meteor75-analog-2022
+      ---
+      duration_ms: 315.434667
+      ...
+    # Subtest: helion-pro-o4
+    ok 2 - helion-pro-o4
+      ---
+      duration_ms: 303.111084
+      ...
+    1..2
+ok 58 - Flight School explicit practice uses the selected aircraft and exact customized rates and PID tune
+  ---
+  duration_ms: 683.745125
+  ...
+# Subtest: saved aircraft prepares World, Beginner and Regional hosts with physical geometry and continuous controls
+    # Subtest: World
+    ok 1 - World
+      ---
+      duration_ms: 600.996208
+      ...
+    # Subtest: Beginner
+    ok 2 - Beginner
+      ---
+      duration_ms: 400.592417
+      ...
+    # Subtest: Regional
+    ok 3 - Regional
+      ---
+      duration_ms: 577.376708
+      ...
+    1..3
+ok 59 - saved aircraft prepares World, Beginner and Regional hosts with physical geometry and continuous controls
+  ---
+  duration_ms: 1651.915833
+  ...
+# Subtest: Regional host explicitly switches into the real Advanced worker and preserves pause, export and recovery ownership
+ok 60 - Regional host explicitly switches into the real Advanced worker and preserves pause, export and recovery ownership
+  ---
+  duration_ms: 649.543708
+  ...
+# Subtest: Regional aircraft stops explain disabled Resume in both languages and Restart prepares a fresh flight
+    # Subtest: region-edge · en
+    ok 1 - region-edge · en
+      ---
+      duration_ms: 377.067666
+      ...
+    # Subtest: worker-error · en
+    ok 2 - worker-error · en
+      ---
+      duration_ms: 387.265167
+      ...
+    # Subtest: terrain-error · en
+    ok 3 - terrain-error · en
+      ---
+      duration_ms: 266.860041
+      ...
+    # Subtest: region-edge · uk
+    ok 4 - region-edge · uk
+      ---
+      duration_ms: 392.420958
+      ...
+    # Subtest: worker-error · uk
+    ok 5 - worker-error · uk
+      ---
+      duration_ms: 411.104416
+      ...
+    # Subtest: terrain-error · uk
+    ok 6 - terrain-error · uk
+      ---
+      duration_ms: 267.468917
+      ...
+    1..6
+ok 61 - Regional aircraft stops explain disabled Resume in both languages and Restart prepares a fresh flight
+  ---
+  duration_ms: 2137.187208
+  ...
+# Subtest: Regional limit stops retain exports and restart while fatal worker failures remain unavailable
+    # Subtest: ADVANCED_DURATION_LIMIT · en
+    ok 1 - ADVANCED_DURATION_LIMIT · en
+      ---
+      duration_ms: 441.727167
+      ...
+    # Subtest: ADVANCED_RECORDING_LIMIT · uk
+    ok 2 - ADVANCED_RECORDING_LIMIT · uk
+      ---
+      duration_ms: 433.23725
+      ...
+    # Subtest: UNKNOWN_LIMIT · en
+    ok 3 - UNKNOWN_LIMIT · en
+      ---
+      duration_ms: 355.793625
+      ...
+    # Subtest: untyped limit text · en
+    ok 4 - untyped limit text · en
+      ---
+      duration_ms: 357.843583
+      ...
+    1..4
+ok 62 - Regional limit stops retain exports and restart while fatal worker failures remain unavailable
+  ---
+  duration_ms: 1627.142291
+  ...
+# Subtest: Regional Advanced is explicitly unavailable when workers cannot run
+ok 63 - Regional Advanced is explicitly unavailable when workers cannot run
+  ---
+  duration_ms: 194.221625
+  ...
+# Subtest: World tuning owns Back without closing the underlying settings dialog
+ok 64 - World tuning owns Back without closing the underlying settings dialog
+  ---
+  duration_ms: 174.885584
+  ...
+# Subtest: World tuning keeps its hint through pointer blur and releases it after closing
+ok 65 - World tuning keeps its hint through pointer blur and releases it after closing
+  ---
+  duration_ms: 263.670958
+  ...
+# Subtest: World captures legacy comfort camera before its first tuning configuration
+ok 66 - World captures legacy comfort camera before its first tuning configuration
+  ---
+  duration_ms: 249.231667
+  ...
+# Subtest: World captures saved drone camera before its first tuning configuration
+ok 67 - World captures saved drone camera before its first tuning configuration
+  ---
+  duration_ms: 247.772292
+  ...
+# Subtest: World captures unreadable comfort camera before its first tuning configuration
+ok 68 - World captures unreadable comfort camera before its first tuning configuration
+  ---
+  duration_ms: 259.817958
+  ...
+# Subtest: World captures World settings camera before its first tuning configuration
+ok 69 - World captures World settings camera before its first tuning configuration
+  ---
+  duration_ms: 265.850167
+  ...
+1..69
+# tests 90
+# suites 0
+# pass 90
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 43672.035792

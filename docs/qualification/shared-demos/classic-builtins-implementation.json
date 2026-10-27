@@ -1,0 +1,188 @@
+{
+  "format": "shared-demo-classic-runtime-admission.v1",
+  "recordedAt": "2026-10-18T19:43:49.928Z",
+  "head": "371f63b86e68753f6de43a5a87d8ffdedf502fc7",
+  "scope": "Working-tree scoped implementation and regression evidence. This is not a whole-tree freeze or final endurance acceptance.",
+  "sourceHashes": {
+    "game/demo-modes/solo-classic-builtins.mjs": "748eb0a5200a20bdb42688c15490767d0cbbea9657e38fa17b5be9e48027a680",
+    "game/demo-modes/solo-classic-launch.mjs": "acdabcdddae9ff37881a5b50979f872a7b4d95d0b6605b8ba3a75277f9f77652",
+    "game/demo-modes/solo-source-owner.mjs": "c0122c017ed20f672e82ce57a5f1a82b7a3e05b47fe6e4f2e0b821a4deb397d6",
+    "game/demo-modes/solo-builtins.mjs": "1aad4c9e8f50cae6dcbc3a2d3303a94d9fc85e5c6642f75a2340804fb6b95ac8",
+    "game/demo-modes/solo-catalog.mjs": "847fc44a3a5588e0c5e1707974a8743494da35ed46ad8527e0559967c46cea42",
+    "game/imports.mjs": "eaae5ee0f75dc5033c3ec2c56880d0e82552655d587c221c4f890cff2f48a675",
+    "game/app.mjs": "f204c43a9cb83845c01cff516d82312f4befa6c11f2bd8e73a77a5e7b674736e",
+    "game/test/demo-solo-classic-builtins.test.mjs": "e13586f4bb4af1a3e7440e51cefaacd4ec14122412bce9bad2fcc015ae76bc2b",
+    "game/test/demo-solo-source-owner.test.mjs": "5f04c932190e6653f4fbf4a6a33f0e5cbd5a3a7d490baa0c08bf6408f30e1768",
+    "game/test/demo-solo-catalog.test.mjs": "94c3c2fdac31ddab48ee599f129f06bf82aba6c6a95525695ed44eed0e94bc4b",
+    "game/test/imports.test.mjs": "cb7de20c4993d6cb78b7626178b4c45484a6cb0f68a004df1eb33e785060b908",
+    "game/test/packs.test.mjs": "9ae907f1ac5cd7b11b1dcb3f2980469f085a730eacf1f56037c14b4a72799220",
+    "game/test/demo-classic-fresh-host.test.mjs": "01c193afcf2cb920514cefb406ada47eeb9ae691decf53d319d4d6c5de3b9122",
+    "scripts/qualify-classic-demo-builtins-browser.mjs": "210b74863741a4356701467eaa397f232fc90a0402f5078aa50c9a172256b046",
+    "game/demo-sources.mjs": "c4a33033692dd2b49b040db610777d3e083dc2f7a54bcc993c9a387fad607d80",
+    "game/test/demo-sources.test.mjs": "5ffc5b64508c7a8387f2498774abfecd2ef5d04c6fb45763f7731c6318d3dcf4"
+  },
+  "inventory": {
+    "beforeCleanStandaloneSolo": 151,
+    "afterSolo": 240,
+    "classic": 101,
+    "byClassicGroup": {
+      "base": 12,
+      "bundled": 77,
+      "archived": 12
+    },
+    "derivation": "Validated mission-library index original authored standard Solo rows plus the existing 139 Journey index entries. Demo catalog descriptors join exact campaign, level and revision; no current-rules projections or custom combinations."
+  },
+  "behavior": [
+    "Metadata-only discovery exposes base, bundled and archived Classic performances from Journey and cross-mode entry, even without installed packs.",
+    "Selected sources stream exact indexed bytes with bounded size and SHA-256 validation, then use native preparePack, canonical prepared-pack identity, standard execution catalog and existing loadDemoSources replay admission.",
+    "Original reviewed replay compatibility and strict generated replay checks remain unchanged. No simulation identity, authored level or recording corpus changes were made by this increment.",
+    "Native browser image decoding now accepts optional cancellation and retires temporary Image callbacks/src immediately; it stops subsequent pack image decodes.",
+    "A shared lazy-source lease preserves frozen player getters, releases Classic and Journey entry references, and retains async disposal result/error after abort.",
+    "Source-ID merge retains existing personal recordings, qualified live bots, improvisation and reviewed choices.",
+    "Uninstalled Classic Fresh uses the existing guarded exact ordinary chooser handoff. Existing installed locked missions retain isolated practice fallback; no installation or unlock is granted.",
+    "Native Solo source descriptors now carry their admitted difficulty variant consistently, so existing personal/improvised/live sources and lazy authored recordings share the same Standard level visit. An actual merged 240-level catalog completes two full no-repeat cycles; native qualified bot metadata and personal Gentle identity are checked separately."
+  ],
+  "tests": [
+    {
+      "path": "docs/qualification/shared-demos/classic-builtins-regressions.tap.txt",
+      "sha256": "9e5c05bc7cf648b7e646dc97464b1bc1f716d03ccbff0bcd3e7756fcc8f02924",
+      "tests": 55,
+      "passed": 55,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    {
+      "path": "docs/qualification/shared-demos/classic-source-owner-final-regressions.tap.txt",
+      "sha256": "1cc9aeeaa0d6f3201ce155170a12d9ae0024f97aacdc7e0e0887e5d1b8c97681",
+      "tests": 14,
+      "passed": 6,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 8
+    },
+    {
+      "path": "docs/qualification/shared-demos/classic-fresh-host-regressions.tap.txt",
+      "sha256": "a9f28d37aec67e3b6a8b327e17adaa358bf352401bcbdfff06c7ef133a0c956a",
+      "tests": 58,
+      "passed": 58,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    {
+      "path": "docs/qualification/shared-demos/classic-fresh-handoff-regressions.tap.txt",
+      "sha256": "9e3c6c118ba9ddac77835181302a50605bcb9266d2ffaa24d76aa4d821895401",
+      "tests": 3,
+      "passed": 3,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    {
+      "path": "docs/qualification/shared-demos/classic-source-fairness-final-regressions.tap.txt",
+      "sha256": "ffb5d4ec15c9015cb5cf3370dbb7d6e18a5424115299ce247309fa42372522df",
+      "tests": 67,
+      "passed": 67,
+      "failed": 0,
+      "cancelled": 0,
+      "skipped": 0
+    }
+  ],
+  "tooling": {
+    "eslint": "Passed all 12 owned implementation/test/qualifier paths.",
+    "prettier": "Passed same paths.",
+    "gitDiffCheck": "Passed at review."
+  },
+  "staleFixtureRepairs": {
+    "preservedFailures": [
+      "docs/qualification/shared-demos/classic-builtins-stale-pack-fixture.tap.txt",
+      "docs/qualification/shared-demos/classic-builtins-stale-dependency-fixture.tap.txt"
+    ],
+    "explanation": "Existing pack tests injected 1x1 dimensions for larger current authored images and inherited a changed pack version in a synthetic foundation fixture. The fixture decoder now derives expected dimensions from actual bounded image headers; intentionally mismatched dimensions still reject. The delayed atomic-import fixture admits exactly its one intended image, and synthetic foundation explicitly pins its declared 1.0.0 version. Production pack validation is unchanged."
+  },
+  "browser": {
+    "path": "docs/qualification/shared-demos/classic-builtins-chromium.json",
+    "complete": true,
+    "browserCloseCompleted": true,
+    "errors": [],
+    "checks": [
+      {
+        "name": "dynamic-clean-profile-union",
+        "levels": 240,
+        "classicLevels": 101,
+        "metadataOnly": true,
+        "journeyAndCrossMode": true
+      },
+      {
+        "name": "native-selected-performance",
+        "group": "base",
+        "sourceId": "first-signal-left",
+        "levelId": "signal-01",
+        "prepareMs": 770.5,
+        "outcome": "won",
+        "ticks": 3682,
+        "capturedCells": 740,
+        "isolatedPractice": true,
+        "nativeImages": true,
+        "requests": [
+          "/game/content/campaign.json",
+          "/game/content/base-artwork.json",
+          "/game/demo-data/first-signal-left.replay.json",
+          "/game/demo-data/first-signal-left.chromium-macos.replay.json"
+        ]
+      },
+      {
+        "name": "native-selected-performance",
+        "group": "bundled",
+        "sourceId": "solo-qualified-bda094dfb23a16c2",
+        "levelId": "night-shift-01",
+        "prepareMs": 201.90000000037253,
+        "outcome": "won",
+        "ticks": 565,
+        "capturedCells": 1054,
+        "isolatedPractice": true,
+        "nativeImages": true,
+        "requests": [
+          "/game/content/packs/night-shift.json",
+          "/game/demo-data/solo-qualified-bda094dfb23a16c2.replay.json"
+        ]
+      },
+      {
+        "name": "native-selected-performance",
+        "group": "archived",
+        "sourceId": "solo-qualified-ec7912cb8caf199d",
+        "levelId": "night-signal",
+        "prepareMs": 1826.5,
+        "outcome": "lost",
+        "ticks": 3121,
+        "capturedCells": 106,
+        "isolatedPractice": true,
+        "nativeImages": true,
+        "requests": [
+          "/game/content/packs/fpv-arcade-r2.json",
+          "/game/demo-data/solo-qualified-ec7912cb8caf199d.chromium.replay.json"
+        ]
+      },
+      {
+        "name": "disposal-and-persistence",
+        "allPreparedEntriesReleased": true,
+        "persistenceUnchanged": true
+      }
+    ],
+    "sourceBinding": "That receipt independently hashes source files before and after. Final async-retirement refinement to solo-source-owner.mjs and explicit source difficulty metadata in demo-sources.mjs followed the first Chromium run. Focused native/source/rotation regressions pass after both changes; final three-engine runtime refresh remains pending.",
+    "laterScopedChanges": [
+      "game/demo-modes/solo-source-owner.mjs",
+      "game/demo-sources.mjs"
+    ]
+  },
+  "limitations": [
+    "The bounded Chromium probe fully played one selected base, current and archived performance, not all 101 Classic performances. Existing corpus qualification remains independently recorded elsewhere.",
+    "The Node packed-replay fixture omits artwork and uses no fake image decoder; actual authored image decoding is exercised by the selected browser performances.",
+    "Final frozen-source three-engine browser/Fresh/resource refresh, publishing-profile capacity validation, and a complete 120-minute actual wall-clock rotation remain separate acceptance gates."
+  ],
+  "fairnessRegression": {
+    "preservedDraftFailure": "docs/qualification/shared-demos/classic-source-fairness-regressions.tap.txt",
+    "explanation": "The first regression fixture incorrectly expected a qualified live bot in the current base-only catalog. The corrected actual merge checks personal, improvisation and qualified recordings; the existing native qualified-bot source fixture independently checks explicit Standard variant metadata. No authored content or bot qualification was invented."
+  }
+}

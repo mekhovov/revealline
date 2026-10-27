@@ -1,0 +1,347 @@
+TAP version 13
+# Subtest: rotation begins approachable and avoids consecutive same-level replay/bot scenes
+ok 1 - rotation begins approachable and avoids consecutive same-level replay/bot scenes
+  ---
+  duration_ms: 3.759041
+  ...
+# Subtest: failed sources are skipped once for this director session
+ok 2 - failed sources are skipped once for this director session
+  ---
+  duration_ms: 2.036042
+  ...
+# Subtest: late cancelled preparation cannot replace a newer player and releases its ownership
+ok 3 - late cancelled preparation cannot replace a newer player and releases its ownership
+  ---
+  duration_ms: 0.794709
+  ...
+# Subtest: suspension cancels loading and requires an explicit play gesture after lifecycle return
+ok 4 - suspension cancels loading and requires an explicit play gesture after lifecycle return
+  ---
+  duration_ms: 0.386291
+  ...
+# Subtest: completion remains available for a host-owned dwell, pause survives asynchronous load
+ok 5 - completion remains available for a host-owned dwell, pause survives asynchronous load
+  ---
+  duration_ms: 0.128042
+  ...
+# Subtest: visible stalls skip spectator time and repeated completed scenes keep rotating without input
+ok 6 - visible stalls skip spectator time and repeated completed scenes keep rotating without input
+  ---
+  duration_ms: 2.522917
+  ...
+# Subtest: empty or wholly unavailable rotation has a stable terminal state
+ok 7 - empty or wholly unavailable rotation has a stable terminal state
+  ---
+  duration_ms: 0.915958
+  ...
+# Subtest: source exceptions during playback skip only that source and preserve next-source ownership
+ok 8 - source exceptions during playback skip only that source and preserve next-source ownership
+  ---
+  duration_ms: 8.913541
+  ...
+# Subtest: expected bot exhaustion keeps the useful final board then selects a replay without quarantine
+ok 9 - expected bot exhaustion keeps the useful final board then selects a replay without quarantine
+  ---
+  duration_ms: 0.46825
+  ...
+# Subtest: a worker fault quarantines that bot and immediately falls back to a replay, never another bot
+ok 10 - a worker fault quarantines that bot and immediately falls back to a replay, never another bot
+  ---
+  duration_ms: 0.451167
+  ...
+# (node:49161) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: the real bot watchdog adopts a verified reviewed replay and cannot revive from a late Worker reply
+ok 11 - the real bot watchdog adopts a verified reviewed replay and cannot revive from a late Worker reply
+  ---
+  duration_ms: 1524.978
+  ...
+# Subtest: no safe first macro falls back without quarantine; missing replay leaves a stable unavailable state
+ok 12 - no safe first macro falls back without quarantine; missing replay leaves a stable unavailable state
+  ---
+  duration_ms: 0.446459
+  ...
+# Subtest: preparation deadline quarantines a hung bot, falls back to replay and preserves explicit Pause
+ok 13 - preparation deadline quarantines a hung bot, falls back to replay and preserves explicit Pause
+  ---
+  duration_ms: 0.319541
+  ...
+# Subtest: Next cancels a preparation which never returns and retains only its newer owner
+ok 14 - Next cancels a preparation which never returns and retains only its newer owner
+  ---
+  duration_ms: 0.27825
+  ...
+# Subtest: dispose settles preparation immediately and disposes its ignored-abort late adapter once
+ok 15 - dispose settles preparation immediately and disposes its ignored-abort late adapter once
+  ---
+  duration_ms: 0.131416
+  ...
+# Subtest: wholly timed-out recordings end unavailable after one bounded attempt per source
+ok 16 - wholly timed-out recordings end unavailable after one bounded attempt per source
+  ---
+  duration_ms: 0.227458
+  ...
+# Subtest: recovery checks its total 29997ms before adopting a prepared source
+ok 17 - recovery checks its total 29997ms before adopting a prepared source
+  ---
+  duration_ms: 0.187209
+  ...
+# Subtest: recovery checks its total 30000ms before adopting a prepared source
+ok 18 - recovery checks its total 30000ms before adopting a prepared source
+  ---
+  duration_ms: 0.235917
+  ...
+# Subtest: recovery checks its total 33000ms before adopting a prepared source
+ok 19 - recovery checks its total 33000ms before adopting a prepared source
+  ---
+  duration_ms: 0.140458
+  ...
+# Subtest: synchronous retirement and replacement preparation share the recovery budget
+ok 20 - synchronous retirement and replacement preparation share the recovery budget
+  ---
+  duration_ms: 0.132584
+  ...
+# Subtest: retirement that exhausts recovery cannot begin another source or quarantine the old source
+ok 21 - retirement that exhausts recovery cannot begin another source or quarantine the old source
+  ---
+  duration_ms: 0.144209
+  ...
+# Subtest: preparation evidence survives timeout and ignores late diagnostic updates
+ok 22 - preparation evidence survives timeout and ignores late diagnostic updates
+  ---
+  duration_ms: 0.268375
+  ...
+# Subtest: preparation evidence survives cancel and ignores late diagnostic updates
+ok 23 - preparation evidence survives cancel and ignores late diagnostic updates
+  ---
+  duration_ms: 0.133291
+  ...
+# Subtest: a delayed optional catalog cannot starve available modes or freeze localization
+ok 24 - a delayed optional catalog cannot starve available modes or freeze localization
+  ---
+  duration_ms: 2.235875
+  ...
+# Subtest: prefetch owns one immutable payload and cancels its predecessor without preparing scenes
+ok 25 - prefetch owns one immutable payload and cancels its predecessor without preparing scenes
+  ---
+  duration_ms: 1.629292
+  ...
+# Subtest: the next prefetched recording is consumed once and never creates a second player early
+ok 26 - the next prefetched recording is consumed once and never creates a second player early
+  ---
+  duration_ms: 1.394834
+  ...
+# Subtest: modes and level variants have equal performance weight despite duplicate recordings
+ok 27 - modes and level variants have equal performance weight despite duplicate recordings
+  ---
+  duration_ms: 3.304083
+  ...
+# Subtest: an unavailable graphics engine is attempted once, not once per authored level
+ok 28 - an unavailable graphics engine is attempted once, not once per authored level
+  ---
+  duration_ms: 2.93775
+  ...
+# Subtest: a large corrupt catalog cannot keep healthy unvisited modes behind verified fallback
+ok 29 - a large corrupt catalog cannot keep healthy unvisited modes behind verified fallback
+  ---
+  duration_ms: 3.215375
+  ...
+# Subtest: a deferred mode returns with its next recording while healthy mode cycles keep progressing
+ok 30 - a deferred mode returns with its next recording while healthy mode cycles keep progressing
+  ---
+  duration_ms: 1.145208
+  ...
+# Subtest: duplicate bad recordings cannot hold the next level behind repeated verified fallback
+ok 31 - duplicate bad recordings cannot hold the next level behind repeated verified fallback
+  ---
+  duration_ms: 0.752208
+  ...
+# Subtest: all fallback attempts together stop at thirty seconds
+ok 32 - all fallback attempts together stop at thirty seconds
+  ---
+  duration_ms: 2.271709
+  ...
+# Subtest: replacement waits for asynchronous graphics disposal
+ok 33 - replacement waits for asynchronous graphics disposal
+  ---
+  duration_ms: 1.272709
+  ...
+# Subtest: fallback waits for cleanup of a source rejected after preparation
+ok 34 - fallback waits for cleanup of a source rejected after preparation
+  ---
+  duration_ms: 1.102917
+  ...
+# Subtest: captions retain five explanations, stay six seconds, and discard stale warnings
+ok 35 - captions retain five explanations, stay six seconds, and discard stale warnings
+  ---
+  duration_ms: 0.39325
+  ...
+# Subtest: caption history translates observed events without replaying or dropping their reading interval
+ok 36 - caption history translates observed events without replaying or dropping their reading interval
+  ---
+  duration_ms: 0.101208
+  ...
+# Subtest: natural completion retains the last explanation and the recap for six seconds each
+ok 37 - natural completion retains the last explanation and the recap for six seconds each
+  ---
+  duration_ms: 0.29875
+  ...
+# Subtest: clean and Journey entry contexts enumerate the complete authored union from metadata only
+ok 38 - clean and Journey entry contexts enumerate the complete authored union from metadata only
+  ---
+  duration_ms: 308.508292
+  ...
+# Subtest: source merge preserves personal recordings, live bots, improvisation and reviewed choices
+ok 39 - source merge preserves personal recordings, live bots, improvisation and reviewed choices
+  ---
+  duration_ms: 0.145125
+  ...
+# Subtest: actual merged personal, improvised and qualified sources share one Standard visit per authored level
+ok 40 - actual merged personal, improvised and qualified sources share one Standard visit per authored level
+  ---
+  duration_ms: 135.705708
+  ...
+# Subtest: lazy handoffs name exact ordinary missions without granting installation or progress
+ok 41 - lazy handoffs name exact ordinary missions without granting installation or progress
+  ---
+  duration_ms: 18.318542
+  ...
+# Subtest: selected native packed replay strictly plays to its terminal outcome and releases its entry
+ok 42 - selected native packed replay strictly plays to its terminal outcome and releases its entry
+  ---
+  duration_ms: 126.964292
+  ...
+# Subtest: changed indexed bytes, canonical pack identity and replay content fail before adoption
+ok 43 - changed indexed bytes, canonical pack identity and replay content fail before adoption
+  ---
+  duration_ms: 59.798333
+  ...
+# Subtest: cancellation releases an ignored late transport and never adopts native content
+ok 44 - cancellation releases an ignored late transport and never adopts native content
+  ---
+  duration_ms: 10.383042
+  ...
+# Subtest: indexed metadata cannot escape the finite local authored pack paths
+ok 45 - indexed metadata cannot escape the finite local authored pack paths
+  ---
+  duration_ms: 15.790875
+  ...
+# Subtest: cancelling a locked pack body releases its stream before preparation
+ok 46 - cancelling a locked pack body releases its stream before preparation
+  ---
+  duration_ms: 12.11975
+  ...
+# Subtest: cancelling native pack image preparation retires its image and prevents subsequent decodes
+ok 47 - cancelling native pack image preparation retires its image and prevents subsequent decodes
+  ---
+  duration_ms: 142.193042
+  ...
+# Subtest: lazy entry ownership preserves frozen live getters and releases once on disposal or cancellation
+ok 48 - lazy entry ownership preserves frozen live getters and releases once on disposal or cancellation
+  ---
+  duration_ms: 1.166458
+  ...
+# Subtest: a retired earlier lease cannot erase the currently owned entry
+ok 49 - a retired earlier lease cannot erase the currently owned entry
+  ---
+  duration_ms: 0.086875
+  ...
+# Subtest: already cancelled admission disposes the native player before retaining its entry
+ok 50 - already cancelled admission disposes the native player before retaining its entry
+  ---
+  duration_ms: 0.365709
+  ...
+# Subtest: abort owns asynchronous retirement and repeated disposal preserves its exact result
+ok 51 - abort owns asynchronous retirement and repeated disposal preserves its exact result
+  ---
+  duration_ms: 4.559959
+  ...
+# Subtest: repeated disposal retains synchronous native cleanup failure without throwing from abort
+ok 52 - repeated disposal retains synchronous native cleanup failure without throwing from abort
+  ---
+  duration_ms: 0.224208
+  ...
+# Subtest: actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily
+ok 53 - actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily
+  ---
+  duration_ms: 3159.36075
+  ...
+# Subtest: same map IDs in separately installed themed owners do not collide
+ok 54 - same map IDs in separately installed themed owners do not collide
+  ---
+  duration_ms: 150.659375
+  ...
+# Subtest: current main Journey host adds every installed Journey level without pretending base clips belong to Journey
+ok 55 - current main Journey host adds every installed Journey level without pretending base clips belong to Journey
+  ---
+  duration_ms: 3908.638125
+  ...
+# Subtest: actual public company editions expose only their own isolated installed levels
+ok 56 - actual public company editions expose only their own isolated installed levels
+  ---
+  duration_ms: 4865.321375
+  ...
+# Subtest: missing Worker and uninstalled content filter sources without downloading or installing packs
+ok 57 - missing Worker and uninstalled content filter sources without downloading or installing packs
+  ---
+  duration_ms: 285.6255
+  ...
+# Subtest: manually kept local recordings join the catalogue without enabling automatic collection
+ok 58 - manually kept local recordings join the catalogue without enabling automatic collection
+  ---
+  duration_ms: 201.839458
+  ...
+# Subtest: personal recording rotation metadata preserves its admitted difficulty identity
+ok 59 - personal recording rotation metadata preserves its admitted difficulty identity
+  ---
+  duration_ms: 0.491708
+  ...
+# Subtest: uncached optional bundled replays fall back to a retained recording or stay unavailable offline
+ok 60 - uncached optional bundled replays fall back to a retained recording or stay unavailable offline
+  ---
+  duration_ms: 191.609542
+  ...
+# Subtest: scene creation rejects a valid but wrong bundled recording and respects cancellation
+ok 61 - scene creation rejects a valid but wrong bundled recording and respects cancellation
+  ---
+  duration_ms: 20.296125
+  ...
+# Subtest: cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation
+ok 62 - cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation
+  ---
+  duration_ms: 0.562917
+  ...
+# Subtest: frozen variants stay strict and reviewed routes qualify only an enemy checkpoint difference
+ok 63 - frozen variants stay strict and reviewed routes qualify only an enemy checkpoint difference
+  ---
+  duration_ms: 470.746833
+  ...
+# Subtest: the ordinary game build includes every dynamic demo asset and Worker module
+ok 64 - the ordinary game build includes every dynamic demo asset and Worker module
+  ---
+  duration_ms: 4218.116958
+  ...
+# Subtest: a personal cache that never settles times out without discarding bundled sources
+ok 65 - a personal cache that never settles times out without discarding bundled sources
+  ---
+  duration_ms: 29.156167
+  ...
+# Subtest: a never-settling catalogue falls through to local sources and cancellation settles a hung cache
+ok 66 - a never-settling catalogue falls through to local sources and cancellation settles a hung cache
+  ---
+  duration_ms: 0.505584
+  ...
+# Subtest: resource diagnostic reaches live source rehearsal before its player can be returned
+ok 67 - resource diagnostic reaches live source rehearsal before its player can be returned
+  ---
+  duration_ms: 33.771792
+  ...
+1..67
+# tests 67
+# suites 0
+# pass 67
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 20482.991875

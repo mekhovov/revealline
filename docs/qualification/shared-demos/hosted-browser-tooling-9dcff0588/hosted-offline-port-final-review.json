@@ -1,0 +1,30 @@
+{
+  "format": "SharedDemoOfflinePortFinalReviewDeltaV1",
+  "observedAt": "2026-10-19T11:42:28.734372+00:00",
+  "readOnlyReview": true,
+  "sourcePins": {
+    "scripts/qualify-shared-demo-offline-browser.mjs": {
+      "bytes": 45447,
+      "sha256": "34f07f27d51dab86a6ee346e900a9cf874ac5ef79db32f4505b7774df73cebd8"
+    },
+    "scripts/shared-demo-offline-storage.mjs": {
+      "bytes": 3810,
+      "sha256": "b1dfe68e2d412cfb5e92a0f34c1f0ea7f81f940df18195e3d0489acac4b16776"
+    },
+    "scripts/test-shared-demo-offline-storage.mjs": {
+      "bytes": 4123,
+      "sha256": "0bb7310f389e101a12a73b84023bda617bc1ae4e74faa26a302e5bb7c95db4c2"
+    },
+    ".cache/offline-port-9dcff0588-preparation.json": {
+      "bytes": 2681,
+      "sha256": "4c05e933579142e809781a261e2ad66db177ced123cfcf9688702deacf8df2b4"
+    },
+    ".cache/hosted-offline-port-independent-review.json": {
+      "bytes": 1342,
+      "sha256": "d04404307a7cc77ecfaba911fe5d66b625c0b17bf4e9f3095e9dfbfb432d1fb2"
+    }
+  },
+  "findings": [],
+  "delta": "Final port requires .json report extension before profile creation and rejects any existing timeout failure before setting complete=true. Both changes are conservative and preserve the reviewed scenario/cleanup semantics. Prior independent27-callback AST review remains scoped evidence; updated agent validation reports27callback identities still equal and4focused guards passing.",
+  "newExecutionCredit": false
+}

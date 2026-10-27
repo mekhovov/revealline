@@ -1,0 +1,56 @@
+{
+  "format": "SnakeDemoPersistenceIndependentReviewV1",
+  "observedAt": "2026-10-19T12:23:57.462253+00:00",
+  "head": "27138039f30d759aaf10d0b8c80564757bc9e905",
+  "sourceState": "Uncommitted focused Snake write-ownership correction; read-only review, no test or browser execution",
+  "files": [
+    {
+      "path": "game/snake/classic-app.mjs",
+      "bytes": 109230,
+      "sha256": "98ac653dc5c5de9f483a529494247e472125b9fb7476cd3f52ee1ded3f0eb39d"
+    },
+    {
+      "path": "game/snake/classic-records.mjs",
+      "bytes": 22080,
+      "sha256": "73f06dc5fdcba5de2f774b14192b3c78fc2c5cb93772e44d0b3cacddd9da5455"
+    },
+    {
+      "path": "game/test/classic-snake-ui.test.mjs",
+      "bytes": 124223,
+      "sha256": "18e5eec94a94c0f63a882cd3974fddef9ee13c0e2660c087b41721a52cbaf923"
+    },
+    {
+      "path": "game/test/classic-snake-progress.test.mjs",
+      "bytes": 14912,
+      "sha256": "07fe2f8b238e25bff6627cead606d96912a2a655931ef631d2e347b3c039484b"
+    },
+    {
+      "path": "game/profile-storage.mjs",
+      "bytes": 9352,
+      "sha256": "722f0b804f0de0cb7c20a3b6c4d98fb99d13389febd0efeca1028c7c9516511d"
+    },
+    {
+      "path": "game/snake/classic-ratings.mjs",
+      "bytes": 6433,
+      "sha256": "c47522c2e97a8bce8c568d7ff3c98390176e30bf63da0b58a949e48afc440934"
+    },
+    {
+      "path": "game/enemy-stats.mjs",
+      "bytes": 23051,
+      "sha256": "538a2a6a37ade82e68197795f654410865938e92358de05554243e621084990a"
+    }
+  ],
+  "findings": [],
+  "review": [
+    "One ordinary player-progress predicate is shared by ratings, records and enemy statistics. Existing backend checks it before open, after open, and immediately before mutation.",
+    "Delayed ordinary work retains its in-memory progress while watching/practice lack write authority. The real records retry test verifies exact accepted proof survives and persists once ordinary ownership resumes.",
+    "Ordinary pagehide drains queued records and statistics before releasing its exact departing lease. Demo-origin departure never receives this allowance, including after destroy makes demo inactive.",
+    "BFCache pageshow waits for prior release before claiming a new writer, with existing writer epoch invalidation retained.",
+    "Derived ratings remain reconstructible from stored completion proofs; rejecting a late rating cache update does not discard the ordinary completion.",
+    "New tests exercise delayed real rating-backend opening, focus during demo, unchanged ordinary checkpoint/storage, later authorized refresh, pending result retry and ordinary/demo departure lifetime."
+  ],
+  "limitations": [
+    "Read-only source review only; focused test outcome is owned by implementing agent.",
+    "Fresh emitted browser restoration and persistence qualification remains required for the changed runtime."
+  ]
+}

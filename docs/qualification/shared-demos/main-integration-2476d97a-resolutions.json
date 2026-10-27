@@ -1,0 +1,18 @@
+[
+  {
+    "commit": "4a397e1398c351fd70ae9114ac25a0bf6bc25f10",
+    "path": "game/i18n/catalogs.mjs",
+    "method": "official catalogBundle/readCatalogs on merged sparse locale files"
+  },
+  {
+    "commit": "4a397e1398c351fd70ae9114ac25a0bf6bc25f10",
+    "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+    "method": "hash exact merged canonical sources using official generator formula; full refresh required after adoption",
+    "canonicalSHA256": "52f82ac3ecb4b3ec43d1877c7907b7384f1f7741f6ed9012a7f7e7d1a31d76ff"
+  },
+  {
+    "commit": "a5d2ddea956760b1d96ac9e786a4db46cbf3bfd1",
+    "path": "game/i18n/catalogs.mjs",
+    "method": "official catalogBundle/readCatalogs on merged sparse locale files"
+  }
+]

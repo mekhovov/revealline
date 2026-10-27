@@ -1,0 +1,56 @@
+{
+  "format": "SharedDemoControlBindingReviewV1",
+  "created": "2026-10-18T22:38:48.992173+00:00",
+  "implementationBase": "f97034cc2f00c5cd2f4d7e58f6f519b1f3e315dd",
+  "headWhenRecorded": "f2a8b6bee4d5d127b770e77626c7ed0d03940fc2",
+  "scope": "Scoped control implementation and regressions; no combined runtime qualification or physical input claim. Concurrent cache/offline increments have separate evidence.",
+  "files": {
+    "game/demo-settings.mjs": "015d8bd720cd13e1cccce721b2b013dd38d4703e1fb1fae4b2297251fe355dec",
+    "game/ui/demo-entry.mjs": "f11edc3f198917fb3173998a898e71e9af33e2dd053bfc0476abb71535224c4b",
+    "game/ui/demo-host.mjs": "fe775bf8636e29d1cedc84fba62f8be47d233c267296fd245bdcc53b83c03d61",
+    "game/test/demo-settings.test.mjs": "0d5e1527d4ec00acd2a2efac685478ae964c525a149794b3a87a623a04d9c18f",
+    "game/test/demo-sim-input.test.mjs": "71d74fe139b4b526c9a114e7e8f0d82cb89dacccd64f14030a6ee6af84a48659",
+    "optional-practice/civilian-fpv/demo-input.mjs": "5e7c2111259ca55b2702dfff21daf055e934705f6744398ec481b9f7d25ca9ab",
+    "optional-practice/civilian-fpv/input.mjs": "cb953e5b990f69d58ee74c75139e04b71baf3329f0cf22775937d6f0f65a472d",
+    "optional-practice/civilian-fpv/world-app.mjs": "16f4db92d8ad196dcbb41d095f6bbb3897d797d2d1f6f9f04399220c5132e66b"
+  },
+  "tests": {
+    "passed": 116,
+    "failed": 0,
+    "seconds": 150.269024,
+    "files": [
+      "game/test/demo-settings.test.mjs",
+      "game/test/demo-sim-input.test.mjs",
+      "game/test/demo-controller.test.mjs",
+      "game/test/demo-input.test.mjs",
+      "game/test/demo-host.test.mjs",
+      "game/test/fpv-controller-readiness.test.mjs",
+      "game/test/fpv-workbench-input.test.mjs"
+    ]
+  },
+  "logs": {
+    "regression": {
+      "path": "docs/qualification/shared-demos/demo-control-bindings-237-regression.log.txt",
+      "sha256": "febf84b35a5c4e3c431a7908e742a04f625b35cf6668fac7e29479abca2e0081"
+    },
+    "lint": {
+      "path": "docs/qualification/shared-demos/demo-control-bindings-237-lint.log.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "format": {
+      "path": "docs/qualification/shared-demos/demo-control-bindings-237-format.log.txt",
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    }
+  },
+  "findings": [
+    "Native demo entry snapshots the current release/edition validated Solo control preferences at each explicit or idle opening. Reading, watching, takeover and reopening do not write or migrate preferences.",
+    "Mounted shared-input checks cover legacy and generation-wrapped profiles, replaced default key rejection, one initiating remapped input, and newer saved remap on reopening.",
+    "Native SIM device guidance uses its actual standard controller mapping or verified radio axis/switch profile. Generic shared pad remaps cannot substitute for this native guidance. Paused hints update when the adapter reports a device change.",
+    "Ordinary Worlds uses the same extracted native controller help; its English/Ukrainian text is preserved. Existing unrelated formatting was preserved."
+  ],
+  "limits": [
+    "Actual physical-controller/radio and mobile checks remain required.",
+    "Initial new tests had two fixture event-dispatch setup failures (missing helper and then window capture); after correcting the fixture boundary, all 25 focused and 116 broader tests pass. No production behavior was weakened for those fixture corrections.",
+    "Whole-file formatting check covers seven files; world-app retains pre-existing unrelated formatting while changing only its helper import/use."
+  ]
+}

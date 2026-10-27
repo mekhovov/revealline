@@ -1,0 +1,40 @@
+{
+  "format": "SharedDemoPreservedNativeRuntimeRetirementV1",
+  "complete": true,
+  "finished": "2026-10-19T10:38:55.537313+00:00",
+  "authorization": "Root explicitly released exact local directory retirement after webkit_review and root native verification completed.",
+  "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac",
+  "preservedDestination": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/preserved-node22131-darwin-x64-20261019T103628Z-fc6aef2f",
+  "preservationReceipt": {
+    "path": "docs/qualification/shared-demos/preserved-node22131-x64-directory.json",
+    "sha256": "82cbcee867505f3b0a87c7ea5058ade9640c01664026c0237f7a70ba28d2c6e2"
+  },
+  "sourceAndBackupReverified": true,
+  "knownBinarySHA256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd",
+  "openHandles": {
+    "command": [
+      "/usr/sbin/lsof",
+      "-nP",
+      "+D",
+      "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac"
+    ],
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  "removedFiles": [
+    "SHASUMS256.txt",
+    "bin/node",
+    "provenance.json"
+  ],
+  "removedFileBytes": 113997825,
+  "localDirectoryAbsent": true,
+  "externalBackupUntouched": true,
+  "availableBytesBefore": 309813248,
+  "availableBytesAfter": 424681472,
+  "observedFreeDifferenceBytes": 114868224,
+  "limitations": [
+    "Free-space difference is a contemporaneous filesystem observation; unrelated concurrent changes are not attributed to this retirement.",
+    "Only the three enumerated ordinary files and their two exact owned directories were removed. No recursive or unrelated cleanup was performed."
+  ]
+}

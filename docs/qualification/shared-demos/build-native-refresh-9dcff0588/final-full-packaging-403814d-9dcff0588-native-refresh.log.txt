@@ -1,0 +1,75 @@
+{"phase":"source-snapshot","sha256":"cbf35154113e1cfe644270c1c7371de2befc6419f2731b62cb3abb927b9ddec9","files":10273,"bytes":410435495,"sourceRevision":"9dcff05887ed573a9fef4037c8d451c8043653a9","started":"2026-10-19T10:45:04.749Z"}
+{"phase":"hosted-build-validated","files":6346}
+{
+  "sourceRevision": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "mainRevision": "403814d27c8e1dd7ba704d8f1eeb7bb6598d454f",
+  "integrationBase": "403814d27c8e1dd7ba704d8f1eeb7bb6598d454f",
+  "started": "2026-10-19T10:45:04.749Z",
+  "sourceFingerprint": {
+    "sha256": "cbf35154113e1cfe644270c1c7371de2befc6419f2731b62cb3abb927b9ddec9",
+    "files": 10273,
+    "bytes": 410435495
+  },
+  "buildFingerprint": {
+    "sha256": "6924a15ed4194878933a7f643acaf2d76c1df573d7ba7b5ab0e9430342732b55",
+    "files": 594,
+    "bytes": 6891633
+  },
+  "materializedBuild": false,
+  "originalPolicy": {
+    "workerConfigMatchesCache": true,
+    "omittedFieldAbsent": true
+  },
+  "files": 6345,
+  "bytes": 1122893169,
+  "simPerformances": 392,
+  "simFiles": 394,
+  "simBytes": 6984573,
+  "soloClips": 242,
+  "snakePerformances": 240,
+  "survivalPerformances": 18,
+  "requiredPayloadsAndDiagnostics": 2744,
+  "missingPayloads": [],
+  "coreCacheFiles": 1752,
+  "coreCacheBytes": 75885601,
+  "coreCacheLimits": {
+    "files": 2000,
+    "bytes": 83886080
+  },
+  "simCoreCacheEntries": [],
+  "coreDemoPayloads": [],
+  "offlineDiagnosticArtifacts": [],
+  "standalone": {
+    "files": 198,
+    "bytes": 18423235,
+    "zipBytes": 18456799,
+    "limits": {
+      "files": 210,
+      "bytes": 20971520
+    },
+    "demonstrations": 0,
+    "offlineDiagnosticArtifacts": []
+  },
+  "sourceDigests": "2836 exact hashes retained in report",
+  "unexpectedEmissionChanges": [],
+  "intentionalDistributionProjections": [
+    "game/snake/classic-app.mjs",
+    "game/ui/demo-host.mjs",
+    "game/ui/demo-input.mjs",
+    "game/ui/demo-picture.mjs",
+    "game/ui/mode-play-shell.mjs",
+    "game/ui/native-menus.mjs"
+  ],
+  "finalSourceFingerprint": {
+    "sha256": "cbf35154113e1cfe644270c1c7371de2befc6419f2731b62cb3abb927b9ddec9",
+    "files": 10273,
+    "bytes": 410435495
+  },
+  "finalBuildFingerprint": {
+    "sha256": "6924a15ed4194878933a7f643acaf2d76c1df573d7ba7b5ab0e9430342732b55",
+    "files": 594,
+    "bytes": 6891633
+  },
+  "finished": "2026-10-19T10:49:25.418Z",
+  "complete": true
+}

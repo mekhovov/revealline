@@ -1,0 +1,115 @@
+{
+  "format": "revealline-demo-owned-historical-capture-retirement.v1",
+  "started": "2026-10-19T05:11:55.563682+00:00",
+  "complete": true,
+  "scope": "Only two inactive regenerable internal generated capture duplicates; no user files, current capture, observer helpers, Git objects or external backups removed.",
+  "authorization": "Root explicitly authorized retirement of these two exact owned generated directories after scoped verification.",
+  "backup": {
+    "imagePath": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/qualification.sparsebundle",
+    "metadataBefore": {
+      "inode": 37530203,
+      "device": 905969668,
+      "uid": 502,
+      "mode": 493,
+      "mtimeNs": 1792383231314428000,
+      "size": 16384
+    },
+    "preservedGitBackups": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/preserved-git-temporary-objects",
+    "proofReceipt": "docs/qualification/shared-demos/scratch-storage-recovery-7438d14d6.json",
+    "proofReceiptSHA256": "5db1e12906684cc4e32a1ea305cb0191974e4601c2f9fa326e76beea46032f36",
+    "priorWholeImageEntries": 907,
+    "priorWholeImageInventorySHA256": "ab683c0818ec79ef6d6235ba90a60e9f8770c04a213d19d13f7101a9298b80d7",
+    "priorWholeImageCopyVerified": true,
+    "freshExternalRemountOrContentHash": false,
+    "limitation": "Relies on the prior complete image-to-internal copy proof and matching current manifest/inventory pins; the external image was not remounted or rehashed for this retirement.",
+    "imageMetadataUnchanged": true,
+    "preservedGitBackupsMetadataUnchanged": true
+  },
+  "currentCapturePreserved": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-16ebd7b-71a0ac38a",
+    "metadataBefore": {
+      "inode": 148158460,
+      "device": 16777235,
+      "uid": 502,
+      "mode": 493,
+      "mtimeNs": 1792385330391862798,
+      "size": 128
+    },
+    "metadataUnchanged": true
+  },
+  "availableBeforeBytes": 1560637440,
+  "entries": [
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/captures/shared-demos-emitted-ab47230-7438d14d6",
+      "relativePath": ".cache/shared-demo-scratch-c4c5fc3c/captures/shared-demos-emitted-ab47230-7438d14d6",
+      "metadataBefore": {
+        "inode": 148058527,
+        "device": 16777235,
+        "uid": 502,
+        "mode": 493,
+        "mtimeNs": 1792382414000000000,
+        "size": 128
+      },
+      "files": 287,
+      "directories": 2,
+      "logicalBytes": 142903203,
+      "allocatedFileBytes": 143519744,
+      "manifestSHA256": "7e3005f0577aa27b361a27f982be173504ead47cb57e74df6ad5fe0fc436d888",
+      "inventorySHA256": "d89d1e29792a85fb05e4b024f4c6ff097645ac349eb5194c1a5ce0f4bc9ceecc",
+      "sourceRevision": "7438d14d6cffa5b5995bfb4050a4ec21aff7dd82",
+      "noSymlinksOrSpecialEntries": true,
+      "allOwnerUid": 502,
+      "openHandleCheck": {
+        "command": [
+          "lsof",
+          "-nP",
+          "+D",
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/captures/shared-demos-emitted-ab47230-7438d14d6"
+        ],
+        "exitCode": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "retired": true,
+      "retiredAt": "2026-10-19T05:11:56.627167+00:00"
+    },
+    {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/captures/shared-demos-emitted-c4c5fc3-575c10a31",
+      "relativePath": ".cache/shared-demo-scratch-c4c5fc3c/captures/shared-demos-emitted-c4c5fc3-575c10a31",
+      "metadataBefore": {
+        "inode": 148058818,
+        "device": 16777235,
+        "uid": 502,
+        "mode": 493,
+        "mtimeNs": 1792378423000000000,
+        "size": 128
+      },
+      "files": 287,
+      "directories": 2,
+      "logicalBytes": 142900844,
+      "allocatedFileBytes": 143519744,
+      "manifestSHA256": "04984771f7737046a5f7045a203dc252f129c726517bc0a2172fbe94213af782",
+      "inventorySHA256": "52d5d28065401b3843f9561eccc91dea0e50fbabfe75eb5047687a17952d56e0",
+      "sourceRevision": "575c10a31287b7ae086bcf373ef4ab3ecbf613a3",
+      "noSymlinksOrSpecialEntries": true,
+      "allOwnerUid": 502,
+      "openHandleCheck": {
+        "command": [
+          "lsof",
+          "-nP",
+          "+D",
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/captures/shared-demos-emitted-c4c5fc3-575c10a31"
+        ],
+        "exitCode": 1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "retired": true,
+      "retiredAt": "2026-10-19T05:11:57.565827+00:00"
+    }
+  ],
+  "availableAfterBytes": 1849171968,
+  "observedAvailableDeltaBytes": 288534528,
+  "allocatedBytesRetired": 287039488,
+  "finished": "2026-10-19T05:11:57.566122+00:00"
+}

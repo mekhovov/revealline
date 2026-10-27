@@ -1,0 +1,49 @@
+{
+  "format": "SharedDemoHostedSupervisorIndependentReviewV1",
+  "observedAt": "2026-10-19T11:52:22.502036+00:00",
+  "head": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "reviewType": "Read-only source and interface review; no process/browser execution",
+  "files": [
+    {
+      "path": "scripts/qualify-shared-demo-hosted-browser.py",
+      "bytes": 22685,
+      "sha256": "185373074ebf52bf67150dac5dfe0001d5989c0f466eb4c3eee260120d0b5065"
+    },
+    {
+      "path": "scripts/test-qualify-shared-demo-hosted-browser.py",
+      "bytes": 12735,
+      "sha256": "fdfc592ca6cad920a2ee268970a24900e5cac3684181126fed87c84c652a584e"
+    },
+    {
+      "path": "scripts/qualify-shared-demo-hosted-browser.mjs",
+      "bytes": 26354,
+      "sha256": "95c450ac55262623f5b2b3450a19f9493016b2b6eb92792acc116945b37be9d8"
+    },
+    {
+      "path": "scripts/qualify-shared-demo-offline-browser.mjs",
+      "bytes": 45447,
+      "sha256": "34f07f27d51dab86a6ee346e900a9cf874ac5ef79db32f4505b7774df73cebd8"
+    },
+    {
+      "path": ".github/workflows/shared-demo-browser-qualification.yml",
+      "bytes": 9473,
+      "sha256": "5a2819d9fb51569ff3489bed85647217f9312562b6bc008e9be4662ee8ecb031"
+    }
+  ],
+  "findings": [],
+  "checks": [
+    "Exact ordered 11/9/1 phase job contracts, complete/exit/binding/provider closure fields and child digest validation match the Node aggregate.",
+    "Previously exited managed-root PID is refused before and after pidfd registration; full identity and held pidfd are checked before signaling.",
+    "Managed root is reaped only by Popen; registered descendants are retained through owned cleanup, and observation bound failure cannot disable cleanup.",
+    "Deferred cancellation spans spawn registration; finalization cancellation revokes success through receipt publication.",
+    "Child elapsed deadline is checked after the final poll as well as while running; final elapsed budget remains bounded separately.",
+    "Private TMP identity, non-symlink canonical path and0700 mode are revalidated during execution; source and capture/tool pins are rechecked.",
+    "Overflow logs, nonzero exit, timeout, forced cleanup, residual owned processes, validation drift and incomplete phase results cannot qualify.",
+    "Workflow uses mandatory Linux guard invocation before capture; portable local results do not establish Linux pidfd/subreaper execution."
+  ],
+  "limits": [
+    "This review does not execute the9 Linux lifetime guards, any browser, a build, or a hosted workflow.",
+    "Synchronous filesystem reads can delay polling; final elapsed validation rejects late success, as documented by the supervisor.",
+    "No physical-device, audible, unfamiliar-player or additional endurance result is implied."
+  ]
+}

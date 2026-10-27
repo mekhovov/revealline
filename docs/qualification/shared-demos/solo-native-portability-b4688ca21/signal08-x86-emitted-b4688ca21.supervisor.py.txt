@@ -1,0 +1,230 @@
+"""Bound the real emitted Signal-08 x86 observation check using the reviewed exact process owner."""
+from pathlib import Path
+import ast
+import datetime
+import hashlib
+import json
+import os
+import re
+import signal
+import subprocess
+import sys
+import threading
+import time
+
+arguments = dict(item[2:].split('=', 1) for item in sys.argv[1:])
+assert set(arguments) <= {'run', 'node', 'report', 'tmpdir', 'head', 'fingerprint', 'emitted-preview', 'runtime', 'executable'}
+assert arguments.get('run') in {'approved', 'preflight'}
+for key in ('node', 'report', 'tmpdir', 'head', 'fingerprint', 'emitted-preview'):
+    assert arguments.get(key), f'Missing --{key}'
+root = Path.cwd().resolve()
+os.environ['GIT_NO_LAZY_FETCH'] = '1'
+report_path = Path(arguments['report']).resolve()
+report_path.relative_to(root)
+assert report_path.suffix == '.json'
+supervision_path, log_path = report_path.with_suffix('.supervision.json'), report_path.with_suffix('.log')
+for path in (report_path, supervision_path, log_path, report_path.with_suffix('.png'), report_path.with_suffix('.mjs.txt'), report_path.with_suffix('.supervisor.py.txt')):
+    assert not path.exists(), f'Refusing existing evidence: {path}'
+tmpdir = Path(arguments['tmpdir']).resolve(strict=True)
+assert tmpdir.is_dir() and Path(os.environ.get('TMPDIR', '')).resolve(strict=True) == tmpdir
+node = Path(arguments['node'])
+assert node.is_absolute() and node.is_file()
+capture = (root / arguments['emitted-preview']).resolve(strict=True)
+capture.relative_to(root)
+owner_name = '.cache/run-endurance-emitted-final.py'
+helper_name = '.cache/probe-signal08-x86-emitted.mjs'
+original_name = '.cache/qualify-demo-menu-focus-emitted.mjs'
+owner_sha = '0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c'
+owner_bytes = (root / owner_name).read_bytes()
+assert hashlib.sha256(owner_bytes).hexdigest() == owner_sha
+supervisor_bytes = Path(__file__).read_bytes()
+
+
+def sha(body):
+    return hashlib.sha256(body).hexdigest()
+
+
+def pin(name):
+    body = (root / name).read_bytes()
+    return {'sha256': sha(body), 'bytes': len(body)}
+
+
+def fingerprint(directories):
+    names = sorted(name for name in subprocess.check_output(['rg', '--files', *directories], text=True, timeout=15).splitlines()
+                   if Path(name).suffix in {'.mjs', '.js', '.json', '.css', '.html'}
+                   and '/test/' not in name and not name.endswith('.test.mjs') and not name.endswith('/coverage.json'))
+    digest, byte_count = hashlib.sha256(), 0
+    for name in names:
+        body = (root / name).read_bytes()
+        byte_count += len(body)
+        digest.update(name.encode() + b'\0')
+        digest.update(hashlib.sha256(body).digest())
+    return {'sha256': digest.hexdigest(), 'files': len(names), 'bytes': byte_count}
+
+
+def bindings():
+    head = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True, timeout=5).strip()
+    manifest_name = str((capture / 'manifest.json').relative_to(root))
+    manifest_bytes = (root / manifest_name).read_bytes()
+    manifest = json.loads(manifest_bytes)
+    audit_name = manifest['auditReportPath']
+    assert not Path(audit_name).is_absolute() and '..' not in Path(audit_name).parts
+    audit = json.loads((root / audit_name).read_bytes())
+    inventory_name = str(Path(audit_name).with_suffix('.inventory.json'))
+    assert manifest['sourceRevision'] == arguments['head']
+    assert manifest['sourceFingerprint']['sha256'] == arguments['fingerprint']
+    assert audit['complete'] is True and audit['sourceStable'] is True and audit['headStable'] is True
+    assert audit['sourceRevision'] == arguments['head']
+    assert audit['sourceFingerprint'] == manifest['sourceFingerprint']
+    assert audit['buildInputFingerprint'] == manifest['buildInputFingerprint']
+    assert audit['emittedPreview']['complete'] is True
+    assert audit['emittedPreview']['manifestSHA256'] == sha(manifest_bytes)
+    assert audit['emittedPreview']['inventorySHA256'] == manifest['inventorySHA256']
+    paths = [helper_name, original_name, owner_name, '.cache/demo-probe-evidence.mjs',
+             'scripts/shared-demo-listener-probe.mjs', 'scripts/serve-production-preview.mjs',
+             'scripts/shared-demo-browser-report.mjs', 'scripts/emitted-preview.mjs',
+             'docs/qualification/shared-demos/source-freeze-latest.json', '.cache/chrome-x86-signal08.sh', '.cache/hosted-demo-admission-failure-b4688ca21.json']
+    value = {'head': head, 'runtime': fingerprint(['game', 'optional-practice', 'publishing']),
+             'buildInputs': fingerprint(['scripts', 'authoring']), 'helpers': {name: pin(name) for name in paths},
+             'emitted': {name: pin(name) for name in [manifest_name, audit_name, inventory_name]},
+             'supervisor': {'sha256': sha(Path(__file__).read_bytes()), 'bytes': len(Path(__file__).read_bytes())}}
+    assert value['head'] == arguments['head']
+    assert value['runtime'] == manifest['sourceFingerprint']
+    assert value['buildInputs'] == manifest['buildInputFingerprint']
+    return value
+
+
+before = bindings()
+names = {'owned_process_snapshot', 'owned_process_identity', 'OwnedProcessTree', 'BoundedChildLog'}
+selected = [item for item in ast.parse(owner_bytes, filename=owner_name).body
+            if isinstance(item, (ast.FunctionDef, ast.ClassDef)) and item.name in names]
+assert {item.name for item in selected} == names
+scope = dict(globals())
+exec(compile(ast.Module(body=selected, type_ignores=[]), owner_name, 'exec'), scope)
+OwnedProcessTree, BoundedChildLog = scope['OwnedProcessTree'], scope['BoundedChildLog']
+command = [str(node), helper_name, '--run=approved', '--head=' + arguments['head'],
+           '--fingerprint=' + arguments['fingerprint'], '--emitted-preview=' + str(capture.relative_to(root)),
+           '--report=' + str(report_path.relative_to(root))]
+for key in ('runtime', 'executable'):
+    if key in arguments:
+        command.append('--' + key + '=' + arguments[key])
+if arguments['run'] == 'preflight':
+    print(json.dumps({'preflight': True, 'browserLaunched': False, 'bindings': before, 'command': command,
+                      'childTimeoutSeconds': 300, 'cleanupGraceSeconds': 16}))
+    sys.exit(0)
+
+report = {'format': 'SharedDemoSignal08X86SupervisionV1', 'complete': False,
+          'started': datetime.datetime.now(datetime.timezone.utc).isoformat(), 'command': command,
+          'timeoutSeconds': 300, 'cleanupGraceSeconds': 16, 'tmpdir': str(tmpdir), 'before': before,
+          'limitations': ['Polled child execution and owned cleanup are bounded. Synchronous filesystem reads are not preemptible; late final validation is rejected after 360 seconds.',
+                         'Read-only x86_64 macOS observation under Rosetta; not Linux proof. A completed observation may contain strictly rejected replays.']}
+log = BoundedChildLog(log_path, byte_limit=1024 * 1024, tail_limit=16384)
+child, owned, remaining = None, None, None
+deferred = {'active': False, 'pending': None}
+started = time.monotonic()
+
+
+def interrupt(signum, _frame):
+    if deferred['active']:
+        deferred['pending'] = signum
+        return
+    report['interruptedSignal'] = signal.Signals(signum).name
+    signal.signal(signal.SIGTERM, signal.SIG_IGN)
+    signal.signal(signal.SIGINT, signal.SIG_IGN)
+    raise InterruptedError('Signal-08 x86 qualification interrupted by ' + signal.Signals(signum).name)
+
+
+signal.signal(signal.SIGTERM, interrupt)
+signal.signal(signal.SIGINT, interrupt)
+try:
+    # Defer Python exceptions only through owner registration; never mask signals inherited by Node.
+    deferred['active'] = True
+    try:
+        child = subprocess.Popen(command, cwd=root, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                                 env={**os.environ, 'NODE_DISABLE_COMPILE_CACHE': '1'}, start_new_session=True)
+        owned = OwnedProcessTree(child)
+        owned.capture()
+        log.start(child.stdout)
+    finally:
+        deferred['active'] = False
+        pending = deferred['pending']
+        deferred['pending'] = None
+        if pending is not None:
+            interrupt(pending, None)
+    while child.poll() is None:
+        owned.capture()
+        owned.check_limits()
+        log.check_limits()
+        if time.monotonic() - started >= report['timeoutSeconds']:
+            report['watchdogExpired'] = True
+            raise TimeoutError('Signal-08 x86 child exceeded 300 seconds.')
+        time.sleep(0.2)
+    remaining = owned.wait_clear(3)
+    if remaining:
+        report['cleanupNeededAfterNodeExit'] = True
+        remaining = owned.cleanup()
+    owned.check_limits()
+except BaseException as error:
+    report['failure'] = repr(error)
+finally:
+    # Preserve cancellation as a failure without interrupting bounded cleanup/evidence writing.
+    def finish_interrupt(signum, _frame):
+        report.setdefault('interruptedSignal', signal.Signals(signum).name)
+        report['complete'] = False
+    signal.signal(signal.SIGTERM, finish_interrupt)
+    signal.signal(signal.SIGINT, finish_interrupt)
+    if owned is not None:
+        if remaining is None:
+            try:
+                remaining = owned.cleanup()
+            except BaseException as error:
+                report['cleanupFailure'] = repr(error)
+        report['ownedProcesses'] = owned.evidence(remaining)
+    log.finish()
+    report['log'] = {'path': str(log_path.relative_to(root)), **log.evidence()}
+    report['childExit'] = child.poll() if child else None
+    try:
+        report['after'] = bindings()
+        report['bindingsStable'] = report['after'] == before
+    except BaseException as error:
+        report['bindingsFailure'] = repr(error)
+        report['bindingsStable'] = False
+    try:
+        body = report_path.read_bytes()
+        result = json.loads(body)
+        report['result'] = {'path': str(report_path.relative_to(root)), 'sha256': sha(body),
+                            'complete': result.get('complete'), 'checks': len(result.get('checks', [])),
+                            'pageErrors': len(result.get('errors', [])), 'failure': result.get('failure'),
+                            'browserClosed': result.get('browserCloseCompleted'), 'previewClosed': result.get('previewClosed')}
+        assert result['format'] == 'SharedDemoSignal08X86ObservationV1'
+        assert result['headBefore'] == result['headAfter'] == arguments['head']
+        assert result['sourceBefore'] == result['sourceAfter'] == before['runtime']
+        assert result['buildInputsBefore'] == result['buildInputsAfter'] == before['buildInputs']
+        assert result['observerSHA256'] == result['observerSHA256After'] == before['helpers'][helper_name]['sha256']
+        assert result['originalNativeProbeSHA256'] == before['helpers'][original_name]['sha256']
+        assert pin(str(report_path.with_suffix('.mjs.txt').relative_to(root))) == before['helpers'][helper_name]
+        report['complete'] = (report['childExit'] == 0 and result.get('complete') is True and len(result.get('checks', [])) == 4
+                              and result.get('errors') == [] and result.get('errorOverflow') == 0
+                              and result.get('sourceUnchanged') is True and result.get('browserCloseCompleted') is True
+                              and result.get('previewClosed') is True and report['bindingsStable'] is True
+                              and report.get('ownedProcesses', {}).get('verified') is True
+                              and not report['ownedProcesses']['observationLimits']['exceeded']
+                              and report['log']['complete'] is True and not report['log']['error'] and not report['log']['limitExceeded']
+                              and not any(report.get(key) for key in ('watchdogExpired', 'interruptedSignal', 'cleanupNeededAfterNodeExit',
+                                                                    'failure', 'cleanupFailure', 'bindingsFailure')))
+    except BaseException as error:
+        report['resultFailure'] = repr(error)
+        report['complete'] = False
+    report['elapsedSeconds'] = time.monotonic() - started
+    if report['elapsedSeconds'] >= 360:
+        report['finalBudgetExceeded'] = True
+        report['complete'] = False
+    report['finished'] = datetime.datetime.now(datetime.timezone.utc).isoformat()
+    with report_path.with_suffix('.supervisor.py.txt').open('xb') as output:
+        output.write(supervisor_bytes)
+    with supervision_path.open('x') as output:
+        json.dump(report, output, indent=2)
+        output.write('\n')
+    print(json.dumps({'supervision': str(supervision_path.relative_to(root)), 'complete': report['complete'],
+                      'childExit': report['childExit'], 'result': report.get('result')}))
+sys.exit(0 if report['complete'] else 1)

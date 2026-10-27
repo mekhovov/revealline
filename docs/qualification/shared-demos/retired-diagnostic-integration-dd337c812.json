@@ -1,0 +1,207 @@
+{
+  "format": "SharedDemoRetiredDiagnosticIntegrationV1",
+  "created": "2026-10-18T23:07:12.179Z",
+  "complete": true,
+  "integrationBase": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "headBefore": "33290126287c8131ebe286b5b14dee1aaa72201a",
+  "headAfter": "33290126287c8131ebe286b5b14dee1aaa72201a",
+  "scope": "One historical diagnostic test repair after rebasing; six serial Node test files plus focused lint/format. No production file edit, browser, full replay-corpus regeneration, or full runtime fingerprint recomputation in this check.",
+  "initialMismatch": {
+    "kind": "read-only exact-byte observation, not an executed failing test",
+    "test": "scripts/test-solo-sentry-wall-anchor.mjs",
+    "path": ".github/workflows/solo-remote-final-timing-sentry-v2-temporary.yml",
+    "originalTestSha256": "7cde55d9c63b3fe096e92f84cbce017d69be7c39502e0e11c91e791fee824f67",
+    "assertedHistoricalSha256": "7eafb28768c05c81aba2dc7529ce778df171f14adcd847d7c77dcd8349e63b8f",
+    "incomingCurrentSha256": "cf616d4fe9b895d9b874f751a0796dc24675b3acfccdbffde8313cc6899c407c",
+    "observedAtRevision": "dd337c8120fd6f875544c1479713d3aa4299c323",
+    "reason": "The current workflow only retired its automatic trigger; the unchanged test still hashed current bytes against the original admitted workflow hash."
+  },
+  "correction": {
+    "file": "scripts/test-solo-sentry-wall-anchor.mjs",
+    "expectedHashUnchanged": true,
+    "readScope": "Only the exact retired Sentry-v2 workflow uses readSoloDiagnosticSource; all other fixture reads remain direct.",
+    "validatedHistoricalSha256": "7eafb28768c05c81aba2dc7529ce778df171f14adcd847d7c77dcd8349e63b8f",
+    "patchSha256": "29b7e382f729adf95abc3085b82364c3346cfb5f982693939d66cc54d522da3a",
+    "diff": "diff --git a/scripts/test-solo-sentry-wall-anchor.mjs b/scripts/test-solo-sentry-wall-anchor.mjs\nindex 5001e5dcd..f32ccf5c9 100644\n--- a/scripts/test-solo-sentry-wall-anchor.mjs\n+++ b/scripts/test-solo-sentry-wall-anchor.mjs\n@@ -14,9 +14,13 @@ import {\n } from '../game/replay.mjs';\n import { createSceneClock } from '../game/ui/scene-clock.mjs';\n import { validateQualification } from './solo-qualification.mjs';\n+import { readSoloDiagnosticSource } from './solo-retired-diagnostic-source.mjs';\n \n const root = new URL('../', import.meta.url);\n-const read = (path) => readFile(new URL(path, root));\n+const read = (path) =>\n+  path === '.github/workflows/solo-remote-final-timing-sentry-v2-temporary.yml'\n+    ? readSoloDiagnosticSource(path)\n+    : readFile(new URL(path, root));\n const directory = 'docs/performance/fixtures/solo-remote-timing/';\n const original = JSON.parse(await read(directory + 'sentry.qualification.fixture'));\n const proposed = JSON.parse(await read(directory + 'sentry-wall-anchor.qualification.fixture'));\n"
+  },
+  "checks": [
+    {
+      "command": "node --test --test-concurrency=1 scripts/test-solo-retired-diagnostic-source.mjs scripts/test-solo-sentry-wall-anchor.mjs scripts/test-solo-final-wave-witness.mjs scripts/test-solo-final-timing-release.mjs scripts/test-solo-final-timing-v2-release.mjs scripts/test-solo-readiness-source-witness.mjs",
+      "exitCode": 0,
+      "tests": 21,
+      "passed": 21,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 49049.653917,
+      "tap": {
+        "path": "docs/qualification/shared-demos/retired-diagnostic-integration-dd337c812.tap.txt",
+        "bytes": 4903,
+        "sha256": "21a44b36c17e8ef02ebce179165f65cb16f0103269d769a72e0326d03ee7146c"
+      }
+    },
+    {
+      "command": "./node_modules/.bin/eslint scripts/test-solo-sentry-wall-anchor.mjs --max-warnings 0",
+      "exitCode": 0
+    },
+    {
+      "command": "./node_modules/.bin/prettier --check scripts/test-solo-sentry-wall-anchor.mjs",
+      "exitCode": 0
+    }
+  ],
+  "cacheMergeReview": {
+    "kind": "read-only; cache runtime tests owned by parent",
+    "path": "game/official-downloads.mjs",
+    "sha256": "11b7010c75f52ebc03504017aed4bc5f896cbb4cdeec01cbada17c1d0c96c607",
+    "locations": [
+      "localOfficialRecordingIds:445",
+      "inspect:137",
+      "aborted:29"
+    ],
+    "findings": [],
+    "preserved": [
+      "One inspect/cache open for ordinary nonconflicting descriptors.",
+      "Catalogue order, duplicate IDs and shared asset hashes retained.",
+      "Conflicting-size fallback inspects each track with the same signal.",
+      "Abort checked before discovery, around native cache awaits, before successful adoption, and in catch so retirement is not converted to empty readiness.",
+      "Empty catalogue opens no cache; ordinary unavailable cache still falls back to empty list."
+    ]
+  },
+  "ciImpact": {
+    "retiredWorkflowCount": 13,
+    "automaticTriggersRemoved": true,
+    "jobBytesAndHistoricalGuardsPreserved": true,
+    "activeSparseConsumerTestPassed": true,
+    "activeCompanyAdmissionWorkflowChanged": false
+  },
+  "sourceHashes": [
+    {
+      "path": "scripts/test-solo-retired-diagnostic-source.mjs",
+      "bytes": 6037,
+      "sha256": "67fefd3ef320afde8bda36b6b28750fc97936e6eb84d4ed05389ed6e1bfa142e"
+    },
+    {
+      "path": "scripts/test-solo-sentry-wall-anchor.mjs",
+      "bytes": 10476,
+      "sha256": "6a6133b329e78f9b7ee875f71fd815d936b347767f4e13238a4afcd942ad7e28"
+    },
+    {
+      "path": "scripts/test-solo-final-wave-witness.mjs",
+      "bytes": 1753,
+      "sha256": "d1400894e28670675b253ba5ce2989c6227ce685e681813d413f76f954a576ff"
+    },
+    {
+      "path": "scripts/test-solo-final-timing-release.mjs",
+      "bytes": 7398,
+      "sha256": "770cec62f02645c115aa6db63e6ee1f6d03740d5a800d10de77f1c2155d01fae"
+    },
+    {
+      "path": "scripts/test-solo-final-timing-v2-release.mjs",
+      "bytes": 12595,
+      "sha256": "feae4f72b19d7ad20f632b945316740529fa1cf9a74f6df3ebe4b707f692e471"
+    },
+    {
+      "path": "scripts/test-solo-readiness-source-witness.mjs",
+      "bytes": 2164,
+      "sha256": "d4a6017a115de4d95568cf757a8e2866fc6cce56c129ac3a375a840a75c81768"
+    },
+    {
+      "path": "scripts/solo-retired-diagnostic-source.mjs",
+      "bytes": 1781,
+      "sha256": "fd3d50399f36a73d19bea10e9b433a685ad59c9d3682c4b9676692bccab88336"
+    },
+    {
+      "path": "scripts/solo-final-wave-witness.mjs",
+      "bytes": 3005,
+      "sha256": "7532bc6e30766ca6d94b39ddd9a498e4ed43d6799551a68053f5696962eec326"
+    },
+    {
+      "path": "scripts/solo-page-error-source-witness.mjs",
+      "bytes": 7578,
+      "sha256": "ac66d9ba34f279cf6ddd2fe9ee0838ebb6fe6c915b0848227281150b88fce221"
+    },
+    {
+      "path": "docs/performance/fixtures/solo-retired-diagnostics/source.json",
+      "bytes": 279318,
+      "sha256": "4c0ba98e10b89dc19f338b22d76bc69bd1ee62cb4ded71837410b604aad17c28"
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-lifecycle-long29-temporary.yml",
+      "bytes": 20612,
+      "sha256": "11e8e7db5a20fb4c50a06e870025b55f89d4e752f600f52fea09e0537193ab9e"
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-lifecycle-next-temporary.yml",
+      "bytes": 20596,
+      "sha256": "070c1c3441d3f0461d8729221064301b66333dfb6f407b4d70f410e86677ba0b"
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-lifecycle-retry-temporary.yml",
+      "bytes": 20604,
+      "sha256": "5ba5aad7ccba26cbeb74e33dd3b223d1267e517c167565e85f3d5f2cbe467ee3"
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-soak-temporary.yml",
+      "bytes": 18092,
+      "sha256": "f687c075d7623d2608e896d4fc182c872a2a2780646b1a3a922b674f714a1f3d"
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-soak-v2-temporary.yml",
+      "bytes": 20570,
+      "sha256": "2d1f87f46689ebbf6018e275154803eb8b50fc13a3f014a59ee8f908742e1527"
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-timing-cold-first30-temporary.yml",
+      "bytes": 18220,
+      "sha256": "f4453250748104ab8d67b5f7a588d4507ec16192589235c3eba330e0d43e58df"
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-timing-cold-first30-v2-temporary.yml",
+      "bytes": 20698,
+      "sha256": "4ea30560db242968f93219ba44a5af7b8655127119486f4f310cda9af1747a3b"
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-timing-long-rail-temporary.yml",
+      "bytes": 18196,
+      "sha256": "f8fbc016ac6f5844324f371a6d7ed7a71fbeaea14e176b0a846a3376b81468ff"
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-timing-long-rail-v2-temporary.yml",
+      "bytes": 20674,
+      "sha256": "cf841d1cd52e26428d3ceb0ab031f76c8c2e87f667c3f067fdc294eded5bb823"
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-timing-sentry-temporary.yml",
+      "bytes": 18172,
+      "sha256": "1218e95c0c6331826b9a9184469678d9e53c5c8f2f188a5c31ff9c7171503e32"
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-timing-sentry-v2-temporary.yml",
+      "bytes": 20650,
+      "sha256": "cf616d4fe9b895d9b874f751a0796dc24675b3acfccdbffde8313cc6899c407c"
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-timing-warm-first30-temporary.yml",
+      "bytes": 18220,
+      "sha256": "2c28a4e5e4f1f93de562fc76fde759fdc6acaa6f7a799fff2fdf5a0d097897b5"
+    },
+    {
+      "path": ".github/workflows/solo-remote-final-timing-warm-first30-v2-temporary.yml",
+      "bytes": 20698,
+      "sha256": "0c05a74da9ee0f9a8ad3026353ea771e2c40baf7bb75674ac65f1636f31128b3"
+    },
+    {
+      "path": "game/official-downloads.mjs",
+      "bytes": 19624,
+      "sha256": "11b7010c75f52ebc03504017aed4bc5f896cbb4cdeec01cbada17c1d0c96c607"
+    }
+  ],
+  "ownedProcesses": {
+    "testCommandExitCode": 0,
+    "noOwnedTestChildrenObserved": true,
+    "browserLaunched": false
+  },
+  "limitations": [
+    "This does not claim current hosted CI success.",
+    "Runtime source freezing, emitted packaging, offline worker browser proof, and final endurance remain separate gates."
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "format": "revealline-demo-preserved-git-garbage.v1",
+  "observedAt": "2026-10-19T02:57:35.355090+00:00",
+  "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.git/objects/pack/tmp_pack_LkzJaT",
+  "sourceInode": 147849137,
+  "bytes": 715128832,
+  "sha256": "8d1ae714f67a7db0305fa65f147c764150f1c73f31410903fff395f7051c4d98",
+  "backup": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/preserved-git-temporary-objects/tmp_pack_LkzJaT.preserved",
+  "backupVerified": true,
+  "gitRecognizesGarbage": true,
+  "openHandlesObserved": 0,
+  "creatorUnknown": true,
+  "availableBeforeBytes": 128049152,
+  "complete": true,
+  "availableAfterBytes": 823451648
+}

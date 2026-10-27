@@ -209,6 +209,15 @@ test('edition recording inventory follows validated catalogue additions and runt
   ];
   catalog.clips.push(additional);
   const paths = editionDemoResources(catalog);
+  for (const clip of catalog.clips)
+    for (const performance of clip.runtimePerformances ?? []) {
+      assert.ok(paths.includes(`game/${performance.replayURL.slice(2)}`));
+      assert.ok(
+        paths.includes(
+          `game/${performance.replayURL.slice(2).replace(/\.replay\.json$/, '.diagnostics.json')}`,
+        ),
+      );
+    }
   for (const relative of [additional.replayURL, ...additional.replayVariants])
     assert.ok(paths.includes(`game/${relative.slice(2)}`));
   assert.equal(new Set(paths).size, paths.length);
@@ -220,6 +229,28 @@ test('edition recording inventory follows validated catalogue additions and runt
     additional.replayVariants[0] = invalid;
     assert.throws(() => editionDemoResources(catalog), /bundled relative URLs/);
   }
+});
+
+test('compiled edition rotation skips absent engines without fetching or installing a package', async () => {
+  const { createDemoRegistry } = await import('../demo-registry.mjs');
+  const { createSimDemoAdapter, createSurvivalDemoAdapter } = await import(
+    '../editions/standalone/unavailable-demo.mjs'
+  );
+  const { loadBuiltinSoloDemoSources } = await import('../editions/standalone/demo-builtins.mjs');
+  const registry = createDemoRegistry({
+    solo: { enumerateSources: async () => [{ id: 'selected-company-mission' }] },
+    snake: { enumerateSources: async () => [{ id: 'included-snake-mission' }] },
+    sim: createSimDemoAdapter,
+    survival: createSurvivalDemoAdapter,
+  });
+  assert.deepEqual(
+    (await registry.enumerateSources({ scope: 'all' })).map((source) => source.modeId),
+    ['snake', 'solo'],
+  );
+  assert.deepEqual(await loadBuiltinSoloDemoSources(), []);
+  await assert.rejects(registry.enumerateSources({ modeId: 'sim' }), {
+    code: 'demo-mode-unavailable',
+  });
 });
 test('standalone and public offline menus retain every dynamically attached panel stylesheet', async () => {
   const modules = [
@@ -337,6 +368,21 @@ test('actual company host closure retains explicit Demo dependencies and preserv
     entries: ['game/company.html'],
   });
   const catalog = JSON.parse(files.get('game/demo-data/catalog.json'));
+  for (const absent of [
+    'game/demo-data/catalog.journey-current.json',
+    'game/demo-data/catalog.journey-archive.json',
+    'game/demo-modes/solo-builtins-index.mjs',
+    'optional-practice/civilian-fpv/demo-player.mjs',
+    'game/demo-modes/survival.mjs',
+  ])
+    assert.equal(
+      files.has(absent),
+      false,
+      `Selected editions must not import unrelated demo content: ${absent}`,
+    );
+  assert.ok(files.has('game/editions/standalone/unavailable-demo.mjs'));
+  assert.ok(files.has('game/editions/standalone/demo-builtins.mjs'));
+  assert.ok(files.has('game/demo-data/snake/classic-snake-open-loop.replay.json'));
   const recordings = catalog.clips.flatMap(({ replayURL, replayVariants = [] }) =>
     [replayURL, ...replayVariants].map((relative) => `game/${relative.slice(2)}`),
   );
@@ -587,7 +633,7 @@ test('common host import projection closes over committed adapters without visit
     [
       'game/app.mjs',
       bytes(
-        "import './content-design/route-loader.mjs'; export * from './runtime-library-sources.mjs'; import('./external-chapter-source.mjs'); import './replay-theater/examples.mjs'; import './audio/reactions/actors.mjs';",
+        "import './content-design/route-loader.mjs'; export * from './runtime-library-sources.mjs'; import('./external-chapter-source.mjs'); import './replay-theater/examples.mjs'; import './audio/reactions/actors.mjs'; import './demo-modes/solo-builtins.mjs'; import './demo-modes/sim.mjs'; import './demo-modes/survival.mjs';",
       ),
     ],
     ['game/ui/style.css', bytes('body{color:red}')],
@@ -632,7 +678,7 @@ test('common host import projection closes over committed adapters without visit
   const projected = projectEditionRuntimeImports('game/app.mjs', collected.get('game/app.mjs'));
   assert.deepEqual(
     editionCodeDependencies('game/app.mjs', projected),
-    Object.values(EDITION_RUNTIME_ADAPTERS).sort(),
+    [...new Set(Object.values(EDITION_RUNTIME_ADAPTERS))].sort(),
   );
 });
 

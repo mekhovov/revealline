@@ -1,0 +1,61 @@
+import assert from 'node:assert/strict';
+import { readFile, writeFile, stat } from 'node:fs/promises';
+import { execFileSync, spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
+import { fingerprintDemoSources } from '../scripts/demo-source-fingerprint.mjs';
+import { survivalDemoInventory } from '../game/demo-modes/survival-catalog.mjs';
+const args=Object.fromEntries(process.argv.slice(2).map(arg=>arg.replace(/^--/,'').split('=')));
+assert.equal(args.run,'approved');
+const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
+const pin=async path=>{const body=await readFile(path);return {path,sha256:sha(body),bytes:body.length};};
+const head=()=>execFileSync('/usr/bin/arch',['-arm64','/usr/bin/git','rev-parse','HEAD'],{encoding:'utf8'}).trim();
+const scope=['game/overflight','game/demo-modes','game/demo-data/survival'];
+const tests=['game/test/demo-survival.test.mjs','scripts/test-demo-tick-survival.mjs'];
+const supplemental=["scripts/generate-survival-demos.mjs",".cache/survival-native-git-bin/git",'game/data-json.mjs','game/demo-preparation.mjs','game/demo-runtime.mjs','scripts/demo-source-fingerprint.mjs','scripts/qualify-survival-native.mjs',...tests];
+const nodes=[{label:'node22131-x64',path:process.execPath},{label:'node20195-arm64',path:'/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node'}];
+const script=await readFile(new URL(import.meta.url));
+for(const path of [args.report,args.report.replace(/\.json$/,'.mjs.txt')]) {
+  try {await stat(path);throw Error('Refusing existing '+path);} catch(error){if(error.code!=='ENOENT')throw error;}
+}
+const report={format:'SurvivalNativeAdmissionV1',complete:false,started:new Date().toISOString(),checks:[],errors:[],headBefore:head(),sourceScope:scope,sourceBefore:await fingerprintDemoSources(process.cwd(),scope),supplementalBefore:await Promise.all(supplemental.map(pin)),observerSHA256:sha(script),nodes:await Promise.all(nodes.map(async node=>({...node,...await pin(node.path),environment:JSON.parse(execFileSync(node.path,['-p','JSON.stringify({version:process.version,v8:process.versions.v8,platform:process.platform,arch:process.arch})'],{encoding:'utf8',timeout:5000}))}))),scope:'Bounded read-only full inventory or canonical check retry with explicit native ARM Git shim; no test rerun, authoring or Linux/browser claim.'};
+assert.equal(report.headBefore,args.head);assert.equal(report.sourceBefore.sha256,args.fingerprint);
+const ids=survivalDemoInventory().map(row=>row.id).sort();assert.equal(ids.length,18);
+try {
+  for(const {node,kind} of [{node:args.case==='x64'?nodes[0]:nodes[1],kind:args.case==='canonical'?'canonical':'catalog'}]) {
+    const isTests=kind.endsWith('tests');
+    const stem=args.report.replace(/\.json$/,'')+'.'+node.label+'.'+kind;
+    const output=stem+(isTests?'.tap.txt':'.log');
+    const receipt=stem+'.json';
+    for(const path of isTests?[output]:[output,receipt]){try{await stat(path);throw Error('Refusing existing '+path);}catch(error){if(error.code!=='ENOENT')throw error;}}
+    const command=[node.path,...(isTests?['--test','--test-concurrency=1','--test-reporter=tap',...(kind==='remaining-tests'?['--test-name-pattern=a rejected upgrade|the observer is awaited|a comparator failure|tick diagnosis rejects',tests[1]]:tests)]:(kind==='canonical'?['scripts/generate-survival-demos.mjs','--check']:['scripts/qualify-survival-native.mjs','--out='+receipt,'--timeout-ms=300000']))];
+    const row={runtime:node.label,kind,command,eligible:false}, started=performance.now();
+    const child=spawnSync(command[0],command.slice(1),{encoding:null,timeout:330000,maxBuffer:1024*1024,env:{...process.env,PATH:process.cwd()+'/.cache/survival-native-git-bin:'+process.env.PATH,NODE_DISABLE_COMPILE_CACHE:'1'},stdio:['ignore','pipe','pipe']});
+    const bytes=child.stdout??Buffer.alloc(0);row.exitCode=child.status;row.signal=child.signal;if(child.error)row.error={message:child.error.message,code:child.error.code};
+    await writeFile(output,bytes,{flag:'wx'});row.output=await pin(output);
+    if(child.stderr?.length){await writeFile(output+'.stderr.txt',child.stderr,{flag:'wx'});row.stderr=await pin(output+'.stderr.txt');}
+    try {
+      assert.equal(row.exitCode,0);assert.ok(!row.signal);
+      if(isTests){
+        row.stats=Object.fromEntries([...bytes.toString().matchAll(/^# (tests|pass|fail|cancelled|skipped|todo) (\d+)$/gm)].map(([,key,value])=>[key,Number(value)]));
+        assert.deepEqual(row.stats,kind==='remaining-tests'?{tests:6,pass:4,fail:0,cancelled:0,skipped:2,todo:0}:{tests:21,pass:21,fail:0,cancelled:0,skipped:0,todo:0});
+      } else if(kind==='canonical') {
+        const matches=[...bytes.toString().matchAll(/^Verified ([^:]+): (won|lost), /gm)];
+        assert.equal(matches.length,18); assert.deepEqual(matches.map(row=>row[1]).sort(),survivalDemoInventory().map(row=>row.levelId).sort());
+        assert.ok(bytes.toString().endsWith('18/18 required Survival demonstrations qualified.\n')); row.counts={required:18,verified:18};
+      } else {
+        row.receipt=await pin(receipt);assert.ok(row.receipt.bytes<=256*1024);
+        const result=JSON.parse(await readFile(receipt,'utf8'));assert.equal(result.complete,true);assert.equal(result.head,args.head);
+        assert.deepEqual(result.counts,{required:18,checked:18,verified:18});assert.deepEqual(result.checks.map(item=>item.id).sort(),ids);assert.ok(result.checks.every(item=>item.verified&&item.progress.kills>0&&item.progress.xpCollected>0&&item.progress.upgrades>0));
+        row.counts=result.counts;row.variants=[...new Set(result.checks.map(item=>item.variant))];
+      }
+      row.eligible=true;
+    } catch(error){row.validationFailure=String(error.stack??error);}
+    row.elapsedMs=performance.now()-started;report.checks.push(row);console.log(JSON.stringify({runtime:row.runtime,kind,eligible:row.eligible,stats:row.stats,counts:row.counts,elapsedMs:row.elapsedMs}));
+    if(row.signal||row.error?.code)throw Error('Native admission child could not exit normally.');
+  }
+  report.complete=report.checks.length===1&&report.checks.every(row=>row.eligible);
+}catch(error){report.failure=String(error.stack??error);report.complete=false;}
+finally{
+  try{report.headAfter=head();report.sourceAfter=await fingerprintDemoSources(process.cwd(),scope);report.supplementalAfter=await Promise.all(supplemental.map(pin));report.observerSHA256After=sha(await readFile(new URL(import.meta.url)));assert.equal(report.headBefore,report.headAfter);assert.deepEqual(report.sourceBefore,report.sourceAfter);assert.deepEqual(report.supplementalBefore,report.supplementalAfter);assert.equal(report.observerSHA256,report.observerSHA256After);report.sourceUnchanged=true;}catch(error){report.complete=false;report.sourceUnchanged=false;report.bindingFailure=String(error.stack??error);}
+  report.finished=new Date().toISOString();await writeFile(args.report.replace(/\.json$/,'.mjs.txt'),script,{flag:'wx'});await writeFile(args.report,JSON.stringify(report,null,2)+'\n',{flag:'wx'});if(!report.complete)process.exitCode=1;
+}

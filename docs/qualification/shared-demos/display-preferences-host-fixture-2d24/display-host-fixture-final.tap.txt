@@ -1,0 +1,129 @@
+TAP version 13
+# Subtest: actual Solo comfort Apply and Undo preserve a paused cut and use its existing profile writer
+ok 1 - actual Solo comfort Apply and Undo preserve a paused cut and use its existing profile writer
+  ---
+  duration_ms: 1906.845625
+  ...
+# Subtest: immediate: shared display edits preserve the actual paused Solo cut and replay
+ok 2 - immediate: shared display edits preserve the actual paused Solo cut and replay
+  ---
+  duration_ms: 1776.700292
+  ...
+# Subtest: grid-center: shared display edits preserve the actual paused Solo cut and replay
+ok 3 - grid-center: shared display edits preserve the actual paused Solo cut and replay
+  ---
+  duration_ms: 1763.508375
+  ...
+# Subtest: Solo to Team to Versus and back restores one display record without Couch profile writes
+    # Subtest: Solo explicitly opts into the shared record
+    ok 1 - Solo explicitly opts into the shared record
+      ---
+      duration_ms: 992.217416
+      ...
+    # Subtest: Team adopts and edits from its real paused Options
+    not ok 2 - Team adopts and edits from its real paused Options
+      ---
+      duration_ms: 448.442
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/display-preferences-host.test.mjs:273:11'
+      failureType: 'testCodeFailure'
+      error: 'The accepted interface publishes its numeric font.'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: true
+      actual: ''
+      operator: '=='
+      stack: |-
+        TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/display-preferences-host.test.mjs:293:12)
+        async Test.run (node:internal/test_runner/test:797:9)
+        async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/display-preferences-host.test.mjs:273:3)
+        async Test.run (node:internal/test_runner/test:797:9)
+        async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+      ...
+    # Subtest: Versus adopts, exposes controls to keyboard and changes only display state
+    not ok 3 - Versus adopts, exposes controls to keyboard and changes only display state
+      ---
+      duration_ms: 1943.694375
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/display-preferences-host.test.mjs:318:11'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly equal:
+        + actual - expected
+        
+        + 'large'
+        - 'standard'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 'standard'
+      actual: 'large'
+      operator: 'strictEqual'
+      stack: |-
+        reflects (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/display-preferences-host.test.mjs:101:10)
+        TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/display-preferences-host.test.mjs:324:7)
+        async Test.run (node:internal/test_runner/test:797:9)
+        async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/display-preferences-host.test.mjs:318:3)
+        async Test.run (node:internal/test_runner/test:797:9)
+        async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+      ...
+    # Subtest: fresh Solo prefers the shared record over its older profile
+    not ok 4 - fresh Solo prefers the shared record over its older profile
+      ---
+      duration_ms: 1010.654
+      location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/display-preferences-host.test.mjs:362:11'
+      failureType: 'testCodeFailure'
+      error: |-
+        Expected values to be strictly equal:
+        + actual - expected
+        
+        + 'pixel'
+        - 'plain'
+      code: 'ERR_ASSERTION'
+      name: 'AssertionError'
+      expected: 'plain'
+      actual: 'pixel'
+      operator: 'strictEqual'
+      stack: |-
+        reflects (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/display-preferences-host.test.mjs:100:10)
+        TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/display-preferences-host.test.mjs:365:5)
+        async Test.run (node:internal/test_runner/test:797:9)
+        async TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/display-preferences-host.test.mjs:362:3)
+        async Test.run (node:internal/test_runner/test:797:9)
+        async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+      ...
+    1..4
+not ok 4 - Solo to Team to Versus and back restores one display record without Couch profile writes
+  ---
+  duration_ms: 4396.397792
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/display-preferences-host.test.mjs:257:1'
+  failureType: 'subtestsFailed'
+  error: '3 subtests failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: Team system reduction preserves a raw false choice and a denied shared save stays session-only
+ok 5 - Team system reduction preserves a raw false choice and a denied shared save stays session-only
+  ---
+  duration_ms: 140.052167
+  ...
+# Subtest: Versus controller selects the real display control without replacing or starting the duel
+ok 6 - Versus controller selects the real display control without replacing or starting the duel
+  ---
+  duration_ms: 2043.342166
+  ...
+# Subtest: actual Team comfort preview and Apply/Undo preserve the existing display controls and Solo profile
+ok 7 - actual Team comfort preview and Apply/Undo preserve the existing display controls and Solo profile
+  ---
+  duration_ms: 127.729792
+  ...
+# Subtest: actual Versus comfort preview and Apply/Undo preserve the existing display controls and Solo profile
+ok 8 - actual Versus comfort preview and Apply/Undo preserve the existing display controls and Solo profile
+  ---
+  duration_ms: 1918.044542
+  ...
+1..8
+# tests 12
+# suites 0
+# pass 8
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 20498.174667

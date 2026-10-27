@@ -1,0 +1,99 @@
+from pathlib import Path
+import ast, datetime, hashlib, json, os, re, signal, subprocess, sys, threading, time
+root=Path.cwd().resolve()
+paths=['game/demo-sources.mjs', 'game/demo-catalog.mjs', 'game/replay.mjs', 'game/replay-player.mjs', 'game/demo-replay-diagnostics.mjs', 'game/test/demo-sources.test.mjs', 'game/test/demo-recordings.test.mjs', 'game/test/demo-solo-coverage.test.mjs', 'game/demo-data/catalog.json', 'game/demo-data/solo-qualified-478808a96f4fbf5e.node22131-x64.diagnostics.json', 'game/demo-data/solo-qualified-478808a96f4fbf5e.node22131-x64.replay.json', 'game/demo-data/solo-qualified-cc8994b6f3d0482f.node22131-x64.diagnostics.json', 'game/demo-data/solo-qualified-cc8994b6f3d0482f.node22131-x64.replay.json', 'game/demo-data/solo-qualified-d0257fa131665b79.node22131-x64.diagnostics.json', 'game/demo-data/solo-qualified-d0257fa131665b79.node22131-x64.replay.json']
+def pins(): return {name:hashlib.sha256((root/name).read_bytes()).hexdigest() for name in paths}
+head=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
+label='solo-coverage-node22131-x64-'+head[:9]+'-'+datetime.datetime.now().strftime('%Y%m%dT%H%M%S')
+parent=root/'.cache'
+assert parent.resolve(strict=True)==parent and parent.is_dir() and parent.stat().st_uid==os.getuid()
+parent_identity=(parent.stat().st_dev,parent.stat().st_ino)
+scratch=parent/(label+'-tmp')
+scratch.mkdir()
+assert scratch.resolve(strict=True)==scratch and scratch.stat().st_uid==os.getuid()
+free_floor=200*1024*1024
+allocation_cap=300*1024*1024
+def free_bytes():
+ st=os.statvfs(parent);return st.f_bavail*st.f_frsize
+assert free_bytes()>free_floor
+report_path=root/'.cache'/(label+'.json')
+log_path=root/'.cache'/(label+'.tap.txt')
+assert not report_path.exists() and not log_path.exists()
+owner_path=root/'.cache/run-endurance-emitted-final.py'
+owner=owner_path.read_bytes()
+names={'owned_process_snapshot','owned_process_identity','OwnedProcessTree','BoundedChildLog'}
+selected=[x for x in ast.parse(owner,filename=str(owner_path)).body if isinstance(x,(ast.FunctionDef,ast.ClassDef)) and x.name in names]
+assert {x.name for x in selected}==names
+scope=dict(globals()); exec(compile(ast.Module(body=selected,type_ignores=[]),str(owner_path),'exec'),scope)
+OwnedProcessTree,BoundedChildLog=scope['OwnedProcessTree'],scope['BoundedChildLog']
+node=str(root/'.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node')
+command=[node,'--test','--test-concurrency=1','--test-reporter=tap','--test-timeout=120000','game/test/demo-solo-coverage.test.mjs']
+report={'format':'SharedDemoNativeReplayAdmissionV1','complete':False,'started':datetime.datetime.now(datetime.timezone.utc).isoformat(),'headBefore':head,'sourceBefore':pins(),'command':command,'nodeVersion':subprocess.check_output([node,'--version'],text=True).strip(),'platform':sys.platform,'tmpdir':str(scratch),'timeoutSeconds':300,'localStorage':{'freeFloorBytes':free_floor,'allocationCapBytes':allocation_cap,'freeBeforeBytes':free_bytes(),'minimumObservedFreeBytes':free_bytes(),'maximumObservedFixtureBytes':0},'ownerSHA256':hashlib.sha256(owner).hexdigest(),'wrapperSHA256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}
+log=BoundedChildLog(log_path,byte_limit=4*1024*1024,tail_limit=32768)
+log.output.close(); log.output=log_path.open('ab',buffering=0)
+child=None; owned=None; remaining=None
+deferred_signal={'active':False,'pending':None}
+
+def interrupt(signum,_frame):
+ if deferred_signal['active']:
+  deferred_signal['pending']=signum
+  return
+ report['interruptedSignal']=signal.Signals(signum).name
+ signal.signal(signal.SIGTERM,signal.SIG_IGN); signal.signal(signal.SIGINT,signal.SIG_IGN)
+ raise InterruptedError(report['interruptedSignal'])
+signal.signal(signal.SIGTERM,interrupt); signal.signal(signal.SIGINT,interrupt)
+try:
+ # Defer only handler exceptions until ownership is attached; the child inherits no blocked signal mask.
+ deferred_signal['active']=True
+ try:
+  child=subprocess.Popen(command,cwd=root,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,start_new_session=True,env={**os.environ,'TMPDIR':str(scratch),'TMP':str(scratch),'TEMP':str(scratch),'GIT_NO_LAZY_FETCH':'1','NODE_DISABLE_COMPILE_CACHE':'1'})
+  owned=OwnedProcessTree(child); owned.capture()
+  log.start(child.stdout)
+ finally:
+  deferred_signal['active']=False
+  pending=deferred_signal['pending'];deferred_signal['pending']=None
+  if pending is not None:interrupt(pending,None)
+ deadline=time.monotonic()+report['timeoutSeconds']
+ next_allocation_check=0
+ while child.poll() is None:
+  owned.capture(); owned.check_limits(); log.check_limits()
+  assert (parent.stat().st_dev,parent.stat().st_ino)==parent_identity, 'scratch root changed'
+  available=free_bytes()
+  report['localStorage']['minimumObservedFreeBytes']=min(available,report['localStorage']['minimumObservedFreeBytes'])
+  assert available>free_floor, 'local free-space floor reached'
+  if time.monotonic()>=next_allocation_check:
+   allocated=int(subprocess.check_output(['du','-sk',str(scratch)],text=True,timeout=3).split()[0])*1024
+   report['localStorage']['maximumObservedFixtureBytes']=max(allocated,report['localStorage']['maximumObservedFixtureBytes'])
+   assert allocated<allocation_cap, 'local test fixture allocation bound reached'
+   next_allocation_check=time.monotonic()+5
+  if time.monotonic()>=deadline:
+   report['watchdogExpired']=True
+   raise TimeoutError('Focused packaging test bound expired')
+  time.sleep(.2)
+ remaining=owned.wait_clear(3)
+ if remaining:
+  report['cleanupNeededAfterExit']=True; remaining=owned.cleanup()
+except BaseException as error:
+ report['failure']=repr(error)
+finally:
+ def record_final_interrupt(signum, _frame):
+  report['interruptedSignal']=signal.Signals(signum).name
+  report['complete']=False
+ signal.signal(signal.SIGTERM,record_final_interrupt); signal.signal(signal.SIGINT,record_final_interrupt)
+ if owned is not None:
+  if remaining is None:
+   try: remaining=owned.cleanup()
+   except BaseException as error: report['cleanupFailure']=repr(error)
+  report['ownedProcesses']=owned.evidence(remaining)
+ log.finish(); report['log']={'path':str(log_path),**log.evidence()}
+ report['childExit']=None if child is None else child.poll()
+ try:
+  report['sourceAfter']=pins()
+  report['sourceStable']=report['sourceBefore']==report['sourceAfter'] and owner_path.read_bytes()==owner
+  report['headAfter']=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()
+ except BaseException as error: report['bindingFailure']=repr(error)
+ report['complete']=report.get('childExit')==0 and report.get('sourceStable') is True and report['headBefore']==report.get('headAfter') and report.get('ownedProcesses',{}).get('verified') is True and report['log']['complete'] and not report['log']['error'] and not report['log']['limitExceeded'] and not any(report.get(k) for k in ['failure','cleanupFailure','bindingFailure','watchdogExpired','cleanupNeededAfterExit','interruptedSignal'])
+ report['finished']=datetime.datetime.now(datetime.timezone.utc).isoformat()
+ with report_path.open('x') as f: json.dump(report,f,indent=2); f.write('\n')
+ print(json.dumps({'report':str(report_path),'complete':report['complete'],'exit':report['childExit'],'log':str(log_path)}),flush=True)
+sys.exit(0 if report['complete'] else 1)

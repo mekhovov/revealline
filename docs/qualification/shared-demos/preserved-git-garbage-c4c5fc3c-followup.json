@@ -1,0 +1,57 @@
+{
+  "format": "revealline-demo-preserved-git-garbage.v1",
+  "observedAt": "2026-10-19T02:46:28.902663+00:00",
+  "availableBeforeBytes": 120680448,
+  "entries": [
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.git/objects/pack/tmp_pack_IF5k3V",
+      "sourceInode": 147844093,
+      "bytes": 174194688,
+      "sha256": "03e816ec9124a534c969d9ed38fabf4f7f91581f210579754a4a67e2ab1316ed",
+      "backup": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/preserved-git-temporary-objects/tmp_pack_IF5k3V.preserved",
+      "backupVerified": true,
+      "openHandlesObserved": 0,
+      "gitRecognizesGarbage": true,
+      "creatorUnknown": true,
+      "sourceRemoved": true
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.git/objects/pack/tmp_pack_RxEQj6",
+      "sourceInode": 147845163,
+      "bytes": 344588288,
+      "sha256": "c53dc6b7c4c9dd79aa6dafa057eeba0cc84d389a7ce6c1a8e42d20722639432b",
+      "backup": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/preserved-git-temporary-objects/tmp_pack_RxEQj6.preserved",
+      "backupVerified": true,
+      "openHandlesObserved": 0,
+      "gitRecognizesGarbage": true,
+      "creatorUnknown": true,
+      "sourceRemoved": true
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.git/objects/pack/tmp_pack_l5LOKi",
+      "sourceInode": 147844634,
+      "bytes": 242745344,
+      "sha256": "950203109b2d28eddb1051d07612b92e9522952ad8d0d9eedc5b6fba86644009",
+      "backup": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/preserved-git-temporary-objects/tmp_pack_l5LOKi.preserved",
+      "backupVerified": true,
+      "openHandlesObserved": 0,
+      "gitRecognizesGarbage": true,
+      "creatorUnknown": true,
+      "sourceRemoved": true
+    },
+    {
+      "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.git/objects/pack/tmp_pack_lV858T",
+      "sourceInode": 147844670,
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "backup": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/preserved-git-temporary-objects/tmp_pack_lV858T.preserved",
+      "backupVerified": true,
+      "openHandlesObserved": 0,
+      "gitRecognizesGarbage": true,
+      "creatorUnknown": true,
+      "sourceRemoved": true
+    }
+  ],
+  "complete": true,
+  "availableAfterBytes": 874541056
+}

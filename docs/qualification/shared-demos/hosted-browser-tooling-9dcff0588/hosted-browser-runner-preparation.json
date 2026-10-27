@@ -1,0 +1,50 @@
+{
+  "format": "SharedDemoHostedRunnerPreparationV1",
+  "preparedAt": "2026-10-19T11:40:40.512315+00:00",
+  "baseHead": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "sourcesAndEvidence": [
+    {
+      "path": "scripts/qualify-shared-demo-hosted-browser.mjs",
+      "sha256": "95c450ac55262623f5b2b3450a19f9493016b2b6eb92792acc116945b37be9d8",
+      "bytes": 26354
+    },
+    {
+      "path": "scripts/test-qualify-shared-demo-hosted-browser.mjs",
+      "sha256": "af9c016e6ddca635caab170bac04124b57f00a3be4dfed7094a675bb2acdb6a2",
+      "bytes": 8401
+    },
+    {
+      "path": ".cache/hosted-browser-runner-guards-initial.tap.txt",
+      "sha256": "d5c56cc09facb9b7a2de332aa44bff4f2e1e8cdb4d10be74025087566188f752",
+      "bytes": 1990
+    },
+    {
+      "path": ".cache/hosted-browser-runner-guards-final.tap.txt",
+      "sha256": "8a419f64da1b8fbcd1b269e1a03f61a2d995df0c23bd28d4b930cba4bd3d3754",
+      "bytes": 3111
+    },
+    {
+      "path": ".cache/hosted-offline-port-independent-review.json",
+      "sha256": "d04404307a7cc77ecfaba911fe5d66b625c0b17bf4e9f3095e9dfbfb432d1fb2",
+      "bytes": 1342
+    }
+  ],
+  "validation": {
+    "node": "v22.22.2",
+    "syntax": true,
+    "eslint": true,
+    "prettier": true,
+    "runnerGuards": 9,
+    "offlineGuards": 4,
+    "total": 13,
+    "pass": 13,
+    "fail": 0,
+    "priorActualMatrixReportContractChecks": 11
+  },
+  "scope": "New qualification tooling only. Existing11+9 qualifier CLIs are unchanged. Linux exact-version/platform execution and actual browsers are deferred to the hosted workflow. Prior actual report checks validate schema compatibility, not new scenario execution.",
+  "limitations": [
+    "No browser/build or hosted/Linux execution by these preparation guards.",
+    "Outer Linux /proc ownership implementation and actual hosted cleanup guards are independently required.",
+    "No original failed local storage/browser report overwritten or converted into a pass."
+  ]
+}

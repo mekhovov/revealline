@@ -2,7 +2,7 @@
 @layer legacy {
   /* The inline head guard covers missing CSS and the first paint. These rules
    style only the launch surface; they never resize or recolor a live arena. */
-  html:not([data-boot-state='ready']) body {
+  html:not([data-boot-state='ready']):not([data-boot-state='interactive']) body {
     height: auto !important;
     min-height: 100svh;
     overflow: auto !important;

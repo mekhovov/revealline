@@ -88,7 +88,7 @@ test('release-qualified practice retains the full shared menu stylesheet closure
     engineTree: 'b'.repeat(40),
     basePath: '/revealline/',
   });
-  assert.equal(built.entries.length, 97);
+  assert.equal(built.entries.length, 96);
   const audio = built.entries.find(
     ({ name }) => name === 'optional-practice/civilian-flight/audio.mjs',
   );

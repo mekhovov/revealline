@@ -64,6 +64,12 @@ export function keyboardFlightHelp(preset, locale = 'en', { actions = true, comb
     text = `${p.labels.throttle} ${uk ? 'газ' : 'throttle'} · ${p.labels.yaw} ${uk ? 'поворот' : 'yaw'} · ${p.labels.pitch} ${uk ? 'нахил уперед/назад' : 'pitch forward/back'} · ${p.labels.roll} ${uk ? 'крен' : 'roll'} · Shift ${uk ? 'точніше' : 'fine control'}`;
   return `${text}${actions ? (p.arm ? (uk ? ' · Пробіл — увімкнути / пауза · R — почати заново · Esc / P — меню' : ' · Space arm / pause · R reset · Esc / P menu') : uk ? ' · Esc / P — пауза' : ' · Esc / P pause') : ''}${combat ? ` · ${p.fire === 'Space' ? (uk ? 'Пробіл' : 'Space') : 'F'} ${uk ? 'вогонь · C зброя · L перезарядка · G заряд · H підрив' : 'fire · C weapon · L reload · G payload · H detonate'}` : ''}`;
 }
+/** Native controller mapping shared by ordinary flight and isolated demo practice. */
+export function gamepadFlightHelp(locale = 'en', { replayControls = true, combat = true } = {}) {
+  if (locale === 'uk')
+    return `A / Cross: увімкнути${replayControls ? ' · Y / Triangle: скинути' : ''} · Menu / B: пауза${replayControls ? ' · R3: камера' : ''}. Лівий стік: поворот і зміна газу; центр утримує газ. Правий стік / D-pad: нахил. LB/RB: поворот · LT/RT: менше/більше газу${combat ? ' · X/Square: вогонь' : ''}. Steam Input: розкладка Gamepad.`;
+  return `A / Cross: arm${replayControls ? ' · Y / Triangle: reset' : ''} · Menu / B: pause${replayControls ? ' · R3: camera' : ''}. Left stick: yaw and throttle adjustment; centre to hold throttle. Right stick / D-pad: tilt. LB/RB: yaw · LT/RT: less/more throttle${combat ? ' · X/Square: fire' : ''}. Steam Input: use a Gamepad layout.`;
+}
 const clamp = (n, low, high) => Math.max(low, Math.min(high, n));
 const editable = (target) =>
   ['INPUT', 'TEXTAREA', 'SELECT'].includes(target?.tagName) || target?.isContentEditable;

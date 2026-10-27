@@ -1,0 +1,94 @@
+{
+  "format": "revealline-demo-continuation-status.v1",
+  "observedAt": "2026-10-19T02:14:55.199097+00:00",
+  "sourceRevision": "ef30abcd27e7a0c292ca5e03cbb29299e6536234",
+  "integratedBase": "dd337c8120fd6f875544c1479713d3aa4299c323",
+  "observedMain": "c4c5fc3c8fbdd17ce496005993e58ad45710823c",
+  "incomingCommitCount": 27,
+  "incomingPathCount": 74,
+  "overlappingPaths": [
+    "game/app.mjs",
+    "game/couch/couch-music-host.mjs",
+    "game/i18n/catalogs.mjs",
+    "game/index.html",
+    "game/snake/classic-app.mjs",
+    "game/test/classic-snake-ui.test.mjs",
+    "game/test/edition-solo-host.test.mjs",
+    "game/test/soundtrack-host.test.mjs",
+    "game/test/soundtrack-panel.test.mjs",
+    "game/ui/native-menus.mjs",
+    "game/ui/soundtrack-panel.mjs",
+    "optional-practice/civilian-fpv/flight-fullscreen.mjs"
+  ],
+  "pullRequest": {
+    "base": "dd337c8120fd6f875544c1479713d3aa4299c323",
+    "draft": true,
+    "head": "ef30abcd27e7a0c292ca5e03cbb29299e6536234",
+    "mergeable": false,
+    "mergeable_state": "dirty",
+    "state": "open"
+  },
+  "currentHeadChecks": {
+    "checks": [],
+    "total_count": 0
+  },
+  "availableDiskBytes": 428150784,
+  "integrationReview": {
+    "method": "Independent read-only legacy three-way preview against locally available f46580679a, plus pinned current-main path comparison.",
+    "confirmedConflict": "game/i18n/catalogs.mjs",
+    "laterMainCommitsChangeCatalog": false,
+    "requiredNextAction": "Rebase onto current main after storage recovery; regenerate translations from combined locale sources and review other overlapping behavior.",
+    "rebasePerformed": false,
+    "limits": "This is integration preparation and status evidence, not a merge, build or browser qualification."
+  },
+  "storageRequirement": "Free at least 2 GB before rebase/rebuild; no unrelated worktrees or user files deleted.",
+  "complete": false,
+  "incomingImpactReview": {
+    "nativeCatalogsRecordingsSimulationReplayFormatsChanged": false,
+    "requiredRefresh": [
+      "menu/settings/audio integration",
+      "generated UI bundles",
+      "runtime/build fingerprints",
+      "new emitted build",
+      "affected browsers and two-hour endurance"
+    ],
+    "corpusRegenerationRequiredByObservedDelta": false,
+    "method": "Read-only pinned incoming path/diff review; no integration or tests executed."
+  },
+  "preparedIntegrationRunbook": {
+    "executed": false,
+    "generatedFiles": [
+      "npm run i18n:build",
+      "node scripts/refresh-fpv-play-shell.mjs",
+      "node scripts/refresh-demo-shell.mjs --check"
+    ],
+    "generatorCaution": "i18n:build also refreshes the content registry; investigate unexpected native content identity changes.",
+    "incomingRegressionFiles": [
+      "game/test/capture-navigation-context-host.test.mjs",
+      "game/test/classic-snake-ui.test.mjs",
+      "game/test/continuous-play-preferences.test.mjs",
+      "game/test/couch-audio-catalogue-demand.test.mjs",
+      "game/test/duel-navigation-context-host.test.mjs",
+      "game/test/edition-solo-host.test.mjs",
+      "game/test/first-flight-home-host.test.mjs",
+      "game/test/first-flight-view.test.mjs",
+      "game/test/global-settings-tools.test.mjs",
+      "game/test/native-landing-structure.test.mjs",
+      "game/test/overflight-suspend-assessment.test.mjs",
+      "game/test/solo-soundtrack-admission-host.test.mjs",
+      "game/test/soundtrack-host.test.mjs",
+      "game/test/soundtrack-panel.test.mjs"
+    ],
+    "affectedDemoRegressionFiles": [
+      "game/test/demo-host.test.mjs",
+      "game/test/demo-audio-host.test.mjs",
+      "game/test/demo-native-host.test.mjs",
+      "game/test/demo-settings.test.mjs",
+      "game/test/demo-back-host.test.mjs",
+      "game/test/demo-confirm-settings-host.test.mjs",
+      "game/test/demo-classic-fresh-host.test.mjs",
+      "game/test/published-solo-entry-host.test.mjs"
+    ],
+    "executionPolicy": "Run suites serially after integration; freeze reconciled sources and HEAD before the established four-stage build and emitted browser checks."
+  }
+}

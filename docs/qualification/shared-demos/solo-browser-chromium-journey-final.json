@@ -1,0 +1,242 @@
+{
+  "engine": "chromium",
+  "started": "2026-10-18T04:25:24.797Z",
+  "complete": true,
+  "verified": [
+    {
+      "id": "solo-qualified-86ee84d48134b04b",
+      "captures": 10,
+      "capturedCells": 1796,
+      "ticks": 5978,
+      "outcome": "won",
+      "checkpoint": "5058a6f3dfa374e3",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-ead64a471b9edd54",
+      "captures": 9,
+      "capturedCells": 1731,
+      "ticks": 4755,
+      "outcome": "won",
+      "checkpoint": "9826ff3d9c0b52ad",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-cd19eddd5888061f",
+      "captures": 12,
+      "capturedCells": 1809,
+      "ticks": 6516,
+      "outcome": "won",
+      "checkpoint": "fd4714ba2436c41b",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-84debdfc44a43699",
+      "captures": 6,
+      "capturedCells": 1876,
+      "ticks": 2791,
+      "outcome": "won",
+      "checkpoint": "55f5141c521b1607",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-4f9aec8fe9b37c0d",
+      "captures": 24,
+      "capturedCells": 2167,
+      "ticks": 10045,
+      "outcome": "won",
+      "checkpoint": "78361c93bc15e356",
+      "variant": true,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-fd3673e16fd6a8fb",
+      "captures": 15,
+      "capturedCells": 1882,
+      "ticks": 8815,
+      "outcome": "won",
+      "checkpoint": "6a71b6e015315fea",
+      "variant": true,
+      "independent": false
+    }
+  ],
+  "variants": [
+    {
+      "id": "solo-qualified-86ee84d48134b04b",
+      "engine": "chromium",
+      "outcome": "won",
+      "recordingIdentity": "4a573ca21631d8c3",
+      "replayURL": "./demo-data/solo-qualified-86ee84d48134b04b.chromium.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-86ee84d48134b04b.chromium.diagnostics.json",
+      "inputTraceIdentity": "8992ac0d1473197e",
+      "durationSeconds": 49.81666666666667,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "914ec1dbdf0c2efe",
+      "checkpoint": "5058a6f3dfa374e3",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "a622250910156311",
+          "actual": "cac65d13fe1f64a7"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "f24cf16b7a5e78c6",
+          "actual": "fed7f568ada3fd5c"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "527568f962493325",
+          "actual": "a2ec35f0541d4ecc"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-ead64a471b9edd54",
+      "engine": "chromium",
+      "outcome": "won",
+      "recordingIdentity": "cfdc87e61f83ca69",
+      "replayURL": "./demo-data/solo-qualified-ead64a471b9edd54.chromium.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-ead64a471b9edd54.chromium.diagnostics.json",
+      "inputTraceIdentity": "b6fbe2545b853658",
+      "durationSeconds": 39.625,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "227beb54e16e8fa7",
+      "checkpoint": "9826ff3d9c0b52ad",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "player",
+          "message": "Authoritative player differs.",
+          "expected": "7caf6bd24ab1d712",
+          "actual": "840894d24e7c3342"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "dda9fc1160bdcc1d",
+          "actual": "eaa7d579a7bd98e2"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-cd19eddd5888061f",
+      "engine": "chromium",
+      "outcome": "won",
+      "recordingIdentity": "2fa4884bb4d0a10e",
+      "replayURL": "./demo-data/solo-qualified-cd19eddd5888061f.chromium.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-cd19eddd5888061f.chromium.diagnostics.json",
+      "inputTraceIdentity": "e9107126b9918f46",
+      "durationSeconds": 54.3,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "4458a317c246cc02",
+      "checkpoint": "fd4714ba2436c41b",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "bf7ab9192f23bddd",
+          "actual": "de5471638c125627"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-84debdfc44a43699",
+      "engine": "chromium",
+      "outcome": "won",
+      "recordingIdentity": "127ab8a071f51a67",
+      "replayURL": "./demo-data/solo-qualified-84debdfc44a43699.chromium.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-84debdfc44a43699.chromium.diagnostics.json",
+      "inputTraceIdentity": "edc7954054a97950",
+      "durationSeconds": 23.258333333333333,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "783822ea30ec7287",
+      "checkpoint": "55f5141c521b1607",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "09b4a7431ad471d1",
+          "actual": "a0e4fe9bffb36c63"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-4f9aec8fe9b37c0d",
+      "engine": "chromium",
+      "outcome": "won",
+      "recordingIdentity": "e4d3be94daba94a2",
+      "replayURL": "./demo-data/solo-qualified-4f9aec8fe9b37c0d.chromium.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-4f9aec8fe9b37c0d.chromium.diagnostics.json",
+      "inputTraceIdentity": "5be29d1937efd817",
+      "durationSeconds": 83.70833333333333,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "fc201249113a4161",
+      "checkpoint": "78361c93bc15e356",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "2e30ce7a3b70abf3",
+          "actual": "18d79288c0dc6b33"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "7f4551e6e67a52db",
+          "actual": "618986da3ff75fbc"
+        }
+      ]
+    },
+    {
+      "id": "solo-qualified-fd3673e16fd6a8fb",
+      "engine": "chromium",
+      "outcome": "won",
+      "recordingIdentity": "05a40cb14840bfc4",
+      "replayURL": "./demo-data/solo-qualified-fd3673e16fd6a8fb.chromium.replay.json",
+      "diagnosticURL": "./demo-data/solo-qualified-fd3673e16fd6a8fb.chromium.diagnostics.json",
+      "inputTraceIdentity": "1559248ee689b84d",
+      "durationSeconds": 73.45833333333333,
+      "turnPolicy": "immediate",
+      "sourceCheckpoint": "dec479c19c7f8245",
+      "checkpoint": "6a71b6e015315fea",
+      "sourceDiagnostics": [
+        {
+          "code": "state-mismatch",
+          "section": "enemies",
+          "message": "Authoritative enemies differs.",
+          "expected": "afd2fd20cdda55a2",
+          "actual": "b09b678a9f7e8b47"
+        },
+        {
+          "code": "state-mismatch",
+          "section": "classic",
+          "message": "Authoritative classic differs.",
+          "expected": "6d8c0434f6aa6f8b",
+          "actual": "40d01420ff6a1a64"
+        }
+      ]
+    }
+  ],
+  "performances": [],
+  "failures": [],
+  "catalogs": "demo-data/catalog.journey-current.json,demo-data/catalog.journey-archive.json",
+  "required": 6,
+  "browserVersion": "155.0.8059.85",
+  "finished": "2026-10-18T04:25:28.965Z"
+}

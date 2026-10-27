@@ -1,0 +1,12 @@
+{
+  "observedAt": "2026-10-19T03:01:26.356358+00:00",
+  "snapshot": {
+    "baseRefName": "main",
+    "headRefOid": "575c10a31287b7ae086bcf373ef4ab3ecbf613a3",
+    "isDraft": true,
+    "mergeStateStatus": "DIRTY",
+    "mergeable": "CONFLICTING",
+    "statusCheckRollup": [],
+    "url": "https://github.com/mekhovov/revealline/pull/1615"
+  }
+}

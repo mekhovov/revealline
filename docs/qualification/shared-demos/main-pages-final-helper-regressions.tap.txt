@@ -1,0 +1,105 @@
+TAP version 13
+# Subtest: demo ownership retains exact native archive sources without exposing or installing archives
+ok 1 - demo ownership retains exact native archive sources without exposing or installing archives
+  ---
+  duration_ms: 1209.297042
+  ...
+# Subtest: native dependency matching rejects missing, ambiguous, altered and unavailable source identities
+ok 2 - native dependency matching rejects missing, ambiguous, altered and unavailable source identities
+  ---
+  duration_ms: 1.652541
+  ...
+# Subtest: recordings without the ordinary demo catalog do not invent native dependencies
+ok 3 - recordings without the ordinary demo catalog do not invent native dependencies
+  ---
+  duration_ms: 0.314167
+  ...
+# Subtest: current reviewed and qualified catalogs resolve the exact authored native pack inventory
+ok 4 - current reviewed and qualified catalogs resolve the exact authored native pack inventory
+  ---
+  duration_ms: 8379.477625
+  ...
+# Subtest: main Pages keeps current content and omits archive and exclusive unused artwork
+ok 5 - main Pages keeps current content and omits archive and exclusive unused artwork
+  ---
+  duration_ms: 2.475625
+  ...
+# Subtest: ordinary builds keep the full optional-artwork contract
+ok 6 - ordinary builds keep the full optional-artwork contract
+  ---
+  duration_ms: 0.105291
+  ...
+# Subtest: publication profiles fail closed
+ok 7 - publication profiles fail closed
+  ---
+  duration_ms: 0.267708
+  ...
+# Subtest: main-pages removes only a registered redundant original and retains offline fallback ownership
+ok 8 - main-pages removes only a registered redundant original and retains offline fallback ownership
+  ---
+  duration_ms: 14.750125
+  ...
+# Subtest: complete releases keep authored originals and original download groups untouched
+ok 9 - complete releases keep authored originals and original download groups untouched
+  ---
+  duration_ms: 0.64375
+  ...
+# Subtest: other consumers or owners, stale images, and missing/mismatched fallback bodies preserve originals
+ok 10 - other consumers or owners, stale images, and missing/mismatched fallback bodies preserve originals
+  ---
+  duration_ms: 4.654334
+  ...
+# Subtest: all native owners must retain an exact fallback before a shared original may be omitted
+ok 11 - all native owners must retain an exact fallback before a shared original may be omitted
+  ---
+  duration_ms: 1.417458
+  ...
+# Subtest: emitted source catalog parsing admits static metadata and never evaluates executable expressions
+ok 12 - emitted source catalog parsing admits static metadata and never evaluates executable expressions
+  ---
+  duration_ms: 2.813333
+  ...
+# Subtest: retained authoring registers cannot lose their original without the shared native reader
+ok 13 - retained authoring registers cannot lose their original without the shared native reader
+  ---
+  duration_ms: 0.819875
+  ...
+# Subtest: an image pin cannot redirect the original identity or use the omitted original as fallback
+ok 14 - an image pin cannot redirect the original identity or use the omitted original as fallback
+  ---
+  duration_ms: 0.527792
+  ...
+# Subtest: the tar model reproduces the actual pinned baseline without building or materializing payloads
+ok 15 - the tar model reproduces the actual pinned baseline without building or materializing payloads
+  ---
+  duration_ms: 18.504708
+  ...
+# Subtest: tar accounting includes parent directories, long UTF-8 names, block padding, and terminal records
+ok 16 - tar accounting includes parent directories, long UTF-8 names, block padding, and terminal records
+  ---
+  duration_ms: 1.883667
+  ...
+# Subtest: every missing or mismatched dependency and either staged or modeled capacity breach fails the gate
+ok 17 - every missing or mismatched dependency and either staged or modeled capacity breach fails the gate
+  ---
+  duration_ms: 1.501708
+  ...
+# Subtest: CLI requires explicit fresh report path and rejects unknown or duplicated options
+ok 18 - CLI requires explicit fresh report path and rejects unknown or duplicated options
+  ---
+  duration_ms: 1.465916
+  ...
+# Subtest: existing evidence is rejected before any costly build or source snapshot
+ok 19 - existing evidence is rejected before any costly build or source snapshot
+  ---
+  duration_ms: 10.900584
+  ...
+1..19
+# tests 19
+# suites 0
+# pass 19
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 10603.863042

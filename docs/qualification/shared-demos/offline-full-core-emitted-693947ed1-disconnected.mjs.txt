@@ -1,0 +1,192 @@
+/* global window, document, navigator, location, localStorage, sessionStorage, caches, Storage, IDBObjectStore */
+// Ignored, bounded actual-product qualification. Prepare only until root releases a browser slot.
+import assert from 'node:assert/strict';
+import { readFile, lstat, mkdtemp, rm, statfs } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { execFileSync } from 'node:child_process';
+import path from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { openEmittedPreview } from '../../scripts/emitted-preview.mjs';
+import { fingerprintDemoSources } from '../../scripts/demo-source-fingerprint.mjs';
+import { startProductionPreview } from '../../scripts/serve-production-preview.mjs';
+import { readEmittedOfflineConfig } from '../../scripts/qualify-demo-packaging.mjs';
+import { downloadFiles, validateDownloadCatalogue } from '../../game/download-catalogue.mjs';
+import { finishQualification, diagnoseQualificationFailure, writeQualificationReport } from '../../scripts/shared-demo-browser-report.mjs';
+import { readQualificationJSONDownload } from '../../scripts/shared-demo-download.mjs';
+import { playerPersistenceMutations, restorationDiagnosticGate } from '../../scripts/demo-restoration-observation.mjs';
+const root = fileURLToPath(new URL('../../', import.meta.url));
+const sha = value => createHash('sha256').update(value).digest('hex');
+const args = Object.fromEntries(process.argv.slice(2).map(arg => { const i=arg.indexOf('='); assert(i>2); return [arg.slice(2,i),arg.slice(i+1)]; }));
+for(const key of ['audit','emitted-preview','runtime','executable','report','head','fingerprint']) assert(args[key],`Missing --${key}`);
+assert.match(args.head,/^[a-f0-9]{40}$/); assert.match(args.fingerprint,/^[a-f0-9]{64}$/);
+const output=path.resolve(root,args.report);
+try { await lstat(output); throw Error('Refusing to overwrite an existing receipt.'); } catch(error) { if(error.code!=='ENOENT') throw error; }
+const git=(...values)=>execFileSync('git',values,{cwd:root,encoding:'utf8',maxBuffer:8*1024*1024}).trim();
+const MAX_INSTALL_BYTES=500*1024*1024, MIN_FREE_BYTES=1024*1024*1024;
+const MAX_RUN_MS=360000, MAX_INSTALL_MS=180000;
+const route='game/snake/play.html?level=classic-snake-open-loop&ready=1&lang=en';
+const sourcePaths=['.cache/demo-offline-browser/full-core-probe.mjs','scripts/emitted-preview.mjs','scripts/demo-source-fingerprint.mjs','scripts/serve-production-preview.mjs','scripts/qualify-demo-main-pages.mjs','scripts/qualify-demo-packaging.mjs','scripts/shared-demo-browser-report.mjs','scripts/shared-demo-download.mjs','scripts/demo-restoration-observation.mjs','game/offline/service-worker.template.js','game/download-catalogue.mjs','game/official-downloads.mjs','game/offline.mjs'];
+const auxiliary=async()=>Object.fromEntries(await Promise.all(sourcePaths.map(async name=>[name,sha(await readFile(path.join(root,name)))])));
+const binding=async()=>({head:git('rev-parse','HEAD'),runtime:await fingerprintDemoSources(root),buildInput:await fingerprintDemoSources(root,['scripts','authoring']),auxiliary:await auxiliary()});
+const pins=files=>files.map(({path,bytes,sha256})=>({path,bytes,sha256})).sort((a,b)=>a.path.localeCompare(b.path));
+const disk=async directory=>{const value=await statfs(directory); return {directory,availableBytes:Number(value.bavail)*Number(value.bsize)};};
+const report={format:'SharedDemoActualFullCoreInstalledOfflineV1',started:new Date().toISOString(),complete:false,checks:[],errors:[],events:[],
+ source:{expectedHead:args.head,expectedRuntimeFingerprint:args.fingerprint},
+ scope:'Unmodified actual emitted Snake HTML and generated worker; complete real core plus the normal extras:demo selection and its required SIM package. Cold offline ordinary Snake entry, one current-mode performance and one four-mode mixed cycle, Snake practice and return, complete native paused-match export comparison, and player-persistence isolation after installation.',
+ limits:{installedBodyBytes:MAX_INSTALL_BYTES,minimumFreeBytes:MIN_FREE_BYTES,totalBrowserMs:MAX_RUN_MS,explicitInstallMs:MAX_INSTALL_MS},
+ limitations:['This is one ordinary entry and five observed performances, not browser playback of all 890 required entries. The complete selected dependency closure remains bound to the emitted audit.','Uses normal core/package installation APIs directly; it does not assert the downloads-screen or stable-launcher activation UI.','The fresh isolated profile receives only the original access-gate verifier through its existing storage contract. No HTML, worker, config, catalog, module, response, or password verifier is rewritten.','The browser uses reduced motion, so default automatic idle entry stays off without a demo-settings seed.','Player mutation observers cover Storage and IndexedDB write APIs, with the four exact managed-media stores classified separately. They are not an exhaustive browser-internal storage audit.','No actual browser discard, physical input hardware, audio listening, or unfamiliar-human review is claimed.']};
+let capture,audit,auditBytes,inventoryBytes,inventoryPath,preview,context,page,browser,profileDirectory,timer,stage='preflight',offline=false,closing=false,offlineServerClosed=false;
+const network={serverRequests:0,serverResponses:0,activeServerRequests:0,offlineRequests:[],offlineResponses:[],browserOfflineResponses:0,browserOfflineNonWorkerResponses:[]};
+const event=(value)=>{if(report.events.length<4000)report.events.push({stage,...value});else report.eventOverflow=(report.eventOverflow??0)+1;};
+const bounded=async(work,ms,label)=>{let alarm;try{return await Promise.race([Promise.resolve().then(work),new Promise((_,reject)=>{alarm=setTimeout(()=>reject(Error(`${label} exceeded ${ms}ms.`)),ms);})]);}finally{clearTimeout(alarm);}};
+const snapshot=()=>page.evaluate(()=>{const d=document.querySelector('#demo-dialog');return {open:!!d?.open,mode:d?.dataset.demoMode,source:d?.dataset.demoSource,phase:d?.dataset.demoPhase,tick:d?.dataset.demoTick,practice:!!d?.classList.contains('is-practice'),resources:JSON.parse(d?.dataset.demoResources||'{}'),nativeSurfaces:document.querySelectorAll('.demo-native-surface').length,ordinaryPlaying:document.body.dataset.playing};});
+const storage=()=>page.evaluate(()=>Object.fromEntries(['localStorage','sessionStorage'].map(name=>[name,Object.fromEntries(Object.keys(window[name]).sort().map(key=>[key,window[name].getItem(key)]))])));
+const summarizeStorage=value=>({sha256:sha(JSON.stringify(value)),keys:Object.fromEntries(Object.entries(value).map(([name,items])=>[name,Object.keys(items)]))});
+const cacheInventory=()=>page.evaluate(async()=>{const result=[];for(const name of (await caches.keys()).sort()){const cache=await caches.open(name);for(const request of (await cache.keys()).sort((a,b)=>a.url.localeCompare(b.url))){const response=await cache.match(request);result.push({cache:name,url:request.url,status:response.status,length:response.headers.get('content-length'),type:response.headers.get('content-type')});}}return result;});
+const ordinary=async()=>{await page.locator('#snake-action-menu').waitFor({state:'visible',timeout:30000});await page.waitForFunction(()=>document.body.dataset.playing==='false'&&!document.querySelector('#demo-dialog')?.open,null,{timeout:30000});await page.locator('#demo-button').waitFor({state:'attached',timeout:30000});assert.equal((await snapshot()).nativeSurfaces,0);};
+const openHome=async()=>{if(!await page.locator('#demo-button').isVisible())await page.locator('#snake-action-menu').click();await page.locator('#demo-button').waitFor({state:'visible'});};
+const closeDemo=async()=>{if(await page.locator('#demo-dialog').evaluate(d=>d.open))await page.locator('#demo-back').click();await page.waitForFunction(()=>{const d=document.querySelector('#demo-dialog'),r=JSON.parse(d?.dataset.demoResources||'{}');return !d?.open&&!d?.querySelector('.demo-native-surface')&&!r.ownedSoloScenes&&!r.ownedNativeScenes&&!r.practiceWorlds;},null,{timeout:6500});assert.equal((await snapshot()).ordinaryPlaying,'false');};
+async function playing(label){await page.waitForFunction(()=>document.querySelector('#demo-dialog')?.dataset.demoPhase==='playing',null,{timeout:31000});const shown=await snapshot();assert(['solo','snake','sim','survival'].includes(shown.mode));assert(shown.nativeSurfaces<=1);assert((shown.resources.ownedNativeScenes??0)+(shown.resources.ownedSoloScenes??0)<=1);await page.waitForFunction(tick=>document.querySelector('#demo-dialog')?.dataset.demoTick!==tick,shown.tick,{timeout:3500});const advanced=await snapshot();report.checks.push({label,...advanced});return advanced;}
+async function exportOrigin(){return readQualificationJSONDownload({page,trigger:()=>page.locator('#export').evaluate(button=>button.click())});}
+function processes(){const rows=execFileSync('ps',['-Ao','pid,ppid,command'],{encoding:'utf8'}).split('\n').map(line=>{const match=line.match(/^\s*(\d+)\s+(\d+)\s+(.+)$/);return match?{pid:Number(match[1]),ppid:Number(match[2]),command:match[3]}:null;}).filter(Boolean);const owned=new Set(rows.filter(row=>profileDirectory&&row.command.includes(profileDirectory)).map(row=>row.pid));for(let added=true;added;){added=false;for(const row of rows)if(owned.has(row.ppid)&&!owned.has(row.pid)){owned.add(row.pid);added=true;}}return rows.filter(row=>owned.has(row.pid)).map(({pid,ppid,command})=>({pid,ppid,kind:command.match(/--type=([^ ]+)/)?.[1]??'browser'}));}
+try {
+ auditBytes=await readFile(path.resolve(root,args.audit));audit=JSON.parse(auditBytes);
+ assert.equal(audit.complete,true);assert.equal(audit.headStable,true);assert.equal(audit.sourceStable,true);assert.equal(audit.demoOfflineSelection?.complete,true);assert.equal(audit.sourceRevision,args.head);assert.equal(audit.sourceFingerprint?.sha256,args.fingerprint);assert.deepEqual(audit.finalSourceFingerprint,audit.sourceFingerprint);
+ inventoryPath=args.audit.replace(/\.json$/,'.inventory.json');inventoryBytes=await readFile(path.resolve(root,inventoryPath));const inventory=JSON.parse(inventoryBytes);assert.equal(inventory.sourceRevision,args.head);
+ report.audit={path:args.audit,sha256:sha(auditBytes),inventory:{path:inventoryPath,sha256:sha(inventoryBytes)}};
+ capture=await openEmittedPreview(args['emitted-preview'],{root,verifySource:true});assert.equal(capture.manifestSHA256,audit.emittedPreview.manifestSHA256);assert.equal(capture.manifest.sourceRevision,args.head);assert.deepEqual(capture.manifest.sourceFingerprint,audit.sourceFingerprint);assert.deepEqual(capture.manifest.buildInputFingerprint,audit.buildInputFingerprint);
+ report.capture={directory:args['emitted-preview'],manifestSHA256:capture.manifestSHA256,inventorySHA256:capture.manifest.inventorySHA256};
+ report.source.before={head:capture.sourceVerification.head,runtime:capture.sourceVerification.runtime,buildInput:capture.sourceVerification.buildInput,auxiliary:await auxiliary()};assert.equal(report.source.before.head,args.head);
+ const workerBytes=await capture.read('service-worker.js'),cacheBytes=await capture.read('offline-cache.json'),catalogBytes=await capture.read('offline-content.json');
+ const config=readEmittedOfflineConfig(workerBytes,cacheBytes),catalog=validateDownloadCatalogue(JSON.parse(catalogBytes)),files=downloadFiles(catalog,['extras:demo']);
+ assert(catalog.groups.find(group=>group.id==='extras:demo')?.requires.includes('extras:sim-fpv'));
+ assert.deepEqual(pins(files),pins(audit.demoOfflineSelection.selectedFiles));assert.deepEqual(pins(config.files),pins(audit.demoOfflineSelection.coreDescriptors));
+ const coreBytes=config.files.reduce((n,file)=>n+file.bytes,0),selectedBytes=files.reduce((n,file)=>n+file.bytes,0),installedBodyUpperBound=coreBytes+selectedBytes;
+ report.selection={ids:['extras:demo'],requires:catalog.groups.find(group=>group.id==='extras:demo').requires,coreFiles:config.files.length,coreBytes,selectedFiles:files.length,selectedBytes,installedBodyUpperBound,accounting:'Full core sum plus SHA-deduplicated selected package sum; cross-cache duplicates are conservatively counted twice.'};
+ report.productPins=[];for(const name of ['service-worker.js','offline-cache.json','offline-content.json','game/snake/play.html','game/build-info.json']){const bytes=await capture.read(name);report.productPins.push({path:name,bytes:bytes.length,sha256:sha(bytes)});}
+ if(installedBodyUpperBound>MAX_INSTALL_BYTES){report.deferred={reason:'The actual complete selection exceeds the authorized 500 MiB cap.',measuredBytes:installedBodyUpperBound};throw Error(report.deferred.reason);}
+ report.diskBeforeProfile=await disk(root);if(report.diskBeforeProfile.availableBytes<MIN_FREE_BYTES){report.deferred={reason:'Less than 1 GiB free before creating the isolated browser profile.',...report.diskBeforeProfile};throw Error(report.deferred.reason);}
+ const html=(await capture.read('game/snake/play.html')).toString('utf8');
+ const meta=name=>{const match=html.match(new RegExp(`<meta\\s+name="${name}"\\s+content="([^"]+)"\\s*/?>`));assert(match,`Exact emitted HTML missing ${name}`);return match[1];};
+ const access={key:`revealline.access.${meta('revealline-access-id')}.v1`,value:meta('revealline-access-verifier')};
+ report.storageSeed={kind:'Existing original credential-session contract only',key:access.key,valueSHA256:sha(access.value),sourceHTMLSHA256:sha(html),demoPreferenceSeed:false,playerProgressSeed:false};
+ preview=await startProductionPreview({root,port:0,fixtureAccess:false,cache:'policy',emittedPreview:args['emitted-preview'],verifyEmittedSource:true});
+ assert.equal(preview.mode,'generated-build');assert.equal(preview.fixtureAccess,false);assert.equal(preview.emittedPreview.sourceVerified,true);assert.equal(preview.emittedPreview.manifestSHA256,capture.manifestSHA256);report.server={url:preview.url,mode:preview.mode,fixtureAccess:preview.fixtureAccess,cache:preview.cache,emittedPreview:preview.emittedPreview};
+ // Observation only: leave the exact preview request listener and all emitted bytes untouched.
+ preview.server.prependListener('request',(request,response)=>{network.serverRequests++;network.activeServerRequests++;let done=false;const ended=()=>{if(!done){done=true;network.activeServerRequests--;}};response.once('close',ended);response.once('finish',ended);const duringOffline=offline;if(duringOffline&&network.offlineRequests.length<32)network.offlineRequests.push(request.url);response.once('finish',()=>{network.serverResponses++;if(duringOffline&&network.offlineResponses.length<32)network.offlineResponses.push({url:request.url,status:response.statusCode});});});
+ profileDirectory=await mkdtemp(path.join(root,'.cache/demo-offline-browser/full-core-profile-'));report.profile={directory:path.relative(root,profileDirectory),fresh:true};
+ const runtime=await import(pathToFileURL(args.runtime).href);
+ context=await runtime.chromium.launchPersistentContext(profileDirectory,{executablePath:args.executable,headless:true,viewport:{width:1280,height:800},reducedMotion:'reduce',acceptDownloads:true,args:['--disable-gpu-shader-disk-cache','--disk-cache-size=1048576','--media-cache-size=1048576']});
+ report.browserVersion=context.browser()?.version()??null;
+ // Closing the persistent context closes its owned browser process as well.
+ browser={close:async()=>{closing=true;await context.close();}};
+ timer=setTimeout(()=>{report.complete=false;report.failure??=`Actual offline proof exceeded ${MAX_RUN_MS}ms.`;void context.close().catch(()=>{});},MAX_RUN_MS);
+ await context.exposeBinding('offlineProbeEvent',(_source,value)=>event(value));
+ await context.addInitScript(({origin,access})=>{
+  if(location.origin!==origin)return;
+  // This is the sole seed; use the untouched gate's own stored-verifier contract.
+  if(localStorage.getItem(access.key)===null)localStorage.setItem(access.key,access.value);
+  const id=`${Date.now()}-${Math.random()}`;window.offlineProbeDocumentId=id;
+  const send=value=>void window.offlineProbeEvent({documentId:id,at:Date.now(),...value}).catch(()=>{});
+  window.addEventListener('error',e=>send({kind:'window-error',message:e.message,source:e.filename,line:e.lineno}));
+  window.addEventListener('unhandledrejection',e=>send({kind:'unhandledrejection',message:String(e.reason?.stack??e.reason).slice(0,2000)}));
+  for(const method of ['setItem','removeItem','clear']){const original=Storage.prototype[method];Storage.prototype[method]=function(...values){const absentRemoval=method==='removeItem'&&this.getItem(values[0])===null;const result=Reflect.apply(original,this,values);send({kind:'mutation',api:'Storage',owner:this===localStorage?'localStorage':'sessionStorage',method,key:values[0]===undefined?null:String(values[0]),absentRemoval});return result;};}
+  for(const method of ['add','put','delete','clear']){const original=IDBObjectStore.prototype[method];IDBObjectStore.prototype[method]=function(...values){const result=Reflect.apply(original,this,values);send({kind:'mutation',api:'IndexedDB',owner:`${this.transaction.db.name}/${this.name}`,method,key:values.length>1?String(values[1]):null});return result;};}
+ },{origin:new URL(preview.url).origin,access});
+ const attach=p=>{p.on('pageerror',error=>{if(report.errors.length<32)report.errors.push({stage,name:error.name,message:error.message,stack:error.stack});});p.on('response',response=>{if(offline&&/^https?:/.test(response.url())){network.browserOfflineResponses++;if(!response.fromServiceWorker()&&network.browserOfflineNonWorkerResponses.length<32)network.browserOfflineNonWorkerResponses.push({url:response.url(),status:response.status()});}});};
+ page=context.pages()[0]??await context.newPage();attach(page);page.setDefaultTimeout(15000);stage='ordinary-online-entry';
+ await page.goto(new URL(route,preview.url).href);await ordinary();
+ assert.equal(await page.evaluate(()=>document.documentElement.dataset.accessState),'unlocked');assert.deepEqual(await page.evaluate(async()=>(await navigator.serviceWorker.getRegistrations()).map(r=>r.scope)),[],'Fresh task profile must have no prior service-worker installation.');
+ const beforeInstall=await page.evaluate(async()=>{const {downloadFiles}=await import('/game/download-catalogue.mjs');const response=await fetch('/offline-content.json');if(!response.ok)throw Error('Real download metadata unavailable');const catalogue=await response.json();const files=downloadFiles(catalogue,['extras:demo']);return files.map(({path,bytes,sha256})=>({path,bytes,sha256}));});
+ assert.deepEqual(pins(beforeInstall),pins(files),'Browser normal selection must match actual audited emitted pins.');
+ report.diskBeforeInstall=await disk(profileDirectory);if(report.diskBeforeInstall.availableBytes<MIN_FREE_BYTES){report.deferred={reason:'Less than 1 GiB free immediately before real installation.',...report.diskBeforeInstall};throw Error(report.deferred.reason);}
+ stage='explicit-authorized-install';
+ report.installation=await bounded(()=>page.evaluate(async({expected,maximum,buildId})=>{
+  const [{prepareOffline,checkOffline},{downloadFiles},{createOfficialDownloads}]=await Promise.all([import('/game/offline.mjs'),import('/game/download-catalogue.mjs'),import('/game/official-downloads.mjs')]);
+  const catalogue=await (await fetch('/offline-content.json')).json(),files=downloadFiles(catalogue,['extras:demo']);
+  if(files.length!==expected.length||files.some((file,i)=>['path','bytes','sha256'].some(key=>file[key]!==expected[i][key])))throw Error('Browser selection changed before installation.');
+  if(files.reduce((n,file)=>n+file.bytes,0)>maximum)throw Error('Selected package exceeds cap.');
+  const controller=new AbortController();window.offlineProbeInstallController=controller;
+  try{
+   const prepared=await prepareOffline({signal:controller.signal,cancelPreparation:true});if(prepared.status!=='ready'||prepared.buildId!==buildId)throw Error(`Full core not ready: ${prepared.status}`);
+   // Own both readiness and first control, including aborted or failed installation.
+   // Subscribe before checking; a late controller change cannot be missed or
+   // accepted after the explicit install observer has been cancelled.
+   await new Promise((resolve,reject)=>{
+    const serviceWorker=navigator.serviceWorker,expectedWorker=new URL('/service-worker.js',location.href).href;
+    let settled=false,ready=false,timer;
+    const finish=(error,failed=false)=>{if(settled)return;settled=true;clearTimeout(timer);serviceWorker.removeEventListener('controllerchange',check);controller.signal.removeEventListener('abort',aborted);failed?reject(error):resolve();};
+    const check=()=>{if(settled)return;if(controller.signal.aborted){aborted();return;}const current=serviceWorker.controller;if(ready&&current?.scriptURL===expectedWorker&&current.state!=='redundant')finish();};
+    const aborted=()=>finish(controller.signal.reason??new DOMException('Installation observation cancelled.','AbortError'),true);
+    serviceWorker.addEventListener('controllerchange',check);controller.signal.addEventListener('abort',aborted,{once:true});
+    timer=setTimeout(()=>finish(Error('Actual generated worker did not control this page within 10000ms.'),true),10000);
+    Promise.resolve(serviceWorker.ready).then(()=>{ready=true;check();},error=>finish(error,true));check();
+   });
+   const store=createOfficialDownloads(),baseURL=new URL('/',location.href).href;
+   const downloaded=await store.download({edition:baseURL,group:'gameplay',selection:['extras:demo'],allGameplay:false,files,baseURL,signal:controller.signal});
+   const inspected=await store.inspect(files,{verify:true,signal:controller.signal}),core=await checkOffline({signal:controller.signal});
+   if(!downloaded.ready||!inspected.ready||core.status!=='ready')throw Error('Real installed files failed verification.');
+   return {prepared:{status:prepared.status,buildId:prepared.buildId},core:{status:core.status,buildId:core.buildId},selected:{ready:inspected.ready,files:files.length,totalBytes:inspected.totalBytes},controller:navigator.serviceWorker.controller.scriptURL,checkpoint:(await store.checkpoints({strict:true})).map(({state})=>({edition:state.edition,group:state.group,selection:state.selection,allGameplay:state.allGameplay,complete:state.complete,hashes:state.hashes.length}))};
+  }finally{window.offlineProbeInstallController=null;}
+ },{expected:files,maximum:MAX_INSTALL_BYTES,buildId:config.buildId}),MAX_INSTALL_MS,'Authorized full core/package installation');
+ assert.equal(report.installation.controller,new URL('service-worker.js',preview.url).href);report.checks.push({label:'Actual generated full core and complete selected packages installed and verified',...report.selection});
+ const afterInstallStorage=await storage();report.persistenceAfterInstall=summarizeStorage(afterInstallStorage);const oldDocument=await page.evaluate(()=>window.offlineProbeDocumentId);
+ for(let i=0;network.activeServerRequests&&i<50;i++)await page.waitForTimeout(100);assert.equal(network.activeServerRequests,0,'All online installation/server requests must settle before measuring the offline interval.');
+ stage='cold-offline-reload';await context.setOffline(true);
+ const serverCloseStarted=performance.now();
+ await bounded(()=>new Promise((resolve,reject)=>{preview.server.close(error=>error?reject(error):resolve());preview.server.closeAllConnections();}),3000,'Owned preview server close before cold offline reload');
+ assert.equal(preview.server.listening,false);assert.equal(network.activeServerRequests,0);offlineServerClosed=true;report.serverClosed=true;
+ report.offlineNetworkBoundary={method:'Browser context offline plus confirmed stopped exact-owned preview server and closed connections',browserOffline:true,serverStoppedBeforeColdNavigation:true,serverURL:preview.url,closedAt:new Date().toISOString(),closeElapsedMs:performance.now()-serverCloseStarted,closeTimeoutMs:3000,serverRequestsAtBoundary:network.serverRequests,serverResponsesAtBoundary:network.serverResponses};
+ offline=true;
+ // Disable HTTP cache through CDP; retain the exact worker's independently verified Cache Storage.
+ const cdp=await context.newCDPSession(page);await cdp.send('Network.enable');await cdp.send('Network.setCacheDisabled',{cacheDisabled:true});await cdp.detach();
+ await page.reload({waitUntil:'domcontentloaded',timeout:30000});await ordinary();assert.notEqual(await page.evaluate(()=>window.offlineProbeDocumentId),oldDocument);
+ assert.equal(await page.evaluate(()=>navigator.onLine),false);assert.deepEqual(await storage(),afterInstallStorage,'Ordinary cold offline entry must retain post-install player storage.');
+ report.checks.push({label:'Cold document loaded from actual generated worker offline',normalEntry:true,ordinaryPlaying:(await snapshot()).ordinaryPlaying,playerStorageUnchanged:true});
+ stage='explicit-ordinary-play-then-pause';await openHome();await page.locator('#snake-action-primary').click();await page.waitForFunction(()=>document.body.dataset.playing==='true');await page.waitForTimeout(320);await page.locator('#snake-action-menu').click();await page.waitForFunction(()=>document.body.dataset.playing==='false');
+ const origin=await exportOrigin();assert.equal(origin.mode,'solo');assert.equal(origin.levelId,'classic-snake-open-loop');assert(origin.match.elapsedMs>0,'Real originating match must advance before being paused.');const nativeOrigin=await page.evaluate(async saved=>{const {restoreClassicSnakeMatch,classicSnakeMatchSummary}=await import('/game/snake/classic-match.mjs');return classicSnakeMatchSummary(restoreClassicSnakeMatch(saved));},origin.match);assert.equal(nativeOrigin.status,'running','Origin must be a live paused game, not an ended performance.');assert(nativeOrigin.boards.some(board=>board.tick>0),'At least one actual native move must precede the pause.');
+ report.origin={method:'Existing native export control, fully completed real browser download',sha256:sha(JSON.stringify(origin)),levelId:origin.levelId,elapsedMs:origin.match.elapsedMs,checkpoint:origin.match.checkpoint,nativeSummary:nativeOrigin};
+ // Finish the explicitly initiated ordinary Start/Pause persistence before the demo-only interval.
+ let settled=false;for(let i=0;i<10;i++){const count=playerPersistenceMutations(report.events).length;await page.waitForTimeout(250);if(playerPersistenceMutations(report.events).length===count){await page.waitForTimeout(250);if(playerPersistenceMutations(report.events).length===count){settled=true;break;}}}assert(settled,'Ordinary player persistence did not settle before the isolation baseline.');
+ await openHome();const before=await storage(),cacheBefore=await cacheInventory();report.persistenceBeforeDemos=summarizeStorage(before);report.cacheBeforeDemos={entries:cacheBefore.length,sha256:sha(JSON.stringify(cacheBefore))};
+ stage='offline-current-demo-and-practice';const mutationStart=report.events.length;await page.locator('#demo-button').click();const first=await playing('Offline current Snake recording advances');assert.equal(first.mode,'snake');
+ await page.locator('#demo-interrupt').click();const checkpoint=await snapshot();await page.locator('#demo-takeover').click();await page.waitForFunction(()=>document.querySelector('#demo-dialog')?.classList.contains('is-practice'));assert.equal((await snapshot()).tick,checkpoint.tick);
+ await page.keyboard.press('ArrowRight');await page.waitForFunction(tick=>document.querySelector('#demo-dialog').dataset.demoTick!==tick,checkpoint.tick,{timeout:3500});
+ await page.locator('#demo-return').click();const returned=await playing('Offline Snake practice returns to its recording');assert.equal(returned.source,first.source);await closeDemo();
+ stage='offline-mixed-demo';await openHome();await page.locator('#demo-all-button').click();const modes=[];for(let i=0;i<4;i++){const shown=await playing(`Offline mixed performance ${i+1}`);modes.push(shown.mode);if(i<3)await page.locator('#demo-next').click();}assert.deepEqual([...new Set(modes)].sort(),['sim','snake','solo','survival']);await closeDemo();
+ await page.evaluate(()=>Promise.resolve());const demoEvents=report.events.slice(mutationStart);assert.deepEqual(playerPersistenceMutations(demoEvents),[],'Demo watching/practice must not issue player storage writes.');
+ assert.deepEqual(await storage(),before,'Post-install paused player persistence must stay unchanged before the final export.');const cacheAfter=await cacheInventory();assert.deepEqual(cacheAfter,cacheBefore,'Installed Cache Storage inventory must stay unchanged during demos.');
+ report.checks.push({label:'Demo isolation after complete actual installation',playerWrites:0,storageSHA256:sha(JSON.stringify(before)),cacheInventorySHA256:sha(JSON.stringify(cacheAfter)),managedMediaEvents:demoEvents.filter(e=>e.kind==='mutation').length});
+ stage='origin-readback';const finalOrigin=await exportOrigin();assert.deepEqual(finalOrigin,origin,'Complete real native paused session must survive watching, mixed rotation, practice and return.');assert.equal((await snapshot()).ordinaryPlaying,'false');
+ report.checks.push({label:'Original paused native match preserved exactly',sha256:sha(JSON.stringify(finalOrigin))});
+ stage='offline-integrity-verification';const verified=await page.evaluate(async()=>{const [{checkOffline},{createOfficialDownloads},{downloadFiles}]=await Promise.all([import('/game/offline.mjs'),import('/game/official-downloads.mjs'),import('/game/download-catalogue.mjs')]);const catalogue=await (await fetch('/offline-content.json')).json();const core=await checkOffline(),selected=await createOfficialDownloads().inspect(downloadFiles(catalogue,['extras:demo']),{verify:true});return {core:core.status,selectedReady:selected.ready};});assert.deepEqual(verified,{core:'ready',selectedReady:true});
+ const unknown=await page.evaluate(async()=>{try{await fetch('/offline-probe-never-selected.json');return false;}catch{return true;}});assert(unknown,'Unknown offline URL must not obtain a fabricated response.');
+ assert.deepEqual(network.offlineRequests,[],'Offline window must have zero requests reaching the real server.');assert.deepEqual(network.offlineResponses,[]);assert.deepEqual(network.browserOfflineNonWorkerResponses,[],'Cold offline HTTP bodies must be served by the actual worker.');
+ assert.equal(network.serverRequests,report.offlineNetworkBoundary.serverRequestsAtBoundary);assert.equal(network.serverResponses,report.offlineNetworkBoundary.serverResponsesAtBoundary);report.offlineNetworkBoundary.offlineRequests=network.offlineRequests;report.offlineNetworkBoundary.offlineResponses=network.offlineResponses;report.offlineNetworkBoundary.unselectedRequestRejected=unknown;
+ for(let i=0;page.workers().length&&i<30;i++)await page.waitForTimeout(100);assert.equal(page.workers().length,0);assert.equal(report.eventOverflow,undefined);assert(restorationDiagnosticGate(report.errors,report.events),'Strict page/window/rejection diagnostic gate failed.');
+ report.checks.push({label:'Actual installed bytes still verify offline; no network responses and transient workers retire',...verified,pageWorkers:0,network:{...network}});report.complete=true;
+} catch(error) {
+ await diagnoseQualificationFailure({report,error,page,screenshotPath:output.replace(/\.json$/,'.png')});
+} finally {
+ clearTimeout(timer);stage='cleanup';report.network=network;
+ const secondary=(label,error)=>{report.complete=false;report.failure??=String(error.stack??error);(report.secondaryDiagnostics??=[]).push({stage:label,error:String(error.stack??error).slice(0,2048)});};
+ if(page&&!page.isClosed()&&!closing){
+  try{await bounded(()=>page.evaluate(()=>window.offlineProbeInstallController?.abort()),1500,'Cancel owned installation');}catch(error){secondary('cancel-install',error);}
+  try{if(await page.locator('#demo-dialog').count())await closeDemo();report.demoRetiredBeforeCleanup=await snapshot();}catch(error){secondary('close-demo',error);}
+  try{report.storageCleanup=await bounded(()=>page.evaluate(async()=>{const registrations=await navigator.serviceWorker.getRegistrations();const unregistered=await Promise.all(registrations.map(r=>r.unregister()));const names=await caches.keys();const deleted=await Promise.all(names.map(name=>caches.delete(name)));return {unregistered,deleted,remainingRegistrations:(await navigator.serviceWorker.getRegistrations()).length,remainingCaches:await caches.keys()};}),8000,'Owned worker/cache cleanup');assert(report.storageCleanup.unregistered.every(Boolean));assert(report.storageCleanup.deleted.every(Boolean));assert.equal(report.storageCleanup.remainingRegistrations,0);assert.deepEqual(report.storageCleanup.remainingCaches,[]);}catch(error){secondary('worker-cache-cleanup',error);}
+ }
+ try{
+  report.source.after=await binding();assert.deepEqual(report.source.after,report.source.before,'Held runtime/build/HEAD and probe producers changed.');
+  if(capture)assert.equal(sha(await readFile(path.resolve(root,args['emitted-preview'],'manifest.json'))),capture.manifestSHA256);
+  if(auditBytes)assert.equal(sha(await readFile(path.resolve(root,args.audit))),sha(auditBytes));
+  if(inventoryBytes)assert.equal(sha(await readFile(path.resolve(root,inventoryPath))),sha(inventoryBytes));
+ }catch(error){secondary('source-binding',error);}
+ if(profileDirectory){try{report.ownedProcessesBeforeClose=processes();}catch(error){secondary('process-observation',error);}}
+ const summary=await finishQualification({report,reportPath:output,browser,writeReport:async(filename,value,options)=>{
+  if(preview){try{if(offlineServerClosed&&preview.server.listening===false)report.offlineNetworkBoundary.serverStillStoppedAtCleanup=true;else{await bounded(()=>new Promise((resolve,reject)=>{preview.server.close(error=>error?reject(error):resolve());preview.server.closeAllConnections();}),3000,'Owned preview server close');assert.equal(preview.server.listening,false);report.serverClosed=true;}}catch(error){secondary('server-close',error);}}
+  if(profileDirectory&&report.browserCloseCompleted){try{let remaining=processes();for(let i=0;remaining.length&&i<20;i++){await new Promise(resolve=>setTimeout(resolve,100));remaining=processes();}report.ownedProcessesAfterClose=remaining;assert.deepEqual(remaining,[],'Owned browser processes must exit.');await rm(profileDirectory,{recursive:true});report.profile.removed=true;report.diskAfterCleanup=await disk(root);}catch(error){secondary('profile-cleanup',error);}}
+  if(!restorationDiagnosticGate(report.errors,report.events))secondary('final-diagnostic-gate',Error('Page/window/rejection diagnostics were observed, including cleanup.'));
+  await writeQualificationReport(filename,value,options);
+ }});
+ if(!summary.complete)process.exitCode=1;
+}

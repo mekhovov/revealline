@@ -157,7 +157,7 @@ async function readPinned(relative, pin, { baseURL, fetch: request, signal, onBy
   onBytes(total);
   return bytes;
 }
-async function checkedPicture(bytes, pin, decodeImage, signal) {
+async function checkOriginalBytes(bytes, pin, signal) {
   required(
     bytes.length === pin.bytes && (await hashPresentationBytes(bytes)) === pin.sha256,
     'Original picture bytes differ from the exact owner pin.',
@@ -171,6 +171,10 @@ async function checkedPicture(bytes, pin, decodeImage, signal) {
       header.height === pin.height,
     'Original picture header differs from its source pin.',
   );
+  abort(signal);
+}
+async function checkedPicture(bytes, pin, decodeImage, signal) {
+  await checkOriginalBytes(bytes, pin, signal);
   const image = await decodeImage(new Blob([bytes], { type: pin.mime }), { signal });
   try {
     abort(signal);
@@ -185,6 +189,147 @@ async function checkedPicture(bytes, pin, decodeImage, signal) {
     throw error;
   }
 }
+/** Match an original only through code-owned source pins. Arbitrary missing URLs
+ * cannot acquire a fallback or become registered artwork. */
+export function findCurrentArtOriginal(file) {
+  return (
+    [...sources.values()].find(
+      (source) =>
+        source.kind !== 'procedural' &&
+        source.sourceImagePath === file?.path &&
+        source.image.bytes === file.bytes &&
+        source.image.sha256 === file.sha256,
+    ) ?? null
+  );
+}
+
+/** Read the exact existing original through the native source/pack/media resolver.
+ * This shares transport with read-only authoring previews without installing a pack. */
+export async function readCurrentArtImage(
+  slotId,
+  {
+    fetch: request = globalThis.fetch,
+    baseURL = rootURL,
+    signal = new AbortController().signal,
+    decodeImage = decodeBitmap,
+    sourceOriginal = true,
+    onBytes = () => {},
+  } = {},
+) {
+  const descriptor = describeCurrentArt(slotId);
+  required(
+    descriptor && descriptor.kind !== 'procedural',
+    'This slot has no registered original picture.',
+  );
+  required(typeof sourceOriginal === 'boolean', 'Source-original preference must be explicit.');
+  abort(signal);
+  const transport = { baseURL, fetch: request, signal, onBytes };
+  let origin,
+    level = descriptor.level,
+    theme = descriptor.theme;
+  let bytes;
+  if (sourceOriginal && descriptor.sourceImagePath) {
+    try {
+      bytes = await readPinned(descriptor.sourceImagePath, descriptor.image, transport);
+      origin = {
+        kind: 'source-original',
+        path: descriptor.sourceImagePath,
+        label: 'Exact source PNG · original bytes verified',
+      };
+    } catch (error) {
+      if (!(error instanceof CurrentArtUnavailableError) || error.status !== 404) throw error;
+    }
+  }
+  if (!bytes && descriptor.kind === 'embedded') {
+    const raw = await readPinned(descriptor.source.path, descriptor.source, transport);
+    const text = new TextDecoder('utf-8', { fatal: true }).decode(raw),
+      checked = validatePack(text);
+    required(checked.valid, `Current source pack is invalid: ${checked.errors.join('; ')}`);
+    const pack = JSON.parse(text),
+      campaign = pack.campaigns.find((c) => c.id === descriptor.source.campaignId);
+    required(
+      pack.id === descriptor.source.packId &&
+        campaign &&
+        campaignKey({
+          ...campaign,
+          classRecipes: pack.classRecipes.filter(
+            (r) => !campaign.classIds || campaign.classIds.includes(r.id),
+          ),
+        }) === descriptor.owner.baseCampaignKey,
+      'Source pack owner identity differs.',
+    );
+    level = campaign.levels.find((l) => l.id === descriptor.owner.levelId);
+    theme = pack.themes.find((t) => t.id === descriptor.owner.themeId);
+    required(
+      level?.revision === descriptor.owner.levelRevision && theme,
+      'Source level/theme identity differs.',
+    );
+    const visual =
+      pack.levelVisuals.find((v) => v.levelId === level.id)?.visualOverrides.background ??
+      pack.visualOverrides.background;
+    required(
+      visual && (visual.fit ?? 'cover') === descriptor.fit,
+      'Source picture fit or binding differs.',
+    );
+    bytes = embeddedBytes(visual.dataUrl).bytes;
+    origin = {
+      kind: descriptor.source.kind,
+      path: descriptor.source.path,
+      label: `Exact ${descriptor.source.kind} pack original · downloaded only for this preview`,
+    };
+  }
+  if (!bytes && descriptor.kind === 'external') {
+    const checkedDecode = async (source) => {
+      abort(signal);
+      const blob = typeof source === 'string' ? new Blob([embeddedBytes(source).bytes]) : source;
+      const candidate = await decodeImage(blob, { signal: signal });
+      try {
+        abort(signal);
+        const size = dimensions(candidate);
+        return { naturalWidth: size.width, naturalHeight: size.height };
+      } finally {
+        candidate?.close?.();
+      }
+    };
+    const prepared = await prepareExternalDownload(descriptor.source.descriptorId, {
+      baseURL,
+      fetch: request,
+      signal: signal,
+      decodeImage: checkedDecode,
+    });
+    onBytes(descriptor.source.pack.bytes + descriptor.source.media.bytes);
+    const original = prepared.descriptor.originals.find(
+      (o) =>
+        o.levelId === descriptor.owner.levelId &&
+        o.levelRevision === descriptor.owner.levelRevision,
+    );
+    required(
+      original && original.sha256 === descriptor.image.sha256,
+      'External source owner differs.',
+    );
+    const presentation = prepared.imported.document.library.presentations.find(
+      (p) => p.id === original.presentationId,
+    );
+    required(
+      canonicalJSON(presentation.identity) === canonicalJSON(descriptor.owner) &&
+        presentation.poster.fit === descriptor.fit,
+      'External source presentation differs.',
+    );
+    const blob = prepared.imported.assets.find((a) => a.sha256 === original.sha256)?.blob;
+    required(blob, 'The selected external original is unavailable.');
+    bytes = new Uint8Array(await blob.arrayBuffer());
+    level = prepared.pack.campaigns[0].levels.find((l) => l.id === descriptor.owner.levelId);
+    theme = prepared.pack.themes.find((t) => t.id === descriptor.owner.themeId);
+    origin = {
+      kind: 'external',
+      path: descriptor.source.media.path,
+      label: 'Exact original from the validated paired external download · no installation',
+    };
+  }
+  await checkOriginalBytes(bytes, descriptor.image, signal);
+  return { bytes, origin, level, theme, descriptor };
+}
+
 /** Explicit, read-only previews. Each instance owns one request and image;
  * cancellation closes late decode results and never writes player or studio data. */
 export function createCurrentArtPreview({
@@ -261,109 +406,12 @@ export function createCurrentArtPreview({
             label: 'Original procedural scene · exact source theme and level · preview seed 0',
           };
         } else {
-          let bytes;
-          if (descriptor.sourceImagePath) {
-            try {
-              bytes = await readPinned(descriptor.sourceImagePath, descriptor.image, transport);
-              origin = {
-                kind: 'source-original',
-                path: descriptor.sourceImagePath,
-                label: 'Exact source PNG · original bytes verified',
-              };
-            } catch (error) {
-              if (!(error instanceof CurrentArtUnavailableError) || error.status !== 404)
-                throw error;
-            }
-          }
-          if (!bytes && descriptor.kind === 'embedded') {
-            const raw = await readPinned(descriptor.source.path, descriptor.source, transport);
-            const text = new TextDecoder('utf-8', { fatal: true }).decode(raw),
-              checked = validatePack(text);
-            required(checked.valid, `Current source pack is invalid: ${checked.errors.join('; ')}`);
-            const pack = JSON.parse(text),
-              campaign = pack.campaigns.find((c) => c.id === descriptor.source.campaignId);
-            required(
-              pack.id === descriptor.source.packId &&
-                campaign &&
-                campaignKey({
-                  ...campaign,
-                  classRecipes: pack.classRecipes.filter(
-                    (r) => !campaign.classIds || campaign.classIds.includes(r.id),
-                  ),
-                }) === descriptor.owner.baseCampaignKey,
-              'Source pack owner identity differs.',
-            );
-            level = campaign.levels.find((l) => l.id === descriptor.owner.levelId);
-            theme = pack.themes.find((t) => t.id === descriptor.owner.themeId);
-            required(
-              level?.revision === descriptor.owner.levelRevision && theme,
-              'Source level/theme identity differs.',
-            );
-            const visual =
-              pack.levelVisuals.find((v) => v.levelId === level.id)?.visualOverrides.background ??
-              pack.visualOverrides.background;
-            required(
-              visual && (visual.fit ?? 'cover') === descriptor.fit,
-              'Source picture fit or binding differs.',
-            );
-            bytes = embeddedBytes(visual.dataUrl).bytes;
-            origin = {
-              kind: descriptor.source.kind,
-              path: descriptor.source.path,
-              label: `Exact ${descriptor.source.kind} pack original · downloaded only for this preview`,
-            };
-          }
-          if (!bytes && descriptor.kind === 'external') {
-            const checkedDecode = async (source) => {
-              abort(controller.signal);
-              const blob =
-                typeof source === 'string' ? new Blob([embeddedBytes(source).bytes]) : source;
-              const candidate = await decodeImage(blob, { signal: controller.signal });
-              try {
-                abort(controller.signal);
-                const size = dimensions(candidate);
-                return { naturalWidth: size.width, naturalHeight: size.height };
-              } finally {
-                candidate?.close?.();
-              }
-            };
-            const prepared = await prepareExternalDownload(descriptor.source.descriptorId, {
-              baseURL,
-              fetch: request,
-              signal: controller.signal,
-              decodeImage: checkedDecode,
-            });
-            downloadBytes += descriptor.source.pack.bytes + descriptor.source.media.bytes;
-            const original = prepared.descriptor.originals.find(
-              (o) =>
-                o.levelId === descriptor.owner.levelId &&
-                o.levelRevision === descriptor.owner.levelRevision,
-            );
-            required(
-              original && original.sha256 === descriptor.image.sha256,
-              'External source owner differs.',
-            );
-            const presentation = prepared.imported.document.library.presentations.find(
-              (p) => p.id === original.presentationId,
-            );
-            required(
-              canonicalJSON(presentation.identity) === canonicalJSON(descriptor.owner) &&
-                presentation.poster.fit === descriptor.fit,
-              'External source presentation differs.',
-            );
-            const blob = prepared.imported.assets.find((a) => a.sha256 === original.sha256)?.blob;
-            required(blob, 'The selected external original is unavailable.');
-            bytes = new Uint8Array(await blob.arrayBuffer());
-            level = prepared.pack.campaigns[0].levels.find(
-              (l) => l.id === descriptor.owner.levelId,
-            );
-            theme = prepared.pack.themes.find((t) => t.id === descriptor.owner.themeId);
-            origin = {
-              kind: 'external',
-              path: descriptor.source.media.path,
-              label: 'Exact original from the validated paired external download · no installation',
-            };
-          }
+          const original = await readCurrentArtImage(slotId, {
+            ...transport,
+            decodeImage,
+          });
+          const { bytes } = original;
+          ({ origin, level, theme } = original);
           image = await checkedPicture(bytes, descriptor.image, decodeImage, controller.signal);
         }
         if (disposed || active !== state) {

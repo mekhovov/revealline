@@ -1,0 +1,260 @@
+{
+  "format": "SharedDemoFinalFrameworkAuditV1",
+  "recordedAt": "2026-10-18T18:33:23.791Z",
+  "method": "Read-only source, test and existing receipt inspection. No browser, replay, test, production/script edit or Git mutation was performed for this audit.",
+  "source": {
+    "head": "e8f6f0ebd01f342d6a9b937f740e15a9bdb75f16",
+    "integrationBase": "461ace72e78f8cbd77c26549381d9e21d0a65e91",
+    "manifest": "docs/qualification/shared-demos/source-freeze-latest.json",
+    "declaredProductionFingerprint": "02f749f71e0a77272e3d9e2ba555469125bbc7a8e8ce4375a3781776df454611",
+    "productionFiles": 9991
+  },
+  "conclusion": {
+    "confirmedNewProductionBlockers": [],
+    "fullAcceptedPlanComplete": false,
+    "assessment": "Implemented fairness, recovery, ownership and persistence contracts have focused regression and browser evidence. The currently running actual two-hour rotation and the recorded human/device gates remain separate acceptance items. Lifecycle limitations below must not be presented as completed browser checks."
+  },
+  "invariants": [
+    {
+      "area": "Fair selection",
+      "implementation": [
+        "game/demo-rotation.mjs:3",
+        "game/demo-director.mjs:96"
+      ],
+      "finding": "Modes are visited before repetition; each mode selects unvisited level/variant keys before recordings. Duplicate recordings do not increase level weight. Failed entries defer their mode for the current attempt cycle; unavailable engines are session-suspended. Healthy unvisited modes precede a verified recovery fallback.",
+      "tests": [
+        "game/test/demo-shared.test.mjs:100",
+        "game/test/demo-shared.test.mjs:125",
+        "game/test/demo-shared.test.mjs:149",
+        "game/test/demo-shared.test.mjs:186",
+        "game/test/demo-shared.test.mjs:216",
+        "game/test/demo-director.test.mjs:59"
+      ],
+      "limit": "Normal cycles avoid adjacent mode/level repeats when alternatives exist. Explicit bounded recovery may repeat the last verified performance; it is not evidence of ordinary rotation unfairness."
+    },
+    {
+      "area": "Loading and cancellation",
+      "implementation": [
+        "game/demo-loading.mjs",
+        "game/demo-director.mjs:113",
+        "game/demo-registry.mjs:73",
+        "game/ui/demo-host.mjs:961"
+      ],
+      "finding": "Per-source deadlines and the 30-second overall budget include elapsed preparation and retirement, with host enumeration time deducted. Late completion cannot adopt a superseded player. Failed preparation and late returned owners get cleanup attempts. A pending retirement blocks replacement; Retry/Back remain the recovery path.",
+      "tests": [
+        "game/test/demo-shared.test.mjs:10",
+        "game/test/demo-shared.test.mjs:245",
+        "game/test/demo-loading.test.mjs:68",
+        "game/test/demo-loading.test.mjs:141",
+        "game/test/demo-loading.test.mjs:213",
+        "game/test/demo-director.test.mjs:486",
+        "game/test/demo-director.test.mjs:516",
+        "game/test/demo-director.test.mjs:572",
+        "game/test/demo-director.test.mjs:602",
+        "game/test/demo-director.test.mjs:635"
+      ],
+      "browser": [
+        "docs/qualification/shared-demos/offline-chromium-461ace-final.json",
+        "docs/qualification/shared-demos/graphics-chromium-461ace-retry.json"
+      ],
+      "limit": "A synchronous browser task cannot be preempted by a JavaScript timer; elapsed-time checks reject overdue results when control returns. The offline probe demonstrates bounded failure/recovery, not playback of every entry from every offline cache."
+    },
+    {
+      "area": "One active simulation scheduler",
+      "implementation": [
+        "game/ui/demo-clock.mjs:92",
+        "game/ui/demo-host.mjs:1035",
+        "game/ui/demo-host.mjs:1599",
+        "game/demo-modes/snake.mjs:297",
+        "game/demo-modes/sim.mjs:167",
+        "game/demo-modes/survival.mjs:285"
+      ],
+      "finding": "Spectator playback uses the shared clock. Practice stops that clock and advances through the shared host from the originating page frame. Native scene paint reads player/practice state and does not advance gameplay. Native timesteps remain engine-owned.",
+      "tests": [
+        "game/test/demo-clock.test.mjs:111",
+        "game/test/demo-clock.test.mjs:164",
+        "game/test/demo-clock.test.mjs:359",
+        "game/test/demo-native-host.test.mjs:210",
+        "game/test/demo-host.test.mjs:225",
+        "game/test/demo-host.test.mjs:265"
+      ],
+      "limit": "The ordinary paused renderer may remain mounted. The invariant is one active demo simulation/scene, not one canvas or one renderer object in the entire page."
+    },
+    {
+      "area": "Hidden, frozen and restored transport",
+      "implementation": [
+        "game/ui/demo-clock.mjs:1",
+        "game/ui/demo-clock.mjs:190",
+        "game/ui/demo-host.mjs:734",
+        "game/ui/demo-input.mjs:301"
+      ],
+      "finding": "Hidden watching admits at most two seconds of debt in quarter-second slices, with bounded catch-up tasks and no hidden painting. Freeze cancels scheduling and resume rebases time. Foreground loss clears input and suspends practice/handoffs. Watching preserves explicit pause and listening intent.",
+      "tests": [
+        "game/test/demo-clock.test.mjs:230",
+        "game/test/demo-clock.test.mjs:294",
+        "game/test/demo-clock.test.mjs:383",
+        "game/test/demo-background.test.mjs:24",
+        "game/test/demo-background.test.mjs:65",
+        "game/test/demo-background.test.mjs:103",
+        "game/test/demo-background.test.mjs:133",
+        "game/test/demo-host.test.mjs:426",
+        "game/test/demo-host.test.mjs:446"
+      ],
+      "browser": [
+        "docs/qualification/shared-demos/mixed-chromium-461ace-final.json"
+      ],
+      "limits": [
+        "The real Chromium CDP freeze/resume check covers playing and explicitly paused watching. Firefox/WebKit mixed checks omit this Chromium-only protocol branch.",
+        "Hidden/blur/restore semantics also have mounted controlled-clock tests; those are not physical mobile operating-system lifecycle observations.",
+        "No explicit actual-browser discard/reload or back-forward-cache round-trip receipt was found in the inspected current mixed/indexed evidence. Ordinary reload follows normal entry because demo playback/practice is not persisted; this is source-based reasoning, not a completed discard browser test."
+      ]
+    },
+    {
+      "area": "Asynchronous disposal and resource ownership",
+      "implementation": [
+        "game/ui/demo-host.mjs:388",
+        "game/ui/demo-host.mjs:760",
+        "game/ui/demo-host.mjs:807",
+        "game/demo-modes/solo.mjs:48",
+        "game/ui/owned-phaser-game.mjs"
+      ],
+      "finding": "Close cancels admission immediately; the retirement barrier survives close/reopen and resolves to undefined instead of retaining recursive result history. Every owned cleanup is attempted independently. Solo preserves asynchronous release promises and re-releases late assets once. Transient Phaser lifecycle hooks have explicit ownership and preserve the originating game.",
+      "tests": [
+        "game/test/demo-shared.test.mjs:267",
+        "game/test/demo-shared.test.mjs:293",
+        "game/test/demo-native-host.test.mjs:287",
+        "game/test/demo-native-host.test.mjs:305",
+        "game/test/demo-native-host.test.mjs:323",
+        "game/test/demo-solo-adapter.test.mjs:67",
+        "game/test/demo-solo-adapter.test.mjs:98",
+        "game/test/demo-solo-adapter.test.mjs:119",
+        "game/test/solo-demo-resources-host.test.mjs:58",
+        "game/test/owned-phaser-game.test.mjs:76",
+        "game/test/owned-phaser-game.test.mjs:152",
+        "game/test/owned-phaser-game.test.mjs:175"
+      ],
+      "browser": "docs/qualification/shared-demos/listener-cleanup-461ace-final.json",
+      "observed": "After warming all four modes, 12 mixed Next transitions across three open/close cycles returned 79 attached targets to the listener baseline (window 161; document 78), with zero listener-signature deltas, zero owned scenes/practice/actual workers at close, preserved canvas ownership and ordinary dimensions, unchanged storage and exact paused ordinary checkpoint.",
+      "limits": [
+        "The direct listener probe measures attached targets and direct event-listener signatures/counts; it does not exhaustively measure detached nodes, heap closures, native driver allocations or all GPU memory.",
+        "No forced garbage collection or heap dump was performed. Coarse process RSS without an initial baseline cannot prove or disprove a leak.",
+        "The Phaser source-contract regression intentionally requires review if the pinned dependency lifecycle changes."
+      ]
+    },
+    {
+      "area": "Persistence and fresh input",
+      "implementation": [
+        "game/ui/demo-host.mjs:1065",
+        "game/ui/demo-host.mjs:1119",
+        "game/ui/demo-controller.mjs",
+        "game/demo-settings.mjs"
+      ],
+      "finding": "Watching and reconstructed practice use isolated native state; late forks are disposed. Generic controls normalize captured raw samples without another hardware poll; native SIM retains raw radio/throttle handling. Ordinary Fresh uses existing departure/adoption guards and enters Ready, with exact demonstrated SIM/Survival setup. Only explicit preference/audio actions write their own settings.",
+      "tests": [
+        "game/test/demo-host.test.mjs:50",
+        "game/test/demo-host.test.mjs:110",
+        "game/test/demo-host.test.mjs:225",
+        "game/test/demo-host.test.mjs:476",
+        "game/test/demo-host.test.mjs:527",
+        "game/test/demo-controller.test.mjs:28",
+        "game/test/demo-controller.test.mjs:100",
+        "game/test/demo-controller.test.mjs:137",
+        "game/test/demo-controller.test.mjs:172",
+        "game/test/demo-controller.test.mjs:231",
+        "game/test/demo-input.test.mjs:189",
+        "game/test/demo-input.test.mjs:372",
+        "game/test/demo-input.test.mjs:523",
+        "game/test/demo-input.test.mjs:636",
+        "game/test/demo-input.test.mjs:678",
+        "game/test/demo-settings.test.mjs:137",
+        "game/test/demo-settings.test.mjs:207"
+      ],
+      "browser": [
+        "docs/qualification/shared-demos/mixed-chromium-461ace-final.json",
+        "docs/qualification/shared-demos/mixed-firefox-461ace-final.json",
+        "docs/qualification/shared-demos/mixed-webkit-461ace-final.json",
+        "docs/qualification/shared-demos/listener-cleanup-461ace-final.json",
+        "docs/qualification/shared-demos/survival-fresh-webkit-461ace-final-retry.json",
+        "docs/qualification/shared-demos/sim-fresh-chromium-461ace-final-retry.json"
+      ],
+      "limit": "Synthetic controller/radio events verify ownership logic, not physical device calibration, drift characteristics, throttle feel or real mobile input."
+    }
+  ],
+  "evidenceScope": {
+    "fullNativeCoverage": {
+      "entries": 890,
+      "modes": {
+        "solo": 240,
+        "snake": 240,
+        "sim": 392,
+        "survival": 18
+      },
+      "receipt": "docs/qualification/shared-demos/runtime-native-regressions-20261018.json",
+      "limit": "Native full replays, terminal outcomes, current content identities and meaningful progress; not 890 complete rendered interactive UI sessions."
+    },
+    "fullBrowserNativeReplay": {
+      "engines": [
+        "chromium",
+        "firefox",
+        "webkit"
+      ],
+      "solo": "docs/qualification/shared-demos/solo-browser-summary.json",
+      "snakeAndSurvival": "docs/qualification/shared-demos/native-browser-{engine}.json",
+      "sim": "docs/qualification/shared-demos/sim-browser-{engine}.json",
+      "counting": "Solo has 242 distinct clips for 240 required levels; browser-specific alternatives do not add levels or selection weight.",
+      "provenance": "These receipts retain their actual historical browser/source bases. The 461ace impact audit and integrated checks cover unchanged native/content inputs and changed ordinary entry behavior; they are not relabeled as newly executed full-corpus browser runs."
+    },
+    "exactTick": {
+      "reports": "docs/qualification/shared-demos/exact-tick-{engine}.json",
+      "scope": "Four representative performances, one per mode, in each of Chromium/Firefox/WebKit; strict trace capture/comparison, injected mismatches, reference rejection and cancellation.",
+      "limit": "Not an all-890-entry per-tick browser trace matrix. Runtime sparse checkpoints identify the first mismatching checkpoint; exact offline traces identify the first differing native tick."
+    },
+    "regressions": {
+      "historicalBroad": {
+        "runtime": 736,
+        "ordinaryConsumers": 78,
+        "receipt": "docs/qualification/shared-demos/runtime-native-regressions-20261018.json"
+      },
+      "integrated": {
+        "tests": 200,
+        "receipt": "docs/qualification/shared-demos/main-461ace-integration-regressions.json"
+      },
+      "limit": "Related/overlapping suites must not be added together. This audit did not rerun them."
+    },
+    "currentPackaging": "docs/qualification/shared-demos/shared-demos-packaging-461ace.json",
+    "currentEndurance": {
+      "statusAtAudit": "running; incomplete",
+      "binding": "docs/qualification/shared-demos/endurance-source-461ace.json",
+      "dynamicReport": "docs/qualification/shared-demos/rotation-chromium-461ace-two-hour.json",
+      "limit": "Requires 7200 measured seconds after preflight and final close/storage/resource/source checks. Earlier partial runs and accelerated clock tests contribute no elapsed acceptance time."
+    }
+  },
+  "claimCorrections": [
+    "The historical browser-matrix-461ace-final.json remains incomplete after its interrupted graphics child; separate passing graphics and Fresh retry receipts supply those checks without changing the failed originals.",
+    "shared-demos-final-packaging.json is the historical 4f68/62b52 receipt. Current complete packaging is shared-demos-packaging-461ace.json, bound to e8f6f0ebd0 / 02f749f7….",
+    "Some live plan/index status lines still reference the earlier HEAD or pending final reruns; refresh them from the final receipts rather than promoting historical partial evidence.",
+    "The original recovered Survival preparation timeouts remain unexplained. Passing later preparation probes do not prove a disk/CPU cause."
+  ],
+  "pendingHumanDevice": {
+    "procedure": "docs/qualification/shared-demos/manual-review.md",
+    "checks": [
+      "Unfamiliar-player goal and mechanic comprehension",
+      "Practice discovery and exit by an unfamiliar player",
+      "Physical controllers with current/custom bindings and neutral/drift checks",
+      "SIM radio calibration, throttle pickup and arming",
+      "Physical mobile touch/orientation/fullscreen/foreground restoration",
+      "Audible music/effects behavior through pauses and engine retirement"
+    ],
+    "status": "Not performed; no automatic substitute or waiver claimed."
+  },
+  "sourceHashes": {
+    "game/demo-director.mjs": "d443705445734492a01a76466cd2f9f8ba3f18904c57c6612fe86f7801654dfc",
+    "game/demo-rotation.mjs": "48d4e542335137e54bc78a3a5f498e686ed51248e9c44b5f1f685887b0c8f37c",
+    "game/demo-prefetch.mjs": "f350a9a13e7a97dbf9a1f2efba2651abfa2e0a4318fca5e39be60cacccfdb724",
+    "game/demo-registry.mjs": "64f0c959cd4026385dc68ba6e6bd2402e9418b682bb1576f285a3035eea6101a",
+    "game/ui/demo-host.mjs": "d6d57b78d4a04ac91df0e19d4a340b8e73d2c526e85d8ab5a37a4951112e2a99",
+    "game/ui/demo-clock.mjs": "839214720356f03438daa90ed0acea923d765b0ce38a311d55bef57c980bc03a",
+    "game/demo-modes/solo.mjs": "bd3914625c4152c5a73ebf3cda0b09d6c1ef23705853c95df6dc0ca0a63798d2",
+    "game/ui/owned-phaser-game.mjs": "57b02a5e1995d3773aebdc40626d4ce0f36f935f4deb80d10ac7baf125d1ea58"
+  }
+}

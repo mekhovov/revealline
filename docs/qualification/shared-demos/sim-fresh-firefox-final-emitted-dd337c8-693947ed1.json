@@ -1,0 +1,31 @@
+{
+  "engine": "firefox",
+  "started": "2026-10-19T00:56:15.935Z",
+  "checks": [
+    {
+      "type": "fresh-start-exact-authored-setup-ready-disarmed",
+      "origin": "sim",
+      "course": "beginner-01",
+      "mode": "self-level",
+      "ticks": 0,
+      "courseIdentity": "593f2abcf4bb8e39",
+      "responseIdentity": "73833493634ba989",
+      "savedCustomAircraftTuningUnchanged": true
+    },
+    {
+      "type": "fresh-start-exact-authored-setup-ready-disarmed",
+      "origin": "solo",
+      "course": "snake-hunt-weave-02",
+      "mode": "self-level",
+      "ticks": 0,
+      "courseIdentity": "8d0fccfd2d4b5b04",
+      "responseIdentity": "73833493634ba989",
+      "savedCustomAircraftTuningUnchanged": true
+    }
+  ],
+  "errors": [],
+  "complete": true,
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-19T00:56:25.832Z"
+}

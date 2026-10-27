@@ -1,0 +1,84 @@
+{
+  "format": "revealline-demo-final-build-validation.v2",
+  "started": "2026-10-19T01:54:52.873Z",
+  "expected": {
+    "head": "e6df275e677ff53cf38ab92bc7cd25c8b7f7ff12",
+    "base": "dd337c8120fd6f875544c1479713d3aa4299c323",
+    "runtime": {
+      "sha256": "a8c62ca43f429b5d66fda765e9ad87db1f97407204824a4f5ca171232ca6b9ae",
+      "files": 9996,
+      "bytes": 404392884
+    }
+  },
+  "sourceRevision": "e6df275e677ff53cf38ab92bc7cd25c8b7f7ff12",
+  "runtimeFingerprint": {
+    "sha256": "a8c62ca43f429b5d66fda765e9ad87db1f97407204824a4f5ca171232ca6b9ae",
+    "files": 9996,
+    "bytes": 404392884
+  },
+  "buildInputFingerprint": {
+    "sha256": "d4099de09239f471bb708e36c06cac362bf4f07e47b71853f07674cc621b2337",
+    "files": 9400,
+    "bytes": 348362554
+  },
+  "wrapper": {
+    "path": ".cache/run-final-build-current.mjs",
+    "sha256": "bf532ec4f438568ab6f6e5bcdb6e5610b0660b58f3c607ddb9eb96097318aead"
+  },
+  "sourceDeclaration": {
+    "path": "docs/qualification/shared-demos/source-freeze-latest.json",
+    "sha256": "97052bcc4e0814165e6ce9429db6a1c9ea32866c6b3194909d83736a0aec4961",
+    "created": "2026-10-19T01:53:23.780372+00:00",
+    "integrationBase": "dd337c8120fd6f875544c1479713d3aa4299c323",
+    "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "sourceFingerprint": "a8c62ca43f429b5d66fda765e9ad87db1f97407204824a4f5ca171232ca6b9ae",
+    "files": 9996,
+    "bytes": 404392884
+  },
+  "materializedBuild": false,
+  "deploymentAdmission": false,
+  "complete": false,
+  "stages": [
+    {
+      "name": "main-pages",
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+        "scripts/qualify-demo-main-pages.mjs",
+        "--report=docs/qualification/shared-demos/main-pages-demo-final-dd337c8-e6df275e6.json",
+        "--preview-output=.cache/shared-demos-emitted-dd337c8-e6df275e6"
+      ],
+      "started": "2026-10-19T01:54:52.874Z",
+      "logPath": "docs/qualification/shared-demos/final-main-pages-dd337c8-e6df275e6.log.txt",
+      "receivedLogBytes": 207,
+      "availableDiskBeforeBytes": 727851008,
+      "pid": 52613,
+      "minimumObservedDiskBytes": 131502080,
+      "stopReason": "Available disk fell below200MiB.",
+      "exitCode": null,
+      "exitSignal": "SIGTERM",
+      "elapsedMs": 270132,
+      "retainedLogBytes": 207,
+      "logTruncated": false,
+      "logSHA256": "72b644b49d9110dbba3cc37ebca68d1278757e970344fbcb19309dafc2873952"
+    }
+  ],
+  "limits": {
+    "logBytesPerStage": 2097152,
+    "stopIfAvailableDiskBelowBytes": 209715200,
+    "stageTimeoutMs": 1200000
+  },
+  "updated": "2026-10-19T01:59:39.261Z",
+  "failure": "Error: ENOENT: no such file or directory, open 'docs/qualification/shared-demos/main-pages-demo-final-dd337c8-e6df275e6.json'\n    at async open (node:internal/fs/promises:639:25)\n    at async readFile (node:internal/fs/promises:1246:14)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/run-final-build-current.mjs:105:21",
+  "finalSourceRevision": "e6df275e677ff53cf38ab92bc7cd25c8b7f7ff12",
+  "finalRuntimeFingerprint": {
+    "sha256": "a8c62ca43f429b5d66fda765e9ad87db1f97407204824a4f5ca171232ca6b9ae",
+    "files": 9996,
+    "bytes": 404392884
+  },
+  "finalBuildInputFingerprint": {
+    "sha256": "d4099de09239f471bb708e36c06cac362bf4f07e47b71853f07674cc621b2337",
+    "files": 9400,
+    "bytes": 348362554
+  },
+  "sourceStable": true
+}

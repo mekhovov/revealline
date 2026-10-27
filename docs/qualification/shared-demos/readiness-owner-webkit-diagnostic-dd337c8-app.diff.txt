@@ -1,0 +1,81 @@
+--- game/app.mjs
++++ .cache/app-readiness-owner-dd337c8.mjs
+@@ -15456,6 +15456,25 @@
+     $('boot-screen').hidden = true;
+     document.documentElement.dataset.bootState = 'interactive';
+   }
++  const observeIncomingHandoff = (stage, details = {}) => {
++    try {
++      globalThis.__readinessHandoffObservation?.({
++        stage, ...details, at: Date.now(), monotonicAt: performance.now(),
++        media: sound.mediaPreparation.snapshot(),
++        prewarmExists: !!picturePrewarm,
++        prewarmLatest: picturePrewarm?.latest ?? null,
++        pictureResume: pictureResume !== null,
++        preparationOperation: !!preparationOperation,
++      });
++    } catch {}
++  };
++  globalThis.__readinessHandoffSnapshot = () => ({
++    media: sound.mediaPreparation.snapshot(),
++    prewarmExists: !!picturePrewarm,
++    prewarmLatest: picturePrewarm?.latest ?? null,
++    pictureResume: pictureResume !== null,
++    preparationOperation: !!preparationOperation,
++  });
+   if (libraryHandoff && !practiceSession) {
+     const revision = ++unifiedOpenRevision;
+     const incomingRun = run,
+@@ -15470,6 +15489,7 @@
+     // opening lease still retires on genuinely newer input or lost foreground.
+     await (async () => {
+       try {
++        observeIncomingHandoff('catalog:enter');
+         const host = await getUnifiedMissionLibrary(
+           () =>
+             revision === unifiedOpenRevision &&
+@@ -15477,10 +15497,15 @@
+             run === incomingRun &&
+             started === incomingStarted,
+         );
++        observeIncomingHandoff('catalog:settled');
+         // The boot picture may still own a media-generation write. Finish it
+         // before the requested mission prepares its distinct exact original.
+         // Its failure is not authority to replace or reject the requested art.
+-        await incomingPrewarm?.catch(() => {});
++        observeIncomingHandoff('prewarm:enter', { capturedPrewarm: !!incomingPrewarm });
++        await incomingPrewarm?.catch((error) => {
++          observeIncomingHandoff('prewarm:rejected', { errorName: error?.name, errorMessage: String(error?.message ?? error).slice(0,1000) });
++        });
++        observeIncomingHandoff('prewarm:settled');
+         opening.dispose();
+         if (
+           revision !== unifiedOpenRevision ||
+@@ -15503,16 +15528,19 @@
+           return;
+         }
+         const context = libraryActivationContext();
++        observeIncomingHandoff('launch:enter', { rowId: row.id });
+         const selected = await host.library.launch(row, {
+           mode: 'solo',
+           ...context,
+           prepareOnly: libraryReady,
+         });
++        observeIncomingHandoff('launch:settled', { selected: selected !== false });
+         if (selected === false && revision === unifiedOpenRevision && context.isCurrent()) {
+           unifiedChooser.open($('shell-missions'));
+           unifiedChooser.reveal(row.id);
+         }
+       } catch (error) {
++        observeIncomingHandoff('incoming:rejected', { errorName: error?.name, errorMessage: String(error?.message ?? error).slice(0,1000) });
+         if (revision === unifiedOpenRevision)
+           warning(
+             localizedMessage('interface:missionLibrary.requestedMissionFailed', {
+@@ -15520,6 +15548,7 @@
+             }),
+           );
+       } finally {
++        observeIncomingHandoff('incoming:finally');
+         opening.dispose();
+       }
+     })();

@@ -1,0 +1,178 @@
+{
+  "engine": "firefox",
+  "started": "2026-10-18T17:41:27.648Z",
+  "complete": true,
+  "checks": [
+    {
+      "modeId": "solo",
+      "recording": "/game/demo-data/solo-qualified-bda094dfb23a16c2.replay.json",
+      "binding": {
+        "modeId": "solo",
+        "levelId": "night-shift-01",
+        "variantId": "standard",
+        "contentIdentity": "f99f314f227f84108277ee4a0be1062913b11c7ead777b26e2185e9b51bb15eb",
+        "simulationIdentity": "9822483de0826602e4e882a3b6064277ec42b354b2d3d90d3ed8eac01d536256",
+        "recordingIdentity": "e3ce794c5ae38a8cd73e678ec421a8b1e831c15bc07a92a3d870ed6b450710b3"
+      },
+      "verification": {
+        "outcome": "won",
+        "terminalIdentity": "21ae7915219ccc2c",
+        "terminalTick": 565
+      },
+      "observedStates": 566,
+      "receipt": {
+        "format": "DemoTickTraceReceiptV1",
+        "traceSha256": "29ad19b299a06faacef3fa1cfb80bf9fcebedd3ae85ed24d3df234feffb113fa",
+        "bindingSha256": "5cf87cde4bc0738929449b4d0350fec61259cce03f34b158d6f4129675635923"
+      },
+      "captureMs": 621,
+      "elapsedMs": 1320,
+      "identicalNativeTrace": true,
+      "faults": [
+        {
+          "tick": 17,
+          "firstDivergentTick": 17,
+          "kind": "state-mismatch",
+          "nativeVerificationPassed": true
+        },
+        {
+          "tick": 300,
+          "firstDivergentTick": 300,
+          "kind": "state-mismatch",
+          "nativeVerificationPassed": true
+        }
+      ],
+      "referenceRejected": true,
+      "cancelledAtTick": 17
+    },
+    {
+      "modeId": "snake",
+      "recording": "/game/demo-data/snake/classic-snake-open-loop.replay.json",
+      "binding": {
+        "modeId": "snake",
+        "levelId": "classic-snake-open-loop",
+        "variantId": "standard",
+        "contentIdentity": "5f286bbd6eb04450",
+        "simulationIdentity": "classic-snake-core.v1",
+        "recordingIdentity": "f0f0043b2a142eecede9cdc406f80bb8ff83263f263b3068a7afa6a27eb87bb3"
+      },
+      "verification": {
+        "outcome": "won",
+        "terminalIdentity": "6b65d4ecbeac829d",
+        "terminalTick": 93
+      },
+      "observedStates": 94,
+      "receipt": {
+        "format": "DemoTickTraceReceiptV1",
+        "traceSha256": "27c7c4005e1c1147c51dead6c6c678668376b4d49752f4be2cdfec30e4b519dd",
+        "bindingSha256": "802da52d2a49e5122387f3b82946ec36627358a8d09272db28cafb2385884ce1"
+      },
+      "captureMs": 21,
+      "elapsedMs": 45,
+      "identicalNativeTrace": true,
+      "faults": [
+        {
+          "tick": 17,
+          "firstDivergentTick": 17,
+          "kind": "state-mismatch",
+          "nativeVerificationPassed": true
+        }
+      ],
+      "referenceRejected": true,
+      "cancelledAtTick": 17
+    },
+    {
+      "modeId": "sim",
+      "recording": "/optional-practice/civilian-fpv/demo-data/beginner-01-self-level-5b7652234b696e5a.json",
+      "binding": {
+        "modeId": "sim",
+        "levelId": "beginner-01",
+        "variantId": "self-level",
+        "contentIdentity": "f2a13af456ce0282b422a4b6e51a94b5724aa06ca5cfd0fe7206b5e1b5421acc",
+        "simulationIdentity": "ccc52c8774e1b4c6672940db44bee124fc354b68e4c06f393bbf974874e50d23",
+        "recordingIdentity": "9d5a0646d414d8793d3c7f5b5c3dd489e69af3974215be27244fd0f32b00ffb7"
+      },
+      "verification": {
+        "outcome": "complete",
+        "terminalIdentity": "9c5c44ff0f549053",
+        "terminalTick": 360
+      },
+      "observedStates": 361,
+      "receipt": {
+        "format": "DemoTickTraceReceiptV1",
+        "traceSha256": "58e2118d83ff95603b8a2509b9aa1f06dc72ccb1f5b88bd797726fd9b8f21c31",
+        "bindingSha256": "0b6e310517faf0bc8a03604115f5d3827a8aad7f67b3e296f74fbe4fe1f0c60c"
+      },
+      "captureMs": 247,
+      "elapsedMs": 386,
+      "identicalNativeTrace": true,
+      "faults": [
+        {
+          "tick": 17,
+          "firstDivergentTick": 17,
+          "kind": "state-mismatch",
+          "nativeVerificationPassed": true
+        },
+        {
+          "tick": 300,
+          "firstDivergentTick": 300,
+          "kind": "state-mismatch",
+          "nativeVerificationPassed": true
+        }
+      ],
+      "referenceRejected": true,
+      "cancelledAtTick": 17
+    },
+    {
+      "modeId": "survival",
+      "recording": "/game/demo-data/survival/field-crossing-broken-crossroads.firefox.replay.json",
+      "binding": {
+        "modeId": "survival",
+        "levelId": "field-crossing-broken-crossroads",
+        "variantId": "standard",
+        "contentIdentity": "f58d3caba411de4a",
+        "simulationIdentity": "e5f65192cdc4fd239d231b8e01f71233925dcb1a4e25ec749aeb0fc8390ab01f",
+        "recordingIdentity": "ca30726ee653911341d40477e0caeea5359842bc8896723b418a5ca6e191aae3"
+      },
+      "verification": {
+        "outcome": "won",
+        "terminalIdentity": "8851c48fea119d7b",
+        "terminalTick": 19020
+      },
+      "observedStates": 19021,
+      "receipt": {
+        "format": "DemoTickTraceReceiptV1",
+        "traceSha256": "97a62c4d0e7bf46b73dd70ae0283416df66418c6ddf089905356bfac82ad7d3b",
+        "bindingSha256": "f1b3592baf068eec97fe0489712caa13a3fa8d540de27f08afb2708f858de935"
+      },
+      "captureMs": 500011,
+      "elapsedMs": 837111,
+      "identicalNativeTrace": true,
+      "faults": [
+        {
+          "tick": 17,
+          "firstDivergentTick": 17,
+          "kind": "state-mismatch",
+          "nativeVerificationPassed": true
+        },
+        {
+          "tick": 300,
+          "firstDivergentTick": 300,
+          "kind": "state-mismatch",
+          "nativeVerificationPassed": true
+        }
+      ],
+      "referenceRejected": true,
+      "cancelledAtTick": 17
+    }
+  ],
+  "errors": [],
+  "implementation": "36ce78ff099c68e9277c0297d98b551702b23a18592e1e3cac0d8d0b2844400c",
+  "browserVersion": "153.0",
+  "activeMode": null,
+  "modeStarted": "2026-10-18T17:41:36.616Z",
+  "finalImplementation": "36ce78ff099c68e9277c0297d98b551702b23a18592e1e3cac0d8d0b2844400c",
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-18T17:55:34.535Z"
+}

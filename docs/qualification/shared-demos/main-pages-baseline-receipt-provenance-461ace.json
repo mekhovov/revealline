@@ -1,0 +1,56 @@
+{
+  "runId": 39151144640,
+  "url": "https://github.com/mekhovov/revealline/actions/runs/39151144640",
+  "artifacts": [
+    {
+      "id": 12145433514,
+      "name": "main-pages-receipt-461ace72e78f8cbd77c26549381d9e21d0a65e91",
+      "reportedZipBytes": 519469,
+      "downloadedZipBytes": 519469,
+      "zipSha256": "919dea1ebf5533047380d27bc5511ed833bffff46710b58c732a7de7ceede0b9",
+      "apiDigest": "sha256:919dea1ebf5533047380d27bc5511ed833bffff46710b58c732a7de7ceede0b9",
+      "files": [
+        {
+          "path": ".cache/baseline-461ace-main-pages-receipt.json",
+          "bytes": 4429,
+          "sha256": "31005aec38b4c46b8137608491abd4fcd4131a6ef6ea132f6b9bcb06050ab33f"
+        },
+        {
+          "path": ".cache/baseline-461ace-main-pages-inventory.json",
+          "bytes": 514738,
+          "sha256": "decdb760892aaba8f2dd9743bc2216b153601daa966b140b909fd0f1d059c75c"
+        }
+      ]
+    },
+    {
+      "id": 12146290596,
+      "name": "main-pages-archive-receipt-461ace72e78f8cbd77c26549381d9e21d0a65e91",
+      "reportedZipBytes": 545,
+      "downloadedZipBytes": 545,
+      "zipSha256": "4085a3a03cd2ce28328feeed445f777f97fae7e254abe116126a0e141450ceaf",
+      "apiDigest": "sha256:4085a3a03cd2ce28328feeed445f777f97fae7e254abe116126a0e141450ceaf",
+      "files": [
+        {
+          "path": ".cache/baseline-461ace-main-pages-archive-receipt.json",
+          "bytes": 599,
+          "sha256": "f5c89c6e40ab2c82ba1e32759a185217afddd76bb7507a70d78070b592d1351b"
+        }
+      ]
+    },
+    {
+      "id": 12145859653,
+      "name": "practice-site-receipt-461ace72e78f8cbd77c26549381d9e21d0a65e91",
+      "reportedZipBytes": 284,
+      "downloadedZipBytes": 284,
+      "zipSha256": "de2d03f284fb6b8d15aa547ccb1cbce0674a7822f43a1dbb31fa721079314118",
+      "apiDigest": "sha256:de2d03f284fb6b8d15aa547ccb1cbce0674a7822f43a1dbb31fa721079314118",
+      "files": [
+        {
+          "path": ".cache/baseline-461ace-practice-site-receipt.json",
+          "bytes": 132,
+          "sha256": "a78f1a58d0a714f920cc9bb88b5bc930b936b0e6bf6cf1a1e9136b8d1c207e14"
+        }
+      ]
+    }
+  ]
+}

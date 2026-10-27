@@ -1,0 +1,249 @@
+{
+  "format": "SharedDemoComfortNativeFocusIndependentReviewV1",
+  "complete": true,
+  "reviewedAt": "2026-10-19T09:09:32.712019+00:00",
+  "sourceRevision": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+  "runtime": {
+    "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+    "files": 10000,
+    "bytes": 404485348
+  },
+  "buildInputs": {
+    "sha256": "e7c80fdd90923ecce12163550c8e9e1f223ca9c3b9e8445d1da65f497d10e02d",
+    "files": 9406,
+    "bytes": 348401321
+  },
+  "method": "Read-only independent exact receipt/log/helper/capture/declaration hash audit; reviewed the executed assertion sequence; validated observed-process ancestry and checked none of its exact identities remains. Full source-tree fingerprints are those independently recomputed by the browser runner and supervisor before/after; no rerun or full source rehash by this review. Exact evidence copies only.",
+  "browser": {
+    "engine": "chromium",
+    "version": "155.0.8059.85",
+    "started": "2026-10-19T09:06:33.929Z",
+    "finished": "2026-10-19T09:06:55.190Z",
+    "checks": 20,
+    "byOrigin": {
+      "solo": 6,
+      "snake": 7,
+      "sim": 7
+    },
+    "pageErrors": 0,
+    "errorOverflow": 0,
+    "complete": true
+  },
+  "persistenceAndCheckpoint": {
+    "ordinaryPausedCheckpoint": {
+      "phase": "paused",
+      "id": 1,
+      "tick": 16,
+      "status": "running",
+      "classId": "scout",
+      "levelId": "signal-01",
+      "checkpoint": {
+        "algorithm": "fnv1a64-state-v2",
+        "hash": "295b86f0607e601c",
+        "sections": {
+          "identity": "a87f904112d2e052",
+          "configuration": "67780a210840e2ad",
+          "board": "fdfff9d1d17aa722",
+          "player": "ecf72552f54d7009",
+          "trail": "f0ca473df9efdcc8",
+          "enemies": "69388d95182847a8",
+          "objectives": "09612b07b5ecb5a5",
+          "supplies": "e1b45854413ff5f8",
+          "ability": "f6b5aef539d929bb",
+          "clock": "a5d4f3a961261284",
+          "continuation": "a1e7286b42b404e7",
+          "result": "5b9bc4ba528108e4"
+        }
+      }
+    },
+    "preview": "Full localStorage and sessionStorage unchanged.",
+    "applyUndo": "Apply permits only the three explicit display preferences, menu-animation store and the ordinary profile mirror. Session storage, unrelated stores/preferences, profile generation and the exact paused checkpoint remain unchanged. Undo restores decoded profile/library values and display/menu intent; raw profile envelope bytes are not claimed identical across explicit preference writes.",
+    "demoCurrentAndMixedBack": "Both checks compare full local/session snapshots with their own immediate pre-entry baseline, preserve the same authoritative paused checkpoint and run identity, retire scene/loads/workers and restore launch-button focus.",
+    "nativeControls": "Seven Snake and seven SIM checks preserve their full localStorage baseline while checking held/neutral guard, focused Space, virtual-controller navigation, single confirmation and Back. Native-control sessionStorage is not measured by those fourteen checks.",
+    "assertionEvidence": "Checks are appended only after their corresponding assertions pass; raw storage values are intentionally not retained."
+  },
+  "bindings": {
+    "heldHeadBeforeAfter": true,
+    "reportedRuntimeAndBuildBeforeAfter": true,
+    "supervisorBeforeAfterEqual": true,
+    "captureMetadataAndDeclarationHashesMatch": true,
+    "helpersAndSavedCopiesExact": true,
+    "manifestSHA256": "ce06ec2f60b99c936f1f473e4626646b2a8939fe9f9a45ddc823387af93559da",
+    "inventorySHA256": "9bd903aa91419dd7db8ec33cc3b84798f3ead98882965b045ca7426a1746cbaf"
+  },
+  "cleanup": {
+    "childExit": 0,
+    "browserClosed": true,
+    "previewClosed": true,
+    "supervisionElapsedSeconds": 24.320876333000342,
+    "ownedIdentitiesObserved": 20,
+    "distinctObservedPIDs": 17,
+    "ancestryVerified": true,
+    "signalsIssued": 0,
+    "remainingAtSupervisorEnd": 0,
+    "sameIdentitiesAliveAtIndependentReview": 0,
+    "logBytes": 186,
+    "logCompleteUntruncated": true
+  },
+  "preparationEvidence": {
+    "browserLaunched": false,
+    "purePersistenceGuardsReportedPassed": 8,
+    "finalizationSignalGuardsReportedPassed": 2,
+    "preflightOnly": true,
+    "includedInBrowserCheckCount": false
+  },
+  "copies": [
+    {
+      "original": ".cache/comfort-menu-focus-emitted-2d24aee-b4688ca21.json",
+      "path": "docs/qualification/shared-demos/comfort-menu-focus-b4688ca21/browser.json",
+      "bytes": 15968,
+      "sha256": "fb61a9ef3b8c75577336ee4f35b2c8f3a27d46f52ed835bae80e42c251545d21",
+      "byteExact": true
+    },
+    {
+      "original": ".cache/comfort-menu-focus-emitted-2d24aee-b4688ca21.supervision.json",
+      "path": "docs/qualification/shared-demos/comfort-menu-focus-b4688ca21/supervision.json",
+      "bytes": 71438,
+      "sha256": "a35bc8ff4dad9ba3d4b6b9f2206fff954167d7fb4108901960414462e5dbd9d9",
+      "byteExact": true
+    },
+    {
+      "original": ".cache/comfort-menu-focus-emitted-2d24aee-b4688ca21.log",
+      "path": "docs/qualification/shared-demos/comfort-menu-focus-b4688ca21/browser.log.txt",
+      "bytes": 186,
+      "sha256": "e80787ffe24a62177f74ab7c66dce911056db2938eee379e88938b84a10e2722",
+      "byteExact": true
+    },
+    {
+      "original": ".cache/comfort-menu-focus-emitted-2d24aee-b4688ca21.mjs.txt",
+      "path": "docs/qualification/shared-demos/comfort-menu-focus-b4688ca21/observer.mjs.txt",
+      "bytes": 24599,
+      "sha256": "47d23dc2c0eb3ef27f32aabf0b30492537196d78fa783324172d021659ed1c75",
+      "byteExact": true
+    },
+    {
+      "original": ".cache/comfort-menu-focus-emitted-2d24aee-b4688ca21.supervisor.py.txt",
+      "path": "docs/qualification/shared-demos/comfort-menu-focus-b4688ca21/supervisor.py.txt",
+      "bytes": 12664,
+      "sha256": "bebc3654d166cd871db977b228260e84cffc67962c2369786e9c87a51445c629",
+      "byteExact": true
+    },
+    {
+      "original": ".cache/comfort-focus-preparation-b4688ca219.json",
+      "path": "docs/qualification/shared-demos/comfort-menu-focus-b4688ca21/preparation.json",
+      "bytes": 3691,
+      "sha256": "4a5f89e654db0f912bce6054be49ee214cebacbf3cad826ab9697e2d38c2846d",
+      "byteExact": true
+    },
+    {
+      "original": ".cache/comfort-focus-preflight-b4688ca219.json",
+      "path": "docs/qualification/shared-demos/comfort-menu-focus-b4688ca21/preflight.json",
+      "bytes": 2794,
+      "sha256": "479007bb4d44f3f99fa159f0b6c1442c3e6a303cade8269605c075ce3fa417bf",
+      "byteExact": true
+    },
+    {
+      "original": ".cache/comfort-focus-finalization-signal-guard.json",
+      "path": "docs/qualification/shared-demos/comfort-menu-focus-b4688ca21/finalization-signal-guard.json",
+      "bytes": 413,
+      "sha256": "95ac450ef1b9bddf7670db03c7451a69050bf2b7f550628db9211bd210b5a936",
+      "byteExact": true
+    },
+    {
+      "original": ".cache/test-comfort-focus-persistence-guards.mjs",
+      "path": "docs/qualification/shared-demos/comfort-menu-focus-b4688ca21/test-persistence-guards.mjs.txt",
+      "bytes": 3372,
+      "sha256": "e7a282cacd20b3c67bf87e91158dacfe41102ee8c41aef75a739d7fb92007775",
+      "byteExact": true
+    },
+    {
+      "original": ".cache/qualify-demo-menu-focus-emitted.mjs",
+      "path": "docs/qualification/shared-demos/comfort-menu-focus-b4688ca21/original-native-menu-probe.mjs.txt",
+      "bytes": 14455,
+      "sha256": "f06a1dad554ac801a5ecead041c34b7d5fde9043bcc0da382a4c77cfd2d2f6bb",
+      "byteExact": true
+    },
+    {
+      "original": ".cache/demo-probe-evidence.mjs",
+      "path": "docs/qualification/shared-demos/comfort-menu-focus-b4688ca21/evidence-helper.mjs.txt",
+      "bytes": 2632,
+      "sha256": "6b94daf1ec09b7e7e16faf905442d50d9e0f8c924479f994a67c89824bb39bc9",
+      "byteExact": true
+    },
+    {
+      "original": "scripts/shared-demo-listener-probe.mjs",
+      "path": "docs/qualification/shared-demos/comfort-menu-focus-b4688ca21/paused-origin-observer.mjs.txt",
+      "bytes": 5642,
+      "sha256": "88db205d8d2353a60bb8e91c7f2cb0ec83cdcc1d060d4b3ab32580aa526274ea",
+      "byteExact": true
+    },
+    {
+      "original": ".cache/run-endurance-emitted-final.py",
+      "path": "docs/qualification/shared-demos/comfort-menu-focus-b4688ca21/owned-process-supervisor-source.py.txt",
+      "bytes": 26055,
+      "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c",
+      "byteExact": true
+    },
+    {
+      "original": ".cache/run-comfort-menu-focus-b4688ca219.sh",
+      "path": "docs/qualification/shared-demos/comfort-menu-focus-b4688ca21/launch.sh.txt",
+      "bytes": 813,
+      "sha256": "f32ac3be76eaa93d75eed7b7f84a6457caff926096b02c741283e04dd3c4367f",
+      "byteExact": true
+    }
+  ],
+  "helperPins": [
+    {
+      "path": ".cache/qualify-comfort-menu-focus-emitted.mjs",
+      "bytes": 24599,
+      "sha256": "47d23dc2c0eb3ef27f32aabf0b30492537196d78fa783324172d021659ed1c75"
+    },
+    {
+      "path": ".cache/qualify-demo-menu-focus-emitted.mjs",
+      "bytes": 14455,
+      "sha256": "f06a1dad554ac801a5ecead041c34b7d5fde9043bcc0da382a4c77cfd2d2f6bb"
+    },
+    {
+      "path": ".cache/run-endurance-emitted-final.py",
+      "bytes": 26055,
+      "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c"
+    },
+    {
+      "path": ".cache/demo-probe-evidence.mjs",
+      "bytes": 2632,
+      "sha256": "6b94daf1ec09b7e7e16faf905442d50d9e0f8c924479f994a67c89824bb39bc9"
+    },
+    {
+      "path": "scripts/shared-demo-listener-probe.mjs",
+      "bytes": 5642,
+      "sha256": "88db205d8d2353a60bb8e91c7f2cb0ec83cdcc1d060d4b3ab32580aa526274ea"
+    },
+    {
+      "path": "scripts/serve-production-preview.mjs",
+      "bytes": 13598,
+      "sha256": "60a40c238318d1b1da84bb5eb572580b7c90b52d0fc55bb80754a03b56d2812a"
+    },
+    {
+      "path": "scripts/shared-demo-browser-report.mjs",
+      "bytes": 4072,
+      "sha256": "395200ee9930991de4cf5774005eac84a9c40fcbea925a999159bad8f71fcbc0"
+    },
+    {
+      "path": "scripts/emitted-preview.mjs",
+      "bytes": 11434,
+      "sha256": "d7c4435e699f62ce91e8dc30d78525349883f15c36eee102eb8cbe9b88239b81"
+    },
+    {
+      "path": "docs/qualification/shared-demos/source-freeze-latest.json",
+      "bytes": 423,
+      "sha256": "05cb055569df7fda6b9a26a7ac3767345e62846a3bea3bea7f91f364b2b78d88"
+    }
+  ],
+  "limitations": [
+    "This is one Chromium run with three isolated origin contexts and a virtual standard gamepad; it does not provide Firefox/WebKit coverage for this new narrow scenario, physical-controller/radio, mobile, audible or unfamiliar-player acceptance.",
+    "The preview modifies only local HTML access credentials. This is not offline HTML integrity, uploaded-artifact or deployment admission.",
+    "The paused-run observer wraps the ephemeral Phaser constructor and retains a WeakRef for read-only checkpoint inspection; it adds no simulation scheduler or listener hook.",
+    "Timers/cleanup guards are cooperative; successful completion does not establish a hard I/O deadline or new failure-path supervision evidence.",
+    "Preparation and pure helper guards are retained separately and never added to the20 browser checks or the11-job matrix."
+  ]
+}

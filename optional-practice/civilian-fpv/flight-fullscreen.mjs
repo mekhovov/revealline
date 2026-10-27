@@ -9323,7 +9323,7 @@ export const readSimRadioAudio=sharedGlobalSettings.readSimRadioAudio;
 export const SIM_RADIO_AUDIO_KEY=sharedGlobalSettings.SIM_RADIO_AUDIO_KEY;
 export const attachSimMenuAudioSettings=sharedGlobalSettings.attachSimMenuAudioSettings;
 export const readSimMenuAudio=sharedGlobalSettings.readSimMenuAudio;
-// Canonical source sha256: a878605004fbfd49d3809deb02e4081e808243f1a2a43d5499a981ff0e335055
+// Canonical source sha256: 2d7d24a8f673ea0f985e4ebbcb2ae0364c127aa24d4644ab6af25d4eab9f1be8
 const sharedModeShell=(()=>{
 // Dependency-free presentation shared with bundled simulator builds.
 const GAME_MODE_ORDER=Object.freeze([
@@ -10142,6 +10142,12 @@ modesRoot?.addEventListener('game-mode-visibility-changed',refresh);
 modesRoot?.addEventListener('game-mode-choices-ready',refresh);
 
 return{
+insertAfter(anchor,nodes){
+const index=groups.findIndex((group)=>group.includes(anchor));
+if(index<0)return;
+groups.splice(index+1,0,...nodes.filter((node)=>node?.id).map((node)=>[node]));
+refresh();
+},
 dispose(){
 modesRoot?.removeEventListener('game-mode-visibility-changed',refresh);
 modesRoot?.removeEventListener('game-mode-choices-ready',refresh);
@@ -10759,6 +10765,7 @@ back,
 update,
 topDialog,
 elements,
+addHomeActions:(nodes)=>landingNavigation.insertAfter(buttons.settings,nodes),
 setLocale,
 localize:setLocale,
 blocksPlay:()=> !!topDialog(),

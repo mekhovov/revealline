@@ -1,0 +1,320 @@
+{
+  "format": "SharedDemoActualChromiumDiscardV1",
+  "engine": "chromium",
+  "started": "2026-10-19T01:03:25.020Z",
+  "complete": false,
+  "source": {
+    "binding": "This probe independently recomputes the canonical full runtime fingerprint before browser launch and after browser/preview cleanup, checks hash/file count/byte count against the pinned argument and manifest, and retains scoped source and unchanged-HEAD checks. It also binds the canonical complete scripts/authoring build-input scope and exact emitted capture/audit/inventory bytes before and after.",
+    "head": "693947ed1373db7a265def126a5eede2bf875013",
+    "manifestPath": "docs/qualification/shared-demos/source-freeze-latest.json",
+    "created": "2026-10-19T00:33:50.857423+00:00",
+    "integrationBase": "dd337c8120fd6f875544c1479713d3aa4299c323",
+    "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+    "sourceFingerprint": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+    "files": 9996,
+    "bytes": 404392393
+  },
+  "probe": {
+    "path": ".cache/qualify-demo-actual-discard-237.mjs",
+    "sha256": "e4410c02ae706cdc082b57aee898e30b164c5590d99d5ae1b9c47f3bc55f799a",
+    "helperSHA256": "55161bdeeab6b08134728686bea76496819a44a89903d31f63b854088f22d749"
+  },
+  "functionalComplete": false,
+  "strictDiagnosticGate": false,
+  "checks": [],
+  "errors": [],
+  "actualDiscards": [
+    {
+      "mode": "solo",
+      "stateName": "ordinary",
+      "started": "2026-10-19T01:03:34.100Z",
+      "targetURL": "http://127.0.0.1:18773/game/?journey=legacy&library-mission=%5B%22%5B%5C%22classic%5C%22%2C%5C%22base%5C%22%2Cnull%5D%22%2C%22fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718%22%2C%22first-signal%2F2%2F88639f3aab7b6cc1%22%2C%22signal-01%22%2C%221%22%5D",
+      "before": {
+        "documentId": "1792371812334-0.09101900988980083",
+        "wasDiscarded": false,
+        "resources": null,
+        "open": false,
+        "practice": false,
+        "phase": null,
+        "mode": null,
+        "tick": null,
+        "bodyState": "briefing",
+        "dialogs": [
+          "shell-home"
+        ],
+        "nativeSurfaces": 0,
+        "lifecycle": [
+          {
+            "type": "pageshow",
+            "persisted": false
+          }
+        ],
+        "navigation": [
+          {
+            "type": "navigate",
+            "notRestoredReasons": null
+          }
+        ]
+      }
+    }
+  ],
+  "beforeHashes": {
+    "docs/qualification/shared-demos/source-freeze-latest.json": "720fad3322504f932ab4974641e4770babba8594ff3d99c93d0b9eeb4aa8d13c",
+    "game/app.mjs": "4a6c4fbaeb036de62697cf47755b3d4162793c250f274192e1ad812b35640eab",
+    "game/ui/demo-host.mjs": "fe775bf8636e29d1cedc84fba62f8be47d233c267296fd245bdcc53b83c03d61",
+    "game/snake/classic-app.mjs": "913443706767cd1d16bfffdbe90b9cfb86da3cf1ff88251577b71ce0088af542",
+    "game/overflight/app.mjs": "fc415ae0525f22639ecc6c9ec06381ad176ec79638014f816c2622cd38f218cf",
+    "optional-practice/civilian-fpv/world-app.mjs": "28fddbd86ca7101ea40e4adee7c60b4a918488cab65cd31ddd25f7e7d77c529d",
+    "scripts/qualify-demo-restoration-browser.mjs": "13d80135cff69674fe569f991df674d1e633ecaa138eded41ce78207bb59ce83",
+    "scripts/demo-restoration-observation.mjs": "55161bdeeab6b08134728686bea76496819a44a89903d31f63b854088f22d749",
+    "scripts/shared-demo-browser-report.mjs": "d38fa9f54e933b9eefe9e29f5c26e88a23e410b96da289dc24ae621ceda240df",
+    "scripts/serve-production-preview.mjs": "60a40c238318d1b1da84bb5eb572580b7c90b52d0fc55bb80754a03b56d2812a",
+    "scripts/demo-source-fingerprint.mjs": "ed795c9d63b6d2c983f10ed72e750585faedfce9eb00399c3f0db1f0aef1c413",
+    "scripts/emitted-preview.mjs": "d7c4435e699f62ce91e8dc30d78525349883f15c36eee102eb8cbe9b88239b81",
+    ".cache/demo-probe-evidence.mjs": "6b94daf1ec09b7e7e16faf905442d50d9e0f8c924479f994a67c89824bb39bc9"
+  },
+  "runtimeBinding": {
+    "scope": "Sorted rg --files game optional-practice publishing; .mjs/.js/.json/.css/.html; excludes /test/, *.test.mjs and */coverage.json; SHA256(path + NUL + raw SHA256(file bytes)).",
+    "before": {
+      "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+      "files": 9996,
+      "bytes": 404392393
+    },
+    "after": {
+      "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+      "files": 9996,
+      "bytes": 404392393
+    },
+    "beforeVerified": true,
+    "afterVerified": true
+  },
+  "buildInputBinding": {
+    "scope": "Sorted rg --files scripts authoring; .mjs/.js/.json/.css/.html; excludes /test/, *.test.mjs and */coverage.json; SHA256(path + NUL + raw SHA256(file bytes)).",
+    "before": {
+      "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+      "files": 9398,
+      "bytes": 348357907
+    },
+    "after": {
+      "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+      "files": 9398,
+      "bytes": 348357907
+    },
+    "beforeVerified": true,
+    "afterVerified": true
+  },
+  "emittedEvidenceBinding": {
+    "before": {
+      "manifest": {
+        "path": ".cache/shared-demos-emitted-dd337c8-693947ed1/manifest.json",
+        "bytes": 1304395,
+        "sha256": "061e1017b9251daaae701b5ae34b874039331653630e378c44cc2ac5e73eb474"
+      },
+      "audit": {
+        "path": "docs/qualification/shared-demos/main-pages-demo-final-dd337c8-693947ed1.json",
+        "bytes": 2057403,
+        "sha256": "7d46a578c3b0ca2b208e58cba99c151bf4889ec850bdc176da1030875baa7532"
+      },
+      "inventory": {
+        "path": "docs/qualification/shared-demos/main-pages-demo-final-dd337c8-693947ed1.inventory.json",
+        "bytes": 941134,
+        "sha256": "49a076bea7fa4402f33de1e07415f5095a0a95cbd11218f8c8593d8bcf93ab0a"
+      },
+      "identity": {
+        "inventorySHA256": "69229598ca547a5e01e805b8fac551ec0a45591e366074f4f6a6c1a4745969cd",
+        "sourceRevision": "693947ed1373db7a265def126a5eede2bf875013",
+        "sourceFingerprint": {
+          "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+          "files": 9996,
+          "bytes": 404392393
+        },
+        "buildInputFingerprint": {
+          "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+          "files": 9398,
+          "bytes": 348357907
+        }
+      }
+    },
+    "after": {
+      "manifest": {
+        "path": ".cache/shared-demos-emitted-dd337c8-693947ed1/manifest.json",
+        "bytes": 1304395,
+        "sha256": "061e1017b9251daaae701b5ae34b874039331653630e378c44cc2ac5e73eb474"
+      },
+      "audit": {
+        "path": "docs/qualification/shared-demos/main-pages-demo-final-dd337c8-693947ed1.json",
+        "bytes": 2057403,
+        "sha256": "7d46a578c3b0ca2b208e58cba99c151bf4889ec850bdc176da1030875baa7532"
+      },
+      "inventory": {
+        "path": "docs/qualification/shared-demos/main-pages-demo-final-dd337c8-693947ed1.inventory.json",
+        "bytes": 941134,
+        "sha256": "49a076bea7fa4402f33de1e07415f5095a0a95cbd11218f8c8593d8bcf93ab0a"
+      },
+      "identity": {
+        "inventorySHA256": "69229598ca547a5e01e805b8fac551ec0a45591e366074f4f6a6c1a4745969cd",
+        "sourceRevision": "693947ed1373db7a265def126a5eede2bf875013",
+        "sourceFingerprint": {
+          "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+          "files": 9996,
+          "bytes": 404392393
+        },
+        "buildInputFingerprint": {
+          "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+          "files": 9398,
+          "bytes": 348357907
+        }
+      }
+    },
+    "beforeVerified": true,
+    "afterVerified": true
+  },
+  "references": [
+    "https://developer.chrome.com/docs/web-platform/page-lifecycle-api",
+    "https://chromium.googlesource.com/chromium/src/+/155.0.8059.85/chrome/browser/resources/discards/discards_tab.ts"
+  ],
+  "instrumentation": "Ephemeral init observers wrap Storage mutations and IndexedDB object-store writes without changing arguments/results. A context binding retains bounded mutation/lifecycle metadata across reload. A separate task-owned preview serves the verified emitted inventory with fixture credentials and public,max-age=0,must-revalidate headers. No Playwright routing is installed; a minimal away page is served by this test-only server.",
+  "limitations": [
+    "The preview serves the verified emitted inventory after verifying its captured source identity against the current checkout. Only the recorded local HTML access salt/verifier exception is applied. This is not offline HTML integrity proof; service workers are not blocked or unregistered.",
+    "Actual urgent discard is requested only for the exact owned game tab through chrome://discards UI; no user browser, extension, crash, synthetic wasDiscarded override, or page.reload fallback is used.",
+    "Every accepted case requires the native UI to report discarded, a new document identity, and native document.wasDiscarded=true after tab activation.",
+    "Fresh profiles cover ordinary entry plus watching/practice in each selected mode; existing saved-flight checkpoint tests remain complementary.",
+    "Storage API observers preserve native return values; managed media asset-cache writes are recorded separately from player persistence, following the existing restoration helper.",
+    "Resource assertions cover no restored demo surface/owned scene and termination of observed dedicated workers. They do not measure browser-internal GPU/process memory.",
+    "The canonical full runtime scope excludes tests, coverage reports, documentation, binary assets and ignored files. The canonical scripts/authoring build-input scope uses the same file selection rules and is independently bound before/after; relevant helpers, this probe, and its ignored evidence helper are also pinned. This is not a hash of every repository file.",
+    "The before/after fingerprints detect changes at those boundaries, not transient edits reverted during the run. The parent must keep the declared source freeze and exclusive browser slot held.",
+    "Invocation requires an exact newly frozen HEAD/runtime; this preparation script itself grants no browser or discard credit until all strict checks complete."
+  ],
+  "preview": {
+    "port": 18773,
+    "cache": "revalidate",
+    "mode": "generated-build",
+    "headers": "generated _headers (verified)",
+    "fixtureAccess": true,
+    "emittedPreview": {
+      "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-dd337c8-693947ed1",
+      "manifestSHA256": "061e1017b9251daaae701b5ae34b874039331653630e378c44cc2ac5e73eb474",
+      "inventorySHA256": "69229598ca547a5e01e805b8fac551ec0a45591e366074f4f6a6c1a4745969cd",
+      "files": 5952,
+      "sourceRevision": "693947ed1373db7a265def126a5eede2bf875013",
+      "sourceFingerprint": {
+        "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+        "files": 9996,
+        "bytes": 404392393
+      },
+      "buildInputFingerprint": {
+        "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+        "files": 9398,
+        "bytes": 348357907
+      },
+      "sourceVerified": true,
+      "sourceVerification": {
+        "head": "693947ed1373db7a265def126a5eede2bf875013",
+        "runtime": {
+          "sha256": "b3521878b45d604f69906d2fff0bcdbdf6a0922f7f8cb573c6488136e89a27b0",
+          "files": 9996,
+          "bytes": 404392393
+        },
+        "buildInput": {
+          "sha256": "ebced3b14c182ddb17fd127acb25298630839871f119818a6ffd82881041351f",
+          "files": 9398,
+          "bytes": 348357907
+        }
+      }
+    },
+    "observedCacheControl": "public, max-age=0, must-revalidate",
+    "fixtureResponses": [
+      {
+        "path": "game/index.html",
+        "original": {
+          "bytes": 148313,
+          "sha256": "418f56ea11a419120e53fc1cd8dceaad5c10c394dad39e0922623aa2b9d6edc6"
+        },
+        "served": {
+          "bytes": 148287,
+          "sha256": "f7b9763619eb424bf737ee3e676695b5e364c45164deb5178aa91b9294b6ccac"
+        },
+        "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+      }
+    ]
+  },
+  "browserVersion": "155.0.8059.85",
+  "failure": "page.waitForFunction: Timeout 3000ms exceeded.\n    at actualDiscard (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/qualify-demo-actual-discard-237.mjs:288:14)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/qualify-demo-actual-discard-237.mjs:514:21",
+  "activeStage": {
+    "mode": "solo",
+    "stage": "ordinary-control-discard"
+  },
+  "events": [
+    {
+      "mode": "solo",
+      "stage": "boot",
+      "id": "1792371812334-0.09101900988980083",
+      "path": "/game/",
+      "at": 1792371812386,
+      "kind": "lifecycle",
+      "type": "pageshow",
+      "persisted": false
+    },
+    {
+      "mode": "solo",
+      "stage": "boot",
+      "id": "1792371812334-0.09101900988980083",
+      "path": "/game/",
+      "at": 1792371812456,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "localStorage",
+      "method": "setItem",
+      "key": "revealline.access.revealline.v1",
+      "absentRemoval": false
+    },
+    {
+      "mode": "solo",
+      "stage": "boot",
+      "id": "1792371812334-0.09101900988980083",
+      "path": "/game/",
+      "at": 1792371813662,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "sessionStorage",
+      "method": "removeItem",
+      "key": "revealline.accepted-appearance-context.v1",
+      "absentRemoval": true
+    },
+    {
+      "mode": "solo",
+      "stage": "ordinary-control-discard",
+      "id": "1792371812334-0.09101900988980083",
+      "path": "/game/",
+      "at": 1792371814185,
+      "kind": "mutation",
+      "api": "Storage",
+      "owner": "sessionStorage",
+      "method": "removeItem",
+      "key": "revealline.accepted-appearance-context.v1",
+      "absentRemoval": true
+    }
+  ],
+  "discardsFailureText": "Internal debugging pages are currently disabled.\n\nThese pages are intended for use by Chrome developers, and may not be actively maintained or tested. To enable them, navigate to chrome://chrome-urls, click the button to enable debug pages, and then navigate to this page again.",
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-19T01:03:37.708Z",
+  "previewClosed": true,
+  "sourceUnchanged": true,
+  "afterHashes": {
+    "docs/qualification/shared-demos/source-freeze-latest.json": "720fad3322504f932ab4974641e4770babba8594ff3d99c93d0b9eeb4aa8d13c",
+    "game/app.mjs": "4a6c4fbaeb036de62697cf47755b3d4162793c250f274192e1ad812b35640eab",
+    "game/ui/demo-host.mjs": "fe775bf8636e29d1cedc84fba62f8be47d233c267296fd245bdcc53b83c03d61",
+    "game/snake/classic-app.mjs": "913443706767cd1d16bfffdbe90b9cfb86da3cf1ff88251577b71ce0088af542",
+    "game/overflight/app.mjs": "fc415ae0525f22639ecc6c9ec06381ad176ec79638014f816c2622cd38f218cf",
+    "optional-practice/civilian-fpv/world-app.mjs": "28fddbd86ca7101ea40e4adee7c60b4a918488cab65cd31ddd25f7e7d77c529d",
+    "scripts/qualify-demo-restoration-browser.mjs": "13d80135cff69674fe569f991df674d1e633ecaa138eded41ce78207bb59ce83",
+    "scripts/demo-restoration-observation.mjs": "55161bdeeab6b08134728686bea76496819a44a89903d31f63b854088f22d749",
+    "scripts/shared-demo-browser-report.mjs": "d38fa9f54e933b9eefe9e29f5c26e88a23e410b96da289dc24ae621ceda240df",
+    "scripts/serve-production-preview.mjs": "60a40c238318d1b1da84bb5eb572580b7c90b52d0fc55bb80754a03b56d2812a",
+    "scripts/demo-source-fingerprint.mjs": "ed795c9d63b6d2c983f10ed72e750585faedfce9eb00399c3f0db1f0aef1c413",
+    "scripts/emitted-preview.mjs": "d7c4435e699f62ce91e8dc30d78525349883f15c36eee102eb8cbe9b88239b81",
+    ".cache/demo-probe-evidence.mjs": "6b94daf1ec09b7e7e16faf905442d50d9e0f8c924479f994a67c89824bb39bc9"
+  },
+  "headAfter": "693947ed1373db7a265def126a5eede2bf875013"
+}

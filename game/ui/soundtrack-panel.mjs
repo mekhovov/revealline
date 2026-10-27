@@ -1786,7 +1786,10 @@ export function attachSoundtrackPanel({
   let officialPresent = new Set();
   async function refreshOfficialDownloads() {
     if (!officialDownloads || !catalogue) return;
-    const ids = await localOfficialRecordingIds(catalogue);
+    const ids = await localOfficialRecordingIds(catalogue, {
+      signal: publicationLifetime.signal,
+    });
+    publicationLifetime.signal.throwIfAborted();
     officialPresent = new Set(
       catalogue.tracks.filter((track) => ids.includes(track.id)).map((track) => track.asset.sha256),
     );

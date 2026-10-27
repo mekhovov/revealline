@@ -99,5 +99,8 @@
   "windowedShort": "Windowed",
   "reactionRecovery": "Back on safe ground with a new capture. That is a comeback.",
   "reactionShield": "The shield caught that hit. A little breathing room!",
-  "reactionObjective": "Objective secured. One step closer to bringing this picture home."
+  "reactionObjective": "Objective secured. One step closer to bringing this picture home.",
+  "watchAll": "Watch all modes",
+  "retry": "Retry",
+  "recentCaptions": "Recent explanations"
 }

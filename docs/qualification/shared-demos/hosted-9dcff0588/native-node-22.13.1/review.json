@@ -1,0 +1,88 @@
+{
+  "format": "SharedDemoHostedNativeArtifactReviewV1",
+  "observedAt": "2026-10-19T10:59:16.367306+00:00",
+  "head": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "environment": {
+    "node": "v22.13.1",
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "strictPass": true,
+  "artifact": {
+    "id": 12181845568,
+    "node_id": "MDg6QXJ0aWZhY3QxMjE4MTg0NTU2OA==",
+    "name": "native-demo-verification-node-22.13.1-9dcff05887ed573a9fef4037c8d451c8043653a9-1",
+    "size_in_bytes": 60195,
+    "url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12181845568",
+    "archive_download_url": "https://api.github.com/repos/mekhovov/revealline/actions/artifacts/12181845568/zip",
+    "expired": false,
+    "digest": "sha256:242163936018fa5b8c6627cafe273b6afe0ebbb8ab12a585c171ab3e7efdcef9",
+    "created_at": "2026-10-19T10:57:24Z",
+    "updated_at": "2026-10-19T10:57:24Z",
+    "expires_at": "2026-10-26T10:57:23Z",
+    "workflow_run": {
+      "id": 39239035807,
+      "repository_id": 1367404328,
+      "head_repository_id": 1367404328,
+      "head_branch": "codex/shared-game-demos",
+      "head_sha": "9dcff05887ed573a9fef4037c8d451c8043653a9"
+    }
+  },
+  "archive": {
+    "path": ".cache/hosted-9dcff0588-native-node-22.13.1.zip",
+    "sha256": "242163936018fa5b8c6627cafe273b6afe0ebbb8ab12a585c171ab3e7efdcef9",
+    "bytes": 60195
+  },
+  "files": [
+    {
+      "path": ".cache/hosted-9dcff0588-native-node-22.13.1/solo-native-candidates/report.json",
+      "sha256": "9f20ac8bef6a5d7a65835457e8d30887357491018cfe0c6fac84af6ece4cf1a0",
+      "bytes": 392742
+    },
+    {
+      "path": ".cache/hosted-9dcff0588-native-node-22.13.1/survival-native-qualification.json",
+      "sha256": "5842183783dae1b58c7e16ce4aec4cafebffbaeae998ed32b4939a10ecc4d3f8",
+      "bytes": 21160
+    },
+    {
+      "path": ".cache/hosted-9dcff0588-native-node-22.13.1/solo-native-verification/scan.log",
+      "sha256": "c287082661291456f214ceb029a01ebbc6032405588e177a577fc1f6a96f3809",
+      "bytes": 31096
+    },
+    {
+      "path": ".cache/hosted-9dcff0588-native-node-22.13.1/survival-native-qualification.log",
+      "sha256": "5967ffe8f54b2fc7463ac85cfcca4af644ecf2e35a27f64a1f5d476ac0c04fb1",
+      "bytes": 4420
+    }
+  ],
+  "solo": {
+    "requiredEntries": 240,
+    "requiredSources": 242,
+    "strictUsableSources": 242,
+    "sourceStable": true,
+    "scanComplete": true,
+    "missingEntries": [],
+    "unusableEntries": [],
+    "unusableSources": [],
+    "generatedCandidates": 0,
+    "started": "2026-10-19T10:41:01.654Z",
+    "finished": "2026-10-19T10:54:03.880Z"
+  },
+  "survival": {
+    "counts": {
+      "required": 18,
+      "checked": 18,
+      "verified": 18
+    },
+    "variants": [
+      "node22131-x64"
+    ],
+    "elapsedMs": 198159.005501,
+    "bodyHashesMatchCurrentCandidate": true
+  },
+  "limits": [
+    "Artifact/source-binding audit of strict hosted execution; no local replay rerun, browser proof or package proof.",
+    "Original job status and all per-source report data retained; no failed receipt relabeled."
+  ],
+  "noJobActions": true
+}

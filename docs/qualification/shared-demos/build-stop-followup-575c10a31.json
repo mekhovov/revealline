@@ -1,0 +1,36 @@
+{
+  "format": "revealline-demo-build-stop-followup.v1",
+  "observedAt": "2026-10-19T02:58:43.147465+00:00",
+  "originalReceipt": "docs/qualification/shared-demos/shared-demos-build-validation-c4c5fc3-575c10a31.json",
+  "originalReceiptSHA256": "3121927e0b51a605f03fcc528c764bbf2bd183154473903cf577d31f706ad956",
+  "originalReceiptRetained": true,
+  "complete": false,
+  "mainPagesComplete": true,
+  "remainingStages": [
+    "full-packaging",
+    "validate",
+    "lint"
+  ],
+  "observedStopReason": "Available disk fell below200MiB.",
+  "wrapperExitCode": 1,
+  "finalReceiptWriteFailure": "ENOSPC",
+  "childExitStatusNotRetained": true,
+  "sourceAfter": {
+    "head": "575c10a31287b7ae086bcf373ef4ab3ecbf613a3",
+    "runtime": {
+      "sha256": "35b8b966b926324557effeea0e9f54d93348d5617fea4e054f9fc0e7ea3859f4",
+      "files": 9996,
+      "bytes": 404409496
+    },
+    "buildInput": {
+      "sha256": "31d7feed289f5e8f2e40f32c72422bb2a4a5a9ab9b8c802e1a0a77cbc2dc9e44",
+      "files": 9406,
+      "bytes": 348394334
+    }
+  },
+  "sourceStable": true,
+  "largeNewTemporaryPack": "tmp_pack_LkzJaT",
+  "largeNewTemporaryPackBytes": 715128832,
+  "writerAttribution": "Unproven; separate bounded observation records Git processes and pack growth.",
+  "capture": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/captures/shared-demos-emitted-c4c5fc3-575c10a31"
+}

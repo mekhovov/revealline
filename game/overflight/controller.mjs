@@ -119,7 +119,12 @@ export function createOverflightController({
     router.clear();
     support = null;
   }
-  function sample({ scope: nextScope, timeMs } = {}) {
+  function sample({
+    scope: nextScope,
+    timeMs,
+    spectator = false,
+    toggleBoostEligible = true,
+  } = {}) {
     const output = {
       x: 0,
       y: 0,
@@ -133,7 +138,7 @@ export function createOverflightController({
     if (destroyed || !enabled) return output;
     if (scope !== nextScope) reset();
     scope = nextScope;
-    const frame = router.sample({ scope, timeMs });
+    const frame = router.sample({ scope, timeMs, spectator, toggleBoostEligible });
     last = frame;
     // Observe the existing owner's result only. Support reads never poll a pad,
     // retain its identity or consume a navigation/flight edge.
@@ -245,6 +250,13 @@ export function createOverflightController({
     return output;
   }
   return {
+    get sharedFrame() {
+      return last;
+    },
+    get gamepads() {
+      return sampledPads;
+    },
+    rawProfile: radio.rawProfile,
     sample,
     clear,
     setPreferences(next) {

@@ -1,0 +1,33 @@
+{
+  "format": "OptionalFPVCountCorrectionStyleChecksV1",
+  "observedAt": "2026-10-19T09:27:52.687779+00:00",
+  "target": "scripts/test-optional-fpv-package.mjs",
+  "sourceSHA256": "5a744cc5cd4bdf71cddce76f61f9c9163ec50004d4385133042e11ee21e03617",
+  "readOnly": true,
+  "complete": true,
+  "checks": [
+    {
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "node_modules/prettier/bin/prettier.cjs",
+        "--check",
+        "scripts/test-optional-fpv-package.mjs"
+      ],
+      "exitCode": 0,
+      "output": "Checking formatting...\nAll matched files use Prettier code style!\n",
+      "passed": true
+    },
+    {
+      "command": [
+        "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/22.22.2/bin/node",
+        "node_modules/eslint/bin/eslint.js",
+        "scripts/test-optional-fpv-package.mjs",
+        "--max-warnings",
+        "0"
+      ],
+      "exitCode": 0,
+      "output": "",
+      "passed": true
+    }
+  ]
+}

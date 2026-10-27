@@ -14,9 +14,13 @@ import {
 } from '../game/replay.mjs';
 import { createSceneClock } from '../game/ui/scene-clock.mjs';
 import { validateQualification } from './solo-qualification.mjs';
+import { readSoloDiagnosticSource } from './solo-retired-diagnostic-source.mjs';
 
 const root = new URL('../', import.meta.url);
-const read = (path) => readFile(new URL(path, root));
+const read = (path) =>
+  path === '.github/workflows/solo-remote-final-timing-sentry-v2-temporary.yml'
+    ? readSoloDiagnosticSource(path)
+    : readFile(new URL(path, root));
 const directory = 'docs/performance/fixtures/solo-remote-timing/';
 const original = JSON.parse(await read(directory + 'sentry.qualification.fixture'));
 const proposed = JSON.parse(await read(directory + 'sentry-wall-anchor.qualification.fixture'));

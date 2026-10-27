@@ -173,6 +173,11 @@ test('real archived CLI builds reviewed soundtrack metadata without installed fo
     'scripts/build-entry-writer.mjs',
     'game/mission-library/included-bundled-pack.mjs',
     'scripts/brand-icons.mjs',
+    'scripts/build-entry-writer.mjs',
+    'scripts/main-pages-source-originals.mjs',
+    'publishing/vendor/acorn-8.18.0.mjs',
+    'publishing/vendor/acorn-LICENSE.txt',
+    'game/mission-library/included-bundled-pack.mjs',
     'game/ui/art/identity/fpv-line/icon-master.png',
     'scripts/offline-content.mjs',
     'scripts/offline-finalize.mjs',
@@ -295,6 +300,7 @@ test('real archived CLI builds reviewed soundtrack metadata without installed fo
   const archive = await readFile(path.join(output, 'source.tar'));
   const entries = new Map(readTarEntries(archive).map((entry) => [entry.name, entry.bytes]));
   assert(![...entries.keys()].some((name) => name.split('/').includes('node_modules')));
+  assert(!entries.has('game/offline.mjs'));
   assert.deepEqual(
     entries.get('scripts/soundtrack-distribution.mjs'),
     await readFile(path.join(source, 'scripts/soundtrack-distribution.mjs')),

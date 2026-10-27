@@ -1,0 +1,282 @@
+{
+  "format": "DisplayHostFixtureCorrectionV1",
+  "completedAt": "2026-10-19T08:21:34.097881+00:00",
+  "complete": true,
+  "head": "f51d2597a3bcc711c229bbc51445e7150bfee1db",
+  "main": "2d24aee29448667a2cbe0381ef1755529f59fb11",
+  "nodeVersion": "v20.19.5",
+  "platform": "darwin",
+  "arch": "arm64",
+  "scope": "Test fixture and assertions only; no production edits or browser runs. Original 23-file integration remains failed at 623/628. Focused final file is a separate 12/12 pass; no aggregate rerun is claimed.",
+  "originalIntegration": {
+    "receipt": "main-integration-2d24-f51d2597a.json",
+    "pass": 623,
+    "tests": 628,
+    "fail": 5
+  },
+  "baselineIdentityChecks": [
+    {
+      "path": "game/test/display-preferences-host.test.mjs",
+      "mainObject": "db93170ef7c79656a85bb23dea45b53165dff65b",
+      "integratedObject": "db93170ef7c79656a85bb23dea45b53165dff65b",
+      "unchanged": true
+    },
+    {
+      "path": "game/couch/relay-rescue.mjs",
+      "mainObject": "c13ac034e6e827faf09e49b4d1ceae3845f56378",
+      "integratedObject": "c13ac034e6e827faf09e49b4d1ceae3845f56378",
+      "unchanged": true
+    },
+    {
+      "path": "game/enemy-stats.mjs",
+      "mainObject": "bdf1a12ae9ab5ffa6b5921a97182dea15de61c19",
+      "integratedObject": "bdf1a12ae9ab5ffa6b5921a97182dea15de61c19",
+      "unchanged": true
+    },
+    {
+      "path": "game/couch/coop-view.mjs",
+      "mainObject": "25593e27a7dc30d64e3c12826695066672e20561",
+      "integratedObject": "25593e27a7dc30d64e3c12826695066672e20561",
+      "unchanged": true
+    },
+    {
+      "path": "game/presentation/theme-host.mjs",
+      "mainObject": "01ab01c6726e561bca8491f5e2241c5c1c1b18e0",
+      "integratedObject": "01ab01c6726e561bca8491f5e2241c5c1c1b18e0",
+      "unchanged": true
+    },
+    {
+      "path": "game/presentation/theme-system.mjs",
+      "mainObject": "461fdd32fc3faf7318eb844138fc4f5892093263",
+      "integratedObject": "461fdd32fc3faf7318eb844138fc4f5892093263",
+      "unchanged": true
+    },
+    {
+      "path": "game/content/campaign.json",
+      "mainObject": "57d9277a23efecd687710ce607f02ff757f5f7f2",
+      "integratedObject": "57d9277a23efecd687710ce607f02ff757f5f7f2",
+      "unchanged": true
+    },
+    {
+      "path": "game/couch/relay-rescue.html",
+      "mainObject": "355127740c664eca7e23fb703b67ffad4c044475",
+      "integratedObject": "355127740c664eca7e23fb703b67ffad4c044475",
+      "unchanged": true
+    },
+    {
+      "path": "game/couch/index.html",
+      "mainObject": "47dee0c3d35255d54304d8ea4056dc6e7df95b87",
+      "integratedObject": "47dee0c3d35255d54304d8ea4056dc6e7df95b87",
+      "unchanged": true
+    },
+    {
+      "path": "game/presentation/compiled/runtime.json",
+      "mainObject": "c27b56d8195b0675d2657dbdb7f284b7955571f2",
+      "integratedObject": "c27b56d8195b0675d2657dbdb7f284b7955571f2",
+      "unchanged": true
+    },
+    {
+      "path": "game/presentation/industrial-workshop.css",
+      "mainObject": "37097219608a73692f328ea8132334923759dce6",
+      "integratedObject": "37097219608a73692f328ea8132334923759dce6",
+      "unchanged": true
+    }
+  ],
+  "reproductions": [
+    {
+      "stage": "Original merged one-case reproduction",
+      "log": "display-host-merged-red.tap.txt",
+      "exitCode": 1,
+      "totals": {
+        "tests": 8,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 7,
+        "duration_ms": 8493.999375
+      }
+    },
+    {
+      "stage": "Pinned-main original test reproduction",
+      "log": "display-host-main-2d24-red.tap.txt",
+      "exitCode": 1,
+      "totals": {
+        "tests": 8,
+        "pass": 0,
+        "fail": 1,
+        "cancelled": 0,
+        "skipped": 7,
+        "duration_ms": 17324.921375
+      },
+      "scope": "Every repository .mjs loaded from exact Git main bytes; 515 module identities logged. Entry JSON/HTML/CSS identity checks above. Remaining local fixture assets are not separately a full main checkout."
+    },
+    {
+      "stage": "Writer seed only; exposed older font expectation",
+      "log": "display-host-fixture-fixed.tap.txt",
+      "exitCode": 1,
+      "totals": {
+        "tests": 12,
+        "pass": 8,
+        "fail": 4,
+        "cancelled": 0,
+        "skipped": 0,
+        "duration_ms": 20181.49125
+      }
+    },
+    {
+      "stage": "Pinned-main production with writer-seeded diagnostic fixture; same font mismatch",
+      "log": "display-host-main-2d24-writer-diagnostic.tap.txt",
+      "exitCode": 1,
+      "totals": {
+        "tests": 12,
+        "pass": 1,
+        "fail": 4,
+        "cancelled": 0,
+        "skipped": 7,
+        "duration_ms": 22976.751792
+      },
+      "scope": "Current diagnostic test source only is projected; all other repository modules come from exact main. Font/paused-state values are observed without changing runtime control flow."
+    },
+    {
+      "stage": "Nonempty published-font assertion caught missing fixture stylesheet boundary",
+      "log": "display-host-fixture-final.tap.txt",
+      "exitCode": 1,
+      "totals": {
+        "tests": 12,
+        "pass": 8,
+        "fail": 4,
+        "cancelled": 0,
+        "skipped": 0,
+        "duration_ms": 20498.174667
+      }
+    },
+    {
+      "stage": "Pinned-main production reproduces missing stylesheet-boundary assertion",
+      "log": "display-host-main-2d24-final.tap.txt",
+      "exitCode": 1,
+      "totals": {
+        "tests": 12,
+        "pass": 1,
+        "fail": 4,
+        "cancelled": 0,
+        "skipped": 7,
+        "duration_ms": 23830.313209
+      }
+    }
+  ],
+  "findings": [
+    "Ordinary Team startup initializes revealline-enemy-stats.v1:writer when absent. Original fixture assumed no startup writes, so a first-use allocation broke strict persistence baselines and prevented subsequent sequential display mutations.",
+    "Current interface typography supersedes the authored artwork font in Canvas. The original expected authored numeric font and older hardcoded pause title were stale on pinned main as well.",
+    "The finite Team document did not model the known shared stylesheet load, so resolved theme state rendered while its accepted CSS variables were absent. Existing installSoloStylesheets(document) models real bounded CSS reads and native load completion without mocking host logic."
+  ],
+  "correction": [
+    "Seed a valid pre-existing statistics writer in only the two tests measuring no-write startup; preserve all strict write-count and full-storage-map assertions.",
+    "Reuse existing shared stylesheet fixture with teardown and await published nonempty numeric font.",
+    "Compare rendered font to the host-published current numeric font; keep geometry, exact picture/actor, numeral scale, paused clock, profile and session checks.",
+    "Assert canonical localized paused title and actual coopPaused state."
+  ],
+  "finalVerification": {
+    "command": [
+      "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+      "--test",
+      "--test-concurrency=1",
+      "game/test/display-preferences-host.test.mjs"
+    ],
+    "exitCode": 0,
+    "log": "display-host-fixture-accepted-styles.tap.txt",
+    "totals": {
+      "tests": 12,
+      "pass": 12,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "duration_ms": 20562.95175
+    },
+    "testSourceSHA256": "1750c864b0f18f81bedbf5a7bdbbf6e293094c6031548374a263f0f5caee9bea",
+    "testSourceCopy": "docs/qualification/shared-demos/display-preferences-host-fixture-2d24/final-test.mjs.txt",
+    "scopedEslintExit": 0,
+    "prettierWriteExit": 0,
+    "prettierResult": "unchanged"
+  },
+  "files": [
+    {
+      "path": "docs/qualification/shared-demos/display-preferences-host-fixture-2d24/display-host-merged-red.tap.txt",
+      "bytes": 3208,
+      "sha256": "f5fbcd8779de5cb44f6f89d97277763a53f30132d0d606e0a96affbefb6c3f77"
+    },
+    {
+      "path": "docs/qualification/shared-demos/display-preferences-host-fixture-2d24/display-host-main-2d24-red.tap.txt",
+      "bytes": 3591,
+      "sha256": "f6b7cf5c42ed9ce7c7ae419eab0cd7ddd2c35f73561269fbcb58f9df7f22e383"
+    },
+    {
+      "path": "docs/qualification/shared-demos/display-preferences-host-fixture-2d24/display-host-main-2d24-loader.mjs.txt",
+      "bytes": 1602,
+      "sha256": "db84978364dab7f92917e9a8bba6221aa1c034a30cf8bc0fda00e06f08ab2181"
+    },
+    {
+      "path": "docs/qualification/shared-demos/display-preferences-host-fixture-2d24/display-host-main-2d24-modules.jsonl.txt",
+      "bytes": 67634,
+      "sha256": "0cfc8cde36467d1312a80681b9928ffa2e83d3a55cbcd05902d303fd1832330b"
+    },
+    {
+      "path": "docs/qualification/shared-demos/display-preferences-host-fixture-2d24/display-host-fixture-fixed.tap.txt",
+      "bytes": 6658,
+      "sha256": "bdcfba815d86f9dee9050a78318bc69c69322b89ec6d57ea3ddaa2f0bad4543f"
+    },
+    {
+      "path": "docs/qualification/shared-demos/display-preferences-host-fixture-2d24/display-host-writer-diagnostic-source.mjs.txt",
+      "bytes": 19542,
+      "sha256": "f72ea2779c0912a46928e17a672fc0bfd219c3903536de8c12da434d0ccbb9e1"
+    },
+    {
+      "path": "docs/qualification/shared-demos/display-preferences-host-fixture-2d24/display-host-main-2d24-writer-diagnostic-loader.mjs.txt",
+      "bytes": 1838,
+      "sha256": "bdd4e2fa22d57b790a936881952f6242c9ded94b64867f457921278486042b64"
+    },
+    {
+      "path": "docs/qualification/shared-demos/display-preferences-host-fixture-2d24/display-host-main-2d24-writer-diagnostic-modules.jsonl.txt",
+      "bytes": 93496,
+      "sha256": "e0dbe12fa767871e2de3bfbabe30312668302900a17e32c2f6bd795aff296b67"
+    },
+    {
+      "path": "docs/qualification/shared-demos/display-preferences-host-fixture-2d24/display-host-main-2d24-writer-diagnostic.tap.txt",
+      "bytes": 8278,
+      "sha256": "a73e8176662831020787d9e9252b76d0a31c2e229cc9ca5decd5c9547a3c6466"
+    },
+    {
+      "path": "docs/qualification/shared-demos/display-preferences-host-fixture-2d24/display-host-final-fixture-source.mjs.txt",
+      "bytes": 19531,
+      "sha256": "ff601228388c317996f3034ecd2b32d3e0632109079fd73ef5868233b54defaa"
+    },
+    {
+      "path": "docs/qualification/shared-demos/display-preferences-host-fixture-2d24/display-host-main-2d24-final-loader.mjs.txt",
+      "bytes": 1822,
+      "sha256": "a556e42356cc8aa2b21f5ca6431bfb3b63ce65a3bfc84c2fc693581534491ecc"
+    },
+    {
+      "path": "docs/qualification/shared-demos/display-preferences-host-fixture-2d24/display-host-main-2d24-final-modules.jsonl.txt",
+      "bytes": 93496,
+      "sha256": "ca118cdc3ad3b66d078797c838db9d265a9f05ffaa75b08c15ef6996d744401b"
+    },
+    {
+      "path": "docs/qualification/shared-demos/display-preferences-host-fixture-2d24/display-host-fixture-final.tap.txt",
+      "bytes": 6423,
+      "sha256": "4c8a96aab8406c7201d26be08b754d221176224828ff0be5cdb8734d1d25693f"
+    },
+    {
+      "path": "docs/qualification/shared-demos/display-preferences-host-fixture-2d24/display-host-main-2d24-final.tap.txt",
+      "bytes": 7074,
+      "sha256": "c21a885e67d799b60b7d685efaa4f9d447bb7d04db04ad9ded97b4295d6cf9e4"
+    },
+    {
+      "path": "docs/qualification/shared-demos/display-preferences-host-fixture-2d24/display-host-fixture-accepted-styles.tap.txt",
+      "bytes": 2794,
+      "sha256": "d51c55e8efab0b3454e6cf9092f6aef7959b9ec14b15ad2d36b2aedeaa5ae873"
+    }
+  ],
+  "limits": [
+    "This corrects a pre-existing pinned-main fixture; it does not repair or clear the separate hosted Linux replay failure or package file-count gates.",
+    "No final emitted build/browser qualification or repeated 23-file aggregate pass is established here."
+  ]
+}

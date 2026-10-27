@@ -14,11 +14,19 @@ export function withDemoLoadingDeadline(
     timeoutMs = DEMO_LOAD_TIMEOUT_MS,
     setTimer = globalThis.setTimeout,
     clearTimer = globalThis.clearTimeout,
+    now = () => performance.now(),
     onLateResult = () => {},
   } = {},
 ) {
   if (!Number.isFinite(timeoutMs) || timeoutMs <= 0 || timeoutMs > DEMO_LOAD_TIMEOUT_MS)
     throw new RangeError('Demo loading needs a deadline of at most 15 seconds.');
+  const deadline = now() + timeoutMs;
+  const expired = () => now() >= deadline;
+  const timeoutFailure = () =>
+    Object.assign(new Error('Demo preparation exceeded its loading deadline.'), {
+      name: 'DemoLoadingTimeoutError',
+      code: 'demo-load-timeout',
+    });
   return new Promise((resolve, reject) => {
     const controller = new AbortController();
     let settled = false,
@@ -40,19 +48,12 @@ export function withDemoLoadingDeadline(
     }
     signal?.addEventListener('abort', cancel, { once: true });
     try {
-      timer = setTimer(
-        () =>
-          finish(
-            true,
-            Object.assign(new Error('Demo preparation exceeded its loading deadline.'), {
-              name: 'DemoLoadingTimeoutError',
-              code: 'demo-load-timeout',
-            }),
-          ),
-        timeoutMs,
-      );
+      timer = setTimer(() => finish(true, timeoutFailure()), timeoutMs);
       Promise.resolve(load(controller.signal)).then(
         (value) => {
+          // Synchronous work can delay the timer past a queued resolution.
+          // Never adopt that overdue value, even if its timer has not run yet.
+          if (!settled && expired()) finish(true, timeoutFailure());
           if (!settled) finish(false, value);
           else {
             // Cleanup cannot revive a cancelled operation or create an unhandled rejection.
@@ -63,10 +64,10 @@ export function withDemoLoadingDeadline(
             }
           }
         },
-        (error) => finish(true, error),
+        (error) => finish(true, expired() ? timeoutFailure() : error),
       );
     } catch (error) {
-      finish(true, error);
+      finish(true, expired() ? timeoutFailure() : error);
     }
   });
 }

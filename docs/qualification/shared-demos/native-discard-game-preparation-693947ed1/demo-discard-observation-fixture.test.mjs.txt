@@ -1,0 +1,129 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { createServer } from 'node:http';
+import { createHash } from 'node:crypto';
+import { readFile } from 'node:fs/promises';
+import vm from 'node:vm';
+import { installDiscardObservationFixture, assertDiscardObservationHealth } from './demo-discard-observation-fixture.mjs';
+
+const original = Buffer.from('<!doctype html><html><head><script src="/native-app.js"></script></head><body>Native entry</body></html>');
+const hash = bytes => createHash('sha256').update(bytes).digest('hex');
+async function harness(work) {
+  const events = [];
+  const server = createServer((_request, response) => {
+    response.writeHead(200, { 'Content-Type': 'text/html', 'Content-Length': original.length,
+      'Content-Security-Policy': "script-src 'self'", ETag: '"original"' });
+    response.end(original);
+  });
+  const fixtureResponses = [{ path: 'game/index.html', original: { bytes: original.length, sha256: hash(original) } }];
+  const fixture = await installDiscardObservationFixture({ preview: { server, fixtureResponses }, events,
+    getMode: () => 'solo', getStage: () => 'boot' });
+  await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
+  const base = 'http://127.0.0.1:' + server.address().port;
+  try { await work({ fixture, events, base }); }
+  finally { server.closeAllConnections(); await new Promise(resolve => server.close(resolve)); }
+}
+test('entry HTML adds the synchronous observer before native scripts while preserving CSP and pinned body', async () => {
+  await harness(async ({ fixture, base }) => {
+    const response = await fetch(base + '/game/'); const body = Buffer.from(await response.arrayBuffer());
+    assert.equal(response.headers.get('content-security-policy'), "script-src 'self'");
+    assert.equal(Number(response.headers.get('content-length')), body.length);
+    assert.equal(fixture.html.size, 1);
+    const row = [...fixture.html.values()][0];
+    assert.equal(row.original.sha256, hash(original));
+    assert.deepEqual(row.credentialBytes, original);
+    assert.equal(body.toString().replace(row.addedTag, ''), original.toString());
+    assert.ok(body.toString().indexOf('__discard-observer-') < body.toString().indexOf('/native-app.js'));
+    const script = await fetch(base + /src="([^"]+)"/.exec(row.addedTag)[1]);
+    assert.equal(hash(Buffer.from(await script.arrayBuffer())), row.observer.sha256);
+  });
+});
+test('collector deduplicates equal messages and rejects altered sequence duplicates', async () => {
+  await harness(async ({ fixture, events, base }) => {
+    const row = { id: '01234567-0123-4123-8123-012345678901', seq: 1, kind: 'observer-installed' };
+    const post = rows => fetch(base + fixture.summary().collectorPath, { method: 'POST', body: JSON.stringify(rows) });
+    assert.equal((await post([row])).status, 204);
+    assert.equal((await post([row])).status, 204);
+    assert.equal(events.length, 1);
+    assert.equal((await post([{ ...row, kind: 'mutation' }])).status, 400);
+    assert.equal(fixture.errors.length, 1);
+  });
+});
+test('prefix reconciliation requires every sequence and fails buffer overflow', async () => {
+  await harness(async ({ fixture, base }) => {
+    const row = { id: '01234567-0123-4123-8123-012345678901', seq: 1, kind: 'observer-installed' };
+    await fetch(base + fixture.summary().collectorPath, { method: 'POST', body: JSON.stringify([row]) });
+    const good = { id: row.id, cutoff: 1, buffer: [row], overflow: 0, transportRejected: 0, observerFailures: 0 };
+    assert.equal((await fixture.reconcile({ evaluate: async () => good }, 'prefix')).cutoff, 1);
+    await assert.rejects(fixture.reconcile({ evaluate: async () => ({ ...good, overflow: 1 }) }, 'overflow'));
+    await assert.rejects(fixture.reconcile({ evaluate: async () => ({ ...good, observerFailures: 1 }) }, 'observer-failure'));
+    await assert.rejects(fixture.reconcile({ evaluate: async () => ({ ...good, cutoff: 2,
+      buffer: [row, { ...row, seq: 3 }] }) }, 'gap'));
+  });
+});
+test('browser observer records before startup and preserves native storage return and thrown error', async () => {
+  const nativeFailure = new Error('native failure');
+  class Storage {
+    getItem() { return null; }
+    setItem(key) { if (key === 'throw') throw nativeFailure; return 91; }
+    removeItem() { return 92; }
+    clear() { return 93; }
+  }
+  class IDBObjectStore {}
+  for (const name of ['add', 'put', 'delete', 'clear']) IDBObjectStore.prototype[name] = () => 'native';
+  const beacons = [], localStorage = new Storage(), sessionStorage = new Storage();
+  const window = { addEventListener() {} };
+  const document = { currentScript: { dataset: { collector: '/collector', mode: 'solo', stage: 'boot' } }, addEventListener() {} };
+  const context = vm.createContext({ window, document, Storage, IDBObjectStore, localStorage, sessionStorage,
+    location: { protocol: 'http:', pathname: '/game/' }, crypto: { randomUUID: () => '01234567-0123-4123-8123-012345678901' },
+    navigator: { sendBeacon: (_url, data) => { beacons.push(JSON.parse(data)); return true; } },
+    fetch: async () => ({ ok: true }), Date, Math });
+  vm.runInContext(await readFile(new URL('./demo-discard-observer-browser.js', import.meta.url), 'utf8'), context);
+  assert.equal(beacons[0][0].kind, 'observer-installed');
+  assert.equal(localStorage.setItem('ordinary', 'value'), 91);
+  assert.throws(() => localStorage.setItem('throw', 'value'), error => error === nativeFailure);
+  assert.equal(window.demoRestorationObservation.buffer.filter(row => row.kind === 'mutation').length, 1);
+  const prefix = await window.demoRestorationObservation.flush();
+  assert.equal(prefix.cutoff, 2);
+});
+
+test('observer transport and metadata faults cannot replace native API return or error', async () => {
+  const nativeFailure = new Error('native');
+  const calls = [];
+  class Storage {
+    getItem() { throw new Error('observation getItem failed'); }
+    setItem(key) { calls.push('set'); if (key === 'throw') throw nativeFailure; return 91; }
+    removeItem() { calls.push('remove'); return 92; }
+    clear() { return 93; }
+  }
+  class IDBObjectStore {
+    get transaction() { throw new Error('metadata failed'); }
+  }
+  for (const name of ['add', 'put', 'delete', 'clear']) IDBObjectStore.prototype[name] = () => 'native-request';
+  const localStorage = new Storage(), sessionStorage = new Storage();
+  const window = { addEventListener() {} };
+  const document = { currentScript: { dataset: { collector: '/collector', mode: 'solo', stage: 'boot' } }, addEventListener() {} };
+  const context = vm.createContext({ window, document, Storage, IDBObjectStore, localStorage, sessionStorage,
+    location: { protocol: 'http:', pathname: '/game/' }, crypto: { randomUUID: () => '01234567-0123-4123-8123-012345678901' },
+    navigator: { sendBeacon: () => { throw new Error('observer transport'); } },
+    fetch: async () => ({ ok: true }), Date, Math });
+  vm.runInContext(await readFile(new URL('./demo-discard-observer-browser.js', import.meta.url), 'utf8'), context);
+  assert.equal(localStorage.setItem('normal', 'value'), 91);
+  assert.throws(() => localStorage.setItem('throw'), error => error === nativeFailure);
+  assert.equal(localStorage.removeItem('missing'), 92, 'Failed pre-call observation cannot prevent native removal.');
+  assert.equal(new IDBObjectStore().put('value', 'key'), 'native-request');
+  let coerced = 0;
+  assert.equal(localStorage.setItem({ toString() { coerced++; throw new Error('extra coercion'); } }, 'value'), 91);
+  assert.equal(coerced, 0, 'Observer cannot repeat user-defined key coercion.');
+  assert.deepEqual(calls, ['set', 'set', 'remove', 'set']);
+  assert.equal((await window.demoRestorationObservation.flush()).observerFailures, 6);
+});
+test('final observation gate rejects late collector, overflow, and native/DOM errors', () => {
+  const healthy = { summary: { errors: [], errorOverflow: 0, reconciliations: [{ overflow: 0, observerFailures: 0 }] }, errors: [], events: [] };
+  assert.equal(assertDiscardObservationHealth(healthy), true);
+  assert.throws(() => assertDiscardObservationHealth({ ...healthy, summary: { ...healthy.summary, errors: ['late'] } }));
+  assert.throws(() => assertDiscardObservationHealth({ ...healthy, summary: { ...healthy.summary, errorOverflow: 1 } }));
+  assert.throws(() => assertDiscardObservationHealth({ ...healthy, errorOverflow: 1 }));
+  assert.throws(() => assertDiscardObservationHealth({ ...healthy, errors: [{ message: 'late native' }] }));
+  assert.throws(() => assertDiscardObservationHealth({ ...healthy, events: [{ kind: 'unhandledrejection', message: 'late DOM' }] }));
+});

@@ -1,0 +1,43 @@
+{
+  "format": "SharedDemoHostedQueueReadOnlyReviewV1",
+  "observed": "2026-10-19T01:18:26.279446+00:00",
+  "sourceRevision": "693947ed1373db7a265def126a5eede2bf875013",
+  "reviewer": "snake_adapter",
+  "method": "Bounded read-only GitHub run/job, pending deployment, repository Actions and workflow concurrency inspection. No rerun, cancellation, configuration, permissions or remote-state mutation.",
+  "runs": [
+    {
+      "name": "Appearance preview",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39181393976"
+    },
+    {
+      "name": "Company edition candidates",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39181393973"
+    },
+    {
+      "name": "Industrial feature verification",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39181393982"
+    },
+    {
+      "name": "Required source gate",
+      "url": "https://github.com/mekhovov/revealline/actions/runs/39181394002"
+    }
+  ],
+  "findings": {
+    "currentJobs": 12,
+    "status": "QUEUED",
+    "runnerLabels": [
+      "ubuntu-latest"
+    ],
+    "assignedRunners": 0,
+    "jobStepsOrAnnotations": 0,
+    "pendingDeployments": 0,
+    "actionsEnabled": true,
+    "sameRepositoryPR": true,
+    "workflowConcurrency": "Per PR/ref; Industrial max-parallel=3 cannot explain every matrix job waiting.",
+    "otherPRsAssignedHostedJobsInBoundedSample": 14,
+    "schedulerProgressObserved": true,
+    "sourceGateJobsCreated": 0
+  },
+  "conclusion": "Runner allocation backlog is supported; exact scheduler reason and account capacity limit are not exposed and remain unknown. No confirmed configuration fault or justified rerun/cancellation.",
+  "remaining": "Current-head hosted success; queue duration unknown."
+}

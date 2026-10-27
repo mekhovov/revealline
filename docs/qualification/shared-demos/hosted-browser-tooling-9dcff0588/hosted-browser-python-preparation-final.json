@@ -1,0 +1,39 @@
+{
+  "format": "SharedDemoLinuxSupervisorPreparationV1",
+  "complete": true,
+  "created": "2026-10-19T11:51:14.144457+00:00",
+  "files": {
+    "scripts/qualify-shared-demo-hosted-browser.py": {
+      "sha256": "185373074ebf52bf67150dac5dfe0001d5989c0f466eb4c3eee260120d0b5065",
+      "bytes": 22685
+    },
+    "scripts/test-qualify-shared-demo-hosted-browser.py": {
+      "sha256": "fdfc592ca6cad920a2ee268970a24900e5cac3684181126fed87c84c652a584e",
+      "bytes": 12735
+    }
+  },
+  "test": {
+    "exitCode": 0,
+    "totalCases": 17,
+    "portablePassed": 8,
+    "linuxSkipped": 9,
+    "platform": "darwin",
+    "output": ".cache/hosted-browser-python-preparation-final.txt",
+    "outputSHA256": "dd3b6c86dde6b7eb1a2a262b064af8b53d2cac00d16c5f4f8eeab9feb710fdc3"
+  },
+  "reviewedCorrections": [
+    "Root PID admission requires managed Popen still running before and after pidfd acquisition.",
+    "Child exit between polls still must meet its execution deadline.",
+    "TMPDIR identity uses lstat, canonical path, UID and private mode at every check.",
+    "Live fixtures wait for parent-observed readiness instead of scheduler-dependent short sleeps."
+  ],
+  "finalNarrowCorrection": {
+    "description": "Diagnostic overflow still fails qualification, but exact-owned cleanup may capture/wait without re-raising the already-known diagnostic overflow. Evidence retains boundsExceeded; no success gate relaxed.",
+    "portableRegressionPassed": true,
+    "independentDeltaReviewPending": true
+  },
+  "limitations": [
+    "No Linux live-process test or browser execution claimed on macOS;9Linux guards are mandatory in hosted workflow before capture.",
+    "Only the two new qualification Python paths were edited; no game source, workflow or Node runner edits by this agent."
+  ]
+}

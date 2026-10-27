@@ -1,0 +1,244 @@
+{
+  "format": "SharedDemoCaptureImageCommandGuardsV1",
+  "complete": true,
+  "helperSHA256": "5f42cc0c0d1bb5763aab0907c43ea9d99d8610d252e309a3718422c18bf8f001",
+  "cases": [
+    {
+      "name": "success",
+      "passed": true,
+      "stage": {
+        "label": "success",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-c",
+          "import time; time.sleep(.1); print(42)"
+        ],
+        "timeoutSeconds": 3,
+        "complete": true,
+        "ownedProcesses": {
+          "rootObserved": true,
+          "identityFields": [
+            "pid",
+            "started",
+            "uid",
+            "argv"
+          ],
+          "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+          "observationLimits": {
+            "ownershipLimit": 256,
+            "ownershipCount": 1,
+            "actionLimit": 1024,
+            "actionCount": 0,
+            "exceeded": false
+          },
+          "observed": [
+            {
+              "pid": 70199,
+              "ppid": 70191,
+              "pgid": 70199,
+              "uid": 502,
+              "started": "Mon Oct 19 13:23:53 2026",
+              "argv": "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python -c import time; time.sleep(.1); print(42)",
+              "profile": null,
+              "ownership": "exact newly spawned child",
+              "observedAt": "2026-10-19T11:23:53.554537+00:00"
+            }
+          ],
+          "actions": [],
+          "ownershipEvidenceTruncated": false,
+          "actionEvidenceTruncated": false,
+          "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "remaining": [],
+          "remainingCount": 0,
+          "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "remainingEvidenceTruncated": false,
+          "verified": true
+        },
+        "log": {
+          "path": ".cache/capture-image-command-guards-41a8f112/guards.success.log.txt",
+          "byteLimit": 1048576,
+          "totalBytes": 3,
+          "writtenBytes": 3,
+          "truncatedBytes": 0,
+          "tailLimit": 4096,
+          "tailBytes": 3,
+          "tailSHA256": "084c799cd551dd1d8d5c5f9a5d593b2e931f5e36122ee5c793c1d08a19839cc0",
+          "tail": "42\n",
+          "limitExceeded": false,
+          "complete": true,
+          "error": null
+        },
+        "exitCode": 0,
+        "elapsedSeconds": 0.35664962499868125
+      }
+    },
+    {
+      "name": "nonzero",
+      "passed": true,
+      "stage": {
+        "label": "nonzero",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-c",
+          "import time; time.sleep(.1); raise SystemExit(7)"
+        ],
+        "timeoutSeconds": 3,
+        "complete": false,
+        "ownedProcesses": {
+          "rootObserved": true,
+          "identityFields": [
+            "pid",
+            "started",
+            "uid",
+            "argv"
+          ],
+          "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+          "observationLimits": {
+            "ownershipLimit": 256,
+            "ownershipCount": 1,
+            "actionLimit": 1024,
+            "actionCount": 0,
+            "exceeded": false
+          },
+          "observed": [
+            {
+              "pid": 70203,
+              "ppid": 70191,
+              "pgid": 70203,
+              "uid": 502,
+              "started": "Mon Oct 19 13:23:53 2026",
+              "argv": "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python -c import time; time.sleep(.1); raise SystemExit(7)",
+              "profile": null,
+              "ownership": "exact newly spawned child",
+              "observedAt": "2026-10-19T11:23:53.910555+00:00"
+            }
+          ],
+          "actions": [],
+          "ownershipEvidenceTruncated": false,
+          "actionEvidenceTruncated": false,
+          "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "remaining": [],
+          "remainingCount": 0,
+          "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "remainingEvidenceTruncated": false,
+          "verified": true
+        },
+        "log": {
+          "path": ".cache/capture-image-command-guards-41a8f112/guards.nonzero.log.txt",
+          "byteLimit": 1048576,
+          "totalBytes": 0,
+          "writtenBytes": 0,
+          "truncatedBytes": 0,
+          "tailLimit": 4096,
+          "tailBytes": 0,
+          "tailSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tail": "",
+          "limitExceeded": false,
+          "complete": true,
+          "error": null
+        },
+        "exitCode": 7,
+        "elapsedSeconds": 0.3635987910020049
+      }
+    },
+    {
+      "name": "timeout",
+      "passed": true,
+      "stage": {
+        "label": "timeout",
+        "command": [
+          "/opt/homebrew/opt/python@3.14/bin/python3.14",
+          "-c",
+          "import time; time.sleep(30)"
+        ],
+        "timeoutSeconds": 0.1,
+        "complete": false,
+        "failure": "TimeoutError('timeout exceeded its command budget.')",
+        "ownedProcesses": {
+          "rootObserved": true,
+          "identityFields": [
+            "pid",
+            "started",
+            "uid",
+            "argv"
+          ],
+          "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+          "observationLimits": {
+            "ownershipLimit": 256,
+            "ownershipCount": 1,
+            "actionLimit": 1024,
+            "actionCount": 1,
+            "exceeded": false
+          },
+          "observed": [
+            {
+              "pid": 70207,
+              "ppid": 70191,
+              "pgid": 70207,
+              "uid": 502,
+              "started": "Mon Oct 19 13:23:54 2026",
+              "argv": "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python -c import time; time.sleep(30)",
+              "profile": null,
+              "ownership": "exact newly spawned child",
+              "observedAt": "2026-10-19T11:23:54.273918+00:00"
+            }
+          ],
+          "actions": [
+            {
+              "pid": 70207,
+              "signal": "SIGTERM",
+              "expectedIdentity": [
+                70207,
+                "Mon Oct 19 13:23:54 2026",
+                502,
+                "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python -c import time; time.sleep(30)"
+              ],
+              "at": "2026-10-19T11:23:54.686029+00:00",
+              "verifiedBeforeSignal": {
+                "pid": 70207,
+                "ppid": 70191,
+                "pgid": 70207,
+                "uid": 502,
+                "started": "Mon Oct 19 13:23:54 2026",
+                "argv": "/opt/homebrew/Cellar/python@3.14/3.14.4_1/Frameworks/Python.framework/Versions/3.14/Resources/Python.app/Contents/MacOS/Python -c import time; time.sleep(30)",
+                "profile": null
+              },
+              "result": "signalled exact owned process"
+            }
+          ],
+          "ownershipEvidenceTruncated": false,
+          "actionEvidenceTruncated": false,
+          "allActionsSHA256": "4cec0eeac1a3bfdb3e8a60604290d3cc74c5336f8a4fa7c8196bf96ed8655bb3",
+          "remaining": [],
+          "remainingCount": 0,
+          "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+          "remainingEvidenceTruncated": false,
+          "verified": true
+        },
+        "log": {
+          "path": ".cache/capture-image-command-guards-41a8f112/guards.timeout.log.txt",
+          "byteLimit": 1048576,
+          "totalBytes": 0,
+          "writtenBytes": 0,
+          "truncatedBytes": 0,
+          "tailLimit": 4096,
+          "tailBytes": 0,
+          "tailSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "tail": "",
+          "limitExceeded": false,
+          "complete": true,
+          "error": null
+        },
+        "exitCode": -15,
+        "elapsedSeconds": 0.499913582996669
+      }
+    }
+  ],
+  "priorGuardAttempt": {
+    "complete": false,
+    "issue": "The extracted-function test setup omitted the re module required by the unchanged process owner; that guard attempt failed before observing success. Helper itself imports re. Test setup corrected without helper change."
+  },
+  "limitations": [
+    "Three real bounded subprocess guards only; no disk image creation, mount, browser or capture swap."
+  ]
+}

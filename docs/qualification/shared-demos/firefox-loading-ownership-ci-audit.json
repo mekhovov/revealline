@@ -1,0 +1,97 @@
+{
+  "format": "SurvivalPreparationBrowserAuditV1",
+  "created": "2026-10-18T19:08:01.203571+00:00",
+  "sourceFingerprint": "087ca93f1c8b8a6e602771320c076f0ad2e14872fe779894bf27e433ce52667c",
+  "report": "docs/qualification/shared-demos/mixed-firefox-ownership-ci.json",
+  "reportSha256": "4d17e4c78fbf64e195f2b0c97f34e76814dbcb147c32cad4e61a92a24ce4e94c",
+  "qualificationOutcome": {
+    "exitCode": 1,
+    "checksBeforeFailure": 12,
+    "pageErrors": [],
+    "browserCloseCompleted": true,
+    "failure": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  [\n    'sim',\n    'snake',\n    'solo',\n-   'survival'\n  ]\n    at file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-shared-demo-browser.mjs:182:10"
+  },
+  "uniquePreparationFailures": [
+    {
+      "event": "failed",
+      "sourceId": "survival:river-port-floodgate-yard:standard",
+      "modeId": "survival",
+      "at": 1792350319250,
+      "loadingMs": 15092,
+      "preparation": {
+        "status": "failed",
+        "stage": "renderer",
+        "elapsedMs": 15092,
+        "durationsMs": {
+          "preparation": 0,
+          "prefetch": 1,
+          "retirement": 0,
+          "adapter": 0,
+          "source": 0,
+          "payload": 0,
+          "verification": 14296,
+          "scene-import": 84,
+          "artwork": 517,
+          "renderer": 194,
+          "mount": 0
+        },
+        "candidates": [
+          {
+            "variant": "firefox",
+            "engineHint": "firefox",
+            "prefetched": true,
+            "status": "verified",
+            "code": null,
+            "tick": 19478,
+            "totalTicks": 19478,
+            "elapsedMs": 14296
+          }
+        ]
+      },
+      "code": "demo-load-timeout",
+      "message": "Demo preparation exceeded its loading deadline.",
+      "stack": "timeoutFailure@http://127.0.0.1:8769/game/demo-loading.mjs:26:19\nwithDemoLoadingDeadline/</<@http://127.0.0.1:8769/game/demo-loading.mjs:56:51\npromise callback*withDemoLoadingDeadline/<@http://127.0.0.1:8769/game/demo-loading.mjs:52:48\nwithDemoLoadingDeadline@http://127.0.0.1:8769/game/demo-loading.mjs:30:10\nnext@http://127.0.0.1:8769/game/demo-director.mjs:195:26\nasync*attachDemoHost/<@http://127.0.0.1:8769/game/ui/demo-host.mjs:1231:21"
+    }
+  ],
+  "measurementLimits": "verification is inclusive. No separate native-step, state-hash, project-compilation, structural-validation or event-loop-wait durations were collected. No numerical yield-overhead estimate is claimed.",
+  "proof": {
+    "levelId": "river-port-floodgate-yard",
+    "variant": "firefox",
+    "ticks": 19478,
+    "checkpoints": 64,
+    "inputChanges": 3247,
+    "upgrades": 10,
+    "yieldEveryNativeTicks": 240,
+    "yieldCount": 81,
+    "yieldImplementation": "await new Promise(resolve => setTimeout(resolve, 0))",
+    "verifiedTerminalOutcome": "won"
+  },
+  "cacheAndReuse": [
+    "One preferred runtime payload can be prefetched. It is consumed by take; no second world or renderer is created by prefetch.",
+    "Observed attempt used exactlyone prefetchedFirefox candidate with0ms payload work. Its full strict verification completed before the renderer-stage timeout.",
+    "No verified-result, prepared-player or scene cache exists in the Survival adapter. Every create performs full native verification and starts a fresh playback run.",
+    "lastVerified is source metadata used as a recovery preference. The old scene is retired; fallback creates and verifies a new player.",
+    "prepareSurvivalDemoPlayer invokes decode/structural validation/project compilation at outer preparation, verification playback construction, and fresh playback construction. These costs were not measured separately."
+  ],
+  "environmentObservation": {
+    "at": "2026-10-18T19:06:04Z",
+    "afterTimedOutAttempt": true,
+    "process": {
+      "pid": 80774,
+      "parentPid": 80699,
+      "test": "game/test/couch-shell.test.mjs",
+      "elapsedSeconds": 65,
+      "cpuPercent": 48.6,
+      "rssKB": 1639536
+    },
+    "diskAvailable": "4.9GiB",
+    "interpretation": "This observation overlaps the attempt by process start time, but it does not establish causation. The process was not interrupted."
+  },
+  "interpretation": [
+    "The application respected source rejection and recovered to a prior verifiedSIM source. No replay mismatch or aggregate recovery timeout was observed.",
+    "The harness intentionally requires all4 modes during its first4 performances; successful fallback does not satisfy that assertion. The failed qualification is preserved.",
+    "This recovery is not proof of all-mode playback or eventual fairness. An unchanged retry after the separately owned heavy build ends is authorized; successful playback for all4 modes remains required.",
+    "No deadline increase, verification relaxation or production edit is made from this audit."
+  ],
+  "newBrowsersOrReplaysForAudit": 0
+}

@@ -1,0 +1,86 @@
+{
+  "format": "SharedDemoHostedToolingMilestoneV1",
+  "at": "2026-10-19T11:51:45.994308+00:00",
+  "parentHead": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "toolingReviewComplete": true,
+  "browserQualificationComplete": false,
+  "runtimeUnchanged": {
+    "sha256": "cbf35154113e1cfe644270c1c7371de2befc6419f2731b62cb3abb927b9ddec9",
+    "files": 10273,
+    "bytes": 410435495
+  },
+  "sources": [
+    {
+      "path": ".github/workflows/shared-demo-browser-qualification.yml",
+      "bytes": 9473,
+      "sha256": "5a2819d9fb51569ff3489bed85647217f9312562b6bc008e9be4662ee8ecb031"
+    },
+    {
+      "path": "scripts/qualify-shared-demo-hosted-browser.mjs",
+      "bytes": 26354,
+      "sha256": "95c450ac55262623f5b2b3450a19f9493016b2b6eb92792acc116945b37be9d8"
+    },
+    {
+      "path": "scripts/test-qualify-shared-demo-hosted-browser.mjs",
+      "bytes": 8401,
+      "sha256": "af9c016e6ddca635caab170bac04124b57f00a3be4dfed7094a675bb2acdb6a2"
+    },
+    {
+      "path": "scripts/qualify-shared-demo-hosted-browser.py",
+      "bytes": 22685,
+      "sha256": "185373074ebf52bf67150dac5dfe0001d5989c0f466eb4c3eee260120d0b5065"
+    },
+    {
+      "path": "scripts/test-qualify-shared-demo-hosted-browser.py",
+      "bytes": 12735,
+      "sha256": "fdfc592ca6cad920a2ee268970a24900e5cac3684181126fed87c84c652a584e"
+    },
+    {
+      "path": "scripts/qualify-shared-demo-offline-browser.mjs",
+      "bytes": 45447,
+      "sha256": "34f07f27d51dab86a6ee346e900a9cf874ac5ef79db32f4505b7774df73cebd8"
+    },
+    {
+      "path": "scripts/shared-demo-offline-storage.mjs",
+      "bytes": 3810,
+      "sha256": "b1dfe68e2d412cfb5e92a0f34c1f0ea7f81f940df18195e3d0489acac4b16776"
+    },
+    {
+      "path": "scripts/test-shared-demo-offline-storage.mjs",
+      "bytes": 4123,
+      "sha256": "0bb7310f389e101a12a73b84023bda617bc1ae4e74faa26a302e5bb7c95db4c2"
+    }
+  ],
+  "validation": {
+    "javascriptGuards": {
+      "passed": 13,
+      "failed": 0,
+      "skipped": 0,
+      "durationMs": 1289.410708
+    },
+    "pythonGuards": {
+      "portablePassed": 8,
+      "failed": 0,
+      "linuxSkipped": 9,
+      "total": 17
+    },
+    "eslint": "pass",
+    "prettier": "pass",
+    "actionlint": "pass",
+    "independentReview": "no remaining material finding",
+    "finalPythonDelta": "Diagnostic overflow still fails admission but cannot disable exact-owned cleanup; final independent review and portable regression pass."
+  },
+  "scope": [
+    "Exact-head read-only Linux workflow, fresh canonical emitted capture, unchanged11+9 qualifier CLI/assertion scopes and original actual-worker offline scenario.",
+    "All27 original browser-side offline callbacks remain canonical-AST identical. Observer transport/storage and timeout finalization are portable.",
+    "Process ownership uses Linux startTicks/UID/raw argv hash and retained pidfds, with dedicated child-subreaper adoption and no broad process-name/group signals.",
+    "Canceled, timed-out, partial, source-drifted, log-overflow, nonzero or unverified-cleanup runs cannot pass; forced cleanup after supposed success is a failure.",
+    "Original local storage/browser failures remain incomplete. The fresh hosted workflow must actually run all9Linux process-lifetime guards before capture."
+  ],
+  "limitations": [
+    "Mac preparation tests are not Linux execution.",
+    "New scripts change build-input identity and require a fresh capture on the published commit.",
+    "No merge, deployment, actual-device, audible, or unfamiliar-human acceptance."
+  ],
+  "evidenceManifest": "preservation.json"
+}

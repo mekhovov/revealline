@@ -1,0 +1,174 @@
+{
+  "engine": "chromium",
+  "requestedDurationSeconds": 0,
+  "scope": "all",
+  "idleEntry": false,
+  "started": "2026-10-18T19:18:51.522Z",
+  "checks": [
+    {
+      "type": "native-playback",
+      "mode": "snake",
+      "source": "snake:classic-snake-open-loop:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Open Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "native-playback",
+      "mode": "sim",
+      "source": "sim:snake-hunt-chase-03-self-level-01b9494dd4385932",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "4",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Chase the corners",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "geometries": 259,
+          "materials": 185,
+          "textures": 25,
+          "gpuGeometries": 200,
+          "gpuTextures": 23,
+          "gpuPrograms": 18,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "type": "native-playback",
+      "mode": "survival",
+      "source": "survival:river-port-twin-docks:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "60",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Twin Docks",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 18
+        }
+      }
+    },
+    {
+      "type": "native-playback",
+      "mode": "solo",
+      "source": "solo-qualified-8abdfdb8249526a1",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "121",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Read the arrows",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "pause",
+      "mode": "solo"
+    },
+    {
+      "type": "offline-recovery-budget",
+      "loadingMs": 151,
+      "mode": "snake",
+      "source": "snake:classic-operation-two-offers-one-route:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Two Offers, One Route",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "offline-recovery-budget",
+      "loadingMs": 4031,
+      "mode": "solo",
+      "source": "",
+      "phase": "unavailable",
+      "failure": "sim:snake-hunt-chase-03-self-level-01b9494dd4385932 : Failed to fetch",
+      "failureDetails": {
+        "event": "failed",
+        "sourceId": "sim:snake-hunt-chase-03-self-level-01b9494dd4385932",
+        "modeId": "sim",
+        "at": 1792351151641,
+        "loadingMs": 3.800000000745058,
+        "preparation": {
+          "status": "failed",
+          "stage": "source",
+          "elapsedMs": 3.8,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 0,
+            "retirement": 1.700000001117587,
+            "adapter": 0,
+            "source": 2.1,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": "Failed to fetch",
+        "stack": "TypeError: Failed to fetch\n    at read (http://127.0.0.1:8769/game/demo-modes/sim.mjs:24:28)\n    at Object.create (http://127.0.0.1:8769/game/demo-modes/sim.mjs:108:37)\n    at prepareScene (http://127.0.0.1:8769/game/ui/demo-host.mjs:816:33)\n    at async prepare (http://127.0.0.1:8769/game/ui/demo-host.mjs:801:14)"
+      },
+      "tick": "0",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Preparing a real level…",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "return-and-persistence",
+      "workers": 0,
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    }
+  ],
+  "samples": [],
+  "errors": [],
+  "complete": true,
+  "enduranceStarted": "2026-10-18T19:19:11.666Z",
+  "enduranceFinished": "2026-10-18T19:19:11.666Z",
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-18T19:19:12.629Z"
+}

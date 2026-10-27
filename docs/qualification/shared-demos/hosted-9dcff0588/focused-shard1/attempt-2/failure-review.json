@@ -1,0 +1,145 @@
+{
+  "format": "SharedDemoSingleJobRetryFailureV1",
+  "observedAt": "2026-10-19T11:08:34.961591+00:00",
+  "head": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "runID": 39239035764,
+  "attempt": 2,
+  "jobID": 118024521796,
+  "result": "failed-before-tests",
+  "firstFailurePreserved": true,
+  "selectedFocusedGatesRan": false,
+  "rawLog": {
+    "path": ".cache/hosted-9dcff0588-job-118024521796.log.txt",
+    "sha256": "d0510408a011465cdfe800b1f41f9903d111ad7bb3f9a44b9b9bbd1ab8b7fe77",
+    "bytes": 34968
+  },
+  "excerpt": [
+    {
+      "line": 398,
+      "text": "2026-10-19T11:05:43.8361866Z ##[group]Run actions/download-artifact@37930b1c2abaa49bbe596cd826c3c89aef350131"
+    },
+    {
+      "line": 399,
+      "text": "2026-10-19T11:05:43.8362348Z with:"
+    },
+    {
+      "line": 400,
+      "text": "2026-10-19T11:05:43.8362567Z   name: admission-39239035764-2"
+    },
+    {
+      "line": 401,
+      "text": "2026-10-19T11:05:43.8362881Z   path: /home/runner/work/_temp/preflight-admission"
+    },
+    {
+      "line": 402,
+      "text": "2026-10-19T11:05:43.8363207Z   merge-multiple: false"
+    },
+    {
+      "line": 403,
+      "text": "2026-10-19T11:05:43.8363446Z   repository: mekhovov/revealline"
+    },
+    {
+      "line": 404,
+      "text": "2026-10-19T11:05:43.8363701Z   run-id: 39239035764"
+    },
+    {
+      "line": 405,
+      "text": "2026-10-19T11:05:43.8363902Z env:"
+    },
+    {
+      "line": 406,
+      "text": "2026-10-19T11:05:43.8364150Z   EXPECTED_SOURCE: 9dcff05887ed573a9fef4037c8d451c8043653a9"
+    },
+    {
+      "line": 407,
+      "text": "2026-10-19T11:05:43.8364554Z   EXPECTED_AUTOMATION: 1e17274262f558eefc373f0f67ecab23407c8938"
+    },
+    {
+      "line": 408,
+      "text": "2026-10-19T11:05:43.8364893Z ##[endgroup]"
+    },
+    {
+      "line": 409,
+      "text": "2026-10-19T11:05:43.9923310Z Downloading single artifact"
+    },
+    {
+      "line": 410,
+      "text": "2026-10-19T11:05:44.1044480Z ##[error]Unable to download artifact(s): Artifact not found for name: admission-39239035764-2"
+    },
+    {
+      "line": 411,
+      "text": "        Please ensure that your artifact is not expired and the artifact was uploaded using a compatible version of toolkit/upload-artifact."
+    },
+    {
+      "line": 412,
+      "text": "        For more information, visit the GitHub Artifacts FAQ: https://github.com/actions/toolkit/blob/main/packages/artifact/docs/faq.md"
+    },
+    {
+      "line": 413,
+      "text": "2026-10-19T11:05:44.1242323Z ##[group]Run actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f"
+    },
+    {
+      "line": 414,
+      "text": "2026-10-19T11:05:44.1243014Z with:"
+    },
+    {
+      "line": 415,
+      "text": "2026-10-19T11:05:44.1243354Z   name: focused-shard-39239035764-2-1"
+    },
+    {
+      "line": 416,
+      "text": "2026-10-19T11:05:44.1243850Z   path: /home/runner/work/_temp/focused-shard/"
+    },
+    {
+      "line": 417,
+      "text": "2026-10-19T11:05:44.1244344Z   if-no-files-found: error"
+    },
+    {
+      "line": 418,
+      "text": "2026-10-19T11:05:44.1244721Z   retention-days: 7"
+    },
+    {
+      "line": 419,
+      "text": "2026-10-19T11:05:44.1245068Z   compression-level: 6"
+    },
+    {
+      "line": 420,
+      "text": "2026-10-19T11:05:44.1245416Z   overwrite: false"
+    },
+    {
+      "line": 421,
+      "text": "2026-10-19T11:05:44.1245763Z   include-hidden-files: false"
+    },
+    {
+      "line": 422,
+      "text": "2026-10-19T11:05:44.1246142Z env:"
+    },
+    {
+      "line": 423,
+      "text": "2026-10-19T11:05:44.1246553Z   EXPECTED_SOURCE: 9dcff05887ed573a9fef4037c8d451c8043653a9"
+    },
+    {
+      "line": 424,
+      "text": "2026-10-19T11:05:44.1247220Z   EXPECTED_AUTOMATION: 1e17274262f558eefc373f0f67ecab23407c8938"
+    },
+    {
+      "line": 425,
+      "text": "2026-10-19T11:05:44.1247769Z ##[endgroup]"
+    },
+    {
+      "line": 426,
+      "text": "2026-10-19T11:05:44.2921205Z ##[error]No files were found with the provided path: /home/runner/work/_temp/focused-shard/. No artifacts will be uploaded."
+    }
+  ],
+  "explanation": "The single-job rerun carried forward successful preflight from attempt1. The shard downloaded admission-39239035764-2 using the new run_attempt, but only the attempt1 admission artifact exists. Test execution and source guards after artifact download were skipped; evidence upload also failed because no shard directory was produced.",
+  "dependentResults": {
+    "focused": "failure",
+    "release-ready": "failure"
+  },
+  "limits": [
+    "Does not reproduce or resolve the original Legacy Fresh timeout; no application test ran.",
+    "Original hosted failure remains unresolved. Unchanged local passes do not establish a product/fixture cause.",
+    "One authorized retry only; no further same-head reruns, workflow change or timeout change.",
+    "A later final evidence commit requires its own fresh workflow run and preflight artifact; this is pending, not a pass."
+  ]
+}

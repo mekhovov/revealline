@@ -1,0 +1,31 @@
+{
+  "engine": "webkit",
+  "started": "2026-10-18T22:13:45.500Z",
+  "checks": [
+    {
+      "type": "fresh-start-exact-authored-setup-ready-disarmed",
+      "origin": "sim",
+      "course": "snake-hunt-interception-two-return-lanes",
+      "mode": "self-level",
+      "ticks": 0,
+      "courseIdentity": "9de7fff1adda5d07",
+      "responseIdentity": "73833493634ba989",
+      "savedCustomAircraftTuningUnchanged": true
+    },
+    {
+      "type": "fresh-start-exact-authored-setup-ready-disarmed",
+      "origin": "solo",
+      "course": "beginner-15",
+      "mode": "self-level",
+      "ticks": 0,
+      "courseIdentity": "64cb3790368fd49f",
+      "responseIdentity": "73833493634ba989",
+      "savedCustomAircraftTuningUnchanged": true
+    }
+  ],
+  "errors": [],
+  "complete": true,
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-18T22:14:04.307Z"
+}

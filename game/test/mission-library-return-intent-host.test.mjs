@@ -12,6 +12,11 @@ import { readMissionLibraryReturn } from '../mission-library/handoff.mjs';
 import { JOURNEY_PREFERENCES_KEY, JOURNEY_PREFERENCES_VERSION } from '../journey/preferences.mjs';
 import { authoritativeCheckpoint } from '../replay.mjs';
 import { activateMissionCard, openMissionLibrary } from './helpers/library-selection.mjs';
+import { activateHostAction } from './helpers/host-action.mjs';
+import {
+  TEAM_LIBRARY_CLASSIC_SOURCE,
+  TEAM_LIBRARY_JOURNEY_EDITION,
+} from '../mission-library/team-source.mjs';
 
 const settle = (condition) => waitFor(condition, { timeoutMs: 10000 });
 // Compiling the real Journey before the held request is a boot precondition,
@@ -22,15 +27,15 @@ const settleBoot = (condition) =>
     message: 'The real host must finish boot preparation and reach the held metadata request.',
   });
 const expert = JSON.stringify({ format: JOURNEY_PREFERENCES_VERSION, difficulty: 'expert' });
-// Native boot keeps controls inert until ready. This is the same finite focus
+// Native boot keeps controls inert until reveal. This is the same finite focus
 // boundary used by the existing checked mode-return host tests.
 function nativeSoloBoot(t) {
   const original = Object.getOwnPropertyDescriptor(globalThis, 'RevealLineBoot');
   const focus = SoloElement.prototype.focus;
-  let ready = false;
+  let interactive = false;
   t.mock.method(SoloElement.prototype, 'focus', function (...args) {
     if (
-      ready &&
+      interactive &&
       !this.disabled &&
       !this.closest('[hidden],[inert]') &&
       this.getClientRects().length
@@ -42,12 +47,20 @@ function nativeSoloBoot(t) {
     fail(error) {
       throw error;
     },
+    reveal() {
+      interactive = true;
+      globalThis.document.documentElement.dataset.bootState = 'interactive';
+      for (const element of globalThis.document.querySelectorAll('[data-boot-inert]')) {
+        element.inert = false;
+        element.setAttribute('aria-busy', 'true');
+      }
+      globalThis.document.getElementById('boot-screen').hidden = true;
+    },
     ready() {
-      ready = true;
+      if (!interactive) this.reveal();
       globalThis.document.documentElement.dataset.bootState = 'ready';
       for (const element of globalThis.document.querySelectorAll('[data-boot-inert]'))
-        element.inert = false;
-      globalThis.document.getElementById('boot-screen').hidden = true;
+        element.removeAttribute('aria-busy');
     },
   };
   t.after(() =>
@@ -88,37 +101,20 @@ async function versus(t, options = {}) {
   });
 }
 async function open(p, host, mode) {
-  if (host === 'solo') await openMissionLibrary(p, 'shell-play');
-  else {
-    const opener = p.$('race-library-switch'),
-      listeners = opener.listeners.get('click'),
-      pending = [];
-    opener.listeners.set(
-      'click',
-      new Set(
-        [...listeners].map((listener) => (event) => {
-          const result = listener.call(opener, event);
-          if (result instanceof Promise) pending.push(result);
-          return result;
-        }),
-      ),
-    );
-    try {
-      opener.focus();
-      opener.click();
-    } finally {
-      opener.listeners.set('click', listeners);
-    }
-    assert.equal(pending.length, 1, 'The visible Missions action owns preparation.');
-    assert.match(p.$('race-message').textContent, /Preparing missions/);
-    await pending[0];
-    assert.equal(p.$('journey-chooser').open, true);
-  }
+  await openMissionLibrary(p, host === 'solo' ? 'shell-play' : 'race-chapters');
   p.$('journey-lifecycle').value = '';
   p.$('journey-lifecycle').emit('change');
   p.$('journey-mode').value = mode;
   p.$('journey-mode').emit('change');
   return [...p.$('journey-cards').children];
+}
+
+function teamCard(cards, { classic = false } = {}) {
+  const owner = classic ? TEAM_LIBRARY_CLASSIC_SOURCE : `journey:${TEAM_LIBRARY_JOURNEY_EDITION}`;
+  const matches = cards.filter((card) => JSON.parse(card.dataset.missionId)[0] === owner);
+  assert.ok(matches.length > 0, `The exact Team owner ${owner} remains selectable.`);
+  assert.equal(new Set(matches.map((card) => card.dataset.missionId)).size, matches.length);
+  return classic ? matches.at(-1) : matches[0];
 }
 
 function incomingSoloSearch() {
@@ -137,15 +133,19 @@ function incomingSoloSearch() {
   })}`;
 }
 
-test('native inert boot cannot cancel exact Team-to-Solo handoff with its own fallback focus', async (t) => {
+test('native boot completes the exact Team-to-Solo briefing before ready and waits for Start', async (t) => {
   nativeSoloBoot(t);
   const p = await solo(t, { search: incomingSoloSearch() });
-  await settle(() => {
-    p.frame(0);
-    return p.doc.body.dataset.flightState === 'running';
-  });
+  assert.deepEqual(p.errors, []);
+  assert.equal(p.doc.documentElement.dataset.bootState, 'ready');
+  assert.equal(p.doc.body.dataset.flightState, 'briefing');
   assert.equal(p.rendered.run.levelId, 'choose-your-share');
+  assert.equal(p.rendered.run.tick, 0);
+  assert.equal(p.rendered.paused, true);
   assert.equal(p.$('journey-chooser').open, false);
+  p.$('start-button').click();
+  await p.waitUntilRunning('incoming exact Solo briefing');
+  assert.equal(p.rendered.run.levelId, 'choose-your-share');
   assert.equal(p.doc.activeElement.id, 'game-canvas');
   assert.deepEqual(p.errors, []);
 });
@@ -154,18 +154,27 @@ for (const interruption of ['focus', 'hidden'])
   test(`native incoming Solo handoff still yields to newer ${interruption} while metadata waits`, async (t) => {
     nativeSoloBoot(t);
     let release,
-      entered = false;
-    const gate = new Promise((resolve) => {
+      reject,
+      entered = false,
+      requestFinished = false;
+    const gate = new Promise((resolve, fail) => {
       release = resolve;
+      reject = fail;
     });
+    const storage = memoryStorage();
     const page = solo(t, {
+      storage,
       search: incomingSoloSearch(),
       fetchResponse: async (path) => {
         if (String(path).includes('/content-design/assets/'))
           return new Response(await readFile(path));
         if (path === 'content/mission-library-index.json') {
           entered = true;
-          await gate;
+          try {
+            await gate;
+          } finally {
+            requestFinished = true;
+          }
         }
       },
     });
@@ -173,7 +182,18 @@ for (const interruption of ['focus', 'hidden'])
     try {
       await settleBoot(() => entered);
       const doc = globalThis.document;
+      const savedBefore = [...storage.map];
       assert.equal(doc.activeElement, doc.body, 'The boot surface has not claimed focus.');
+      assert.equal(
+        doc.documentElement.dataset.bootState,
+        'interactive',
+        'Pending incoming work cannot report public ready.',
+      );
+      assert.ok(
+        [...doc.querySelectorAll('[data-boot-inert]')].every(
+          (node) => !node.inert && node.getAttribute('aria-busy') === 'true',
+        ),
+      );
       if (interruption === 'focus') {
         doc.getElementById('overlay-menu').focus();
         assert.equal(
@@ -185,17 +205,131 @@ for (const interruption of ['focus', 'hidden'])
         doc.hidden = true;
         doc.emit('visibilitychange');
       }
-      release();
+      await settle(() => doc.documentElement.dataset.bootState === 'ready');
+      assert.equal(requestFinished, false, 'Retirement releases boot before metadata settles.');
       const p = await page;
+      assert.deepEqual(p.errors, []);
+      assert.notEqual(p.doc.body.dataset.flightState, 'running');
+      assert.notEqual(p.$('journey-chooser')?.open, true);
+      if (interruption === 'hidden') {
+        doc.hidden = false;
+        doc.emit('visibilitychange');
+      }
       p.frame(0);
       assert.equal(p.rendered.run.levelId, 'first-return');
+      assert.equal(p.rendered.run.tick, 0);
+      assert.equal(p.rendered.paused, true);
       assert.notEqual(p.doc.body.dataset.flightState, 'running');
-      assert.equal(p.$('journey-chooser').open, false);
+      assert.deepEqual([...storage.map], savedBefore);
+      assert.equal(
+        doc.documentElement.dataset.bootState,
+        'ready',
+        'Retired incoming intent completes boot readiness.',
+      );
+      assert.ok(
+        [...doc.querySelectorAll('[data-boot-inert]')].every(
+          (node) => !node.hasAttribute('aria-busy'),
+        ),
+      );
+      if (interruption === 'focus') assert.equal(doc.activeElement.id, 'overlay-menu');
+      const retainedMessage = p.$('run-message').textContent;
+      if (interruption === 'hidden') reject(new Error('Retired metadata failed late.'));
+      else release();
+      await settle(() => requestFinished);
+      await new Promise((resolve) => setImmediate(resolve));
+      p.frame(0);
+      assert.equal(p.rendered.run.levelId, 'first-return');
+      assert.equal(p.rendered.run.tick, 0);
+      assert.equal(p.rendered.paused, true);
+      assert.notEqual(p.$('journey-chooser')?.open, true);
+      assert.equal(p.$('run-message').textContent, retainedMessage);
+      assert.deepEqual([...storage.map], savedBefore);
       if (interruption === 'focus') assert.equal(doc.activeElement.id, 'overlay-menu');
       assert.deepEqual(p.errors, []);
     } finally {
       // Settle the original page before its fixture restores global DOM state,
       // even when interception or an assertion fails. Keep the original failure.
+      release();
+      await pageSettled;
+    }
+  });
+
+for (const retired of [false, true])
+  test(`incoming Solo ${retired ? 'retires without awaiting its pending boot picture' : 'awaits its owned boot picture before exact launch'}`, async (t) => {
+    nativeSoloBoot(t);
+    let release,
+      held = false,
+      responseFinished = false;
+    const gate = new Promise((resolve) => {
+      release = resolve;
+    });
+    const storage = memoryStorage();
+    const page = solo(t, {
+      storage,
+      search: incomingSoloSearch(),
+      waitForPictures: false,
+      fetchResponse: async (path, options) => {
+        if (String(path).includes('/content-design/assets/'))
+          return new Response(await readFile(path));
+        if (!held && options?.signal && String(path).includes('/presentation/compiled/')) {
+          held = true;
+          await gate;
+          responseFinished = true;
+        }
+      },
+    });
+    const pageSettled = page.catch(() => {});
+    try {
+      await settleBoot(
+        () =>
+          held &&
+          globalThis.document.documentElement.dataset.bootState === 'interactive' &&
+          globalThis.document.getElementById('journey-chooser'),
+      );
+      const doc = globalThis.document;
+      const savedBefore = [...storage.map];
+      assert.equal(responseFinished, false);
+      assert.equal(doc.body.dataset.pictureState, 'pending');
+      assert.equal(doc.documentElement.dataset.bootState, 'interactive');
+      if (retired) {
+        doc.getElementById('overlay-menu').focus();
+        await settle(() => doc.documentElement.dataset.bootState === 'ready');
+        assert.equal(responseFinished, false, 'Cancelled prewarm cannot hold boot readiness.');
+        const p = await page;
+        p.frame(0);
+        assert.equal(p.rendered.run.levelId, 'first-return');
+        const checkpoint = authoritativeCheckpoint(p.rendered.run);
+        assert.equal(p.rendered.paused, true);
+        assert.equal(doc.activeElement.id, 'overlay-menu');
+        assert.deepEqual([...storage.map], savedBefore);
+        release();
+        await settle(() => responseFinished && doc.body.dataset.pictureState === 'ready');
+        p.frame(0);
+        assert.deepEqual(authoritativeCheckpoint(p.rendered.run), checkpoint);
+        assert.equal(p.rendered.paused, true);
+        assert.equal(doc.activeElement.id, 'overlay-menu');
+        assert.notEqual(p.$('journey-chooser').open, true);
+        assert.deepEqual([...storage.map], savedBefore);
+        assert.deepEqual(p.errors, []);
+        // A later explicit opening owns its own cancellation slot and may use
+        // the shared metadata whose obsolete incoming waiter has now finished.
+        await openMissionLibrary(p, 'shell-play');
+        assert.equal(p.$('journey-chooser').open, true);
+      } else {
+        // Keep the producer pending through another task: mere control
+        // availability must not announce ready before the owned handoff ends.
+        await new Promise((resolve) => setImmediate(resolve));
+        assert.equal(doc.documentElement.dataset.bootState, 'interactive');
+        release();
+        await settle(() => doc.documentElement.dataset.bootState === 'ready');
+        const p = await page;
+        assert.equal(p.rendered.run.levelId, 'choose-your-share');
+        assert.equal(p.rendered.run.tick, 0);
+        assert.equal(p.rendered.paused, true);
+        assert.equal(doc.body.dataset.flightState, 'briefing');
+        assert.deepEqual(p.errors, []);
+      }
+    } finally {
       release();
       await pageSettled;
     }
@@ -259,7 +393,6 @@ for (const source of ['legacy', 'whole-spatial-v5', 'opening'])
     storage.setItem(JOURNEY_PREFERENCES_KEY, expert);
     const p = await solo(t, { search: `?journey=${source}`, storage, previewStorage });
     const cards = await open(p, 'solo', 'team');
-    assert.equal(cards.length, 14);
     assert.equal(p.$('mission-picker-setup').contains(p.$('shell-mode-choice')), true);
     assert.equal(
       p
@@ -274,8 +407,8 @@ for (const source of ['legacy', 'whole-spatial-v5', 'opening'])
       false,
       'Optional native mode controls stay collapsed.',
     );
-    assert.match(cards[0].textContent, /Expert/);
-    const card = source === 'legacy' ? cards[0] : cards.at(-1);
+    assert.match(teamCard(cards).textContent, /Expert/);
+    const card = teamCard(cards, { classic: source !== 'legacy' });
     const selected = card.dataset.missionId;
     card.click();
     await settle(() => globalThis.location.href.includes('relay-rescue.html'));
@@ -310,10 +443,10 @@ for (const source of ['legacy', 'opening'])
     storage.setItem(JOURNEY_PREFERENCES_KEY, expert);
     const p = await versus(t, { href: `http://localhost/game/couch/?journey=${source}`, storage });
     const cards = await open(p, 'versus', 'team');
-    assert.equal(cards.length, 14);
-    assert.match(cards[0].textContent, /Expert/);
-    const selected = cards[0].dataset.missionId;
-    cards[0].click();
+    const card = teamCard(cards);
+    assert.match(card.textContent, /Expert/);
+    const selected = card.dataset.missionId;
+    card.click();
     await settle(() => globalThis.location.href.includes('relay-rescue.html'));
     const target = new URL(globalThis.location.href);
     assert.deepEqual(readMissionLibraryReturn(target.searchParams, { mode: 'team' }), {
@@ -453,7 +586,8 @@ test('unfinished Legacy library departure checks its saved attempt before mintin
   p.$('start-button').click();
   await settle(() => p.doc.body.dataset.flightState === 'running');
   p.key('ArrowDown');
-  for (let index = 0; index < 24; index++) p.frame();
+  // Frame scheduling may rebase once after Start; retain the exact simulated cut.
+  for (let index = 0; index < 48 && p.rendered.run.tick < 24; index++) p.frame();
   p.key('ArrowDown', false);
   assert.equal(p.rendered.run.tick, 24);
   assert.ok(p.rendered.run.trail.length > 0, 'Departure must protect a genuine unfinished cut.');
@@ -527,6 +661,12 @@ test('late Classic checked return without saved browse state uses the retained m
       assert.ok(card);
       missionId = card.dataset.missionId;
       await activateMissionCard(card);
+      p.frame(0);
+      assert.equal(p.rendered.run.levelId, 'signal-12');
+      assert.equal(p.rendered.run.tick, 0);
+      assert.equal(p.rendered.paused, true);
+      assert.equal(p.$('game-overlay').dataset.kind, 'ready');
+      await activateHostAction(p.$('start-button'));
       await settle(() => {
         p.frame(0);
         return (

@@ -1,0 +1,2337 @@
+{
+  "engine": "chromium",
+  "sourceRevision": "71a0ac38a391ca1ec305a4ad7afc75527b8d2e23",
+  "mainRevision": "16ebd7b51984387c39622380a8e51a60e745152e",
+  "started": "2026-10-19T05:02:43.403Z",
+  "complete": true,
+  "verified": [
+    {
+      "id": "solo-qualified-478808a96f4fbf5e",
+      "captures": 12,
+      "capturedCells": 1183,
+      "ticks": 7322,
+      "outcome": "won",
+      "checkpoint": "c9b1881bd08b8a93",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-acdacc2c6fce041f",
+      "captures": 4,
+      "capturedCells": 1444,
+      "ticks": 2688,
+      "outcome": "won",
+      "checkpoint": "9520a5310cc681c3",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-365f2ab3bab05af8",
+      "captures": 2,
+      "capturedCells": 1156,
+      "ticks": 1673,
+      "outcome": "won",
+      "checkpoint": "4809b07ddd2b9a60",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-d0257fa131665b79",
+      "captures": 15,
+      "capturedCells": 1171,
+      "ticks": 10731,
+      "outcome": "lost",
+      "checkpoint": "5b5c5d20ff8f82bf",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-6cdffde70fe72fa4",
+      "captures": 11,
+      "capturedCells": 1651,
+      "ticks": 9218,
+      "outcome": "won",
+      "checkpoint": "45206869d40f5d1c",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-cc8994b6f3d0482f",
+      "captures": 10,
+      "capturedCells": 1722,
+      "ticks": 8274,
+      "outcome": "won",
+      "checkpoint": "6a79dfbd1a8f4fb0",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-596ebdf496c9e073",
+      "captures": 10,
+      "capturedCells": 653,
+      "ticks": 6126,
+      "outcome": "lost",
+      "checkpoint": "8d300f94f247f4a7",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-fc4db0777028aa09",
+      "captures": 11,
+      "capturedCells": 1050,
+      "ticks": 7582,
+      "outcome": "lost",
+      "checkpoint": "8efb2b165f743afc",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-c8ea742b75efcef6",
+      "captures": 13,
+      "capturedCells": 1768,
+      "ticks": 9240,
+      "outcome": "lost",
+      "checkpoint": "798c57509932c0f1",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-ab845a60c1777460",
+      "captures": 3,
+      "capturedCells": 183,
+      "ticks": 2818,
+      "outcome": "lost",
+      "checkpoint": "ff28782ea6b87340",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-bda094dfb23a16c2",
+      "captures": 1,
+      "capturedCells": 1054,
+      "ticks": 565,
+      "outcome": "won",
+      "checkpoint": "21ae7915219ccc2c",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-f39ca41ce3e763e1",
+      "captures": 4,
+      "capturedCells": 1064,
+      "ticks": 2262,
+      "outcome": "won",
+      "checkpoint": "c05afb4ee0047df6",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-ede2a5c11f561acc",
+      "captures": 7,
+      "capturedCells": 1114,
+      "ticks": 5263,
+      "outcome": "won",
+      "checkpoint": "3c5ac3c49000cae8",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-661be5ee4be18dd1",
+      "captures": 1,
+      "capturedCells": 1058,
+      "ticks": 646,
+      "outcome": "won",
+      "checkpoint": "b9c8ab1e7201dd67",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-57d61f78dee61bd0",
+      "captures": 5,
+      "capturedCells": 1332,
+      "ticks": 5580,
+      "outcome": "won",
+      "checkpoint": "35cfe0c1106bc6ea",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-4b2800b5c31c2f3f",
+      "captures": 10,
+      "capturedCells": 1179,
+      "ticks": 6911,
+      "outcome": "won",
+      "checkpoint": "f9b62b1c0c1b17b4",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-3beea0c189588dba",
+      "captures": 13,
+      "capturedCells": 1447,
+      "ticks": 6995,
+      "outcome": "won",
+      "checkpoint": "731516e3b401e66d",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-5e8ee38d1fcc2441",
+      "captures": 4,
+      "capturedCells": 1330,
+      "ticks": 3990,
+      "outcome": "won",
+      "checkpoint": "56baa365861be1b0",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-cdeea19d777f8c90",
+      "captures": 6,
+      "capturedCells": 1310,
+      "ticks": 3547,
+      "outcome": "won",
+      "checkpoint": "ace6a1261f6c9e44",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-0672eec7c1fe6311",
+      "captures": 13,
+      "capturedCells": 1447,
+      "ticks": 6995,
+      "outcome": "won",
+      "checkpoint": "e2957b61ec4521eb",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-8c77d68ddaaf730a",
+      "captures": 4,
+      "capturedCells": 1330,
+      "ticks": 3990,
+      "outcome": "won",
+      "checkpoint": "4528b59f2b7e5e70",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-24be1e733257dfcf",
+      "captures": 13,
+      "capturedCells": 1447,
+      "ticks": 6995,
+      "outcome": "won",
+      "checkpoint": "6168023980e3d14b",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-28e4ea0f6087b260",
+      "captures": 4,
+      "capturedCells": 1330,
+      "ticks": 3990,
+      "outcome": "won",
+      "checkpoint": "0747d4a48956cac9",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-3ddc332fe23ac63b",
+      "captures": 4,
+      "capturedCells": 1564,
+      "ticks": 3502,
+      "outcome": "won",
+      "checkpoint": "b1e9f1ff35a676ac",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-1317cbb34f9f263d",
+      "captures": 26,
+      "capturedCells": 1611,
+      "ticks": 15953,
+      "outcome": "won",
+      "checkpoint": "e9ebfa2380811e90",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-6d6735f53cea772c",
+      "captures": 20,
+      "capturedCells": 1642,
+      "ticks": 12488,
+      "outcome": "won",
+      "checkpoint": "c5d9690a170ece1b",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-b48891e1132779ca",
+      "captures": 14,
+      "capturedCells": 628,
+      "ticks": 8037,
+      "outcome": "lost",
+      "checkpoint": "5b92613a6bfe8a52",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-a6bd03461640ac1f",
+      "captures": 12,
+      "capturedCells": 1030,
+      "ticks": 10973,
+      "outcome": "lost",
+      "checkpoint": "adc86ee7e63fdd01",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-eb610c93d32ff955",
+      "captures": 6,
+      "capturedCells": 276,
+      "ticks": 5940,
+      "outcome": "lost",
+      "checkpoint": "dfcaec750274816e",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-fc70762275c737c3",
+      "captures": 7,
+      "capturedCells": 924,
+      "ticks": 7163,
+      "outcome": "lost",
+      "checkpoint": "ecff28944d450c8e",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-85b7fe2bd59f4ce6",
+      "captures": 9,
+      "capturedCells": 715,
+      "ticks": 8180,
+      "outcome": "lost",
+      "checkpoint": "18ad4e035e432dd7",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-357575c079f7c22a",
+      "captures": 11,
+      "capturedCells": 1233,
+      "ticks": 7687,
+      "outcome": "lost",
+      "checkpoint": "32819304d665c940",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-67de5079eb3bf92d",
+      "captures": 8,
+      "capturedCells": 635,
+      "ticks": 5525,
+      "outcome": "lost",
+      "checkpoint": "233846ce0c7db4b5",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-958579fbf73ab1f3",
+      "captures": 16,
+      "capturedCells": 1027,
+      "ticks": 10366,
+      "outcome": "lost",
+      "checkpoint": "ca51a23332c539c4",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-11bae25f26fd63b2",
+      "captures": 8,
+      "capturedCells": 510,
+      "ticks": 6253,
+      "outcome": "lost",
+      "checkpoint": "e3faccb8591c9b5d",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-519f2cb9a0c75bc5",
+      "captures": 10,
+      "capturedCells": 966,
+      "ticks": 7209,
+      "outcome": "lost",
+      "checkpoint": "671c2cc73a1a9ea1",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-2d795f9b60e1e9ea",
+      "captures": 18,
+      "capturedCells": 913,
+      "ticks": 10986,
+      "outcome": "lost",
+      "checkpoint": "c669bae23010c4db",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-d7e8c58fb56985a6",
+      "captures": 7,
+      "capturedCells": 1413,
+      "ticks": 5650,
+      "outcome": "lost",
+      "checkpoint": "e4b144c5a21b19fb",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-6fc96345c2385275",
+      "captures": 6,
+      "capturedCells": 369,
+      "ticks": 6062,
+      "outcome": "lost",
+      "checkpoint": "37072b57aedef56b",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-ed2912770fa96724",
+      "captures": 10,
+      "capturedCells": 800,
+      "ticks": 6683,
+      "outcome": "lost",
+      "checkpoint": "a47ba4146dcc96eb",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-1b7c6f1b1a4d7efd",
+      "captures": 16,
+      "capturedCells": 980,
+      "ticks": 10150,
+      "outcome": "lost",
+      "checkpoint": "f00238ca38d1e146",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-0305faa5f3b057f0",
+      "captures": 10,
+      "capturedCells": 462,
+      "ticks": 6842,
+      "outcome": "lost",
+      "checkpoint": "2a122bcea81a8eab",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-1d6d571646ea58e8",
+      "captures": 6,
+      "capturedCells": 903,
+      "ticks": 5747,
+      "outcome": "lost",
+      "checkpoint": "7b6ac8686d5bfdea",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-317c68e1e84b012b",
+      "captures": 6,
+      "capturedCells": 644,
+      "ticks": 6562,
+      "outcome": "lost",
+      "checkpoint": "4132f50e1df313aa",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-3edb8b3d29afe4e4",
+      "captures": 5,
+      "capturedCells": 447,
+      "ticks": 4626,
+      "outcome": "lost",
+      "checkpoint": "766a89178024cc05",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-6f9d15c9f157385c",
+      "captures": 19,
+      "capturedCells": 943,
+      "ticks": 12291,
+      "outcome": "lost",
+      "checkpoint": "e26d955dcd61df0a",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-6fb14628da57d097",
+      "captures": 2,
+      "capturedCells": 209,
+      "ticks": 3176,
+      "outcome": "lost",
+      "checkpoint": "3ae707ce97781077",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-63cbda0ed7ddb858",
+      "captures": 5,
+      "capturedCells": 632,
+      "ticks": 4621,
+      "outcome": "lost",
+      "checkpoint": "f381843eee56e2c8",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-da69d08373c12fee",
+      "captures": 5,
+      "capturedCells": 684,
+      "ticks": 5253,
+      "outcome": "lost",
+      "checkpoint": "f7dcb808b240644b",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-014fa419dd4cee2b",
+      "captures": 6,
+      "capturedCells": 400,
+      "ticks": 5092,
+      "outcome": "lost",
+      "checkpoint": "b6854234e01c4861",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-7e1dbadc86cf52ca",
+      "captures": 4,
+      "capturedCells": 341,
+      "ticks": 4415,
+      "outcome": "lost",
+      "checkpoint": "7309255733ba49fc",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-73fda9cd13ee6004",
+      "captures": 5,
+      "capturedCells": 373,
+      "ticks": 4790,
+      "outcome": "lost",
+      "checkpoint": "ff8d431efec1c64d",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-0cf6a5512cf875ec",
+      "captures": 6,
+      "capturedCells": 196,
+      "ticks": 4663,
+      "outcome": "lost",
+      "checkpoint": "d30274b094d601f6",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-e546fded69fb9336",
+      "captures": 6,
+      "capturedCells": 465,
+      "ticks": 6165,
+      "outcome": "lost",
+      "checkpoint": "9a8605cc8e798d2a",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-ae4fe97bb5a844f3",
+      "captures": 5,
+      "capturedCells": 313,
+      "ticks": 5253,
+      "outcome": "lost",
+      "checkpoint": "326ddc40734f9169",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-b420aacc8400ae19",
+      "captures": 27,
+      "capturedCells": 1483,
+      "ticks": 15304,
+      "outcome": "won",
+      "checkpoint": "d9f4adc64f2fb517",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-5345516b36f07dce",
+      "captures": 2,
+      "capturedCells": 809,
+      "ticks": 3518,
+      "outcome": "lost",
+      "checkpoint": "1284fba4260a4480",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-9f0dd1a83a873b3a",
+      "captures": 3,
+      "capturedCells": 356,
+      "ticks": 4768,
+      "outcome": "lost",
+      "checkpoint": "ebefb42ffdeeb3d2",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-8e69822594538456",
+      "captures": 4,
+      "capturedCells": 1617,
+      "ticks": 3284,
+      "outcome": "won",
+      "checkpoint": "2b87de6ae5559597",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-b20ed0897d0f5ffc",
+      "captures": 12,
+      "capturedCells": 1925,
+      "ticks": 9085,
+      "outcome": "won",
+      "checkpoint": "d2379ad8de7d44ab",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-209dd22e35205b41",
+      "captures": 2,
+      "capturedCells": 106,
+      "ticks": 3147,
+      "outcome": "lost",
+      "checkpoint": "406080e2ff56685e",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-ab36af48e02d65ca",
+      "captures": 4,
+      "capturedCells": 1617,
+      "ticks": 3284,
+      "outcome": "won",
+      "checkpoint": "154329591e33001b",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-70dd4c708b708cfc",
+      "captures": 12,
+      "capturedCells": 1925,
+      "ticks": 9085,
+      "outcome": "won",
+      "checkpoint": "9583eb676573ca98",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-5fe1b2d2833db1f9",
+      "captures": 2,
+      "capturedCells": 106,
+      "ticks": 3147,
+      "outcome": "lost",
+      "checkpoint": "9557d0583fba9413",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-58fa121c41ee9a76",
+      "captures": 13,
+      "capturedCells": 1631,
+      "ticks": 7217,
+      "outcome": "won",
+      "checkpoint": "53c55c144027290f",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-8c5a7d940162231c",
+      "captures": 17,
+      "capturedCells": 1736,
+      "ticks": 11983,
+      "outcome": "won",
+      "checkpoint": "c4bed3ce77ab1905",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-ec7912cb8caf199d",
+      "captures": 2,
+      "capturedCells": 106,
+      "ticks": 3121,
+      "outcome": "lost",
+      "checkpoint": "06d76e490ec23bf2",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-01c45eb2a92b2a48",
+      "captures": 9,
+      "capturedCells": 1680,
+      "ticks": 7423,
+      "outcome": "won",
+      "checkpoint": "31eaf4c756f35fcf",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-906d14f392635406",
+      "captures": 10,
+      "capturedCells": 1962,
+      "ticks": 8918,
+      "outcome": "won",
+      "checkpoint": "79c18f8504ad48cc",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-7cf943719a6391a9",
+      "captures": 16,
+      "capturedCells": 1808,
+      "ticks": 11088,
+      "outcome": "lost",
+      "checkpoint": "a1445a1ef68f3dcc",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-8a91659e300e8ed3",
+      "captures": 8,
+      "capturedCells": 1322,
+      "ticks": 5959,
+      "outcome": "won",
+      "checkpoint": "2d2dff65568384d0",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-d98ec8cfe4477b6c",
+      "captures": 8,
+      "capturedCells": 1322,
+      "ticks": 5959,
+      "outcome": "won",
+      "checkpoint": "5b7871e6f65bd273",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-6884a9c1bc511396",
+      "captures": 8,
+      "capturedCells": 1322,
+      "ticks": 5959,
+      "outcome": "won",
+      "checkpoint": "b9bb4d4bfbf82877",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-1365c63c29f6f7b0",
+      "captures": 18,
+      "capturedCells": 1044,
+      "ticks": 15911,
+      "outcome": "won",
+      "checkpoint": "e7233a3088196fc9",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-0a838d0c1691b31f",
+      "captures": 9,
+      "capturedCells": 1356,
+      "ticks": 5864,
+      "outcome": "won",
+      "checkpoint": "bd98f0a71aec8ec7",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-539f1ca4cc7249a8",
+      "captures": 16,
+      "capturedCells": 1478,
+      "ticks": 12342,
+      "outcome": "won",
+      "checkpoint": "375d86e864bc4807",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-9f55f7092af5ad15",
+      "captures": 4,
+      "capturedCells": 1152,
+      "ticks": 3957,
+      "outcome": "won",
+      "checkpoint": "41b30216fbc61cf2",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-34436b9f24286344",
+      "captures": 13,
+      "capturedCells": 1195,
+      "ticks": 10185,
+      "outcome": "won",
+      "checkpoint": "5caec8ad43b96f4d",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-5107ade9c5d366bb",
+      "captures": 13,
+      "capturedCells": 958,
+      "ticks": 12025,
+      "outcome": "won",
+      "checkpoint": "81e7057cc99e9fbd",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-9f1b8ec355af25b9",
+      "captures": 11,
+      "capturedCells": 1078,
+      "ticks": 13633,
+      "outcome": "won",
+      "checkpoint": "411124a0c33c5fe5",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-609112f5d34480ec",
+      "captures": 12,
+      "capturedCells": 1277,
+      "ticks": 10324,
+      "outcome": "won",
+      "checkpoint": "20bcff6c9fc1d8ce",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-6e585d1b8ae71b58",
+      "captures": 21,
+      "capturedCells": 1259,
+      "ticks": 12881,
+      "outcome": "won",
+      "checkpoint": "c4525d850a998560",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-508a8b6278a54af2",
+      "captures": 1,
+      "capturedCells": 774,
+      "ticks": 3997,
+      "outcome": "lost",
+      "checkpoint": "c4d007bc0feeae10",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-6831f1fd6349b2be",
+      "captures": 10,
+      "capturedCells": 841,
+      "ticks": 12458,
+      "outcome": "lost",
+      "checkpoint": "6b79c60d0ec064d3",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-d03c65948bb71da1",
+      "captures": 11,
+      "capturedCells": 1480,
+      "ticks": 6020,
+      "outcome": "won",
+      "checkpoint": "c0408d0e03f74982",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-13346d4f3775859d",
+      "captures": 25,
+      "capturedCells": 1491,
+      "ticks": 13366,
+      "outcome": "won",
+      "checkpoint": "daaccd8887abeb9c",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-0a05fdf1d370e239",
+      "captures": 30,
+      "capturedCells": 1629,
+      "ticks": 13201,
+      "outcome": "won",
+      "checkpoint": "b2f8062bedbcf30c",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-a1ce0aac4a4ba375",
+      "captures": 21,
+      "capturedCells": 1631,
+      "ticks": 8971,
+      "outcome": "won",
+      "checkpoint": "47e11334b21dd9fe",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-cb467c172a8504ec",
+      "captures": 18,
+      "capturedCells": 1551,
+      "ticks": 8567,
+      "outcome": "won",
+      "checkpoint": "1ea60cfeee4f52ed",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-f85650a2f81b67ed",
+      "captures": 23,
+      "capturedCells": 1650,
+      "ticks": 10954,
+      "outcome": "won",
+      "checkpoint": "33a60c19da7fb9e8",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-c7131a2a20fe532d",
+      "captures": 17,
+      "capturedCells": 1566,
+      "ticks": 8312,
+      "outcome": "won",
+      "checkpoint": "f8c53e691ba2e764",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-6a03bb8315594257",
+      "captures": 21,
+      "capturedCells": 1530,
+      "ticks": 10952,
+      "outcome": "won",
+      "checkpoint": "2f98f42b1156e2a5",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-14d1e5097d455385",
+      "captures": 19,
+      "capturedCells": 1611,
+      "ticks": 7890,
+      "outcome": "won",
+      "checkpoint": "19b64f73d2c4a387",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-44273034491a74e4",
+      "captures": 1,
+      "capturedCells": 1224,
+      "ticks": 632,
+      "outcome": "won",
+      "checkpoint": "9502a190cf93ca76",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-d1a5994b174c9108",
+      "captures": 1,
+      "capturedCells": 1564,
+      "ticks": 1082,
+      "outcome": "won",
+      "checkpoint": "450a462cb2e5a849",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-b669b6afe477abbb",
+      "captures": 2,
+      "capturedCells": 1890,
+      "ticks": 1724,
+      "outcome": "won",
+      "checkpoint": "3bf58ab666523410",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-c0d8a5252aaa7f39",
+      "captures": 4,
+      "capturedCells": 1533,
+      "ticks": 3149,
+      "outcome": "won",
+      "checkpoint": "3268da0db53434f9",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-1d64e506d5980412",
+      "captures": 7,
+      "capturedCells": 1500,
+      "ticks": 5590,
+      "outcome": "won",
+      "checkpoint": "26df99c67db05c63",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-4ac90773fa58369b",
+      "captures": 9,
+      "capturedCells": 1752,
+      "ticks": 6872,
+      "outcome": "won",
+      "checkpoint": "18c13328878cbe0b",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-11133b7849422018",
+      "captures": 2,
+      "capturedCells": 2047,
+      "ticks": 1755,
+      "outcome": "won",
+      "checkpoint": "e63f2fbb2a79f379",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-be318c73458f4900",
+      "captures": 7,
+      "capturedCells": 1537,
+      "ticks": 6475,
+      "outcome": "won",
+      "checkpoint": "da1a57d09a46a3ea",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-5678d483da29e23a",
+      "captures": 8,
+      "capturedCells": 1808,
+      "ticks": 6926,
+      "outcome": "won",
+      "checkpoint": "b9964061c01a633a",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-965c3d07edf7944d",
+      "captures": 2,
+      "capturedCells": 1640,
+      "ticks": 3534,
+      "outcome": "won",
+      "checkpoint": "a7c098626923e568",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-f7181f0af9511fcc",
+      "captures": 5,
+      "capturedCells": 2083,
+      "ticks": 5070,
+      "outcome": "won",
+      "checkpoint": "81b501d4f419eaaf",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-0e6f0bf3f5775703",
+      "captures": 9,
+      "capturedCells": 1575,
+      "ticks": 6337,
+      "outcome": "won",
+      "checkpoint": "71e931f94a41973c",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-728dc5622c493506",
+      "captures": 5,
+      "capturedCells": 1538,
+      "ticks": 4289,
+      "outcome": "won",
+      "checkpoint": "925f1dc2d9196f5c",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-3996626042c502db",
+      "captures": 3,
+      "capturedCells": 2079,
+      "ticks": 2236,
+      "outcome": "won",
+      "checkpoint": "ee140537d0f5b865",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-b7b6ea7705c422d5",
+      "captures": 7,
+      "capturedCells": 2092,
+      "ticks": 5912,
+      "outcome": "won",
+      "checkpoint": "11878d6ffe5928c0",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-70a708ee64355d75",
+      "captures": 4,
+      "capturedCells": 1677,
+      "ticks": 3946,
+      "outcome": "won",
+      "checkpoint": "c3cab654b121f429",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-d87dc7be0d62a2b1",
+      "captures": 11,
+      "capturedCells": 1766,
+      "ticks": 9878,
+      "outcome": "won",
+      "checkpoint": "4bbfbf4a95425734",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-7b3a3b7248f976ce",
+      "captures": 11,
+      "capturedCells": 1833,
+      "ticks": 8227,
+      "outcome": "won",
+      "checkpoint": "7cacb7c8154b4178",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-a06599f68a914d16",
+      "captures": 2,
+      "capturedCells": 2110,
+      "ticks": 1745,
+      "outcome": "won",
+      "checkpoint": "74e0cd6c7aaad492",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-9dddcc84f7d60f65",
+      "captures": 1,
+      "capturedCells": 1835,
+      "ticks": 1510,
+      "outcome": "won",
+      "checkpoint": "1083898a088b6da4",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-9aa30fcd0b3c8281",
+      "captures": 9,
+      "capturedCells": 1925,
+      "ticks": 7809,
+      "outcome": "won",
+      "checkpoint": "729841f422614515",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-f1f91fa91991d51b",
+      "captures": 5,
+      "capturedCells": 1623,
+      "ticks": 4392,
+      "outcome": "won",
+      "checkpoint": "db4fccc76a4ee011",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-dd5c4beb661682f0",
+      "captures": 11,
+      "capturedCells": 1669,
+      "ticks": 6736,
+      "outcome": "won",
+      "checkpoint": "975d38b753a25f3b",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-bbd69e7ccb5526d9",
+      "captures": 4,
+      "capturedCells": 1374,
+      "ticks": 5100,
+      "outcome": "won",
+      "checkpoint": "76156adabeafac10",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-484de1d1d425f0c5",
+      "captures": 5,
+      "capturedCells": 1669,
+      "ticks": 3486,
+      "outcome": "won",
+      "checkpoint": "ccded76ee52272ea",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-0eafd68dc70ee8a8",
+      "captures": 7,
+      "capturedCells": 1779,
+      "ticks": 5883,
+      "outcome": "won",
+      "checkpoint": "3ae9f4b6bbd3e3e0",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-821bba1882552b03",
+      "captures": 6,
+      "capturedCells": 1795,
+      "ticks": 4681,
+      "outcome": "won",
+      "checkpoint": "fbfe7d067b7c28d7",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-bbe0c5897adb725d",
+      "captures": 7,
+      "capturedCells": 1592,
+      "ticks": 6142,
+      "outcome": "won",
+      "checkpoint": "2f4bc15fa1f21af1",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-dc59e6e76ae9df8b",
+      "captures": 3,
+      "capturedCells": 1683,
+      "ticks": 2801,
+      "outcome": "won",
+      "checkpoint": "12b02f9b7162ffce",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-08bfbce48d50a5c0",
+      "captures": 8,
+      "capturedCells": 1679,
+      "ticks": 5030,
+      "outcome": "won",
+      "checkpoint": "e845bf0b9bbe417b",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-614567e280b3c780",
+      "captures": 9,
+      "capturedCells": 1588,
+      "ticks": 7561,
+      "outcome": "won",
+      "checkpoint": "55c9a55697f82b78",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-2df382183e2f00d6",
+      "captures": 6,
+      "capturedCells": 1683,
+      "ticks": 4019,
+      "outcome": "won",
+      "checkpoint": "304f71e7a93927ca",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-7e1cae99ddeff5f9",
+      "captures": 7,
+      "capturedCells": 1492,
+      "ticks": 3920,
+      "outcome": "won",
+      "checkpoint": "5e1bfd4ff0ed03da",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-2d3df26570caee45",
+      "captures": 5,
+      "capturedCells": 1696,
+      "ticks": 5451,
+      "outcome": "won",
+      "checkpoint": "e9a7e731fa230965",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-10d16d94f297eb0c",
+      "captures": 15,
+      "capturedCells": 1896,
+      "ticks": 10473,
+      "outcome": "won",
+      "checkpoint": "255c31b500ddd0b6",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-8f766bd89a83be7e",
+      "captures": 9,
+      "capturedCells": 1651,
+      "ticks": 6391,
+      "outcome": "won",
+      "checkpoint": "174677697c9dd2a5",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-7ff2d0d3f752cf2b",
+      "captures": 1,
+      "capturedCells": 1682,
+      "ticks": 2812,
+      "outcome": "won",
+      "checkpoint": "169438dd587cff20",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-bcc2b9ca5521a87d",
+      "captures": 17,
+      "capturedCells": 1769,
+      "ticks": 11238,
+      "outcome": "won",
+      "checkpoint": "88633d82ea220a4b",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-86af557da6e8a323",
+      "captures": 6,
+      "capturedCells": 1776,
+      "ticks": 3048,
+      "outcome": "won",
+      "checkpoint": "4e414cf0fa9485ec",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-f223736d7f7b47b2",
+      "captures": 7,
+      "capturedCells": 1712,
+      "ticks": 4867,
+      "outcome": "won",
+      "checkpoint": "d9f1c50c5b1ab5e1",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-1c903081aa79df1e",
+      "captures": 15,
+      "capturedCells": 1731,
+      "ticks": 9009,
+      "outcome": "won",
+      "checkpoint": "66108bcb8cb06386",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-30038742a961b399",
+      "captures": 3,
+      "capturedCells": 2179,
+      "ticks": 1398,
+      "outcome": "won",
+      "checkpoint": "1adc43783e082ff4",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-bfae960cf9bf13c8",
+      "captures": 4,
+      "capturedCells": 1568,
+      "ticks": 1742,
+      "outcome": "won",
+      "checkpoint": "9aa7c52624f2c7e6",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-b03217288edf527a",
+      "captures": 8,
+      "capturedCells": 1534,
+      "ticks": 6040,
+      "outcome": "won",
+      "checkpoint": "6ac6b16c15bef158",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-72dfbcf032b5ad25",
+      "captures": 8,
+      "capturedCells": 1718,
+      "ticks": 4097,
+      "outcome": "won",
+      "checkpoint": "181e5642b727958a",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-4a4987306df02c59",
+      "captures": 6,
+      "capturedCells": 1872,
+      "ticks": 6243,
+      "outcome": "won",
+      "checkpoint": "0599fc591a728aa7",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-2d68ede8fad57f5b",
+      "captures": 9,
+      "capturedCells": 1926,
+      "ticks": 5037,
+      "outcome": "won",
+      "checkpoint": "8f5bf479cc820cd8",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-4301d76f85efb491",
+      "captures": 5,
+      "capturedCells": 1596,
+      "ticks": 5634,
+      "outcome": "won",
+      "checkpoint": "a4b5986037a063c3",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-20e853301cb3ac52",
+      "captures": 6,
+      "capturedCells": 1797,
+      "ticks": 3479,
+      "outcome": "won",
+      "checkpoint": "89bf4c6e29060d59",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-11ac088d9288363c",
+      "captures": 8,
+      "capturedCells": 1642,
+      "ticks": 3646,
+      "outcome": "won",
+      "checkpoint": "3c675886488c6eab",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-a99c5711c5c1839d",
+      "captures": 16,
+      "capturedCells": 1680,
+      "ticks": 10808,
+      "outcome": "won",
+      "checkpoint": "9d12958373d941f1",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-f96b30d71b0716cf",
+      "captures": 12,
+      "capturedCells": 1904,
+      "ticks": 6940,
+      "outcome": "won",
+      "checkpoint": "c2d5b9ba31376c44",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-8812ad38e87d1a3e",
+      "captures": 14,
+      "capturedCells": 1518,
+      "ticks": 9950,
+      "outcome": "lost",
+      "checkpoint": "3b8becf141e65934",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-2e72fe1d788ce165",
+      "captures": 17,
+      "capturedCells": 1788,
+      "ticks": 7962,
+      "outcome": "won",
+      "checkpoint": "b16a396e517869b5",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-e32d403f3f492be1",
+      "captures": 10,
+      "capturedCells": 1454,
+      "ticks": 7928,
+      "outcome": "lost",
+      "checkpoint": "9855b17c7a58956d",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-205560abb7070791",
+      "captures": 14,
+      "capturedCells": 1999,
+      "ticks": 10389,
+      "outcome": "won",
+      "checkpoint": "04975a9233f2e646",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-0a95463cda39b995",
+      "captures": 12,
+      "capturedCells": 1607,
+      "ticks": 8094,
+      "outcome": "won",
+      "checkpoint": "fd70613f43201d96",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-d5027ee8cc9ab251",
+      "captures": 18,
+      "capturedCells": 1887,
+      "ticks": 10290,
+      "outcome": "won",
+      "checkpoint": "fb442fc18ade214d",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-d4d010be74f4ff34",
+      "captures": 9,
+      "capturedCells": 1975,
+      "ticks": 7695,
+      "outcome": "won",
+      "checkpoint": "fb56f80c9afc1554",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-99b7fe8c6c02e8f5",
+      "captures": 10,
+      "capturedCells": 1583,
+      "ticks": 6869,
+      "outcome": "won",
+      "checkpoint": "2560ce752be9039d",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-86e49440668d32eb",
+      "captures": 16,
+      "capturedCells": 1730,
+      "ticks": 8018,
+      "outcome": "won",
+      "checkpoint": "17eb0f92f11ce461",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-1045a071c392b17f",
+      "captures": 20,
+      "capturedCells": 2090,
+      "ticks": 7254,
+      "outcome": "won",
+      "checkpoint": "0024eb50fdba7e1e",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-26c083d6a304753c",
+      "captures": 14,
+      "capturedCells": 2028,
+      "ticks": 10000,
+      "outcome": "won",
+      "checkpoint": "413b790105b6e4a6",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-03e90b310d2bc700",
+      "captures": 12,
+      "capturedCells": 1996,
+      "ticks": 5576,
+      "outcome": "won",
+      "checkpoint": "a2a1dd2d499de832",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-9bd405709d380bb7",
+      "captures": 14,
+      "capturedCells": 2044,
+      "ticks": 8299,
+      "outcome": "won",
+      "checkpoint": "3621afbf5096d7c3",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-fe13ae38e227f3d4",
+      "captures": 16,
+      "capturedCells": 1863,
+      "ticks": 10600,
+      "outcome": "won",
+      "checkpoint": "3608d4864267f189",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-9b61f76591ea319f",
+      "captures": 17,
+      "capturedCells": 1778,
+      "ticks": 11564,
+      "outcome": "won",
+      "checkpoint": "3d7654d13a51e2f3",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-b8a409de0207c16a",
+      "captures": 11,
+      "capturedCells": 1727,
+      "ticks": 7236,
+      "outcome": "won",
+      "checkpoint": "94f08cc1bab73bb5",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-9a05e4f32fe3e8c3",
+      "captures": 12,
+      "capturedCells": 1836,
+      "ticks": 9237,
+      "outcome": "won",
+      "checkpoint": "34ad33a325c48221",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-6066cc64f5796336",
+      "captures": 8,
+      "capturedCells": 1798,
+      "ticks": 6963,
+      "outcome": "won",
+      "checkpoint": "f900c564aeca528f",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-f420d6e14fbac1ed",
+      "captures": 13,
+      "capturedCells": 1817,
+      "ticks": 10186,
+      "outcome": "won",
+      "checkpoint": "84bb0259cd49696e",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-45ff8eaac10d989c",
+      "captures": 11,
+      "capturedCells": 1468,
+      "ticks": 9171,
+      "outcome": "won",
+      "checkpoint": "6481150162cacd5d",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-d658e2bd3c0d5c7e",
+      "captures": 11,
+      "capturedCells": 1555,
+      "ticks": 7770,
+      "outcome": "won",
+      "checkpoint": "1ee4cd26de211726",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-fabdfb2541546426",
+      "captures": 11,
+      "capturedCells": 1651,
+      "ticks": 8482,
+      "outcome": "won",
+      "checkpoint": "97914afc2f4d1e2c",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-acd938abf093e19a",
+      "captures": 10,
+      "capturedCells": 1817,
+      "ticks": 6029,
+      "outcome": "won",
+      "checkpoint": "fb614ae74f45ee9d",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-ab4de59fa240aa05",
+      "captures": 9,
+      "capturedCells": 566,
+      "ticks": 6052,
+      "outcome": "lost",
+      "checkpoint": "0a280f4bd94a2a07",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-f8e0d67f3ee24811",
+      "captures": 14,
+      "capturedCells": 1794,
+      "ticks": 8065,
+      "outcome": "won",
+      "checkpoint": "23ee0020a818b929",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-17b6edccaf82b693",
+      "captures": 9,
+      "capturedCells": 2155,
+      "ticks": 4936,
+      "outcome": "won",
+      "checkpoint": "d018cc10ac02ad02",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-512b66c5e6a7ca41",
+      "captures": 18,
+      "capturedCells": 1874,
+      "ticks": 10948,
+      "outcome": "won",
+      "checkpoint": "8073c110044997f4",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-d775783a12234789",
+      "captures": 10,
+      "capturedCells": 2188,
+      "ticks": 8693,
+      "outcome": "won",
+      "checkpoint": "fa80f44690810df1",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-56165d770d83ee1e",
+      "captures": 11,
+      "capturedCells": 1502,
+      "ticks": 8519,
+      "outcome": "won",
+      "checkpoint": "0085436384e49180",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-6bd31868bd8f9091",
+      "captures": 9,
+      "capturedCells": 2062,
+      "ticks": 4303,
+      "outcome": "won",
+      "checkpoint": "a851d6f585c27186",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-a13b85ddde0f9663",
+      "captures": 17,
+      "capturedCells": 1617,
+      "ticks": 11644,
+      "outcome": "won",
+      "checkpoint": "5b84c3b58df26382",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-22874d7656ce6c3e",
+      "captures": 18,
+      "capturedCells": 1394,
+      "ticks": 11251,
+      "outcome": "won",
+      "checkpoint": "eed316add7e29a35",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-dd80d3e78efbf350",
+      "captures": 14,
+      "capturedCells": 1514,
+      "ticks": 10956,
+      "outcome": "won",
+      "checkpoint": "6778337b986b92be",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-c258ed926a320cc2",
+      "captures": 11,
+      "capturedCells": 1878,
+      "ticks": 7729,
+      "outcome": "won",
+      "checkpoint": "7cf3534c6c916ef0",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-86ee84d48134b04b",
+      "captures": 10,
+      "capturedCells": 1796,
+      "ticks": 5978,
+      "outcome": "won",
+      "checkpoint": "5058a6f3dfa374e3",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-ead64a471b9edd54",
+      "captures": 9,
+      "capturedCells": 1731,
+      "ticks": 4755,
+      "outcome": "won",
+      "checkpoint": "9826ff3d9c0b52ad",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-cd19eddd5888061f",
+      "captures": 12,
+      "capturedCells": 1809,
+      "ticks": 6516,
+      "outcome": "won",
+      "checkpoint": "fd4714ba2436c41b",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-84debdfc44a43699",
+      "captures": 6,
+      "capturedCells": 1876,
+      "ticks": 2791,
+      "outcome": "won",
+      "checkpoint": "55f5141c521b1607",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-4f9aec8fe9b37c0d",
+      "captures": 24,
+      "capturedCells": 2167,
+      "ticks": 10045,
+      "outcome": "won",
+      "checkpoint": "78361c93bc15e356",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-b2087ebb50aee570",
+      "captures": 6,
+      "capturedCells": 2074,
+      "ticks": 6282,
+      "outcome": "won",
+      "checkpoint": "cbbc3f53b555da17",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-8abdfdb8249526a1",
+      "captures": 2,
+      "capturedCells": 1978,
+      "ticks": 3536,
+      "outcome": "won",
+      "checkpoint": "4811a4173509cfef",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-0c1decf0a2983bd4",
+      "captures": 12,
+      "capturedCells": 1726,
+      "ticks": 8606,
+      "outcome": "won",
+      "checkpoint": "75057dc099e30796",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-2c530a2670b6a7f3",
+      "captures": 3,
+      "capturedCells": 1913,
+      "ticks": 1492,
+      "outcome": "won",
+      "checkpoint": "0e5925369180ead1",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-47b82cbab227cd1f",
+      "captures": 5,
+      "capturedCells": 1776,
+      "ticks": 3030,
+      "outcome": "won",
+      "checkpoint": "3077c53211500b67",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-23166f06bb57b9b3",
+      "captures": 5,
+      "capturedCells": 1741,
+      "ticks": 2856,
+      "outcome": "won",
+      "checkpoint": "d12b331f95154286",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-5bd37fe7b93c3853",
+      "captures": 4,
+      "capturedCells": 1811,
+      "ticks": 2410,
+      "outcome": "won",
+      "checkpoint": "cd2d200fda57310a",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-a57cfb4b64844ce9",
+      "captures": 3,
+      "capturedCells": 1900,
+      "ticks": 2563,
+      "outcome": "won",
+      "checkpoint": "987cbcabcba656f7",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-5307e5f38725a0e3",
+      "captures": 4,
+      "capturedCells": 1852,
+      "ticks": 2775,
+      "outcome": "won",
+      "checkpoint": "d5dc3eb28d717188",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-5915fde156c7fb92",
+      "captures": 2,
+      "capturedCells": 1555,
+      "ticks": 3166,
+      "outcome": "won",
+      "checkpoint": "b7f50ecf058d254a",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-f229f1af7ed82073",
+      "captures": 3,
+      "capturedCells": 1792,
+      "ticks": 2301,
+      "outcome": "won",
+      "checkpoint": "8963f42a717df80b",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-81e24a32328f7a3c",
+      "captures": 4,
+      "capturedCells": 1549,
+      "ticks": 4007,
+      "outcome": "won",
+      "checkpoint": "2aea556317148d49",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-8d1b4bbb885d0b9d",
+      "captures": 4,
+      "capturedCells": 1570,
+      "ticks": 4250,
+      "outcome": "won",
+      "checkpoint": "e72b0bc32783c9b1",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-5aa8f6bd6fb84df2",
+      "captures": 9,
+      "capturedCells": 1694,
+      "ticks": 6641,
+      "outcome": "won",
+      "checkpoint": "99c0506f0edcae58",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-47cfdd798430bc97",
+      "captures": 4,
+      "capturedCells": 1540,
+      "ticks": 3051,
+      "outcome": "won",
+      "checkpoint": "1f0ac279f3d0dcfb",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-8fbfa21663542ea1",
+      "captures": 1,
+      "capturedCells": 1605,
+      "ticks": 2399,
+      "outcome": "won",
+      "checkpoint": "a246ee62d2b14cdd",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-93ffe1fc5a201d2e",
+      "captures": 2,
+      "capturedCells": 2108,
+      "ticks": 1745,
+      "outcome": "won",
+      "checkpoint": "795a9848d31d0c54",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-a922c6b22d771e68",
+      "captures": 1,
+      "capturedCells": 1811,
+      "ticks": 2303,
+      "outcome": "won",
+      "checkpoint": "b7bf0efdb5da8f98",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-d3260fe50e480049",
+      "captures": 3,
+      "capturedCells": 1972,
+      "ticks": 2271,
+      "outcome": "won",
+      "checkpoint": "bc606ce14d788a9c",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-b61cda337720b14d",
+      "captures": 1,
+      "capturedCells": 1733,
+      "ticks": 1890,
+      "outcome": "won",
+      "checkpoint": "b502daef6a499944",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-c4afd0fd10fd9d29",
+      "captures": 5,
+      "capturedCells": 2011,
+      "ticks": 5877,
+      "outcome": "won",
+      "checkpoint": "487e1d243e565dea",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-d6b94392830623da",
+      "captures": 2,
+      "capturedCells": 1862,
+      "ticks": 1852,
+      "outcome": "won",
+      "checkpoint": "00067579b248dee8",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-bd23e3eb635875d1",
+      "captures": 4,
+      "capturedCells": 1786,
+      "ticks": 2956,
+      "outcome": "won",
+      "checkpoint": "e1075c691b8ecb32",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-6ab3604dd6a03040",
+      "captures": 2,
+      "capturedCells": 1741,
+      "ticks": 3091,
+      "outcome": "won",
+      "checkpoint": "ca482f7736e55f68",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-84508838cf882427",
+      "captures": 3,
+      "capturedCells": 1756,
+      "ticks": 4009,
+      "outcome": "won",
+      "checkpoint": "569ceef3d8dfffb4",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-f1a05094f22dda3a",
+      "captures": 2,
+      "capturedCells": 1910,
+      "ticks": 2106,
+      "outcome": "won",
+      "checkpoint": "5b6f153c5163f80b",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-9695696535e4ee17",
+      "captures": 7,
+      "capturedCells": 1640,
+      "ticks": 5045,
+      "outcome": "won",
+      "checkpoint": "37e0a8c30ef9dc78",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-348cde9a8a95df59",
+      "captures": 3,
+      "capturedCells": 1861,
+      "ticks": 2450,
+      "outcome": "won",
+      "checkpoint": "4c2c2ace15254019",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-f57d5e1891de81f5",
+      "captures": 2,
+      "capturedCells": 1656,
+      "ticks": 2146,
+      "outcome": "won",
+      "checkpoint": "c1958083cc058670",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-53797d64463a8706",
+      "captures": 4,
+      "capturedCells": 1711,
+      "ticks": 2909,
+      "outcome": "won",
+      "checkpoint": "2930212345feda6f",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-7c360a513791c0c5",
+      "captures": 5,
+      "capturedCells": 1938,
+      "ticks": 4478,
+      "outcome": "won",
+      "checkpoint": "147f9838f200a88f",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-3ab81dea52f12ba3",
+      "captures": 12,
+      "capturedCells": 1871,
+      "ticks": 7400,
+      "outcome": "won",
+      "checkpoint": "5910f804e6d0e351",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-3037b64d2bd5cd52",
+      "captures": 16,
+      "capturedCells": 1683,
+      "ticks": 10460,
+      "outcome": "won",
+      "checkpoint": "406e2b62352a08da",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-d6bea0fb51f4d9b7",
+      "captures": 17,
+      "capturedCells": 2165,
+      "ticks": 8854,
+      "outcome": "won",
+      "checkpoint": "36856a685338cc84",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-30d8c82c95cfaa84",
+      "captures": 22,
+      "capturedCells": 1987,
+      "ticks": 12163,
+      "outcome": "won",
+      "checkpoint": "e95103274a76704c",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-896fc42fcd97192f",
+      "captures": 18,
+      "capturedCells": 2104,
+      "ticks": 10472,
+      "outcome": "won",
+      "checkpoint": "19dfa990d43e8b61",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-3e2c476ed99d280e",
+      "captures": 22,
+      "capturedCells": 1868,
+      "ticks": 12493,
+      "outcome": "won",
+      "checkpoint": "11abec5c5aa90aa3",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-1c34f9397715919f",
+      "captures": 8,
+      "capturedCells": 1093,
+      "ticks": 5998,
+      "outcome": "lost",
+      "checkpoint": "2a2e9c5287e70679",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-08205883fcfeb6de",
+      "captures": 14,
+      "capturedCells": 1200,
+      "ticks": 9573,
+      "outcome": "lost",
+      "checkpoint": "391bf80c74e182dd",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-29078bd0c9992bd0",
+      "captures": 11,
+      "capturedCells": 1742,
+      "ticks": 6853,
+      "outcome": "won",
+      "checkpoint": "0ef28d8f2c60540c",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-ebc3051ed29e5814",
+      "captures": 8,
+      "capturedCells": 2006,
+      "ticks": 6168,
+      "outcome": "won",
+      "checkpoint": "b1a651029e375107",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-ee5ba3df09bda042",
+      "captures": 12,
+      "capturedCells": 1605,
+      "ticks": 9915,
+      "outcome": "won",
+      "checkpoint": "41e5cbf93c31cdef",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-ee30594d88087e08",
+      "captures": 17,
+      "capturedCells": 1810,
+      "ticks": 11204,
+      "outcome": "won",
+      "checkpoint": "75f9217589ffb8b6",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-33e6a62cdaa16aaa",
+      "captures": 9,
+      "capturedCells": 1883,
+      "ticks": 7062,
+      "outcome": "won",
+      "checkpoint": "121586d019e4a377",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-8cfed8cf70713745",
+      "captures": 11,
+      "capturedCells": 1578,
+      "ticks": 8003,
+      "outcome": "won",
+      "checkpoint": "036132f005edb15f",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-27223f09fed82eb2",
+      "captures": 13,
+      "capturedCells": 1937,
+      "ticks": 8132,
+      "outcome": "won",
+      "checkpoint": "e81cdc7af0cff4a6",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-61e28381c52a36af",
+      "captures": 3,
+      "capturedCells": 1825,
+      "ticks": 2771,
+      "outcome": "won",
+      "checkpoint": "5c4fcfeadafb0088",
+      "variant": false,
+      "independent": false
+    },
+    {
+      "id": "solo-qualified-fd3673e16fd6a8fb",
+      "captures": 15,
+      "capturedCells": 1882,
+      "ticks": 8815,
+      "outcome": "won",
+      "checkpoint": "6a71b6e015315fea",
+      "variant": false,
+      "independent": false
+    }
+  ],
+  "variants": [],
+  "performances": [],
+  "failures": [],
+  "catalogs": "demo-data/catalog.json,demo-data/catalog.journey-current.json,demo-data/catalog.journey-archive.json",
+  "required": 232,
+  "browserVersion": "155.0.8059.85",
+  "active": null,
+  "finished": "2026-10-19T05:03:56.475Z"
+}

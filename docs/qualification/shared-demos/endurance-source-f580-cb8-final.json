@@ -1,0 +1,57 @@
+{
+  "format": "SharedDemoEnduranceSourceV2",
+  "started": "2026-10-18T21:09:26.170839+00:00",
+  "sourceRevisionAtStart": "b389705faa3c1c4920adc5a04d9a7fc0f6df33d9",
+  "integrationBase": "cb8dddd3d3c11d24c56b014fa48ac0e6417d6465",
+  "sourceFingerprintAtStart": {
+    "sha256": "f580d85f3d252d8efc282b4fb9e30366ac061f6eb8a75b8dde7d9deea0818591",
+    "files": 9994,
+    "bytes": 404341587
+  },
+  "harnessSha256AtStart": {
+    "scripts/qualify-shared-demo-browser.mjs": "0448d04f1507eb9fe51b929e11afa888c988eb6bf06cbf49d10b32ca122f280a",
+    "scripts/shared-demo-browser-report.mjs": "d38fa9f54e933b9eefe9e29f5c26e88a23e410b96da289dc24ae621ceda240df",
+    "docs/qualification/shared-demos/source-freeze-latest.json": "194a6ae89232f4cfcc823d10e30e807f716dcc62c98b8cd015ad2099676e691b"
+  },
+  "requestedSeconds": 7200,
+  "report": "rotation-chromium-f580-cb8-final-two-hour.json",
+  "command": [
+    "node",
+    "scripts/qualify-shared-demo-browser.mjs",
+    "--runtime=/Users/oleksandr.mekhovov/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright/index.mjs",
+    "--executable=/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    "--browser=chromium",
+    "--url=http://127.0.0.1:8769",
+    "--seconds=7200",
+    "--practice=true",
+    "--cycles=12",
+    "--lifecycle=true",
+    "--localeCheck=true",
+    "--report=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/docs/qualification/shared-demos/rotation-chromium-f580-cb8-final-two-hour.json"
+  ],
+  "complete": false,
+  "scope": "One uninterrupted 7200-second watching interval after interaction preflight. All previous partial runs contribute zero minutes. Final storage/workers/native owners and browser closure are required.",
+  "exitCode": 1,
+  "ended": "2026-10-18T21:16:59.721425+00:00",
+  "sourceFingerprintAtEnd": {
+    "sha256": "f580d85f3d252d8efc282b4fb9e30366ac061f6eb8a75b8dde7d9deea0818591",
+    "files": 9994,
+    "bytes": 404341587
+  },
+  "harnessSha256AtEnd": {
+    "scripts/qualify-shared-demo-browser.mjs": "0448d04f1507eb9fe51b929e11afa888c988eb6bf06cbf49d10b32ca122f280a",
+    "scripts/shared-demo-browser-report.mjs": "d38fa9f54e933b9eefe9e29f5c26e88a23e410b96da289dc24ae621ceda240df",
+    "docs/qualification/shared-demos/source-freeze-latest.json": "194a6ae89232f4cfcc823d10e30e807f716dcc62c98b8cd015ad2099676e691b"
+  },
+  "sourceRevisionAtEnd": "b389705faa3c1c4920adc5a04d9a7fc0f6df33d9",
+  "sourceUnchanged": true,
+  "harnessUnchanged": true,
+  "reportSha256": "07449070035756c789b9d5e46153a4a4f26bb1332014921212c4e744ef31b959",
+  "browserComplete": false,
+  "browserCloseCompleted": true,
+  "pageErrors": 0,
+  "samples": 35,
+  "checks": 27,
+  "enduranceStarted": "2026-10-18T21:11:03.573Z",
+  "enduranceFinished": null
+}

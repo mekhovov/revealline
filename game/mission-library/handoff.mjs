@@ -79,9 +79,9 @@ export function readMissionLibraryReady(params) {
     values[0] !== '1' ||
     !readMissionLibraryHandoff(params) ||
     params.getAll('journey').length !== 1 ||
-    params.get('journey') !== 'legacy'
+    !journeyForMode(params.get('journey'), 'solo')
   )
-    throw new TypeError('Ready handoff needs one exact Legacy mission request.');
+    throw new TypeError('Ready handoff needs one exact authored Solo mission request.');
   return true;
 }
 
@@ -157,8 +157,8 @@ export function missionLibraryHref({
   missionId(id);
   if (!['play', 'select'].includes(intent) || (intent === 'select' && mode !== 'versus'))
     throw new TypeError('Select-only mission handoff is supported in Versus.');
-  if (typeof ready !== 'boolean' || (ready && (mode !== 'solo' || journey !== 'legacy')))
-    throw new TypeError('Ready handoff is supported only for Solo Legacy missions.');
+  if (typeof ready !== 'boolean' || (ready && mode !== 'solo'))
+    throw new TypeError('Ready handoff is supported only for Solo missions.');
   if (!journeyForMode(journey, mode))
     throw new TypeError('Mission handoff needs a registered destination Journey route.');
   if (sourceJourney !== undefined && !isMissionLibrarySourceJourney(sourceJourney, currentMode))

@@ -1,0 +1,108 @@
+{
+  "format": "SharedDemoOfflineSelectionFixReviewV1",
+  "created": "2026-10-18T22:40:45.414Z",
+  "baseRevision": "f2a8b6bee4d5d127b770e77626c7ed0d03940fc2",
+  "sourceScope": "Exact five owned implementation/test paths below; this review does not recompute a full runtime fingerprint. Other agents are editing separate runtime files.",
+  "files": [
+    {
+      "path": "scripts/demo-native-dependencies.mjs",
+      "bytes": 6768,
+      "sha256": "4e34c06d076893f9f2141dbdb9a4093be805810de317575dc4764f43323d7027"
+    },
+    {
+      "path": "scripts/offline-content.mjs",
+      "bytes": 28345,
+      "sha256": "8cd99b9fc07f10e41133d2205c9d8af1c17e5bd8fd2c085b23d1ed37606ad7e8"
+    },
+    {
+      "path": "scripts/qualify-demo-main-pages.mjs",
+      "bytes": 32163,
+      "sha256": "368cfbd3e42336131d916c8bb4f5994650955a6c4eee3c6bfa69886eb5180134"
+    },
+    {
+      "path": "scripts/test-demo-native-dependencies.mjs",
+      "bytes": 17324,
+      "sha256": "6c565fc5552be278e6004e3fc8848af5676869b3c07ed21d19e899331b123bb5"
+    },
+    {
+      "path": "scripts/test-qualify-demo-main-pages.mjs",
+      "bytes": 13405,
+      "sha256": "fac70ecb6bc6614f13d3bbcc60381853de66c5cfca4bd36830364493e83f0bf2"
+    }
+  ],
+  "findingsFixed": [
+    {
+      "mode": "sim",
+      "problem": "Hosted SIM demo catalog/payload/bridge paths had only hidden legacy extras:practice ownership; visible extras:demo did not select them.",
+      "change": "Derive indexed recording bodies and the four adapter modules, include them in extras:demo, require the existing extras:sim-fpv owner. Missing/ambiguous bodies, unsafe catalog paths, absent native owner and accidental core promotion fail closed."
+    },
+    {
+      "mode": "solo-journey",
+      "problem": "Recorded Journey full-source snapshots and pictures were owned by separate chapter/archive/mode groups, outside the demo-only selection.",
+      "change": "Match each shipped Journey demo descriptor to its code-owned authored route/mission and share only that route snapshot and exact pinned background in extras:demo."
+    },
+    {
+      "mode": "all",
+      "problem": "Earlier package evidence established emitted hosted presence, not the files obtained by selecting Demo recordings.",
+      "change": "Main Pages qualification now resolves the actual emitted selection, independently checks required replay/native/literal-module dependencies against actual worker pins and emitted bytes, and retains selected/core metadata for a separate bounded browser install proof."
+    }
+  ],
+  "validation": [
+    {
+      "command": "node --test --test-concurrency=2 scripts/test-demo-native-dependencies.mjs scripts/test-qualify-demo-main-pages.mjs scripts/test-offline-publication.mjs",
+      "tests": 22,
+      "pass": 22,
+      "fail": 0,
+      "log": "docs/qualification/shared-demos/offline-demo-selection-237-f970-tests.tap",
+      "sha256": "16af8387c04098774c4f6e744c59fca4628c74e511ccd8f4a6af4cc796939f0f"
+    },
+    {
+      "command": "node --test scripts/test-qualify-demo-main-pages.mjs",
+      "tests": 10,
+      "pass": 10,
+      "fail": 0,
+      "note": "Final metadata-only addition also retains actual core descriptors; targeted audit file rerun.",
+      "log": "docs/qualification/shared-demos/offline-demo-selection-237-f970-audit-final.tap",
+      "sha256": "c0030c92742cbabd9c3eb6931a159598822906cbb6f1b131eb6e01bb1dbc4839"
+    },
+    {
+      "command": "Focused ESLint on all five owned paths",
+      "passed": true
+    },
+    {
+      "command": "Focused Prettier check on all five owned paths",
+      "passed": true
+    }
+  ],
+  "inventoryChecks": {
+    "sim": "Current catalog-derived 392 bodies, one index, four bridge modules; native package module closure independently walked. No fixed catalog count in implementation.",
+    "journey": "All 139 shipped current/prior authored Journey demo descriptors resolve generated full-route snapshots and exact pictures."
+  },
+  "preserved": [
+    "Standalone optional-package policy and limits",
+    "Automatic core cache exclusions",
+    "No archived ordinary mission installation or multiplayer selection",
+    "Unknown/omitted unrelated optional practice remains unselected",
+    "No ordinary gameplay/progress/tuning changes"
+  ],
+  "pending": [
+    "Refreshed full in-memory emitted audit/packaging on final frozen source",
+    "Representative real service-worker offline browser installation against emitted pins"
+  ],
+  "limitations": [
+    "Unit/source closure evidence is not an actual full 890-entry offline browser run.",
+    "Literal import closure and explicit catalog/native assets are checked; this does not claim every optional sound or external/variable asset is exercised.",
+    "No browser, full build, Git mutation or deployment performed by this change."
+  ],
+  "independentReview": {
+    "reviewer": "sim_adapter",
+    "mode": "read-only",
+    "result": "No concrete defect found.",
+    "verified": [
+      "Hash alias selection matches downloadFiles SHA deduplication and worker officialKey(hash) lookup.",
+      "Every required URL retains exact emitted worker length/hash registration.",
+      "Journey descriptor, mission and background matching fails closed.",
+      "Literal imports/native bodies must remain selected or core."
+    ]
+  }
+}

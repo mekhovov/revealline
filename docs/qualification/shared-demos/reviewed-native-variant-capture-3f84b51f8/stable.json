@@ -1,0 +1,2535 @@
+{
+  "format": "ReviewedSoloNativeCandidateCaptureV1",
+  "complete": true,
+  "started": "2026-10-19T09:44:56.261Z",
+  "checks": [
+    {
+      "id": "first-signal-left",
+      "levelId": "signal-01",
+      "source": {
+        "path": "game/demo-data/first-signal-left.replay.json",
+        "sha256": "900f921146e37324dfefc90f55bfc60c03bd8a2954d53353ecae25df8a55c54a",
+        "bytes": 10793
+      },
+      "attempts": [
+        {
+          "replayURL": "./demo-data/first-signal-left.replay.json",
+          "file": {
+            "path": "game/demo-data/first-signal-left.replay.json",
+            "sha256": "900f921146e37324dfefc90f55bfc60c03bd8a2954d53353ecae25df8a55c54a",
+            "bytes": 10793
+          },
+          "match": true,
+          "diagnostics": [],
+          "actual": {
+            "summary": {
+              "ruleset": "xonix-core.v2",
+              "levelId": "signal-01",
+              "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-c6166fbf97fb6d66",
+              "seed": 35,
+              "turnPolicy": "immediate",
+              "classId": "scout",
+              "activeClassId": "scout",
+              "rosterHash": "roster-v1-e159e435",
+              "classHistory": [
+                {
+                  "classId": "scout",
+                  "classRevision": "1",
+                  "loadoutHash": "loadout-v1-aaa4aadd",
+                  "tick": 0
+                }
+              ],
+              "switches": 0,
+              "failureCause": null,
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "status": "won",
+              "won": true,
+              "tick": 3682,
+              "time": 30.679939668173855,
+              "lives": 3,
+              "score": 7400,
+              "coverage": 0.4731457800511509,
+              "claimedCount": 740,
+              "totalClaimable": 1564,
+              "medal": "gold",
+              "objectives": {
+                "captured": 0,
+                "total": 0,
+                "required": 0
+              }
+            },
+            "checkpoint": {
+              "algorithm": "fnv1a64-state-v2",
+              "hash": "456fdc8321bcf296",
+              "sections": {
+                "identity": "2b1ecce1381bcd3b",
+                "configuration": "67780a210840e2ad",
+                "board": "f8ff18bf7024ce13",
+                "player": "f2b207f7ef0648ec",
+                "trail": "f0ca473df9efdcc8",
+                "enemies": "b0361fc010857401",
+                "objectives": "09612b07b5ecb5a5",
+                "supplies": "e1b45854413ff5f8",
+                "ability": "2d7b5e5f3cefa19b",
+                "clock": "7d877b15c0101bab",
+                "continuation": "a9d828ced6380d30",
+                "result": "f4d01e4ae43a9351"
+              }
+            }
+          }
+        },
+        {
+          "replayURL": "./demo-data/first-signal-left.chromium-macos.replay.json",
+          "file": {
+            "path": "game/demo-data/first-signal-left.chromium-macos.replay.json",
+            "sha256": "b18d9d343ffca2b7efec6c3ec0266d80ed0603804420f444159e4214533bd11e",
+            "bytes": 10801
+          },
+          "match": false,
+          "diagnostics": [
+            {
+              "code": "state-mismatch",
+              "section": "enemies",
+              "message": "Authoritative enemies differs.",
+              "expected": "71a8354812281008",
+              "actual": "b0361fc010857401"
+            }
+          ],
+          "actual": {
+            "summary": {
+              "ruleset": "xonix-core.v2",
+              "levelId": "signal-01",
+              "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-c6166fbf97fb6d66",
+              "seed": 35,
+              "turnPolicy": "immediate",
+              "classId": "scout",
+              "activeClassId": "scout",
+              "rosterHash": "roster-v1-e159e435",
+              "classHistory": [
+                {
+                  "classId": "scout",
+                  "classRevision": "1",
+                  "loadoutHash": "loadout-v1-aaa4aadd",
+                  "tick": 0
+                }
+              ],
+              "switches": 0,
+              "failureCause": null,
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "status": "won",
+              "won": true,
+              "tick": 3682,
+              "time": 30.679939668173855,
+              "lives": 3,
+              "score": 7400,
+              "coverage": 0.4731457800511509,
+              "claimedCount": 740,
+              "totalClaimable": 1564,
+              "medal": "gold",
+              "objectives": {
+                "captured": 0,
+                "total": 0,
+                "required": 0
+              }
+            },
+            "checkpoint": {
+              "algorithm": "fnv1a64-state-v2",
+              "hash": "456fdc8321bcf296",
+              "sections": {
+                "identity": "2b1ecce1381bcd3b",
+                "configuration": "67780a210840e2ad",
+                "board": "f8ff18bf7024ce13",
+                "player": "f2b207f7ef0648ec",
+                "trail": "f0ca473df9efdcc8",
+                "enemies": "b0361fc010857401",
+                "objectives": "09612b07b5ecb5a5",
+                "supplies": "e1b45854413ff5f8",
+                "ability": "2d7b5e5f3cefa19b",
+                "clock": "7d877b15c0101bab",
+                "continuation": "a9d828ced6380d30",
+                "result": "f4d01e4ae43a9351"
+              }
+            }
+          }
+        }
+      ],
+      "eligible": true,
+      "selected": "./demo-data/first-signal-left.replay.json",
+      "playback": {
+        "match": true,
+        "actual": {
+          "summary": {
+            "ruleset": "xonix-core.v2",
+            "levelId": "signal-01",
+            "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-c6166fbf97fb6d66",
+            "seed": 35,
+            "turnPolicy": "immediate",
+            "classId": "scout",
+            "activeClassId": "scout",
+            "rosterHash": "roster-v1-e159e435",
+            "classHistory": [
+              {
+                "classId": "scout",
+                "classRevision": "1",
+                "loadoutHash": "loadout-v1-aaa4aadd",
+                "tick": 0
+              }
+            ],
+            "switches": 0,
+            "failureCause": null,
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "status": "won",
+            "won": true,
+            "tick": 3682,
+            "time": 30.679939668173855,
+            "lives": 3,
+            "score": 7400,
+            "coverage": 0.4731457800511509,
+            "claimedCount": 740,
+            "totalClaimable": 1564,
+            "medal": "gold",
+            "objectives": {
+              "captured": 0,
+              "total": 0,
+              "required": 0
+            }
+          },
+          "checkpoint": {
+            "algorithm": "fnv1a64-state-v2",
+            "hash": "456fdc8321bcf296",
+            "sections": {
+              "identity": "2b1ecce1381bcd3b",
+              "configuration": "67780a210840e2ad",
+              "board": "f8ff18bf7024ce13",
+              "player": "f2b207f7ef0648ec",
+              "trail": "f0ca473df9efdcc8",
+              "enemies": "b0361fc010857401",
+              "objectives": "09612b07b5ecb5a5",
+              "supplies": "e1b45854413ff5f8",
+              "ability": "2d7b5e5f3cefa19b",
+              "clock": "7d877b15c0101bab",
+              "continuation": "a9d828ced6380d30",
+              "result": "f4d01e4ae43a9351"
+            }
+          }
+        },
+        "phase": "complete",
+        "captures": 4,
+        "capturedCells": 740,
+        "ticks": 3682,
+        "outcome": "won"
+      }
+    },
+    {
+      "id": "first-signal-right",
+      "levelId": "signal-01",
+      "source": {
+        "path": "game/demo-data/first-signal-right.replay.json",
+        "sha256": "1670c4dff98ebfb56d4b6a44bac010c3f796d98f16abb4abe71e56a2ec5c8fc7",
+        "bytes": 10795
+      },
+      "attempts": [
+        {
+          "replayURL": "./demo-data/first-signal-right.replay.json",
+          "file": {
+            "path": "game/demo-data/first-signal-right.replay.json",
+            "sha256": "1670c4dff98ebfb56d4b6a44bac010c3f796d98f16abb4abe71e56a2ec5c8fc7",
+            "bytes": 10795
+          },
+          "match": false,
+          "diagnostics": [
+            {
+              "code": "state-mismatch",
+              "section": "enemies",
+              "message": "Authoritative enemies differs.",
+              "expected": "745dd1e7f36f494f",
+              "actual": "ae5b37c639e6c7a7"
+            }
+          ],
+          "actual": {
+            "summary": {
+              "ruleset": "xonix-core.v2",
+              "levelId": "signal-01",
+              "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-c6166fbf97fb6d66",
+              "seed": 5,
+              "turnPolicy": "grid-center",
+              "classId": "scout",
+              "activeClassId": "scout",
+              "rosterHash": "roster-v1-e159e435",
+              "classHistory": [
+                {
+                  "classId": "scout",
+                  "classRevision": "1",
+                  "loadoutHash": "loadout-v1-aaa4aadd",
+                  "tick": 0
+                }
+              ],
+              "switches": 0,
+              "failureCause": null,
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "status": "won",
+              "won": true,
+              "tick": 3829,
+              "time": 31.90086726998364,
+              "lives": 3,
+              "score": 7930,
+              "coverage": 0.5070332480818415,
+              "claimedCount": 793,
+              "totalClaimable": 1564,
+              "medal": "gold",
+              "objectives": {
+                "captured": 0,
+                "total": 0,
+                "required": 0
+              }
+            },
+            "checkpoint": {
+              "algorithm": "fnv1a64-state-v2",
+              "hash": "9b66591b55769ea8",
+              "sections": {
+                "identity": "e4eb8b51fbc1bdcf",
+                "configuration": "67780a210840e2ad",
+                "board": "3658b804fc4a9f39",
+                "player": "c640b899e9c96ca4",
+                "trail": "f0ca473df9efdcc8",
+                "enemies": "ae5b37c639e6c7a7",
+                "objectives": "09612b07b5ecb5a5",
+                "supplies": "e1b45854413ff5f8",
+                "ability": "b1bc5cafd1e51d55",
+                "clock": "433736b21ebe1a12",
+                "continuation": "a9d828ced6380d30",
+                "result": "b2b6ec3836a350ab"
+              }
+            }
+          }
+        },
+        {
+          "replayURL": "./demo-data/first-signal-right.chromium-macos.replay.json",
+          "file": {
+            "path": "game/demo-data/first-signal-right.chromium-macos.replay.json",
+            "sha256": "c20c847103c652b3cf04f081b17bed8ddb1b0fca4b04e8e29cc72da23cf3849e",
+            "bytes": 10803
+          },
+          "match": false,
+          "diagnostics": [
+            {
+              "code": "state-mismatch",
+              "section": "enemies",
+              "message": "Authoritative enemies differs.",
+              "expected": "8d0d04919b16043a",
+              "actual": "ae5b37c639e6c7a7"
+            }
+          ],
+          "actual": {
+            "summary": {
+              "ruleset": "xonix-core.v2",
+              "levelId": "signal-01",
+              "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-c6166fbf97fb6d66",
+              "seed": 5,
+              "turnPolicy": "grid-center",
+              "classId": "scout",
+              "activeClassId": "scout",
+              "rosterHash": "roster-v1-e159e435",
+              "classHistory": [
+                {
+                  "classId": "scout",
+                  "classRevision": "1",
+                  "loadoutHash": "loadout-v1-aaa4aadd",
+                  "tick": 0
+                }
+              ],
+              "switches": 0,
+              "failureCause": null,
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "status": "won",
+              "won": true,
+              "tick": 3829,
+              "time": 31.90086726998364,
+              "lives": 3,
+              "score": 7930,
+              "coverage": 0.5070332480818415,
+              "claimedCount": 793,
+              "totalClaimable": 1564,
+              "medal": "gold",
+              "objectives": {
+                "captured": 0,
+                "total": 0,
+                "required": 0
+              }
+            },
+            "checkpoint": {
+              "algorithm": "fnv1a64-state-v2",
+              "hash": "9b66591b55769ea8",
+              "sections": {
+                "identity": "e4eb8b51fbc1bdcf",
+                "configuration": "67780a210840e2ad",
+                "board": "3658b804fc4a9f39",
+                "player": "c640b899e9c96ca4",
+                "trail": "f0ca473df9efdcc8",
+                "enemies": "ae5b37c639e6c7a7",
+                "objectives": "09612b07b5ecb5a5",
+                "supplies": "e1b45854413ff5f8",
+                "ability": "b1bc5cafd1e51d55",
+                "clock": "433736b21ebe1a12",
+                "continuation": "a9d828ced6380d30",
+                "result": "b2b6ec3836a350ab"
+              }
+            }
+          }
+        }
+      ],
+      "eligible": true,
+      "natural": {
+        "status": "won",
+        "tick": 3829,
+        "captures": 4,
+        "capturedCells": 793
+      },
+      "candidate": {
+        "path": ".cache/reviewed-node22131-x64-capture-3f84b51f8-stable-candidates/first-signal-right.node22131-x64.replay.json",
+        "sha256": "e8c63af3440feff2d430b02d93f26c86c58acd94e135f92affcf44bc9c54f22a",
+        "bytes": 6966
+      },
+      "diagnostic": {
+        "path": ".cache/reviewed-node22131-x64-capture-3f84b51f8-stable-candidates/first-signal-right.node22131-x64.diagnostics.json",
+        "sha256": "be92f9682131a82a0c5f1185d98b425284fbd86b7903a12e808fe483af4e8134",
+        "bytes": 2730
+      },
+      "trace": {
+        "inputTraceIdentity": "0d05c1be36470add",
+        "durationSeconds": 31.908333333333335,
+        "exactTrace": true,
+        "exactSummary": true,
+        "allNonEnemySectionsUnchanged": true
+      },
+      "authoringVerification": {
+        "match": true,
+        "actual": {
+          "summary": {
+            "ruleset": "xonix-core.v2",
+            "levelId": "signal-01",
+            "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-c6166fbf97fb6d66",
+            "seed": 5,
+            "turnPolicy": "grid-center",
+            "classId": "scout",
+            "activeClassId": "scout",
+            "rosterHash": "roster-v1-e159e435",
+            "classHistory": [
+              {
+                "classId": "scout",
+                "classRevision": "1",
+                "loadoutHash": "loadout-v1-aaa4aadd",
+                "tick": 0
+              }
+            ],
+            "switches": 0,
+            "failureCause": null,
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "status": "won",
+            "won": true,
+            "tick": 3829,
+            "time": 31.90086726998364,
+            "lives": 3,
+            "score": 7930,
+            "coverage": 0.5070332480818415,
+            "claimedCount": 793,
+            "totalClaimable": 1564,
+            "medal": "gold",
+            "objectives": {
+              "captured": 0,
+              "total": 0,
+              "required": 0
+            }
+          },
+          "checkpoint": {
+            "algorithm": "fnv1a64-state-v2",
+            "hash": "9b66591b55769ea8",
+            "sections": {
+              "identity": "e4eb8b51fbc1bdcf",
+              "configuration": "67780a210840e2ad",
+              "board": "3658b804fc4a9f39",
+              "player": "c640b899e9c96ca4",
+              "trail": "f0ca473df9efdcc8",
+              "enemies": "ae5b37c639e6c7a7",
+              "objectives": "09612b07b5ecb5a5",
+              "supplies": "e1b45854413ff5f8",
+              "ability": "b1bc5cafd1e51d55",
+              "clock": "433736b21ebe1a12",
+              "continuation": "a9d828ced6380d30",
+              "result": "b2b6ec3836a350ab"
+            }
+          }
+        }
+      },
+      "independent": {
+        "environment": {
+          "version": "v22.13.1",
+          "platform": "darwin",
+          "arch": "x64"
+        },
+        "candidate": {
+          "path": ".cache/reviewed-node22131-x64-capture-3f84b51f8-stable-candidates/first-signal-right.node22131-x64.replay.json",
+          "sha256": "e8c63af3440feff2d430b02d93f26c86c58acd94e135f92affcf44bc9c54f22a",
+          "bytes": 6966
+        },
+        "diagnostic": {
+          "path": ".cache/reviewed-node22131-x64-capture-3f84b51f8-stable-candidates/first-signal-right.node22131-x64.diagnostics.json",
+          "sha256": "be92f9682131a82a0c5f1185d98b425284fbd86b7903a12e808fe483af4e8134",
+          "bytes": 2730
+        },
+        "diagnosticsMatch": true,
+        "match": true,
+        "actual": {
+          "summary": {
+            "ruleset": "xonix-core.v2",
+            "levelId": "signal-01",
+            "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-c6166fbf97fb6d66",
+            "seed": 5,
+            "turnPolicy": "grid-center",
+            "classId": "scout",
+            "activeClassId": "scout",
+            "rosterHash": "roster-v1-e159e435",
+            "classHistory": [
+              {
+                "classId": "scout",
+                "classRevision": "1",
+                "loadoutHash": "loadout-v1-aaa4aadd",
+                "tick": 0
+              }
+            ],
+            "switches": 0,
+            "failureCause": null,
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "status": "won",
+            "won": true,
+            "tick": 3829,
+            "time": 31.90086726998364,
+            "lives": 3,
+            "score": 7930,
+            "coverage": 0.5070332480818415,
+            "claimedCount": 793,
+            "totalClaimable": 1564,
+            "medal": "gold",
+            "objectives": {
+              "captured": 0,
+              "total": 0,
+              "required": 0
+            }
+          },
+          "checkpoint": {
+            "algorithm": "fnv1a64-state-v2",
+            "hash": "9b66591b55769ea8",
+            "sections": {
+              "identity": "e4eb8b51fbc1bdcf",
+              "configuration": "67780a210840e2ad",
+              "board": "3658b804fc4a9f39",
+              "player": "c640b899e9c96ca4",
+              "trail": "f0ca473df9efdcc8",
+              "enemies": "ae5b37c639e6c7a7",
+              "objectives": "09612b07b5ecb5a5",
+              "supplies": "e1b45854413ff5f8",
+              "ability": "b1bc5cafd1e51d55",
+              "clock": "433736b21ebe1a12",
+              "continuation": "a9d828ced6380d30",
+              "result": "b2b6ec3836a350ab"
+            }
+          }
+        },
+        "phase": "complete",
+        "captures": 4,
+        "capturedCells": 793,
+        "ticks": 3829,
+        "outcome": "won"
+      },
+      "proposedProvenance": {
+        "id": "first-signal-right",
+        "replayURL": "./demo-data/first-signal-right.node22131-x64.replay.json",
+        "inputTraceIdentity": "0d05c1be36470add",
+        "sourceCheckpoint": "2451aa6bc58d0614",
+        "checkpoint": "9b66591b55769ea8",
+        "recordedIn": {
+          "createdAt": "2026-10-19T09:44:56.261Z",
+          "runtime": "Node.js",
+          "version": "v22.13.1",
+          "v8": "12.4.254.21-node.22",
+          "platform": "darwin",
+          "arch": "x64",
+          "executableSHA256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd",
+          "mathWitness": {
+            "sin": 0.6831007735084312,
+            "hypot": 0.7615773105863908
+          }
+        }
+      }
+    },
+    {
+      "id": "relay-orchard-loop",
+      "levelId": "signal-02",
+      "source": {
+        "path": "game/demo-data/relay-orchard-loop.replay.json",
+        "sha256": "d48bab6ab5f1fb1513d8261a8758519f0d9faccd91a0f334946f802260738627",
+        "bytes": 12238
+      },
+      "attempts": [
+        {
+          "replayURL": "./demo-data/relay-orchard-loop.replay.json",
+          "file": {
+            "path": "game/demo-data/relay-orchard-loop.replay.json",
+            "sha256": "d48bab6ab5f1fb1513d8261a8758519f0d9faccd91a0f334946f802260738627",
+            "bytes": 12238
+          },
+          "match": true,
+          "diagnostics": [],
+          "actual": {
+            "summary": {
+              "ruleset": "xonix-core.v2",
+              "levelId": "signal-02",
+              "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-c28eeed59e4d68d8",
+              "seed": 331,
+              "turnPolicy": "immediate",
+              "classId": "scout",
+              "activeClassId": "scout",
+              "rosterHash": "roster-v1-e159e435",
+              "classHistory": [
+                {
+                  "classId": "scout",
+                  "classRevision": "1",
+                  "loadoutHash": "loadout-v1-aaa4aadd",
+                  "tick": 0
+                }
+              ],
+              "switches": 0,
+              "failureCause": null,
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "status": "won",
+              "won": true,
+              "tick": 5457,
+              "time": 45.47266214177785,
+              "lives": 3,
+              "score": 11160,
+              "coverage": 0.6815856777493606,
+              "claimedCount": 1066,
+              "totalClaimable": 1564,
+              "medal": "silver",
+              "objectives": {
+                "captured": 1,
+                "total": 1,
+                "required": 1
+              }
+            },
+            "checkpoint": {
+              "algorithm": "fnv1a64-state-v2",
+              "hash": "bb6ef6c69bd534b5",
+              "sections": {
+                "identity": "73619ec6014d61be",
+                "configuration": "016385845cadd377",
+                "board": "ec8ea6ad08bdf4f5",
+                "player": "40a63ad4faa2efec",
+                "trail": "f0ca473df9efdcc8",
+                "enemies": "895994456621b495",
+                "objectives": "86d1d22b1ef2e85d",
+                "supplies": "e1b45854413ff5f8",
+                "ability": "ebe73a2334d6e9b9",
+                "clock": "6036c5903f857ff1",
+                "continuation": "a9d828ced6380d30",
+                "result": "9b65513247f17bc3"
+              }
+            }
+          }
+        },
+        {
+          "replayURL": "./demo-data/relay-orchard-loop.chromium-macos.replay.json",
+          "file": {
+            "path": "game/demo-data/relay-orchard-loop.chromium-macos.replay.json",
+            "sha256": "58a4196d25f5759260e716d175e78c29c157ef5f366ffe833648bcc7c25f9ebc",
+            "bytes": 12246
+          },
+          "match": false,
+          "diagnostics": [
+            {
+              "code": "state-mismatch",
+              "section": "enemies",
+              "message": "Authoritative enemies differs.",
+              "expected": "6b9bd22e7b6c656d",
+              "actual": "895994456621b495"
+            }
+          ],
+          "actual": {
+            "summary": {
+              "ruleset": "xonix-core.v2",
+              "levelId": "signal-02",
+              "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-c28eeed59e4d68d8",
+              "seed": 331,
+              "turnPolicy": "immediate",
+              "classId": "scout",
+              "activeClassId": "scout",
+              "rosterHash": "roster-v1-e159e435",
+              "classHistory": [
+                {
+                  "classId": "scout",
+                  "classRevision": "1",
+                  "loadoutHash": "loadout-v1-aaa4aadd",
+                  "tick": 0
+                }
+              ],
+              "switches": 0,
+              "failureCause": null,
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "status": "won",
+              "won": true,
+              "tick": 5457,
+              "time": 45.47266214177785,
+              "lives": 3,
+              "score": 11160,
+              "coverage": 0.6815856777493606,
+              "claimedCount": 1066,
+              "totalClaimable": 1564,
+              "medal": "silver",
+              "objectives": {
+                "captured": 1,
+                "total": 1,
+                "required": 1
+              }
+            },
+            "checkpoint": {
+              "algorithm": "fnv1a64-state-v2",
+              "hash": "bb6ef6c69bd534b5",
+              "sections": {
+                "identity": "73619ec6014d61be",
+                "configuration": "016385845cadd377",
+                "board": "ec8ea6ad08bdf4f5",
+                "player": "40a63ad4faa2efec",
+                "trail": "f0ca473df9efdcc8",
+                "enemies": "895994456621b495",
+                "objectives": "86d1d22b1ef2e85d",
+                "supplies": "e1b45854413ff5f8",
+                "ability": "ebe73a2334d6e9b9",
+                "clock": "6036c5903f857ff1",
+                "continuation": "a9d828ced6380d30",
+                "result": "9b65513247f17bc3"
+              }
+            }
+          }
+        }
+      ],
+      "eligible": true,
+      "selected": "./demo-data/relay-orchard-loop.replay.json",
+      "playback": {
+        "match": true,
+        "actual": {
+          "summary": {
+            "ruleset": "xonix-core.v2",
+            "levelId": "signal-02",
+            "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-c28eeed59e4d68d8",
+            "seed": 331,
+            "turnPolicy": "immediate",
+            "classId": "scout",
+            "activeClassId": "scout",
+            "rosterHash": "roster-v1-e159e435",
+            "classHistory": [
+              {
+                "classId": "scout",
+                "classRevision": "1",
+                "loadoutHash": "loadout-v1-aaa4aadd",
+                "tick": 0
+              }
+            ],
+            "switches": 0,
+            "failureCause": null,
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "status": "won",
+            "won": true,
+            "tick": 5457,
+            "time": 45.47266214177785,
+            "lives": 3,
+            "score": 11160,
+            "coverage": 0.6815856777493606,
+            "claimedCount": 1066,
+            "totalClaimable": 1564,
+            "medal": "silver",
+            "objectives": {
+              "captured": 1,
+              "total": 1,
+              "required": 1
+            }
+          },
+          "checkpoint": {
+            "algorithm": "fnv1a64-state-v2",
+            "hash": "bb6ef6c69bd534b5",
+            "sections": {
+              "identity": "73619ec6014d61be",
+              "configuration": "016385845cadd377",
+              "board": "ec8ea6ad08bdf4f5",
+              "player": "40a63ad4faa2efec",
+              "trail": "f0ca473df9efdcc8",
+              "enemies": "895994456621b495",
+              "objectives": "86d1d22b1ef2e85d",
+              "supplies": "e1b45854413ff5f8",
+              "ability": "ebe73a2334d6e9b9",
+              "clock": "6036c5903f857ff1",
+              "continuation": "a9d828ced6380d30",
+              "result": "9b65513247f17bc3"
+            }
+          }
+        },
+        "phase": "complete",
+        "captures": 5,
+        "capturedCells": 1066,
+        "ticks": 5457,
+        "outcome": "won"
+      }
+    },
+    {
+      "id": "relay-orchard-stairs",
+      "levelId": "signal-02",
+      "source": {
+        "path": "game/demo-data/relay-orchard-stairs.replay.json",
+        "sha256": "d145e8462f193a707e8bb3d8059a06fd1b0a407e8141a63101ebcf56b446cfb1",
+        "bytes": 12238
+      },
+      "attempts": [
+        {
+          "replayURL": "./demo-data/relay-orchard-stairs.replay.json",
+          "file": {
+            "path": "game/demo-data/relay-orchard-stairs.replay.json",
+            "sha256": "d145e8462f193a707e8bb3d8059a06fd1b0a407e8141a63101ebcf56b446cfb1",
+            "bytes": 12238
+          },
+          "match": true,
+          "diagnostics": [],
+          "actual": {
+            "summary": {
+              "ruleset": "xonix-core.v2",
+              "levelId": "signal-02",
+              "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-c28eeed59e4d68d8",
+              "seed": 322,
+              "turnPolicy": "grid-center",
+              "classId": "scout",
+              "activeClassId": "scout",
+              "rosterHash": "roster-v1-e159e435",
+              "classHistory": [
+                {
+                  "classId": "scout",
+                  "classRevision": "1",
+                  "loadoutHash": "loadout-v1-aaa4aadd",
+                  "tick": 0
+                }
+              ],
+              "switches": 0,
+              "failureCause": null,
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "status": "won",
+              "won": true,
+              "tick": 5481,
+              "time": 45.6703996983388,
+              "lives": 3,
+              "score": 11680,
+              "coverage": 0.7148337595907929,
+              "claimedCount": 1118,
+              "totalClaimable": 1564,
+              "medal": "silver",
+              "objectives": {
+                "captured": 1,
+                "total": 1,
+                "required": 1
+              }
+            },
+            "checkpoint": {
+              "algorithm": "fnv1a64-state-v2",
+              "hash": "e95334f384f5d8c3",
+              "sections": {
+                "identity": "ce9b00d8cc1af33f",
+                "configuration": "016385845cadd377",
+                "board": "f8c1b346dfa40cb9",
+                "player": "ff471a198477500d",
+                "trail": "f0ca473df9efdcc8",
+                "enemies": "f6093f7568531f12",
+                "objectives": "86d1d22b1ef2e85d",
+                "supplies": "e1b45854413ff5f8",
+                "ability": "cca42a930de22799",
+                "clock": "48ea86fd1937db61",
+                "continuation": "a9d828ced6380d30",
+                "result": "e4c32462158e26e6"
+              }
+            }
+          }
+        },
+        {
+          "replayURL": "./demo-data/relay-orchard-stairs.chromium-macos.replay.json",
+          "file": {
+            "path": "game/demo-data/relay-orchard-stairs.chromium-macos.replay.json",
+            "sha256": "605add619e47a1d7762813897ead1368c98048819874b1b84816dce69e2af358",
+            "bytes": 12246
+          },
+          "match": false,
+          "diagnostics": [
+            {
+              "code": "state-mismatch",
+              "section": "enemies",
+              "message": "Authoritative enemies differs.",
+              "expected": "c7bb3eb2e44c24f4",
+              "actual": "f6093f7568531f12"
+            }
+          ],
+          "actual": {
+            "summary": {
+              "ruleset": "xonix-core.v2",
+              "levelId": "signal-02",
+              "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-c28eeed59e4d68d8",
+              "seed": 322,
+              "turnPolicy": "grid-center",
+              "classId": "scout",
+              "activeClassId": "scout",
+              "rosterHash": "roster-v1-e159e435",
+              "classHistory": [
+                {
+                  "classId": "scout",
+                  "classRevision": "1",
+                  "loadoutHash": "loadout-v1-aaa4aadd",
+                  "tick": 0
+                }
+              ],
+              "switches": 0,
+              "failureCause": null,
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "status": "won",
+              "won": true,
+              "tick": 5481,
+              "time": 45.6703996983388,
+              "lives": 3,
+              "score": 11680,
+              "coverage": 0.7148337595907929,
+              "claimedCount": 1118,
+              "totalClaimable": 1564,
+              "medal": "silver",
+              "objectives": {
+                "captured": 1,
+                "total": 1,
+                "required": 1
+              }
+            },
+            "checkpoint": {
+              "algorithm": "fnv1a64-state-v2",
+              "hash": "e95334f384f5d8c3",
+              "sections": {
+                "identity": "ce9b00d8cc1af33f",
+                "configuration": "016385845cadd377",
+                "board": "f8c1b346dfa40cb9",
+                "player": "ff471a198477500d",
+                "trail": "f0ca473df9efdcc8",
+                "enemies": "f6093f7568531f12",
+                "objectives": "86d1d22b1ef2e85d",
+                "supplies": "e1b45854413ff5f8",
+                "ability": "cca42a930de22799",
+                "clock": "48ea86fd1937db61",
+                "continuation": "a9d828ced6380d30",
+                "result": "e4c32462158e26e6"
+              }
+            }
+          }
+        }
+      ],
+      "eligible": true,
+      "selected": "./demo-data/relay-orchard-stairs.replay.json",
+      "playback": {
+        "match": true,
+        "actual": {
+          "summary": {
+            "ruleset": "xonix-core.v2",
+            "levelId": "signal-02",
+            "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-c28eeed59e4d68d8",
+            "seed": 322,
+            "turnPolicy": "grid-center",
+            "classId": "scout",
+            "activeClassId": "scout",
+            "rosterHash": "roster-v1-e159e435",
+            "classHistory": [
+              {
+                "classId": "scout",
+                "classRevision": "1",
+                "loadoutHash": "loadout-v1-aaa4aadd",
+                "tick": 0
+              }
+            ],
+            "switches": 0,
+            "failureCause": null,
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "status": "won",
+            "won": true,
+            "tick": 5481,
+            "time": 45.6703996983388,
+            "lives": 3,
+            "score": 11680,
+            "coverage": 0.7148337595907929,
+            "claimedCount": 1118,
+            "totalClaimable": 1564,
+            "medal": "silver",
+            "objectives": {
+              "captured": 1,
+              "total": 1,
+              "required": 1
+            }
+          },
+          "checkpoint": {
+            "algorithm": "fnv1a64-state-v2",
+            "hash": "e95334f384f5d8c3",
+            "sections": {
+              "identity": "ce9b00d8cc1af33f",
+              "configuration": "016385845cadd377",
+              "board": "f8c1b346dfa40cb9",
+              "player": "ff471a198477500d",
+              "trail": "f0ca473df9efdcc8",
+              "enemies": "f6093f7568531f12",
+              "objectives": "86d1d22b1ef2e85d",
+              "supplies": "e1b45854413ff5f8",
+              "ability": "cca42a930de22799",
+              "clock": "48ea86fd1937db61",
+              "continuation": "a9d828ced6380d30",
+              "result": "e4c32462158e26e6"
+            }
+          }
+        },
+        "phase": "complete",
+        "captures": 5,
+        "capturedCells": 1118,
+        "ticks": 5481,
+        "outcome": "won"
+      }
+    },
+    {
+      "id": "crosswind-openings",
+      "levelId": "signal-03",
+      "source": {
+        "path": "game/demo-data/crosswind-openings.replay.json",
+        "sha256": "a8eb595988bd478a99bec31a4cc5a2c2f53413778a890fe8a7de36c93c841676",
+        "bytes": 12332
+      },
+      "attempts": [
+        {
+          "replayURL": "./demo-data/crosswind-openings.replay.json",
+          "file": {
+            "path": "game/demo-data/crosswind-openings.replay.json",
+            "sha256": "a8eb595988bd478a99bec31a4cc5a2c2f53413778a890fe8a7de36c93c841676",
+            "bytes": 12332
+          },
+          "match": true,
+          "diagnostics": [],
+          "actual": {
+            "summary": {
+              "ruleset": "xonix-core.v2",
+              "levelId": "signal-03",
+              "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-3f32e7df15deb15a",
+              "seed": 287,
+              "turnPolicy": "immediate",
+              "classId": "scout",
+              "activeClassId": "scout",
+              "rosterHash": "roster-v1-e159e435",
+              "classHistory": [
+                {
+                  "classId": "scout",
+                  "classRevision": "1",
+                  "loadoutHash": "loadout-v1-aaa4aadd",
+                  "tick": 0
+                }
+              ],
+              "switches": 0,
+              "failureCause": null,
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "status": "won",
+              "won": true,
+              "tick": 5604,
+              "time": 46.698906485669184,
+              "lives": 3,
+              "score": 10250,
+              "coverage": 0.6553708439897699,
+              "claimedCount": 1025,
+              "totalClaimable": 1564,
+              "medal": "gold",
+              "objectives": {
+                "captured": 0,
+                "total": 0,
+                "required": 0
+              }
+            },
+            "checkpoint": {
+              "algorithm": "fnv1a64-state-v2",
+              "hash": "4fbbce27372cbf2d",
+              "sections": {
+                "identity": "7ee295b1cd18a8f0",
+                "configuration": "5c19dc4a0aa5574c",
+                "board": "977a173937750811",
+                "player": "f2d007f7ef1f467b",
+                "trail": "f0ca473df9efdcc8",
+                "enemies": "a643864a6889266a",
+                "objectives": "09612b07b5ecb5a5",
+                "supplies": "e1b45854413ff5f8",
+                "ability": "13d5259cf6bdd35b",
+                "clock": "e0a7e04390fd053c",
+                "continuation": "a9d828ced6380d30",
+                "result": "ad83ca456b18c878"
+              }
+            }
+          }
+        },
+        {
+          "replayURL": "./demo-data/crosswind-openings.chromium-macos.replay.json",
+          "file": {
+            "path": "game/demo-data/crosswind-openings.chromium-macos.replay.json",
+            "sha256": "11dd1280e1f0899947d9697eb20e75c28b27bcc35d102eb4058a81256d18c94f",
+            "bytes": 12340
+          },
+          "match": false,
+          "diagnostics": [
+            {
+              "code": "state-mismatch",
+              "section": "enemies",
+              "message": "Authoritative enemies differs.",
+              "expected": "7a4d767160c13575",
+              "actual": "a643864a6889266a"
+            }
+          ],
+          "actual": {
+            "summary": {
+              "ruleset": "xonix-core.v2",
+              "levelId": "signal-03",
+              "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-3f32e7df15deb15a",
+              "seed": 287,
+              "turnPolicy": "immediate",
+              "classId": "scout",
+              "activeClassId": "scout",
+              "rosterHash": "roster-v1-e159e435",
+              "classHistory": [
+                {
+                  "classId": "scout",
+                  "classRevision": "1",
+                  "loadoutHash": "loadout-v1-aaa4aadd",
+                  "tick": 0
+                }
+              ],
+              "switches": 0,
+              "failureCause": null,
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "status": "won",
+              "won": true,
+              "tick": 5604,
+              "time": 46.698906485669184,
+              "lives": 3,
+              "score": 10250,
+              "coverage": 0.6553708439897699,
+              "claimedCount": 1025,
+              "totalClaimable": 1564,
+              "medal": "gold",
+              "objectives": {
+                "captured": 0,
+                "total": 0,
+                "required": 0
+              }
+            },
+            "checkpoint": {
+              "algorithm": "fnv1a64-state-v2",
+              "hash": "4fbbce27372cbf2d",
+              "sections": {
+                "identity": "7ee295b1cd18a8f0",
+                "configuration": "5c19dc4a0aa5574c",
+                "board": "977a173937750811",
+                "player": "f2d007f7ef1f467b",
+                "trail": "f0ca473df9efdcc8",
+                "enemies": "a643864a6889266a",
+                "objectives": "09612b07b5ecb5a5",
+                "supplies": "e1b45854413ff5f8",
+                "ability": "13d5259cf6bdd35b",
+                "clock": "e0a7e04390fd053c",
+                "continuation": "a9d828ced6380d30",
+                "result": "ad83ca456b18c878"
+              }
+            }
+          }
+        }
+      ],
+      "eligible": true,
+      "selected": "./demo-data/crosswind-openings.replay.json",
+      "playback": {
+        "match": true,
+        "actual": {
+          "summary": {
+            "ruleset": "xonix-core.v2",
+            "levelId": "signal-03",
+            "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-3f32e7df15deb15a",
+            "seed": 287,
+            "turnPolicy": "immediate",
+            "classId": "scout",
+            "activeClassId": "scout",
+            "rosterHash": "roster-v1-e159e435",
+            "classHistory": [
+              {
+                "classId": "scout",
+                "classRevision": "1",
+                "loadoutHash": "loadout-v1-aaa4aadd",
+                "tick": 0
+              }
+            ],
+            "switches": 0,
+            "failureCause": null,
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "status": "won",
+            "won": true,
+            "tick": 5604,
+            "time": 46.698906485669184,
+            "lives": 3,
+            "score": 10250,
+            "coverage": 0.6553708439897699,
+            "claimedCount": 1025,
+            "totalClaimable": 1564,
+            "medal": "gold",
+            "objectives": {
+              "captured": 0,
+              "total": 0,
+              "required": 0
+            }
+          },
+          "checkpoint": {
+            "algorithm": "fnv1a64-state-v2",
+            "hash": "4fbbce27372cbf2d",
+            "sections": {
+              "identity": "7ee295b1cd18a8f0",
+              "configuration": "5c19dc4a0aa5574c",
+              "board": "977a173937750811",
+              "player": "f2d007f7ef1f467b",
+              "trail": "f0ca473df9efdcc8",
+              "enemies": "a643864a6889266a",
+              "objectives": "09612b07b5ecb5a5",
+              "supplies": "e1b45854413ff5f8",
+              "ability": "13d5259cf6bdd35b",
+              "clock": "e0a7e04390fd053c",
+              "continuation": "a9d828ced6380d30",
+              "result": "ad83ca456b18c878"
+            }
+          }
+        },
+        "phase": "complete",
+        "captures": 5,
+        "capturedCells": 1025,
+        "ticks": 5604,
+        "outcome": "won"
+      }
+    },
+    {
+      "id": "night-patrol-loop",
+      "levelId": "signal-05",
+      "source": {
+        "path": "game/demo-data/night-patrol-loop.replay.json",
+        "sha256": "f83e60de8f61ac2a44ba4bdc98228cc72abfdbc8e70fe3843946281a17d632e9",
+        "bytes": 12265
+      },
+      "attempts": [
+        {
+          "replayURL": "./demo-data/night-patrol-loop.replay.json",
+          "file": {
+            "path": "game/demo-data/night-patrol-loop.replay.json",
+            "sha256": "f83e60de8f61ac2a44ba4bdc98228cc72abfdbc8e70fe3843946281a17d632e9",
+            "bytes": 12265
+          },
+          "match": true,
+          "diagnostics": [],
+          "actual": {
+            "summary": {
+              "ruleset": "xonix-core.v2",
+              "levelId": "signal-05",
+              "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-fa76537cd16b5450",
+              "seed": 376,
+              "turnPolicy": "grid-center",
+              "classId": "scout",
+              "activeClassId": "scout",
+              "rosterHash": "roster-v1-e159e435",
+              "classHistory": [
+                {
+                  "classId": "scout",
+                  "classRevision": "1",
+                  "loadoutHash": "loadout-v1-aaa4aadd",
+                  "tick": 0
+                }
+              ],
+              "switches": 0,
+              "failureCause": null,
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "status": "won",
+              "won": true,
+              "tick": 5602,
+              "time": 46.67571644042031,
+              "lives": 3,
+              "score": 10820,
+              "coverage": 0.6918158567774936,
+              "claimedCount": 1082,
+              "totalClaimable": 1564,
+              "medal": "gold",
+              "objectives": {
+                "captured": 0,
+                "total": 0,
+                "required": 0
+              }
+            },
+            "checkpoint": {
+              "algorithm": "fnv1a64-state-v2",
+              "hash": "016a46a4b5673580",
+              "sections": {
+                "identity": "829d327ffbbb9a1d",
+                "configuration": "5424a0dcd0d1c177",
+                "board": "eee7bb640eedc36b",
+                "player": "f7283610f92cc6e6",
+                "trail": "f0ca473df9efdcc8",
+                "enemies": "6f7b287617f5cdd6",
+                "objectives": "09612b07b5ecb5a5",
+                "supplies": "e1b45854413ff5f8",
+                "ability": "a31f955f9cc7d175",
+                "clock": "d16a834cc8126b94",
+                "continuation": "a9d828ced6380d30",
+                "result": "3bab2fa362a1b7a0"
+              }
+            }
+          }
+        },
+        {
+          "replayURL": "./demo-data/night-patrol-loop.chromium-macos.replay.json",
+          "file": {
+            "path": "game/demo-data/night-patrol-loop.chromium-macos.replay.json",
+            "sha256": "2ac0bb990b4eca72e5854c1d56b59188a3cad2968a5049e8ee77900895410e2d",
+            "bytes": 12273
+          },
+          "match": false,
+          "diagnostics": [
+            {
+              "code": "state-mismatch",
+              "section": "enemies",
+              "message": "Authoritative enemies differs.",
+              "expected": "842e7ccd7fbd55a1",
+              "actual": "6f7b287617f5cdd6"
+            }
+          ],
+          "actual": {
+            "summary": {
+              "ruleset": "xonix-core.v2",
+              "levelId": "signal-05",
+              "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-fa76537cd16b5450",
+              "seed": 376,
+              "turnPolicy": "grid-center",
+              "classId": "scout",
+              "activeClassId": "scout",
+              "rosterHash": "roster-v1-e159e435",
+              "classHistory": [
+                {
+                  "classId": "scout",
+                  "classRevision": "1",
+                  "loadoutHash": "loadout-v1-aaa4aadd",
+                  "tick": 0
+                }
+              ],
+              "switches": 0,
+              "failureCause": null,
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "status": "won",
+              "won": true,
+              "tick": 5602,
+              "time": 46.67571644042031,
+              "lives": 3,
+              "score": 10820,
+              "coverage": 0.6918158567774936,
+              "claimedCount": 1082,
+              "totalClaimable": 1564,
+              "medal": "gold",
+              "objectives": {
+                "captured": 0,
+                "total": 0,
+                "required": 0
+              }
+            },
+            "checkpoint": {
+              "algorithm": "fnv1a64-state-v2",
+              "hash": "016a46a4b5673580",
+              "sections": {
+                "identity": "829d327ffbbb9a1d",
+                "configuration": "5424a0dcd0d1c177",
+                "board": "eee7bb640eedc36b",
+                "player": "f7283610f92cc6e6",
+                "trail": "f0ca473df9efdcc8",
+                "enemies": "6f7b287617f5cdd6",
+                "objectives": "09612b07b5ecb5a5",
+                "supplies": "e1b45854413ff5f8",
+                "ability": "a31f955f9cc7d175",
+                "clock": "d16a834cc8126b94",
+                "continuation": "a9d828ced6380d30",
+                "result": "3bab2fa362a1b7a0"
+              }
+            }
+          }
+        }
+      ],
+      "eligible": true,
+      "selected": "./demo-data/night-patrol-loop.replay.json",
+      "playback": {
+        "match": true,
+        "actual": {
+          "summary": {
+            "ruleset": "xonix-core.v2",
+            "levelId": "signal-05",
+            "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-fa76537cd16b5450",
+            "seed": 376,
+            "turnPolicy": "grid-center",
+            "classId": "scout",
+            "activeClassId": "scout",
+            "rosterHash": "roster-v1-e159e435",
+            "classHistory": [
+              {
+                "classId": "scout",
+                "classRevision": "1",
+                "loadoutHash": "loadout-v1-aaa4aadd",
+                "tick": 0
+              }
+            ],
+            "switches": 0,
+            "failureCause": null,
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "status": "won",
+            "won": true,
+            "tick": 5602,
+            "time": 46.67571644042031,
+            "lives": 3,
+            "score": 10820,
+            "coverage": 0.6918158567774936,
+            "claimedCount": 1082,
+            "totalClaimable": 1564,
+            "medal": "gold",
+            "objectives": {
+              "captured": 0,
+              "total": 0,
+              "required": 0
+            }
+          },
+          "checkpoint": {
+            "algorithm": "fnv1a64-state-v2",
+            "hash": "016a46a4b5673580",
+            "sections": {
+              "identity": "829d327ffbbb9a1d",
+              "configuration": "5424a0dcd0d1c177",
+              "board": "eee7bb640eedc36b",
+              "player": "f7283610f92cc6e6",
+              "trail": "f0ca473df9efdcc8",
+              "enemies": "6f7b287617f5cdd6",
+              "objectives": "09612b07b5ecb5a5",
+              "supplies": "e1b45854413ff5f8",
+              "ability": "a31f955f9cc7d175",
+              "clock": "d16a834cc8126b94",
+              "continuation": "a9d828ced6380d30",
+              "result": "3bab2fa362a1b7a0"
+            }
+          }
+        },
+        "phase": "complete",
+        "captures": 5,
+        "capturedCells": 1082,
+        "ticks": 5602,
+        "outcome": "won"
+      }
+    },
+    {
+      "id": "stone-lanes-detour",
+      "levelId": "signal-04",
+      "source": {
+        "path": "game/demo-data/stone-lanes-detour.replay.json",
+        "sha256": "137b26ecdac3ea17780a293b961f93c4cb0722f50d5e19b3f6188ccbb8603b99",
+        "bytes": 9152
+      },
+      "attempts": [
+        {
+          "replayURL": "./demo-data/stone-lanes-detour.replay.json",
+          "file": {
+            "path": "game/demo-data/stone-lanes-detour.replay.json",
+            "sha256": "137b26ecdac3ea17780a293b961f93c4cb0722f50d5e19b3f6188ccbb8603b99",
+            "bytes": 9152
+          },
+          "match": true,
+          "diagnostics": [],
+          "actual": {
+            "summary": {
+              "ruleset": "xonix-core.v2",
+              "levelId": "signal-04",
+              "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-f6d731811f644eed",
+              "seed": 1,
+              "turnPolicy": "immediate",
+              "classId": "scout",
+              "activeClassId": "scout",
+              "rosterHash": "roster-v1-e159e435",
+              "classHistory": [
+                {
+                  "classId": "scout",
+                  "classRevision": "1",
+                  "loadoutHash": "loadout-v1-aaa4aadd",
+                  "tick": 0
+                }
+              ],
+              "switches": 0,
+              "failureCause": null,
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "status": "won",
+              "won": true,
+              "tick": 3005,
+              "time": 25.035105580693035,
+              "lives": 3,
+              "score": 12410,
+              "coverage": 0.7774151436031331,
+              "claimedCount": 1191,
+              "totalClaimable": 1532,
+              "medal": "gold",
+              "objectives": {
+                "captured": 1,
+                "total": 1,
+                "required": 1
+              }
+            },
+            "checkpoint": {
+              "algorithm": "fnv1a64-state-v2",
+              "hash": "de015f36e30129e9",
+              "sections": {
+                "identity": "ea68e0200ed5deb8",
+                "configuration": "8d3e801b2bb23bff",
+                "board": "c88071f17d194990",
+                "player": "3919c6e793cd4b6a",
+                "trail": "f0ca473df9efdcc8",
+                "enemies": "26eeff55b6a53e2c",
+                "objectives": "f8f8bccdef23a0d5",
+                "supplies": "e1b45854413ff5f8",
+                "ability": "1c2de8527f6b6af5",
+                "clock": "b3550dd98fc525bc",
+                "continuation": "a9d828ced6380d30",
+                "result": "d4b67dce98cde656"
+              }
+            }
+          }
+        },
+        {
+          "replayURL": "./demo-data/stone-lanes-detour.chromium-macos.replay.json",
+          "file": {
+            "path": "game/demo-data/stone-lanes-detour.chromium-macos.replay.json",
+            "sha256": "5081c6c54a80dd43954005a8eef2f79d8fe2019572d3b3328fecab95def25673",
+            "bytes": 9160
+          },
+          "match": false,
+          "diagnostics": [
+            {
+              "code": "state-mismatch",
+              "section": "enemies",
+              "message": "Authoritative enemies differs.",
+              "expected": "be5c50b02c10b1ed",
+              "actual": "26eeff55b6a53e2c"
+            }
+          ],
+          "actual": {
+            "summary": {
+              "ruleset": "xonix-core.v2",
+              "levelId": "signal-04",
+              "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-f6d731811f644eed",
+              "seed": 1,
+              "turnPolicy": "immediate",
+              "classId": "scout",
+              "activeClassId": "scout",
+              "rosterHash": "roster-v1-e159e435",
+              "classHistory": [
+                {
+                  "classId": "scout",
+                  "classRevision": "1",
+                  "loadoutHash": "loadout-v1-aaa4aadd",
+                  "tick": 0
+                }
+              ],
+              "switches": 0,
+              "failureCause": null,
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "status": "won",
+              "won": true,
+              "tick": 3005,
+              "time": 25.035105580693035,
+              "lives": 3,
+              "score": 12410,
+              "coverage": 0.7774151436031331,
+              "claimedCount": 1191,
+              "totalClaimable": 1532,
+              "medal": "gold",
+              "objectives": {
+                "captured": 1,
+                "total": 1,
+                "required": 1
+              }
+            },
+            "checkpoint": {
+              "algorithm": "fnv1a64-state-v2",
+              "hash": "de015f36e30129e9",
+              "sections": {
+                "identity": "ea68e0200ed5deb8",
+                "configuration": "8d3e801b2bb23bff",
+                "board": "c88071f17d194990",
+                "player": "3919c6e793cd4b6a",
+                "trail": "f0ca473df9efdcc8",
+                "enemies": "26eeff55b6a53e2c",
+                "objectives": "f8f8bccdef23a0d5",
+                "supplies": "e1b45854413ff5f8",
+                "ability": "1c2de8527f6b6af5",
+                "clock": "b3550dd98fc525bc",
+                "continuation": "a9d828ced6380d30",
+                "result": "d4b67dce98cde656"
+              }
+            }
+          }
+        }
+      ],
+      "eligible": true,
+      "selected": "./demo-data/stone-lanes-detour.replay.json",
+      "playback": {
+        "match": true,
+        "actual": {
+          "summary": {
+            "ruleset": "xonix-core.v2",
+            "levelId": "signal-04",
+            "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-f6d731811f644eed",
+            "seed": 1,
+            "turnPolicy": "immediate",
+            "classId": "scout",
+            "activeClassId": "scout",
+            "rosterHash": "roster-v1-e159e435",
+            "classHistory": [
+              {
+                "classId": "scout",
+                "classRevision": "1",
+                "loadoutHash": "loadout-v1-aaa4aadd",
+                "tick": 0
+              }
+            ],
+            "switches": 0,
+            "failureCause": null,
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "status": "won",
+            "won": true,
+            "tick": 3005,
+            "time": 25.035105580693035,
+            "lives": 3,
+            "score": 12410,
+            "coverage": 0.7774151436031331,
+            "claimedCount": 1191,
+            "totalClaimable": 1532,
+            "medal": "gold",
+            "objectives": {
+              "captured": 1,
+              "total": 1,
+              "required": 1
+            }
+          },
+          "checkpoint": {
+            "algorithm": "fnv1a64-state-v2",
+            "hash": "de015f36e30129e9",
+            "sections": {
+              "identity": "ea68e0200ed5deb8",
+              "configuration": "8d3e801b2bb23bff",
+              "board": "c88071f17d194990",
+              "player": "3919c6e793cd4b6a",
+              "trail": "f0ca473df9efdcc8",
+              "enemies": "26eeff55b6a53e2c",
+              "objectives": "f8f8bccdef23a0d5",
+              "supplies": "e1b45854413ff5f8",
+              "ability": "1c2de8527f6b6af5",
+              "clock": "b3550dd98fc525bc",
+              "continuation": "a9d828ced6380d30",
+              "result": "d4b67dce98cde656"
+            }
+          }
+        },
+        "phase": "complete",
+        "captures": 3,
+        "capturedCells": 1191,
+        "ticks": 3005,
+        "outcome": "won"
+      }
+    },
+    {
+      "id": "hidden-frequency-search",
+      "levelId": "signal-06",
+      "source": {
+        "path": "game/demo-data/hidden-frequency-search.replay.json",
+        "sha256": "dd5e26c19ad433acf88b926ac1e595fa3f2e1df0d040d1879ca8190f7dd18537",
+        "bytes": 11517
+      },
+      "attempts": [
+        {
+          "replayURL": "./demo-data/hidden-frequency-search.replay.json",
+          "file": {
+            "path": "game/demo-data/hidden-frequency-search.replay.json",
+            "sha256": "dd5e26c19ad433acf88b926ac1e595fa3f2e1df0d040d1879ca8190f7dd18537",
+            "bytes": 11517
+          },
+          "match": false,
+          "diagnostics": [
+            {
+              "code": "state-mismatch",
+              "section": "enemies",
+              "message": "Authoritative enemies differs.",
+              "expected": "293f700030b26b13",
+              "actual": "7e389b3f85dc1d92"
+            }
+          ],
+          "actual": {
+            "summary": {
+              "ruleset": "xonix-core.v2",
+              "levelId": "signal-06",
+              "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-f2fd952c2f9eb5e2",
+              "seed": 1,
+              "turnPolicy": "immediate",
+              "classId": "scout",
+              "activeClassId": "scout",
+              "rosterHash": "roster-v1-e159e435",
+              "classHistory": [
+                {
+                  "classId": "scout",
+                  "classRevision": "1",
+                  "loadoutHash": "loadout-v1-aaa4aadd",
+                  "tick": 0
+                }
+              ],
+              "switches": 0,
+              "failureCause": null,
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "status": "won",
+              "won": true,
+              "tick": 5327,
+              "time": 44.38510558069194,
+              "lives": 3,
+              "score": 13780,
+              "coverage": 0.8491048593350383,
+              "claimedCount": 1328,
+              "totalClaimable": 1564,
+              "medal": "gold",
+              "objectives": {
+                "captured": 1,
+                "total": 2,
+                "required": 1
+              }
+            },
+            "checkpoint": {
+              "algorithm": "fnv1a64-state-v2",
+              "hash": "4014a9351894e345",
+              "sections": {
+                "identity": "1da777c9ecada454",
+                "configuration": "0f983cb0e550842e",
+                "board": "2b0ed2d4171ac535",
+                "player": "e8ddc1f9fef370f3",
+                "trail": "f0ca473df9efdcc8",
+                "enemies": "7e389b3f85dc1d92",
+                "objectives": "a976f8e0396bcd8f",
+                "supplies": "e1b45854413ff5f8",
+                "ability": "aebdf7a69e887a49",
+                "clock": "e47b982451db1c18",
+                "continuation": "a9d828ced6380d30",
+                "result": "95ba6a6bb3a2a70b"
+              }
+            }
+          }
+        },
+        {
+          "replayURL": "./demo-data/hidden-frequency-search.chromium-macos.replay.json",
+          "file": {
+            "path": "game/demo-data/hidden-frequency-search.chromium-macos.replay.json",
+            "sha256": "56c7600b96686d17e84b5e1292ca848112767a15a6d192d8b11accb0d242f89c",
+            "bytes": 11525
+          },
+          "match": false,
+          "diagnostics": [
+            {
+              "code": "state-mismatch",
+              "section": "enemies",
+              "message": "Authoritative enemies differs.",
+              "expected": "d4286585d162aa21",
+              "actual": "7e389b3f85dc1d92"
+            }
+          ],
+          "actual": {
+            "summary": {
+              "ruleset": "xonix-core.v2",
+              "levelId": "signal-06",
+              "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-f2fd952c2f9eb5e2",
+              "seed": 1,
+              "turnPolicy": "immediate",
+              "classId": "scout",
+              "activeClassId": "scout",
+              "rosterHash": "roster-v1-e159e435",
+              "classHistory": [
+                {
+                  "classId": "scout",
+                  "classRevision": "1",
+                  "loadoutHash": "loadout-v1-aaa4aadd",
+                  "tick": 0
+                }
+              ],
+              "switches": 0,
+              "failureCause": null,
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "status": "won",
+              "won": true,
+              "tick": 5327,
+              "time": 44.38510558069194,
+              "lives": 3,
+              "score": 13780,
+              "coverage": 0.8491048593350383,
+              "claimedCount": 1328,
+              "totalClaimable": 1564,
+              "medal": "gold",
+              "objectives": {
+                "captured": 1,
+                "total": 2,
+                "required": 1
+              }
+            },
+            "checkpoint": {
+              "algorithm": "fnv1a64-state-v2",
+              "hash": "4014a9351894e345",
+              "sections": {
+                "identity": "1da777c9ecada454",
+                "configuration": "0f983cb0e550842e",
+                "board": "2b0ed2d4171ac535",
+                "player": "e8ddc1f9fef370f3",
+                "trail": "f0ca473df9efdcc8",
+                "enemies": "7e389b3f85dc1d92",
+                "objectives": "a976f8e0396bcd8f",
+                "supplies": "e1b45854413ff5f8",
+                "ability": "aebdf7a69e887a49",
+                "clock": "e47b982451db1c18",
+                "continuation": "a9d828ced6380d30",
+                "result": "95ba6a6bb3a2a70b"
+              }
+            }
+          }
+        }
+      ],
+      "eligible": true,
+      "natural": {
+        "status": "won",
+        "tick": 5327,
+        "captures": 5,
+        "capturedCells": 1328
+      },
+      "candidate": {
+        "path": ".cache/reviewed-node22131-x64-capture-3f84b51f8-stable-candidates/hidden-frequency-search.node22131-x64.replay.json",
+        "sha256": "dac59e429e2e95214f46b3e52059d880d8fab24a3b1697ad5bf7d28395705369",
+        "bytes": 7370
+      },
+      "diagnostic": {
+        "path": ".cache/reviewed-node22131-x64-capture-3f84b51f8-stable-candidates/hidden-frequency-search.node22131-x64.diagnostics.json",
+        "sha256": "576c3d46a73c1f0707c8cdee03dffe5be9801ae7ceae83b16198a4d30f2b2ea6",
+        "bytes": 3610
+      },
+      "trace": {
+        "inputTraceIdentity": "806c350fdb164271",
+        "durationSeconds": 44.391666666666666,
+        "exactTrace": true,
+        "exactSummary": true,
+        "allNonEnemySectionsUnchanged": true
+      },
+      "authoringVerification": {
+        "match": true,
+        "actual": {
+          "summary": {
+            "ruleset": "xonix-core.v2",
+            "levelId": "signal-06",
+            "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-f2fd952c2f9eb5e2",
+            "seed": 1,
+            "turnPolicy": "immediate",
+            "classId": "scout",
+            "activeClassId": "scout",
+            "rosterHash": "roster-v1-e159e435",
+            "classHistory": [
+              {
+                "classId": "scout",
+                "classRevision": "1",
+                "loadoutHash": "loadout-v1-aaa4aadd",
+                "tick": 0
+              }
+            ],
+            "switches": 0,
+            "failureCause": null,
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "status": "won",
+            "won": true,
+            "tick": 5327,
+            "time": 44.38510558069194,
+            "lives": 3,
+            "score": 13780,
+            "coverage": 0.8491048593350383,
+            "claimedCount": 1328,
+            "totalClaimable": 1564,
+            "medal": "gold",
+            "objectives": {
+              "captured": 1,
+              "total": 2,
+              "required": 1
+            }
+          },
+          "checkpoint": {
+            "algorithm": "fnv1a64-state-v2",
+            "hash": "4014a9351894e345",
+            "sections": {
+              "identity": "1da777c9ecada454",
+              "configuration": "0f983cb0e550842e",
+              "board": "2b0ed2d4171ac535",
+              "player": "e8ddc1f9fef370f3",
+              "trail": "f0ca473df9efdcc8",
+              "enemies": "7e389b3f85dc1d92",
+              "objectives": "a976f8e0396bcd8f",
+              "supplies": "e1b45854413ff5f8",
+              "ability": "aebdf7a69e887a49",
+              "clock": "e47b982451db1c18",
+              "continuation": "a9d828ced6380d30",
+              "result": "95ba6a6bb3a2a70b"
+            }
+          }
+        }
+      },
+      "independent": {
+        "environment": {
+          "version": "v22.13.1",
+          "platform": "darwin",
+          "arch": "x64"
+        },
+        "candidate": {
+          "path": ".cache/reviewed-node22131-x64-capture-3f84b51f8-stable-candidates/hidden-frequency-search.node22131-x64.replay.json",
+          "sha256": "dac59e429e2e95214f46b3e52059d880d8fab24a3b1697ad5bf7d28395705369",
+          "bytes": 7370
+        },
+        "diagnostic": {
+          "path": ".cache/reviewed-node22131-x64-capture-3f84b51f8-stable-candidates/hidden-frequency-search.node22131-x64.diagnostics.json",
+          "sha256": "576c3d46a73c1f0707c8cdee03dffe5be9801ae7ceae83b16198a4d30f2b2ea6",
+          "bytes": 3610
+        },
+        "diagnosticsMatch": true,
+        "match": true,
+        "actual": {
+          "summary": {
+            "ruleset": "xonix-core.v2",
+            "levelId": "signal-06",
+            "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-f2fd952c2f9eb5e2",
+            "seed": 1,
+            "turnPolicy": "immediate",
+            "classId": "scout",
+            "activeClassId": "scout",
+            "rosterHash": "roster-v1-e159e435",
+            "classHistory": [
+              {
+                "classId": "scout",
+                "classRevision": "1",
+                "loadoutHash": "loadout-v1-aaa4aadd",
+                "tick": 0
+              }
+            ],
+            "switches": 0,
+            "failureCause": null,
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "status": "won",
+            "won": true,
+            "tick": 5327,
+            "time": 44.38510558069194,
+            "lives": 3,
+            "score": 13780,
+            "coverage": 0.8491048593350383,
+            "claimedCount": 1328,
+            "totalClaimable": 1564,
+            "medal": "gold",
+            "objectives": {
+              "captured": 1,
+              "total": 2,
+              "required": 1
+            }
+          },
+          "checkpoint": {
+            "algorithm": "fnv1a64-state-v2",
+            "hash": "4014a9351894e345",
+            "sections": {
+              "identity": "1da777c9ecada454",
+              "configuration": "0f983cb0e550842e",
+              "board": "2b0ed2d4171ac535",
+              "player": "e8ddc1f9fef370f3",
+              "trail": "f0ca473df9efdcc8",
+              "enemies": "7e389b3f85dc1d92",
+              "objectives": "a976f8e0396bcd8f",
+              "supplies": "e1b45854413ff5f8",
+              "ability": "aebdf7a69e887a49",
+              "clock": "e47b982451db1c18",
+              "continuation": "a9d828ced6380d30",
+              "result": "95ba6a6bb3a2a70b"
+            }
+          }
+        },
+        "phase": "complete",
+        "captures": 5,
+        "capturedCells": 1328,
+        "ticks": 5327,
+        "outcome": "won"
+      },
+      "proposedProvenance": {
+        "id": "hidden-frequency-search",
+        "replayURL": "./demo-data/hidden-frequency-search.node22131-x64.replay.json",
+        "inputTraceIdentity": "806c350fdb164271",
+        "sourceCheckpoint": "1bd018399cd068be",
+        "checkpoint": "4014a9351894e345",
+        "recordedIn": {
+          "createdAt": "2026-10-19T09:44:56.261Z",
+          "runtime": "Node.js",
+          "version": "v22.13.1",
+          "v8": "12.4.254.21-node.22",
+          "platform": "darwin",
+          "arch": "x64",
+          "executableSHA256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd",
+          "mathWitness": {
+            "sin": 0.6831007735084312,
+            "hypot": 0.7615773105863908
+          }
+        }
+      }
+    },
+    {
+      "id": "the-crossing-windows",
+      "levelId": "signal-07",
+      "source": {
+        "path": "game/demo-data/the-crossing-windows.replay.json",
+        "sha256": "b52aa84d5bcc15a75d998dc40ab91cf8c36dca5e25562873223d86ae33f9982c",
+        "bytes": 9887
+      },
+      "attempts": [
+        {
+          "replayURL": "./demo-data/the-crossing-windows.replay.json",
+          "file": {
+            "path": "game/demo-data/the-crossing-windows.replay.json",
+            "sha256": "b52aa84d5bcc15a75d998dc40ab91cf8c36dca5e25562873223d86ae33f9982c",
+            "bytes": 9887
+          },
+          "match": true,
+          "diagnostics": [],
+          "actual": {
+            "summary": {
+              "ruleset": "xonix-core.v2",
+              "levelId": "signal-07",
+              "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-7f3823f6f7c70b82",
+              "seed": 1,
+              "turnPolicy": "immediate",
+              "classId": "scout",
+              "activeClassId": "scout",
+              "rosterHash": "roster-v1-e159e435",
+              "classHistory": [
+                {
+                  "classId": "scout",
+                  "classRevision": "1",
+                  "loadoutHash": "loadout-v1-aaa4aadd",
+                  "tick": 0
+                }
+              ],
+              "switches": 0,
+              "failureCause": null,
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "status": "won",
+              "won": true,
+              "tick": 4153,
+              "time": 34.60512820512689,
+              "lives": 3,
+              "score": 13690,
+              "coverage": 0.8433503836317136,
+              "claimedCount": 1319,
+              "totalClaimable": 1564,
+              "medal": "gold",
+              "objectives": {
+                "captured": 1,
+                "total": 1,
+                "required": 1
+              }
+            },
+            "checkpoint": {
+              "algorithm": "fnv1a64-state-v2",
+              "hash": "5b0f6b3b1daf7949",
+              "sections": {
+                "identity": "3fa00d854708c124",
+                "configuration": "4f6335efd44e5074",
+                "board": "a9994a4656c3f95d",
+                "player": "81d72065c72381bf",
+                "trail": "f0ca473df9efdcc8",
+                "enemies": "d93e9ed894e02801",
+                "objectives": "bb1c73bb4d74bbe7",
+                "supplies": "e1b45854413ff5f8",
+                "ability": "73fb3f793d3830e9",
+                "clock": "d054835f976ae380",
+                "continuation": "a9d828ced6380d30",
+                "result": "c714d79cabdf3495"
+              }
+            }
+          }
+        },
+        {
+          "replayURL": "./demo-data/the-crossing-windows.chromium-macos.replay.json",
+          "file": {
+            "path": "game/demo-data/the-crossing-windows.chromium-macos.replay.json",
+            "sha256": "03fe9a5ea307d82093badf26968a06686605a01832d5ef6048a8fa38c13e9f2f",
+            "bytes": 9895
+          },
+          "match": false,
+          "diagnostics": [
+            {
+              "code": "state-mismatch",
+              "section": "enemies",
+              "message": "Authoritative enemies differs.",
+              "expected": "12475c36917eb912",
+              "actual": "d93e9ed894e02801"
+            }
+          ],
+          "actual": {
+            "summary": {
+              "ruleset": "xonix-core.v2",
+              "levelId": "signal-07",
+              "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-7f3823f6f7c70b82",
+              "seed": 1,
+              "turnPolicy": "immediate",
+              "classId": "scout",
+              "activeClassId": "scout",
+              "rosterHash": "roster-v1-e159e435",
+              "classHistory": [
+                {
+                  "classId": "scout",
+                  "classRevision": "1",
+                  "loadoutHash": "loadout-v1-aaa4aadd",
+                  "tick": 0
+                }
+              ],
+              "switches": 0,
+              "failureCause": null,
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "status": "won",
+              "won": true,
+              "tick": 4153,
+              "time": 34.60512820512689,
+              "lives": 3,
+              "score": 13690,
+              "coverage": 0.8433503836317136,
+              "claimedCount": 1319,
+              "totalClaimable": 1564,
+              "medal": "gold",
+              "objectives": {
+                "captured": 1,
+                "total": 1,
+                "required": 1
+              }
+            },
+            "checkpoint": {
+              "algorithm": "fnv1a64-state-v2",
+              "hash": "5b0f6b3b1daf7949",
+              "sections": {
+                "identity": "3fa00d854708c124",
+                "configuration": "4f6335efd44e5074",
+                "board": "a9994a4656c3f95d",
+                "player": "81d72065c72381bf",
+                "trail": "f0ca473df9efdcc8",
+                "enemies": "d93e9ed894e02801",
+                "objectives": "bb1c73bb4d74bbe7",
+                "supplies": "e1b45854413ff5f8",
+                "ability": "73fb3f793d3830e9",
+                "clock": "d054835f976ae380",
+                "continuation": "a9d828ced6380d30",
+                "result": "c714d79cabdf3495"
+              }
+            }
+          }
+        }
+      ],
+      "eligible": true,
+      "selected": "./demo-data/the-crossing-windows.replay.json",
+      "playback": {
+        "match": true,
+        "actual": {
+          "summary": {
+            "ruleset": "xonix-core.v2",
+            "levelId": "signal-07",
+            "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-7f3823f6f7c70b82",
+            "seed": 1,
+            "turnPolicy": "immediate",
+            "classId": "scout",
+            "activeClassId": "scout",
+            "rosterHash": "roster-v1-e159e435",
+            "classHistory": [
+              {
+                "classId": "scout",
+                "classRevision": "1",
+                "loadoutHash": "loadout-v1-aaa4aadd",
+                "tick": 0
+              }
+            ],
+            "switches": 0,
+            "failureCause": null,
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "status": "won",
+            "won": true,
+            "tick": 4153,
+            "time": 34.60512820512689,
+            "lives": 3,
+            "score": 13690,
+            "coverage": 0.8433503836317136,
+            "claimedCount": 1319,
+            "totalClaimable": 1564,
+            "medal": "gold",
+            "objectives": {
+              "captured": 1,
+              "total": 1,
+              "required": 1
+            }
+          },
+          "checkpoint": {
+            "algorithm": "fnv1a64-state-v2",
+            "hash": "5b0f6b3b1daf7949",
+            "sections": {
+              "identity": "3fa00d854708c124",
+              "configuration": "4f6335efd44e5074",
+              "board": "a9994a4656c3f95d",
+              "player": "81d72065c72381bf",
+              "trail": "f0ca473df9efdcc8",
+              "enemies": "d93e9ed894e02801",
+              "objectives": "bb1c73bb4d74bbe7",
+              "supplies": "e1b45854413ff5f8",
+              "ability": "73fb3f793d3830e9",
+              "clock": "d054835f976ae380",
+              "continuation": "a9d828ced6380d30",
+              "result": "c714d79cabdf3495"
+            }
+          }
+        },
+        "phase": "complete",
+        "captures": 4,
+        "capturedCells": 1319,
+        "ticks": 4153,
+        "outcome": "won"
+      }
+    },
+    {
+      "id": "signal-garden-route",
+      "levelId": "signal-09",
+      "source": {
+        "path": "game/demo-data/signal-garden-route.replay.json",
+        "sha256": "a12a33a32a6583ae18680f891af2f4f0304569c024ef474d507041f6ad3e3572",
+        "bytes": 11805
+      },
+      "attempts": [
+        {
+          "replayURL": "./demo-data/signal-garden-route.replay.json",
+          "file": {
+            "path": "game/demo-data/signal-garden-route.replay.json",
+            "sha256": "a12a33a32a6583ae18680f891af2f4f0304569c024ef474d507041f6ad3e3572",
+            "bytes": 11805
+          },
+          "match": true,
+          "diagnostics": [],
+          "actual": {
+            "summary": {
+              "ruleset": "xonix-core.v2",
+              "levelId": "signal-09",
+              "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-43e9e379e1295c74",
+              "seed": 1,
+              "turnPolicy": "immediate",
+              "classId": "scout",
+              "activeClassId": "scout",
+              "rosterHash": "roster-v1-e159e435",
+              "classHistory": [
+                {
+                  "classId": "scout",
+                  "classRevision": "1",
+                  "loadoutHash": "loadout-v1-aaa4aadd",
+                  "tick": 0
+                }
+              ],
+              "switches": 0,
+              "failureCause": null,
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "status": "won",
+              "won": true,
+              "tick": 5656,
+              "time": 47.12677224735845,
+              "lives": 3,
+              "score": 12820,
+              "coverage": 0.7877237851662404,
+              "claimedCount": 1232,
+              "totalClaimable": 1564,
+              "medal": "gold",
+              "objectives": {
+                "captured": 1,
+                "total": 1,
+                "required": 1
+              }
+            },
+            "checkpoint": {
+              "algorithm": "fnv1a64-state-v2",
+              "hash": "b627fd8c6256b2f2",
+              "sections": {
+                "identity": "01f22b0fc387e3e3",
+                "configuration": "0845bff636b09bab",
+                "board": "64090ec1c86a8b69",
+                "player": "ee98a4a624d5813d",
+                "trail": "f0ca473df9efdcc8",
+                "enemies": "055fe7cbbff3e584",
+                "objectives": "2e9dc118a1f59e04",
+                "supplies": "e1b45854413ff5f8",
+                "ability": "0dab8c1529fd900a",
+                "clock": "778f280a2cabacdf",
+                "continuation": "a9d828ced6380d30",
+                "result": "bf3de7693c60a9e4"
+              }
+            }
+          }
+        },
+        {
+          "replayURL": "./demo-data/signal-garden-route.chromium-macos.replay.json",
+          "file": {
+            "path": "game/demo-data/signal-garden-route.chromium-macos.replay.json",
+            "sha256": "8129f40d4713dc8f44c6023d09f2827ba4c98624ad6c88fa723d82f5c96959c1",
+            "bytes": 11813
+          },
+          "match": false,
+          "diagnostics": [
+            {
+              "code": "state-mismatch",
+              "section": "enemies",
+              "message": "Authoritative enemies differs.",
+              "expected": "be2a05c6da1619e7",
+              "actual": "055fe7cbbff3e584"
+            }
+          ],
+          "actual": {
+            "summary": {
+              "ruleset": "xonix-core.v2",
+              "levelId": "signal-09",
+              "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-43e9e379e1295c74",
+              "seed": 1,
+              "turnPolicy": "immediate",
+              "classId": "scout",
+              "activeClassId": "scout",
+              "rosterHash": "roster-v1-e159e435",
+              "classHistory": [
+                {
+                  "classId": "scout",
+                  "classRevision": "1",
+                  "loadoutHash": "loadout-v1-aaa4aadd",
+                  "tick": 0
+                }
+              ],
+              "switches": 0,
+              "failureCause": null,
+              "classRevision": "1",
+              "loadoutHash": "loadout-v1-aaa4aadd",
+              "status": "won",
+              "won": true,
+              "tick": 5656,
+              "time": 47.12677224735845,
+              "lives": 3,
+              "score": 12820,
+              "coverage": 0.7877237851662404,
+              "claimedCount": 1232,
+              "totalClaimable": 1564,
+              "medal": "gold",
+              "objectives": {
+                "captured": 1,
+                "total": 1,
+                "required": 1
+              }
+            },
+            "checkpoint": {
+              "algorithm": "fnv1a64-state-v2",
+              "hash": "b627fd8c6256b2f2",
+              "sections": {
+                "identity": "01f22b0fc387e3e3",
+                "configuration": "0845bff636b09bab",
+                "board": "64090ec1c86a8b69",
+                "player": "ee98a4a624d5813d",
+                "trail": "f0ca473df9efdcc8",
+                "enemies": "055fe7cbbff3e584",
+                "objectives": "2e9dc118a1f59e04",
+                "supplies": "e1b45854413ff5f8",
+                "ability": "0dab8c1529fd900a",
+                "clock": "778f280a2cabacdf",
+                "continuation": "a9d828ced6380d30",
+                "result": "bf3de7693c60a9e4"
+              }
+            }
+          }
+        }
+      ],
+      "eligible": true,
+      "selected": "./demo-data/signal-garden-route.replay.json",
+      "playback": {
+        "match": true,
+        "actual": {
+          "summary": {
+            "ruleset": "xonix-core.v2",
+            "levelId": "signal-09",
+            "revision": "gp4s-3ff00000000000003ff00000000000003ff0000000000000-43e9e379e1295c74",
+            "seed": 1,
+            "turnPolicy": "immediate",
+            "classId": "scout",
+            "activeClassId": "scout",
+            "rosterHash": "roster-v1-e159e435",
+            "classHistory": [
+              {
+                "classId": "scout",
+                "classRevision": "1",
+                "loadoutHash": "loadout-v1-aaa4aadd",
+                "tick": 0
+              }
+            ],
+            "switches": 0,
+            "failureCause": null,
+            "classRevision": "1",
+            "loadoutHash": "loadout-v1-aaa4aadd",
+            "status": "won",
+            "won": true,
+            "tick": 5656,
+            "time": 47.12677224735845,
+            "lives": 3,
+            "score": 12820,
+            "coverage": 0.7877237851662404,
+            "claimedCount": 1232,
+            "totalClaimable": 1564,
+            "medal": "gold",
+            "objectives": {
+              "captured": 1,
+              "total": 1,
+              "required": 1
+            }
+          },
+          "checkpoint": {
+            "algorithm": "fnv1a64-state-v2",
+            "hash": "b627fd8c6256b2f2",
+            "sections": {
+              "identity": "01f22b0fc387e3e3",
+              "configuration": "0845bff636b09bab",
+              "board": "64090ec1c86a8b69",
+              "player": "ee98a4a624d5813d",
+              "trail": "f0ca473df9efdcc8",
+              "enemies": "055fe7cbbff3e584",
+              "objectives": "2e9dc118a1f59e04",
+              "supplies": "e1b45854413ff5f8",
+              "ability": "0dab8c1529fd900a",
+              "clock": "778f280a2cabacdf",
+              "continuation": "a9d828ced6380d30",
+              "result": "bf3de7693c60a9e4"
+            }
+          }
+        },
+        "phase": "complete",
+        "captures": 5,
+        "capturedCells": 1232,
+        "ticks": 5656,
+        "outcome": "won"
+      }
+    }
+  ],
+  "errors": [],
+  "environment": {
+    "version": "v22.13.1",
+    "platform": "darwin",
+    "arch": "x64",
+    "versions": {
+      "node": "22.13.1",
+      "acorn": "8.14.0",
+      "ada": "2.9.2",
+      "amaro": "0.2.0",
+      "ares": "1.34.4",
+      "brotli": "1.1.0",
+      "cjs_module_lexer": "1.4.1",
+      "cldr": "46.0",
+      "icu": "76.1",
+      "llhttp": "9.2.1",
+      "modules": "127",
+      "napi": "9",
+      "nbytes": "0.1.1",
+      "ncrypto": "0.0.1",
+      "nghttp2": "1.64.0",
+      "nghttp3": "1.6.0",
+      "ngtcp2": "1.9.1",
+      "openssl": "3.0.15+quic",
+      "simdjson": "3.10.1",
+      "simdutf": "5.6.4",
+      "sqlite": "3.47.2",
+      "tz": "2024b",
+      "undici": "6.21.1",
+      "unicode": "16.0",
+      "uv": "1.49.2",
+      "uvwasi": "0.0.21",
+      "v8": "12.4.254.21-node.22",
+      "zlib": "1.3.0.1-motley-82a5fec"
+    },
+    "executable": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+      "sha256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd",
+      "bytes": 113991760
+    }
+  },
+  "headBefore": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+  "sourceBefore": {
+    "sha256": "64de97836648cf4081e9ca236dbdb3f65246327e17cd0936d19e874522011cfa",
+    "files": 10011,
+    "bytes": 404639350
+  },
+  "buildInputsBefore": {
+    "sha256": "b2a70eb2815b4b64acf0bf9d341ddab7044fa61ebed7f1b8a328d68f5d4e7634",
+    "files": 9408,
+    "bytes": 348406839
+  },
+  "observerSHA256": "ce0208f2f25750b326ed40eb9af141dc179e93c7b2a6b03cc103e9f52339df64",
+  "scope": "All ten reviewed clips and every committed candidate strictly checked on exact macOS x64 Node22.13.1. Missing strict matches receive only ignored ordinary-recorder candidates with exact legacy input/summary/non-enemy contracts, native terminal progress, five-second sidecars and separate-child full verification plus playback. No Linux claim or production mutation.",
+  "directory": ".cache/reviewed-node22131-x64-capture-3f84b51f8-stable-candidates",
+  "generatedDescriptorsMatch": true,
+  "counts": {
+    "reviewed": 10,
+    "committedCandidates": 20,
+    "existingStrictMatches": 8,
+    "newCandidates": 2
+  },
+  "headAfter": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+  "sourceAfter": {
+    "sha256": "64de97836648cf4081e9ca236dbdb3f65246327e17cd0936d19e874522011cfa",
+    "files": 10011,
+    "bytes": 404639350
+  },
+  "buildInputsAfter": {
+    "sha256": "b2a70eb2815b4b64acf0bf9d341ddab7044fa61ebed7f1b8a328d68f5d4e7634",
+    "files": 9408,
+    "bytes": 348406839
+  },
+  "observerSHA256After": "ce0208f2f25750b326ed40eb9af141dc179e93c7b2a6b03cc103e9f52339df64",
+  "sourceUnchanged": true,
+  "finished": "2026-10-19T09:45:07.382Z"
+}

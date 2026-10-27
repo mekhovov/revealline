@@ -1,0 +1,46 @@
+{
+  "format": "AgentObservedTestReceiptV1",
+  "recordedAt": "2026-10-18T17:39:37.589835+00:00",
+  "provenance": "Observed Node test runner outputs from this agent session; this is a concise receipt, not reconstructed TAP.",
+  "command": "NODE_DISABLE_COMPILE_CACHE=1 node --test --test-concurrency=1 scripts/test-demo-tick-survival.mjs",
+  "qualificationStage": "Native replay factory export and offline adapter; before the later optional preparation progress-report instrumentation.",
+  "fullRun": {
+    "tests": 6,
+    "passed": 6,
+    "failed": 0,
+    "durationMs": 258573.943709
+  },
+  "fullCapture": {
+    "levelId": "field-crossing-broken-crossroads",
+    "durationMs": 243970.551083,
+    "terminalTick": 19020,
+    "observedStates": 19021,
+    "recordedUpgrades": 10,
+    "recordedRerolls": 1,
+    "sparseCheckpointsMatched": true,
+    "independentNativeVerificationPassed": true,
+    "terminalIdentityMatched": true,
+    "largeTraceFileWritten": false
+  },
+  "regressions": [
+    "Native checkpoint rejection still exposes actual tick 300 to the exact comparator.",
+    "A failed upgrade does not fabricate an extra native tick.",
+    "The asynchronous observer is awaited and cancellation stops before another tick.",
+    "Comparator exceptions at checkpoint boundaries retain their identity.",
+    "Stale content, stale simulation identity, unknown missions and nonstandard variants are rejected.",
+    "Caller mutations after adapter creation cannot change its owned proof."
+  ],
+  "followup": {
+    "command": "NODE_DISABLE_COMPILE_CACHE=1 node --test --test-concurrency=1 --test-name-pattern='tick diagnosis rejects' scripts/test-demo-tick-survival.mjs",
+    "reason": "Confirm final maxTicks uses the native cap SURVIVAL_DEMO_MAX_TICKS, after that interface-only change during the full run.",
+    "passed": 1,
+    "failed": 0,
+    "skippedByNameFilter": 5,
+    "durationMs": 206.7235
+  },
+  "finalChecks": {
+    "eslint": "passed",
+    "prettier": "passed",
+    "diffWhitespace": "passed"
+  }
+}

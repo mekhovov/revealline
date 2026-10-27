@@ -1,0 +1,9 @@
+{
+  "format": "SharedDemoQualificationInterruptionV1",
+  "at": "2026-10-18T21:16:59.578449+00:00",
+  "complete": false,
+  "reason": "Superseded runtime: main advanced to237b405437def3c41b01165fe057af1ab06f618c with Solo host and SIM input/renderer changes. Stop early and integrate before final uninterrupted qualification. No partial endurance credit.",
+  "ownedBrowserPid": 18718,
+  "parentQualifierPid": 18717,
+  "action": "SIGTERM only the verified owned browser; allow qualifier finally and source wrapper to retain failure and finish."
+}

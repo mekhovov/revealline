@@ -1,0 +1,126 @@
+{
+  "format": "ReviewedNativeVariantMetadataProposalV1",
+  "catalogBefore": {
+    "path": "game/demo-data/catalog.json",
+    "sha256": "9dbec5b1f6d1a02e919d2515f784565cab119db0da0b92a653bec181d6a13421",
+    "bytes": 165265
+  },
+  "provenanceBefore": {
+    "path": "game/demo-data/variant-provenance.json",
+    "sha256": "701d0c04385779caa7c2660fa30216df9b856738f2da040e02434131e31f39b6",
+    "bytes": 4722
+  },
+  "additions": [
+    {
+      "id": "first-signal-right",
+      "replayURL": "./demo-data/first-signal-right.node22131-x64.replay.json",
+      "insertBefore": "./demo-data/first-signal-right.chromium-macos.replay.json",
+      "candidate": {
+        "path": ".cache/reviewed-node22131-x64-capture-3f84b51f8-stable-candidates/first-signal-right.node22131-x64.replay.json",
+        "sha256": "e8c63af3440feff2d430b02d93f26c86c58acd94e135f92affcf44bc9c54f22a",
+        "bytes": 6966
+      },
+      "diagnostic": {
+        "path": ".cache/reviewed-node22131-x64-capture-3f84b51f8-stable-candidates/first-signal-right.node22131-x64.diagnostics.json",
+        "sha256": "be92f9682131a82a0c5f1185d98b425284fbd86b7903a12e808fe483af4e8134",
+        "bytes": 2730
+      },
+      "provenance": {
+        "id": "first-signal-right",
+        "replayURL": "./demo-data/first-signal-right.node22131-x64.replay.json",
+        "inputTraceIdentity": "0d05c1be36470add",
+        "sourceCheckpoint": "2451aa6bc58d0614",
+        "checkpoint": "9b66591b55769ea8",
+        "recordedIn": {
+          "createdAt": "2026-10-19T09:44:56.261Z",
+          "runtime": "Node.js",
+          "version": "v22.13.1",
+          "v8": "12.4.254.21-node.22",
+          "platform": "darwin",
+          "arch": "x64",
+          "executableSHA256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd",
+          "mathWitness": {
+            "sin": 0.6831007735084312,
+            "hypot": 0.7615773105863908,
+            "sinInput": 0.752,
+            "hypotInputs": [
+              0.3,
+              0.7
+            ]
+          }
+        }
+      },
+      "natural": {
+        "status": "won",
+        "tick": 3829,
+        "captures": 4,
+        "capturedCells": 793
+      },
+      "trace": {
+        "inputTraceIdentity": "0d05c1be36470add",
+        "durationSeconds": 31.908333333333335,
+        "exactTrace": true,
+        "exactSummary": true,
+        "allNonEnemySectionsUnchanged": true
+      },
+      "sidecarCheckpoints": 6
+    },
+    {
+      "id": "hidden-frequency-search",
+      "replayURL": "./demo-data/hidden-frequency-search.node22131-x64.replay.json",
+      "insertBefore": "./demo-data/hidden-frequency-search.chromium-macos.replay.json",
+      "candidate": {
+        "path": ".cache/reviewed-node22131-x64-capture-3f84b51f8-stable-candidates/hidden-frequency-search.node22131-x64.replay.json",
+        "sha256": "dac59e429e2e95214f46b3e52059d880d8fab24a3b1697ad5bf7d28395705369",
+        "bytes": 7370
+      },
+      "diagnostic": {
+        "path": ".cache/reviewed-node22131-x64-capture-3f84b51f8-stable-candidates/hidden-frequency-search.node22131-x64.diagnostics.json",
+        "sha256": "576c3d46a73c1f0707c8cdee03dffe5be9801ae7ceae83b16198a4d30f2b2ea6",
+        "bytes": 3610
+      },
+      "provenance": {
+        "id": "hidden-frequency-search",
+        "replayURL": "./demo-data/hidden-frequency-search.node22131-x64.replay.json",
+        "inputTraceIdentity": "806c350fdb164271",
+        "sourceCheckpoint": "1bd018399cd068be",
+        "checkpoint": "4014a9351894e345",
+        "recordedIn": {
+          "createdAt": "2026-10-19T09:44:56.261Z",
+          "runtime": "Node.js",
+          "version": "v22.13.1",
+          "v8": "12.4.254.21-node.22",
+          "platform": "darwin",
+          "arch": "x64",
+          "executableSHA256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd",
+          "mathWitness": {
+            "sin": 0.6831007735084312,
+            "hypot": 0.7615773105863908,
+            "sinInput": 0.752,
+            "hypotInputs": [
+              0.3,
+              0.7
+            ]
+          }
+        }
+      },
+      "natural": {
+        "status": "won",
+        "tick": 5327,
+        "captures": 5,
+        "capturedCells": 1328
+      },
+      "trace": {
+        "inputTraceIdentity": "806c350fdb164271",
+        "durationSeconds": 44.391666666666666,
+        "exactTrace": true,
+        "exactSummary": true,
+        "allNonEnemySectionsUnchanged": true
+      },
+      "sidecarCheckpoints": 8
+    }
+  ],
+  "provenanceText": "Fixed committed input traces recorded and independently strictly verified twice in the named browser or runtime. Only the exact enemy checkpoint section differs from the original runtime; all other sections, summaries, levels, options, input segments and ticks are identical.",
+  "generatorChangeRequired": false,
+  "instructions": "Insert each provenance row before its matching existing chromium-macos row and its URL before the same last catalog variant. Keep every old replay, trace and relative order. The generator already reads this manifest order; preserve the last-candidate legacy gate. Direct reviewed metadata adoption is needed because --extend intentionally requires old variants as an unchanged prefix."
+}

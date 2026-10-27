@@ -1,0 +1,264 @@
+{
+  "engine": "webkit",
+  "requestedDurationSeconds": 0,
+  "scope": "all",
+  "idleEntry": false,
+  "started": "2026-10-19T11:09:56.533Z",
+  "checks": [
+    {
+      "type": "native-playback",
+      "mode": "survival",
+      "source": "survival:field-crossing-broken-crossroads:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "survival:field-crossing-broken-crossroads:standard",
+        "modeId": "survival",
+        "at": 1792408206391,
+        "loadingMs": 3360,
+        "preparation": {
+          "status": "ready",
+          "stage": "renderer",
+          "elapsedMs": 3360,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 0,
+            "retirement": 1,
+            "adapter": 0,
+            "source": 0,
+            "payload": 19,
+            "verification": 3172,
+            "scene-import": 11,
+            "artwork": 82,
+            "renderer": 74,
+            "mount": 1
+          },
+          "candidates": [
+            {
+              "variant": "webkit",
+              "engineHint": "webkit",
+              "prefetched": false,
+              "status": "verified",
+              "code": null,
+              "tick": 19020,
+              "totalTicks": 19020,
+              "elapsedMs": 3191
+            }
+          ]
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "60",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Broken Crossroads",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {
+          "allocatedSprites": 18
+        }
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "survival",
+      "caption": "Виживіть у вильоті, збирайте ресурси та обирайте поліпшення, щоб знищити фінальну ціль."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "survival"
+    },
+    {
+      "type": "native-playback",
+      "mode": "snake",
+      "source": "snake:classic-operation-heavy-crossing:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "snake:classic-operation-heavy-crossing:standard",
+        "modeId": "snake",
+        "at": 1792408208872,
+        "loadingMs": 47,
+        "preparation": {
+          "status": "ready",
+          "stage": "mount",
+          "elapsedMs": 47,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 1,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 46,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 0
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Heavy Crossing",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "snake",
+      "caption": "Зберіть обидві посилки перед розвантаженням за воротами. Довший кабель довше тримає плиту, але звужує поворот."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "snake"
+    },
+    {
+      "type": "native-playback",
+      "mode": "sim",
+      "source": "sim:snake-hunt-interception-two-return-lanes-acro-5aa29fc9c2ba76ef",
+      "phase": "playing",
+      "failureDetails": null,
+      "preparationDetails": {
+        "event": "ready",
+        "sourceId": "sim:snake-hunt-interception-two-return-lanes-acro-5aa29fc9c2ba76ef",
+        "modeId": "sim",
+        "at": 1792408211827,
+        "loadingMs": 529,
+        "preparation": {
+          "status": "ready",
+          "stage": "mount",
+          "elapsedMs": 529,
+          "durationsMs": {
+            "preparation": 0,
+            "prefetch": 0,
+            "retirement": 0,
+            "adapter": 0,
+            "source": 326,
+            "payload": 0,
+            "verification": 0,
+            "scene-import": 0,
+            "artwork": 0,
+            "renderer": 0,
+            "mount": 203
+          },
+          "candidates": []
+        },
+        "code": null,
+        "message": null,
+        "stack": null
+      },
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Two return lanes",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "sim",
+      "caption": "Дві петлі патрулів проходять обабіч перегородки. Обігніть її кінець або підніміться над нею перед поверненням."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "sim"
+    }
+  ],
+  "samples": [],
+  "errors": [],
+  "complete": false,
+  "preview": {
+    "url": "http://127.0.0.1:18773/",
+    "mode": "generated-build",
+    "headers": "generated _headers (verified)",
+    "cache": "revalidate",
+    "fixtureAccess": true,
+    "emittedPreview": {
+      "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demos-emitted-403814d-9dcff0588-native-refresh",
+      "manifestSHA256": "7f47ad2efa3b7891f142db0c984f46cfd67be41defc4da6516c36fa78b35f4a3",
+      "inventorySHA256": "20e51e1ae9bfd6b9916b86978e0a3b212c40724d81612b376a38ccd944621279",
+      "files": 6229,
+      "sourceRevision": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+      "sourceFingerprint": {
+        "sha256": "cbf35154113e1cfe644270c1c7371de2befc6419f2731b62cb3abb927b9ddec9",
+        "files": 10273,
+        "bytes": 410435495
+      },
+      "buildInputFingerprint": {
+        "sha256": "19b7f0081a6b62294ad61158594156a9f3f98b25806a09b42aaf5032999a96f9",
+        "files": 9411,
+        "bytes": 348449477
+      },
+      "sourceVerified": true,
+      "sourceVerification": {
+        "head": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+        "runtime": {
+          "sha256": "cbf35154113e1cfe644270c1c7371de2befc6419f2731b62cb3abb927b9ddec9",
+          "files": 10273,
+          "bytes": 410435495
+        },
+        "buildInput": {
+          "sha256": "19b7f0081a6b62294ad61158594156a9f3f98b25806a09b42aaf5032999a96f9",
+          "files": 9411,
+          "bytes": 348449477
+        }
+      }
+    },
+    "fixtureResponses": [
+      {
+        "path": "game/index.html",
+        "original": {
+          "bytes": 148811,
+          "sha256": "5612b0450f58e1f3d19f60d2d3509737424f5f837d40e55aebdaa7f72206efa9"
+        },
+        "served": {
+          "bytes": 148785,
+          "sha256": "282789ae93daeb36060ca7de9b294caae44a796e49f53302369c23127e05ef85"
+        },
+        "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+      }
+    ]
+  },
+  "limitations": [
+    "The preview serves the verified emitted inventory, with only the declared local HTML access-credential exception. This run does not establish offline HTML integrity. No document routing or service-worker blocking is installed for this preview."
+  ],
+  "failure": "locator.click: Target page, context or browser has been closed\nCall log:\n\u001b[2m  - waiting for locator('#demo-next')\u001b[22m\n\u001b[2m    - locator resolved to <button type=\"button\" id=\"demo-next\" aria-label=\"Next level\" class=\"button secondary\" data-i18n=\"demo:nextShort\">Next level</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\n    at /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-shared-demo-browser.mjs:214:61",
+  "secondaryDiagnostics": [
+    {
+      "stage": "failure-state",
+      "error": "locator.evaluate: Target page, context or browser has been closed\n    at snapshot (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-shared-demo-browser.mjs:52:32)\n    at async bounded (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:18:12)\n    at async diagnoseQualificationFailure (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:76:29)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-shared-demo-browser.mjs:398:3"
+    },
+    {
+      "stage": "failure-body-text",
+      "error": "locator.innerText: Target page, context or browser has been closed\n    at /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:83:48\n    at async bounded (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:18:12)\n    at async diagnoseQualificationFailure (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:83:7)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-shared-demo-browser.mjs:398:3"
+    },
+    {
+      "stage": "failure-screenshot",
+      "error": "page.screenshot: Target page, context or browser has been closed\n    at /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:89:30\n    at async bounded (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:18:12)\n    at async diagnoseQualificationFailure (/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/shared-demo-browser-report.mjs:89:5)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/scripts/qualify-shared-demo-browser.mjs:398:3"
+    }
+  ],
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-19T11:10:12.749Z",
+  "previewClosed": true
+}

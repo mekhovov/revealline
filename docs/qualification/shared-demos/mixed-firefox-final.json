@@ -1,0 +1,394 @@
+{
+  "engine": "firefox",
+  "requestedDurationSeconds": 0,
+  "started": "2026-10-18T04:37:26.180Z",
+  "checks": [
+    {
+      "type": "native-playback",
+      "mode": "snake",
+      "source": "snake:classic-snake-open-loop:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "8",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Open Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "snake",
+      "caption": "Порожнє поле: рухайтеся широкими петлями, ловіть єдину ціль і стежте за зростанням хвоста."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "snake"
+    },
+    {
+      "type": "native-playback",
+      "mode": "survival",
+      "source": "survival:freight-depot-dispatch-junction:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "80",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Dispatch Junction",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {
+          "allocatedSprites": 26
+        }
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "survival",
+      "caption": "Виживіть у вильоті, збирайте ресурси та обирайте поліпшення, щоб знищити фінальну ціль."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "survival"
+    },
+    {
+      "type": "native-playback",
+      "mode": "sim",
+      "source": "sim:adventure-rooftops-04-self-level-5ed1fecffb664a97",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "78",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Roof-to-roof landings",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {
+          "geometries": 96,
+          "materials": 135,
+          "textures": 26,
+          "gpuGeometries": 82,
+          "gpuTextures": 19,
+          "gpuPrograms": 12,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "sim",
+      "caption": "Сядьте на низькому західному, середньому східному й високому західному дахах. Заходьте згори."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "sim"
+    },
+    {
+      "type": "native-playback",
+      "mode": "solo",
+      "source": "solo-qualified-fabdfb2541546426",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "176",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Keep the network",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "solo",
+      "caption": "Дивись справжній маршрут: залиш безпечну територію, поверни й замкни лінію, щоб захопити ділянку."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "solo"
+    },
+    {
+      "type": "pause",
+      "mode": "solo"
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 0,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:chalk-quarry-haul-switchbacks:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "14",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Haul Switchbacks",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 1,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-expedition-crosswind-gates:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "0",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Crosswind Gates",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 2,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:beginner-04-self-level-bbce5a92237477b8",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "10",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Turn the nose: yaw",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 3,
+      "workers": 0,
+      "mode": "solo",
+      "source": "hidden-frequency-search",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "69",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Hidden Frequency",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 4,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:river-port-pump-apron:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "9",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Pump Apron",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 5,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-expedition-tail-workshop:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "1",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Tail Workshop",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 6,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:adventure-rooftops-04-acro-5ed1fecffb664a97",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "13",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Roof-to-roof landings",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {
+          "geometries": 96,
+          "materials": 135,
+          "textures": 26,
+          "gpuGeometries": 0,
+          "gpuTextures": 1,
+          "gpuPrograms": 9,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 7,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-3037b64d2bd5cd52",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "34",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Home signal",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 8,
+      "workers": 0,
+      "mode": "sim",
+      "source": "sim:adventure-orchard-02-acro-1c45351e324ce4f8",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "12",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "SIM · Between the rows",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {
+          "geometries": 153,
+          "materials": 209,
+          "textures": 32,
+          "gpuGeometries": 0,
+          "gpuTextures": 1,
+          "gpuPrograms": 9,
+          "contextLost": false
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 9,
+      "workers": 0,
+      "mode": "solo",
+      "source": "solo-qualified-cd19eddd5888061f",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "45",
+      "canvases": 2,
+      "nativeSurfaces": 0,
+      "title": "Solo · Crossbar depot",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 10,
+      "workers": 0,
+      "mode": "survival",
+      "source": "survival:orchard-strongpoint-harvest-clearing:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "10",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "FPV Survival · Harvest Clearing",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {
+          "allocatedSprites": 2
+        }
+      }
+    },
+    {
+      "type": "scene-retirement",
+      "cycle": 11,
+      "workers": 0,
+      "mode": "snake",
+      "source": "snake:classic-pursuit-clockwork-ring:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "1",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Clockwork Ring",
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "narrow-controls"
+    },
+    {
+      "type": "return-and-persistence",
+      "workers": 0,
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 27,
+        "renderer": {}
+      }
+    }
+  ],
+  "samples": [],
+  "errors": [],
+  "complete": true,
+  "enduranceStarted": "2026-10-18T04:38:49.079Z",
+  "enduranceFinished": "2026-10-18T04:38:49.080Z",
+  "finished": "2026-10-18T04:38:50.163Z"
+}

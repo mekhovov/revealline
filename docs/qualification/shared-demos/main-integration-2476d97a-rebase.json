@@ -1,0 +1,286 @@
+{
+  "started": "2026-10-19T03:07:34.175236+00:00",
+  "oldHead": "546d0d8445fa666ee52c0ee398f511e4644f4c02",
+  "oldBase": "c4c5fc3c8fbdd17ce496005993e58ad45710823c",
+  "newBase": "2476d97a90381cc6cd5af6d1c911337d529dc0ca",
+  "sparseWorktree": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/main-integration-sparse-2476d97a",
+  "backupBranch": "codex/shared-demos-before-2476d97a",
+  "complete": true,
+  "initialRebaseExitCode": 1,
+  "rebasedHead": "c9101428f186ffea75f237e1bb0a33281db0dbbd",
+  "commitCount": 34,
+  "commitMapping": [
+    {
+      "old": "4a397e1398c351fd70ae9114ac25a0bf6bc25f10",
+      "rebased": "79e4652fb2f57834ee35e24f3b9de44e639e516f"
+    },
+    {
+      "old": "5e5e29160e3044566a9303f4fd075ae48a150cd7",
+      "rebased": "86f42c5610c8e9e5cf935ffdfe9d09eddbc33f1c"
+    },
+    {
+      "old": "3ede7848a0b45b8bd2c0add228dc1c1a8cdd5c3b",
+      "rebased": "6ea8f8b3103ca4171cca8c1718c82f6877e3283c"
+    },
+    {
+      "old": "20c2a66d612aabad1ef6db7beff95d761f66f880",
+      "rebased": "395dd12ea96d66a0247af05600489e7bdc7a6328"
+    },
+    {
+      "old": "506250c2e892da4e6690f6e3189f13d405f35db6",
+      "rebased": "67d931b0c3f24aab7720b366d3a247d21f525776"
+    },
+    {
+      "old": "e60028357a81ed637eb34b15bfc19eea7d427269",
+      "rebased": "78b6bbd959bb8f4869717c3ef06b22ff0e4878a9"
+    },
+    {
+      "old": "03e770105e2c5af722ebbbb28152eb67593412e5",
+      "rebased": "0fc088246b91b872334f1a26a2ea88738027f653"
+    },
+    {
+      "old": "4bae334b2ecb8ead403ea68711150abe09d2eb06",
+      "rebased": "4fd086aef143004c17fcc9a177dea42497a550fc"
+    },
+    {
+      "old": "d4ce9b4d29ef387343999e44b8fe86c7ad78f1f2",
+      "rebased": "dec9fcbd8db906afb80d28eff6fd2f7cf1fedc8b"
+    },
+    {
+      "old": "56ae5e98fb727ad0a683b03831e81ebd39d87568",
+      "rebased": "f4f7bf1e475eb08c9058b197f195533579eff773"
+    },
+    {
+      "old": "301b9660115de0d79c7c3db9e1f626b9322613a5",
+      "rebased": "cf293964ca74365e40107094384c1ea86e6b3aac"
+    },
+    {
+      "old": "db27128a2a6420ed85ee841273f5e04a6ada2dcf",
+      "rebased": "bc05b3f289a081400b4bf6c48484b4506e5fa191"
+    },
+    {
+      "old": "a5d2ddea956760b1d96ac9e786a4db46cbf3bfd1",
+      "rebased": "0545f2bb4206cf8f24c5ca66b652c023fd4466b4"
+    },
+    {
+      "old": "720140945d0379142d45d19fe46ba83555d2322b",
+      "rebased": "9ce18ae9b41f31828c1435c0944891305bf3b537"
+    },
+    {
+      "old": "2fc9c4f83f0694eea2051453ed998be5a3e3f43d",
+      "rebased": "3f45e343b98c76975ee81b3be87813c3af484c07"
+    },
+    {
+      "old": "829a5f1a2dd88a0bb5391b2c43ec7bc8ed084b03",
+      "rebased": "b5648a766ccb01640e8c3cf41258a8dff244af83"
+    },
+    {
+      "old": "92d6ce5fd37cd116356718d5f311d15c09f3626f",
+      "rebased": "ca8466741c8a311f3209acd145f370cdac0fe82d"
+    },
+    {
+      "old": "3bcea47ecc827ceccd86884396290a406f40eec4",
+      "rebased": "6312288506a657ea01901b15f6e0b30983631c14"
+    },
+    {
+      "old": "ba7df329a6f180d85ba276e91d0f4ea2201ee26b",
+      "rebased": "d466f00480b0c7800e64236ae0c3d3ecd753ea6a"
+    },
+    {
+      "old": "d63376217439baa5bcf42cc41d9407dd6b886014",
+      "rebased": "9e1a8d24d10af6f943b1ef576de2912524aafa42"
+    },
+    {
+      "old": "d719c0f18fda48dc0af93d288c0decb6ef3df7cd",
+      "rebased": "62da0775904b8076fdc70463fa6eb1b70d6bd721"
+    },
+    {
+      "old": "f4a6eb74389baf3ffc51492974fe824467254955",
+      "rebased": "74056db7d0fbaae6216528c28221cb264722f323"
+    },
+    {
+      "old": "be88e7868f83ecf63701f946a28d59be6113716a",
+      "rebased": "4e1ed3d5d8f58b19b5d1faaf31b52dfe53f49d0c"
+    },
+    {
+      "old": "ad1a68a9cb59346dec1c6ae694ed32d563f0966a",
+      "rebased": "f7c937023e80eec139cff59480c490497307336a"
+    },
+    {
+      "old": "b77abd2991da640e229b69f7d0eaffc669ec93a3",
+      "rebased": "e75f2a2064e9df49c719f75aa1a17e61413dcee2"
+    },
+    {
+      "old": "5718046e8d89a01a50ade9339bf48b2fa8f2a6e8",
+      "rebased": "9b5dd03f6b032c65616a2b1eea01cdc60cc3d408"
+    },
+    {
+      "old": "8590fc5af64db459c0045e81604f0a32c30882da",
+      "rebased": "43d7dbd72fc60a42888a32e472f42545a6daef08"
+    },
+    {
+      "old": "62bb9b4496b3712822a66e67caf47f7c3c931637",
+      "rebased": "08f3119c7bdc72ccab626e30ced0201999983316"
+    },
+    {
+      "old": "312e27de40a9b0a0772ac394319c6356475bf1a5",
+      "rebased": "4e634da2c9d5ae0f2884de530ca96ce908913201"
+    },
+    {
+      "old": "b39ae89d23f2262fb87c0e378fa929f261af0c99",
+      "rebased": "af06a573f3132da2a4a9c53a02ff42b72be2ce3e"
+    },
+    {
+      "old": "b91161279755c06ede69bac1d90e5f7f3b705746",
+      "rebased": "4a18d424b16eb4ef35cbebedfffcac014e42840a"
+    },
+    {
+      "old": "f4c86112ceca20b2e720590bd217d77f3b05ce65",
+      "rebased": "cca90b70ebb8bdaaad6ca84811ced74893030da8"
+    },
+    {
+      "old": "575c10a31287b7ae086bcf373ef4ab3ecbf613a3",
+      "rebased": "6b8195f979e3226add9f4b1460d98eef4fbdad93"
+    },
+    {
+      "old": "546d0d8445fa666ee52c0ee398f511e4644f4c02",
+      "rebased": "c9101428f186ffea75f237e1bb0a33281db0dbbd"
+    }
+  ],
+  "authorsMessagesOrderPreserved": true,
+  "exactIncomingDeltaPaths": [
+    "docs/accessibility/critical-cues-2026-10-18.json",
+    "docs/accessibility/critical-cues-2026-10-18.md",
+    "docs/fpv-aircraft-mission-adapter-qualification.json",
+    "docs/fpv-aircraft-presets.md",
+    "docs/performance/solo-performance-followup-plan.md",
+    "docs/time-attack-medal-goals.md",
+    "game/app.mjs",
+    "game/content-design/team-entry.mjs",
+    "game/content-design/team-timed-entry.mjs",
+    "game/couch/couch.mjs",
+    "game/couch/relay-rescue.html",
+    "game/couch/relay-rescue.mjs",
+    "game/i18n/catalogs.mjs",
+    "game/locales/en/interface.json",
+    "game/locales/uk/interface.json",
+    "game/overflight/app.mjs",
+    "game/overflight/copy.mjs",
+    "game/overflight/play.html",
+    "game/overflight/raid-variants.mjs",
+    "game/overflight/raid.html",
+    "game/overflight/style.css",
+    "game/snake/classic-app.mjs",
+    "game/snake/classic-copy.mjs",
+    "game/test/capture-navigation-context-host.test.mjs",
+    "game/test/classic-snake-ui.test.mjs",
+    "game/test/duel-navigation-context-host.test.mjs",
+    "game/test/fixtures/fpv-aircraft-mission-v1.json",
+    "game/test/fixtures/fpv-nazgul-revision1.json",
+    "game/test/fpv-aircraft-mission-adapter.test.mjs",
+    "game/test/fpv-aircraft-presets.test.mjs",
+    "game/test/fpv-flight-ui.test.mjs",
+    "game/test/fpv-nazgul-diameter.test.mjs",
+    "game/test/fpv-tuning-ui.test.mjs",
+    "game/test/fpv-world-appearance-ui.test.mjs",
+    "game/test/mode-play-shell.test.mjs",
+    "game/test/native-landing-structure.test.mjs",
+    "game/test/overflight-reroll-disclosure.test.mjs",
+    "game/test/overflight-time-attack-medal-goal.test.mjs",
+    "game/test/reading-prompts-host.test.mjs",
+    "game/test/team-navigation-context-host.test.mjs",
+    "game/ui/mode-play-shell.mjs",
+    "game/ui/native-menus.mjs",
+    "optional-practice/civilian-fpv/aircraft-challenge.mjs",
+    "optional-practice/civilian-fpv/aircraft-course-session.mjs",
+    "optional-practice/civilian-fpv/aircraft-presets.mjs",
+    "optional-practice/civilian-fpv/app.mjs",
+    "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+    "optional-practice/civilian-fpv/tuning-ui.mjs",
+    "optional-practice/civilian-fpv/world-app.mjs"
+  ],
+  "nonoverlapMatchesMain": true,
+  "exactNativeObjects": [
+    {
+      "path": "game/demo-data",
+      "gitObject": "fe4780393e107e63ee14d122ce1d59024b8ae731"
+    },
+    {
+      "path": "game/demo-modes",
+      "gitObject": "4e192209366eeb31de526b38ea9a7dc3790008a0"
+    },
+    {
+      "path": "game/content",
+      "gitObject": "c28ca8de5c51fd99a1e52d5df095a1aaa7e37764"
+    },
+    {
+      "path": "game/content-design/assets",
+      "gitObject": "9c07add5dde5d583507a82c9c5e3cdbd24e3b183"
+    },
+    {
+      "path": "game/core",
+      "gitObject": "e8d1c3f8281c1a07664e8a1e10e65f29cfa4cc4d"
+    },
+    {
+      "path": "game/replay.mjs",
+      "gitObject": "fa473c568bec333395636541cc82fe3dd8b597f6"
+    },
+    {
+      "path": "game/snake/classic-core.mjs",
+      "gitObject": "25fe9a65b7faa4c8b7819fbcebffab80b7bab6a5"
+    },
+    {
+      "path": "game/snake/classic-match.mjs",
+      "gitObject": "cd47d4660228b5e8968d6aef3d3d7700b48d432c"
+    },
+    {
+      "path": "game/overflight/core.mjs",
+      "gitObject": "49ba6f546fa756fb41aa5f853e511c9b70efa7d6"
+    },
+    {
+      "path": "game/overflight/host-loop.mjs",
+      "gitObject": "c87f15cdc632a1bfd7592e8075974558d776fb88"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demo-data",
+      "gitObject": "886ca4fe9dbbcb1840017626fd9a85cadaa8ec86"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/aircraft-physics.mjs",
+      "gitObject": "e9ee1383ebe909ce7993da499f07b33d486c9605"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/advanced-simulation.mjs",
+      "gitObject": "fa254c168037003881a41f881f270465a09d8f05"
+    },
+    {
+      "path": "authoring/fpv-worlds/demonstrations/shared-demos-generated",
+      "gitObject": "dbb69ca9fb1a3f39b9760b175ac77085b6a46179"
+    }
+  ],
+  "contentDesignChanges": [
+    "game/content-design/team-entry.mjs",
+    "game/content-design/team-timed-entry.mjs"
+  ],
+  "resolutions": [
+    {
+      "commit": "4a397e1398c351fd70ae9114ac25a0bf6bc25f10",
+      "path": "game/i18n/catalogs.mjs",
+      "method": "official catalogBundle/readCatalogs on merged sparse locale files"
+    },
+    {
+      "commit": "4a397e1398c351fd70ae9114ac25a0bf6bc25f10",
+      "path": "optional-practice/civilian-fpv/flight-fullscreen.mjs",
+      "method": "hash exact merged canonical sources using official generator formula; full refresh required after adoption",
+      "canonicalSHA256": "52f82ac3ecb4b3ec43d1877c7907b7384f1f7741f6ed9012a7f7e7d1a31d76ff"
+    },
+    {
+      "commit": "a5d2ddea956760b1d96ac9e786a4db46cbf3bfd1",
+      "path": "game/i18n/catalogs.mjs",
+      "method": "official catalogBundle/readCatalogs on merged sparse locale files"
+    }
+  ],
+  "verificationCompleted": "2026-10-19T03:10:02.775423+00:00",
+  "adopted": true,
+  "sparseWorktreeRemoved": true
+}

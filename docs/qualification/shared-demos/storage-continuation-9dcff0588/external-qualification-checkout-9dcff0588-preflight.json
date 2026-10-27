@@ -1,0 +1,30 @@
+{
+  "format": "SharedDemoExternalCheckoutPreflightV1",
+  "complete": true,
+  "head": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "source": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos",
+  "target": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/qualification-checkout-9dcff0588-20261019T105752Z-60631b88",
+  "externalParent": {
+    "path": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412",
+    "device": 905969668,
+    "inode": 37530202,
+    "uid": 502,
+    "freeBytes": 42598400000
+  },
+  "trackedEntries": 49346,
+  "uniqueBlobObjects": 40147,
+  "uniqueBlobBytes": 3233183896,
+  "treeListingSHA256": "29ee65d2f796001f589dd1fc17c52bffee166c8ec189b7b550e2a827aa539263",
+  "missingBlobObjects": [],
+  "missingBlobPaths": [],
+  "nonBlobEntries": [],
+  "symlinks": [],
+  "elapsedSeconds": 0.8992337080017023,
+  "noFetchOrCheckoutYet": true,
+  "environmentGuards": {
+    "GIT_NO_LAZY_FETCH": "1",
+    "maintenance.auto": false,
+    "gc.auto": 0,
+    "hooks": "/dev/null"
+  }
+}

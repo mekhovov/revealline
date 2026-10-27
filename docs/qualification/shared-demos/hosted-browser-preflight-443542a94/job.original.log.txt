@@ -1,0 +1,558 @@
+﻿2026-10-19T11:54:05.9312087Z Current runner version: '2.337.0'
+2026-10-19T11:54:05.9334810Z ##[group]Runner Image Provisioner
+2026-10-19T11:54:05.9335547Z Hosted Compute Agent
+2026-10-19T11:54:05.9336099Z Version: 20261012.601
+2026-10-19T11:54:05.9336668Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+2026-10-19T11:54:05.9337304Z Build Date: 2026-10-12T17:48:21Z
+2026-10-19T11:54:05.9337893Z Worker ID: {0b5d8b11-8c8c-43a4-b697-e07745452483}
+2026-10-19T11:54:05.9338479Z Region: westus3
+2026-10-19T11:54:05.9338963Z Cloud: Azure
+2026-10-19T11:54:05.9339458Z ##[endgroup]
+2026-10-19T11:54:05.9340526Z ##[group]Operating System
+2026-10-19T11:54:05.9341014Z Ubuntu
+2026-10-19T11:54:05.9341524Z 24.04.5
+2026-10-19T11:54:05.9341977Z LTS
+2026-10-19T11:54:05.9342435Z ##[endgroup]
+2026-10-19T11:54:05.9342949Z ##[group]Runner Image
+2026-10-19T11:54:05.9343673Z Image: ubuntu-24.04
+2026-10-19T11:54:05.9344206Z Version: 20261012.334.1
+2026-10-19T11:54:05.9345267Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-19T11:54:05.9346539Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-19T11:54:05.9347286Z ##[endgroup]
+2026-10-19T11:54:05.9348233Z ##[group]GITHUB_TOKEN Permissions
+2026-10-19T11:54:05.9349892Z Contents: read
+2026-10-19T11:54:05.9350469Z Metadata: read
+2026-10-19T11:54:05.9350932Z ##[endgroup]
+2026-10-19T11:54:05.9352732Z Secret source: Actions
+2026-10-19T11:54:05.9353719Z Cache mode: write
+2026-10-19T11:54:05.9354357Z Prepare workflow directory
+2026-10-19T11:54:05.9817180Z Prepare all required actions
+2026-10-19T11:54:05.9858104Z Getting action download info
+2026-10-19T11:54:06.3031662Z Download action repository 'actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+2026-10-19T11:54:06.4020222Z Download action repository 'actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444' (SHA:a0853c24544627f65ddf259abe73b1d18a591444)
+2026-10-19T11:54:06.5147601Z Download action repository 'actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f' (SHA:b7c566a772e6b6bfb58ed0dc250532a479d7789f)
+2026-10-19T11:54:06.7131247Z Complete job name: emitted-browser-qualification
+2026-10-19T11:54:06.7803352Z ##[group]Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+2026-10-19T11:54:06.7804394Z with:
+2026-10-19T11:54:06.7804766Z   ref: 443542a94d424187b9397c09773ab9d8eb6df6bd
+2026-10-19T11:54:06.7805231Z   persist-credentials: false
+2026-10-19T11:54:06.7805617Z   fetch-depth: 1
+2026-10-19T11:54:06.7805975Z   repository: mekhovov/revealline
+2026-10-19T11:54:06.7809026Z   token: ***
+2026-10-19T11:54:06.7809378Z   ssh-strict: true
+2026-10-19T11:54:06.7809734Z   ssh-user: git
+2026-10-19T11:54:06.7810060Z   clean: true
+2026-10-19T11:54:06.7810405Z   sparse-checkout-cone-mode: true
+2026-10-19T11:54:06.7810813Z   fetch-tags: false
+2026-10-19T11:54:06.7811154Z   show-progress: true
+2026-10-19T11:54:06.7811499Z   lfs: false
+2026-10-19T11:54:06.7811815Z   submodules: false
+2026-10-19T11:54:06.7812191Z   set-safe-directory: true
+2026-10-19T11:54:06.7812583Z   allow-unsafe-pr-checkout: false
+2026-10-19T11:54:06.7813239Z env:
+2026-10-19T11:54:06.7813653Z   DEMO_HEAD: 443542a94d424187b9397c09773ab9d8eb6df6bd
+2026-10-19T11:54:06.7814121Z   GIT_NO_LAZY_FETCH: 1
+2026-10-19T11:54:06.7814490Z   NODE_DISABLE_COMPILE_CACHE: 1
+2026-10-19T11:54:06.7814891Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-19T11:54:06.7815271Z ##[endgroup]
+2026-10-19T11:54:06.8648174Z Syncing repository: mekhovov/revealline
+2026-10-19T11:54:06.8650291Z ##[group]Getting Git version info
+2026-10-19T11:54:06.8651149Z Working directory is '/home/runner/work/revealline/revealline'
+2026-10-19T11:54:06.8652372Z [command]/usr/bin/git version
+2026-10-19T11:54:06.8687606Z git version 2.55.0
+2026-10-19T11:54:06.8704594Z ##[endgroup]
+2026-10-19T11:54:06.8717239Z Temporarily overriding HOME='/home/runner/work/_temp/38489368-66af-46bf-9abc-3e928d312542' before making global git config changes
+2026-10-19T11:54:06.8719093Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-19T11:54:06.8722481Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/revealline/revealline
+2026-10-19T11:54:06.8770727Z Deleting the contents of '/home/runner/work/revealline/revealline'
+2026-10-19T11:54:06.8774077Z ##[group]Initializing the repository
+2026-10-19T11:54:06.8778553Z [command]/usr/bin/git init /home/runner/work/revealline/revealline
+2026-10-19T11:54:06.8871287Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-19T11:54:06.8872732Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-19T11:54:06.8874246Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-19T11:54:06.8875250Z hint: call:
+2026-10-19T11:54:06.8875931Z hint:
+2026-10-19T11:54:06.8876575Z hint: 	git config --global init.defaultBranch <name>
+2026-10-19T11:54:06.8877196Z hint:
+2026-10-19T11:54:06.8877654Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-19T11:54:06.8878427Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-19T11:54:06.8878999Z hint:
+2026-10-19T11:54:06.8879350Z hint: 	git branch -m <name>
+2026-10-19T11:54:06.8879726Z hint:
+2026-10-19T11:54:06.8880212Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-19T11:54:06.8881185Z Initialized empty Git repository in /home/runner/work/revealline/revealline/.git/
+2026-10-19T11:54:06.8883787Z [command]/usr/bin/git remote add origin https://github.com/mekhovov/revealline
+2026-10-19T11:54:06.8929345Z ##[endgroup]
+2026-10-19T11:54:06.8930159Z ##[group]Disabling automatic garbage collection
+2026-10-19T11:54:06.8932573Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-19T11:54:06.8962295Z ##[endgroup]
+2026-10-19T11:54:06.8962879Z ##[group]Setting up auth
+2026-10-19T11:54:06.8970151Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-19T11:54:06.9001990Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-19T11:54:06.9320274Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-19T11:54:06.9353063Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-19T11:54:06.9561453Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-19T11:54:06.9594961Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-19T11:54:06.9868436Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-19T11:54:06.9876839Z ##[endgroup]
+2026-10-19T11:54:06.9877966Z ##[group]Fetching the repository
+2026-10-19T11:54:06.9879714Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin 443542a94d424187b9397c09773ab9d8eb6df6bd
+2026-10-19T11:54:50.2297176Z From https://github.com/mekhovov/revealline
+2026-10-19T11:54:50.2298457Z  * branch              443542a94d424187b9397c09773ab9d8eb6df6bd -> FETCH_HEAD
+2026-10-19T11:54:50.2302868Z ##[endgroup]
+2026-10-19T11:54:50.2303599Z ##[group]Determining the checkout info
+2026-10-19T11:54:50.2304104Z ##[endgroup]
+2026-10-19T11:54:50.2305536Z [command]/usr/bin/git sparse-checkout disable
+2026-10-19T11:54:50.2358765Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-19T11:54:50.2388470Z ##[group]Checking out the ref
+2026-10-19T11:54:50.2391702Z [command]/usr/bin/git checkout --progress --force 443542a94d424187b9397c09773ab9d8eb6df6bd
+2026-10-19T11:54:51.6783381Z Updating files:  19% (9867/49544)
+2026-10-19T11:54:51.7167666Z Updating files:  20% (9909/49544)
+2026-10-19T11:54:51.7545195Z Updating files:  21% (10405/49544)
+2026-10-19T11:54:51.7941490Z Updating files:  22% (10900/49544)
+2026-10-19T11:54:51.8318666Z Updating files:  23% (11396/49544)
+2026-10-19T11:54:51.8700597Z Updating files:  24% (11891/49544)
+2026-10-19T11:54:51.9078298Z Updating files:  25% (12386/49544)
+2026-10-19T11:54:51.9478090Z Updating files:  26% (12882/49544)
+2026-10-19T11:54:51.9941239Z Updating files:  27% (13377/49544)
+2026-10-19T11:54:52.0313297Z Updating files:  28% (13873/49544)
+2026-10-19T11:54:52.1220976Z Updating files:  29% (14368/49544)
+2026-10-19T11:54:52.4121534Z Updating files:  30% (14864/49544)
+2026-10-19T11:54:52.6759105Z Updating files:  31% (15359/49544)
+2026-10-19T11:54:52.8343482Z Updating files:  31% (15704/49544)
+2026-10-19T11:54:53.0876951Z Updating files:  32% (15855/49544)
+2026-10-19T11:54:53.2539902Z Updating files:  33% (16350/49544)
+2026-10-19T11:54:53.3985902Z Updating files:  34% (16845/49544)
+2026-10-19T11:54:53.5058829Z Updating files:  35% (17341/49544)
+2026-10-19T11:54:53.5628698Z Updating files:  36% (17836/49544)
+2026-10-19T11:54:53.6780913Z Updating files:  37% (18332/49544)
+2026-10-19T11:54:53.6874516Z Updating files:  37% (18785/49544)
+2026-10-19T11:54:53.7248452Z Updating files:  38% (18827/49544)
+2026-10-19T11:54:53.7679042Z Updating files:  39% (19323/49544)
+2026-10-19T11:54:53.8052054Z Updating files:  40% (19818/49544)
+2026-10-19T11:54:54.0217934Z Updating files:  41% (20314/49544)
+2026-10-19T11:54:54.1796969Z Updating files:  42% (20809/49544)
+2026-10-19T11:54:54.3001056Z Updating files:  43% (21304/49544)
+2026-10-19T11:54:54.4071323Z Updating files:  44% (21800/49544)
+2026-10-19T11:54:54.4731844Z Updating files:  45% (22295/49544)
+2026-10-19T11:54:54.6314032Z Updating files:  46% (22791/49544)
+2026-10-19T11:54:54.7274768Z Updating files:  47% (23286/49544)
+2026-10-19T11:54:54.7760741Z Updating files:  47% (23385/49544)
+2026-10-19T11:54:54.8668325Z Updating files:  48% (23782/49544)
+2026-10-19T11:54:54.9174674Z Updating files:  49% (24277/49544)
+2026-10-19T11:54:54.9659160Z Updating files:  50% (24772/49544)
+2026-10-19T11:54:55.0098261Z Updating files:  51% (25268/49544)
+2026-10-19T11:54:55.1029691Z Updating files:  52% (25763/49544)
+2026-10-19T11:54:55.1378506Z Updating files:  53% (26259/49544)
+2026-10-19T11:54:55.1768288Z Updating files:  54% (26754/49544)
+2026-10-19T11:54:55.2302684Z Updating files:  55% (27250/49544)
+2026-10-19T11:54:55.2819913Z Updating files:  56% (27745/49544)
+2026-10-19T11:54:55.3185067Z Updating files:  57% (28241/49544)
+2026-10-19T11:54:55.3478022Z Updating files:  58% (28736/49544)
+2026-10-19T11:54:55.4044034Z Updating files:  59% (29231/49544)
+2026-10-19T11:54:55.5046766Z Updating files:  60% (29727/49544)
+2026-10-19T11:54:55.5944690Z Updating files:  61% (30222/49544)
+2026-10-19T11:54:55.6375371Z Updating files:  62% (30718/49544)
+2026-10-19T11:54:55.6749409Z Updating files:  63% (31213/49544)
+2026-10-19T11:54:55.7180617Z Updating files:  63% (31476/49544)
+2026-10-19T11:54:55.7677348Z Updating files:  64% (31709/49544)
+2026-10-19T11:54:55.8685812Z Updating files:  65% (32204/49544)
+2026-10-19T11:54:56.1916422Z Updating files:  66% (32700/49544)
+2026-10-19T11:54:56.7081162Z Updating files:  67% (33195/49544)
+2026-10-19T11:54:56.7609805Z Updating files:  67% (33353/49544)
+2026-10-19T11:54:56.7848605Z Updating files:  68% (33690/49544)
+2026-10-19T11:54:56.8061679Z Updating files:  69% (34186/49544)
+2026-10-19T11:54:56.8268422Z Updating files:  70% (34681/49544)
+2026-10-19T11:54:56.8466204Z Updating files:  71% (35177/49544)
+2026-10-19T11:54:57.3164279Z Updating files:  72% (35672/49544)
+2026-10-19T11:54:57.6468148Z Updating files:  73% (36168/49544)
+2026-10-19T11:54:57.6750787Z Updating files:  74% (36663/49544)
+2026-10-19T11:54:57.8019501Z Updating files:  74% (36767/49544)
+2026-10-19T11:54:57.8340272Z Updating files:  75% (37158/49544)
+2026-10-19T11:54:57.9563483Z Updating files:  76% (37654/49544)
+2026-10-19T11:54:57.9860038Z Updating files:  77% (38149/49544)
+2026-10-19T11:54:58.0153708Z Updating files:  78% (38645/49544)
+2026-10-19T11:54:58.1733667Z Updating files:  79% (39140/49544)
+2026-10-19T11:54:58.2233029Z Updating files:  80% (39636/49544)
+2026-10-19T11:54:58.3486827Z Updating files:  81% (40131/49544)
+2026-10-19T11:54:58.4622589Z Updating files:  82% (40627/49544)
+2026-10-19T11:54:58.6228527Z Updating files:  83% (41122/49544)
+2026-10-19T11:54:58.6749165Z Updating files:  84% (41617/49544)
+2026-10-19T11:54:58.7189484Z Updating files:  84% (41822/49544)
+2026-10-19T11:54:58.8013416Z Updating files:  85% (42113/49544)
+2026-10-19T11:54:58.9784953Z Updating files:  86% (42608/49544)
+2026-10-19T11:54:59.0648640Z Updating files:  87% (43104/49544)
+2026-10-19T11:54:59.1643006Z Updating files:  88% (43599/49544)
+2026-10-19T11:54:59.3376928Z Updating files:  89% (44095/49544)
+2026-10-19T11:54:59.4134010Z Updating files:  90% (44590/49544)
+2026-10-19T11:54:59.5786764Z Updating files:  91% (45086/49544)
+2026-10-19T11:54:59.6758144Z Updating files:  92% (45581/49544)
+2026-10-19T11:54:59.7319122Z Updating files:  92% (45940/49544)
+2026-10-19T11:54:59.9337076Z Updating files:  93% (46076/49544)
+2026-10-19T11:55:00.0474523Z Updating files:  94% (46572/49544)
+2026-10-19T11:55:00.2373739Z Updating files:  95% (47067/49544)
+2026-10-19T11:55:00.3436287Z Updating files:  96% (47563/49544)
+2026-10-19T11:55:00.5446315Z Updating files:  97% (48058/49544)
+2026-10-19T11:55:00.5776251Z Updating files:  98% (48554/49544)
+2026-10-19T11:55:00.6110296Z Updating files:  99% (49049/49544)
+2026-10-19T11:55:00.6110669Z Updating files: 100% (49544/49544)
+2026-10-19T11:55:00.6110895Z Updating files: 100% (49544/49544), done.
+2026-10-19T11:55:00.7464225Z Note: switching to '443542a94d424187b9397c09773ab9d8eb6df6bd'.
+2026-10-19T11:55:00.7464834Z 
+2026-10-19T11:55:00.7465075Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-19T11:55:00.7465459Z changes and commit them, and you can discard any commits you make in this
+2026-10-19T11:55:00.7465835Z state without impacting any branches by switching back to a branch.
+2026-10-19T11:55:00.7466086Z 
+2026-10-19T11:55:00.7466230Z If you want to create a new branch to retain commits you create, you may
+2026-10-19T11:55:00.7466870Z do so (now or later) by using -c with the switch command. Example:
+2026-10-19T11:55:00.7467074Z 
+2026-10-19T11:55:00.7467164Z   git switch -c <new-branch-name>
+2026-10-19T11:55:00.7467303Z 
+2026-10-19T11:55:00.7467392Z Or undo this operation with:
+2026-10-19T11:55:00.7467516Z 
+2026-10-19T11:55:00.7467592Z   git switch -
+2026-10-19T11:55:00.7467689Z 
+2026-10-19T11:55:00.7467858Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-19T11:55:00.7468088Z 
+2026-10-19T11:55:00.7468265Z HEAD is now at 443542a9 Add hosted browser qualification and preserve demo evidence
+2026-10-19T11:55:00.7737928Z ##[endgroup]
+2026-10-19T11:55:00.7783743Z [command]/usr/bin/git log -1 --format=%H
+2026-10-19T11:55:00.7820773Z 443542a94d424187b9397c09773ab9d8eb6df6bd
+2026-10-19T11:55:00.7822019Z ##[group]Removing auth
+2026-10-19T11:55:00.7822373Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-19T11:55:00.7850566Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-19T11:55:00.8080030Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-19T11:55:00.8105812Z http.https://github.com/.extraheader
+2026-10-19T11:55:00.8146478Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-19T11:55:00.8987093Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-19T11:55:00.9222816Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-19T11:55:00.9255473Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-19T11:55:00.9495184Z ##[endgroup]
+2026-10-19T11:55:01.0342210Z ##[group]Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+2026-10-19T11:55:01.0342695Z with:
+2026-10-19T11:55:01.0342942Z   node-version: 22.13.1
+2026-10-19T11:55:01.0343388Z   package-manager-cache: false
+2026-10-19T11:55:01.0343699Z   always-auth: false
+2026-10-19T11:55:01.0343974Z   check-latest: false
+2026-10-19T11:55:01.0347126Z   token: ***
+2026-10-19T11:55:01.0347362Z env:
+2026-10-19T11:55:01.0347636Z   DEMO_HEAD: 443542a94d424187b9397c09773ab9d8eb6df6bd
+2026-10-19T11:55:01.0347990Z   GIT_NO_LAZY_FETCH: 1
+2026-10-19T11:55:01.0348264Z   NODE_DISABLE_COMPILE_CACHE: 1
+2026-10-19T11:55:01.0348574Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-19T11:55:01.0348874Z ##[endgroup]
+2026-10-19T11:55:01.2371191Z Attempting to download 22.13.1...
+2026-10-19T11:55:01.2463538Z (node:2178) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-19T11:55:01.2464545Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-19T11:55:02.2708504Z Acquiring 22.13.1 - x64 from https://github.com/actions/node-versions/releases/download/22.13.1-12900459766/node-22.13.1-linux-x64.tar.gz
+2026-10-19T11:55:02.8592938Z Extracting ...
+2026-10-19T11:55:02.8698190Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/b2016e9d-9ec4-4861-bf25-f027df947a2e -f /home/runner/work/_temp/2beca561-30e5-478c-bea5-5e4dd74c2bc3
+2026-10-19T11:55:03.8765861Z Adding to the cache ...
+2026-10-19T11:55:15.9287308Z ##[group]Environment details
+2026-10-19T11:55:16.1463644Z node: v22.13.1
+2026-10-19T11:55:16.1463974Z npm: 10.9.2
+2026-10-19T11:55:16.1464200Z yarn: 1.22.22
+2026-10-19T11:55:16.1464774Z ##[endgroup]
+2026-10-19T11:55:16.1617789Z ##[group]Run set -euo pipefail
+2026-10-19T11:55:16.1618135Z [36;1mset -euo pipefail[0m
+2026-10-19T11:55:16.1618403Z [36;1mtest "$(git rev-parse HEAD)" = "$DEMO_HEAD"[0m
+2026-10-19T11:55:16.1618724Z [36;1mtest -z "$(git status --porcelain --untracked-files=no)"[0m
+2026-10-19T11:55:16.1619014Z [36;1mmkdir -p .cache[0m
+2026-10-19T11:55:16.1619225Z [36;1mmkdir .cache/hosted-demo-browser[0m
+2026-10-19T11:55:16.1619603Z [36;1mmkdir -m 700 "$RUNNER_TEMP/shared-demo-playwright" "$RUNNER_TEMP/shared-demo-browser-tmp"[0m
+2026-10-19T11:55:16.1619956Z [36;1m{[0m
+2026-10-19T11:55:16.1620268Z [36;1m  echo "DEMO_PLAYWRIGHT=$RUNNER_TEMP/shared-demo-playwright/node_modules/playwright/index.mjs"[0m
+2026-10-19T11:55:16.1620711Z [36;1m  echo "PLAYWRIGHT_BROWSERS_PATH=$RUNNER_TEMP/shared-demo-browsers"[0m
+2026-10-19T11:55:16.1621050Z [36;1m  echo "TMPDIR=$RUNNER_TEMP/shared-demo-browser-tmp"[0m
+2026-10-19T11:55:16.1621383Z [36;1m  echo "TMP=$RUNNER_TEMP/shared-demo-browser-tmp"[0m
+2026-10-19T11:55:16.1621666Z [36;1m  echo "TEMP=$RUNNER_TEMP/shared-demo-browser-tmp"[0m
+2026-10-19T11:55:16.1621920Z [36;1m} >> "$GITHUB_ENV"[0m
+2026-10-19T11:55:16.1622190Z [36;1mdf -k . "$RUNNER_TEMP" > .cache/hosted-demo-browser/storage-before.txt[0m
+2026-10-19T11:55:16.1827906Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-19T11:55:16.1828209Z env:
+2026-10-19T11:55:16.1828424Z   DEMO_HEAD: 443542a94d424187b9397c09773ab9d8eb6df6bd
+2026-10-19T11:55:16.1828691Z   GIT_NO_LAZY_FETCH: 1
+2026-10-19T11:55:16.1828881Z   NODE_DISABLE_COMPILE_CACHE: 1
+2026-10-19T11:55:16.1829093Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-19T11:55:16.1829303Z ##[endgroup]
+2026-10-19T11:55:16.6229822Z ##[group]Run set -euo pipefail
+2026-10-19T11:55:16.6230070Z [36;1mset -euo pipefail[0m
+2026-10-19T11:55:16.6230364Z [36;1mtimeout --signal=TERM --kill-after=10s 180s npm ci --no-audit --no-fund[0m
+2026-10-19T11:55:16.6231050Z [36;1mtimeout --signal=TERM --kill-after=10s 90s npm install --prefix "$RUNNER_TEMP/shared-demo-playwright" --no-package-lock --ignore-scripts --no-audit --no-fund playwright@1.62.1[0m
+2026-10-19T11:55:16.6231854Z [36;1mtest -z "$(git status --porcelain --untracked-files=no)"[0m
+2026-10-19T11:55:16.6290150Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-19T11:55:16.6290432Z env:
+2026-10-19T11:55:16.6290627Z   DEMO_HEAD: 443542a94d424187b9397c09773ab9d8eb6df6bd
+2026-10-19T11:55:16.6290861Z   GIT_NO_LAZY_FETCH: 1
+2026-10-19T11:55:16.6291040Z   NODE_DISABLE_COMPILE_CACHE: 1
+2026-10-19T11:55:16.6291240Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-19T11:55:16.6291654Z   DEMO_PLAYWRIGHT: /home/runner/work/_temp/shared-demo-playwright/node_modules/playwright/index.mjs
+2026-10-19T11:55:16.6292098Z   PLAYWRIGHT_BROWSERS_PATH: /home/runner/work/_temp/shared-demo-browsers
+2026-10-19T11:55:16.6292445Z   TMPDIR: /home/runner/work/_temp/shared-demo-browser-tmp
+2026-10-19T11:55:16.6292726Z   TMP: /home/runner/work/_temp/shared-demo-browser-tmp
+2026-10-19T11:55:16.6292994Z   TEMP: /home/runner/work/_temp/shared-demo-browser-tmp
+2026-10-19T11:55:16.6293468Z ##[endgroup]
+2026-10-19T11:55:18.9482119Z 
+2026-10-19T11:55:18.9488697Z added 89 packages in 2s
+2026-10-19T11:55:20.2526343Z 
+2026-10-19T11:55:20.2527046Z added 2 packages in 1s
+2026-10-19T11:55:20.3079899Z ##[group]Run set -euo pipefail
+2026-10-19T11:55:20.3080209Z [36;1mset -euo pipefail[0m
+2026-10-19T11:55:20.3080457Z [36;1mset +e[0m
+2026-10-19T11:55:20.3081129Z [36;1mtimeout --signal=TERM --kill-after=10s 9m node "$RUNNER_TEMP/shared-demo-playwright/node_modules/playwright/cli.js" install --with-deps chromium firefox webkit 2>&1 | head -c 4194305 > .cache/hosted-demo-browser/browser-install.log[0m
+2026-10-19T11:55:20.3081842Z [36;1mstatuses=("${PIPESTATUS[@]}")[0m
+2026-10-19T11:55:20.3082065Z [36;1mset -e[0m
+2026-10-19T11:55:20.3082337Z [36;1mtest "$(wc -c < .cache/hosted-demo-browser/browser-install.log)" -le 4194304[0m
+2026-10-19T11:55:20.3082658Z [36;1mtest "${statuses[0]}" -eq 0[0m
+2026-10-19T11:55:20.3082871Z [36;1mtest "${statuses[1]}" -eq 0[0m
+2026-10-19T11:55:20.3151221Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-19T11:55:20.3151703Z env:
+2026-10-19T11:55:20.3152008Z   DEMO_HEAD: 443542a94d424187b9397c09773ab9d8eb6df6bd
+2026-10-19T11:55:20.3152471Z   GIT_NO_LAZY_FETCH: 1
+2026-10-19T11:55:20.3152768Z   NODE_DISABLE_COMPILE_CACHE: 1
+2026-10-19T11:55:20.3153351Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-19T11:55:20.3154044Z   DEMO_PLAYWRIGHT: /home/runner/work/_temp/shared-demo-playwright/node_modules/playwright/index.mjs
+2026-10-19T11:55:20.3155204Z   PLAYWRIGHT_BROWSERS_PATH: /home/runner/work/_temp/shared-demo-browsers
+2026-10-19T11:55:20.3155864Z   TMPDIR: /home/runner/work/_temp/shared-demo-browser-tmp
+2026-10-19T11:55:20.3156411Z   TMP: /home/runner/work/_temp/shared-demo-browser-tmp
+2026-10-19T11:55:20.3156842Z   TEMP: /home/runner/work/_temp/shared-demo-browser-tmp
+2026-10-19T11:55:20.3157107Z ##[endgroup]
+2026-10-19T11:56:18.6319088Z ##[group]Run set -euo pipefail
+2026-10-19T11:56:18.6319349Z [36;1mset -euo pipefail[0m
+2026-10-19T11:56:18.6319822Z [36;1mnode --test --test-concurrency=1 scripts/test-qualify-shared-demo-hosted-browser.mjs scripts/test-shared-demo-offline-storage.mjs[0m
+2026-10-19T11:56:18.6320397Z [36;1mpython3 scripts/test-qualify-shared-demo-hosted-browser.py[0m
+2026-10-19T11:56:18.6378137Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-19T11:56:18.6378426Z env:
+2026-10-19T11:56:18.6378625Z   DEMO_HEAD: 443542a94d424187b9397c09773ab9d8eb6df6bd
+2026-10-19T11:56:18.6378867Z   GIT_NO_LAZY_FETCH: 1
+2026-10-19T11:56:18.6379047Z   NODE_DISABLE_COMPILE_CACHE: 1
+2026-10-19T11:56:18.6379254Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-19T11:56:18.6379622Z   DEMO_PLAYWRIGHT: /home/runner/work/_temp/shared-demo-playwright/node_modules/playwright/index.mjs
+2026-10-19T11:56:18.6380067Z   PLAYWRIGHT_BROWSERS_PATH: /home/runner/work/_temp/shared-demo-browsers
+2026-10-19T11:56:18.6380474Z   TMPDIR: /home/runner/work/_temp/shared-demo-browser-tmp
+2026-10-19T11:56:18.6380754Z   TMP: /home/runner/work/_temp/shared-demo-browser-tmp
+2026-10-19T11:56:18.6381028Z   TEMP: /home/runner/work/_temp/shared-demo-browser-tmp
+2026-10-19T11:56:18.6381447Z ##[endgroup]
+2026-10-19T11:56:18.6768549Z TAP version 13
+2026-10-19T11:56:19.0837641Z # Subtest: hosted plan covers every engine and the complete11+9 existing job scopes without retries
+2026-10-19T11:56:19.0840389Z ok 1 - hosted plan covers every engine and the complete11+9 existing job scopes without retries
+2026-10-19T11:56:19.0840973Z   ---
+2026-10-19T11:56:19.0874273Z   duration_ms: 2.320742
+2026-10-19T11:56:19.0874668Z   ...
+2026-10-19T11:56:19.0875285Z # Subtest: partial, error-bearing and unclosed browser results cannot satisfy the hosted gate
+2026-10-19T11:56:19.0876058Z ok 2 - partial, error-bearing and unclosed browser results cannot satisfy the hosted gate
+2026-10-19T11:56:19.0876507Z   ---
+2026-10-19T11:56:19.0876799Z   duration_ms: 6.665041
+2026-10-19T11:56:19.0877169Z   ...
+2026-10-19T11:56:19.0877791Z # Subtest: unequal mode coverage and lost lifecycle observations cannot be hidden by complete=true
+2026-10-19T11:56:19.0878562Z ok 3 - unequal mode coverage and lost lifecycle observations cannot be hidden by complete=true
+2026-10-19T11:56:19.0879056Z   ---
+2026-10-19T11:56:19.0879298Z   duration_ms: 0.906314
+2026-10-19T11:56:19.0879565Z   ...
+2026-10-19T11:56:19.0880152Z # Subtest: reviewed proof must actually terminate with progress at a published candidate boundary
+2026-10-19T11:56:19.0880942Z ok 4 - reviewed proof must actually terminate with progress at a published candidate boundary
+2026-10-19T11:56:19.0881381Z   ---
+2026-10-19T11:56:19.0881619Z   duration_ms: 3.117211
+2026-10-19T11:56:19.0881946Z   ...
+2026-10-19T11:56:19.0882494Z # Subtest: hosted CLI rejects duplicate authority, unknown flags, source URLs and unbounded phases
+2026-10-19T11:56:19.0883418Z ok 5 - hosted CLI rejects duplicate authority, unknown flags, source URLs and unbounded phases
+2026-10-19T11:56:19.0884025Z   ---
+2026-10-19T11:56:19.0910159Z   duration_ms: 1.074888
+2026-10-19T11:56:19.0910525Z   ...
+2026-10-19T11:56:19.1046456Z # Subtest: real child nonzero exit is preserved for strict result validation
+2026-10-19T11:56:19.1047528Z ok 6 - real child nonzero exit is preserved for strict result validation
+2026-10-19T11:56:19.1048365Z   ---
+2026-10-19T11:56:19.1049244Z   duration_ms: 24.49521
+2026-10-19T11:56:19.1049565Z   ...
+2026-10-19T11:56:19.2090245Z # Subtest: child deadline fails promptly and retains the spawned identity for outer cleanup
+2026-10-19T11:56:19.2099559Z ok 7 - child deadline fails promptly and retains the spawned identity for outer cleanup
+2026-10-19T11:56:19.2100093Z   ---
+2026-10-19T11:56:19.2100343Z   duration_ms: 104.375337
+2026-10-19T11:56:19.2100641Z   ...
+2026-10-19T11:56:19.3097604Z # Subtest: cancellation fails promptly and cannot turn an unfinished child into success
+2026-10-19T11:56:19.3099250Z ok 8 - cancellation fails promptly and cannot turn an unfinished child into success
+2026-10-19T11:56:19.3100003Z   ---
+2026-10-19T11:56:19.3100302Z   duration_ms: 102.244204
+2026-10-19T11:56:19.3100673Z   ...
+2026-10-19T11:56:19.3101332Z # Subtest: actual-worker offline evidence cannot pass with unretired storage or changed bindings
+2026-10-19T11:56:19.3102368Z ok 9 - actual-worker offline evidence cannot pass with unretired storage or changed bindings
+2026-10-19T11:56:19.3102998Z   ---
+2026-10-19T11:56:19.3103437Z   duration_ms: 0.968678
+2026-10-19T11:56:19.3103815Z   ...
+2026-10-19T11:56:19.3604975Z # Subtest: full audited installation determines rounded body cap and conservative local reserve
+2026-10-19T11:56:19.3605940Z ok 10 - full audited installation determines rounded body cap and conservative local reserve
+2026-10-19T11:56:19.3606377Z   ---
+2026-10-19T11:56:19.3606610Z   duration_ms: 6.678942
+2026-10-19T11:56:19.3606840Z   ...
+2026-10-19T11:56:19.3668327Z # Subtest: fresh local session removes only its own verified private tree
+2026-10-19T11:56:19.3669199Z ok 11 - fresh local session removes only its own verified private tree
+2026-10-19T11:56:19.3669740Z   ---
+2026-10-19T11:56:19.3670007Z   duration_ms: 8.720845
+2026-10-19T11:56:19.3670586Z   ...
+2026-10-19T11:56:19.3716065Z # Subtest: a replacement session or symlink is refused before recursive cleanup
+2026-10-19T11:56:19.3717235Z ok 12 - a replacement session or symlink is refused before recursive cleanup
+2026-10-19T11:56:19.3717599Z   ---
+2026-10-19T11:56:19.3717826Z   duration_ms: 4.662733
+2026-10-19T11:56:19.3718277Z   ...
+2026-10-19T11:56:20.2094706Z # Subtest: the browser qualifier rejects unsafe invocation before creating a profile
+2026-10-19T11:56:20.2095578Z ok 13 - the browser qualifier rejects unsafe invocation before creating a profile
+2026-10-19T11:56:20.2096070Z   ---
+2026-10-19T11:56:20.2160818Z   duration_ms: 837.797723
+2026-10-19T11:56:20.2161205Z   ...
+2026-10-19T11:56:20.2161453Z 1..13
+2026-10-19T11:56:20.2161726Z # tests 13
+2026-10-19T11:56:20.2161943Z # suites 0
+2026-10-19T11:56:20.2162218Z # pass 13
+2026-10-19T11:56:20.2162459Z # fail 0
+2026-10-19T11:56:20.2162730Z # cancelled 0
+2026-10-19T11:56:20.2162980Z # skipped 0
+2026-10-19T11:56:20.2163374Z # todo 0
+2026-10-19T11:56:20.2174346Z # duration_ms 1548.304127
+2026-10-19T11:56:20.3347242Z test_aggregate_rejects_missing_jobs_changed_bindings_and_child_tampering (__main__.ContractGuards.test_aggregate_rejects_missing_jobs_changed_bindings_and_child_tampering) ... ok
+2026-10-19T11:56:20.3349386Z test_diagnostic_overflow_fails_admission_but_does_not_disable_cleanup (__main__.ContractGuards.test_diagnostic_overflow_fails_admission_but_does_not_disable_cleanup) ... ok
+2026-10-19T11:56:20.3351640Z test_exited_root_pid_cannot_be_readmitted_after_pid_reuse (__main__.ContractGuards.test_exited_root_pid_cannot_be_readmitted_after_pid_reuse) ... ok
+2026-10-19T11:56:20.3352792Z test_interruption_is_deferred_only_through_registration (__main__.ContractGuards.test_interruption_is_deferred_only_through_registration) ... ok
+2026-10-19T11:56:20.3517076Z test_log_overflow_is_drained_but_not_stored_unboundedly (__main__.ContractGuards.test_log_overflow_is_drained_but_not_stored_unboundedly) ... ok
+2026-10-19T11:56:20.3517918Z test_phase_inventory_is_complete_and_ordered (__main__.ContractGuards.test_phase_inventory_is_complete_and_ordered) ... ok
+2026-10-19T11:56:20.3520282Z test_report_read_rejects_oversize_and_symlink (__main__.ContractGuards.test_report_read_rejects_oversize_and_symlink) ... ok
+2026-10-19T11:56:20.3524924Z test_tmp_symlink_swap_cannot_reuse_a_previously_admitted_inode (__main__.ContractGuards.test_tmp_symlink_swap_cannot_reuse_a_previously_admitted_inode) ... ok
+2026-10-19T11:56:20.4267832Z test_changed_pid_identity_cannot_receive_a_signal (__main__.LinuxLifetimeGuards.test_changed_pid_identity_cannot_receive_a_signal) ... ok
+2026-10-19T11:56:20.8875597Z test_child_exiting_between_polls_does_not_borrow_finalization_time (__main__.LinuxLifetimeGuards.test_child_exiting_between_polls_does_not_borrow_finalization_time) ... ok
+2026-10-19T11:56:20.9978418Z test_clean_child_success_requires_observed_retirement (__main__.LinuxLifetimeGuards.test_clean_child_success_requires_observed_retirement) ... ok
+2026-10-19T11:56:21.1080921Z test_failed_validation_and_finalization_signal_cannot_restore_success (__main__.LinuxLifetimeGuards.test_failed_validation_and_finalization_signal_cannot_restore_success) ... ok
+2026-10-19T11:56:21.1682672Z test_interrupt_inside_popen_registration_is_cleaned_and_cannot_succeed (__main__.LinuxLifetimeGuards.test_interrupt_inside_popen_registration_is_cleaned_and_cannot_succeed) ... ok
+2026-10-19T11:56:21.3078536Z test_log_overflow_cannot_be_success_even_when_cleanup_finishes (__main__.LinuxLifetimeGuards.test_log_overflow_cannot_be_success_even_when_cleanup_finishes) ... ok
+2026-10-19T11:56:22.4865568Z test_nonzero_root_is_not_reaped_as_success_when_child_is_adopted (__main__.LinuxLifetimeGuards.test_nonzero_root_is_not_reaped_as_success_when_child_is_adopted) ... ok
+2026-10-19T11:56:22.6973627Z test_preexisting_unrelated_sibling_is_not_owned_or_signalled (__main__.LinuxLifetimeGuards.test_preexisting_unrelated_sibling_is_not_owned_or_signalled) ... ok
+2026-10-19T11:56:23.3210951Z test_timeout_retires_detached_sigterm_ignoring_descendant (__main__.LinuxLifetimeGuards.test_timeout_retires_detached_sigterm_ignoring_descendant) ... ok
+2026-10-19T11:56:23.3211769Z 
+2026-10-19T11:56:23.3211991Z ----------------------------------------------------------------------
+2026-10-19T11:56:23.3212302Z Ran 17 tests in 2.989s
+2026-10-19T11:56:23.3212429Z 
+2026-10-19T11:56:23.3212501Z OK
+2026-10-19T11:56:23.3382650Z ##[group]Run set -euo pipefail
+2026-10-19T11:56:23.3383265Z [36;1mset -euo pipefail[0m
+2026-10-19T11:56:23.3383600Z [36;1mnode --input-type=module <<'NODE'[0m
+2026-10-19T11:56:23.3384024Z [36;1mimport assert from 'node:assert/strict';[0m
+2026-10-19T11:56:23.3384460Z [36;1mimport { execFileSync } from 'node:child_process';[0m
+2026-10-19T11:56:23.3384905Z [36;1mimport { createHash } from 'node:crypto';[0m
+2026-10-19T11:56:23.3385445Z [36;1mimport { appendFile, readFile, statfs, writeFile } from 'node:fs/promises';[0m
+2026-10-19T11:56:23.3385983Z [36;1mimport path from 'node:path';[0m
+2026-10-19T11:56:23.3386524Z [36;1mimport { fingerprintDemoSources } from './scripts/demo-source-fingerprint.mjs';[0m
+2026-10-19T11:56:23.3387104Z [36;1mconst root = process.cwd();[0m
+2026-10-19T11:56:23.3387595Z [36;1mconst git = (...args) => execFileSync('git', args, { encoding: 'utf8' }).trim();[0m
+2026-10-19T11:56:23.3388315Z [36;1massert.match(process.env.DEMO_HEAD, /^[a-f0-9]{40}$/);[0m
+2026-10-19T11:56:23.3388843Z [36;1massert.equal(git('rev-parse', 'HEAD'), process.env.DEMO_HEAD);[0m
+2026-10-19T11:56:23.3389462Z [36;1massert.equal(git('status', '--porcelain', '--untracked-files=no'), '');[0m
+2026-10-19T11:56:23.3389993Z [36;1massert.equal(process.version, 'v22.13.1');[0m
+2026-10-19T11:56:23.3390412Z [36;1massert.equal(process.platform, 'linux');[0m
+2026-10-19T11:56:23.3390806Z [36;1massert.equal(process.arch, 'x64');[0m
+2026-10-19T11:56:23.3391456Z [36;1mconst declaration = JSON.parse(await readFile('docs/qualification/shared-demos/source-freeze-latest.json'));[0m
+2026-10-19T11:56:23.3392212Z [36;1massert.match(declaration.integrationBase, /^[a-f0-9]{40}$/);[0m
+2026-10-19T11:56:23.3392767Z [36;1mconst runtime = await fingerprintDemoSources(root);[0m
+2026-10-19T11:56:23.3393561Z [36;1massert.equal(runtime.sha256, declaration.sourceFingerprint);[0m
+2026-10-19T11:56:23.3394199Z [36;1mconst build = await fingerprintDemoSources(root, ['scripts', 'authoring']);[0m
+2026-10-19T11:56:23.3394989Z [36;1mconst toolingRoot = path.join(process.env.RUNNER_TEMP, 'shared-demo-playwright/node_modules');[0m
+2026-10-19T11:56:23.3395909Z [36;1mconst files = ['playwright/package.json', 'playwright-core/package.json', 'playwright-core/browsers.json'];[0m
+2026-10-19T11:56:23.3396577Z [36;1mconst tooling = [];[0m
+2026-10-19T11:56:23.3396897Z [36;1mfor (const name of files) {[0m
+2026-10-19T11:56:23.3397339Z [36;1m  const bytes = await readFile(path.join(toolingRoot, name));[0m
+2026-10-19T11:56:23.3397821Z [36;1m  const value = JSON.parse(bytes);[0m
+2026-10-19T11:56:23.3398333Z [36;1m  if (name.endsWith('/package.json')) assert.equal(value.version, '1.62.1');[0m
+2026-10-19T11:56:23.3399139Z [36;1m  tooling.push({ path: name, bytes: bytes.length, sha256: createHash('sha256').update(bytes).digest('hex'), value });[0m
+2026-10-19T11:56:23.3399780Z [36;1m}[0m
+2026-10-19T11:56:23.3400047Z [36;1mconst disk = await statfs(root);[0m
+2026-10-19T11:56:23.3400472Z [36;1mconst availableBytes = disk.bavail * disk.bsize;[0m
+2026-10-19T11:56:23.3401073Z [36;1mconst proof = { format: 'SharedDemoHostedPreflightV1', head: process.env.DEMO_HEAD,[0m
+2026-10-19T11:56:23.3401854Z [36;1m  integrationBase: declaration.integrationBase, runtime, build, node: process.version,[0m
+2026-10-19T11:56:23.3402740Z [36;1m  platform: process.platform, arch: process.arch, tooling, availableBytes, complete: availableBytes >= 6 * 1024 ** 3 };[0m
+2026-10-19T11:56:23.3403900Z [36;1mawait writeFile('.cache/hosted-demo-browser/preflight.json', JSON.stringify(proof, null, 2) + '\n', { flag: 'wx' });[0m
+2026-10-19T11:56:23.3404912Z [36;1massert(proof.complete, 'Six GiB of free runner storage is required before capture; no existing files are removed.');[0m
+2026-10-19T11:56:23.3406236Z [36;1mawait appendFile(process.env.GITHUB_ENV, `DEMO_RUNTIME_SHA=${runtime.sha256}\nDEMO_BASE=${declaration.integrationBase}\n`);[0m
+2026-10-19T11:56:23.3406974Z [36;1mNODE[0m
+2026-10-19T11:56:23.3465204Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+2026-10-19T11:56:23.3465515Z env:
+2026-10-19T11:56:23.3465721Z   DEMO_HEAD: 443542a94d424187b9397c09773ab9d8eb6df6bd
+2026-10-19T11:56:23.3465957Z   GIT_NO_LAZY_FETCH: 1
+2026-10-19T11:56:23.3466140Z   NODE_DISABLE_COMPILE_CACHE: 1
+2026-10-19T11:56:23.3466348Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-19T11:56:23.3466706Z   DEMO_PLAYWRIGHT: /home/runner/work/_temp/shared-demo-playwright/node_modules/playwright/index.mjs
+2026-10-19T11:56:23.3467155Z   PLAYWRIGHT_BROWSERS_PATH: /home/runner/work/_temp/shared-demo-browsers
+2026-10-19T11:56:23.3467489Z   TMPDIR: /home/runner/work/_temp/shared-demo-browser-tmp
+2026-10-19T11:56:23.3467770Z   TMP: /home/runner/work/_temp/shared-demo-browser-tmp
+2026-10-19T11:56:23.3468052Z   TEMP: /home/runner/work/_temp/shared-demo-browser-tmp
+2026-10-19T11:56:23.3468290Z ##[endgroup]
+2026-10-19T11:56:23.4275139Z node:internal/child_process:1120
+2026-10-19T11:56:23.4275773Z     result.error = new ErrnoException(result.error, 'spawnSync ' + options.file);
+2026-10-19T11:56:23.4276122Z                    ^
+2026-10-19T11:56:23.4276237Z 
+2026-10-19T11:56:23.4276371Z <ref *1> Error: spawnSync rg ENOENT
+2026-10-19T11:56:23.4276691Z     at Object.spawnSync (node:internal/child_process:1120:20)
+2026-10-19T11:56:23.4277005Z     at spawnSync (node:child_process:868:24)
+2026-10-19T11:56:23.4277361Z     at execFileSync (node:child_process:911:15)
+2026-10-19T11:56:23.4277864Z     at fingerprintDemoSources (file:///home/runner/work/revealline/revealline/scripts/demo-source-fingerprint.mjs:11:17)
+2026-10-19T11:56:23.4278372Z     at file:///home/runner/work/revealline/revealline/[eval1]:17:23 {
+2026-10-19T11:56:23.4278728Z   errno: -2,
+2026-10-19T11:56:23.4279039Z   code: 'ENOENT',
+2026-10-19T11:56:23.4279217Z   syscall: 'spawnSync rg',
+2026-10-19T11:56:23.4279407Z   path: 'rg',
+2026-10-19T11:56:23.4279708Z   spawnargs: [ '--files', 'game', 'optional-practice', 'publishing' ],
+2026-10-19T11:56:23.4279996Z   error: [Circular *1],
+2026-10-19T11:56:23.4280189Z   status: null,
+2026-10-19T11:56:23.4280365Z   signal: null,
+2026-10-19T11:56:23.4280531Z   output: null,
+2026-10-19T11:56:23.4280689Z   pid: 0,
+2026-10-19T11:56:23.4280855Z   stdout: undefined,
+2026-10-19T11:56:23.4281028Z   stderr: undefined
+2026-10-19T11:56:23.4281195Z }
+2026-10-19T11:56:23.4281275Z 
+2026-10-19T11:56:23.4281354Z Node.js v22.13.1
+2026-10-19T11:56:23.4325795Z ##[error]Process completed with exit code 1.
+2026-10-19T11:56:23.4434391Z ##[group]Run actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+2026-10-19T11:56:23.4434731Z with:
+2026-10-19T11:56:23.4434981Z   name: shared-demo-browser-443542a94d424187b9397c09773ab9d8eb6df6bd-1
+2026-10-19T11:56:23.4435386Z   path: .cache/hosted-demo-browser/
+.cache/hosted-demo-emitted/manifest.json
+
+2026-10-19T11:56:23.4435695Z   include-hidden-files: true
+2026-10-19T11:56:23.4435904Z   if-no-files-found: error
+2026-10-19T11:56:23.4436091Z   retention-days: 7
+2026-10-19T11:56:23.4436272Z   compression-level: 6
+2026-10-19T11:56:23.4436450Z   overwrite: false
+2026-10-19T11:56:23.4436614Z env:
+2026-10-19T11:56:23.4436798Z   DEMO_HEAD: 443542a94d424187b9397c09773ab9d8eb6df6bd
+2026-10-19T11:56:23.4437028Z   GIT_NO_LAZY_FETCH: 1
+2026-10-19T11:56:23.4437209Z   NODE_DISABLE_COMPILE_CACHE: 1
+2026-10-19T11:56:23.4437412Z   PYTHONDONTWRITEBYTECODE: 1
+2026-10-19T11:56:23.4437815Z   DEMO_PLAYWRIGHT: /home/runner/work/_temp/shared-demo-playwright/node_modules/playwright/index.mjs
+2026-10-19T11:56:23.4438263Z   PLAYWRIGHT_BROWSERS_PATH: /home/runner/work/_temp/shared-demo-browsers
+2026-10-19T11:56:23.4438599Z   TMPDIR: /home/runner/work/_temp/shared-demo-browser-tmp
+2026-10-19T11:56:23.4438879Z   TMP: /home/runner/work/_temp/shared-demo-browser-tmp
+2026-10-19T11:56:23.4439341Z   TEMP: /home/runner/work/_temp/shared-demo-browser-tmp
+2026-10-19T11:56:23.4439585Z ##[endgroup]
+2026-10-19T11:56:23.5812355Z Multiple search paths detected. Calculating the least common ancestor of all paths
+2026-10-19T11:56:23.5814288Z The least common ancestor is /home/runner/work/revealline/revealline/.cache. This will be the root directory of the artifact
+2026-10-19T11:56:23.5815104Z With the provided path, there will be 2 files uploaded
+2026-10-19T11:56:23.5819008Z Artifact name is valid!
+2026-10-19T11:56:23.5819560Z Root directory input is valid!
+2026-10-19T11:56:23.9481380Z Beginning upload of artifact content to blob storage
+2026-10-19T11:56:24.2559752Z Uploaded bytes 13818
+2026-10-19T11:56:24.3280281Z Finished uploading artifact content to blob storage!
+2026-10-19T11:56:24.3281234Z SHA256 digest of uploaded artifact zip is 7102addd493253d45e160a2fd1884facc77471bcfef238d936cdb0220b9c959f
+2026-10-19T11:56:24.3282058Z Finalizing artifact upload
+2026-10-19T11:56:24.6892236Z Artifact shared-demo-browser-443542a94d424187b9397c09773ab9d8eb6df6bd-1.zip successfully finalized. Artifact ID 12183514218
+2026-10-19T11:56:24.6893374Z Artifact shared-demo-browser-443542a94d424187b9397c09773ab9d8eb6df6bd-1 has been successfully uploaded! Final size is 13818 bytes. Artifact ID is 12183514218
+2026-10-19T11:56:24.6896321Z Artifact download URL: https://github.com/mekhovov/revealline/actions/runs/39247977730/artifacts/12183514218
+2026-10-19T11:56:24.7056702Z Post job cleanup.
+2026-10-19T11:56:24.7764174Z [command]/usr/bin/git version
+2026-10-19T11:56:24.7800837Z git version 2.55.0
+2026-10-19T11:56:24.7830800Z Temporarily overriding HOME='/home/runner/work/_temp/ea1f2ca0-e1ea-4cd3-9163-d87c91b03f99' before making global git config changes
+2026-10-19T11:56:24.7832236Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-19T11:56:24.7835835Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/revealline/revealline
+2026-10-19T11:56:24.7874170Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-19T11:56:24.7908077Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-19T11:56:24.8160240Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-19T11:56:24.8192900Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-19T11:56:24.8453950Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-19T11:56:24.8488816Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-19T11:56:24.8870385Z Cleaning up orphan processes

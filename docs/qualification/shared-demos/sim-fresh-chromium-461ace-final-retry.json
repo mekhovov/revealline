@@ -1,0 +1,31 @@
+{
+  "engine": "chromium",
+  "started": "2026-10-18T18:24:20.377Z",
+  "checks": [
+    {
+      "type": "fresh-start-exact-authored-setup-ready-disarmed",
+      "origin": "sim",
+      "course": "woodland-01",
+      "mode": "self-level",
+      "ticks": 0,
+      "courseIdentity": "78d139a1585ffb9e",
+      "responseIdentity": "f91eeb500cf8bc2d",
+      "savedCustomAircraftTuningUnchanged": true
+    },
+    {
+      "type": "fresh-start-exact-authored-setup-ready-disarmed",
+      "origin": "solo",
+      "course": "snake-hunt-interception-two-return-lanes",
+      "mode": "self-level",
+      "ticks": 0,
+      "courseIdentity": "9de7fff1adda5d07",
+      "responseIdentity": "73833493634ba989",
+      "savedCustomAircraftTuningUnchanged": true
+    }
+  ],
+  "errors": [],
+  "complete": true,
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-18T18:24:32.186Z"
+}

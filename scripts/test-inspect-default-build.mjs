@@ -116,6 +116,7 @@ async function committedInspectorFixture(t) {
     'scripts/distribution-zip.mjs',
     'scripts/brand-icons.mjs',
     'scripts/build-entry-writer.mjs',
+    'scripts/main-pages-source-originals.mjs',
     'scripts/published-content-ownership.mjs',
     'game/editions/model.mjs',
     'scripts/frozen-source.mjs',

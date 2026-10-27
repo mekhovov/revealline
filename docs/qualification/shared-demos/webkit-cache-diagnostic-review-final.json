@@ -1,0 +1,247 @@
+{
+  "format": "WebKitCacheOwnershipReviewV1",
+  "created": "2026-10-18T20:05:15.198458+00:00",
+  "status": "Context is stopped did not recur. Original events remain UNCLASSIFIED; strict diagnostic gate still FAILED for two observed native fetch access-control errors.",
+  "browserRun": {
+    "started": "2026-10-18T20:02:17.104Z",
+    "finished": "2026-10-18T20:02:57.769Z",
+    "durationSeconds": 40.665,
+    "functionalChecks": 4,
+    "functionalComplete": true,
+    "strictDiagnosticGate": false,
+    "childExit": {
+      "code": 1,
+      "signal": null
+    },
+    "browserCloseCompleted": true,
+    "previewClosed": true,
+    "protocolCaptureComplete": true,
+    "protocolCaptureMeaning": "Only bounded collection and cleanup; it does not override the failed strict child gate.",
+    "protocolEvents": 77,
+    "cacheEvents": 2655,
+    "overflow": 0,
+    "cacheOverflow": false
+  },
+  "receipts": [
+    {
+      "path": "docs/qualification/shared-demos/webkit-cache-protocol-final.json",
+      "sha256": "2572c93a5efc846ced06b9d5334be20d3c705b602888827238c80b27a8040b09",
+      "bytes": 39652
+    },
+    {
+      "path": "docs/qualification/shared-demos/webkit-cache-owner-reloads-final.json",
+      "sha256": "fbb93fe6f8eb4ebdeab0dba5aa8ede4dbb14be536d842cd7e83d55b421ff126e",
+      "bytes": 1217450
+    }
+  ],
+  "source": {
+    "head": "05c795fdca2a179b78d016c2a0dfc5b1991a498d",
+    "fingerprint": "e57d0dfc71f382d07e745619916e6f828b72bd6b382961430add82a2240106f5",
+    "scopedSourcesUnchanged": true,
+    "sourceHashes": {
+      "game/app.mjs": "f204c43a9cb83845c01cff516d82312f4befa6c11f2bd8e73a77a5e7b674736e",
+      "game/presentation/host.mjs": "1d6ba3403f14499301e407db3ba05bc22c5896a56909c4c1fb4b66f92f758ca2",
+      "game/official-downloads.mjs": "777563cccc42e7f41f36d3848012f93d6fdf48687e672fc30191624f5a42927e",
+      "game/soundtrack-source.mjs": "fb4930936a51c052dd5462fbd2f1178323dc59173b6a6556b6039c10dc9a4c83"
+    },
+    "override": [
+      {
+        "path": "/game/official-downloads.mjs",
+        "originalSHA256": "777563cccc42e7f41f36d3848012f93d6fdf48687e672fc30191624f5a42927e",
+        "candidatePath": ".cache/webkit-cache-diagnostic/official-downloads.mjs",
+        "candidateSHA256": "b9cff30935d3c941743b8a5821a64174427b3fa3ef63464ced1b53240fab6a14",
+        "scope": "Diagnostic-only existing await/catch observations. No native promise rejection handler added; existing scan catch still returns the same empty list."
+      }
+    ],
+    "observerSHA256": "5ad01a546994cfdc2bd965fa7f2ac19329a151a712a211310539723f4c24c346",
+    "qualificationLimit": "One explicitly instrumented cache module was served by the task-owned preview; no production source changed. This is diagnostic evidence, not unchanged-production browser acceptance.",
+    "declaration": {
+      "binding": "Diagnostic-only official-downloads override is hashed. Scoped live files and frozen manifest are checked before/after; this does not independently recompute the complete tree fingerprint.",
+      "head": "05c795fdca2a179b78d016c2a0dfc5b1991a498d",
+      "manifestPath": "docs/qualification/shared-demos/source-freeze-latest.json",
+      "created": "2026-10-18T19:54:37.649835+00:00",
+      "integrationBase": "461ace72e78f8cbd77c26549381d9e21d0a65e91",
+      "scope": "sorted rg --files game optional-practice publishing; mjs/js/json/css/html; excludes /test/, *.test.mjs, */coverage.json; SHA256(path + NUL + SHA256(file bytes))",
+      "sourceFingerprint": "e57d0dfc71f382d07e745619916e6f828b72bd6b382961430add82a2240106f5",
+      "files": 9994,
+      "bytes": 404339802
+    }
+  },
+  "observedNativeJavaScriptErrors": [
+    {
+      "receivedAt": "2026-10-18T20:02:38.316Z",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "message": {
+        "source": "javascript",
+        "level": "error",
+        "text": "Fetch API cannot load http://127.0.0.1:8771/game/presentation/compiled/assets/2d4e0eafa015c8e434082b8be0552556e0abfe057248233a701cac4d1b3f4cd0.png due to access control checks.",
+        "type": "log",
+        "line": 332,
+        "column": 35,
+        "url": "http://127.0.0.1:8771/game/presentation/host.mjs",
+        "repeatCount": 1,
+        "timestamp": 1792353758.316457,
+        "stackTrace": {
+          "callFrames": [
+            {
+              "functionName": "bytesAt",
+              "url": "http://127.0.0.1:8771/game/presentation/host.mjs",
+              "scriptId": "103",
+              "lineNumber": 332,
+              "columnNumber": 35
+            }
+          ]
+        }
+      }
+    },
+    {
+      "receivedAt": "2026-10-18T20:02:49.122Z",
+      "pageProxyId": "7",
+      "targetId": "page-8",
+      "message": {
+        "source": "javascript",
+        "level": "error",
+        "text": "Fetch API cannot load http://127.0.0.1:8771/game/presentation/compiled/assets/cea04fc27e33583748da59f8bc873505d15b8c37745f0b30b5a4415f4d7c87cb.png due to access control checks.",
+        "type": "log",
+        "line": 332,
+        "column": 35,
+        "url": "http://127.0.0.1:8771/game/presentation/host.mjs",
+        "repeatCount": 1,
+        "timestamp": 1792353769.122543,
+        "stackTrace": {
+          "callFrames": [
+            {
+              "functionName": "bytesAt",
+              "url": "http://127.0.0.1:8771/game/presentation/host.mjs",
+              "scriptId": "135",
+              "lineNumber": 332,
+              "columnNumber": 35
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "otherNativeCategories": {
+    "network": 5,
+    "security": 2
+  },
+  "cacheFinding": {
+    "afterBeforeUnloadEvents": 12,
+    "afterBeforeUnloadNativeCalls": [
+      {
+        "id": "1792353741033-0.8168872664136008",
+        "at": 1792353749831,
+        "kind": "native-cache-call",
+        "api": "CacheStorage",
+        "method": "open",
+        "key": "revealline-official-content-v1",
+        "hidden": false
+      },
+      {
+        "id": "1792353749851-0.8606460340144095",
+        "at": 1792353758316,
+        "kind": "native-cache-call",
+        "api": "Cache",
+        "method": "match",
+        "key": "http://127.0.0.1:8771/.revealline-official/sha256/d4147214e221be28f19d6c6c38afc8d3cf0289a0dc6ac579b26574a0c571bc58",
+        "hidden": false
+      },
+      {
+        "id": "1792353759469-0.4023597595813473",
+        "at": 1792353769124,
+        "kind": "native-cache-call",
+        "api": "CacheStorage",
+        "method": "open",
+        "key": "revealline-official-content-v1",
+        "hidden": false
+      },
+      {
+        "id": "1792353759469-0.4023597595813473",
+        "at": 1792353769139,
+        "kind": "native-cache-call",
+        "api": "Cache",
+        "method": "match",
+        "key": "http://127.0.0.1:8771/.revealline-official/sha256/77e1ad0bd0a7c5625a12eaa1c8099408ede6959b2ee2dbf5bace85d09a602ada",
+        "hidden": false
+      }
+    ],
+    "scanExistingCatchCount": 0,
+    "interpretation": "Existing ordinary cache scanning demonstrably continues between beforeunload and pagehide, with fresh open/match calls. This establishes navigation overlap only. No cache error or catch matched Context is stopped in this run; unresolved settlements at teardown are not proof of a leak or unhandled rejection.",
+    "documents": [
+      {
+        "id": "1792353738689-0.9639339108958848",
+        "inspectionsStarted": 154,
+        "inspectionsOpened": 154,
+        "matchesStarted": 154,
+        "matchesSettled": 154,
+        "scansComplete": 2,
+        "pagehideAt": 1792353741008
+      },
+      {
+        "id": "1792353741033-0.8168872664136008",
+        "inspectionsStarted": 85,
+        "inspectionsOpened": 84,
+        "matchesStarted": 84,
+        "matchesSettled": 84,
+        "scansComplete": 1,
+        "pagehideAt": 1792353749831
+      },
+      {
+        "id": "1792353749851-0.8606460340144095",
+        "inspectionsStarted": 78,
+        "inspectionsOpened": 78,
+        "matchesStarted": 78,
+        "matchesSettled": 77,
+        "scansComplete": 1,
+        "pagehideAt": 1792353759450
+      },
+      {
+        "id": "1792353759469-0.4023597595813473",
+        "inspectionsStarted": 65,
+        "inspectionsOpened": 65,
+        "matchesStarted": 65,
+        "matchesSettled": 64,
+        "scansComplete": 0,
+        "pagehideAt": 1792353769141
+      },
+      {
+        "id": "1792353769159-0.6545003600708545",
+        "inspectionsStarted": 52,
+        "inspectionsOpened": 51,
+        "matchesStarted": 51,
+        "matchesSettled": 51,
+        "scansComplete": 0,
+        "pagehideAt": null
+      }
+    ]
+  },
+  "diagnosticFormatterFix": {
+    "scope": "Subsequent test-only qualification helper change; this completed browser report already records separate name/rawMessage/stack fields.",
+    "paths": [
+      {
+        "path": "scripts/demo-restoration-observation.mjs",
+        "sha256": "55161bdeeab6b08134728686bea76496819a44a89903d31f63b854088f22d749"
+      },
+      {
+        "path": "scripts/test-demo-restoration-observation.mjs",
+        "sha256": "0db5fa9dd998cfae9cb378fa6b24162bf66be2a8f28a3f8587401e8289e06498"
+      }
+    ],
+    "baseline": {
+      "path": "docs/qualification/shared-demos/webkit-error-name-baseline.tap.txt",
+      "sha256": "919092fcf9e400d3543c0d14703dd8958dfbc286b425ec13372d1ed0d3b91e88",
+      "passed": 6,
+      "failed": 2
+    },
+    "fixed": {
+      "path": "docs/qualification/shared-demos/webkit-error-name-regressions.tap.txt",
+      "sha256": "d3031d1cef31494390b3e5442b492255fc9dcbaf2abc785a1cb8acf9084f1ae1",
+      "passed": 8,
+      "failed": 0
+    },
+    "meaning": "Names survive empty-stack formatting, complete stacks retain priority, output stays bounded, and strict native errors remain failures."
+  },
+  "nextAction": "Stop repeated probes. Preserve names/raw protocol on any future naturally occurring diagnostic, retain all failed receipts, and continue the source-frozen functional qualification when heavy builds release the browser slot."
+}

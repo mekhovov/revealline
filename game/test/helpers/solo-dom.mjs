@@ -142,7 +142,7 @@ class SoloDocument extends Document {
     return super.createTextNode(value);
   }
 }
-function mount(document, html) {
+export function mount(document, html) {
   const stack = [document.body];
   for (const token of html
     .split(/<body\b[^>]*>/u)[1]
@@ -781,8 +781,11 @@ export async function soloPage(
         const encoded = JSON.stringify(diagnostic);
         if (Buffer.byteLength(encoded, 'utf8') <= 8192 && typeof error?.message === 'string') {
           // Preserve V8's original lazy stack header, cause and Error identity.
-          void error.stack;
-          error.message += `\n${encoded}`;
+          // Include the same bounded details for reporters that display only stack.
+          const stack = error.stack,
+            details = `\n${encoded}`;
+          error.message += details;
+          if (typeof stack === 'string') error.stack = stack + details;
         }
       } catch {}
 

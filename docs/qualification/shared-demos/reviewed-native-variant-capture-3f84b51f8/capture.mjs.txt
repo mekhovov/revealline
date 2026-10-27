@@ -1,0 +1,117 @@
+import assert from 'node:assert/strict';
+import { readFile, writeFile, stat, mkdir } from 'node:fs/promises';
+import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
+import { createRun, stepRun, releaseInputs, FIXED_DT } from '../game/core/index.mjs';
+import { createRecorder, recordInput, recordRelease, exportReplay, verifyReplay, authoritativeCheckpoint, snapshotReplay } from '../game/replay.mjs';
+import { prepareReplayPlayer } from '../game/replay-player.mjs';
+import { demoInputTraceIdentity, validateDemoCatalog } from '../game/demo-catalog.mjs';
+import { diagnoseDemoReplay } from '../game/demo-replay-diagnostics.mjs';
+import { buildDemoRecordings } from '../scripts/build-demo-recordings.mjs';
+import { fingerprintDemoSources } from '../scripts/demo-source-fingerprint.mjs';
+const args=Object.fromEntries(process.argv.slice(2).map(arg=>arg.replace(/^--/,'').split('=')));
+assert.equal(process.version,'v22.13.1'); assert.equal(process.arch,'x64'); assert.equal(process.platform,'darwin');
+const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
+const pin=async path=>{const body=await readFile(path);return {path,sha256:sha(body),bytes:body.length};};
+async function qualify(proof) {
+  const result=verifyReplay(proof); assert.equal(result.match,true,JSON.stringify(result.diagnostics));
+  const player=await prepareReplayPlayer(proof,{chunkTicks:1200});
+  try {
+    const initial=player.state.claimedCount; let captures=0, advances=0; player.play();
+    while(player.phase==='playing') {
+      const tick=player.state.tick;
+      captures+=player.advance(.25).events.filter(event=>event.type==='cut.closed').length;
+      assert.ok(++advances<=Math.ceil(proof.ticks/30)+2);
+      assert.ok(player.state.tick>tick||player.phase!=='playing');
+    }
+    assert.equal(player.phase,'complete'); assert.equal(player.state.tick,proof.ticks);
+    assert.equal(player.state.status,proof.summary.status);
+    assert.deepEqual(authoritativeCheckpoint(player.state),proof.checkpoint);
+    assert.ok(captures>0&&player.state.claimedCount>initial);
+    return {match:true,actual:result.actual,phase:player.phase,captures,capturedCells:player.state.claimedCount-initial,ticks:player.state.tick,outcome:player.state.status};
+  } finally { await player.dispose(); }
+}
+if(args.mode==='verify-child') {
+  const proof=snapshotReplay(await readFile(args.candidate,'utf8'));
+  const result=await qualify(proof);
+  assert.equal(await diagnoseDemoReplay(proof,await readFile(args.diagnostic,'utf8')),null);
+  process.stdout.write(JSON.stringify({environment:{version:process.version,platform:process.platform,arch:process.arch},candidate:await pin(args.candidate),diagnostic:await pin(args.diagnostic),diagnosticsMatch:true,...result})+'\n');
+} else {
+  assert.equal(args.run,'approved');
+  const head=()=>execFileSync('/usr/bin/arch',['-arm64','/usr/bin/git','rev-parse','HEAD'],{encoding:'utf8'}).trim();
+  const script=await readFile(new URL(import.meta.url));
+  for(const name of [args.report,args.report.replace(/\.json$/,'.mjs.txt')]) {
+    try { await stat(name); throw Error('Refusing existing '+name); } catch(error) { if(error.code!=='ENOENT') throw error; }
+  }
+  const report={format:'ReviewedSoloNativeCandidateCaptureV1',complete:false,started:new Date().toISOString(),checks:[],errors:[],
+    environment:{version:process.version,platform:process.platform,arch:process.arch,versions:process.versions,executable:await pin(process.execPath)},
+    headBefore:head(),sourceBefore:await fingerprintDemoSources(process.cwd()),buildInputsBefore:await fingerprintDemoSources(process.cwd(),['scripts','authoring']),observerSHA256:sha(script),
+    scope:'All ten reviewed clips and every committed candidate strictly checked on exact macOS x64 Node22.13.1. Missing strict matches receive only ignored ordinary-recorder candidates with exact legacy input/summary/non-enemy contracts, native terminal progress, five-second sidecars and separate-child full verification plus playback. No Linux claim or production mutation.'};
+  assert.equal(report.headBefore,args.head); assert.equal(report.sourceBefore.sha256,args.fingerprint);
+  const directory=args.report.replace(/\.json$/,'-candidates'); await mkdir(directory,{mode:0o700}); report.directory=directory;
+  try {
+    const catalog=validateDemoCatalog(await readFile('game/demo-data/catalog.json','utf8'));
+    const reviewed=catalog.clips.filter(clip=>!clip.id.startsWith('solo-qualified-'));
+    const generated=await buildDemoRecordings();
+    assert.equal(reviewed.length,10); assert.deepEqual(reviewed,generated.map(row=>row.descriptor));
+    report.generatedDescriptorsMatch=true;
+    for(const clip of reviewed) {
+      const sourcePath='game/'+clip.replayURL.slice(2), source=snapshotReplay(await readFile(sourcePath,'utf8'));
+      const row={id:clip.id,levelId:clip.levelId,source:await pin(sourcePath),attempts:[],eligible:false};
+      for(const url of [clip.replayURL,...(clip.replayVariants??[])]) {
+        const path='game/'+url.slice(2), candidate=snapshotReplay(await readFile(path,'utf8')), verified=verifyReplay(candidate);
+        row.attempts.push({replayURL:url,file:await pin(path),match:verified.match,diagnostics:verified.diagnostics,actual:verified.actual});
+      }
+      const matched=row.attempts.find(attempt=>attempt.match);
+      if(matched) {
+        row.selected=matched.replayURL;
+        row.playback=await qualify(snapshotReplay(await readFile(matched.file.path,'utf8')));
+        row.eligible=true; report.checks.push(row);
+        console.log(JSON.stringify({id:row.id,existingStrictMatch:row.selected})); continue;
+      }
+      const run=createRun(source.level,source.options), recorder=createRecorder(source.level,source.options,source.build), checkpoints=[];
+      const initial=run.claimedCount; let captures=0;
+      for(const segment of source.segments) {
+        if(segment.releaseBefore) { releaseInputs(run); recordRelease(recorder); }
+        for(let tick=0;tick<segment.ticks;tick++) {
+          assert.ok(!['won','lost'].includes(run.status),'Natural terminal state precedes the committed trace.');
+          recordInput(recorder,segment.input); stepRun(run,segment.input,FIXED_DT);
+          captures+=run.events.filter(event=>event.type==='cut.closed').length;
+          if(run.tick%600===0) checkpoints.push({tick:run.tick,...authoritativeCheckpoint(run)});
+        }
+      }
+      if(source.releaseAfter) { releaseInputs(run); recordRelease(recorder); }
+      assert.ok(['won','lost'].includes(run.status)&&captures>0&&run.claimedCount>initial);
+      const proof=snapshotReplay(exportReplay(recorder,run));
+      for(const key of ['version','ruleset','build','level','options','segments','ticks','releaseAfter','summary'])
+        assert.deepEqual(proof[key],source[key],clip.id+' changes '+key);
+      assert.deepEqual(proof.summary,generated.find(item=>item.descriptor.id===clip.id).replay.summary);
+      for(const [section,hash] of Object.entries(source.checkpoint.sections))
+        if(section!=='enemies') assert.equal(proof.checkpoint.sections[section],hash,clip.id+' changes '+section);
+      assert.notEqual(proof.checkpoint.sections.enemies,source.checkpoint.sections.enemies);
+      assert.equal(demoInputTraceIdentity(proof),clip.inputTraceIdentity); assert.equal(proof.ticks/120,clip.durationSeconds);
+      const replayPath=directory+'/'+clip.id+'.node22131-x64.replay.json', diagnosticPath=replayPath.replace(/\.replay\.json$/,'.diagnostics.json');
+      const diagnostic={format:'SoloDemoDiagnosticsV1',inputTraceIdentity:demoInputTraceIdentity(proof),checkpoints};
+      assert.equal(checkpoints.length,Math.floor(proof.ticks/600));
+      const verified=verifyReplay(proof); assert.equal(verified.match,true,JSON.stringify(verified.diagnostics));
+      await writeFile(replayPath,JSON.stringify(proof)+'\n',{flag:'wx'});
+      await writeFile(diagnosticPath,JSON.stringify(diagnostic)+'\n',{flag:'wx'});
+      row.natural={status:run.status,tick:run.tick,captures,capturedCells:run.claimedCount-initial};
+      row.candidate=await pin(replayPath); row.diagnostic=await pin(diagnosticPath);
+      row.trace={inputTraceIdentity:demoInputTraceIdentity(proof),durationSeconds:proof.ticks/120,exactTrace:true,exactSummary:true,allNonEnemySectionsUnchanged:true};
+      row.authoringVerification={match:verified.match,actual:verified.actual};
+      const output=execFileSync(process.execPath,[new URL(import.meta.url).pathname,'--mode=verify-child','--candidate='+replayPath,'--diagnostic='+diagnosticPath],{encoding:'utf8',timeout:45000,maxBuffer:1024*1024,env:{...process.env,NODE_DISABLE_COMPILE_CACHE:'1'}});
+      row.independent=JSON.parse(output); assert.deepEqual(row.independent.candidate,row.candidate); assert.deepEqual(row.independent.diagnostic,row.diagnostic);
+      row.proposedProvenance={id:clip.id,replayURL:'./demo-data/'+replayPath.split('/').at(-1),inputTraceIdentity:clip.inputTraceIdentity,sourceCheckpoint:source.checkpoint.hash,checkpoint:proof.checkpoint.hash,recordedIn:{createdAt:report.started,runtime:'Node.js',version:process.version,v8:process.versions.v8,platform:process.platform,arch:process.arch,executableSHA256:report.environment.executable.sha256,mathWitness:{sin:Math.sin(.752),hypot:Math.hypot(.3,.7)}}};
+      row.eligible=true; report.checks.push(row);
+      console.log(JSON.stringify({id:row.id,newCandidate:row.candidate,natural:row.natural,strict:true,diagnosticCheckpoints:checkpoints.length}));
+    }
+    report.counts={reviewed:reviewed.length,committedCandidates:report.checks.reduce((n,row)=>n+row.attempts.length,0),existingStrictMatches:report.checks.filter(row=>row.selected).length,newCandidates:report.checks.filter(row=>row.candidate).length};
+    report.complete=report.checks.length===10&&report.checks.every(row=>row.eligible);
+  } catch(error) { report.complete=false; report.failure=String(error.stack??error); }
+  finally {
+    try { report.headAfter=head(); report.sourceAfter=await fingerprintDemoSources(process.cwd()); report.buildInputsAfter=await fingerprintDemoSources(process.cwd(),['scripts','authoring']); report.observerSHA256After=sha(await readFile(new URL(import.meta.url))); assert.equal(report.headBefore,report.headAfter); assert.deepEqual(report.sourceBefore,report.sourceAfter); assert.deepEqual(report.buildInputsBefore,report.buildInputsAfter); assert.equal(report.observerSHA256,report.observerSHA256After); report.sourceUnchanged=true; }
+    catch(error) { report.complete=false; report.sourceUnchanged=false; report.bindingFailure=String(error.stack??error); }
+    report.finished=new Date().toISOString(); await writeFile(args.report.replace(/\.json$/,'.mjs.txt'),script,{flag:'wx'}); await writeFile(args.report,JSON.stringify(report,null,2)+'\n',{flag:'wx'}); if(!report.complete) process.exitCode=1;
+  }
+}

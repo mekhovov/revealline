@@ -1,0 +1,31 @@
+{
+  "format": "SharedDemoEnduranceRunnerPreparationV1",
+  "observed": "2026-10-19T00:49:14.846906+00:00",
+  "sourceRevision": "693947ed1373db7a265def126a5eede2bf875013",
+  "scope": "Ignored endurance wrapper safeguards only; no browser or endurance credit. Root captured this separate lightweight fixture run because the preceding agent output was not retained as a file.",
+  "command": [
+    "python3",
+    "-B",
+    ".cache/test-endurance-process-ownership.py"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 1.6911706660030177,
+  "sourceBefore": {
+    ".cache/run-endurance-emitted-final.py": "79b966bb098d69f014dbf34111c3ae7c13c6ce1c3f1137b3f0e8a8e17c07b3ab",
+    ".cache/test-endurance-process-ownership.py": "877a47a061e744d8839997ff2305e34b00ad47bb401cb7bbf0efc53ca72e08f2"
+  },
+  "sourceAfter": {
+    ".cache/run-endurance-emitted-final.py": "79b966bb098d69f014dbf34111c3ae7c13c6ce1c3f1137b3f0e8a8e17c07b3ab",
+    ".cache/test-endurance-process-ownership.py": "877a47a061e744d8839997ff2305e34b00ad47bb401cb7bbf0efc53ca72e08f2"
+  },
+  "sourceStable": true,
+  "testLog": "docs/qualification/shared-demos/endurance-runner-preparation-693947ed1/fixtures.log.txt",
+  "tests": 5,
+  "pass": 5,
+  "complete": true,
+  "rootReadOnlyReview": "Finite log drain retains prefix/tail, observes overflow and keeps consuming; ownership evidence caps retain live identities for exact cleanup, fail overflow and never signal by broad browser name or process group.",
+  "independentReadOnlyReview": {
+    "reviewer": "sim_adapter",
+    "result": "Final exact cap/drain wrapper reviewed without blocker: live ownership retained, bounded evidence/logs, overflow and incomplete cleanup prevent success. No additional tests run."
+  }
+}

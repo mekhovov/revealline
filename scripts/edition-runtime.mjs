@@ -12,6 +12,7 @@ import {
   validateCompiledPresentation,
 } from '../game/presentation/host.mjs';
 import { projectEditionFlightMenu } from './edition-flight-menu.mjs';
+import { CLASSIC_SNAKE_LEVELS } from '../game/snake/classic-catalogue.mjs';
 import {
   MENU_SCENES,
   MENU_SCENE_COMPOSITIONS,
@@ -52,6 +53,16 @@ export function projectEditionBrandIdentity(bytes, logoPath) {
   );
 }
 
+// A standalone edition can select only its own validated campaign closure.
+// Keep every recording variant and diagnostic for any retained clip.
+export function projectEditionDemoCatalog(source, campaignIds) {
+  if (!Array.isArray(campaignIds) || campaignIds.some((id) => typeof id !== 'string'))
+    throw new Error('Edition demo projection needs selected campaign IDs.');
+  const catalog = validateDemoCatalog(source),
+    selected = new Set(campaignIds);
+  return { ...catalog, clips: catalog.clips.filter((clip) => selected.has(clip.campaignId)) };
+}
+
 /** Resolve only the reviewed catalogue's bounded local recording paths. Keep
  * this build inventory derived from the same data the runtime will select. */
 export function editionDemoResources(source) {
@@ -60,8 +71,17 @@ export function editionDemoResources(source) {
     'game/demo-data/catalog.json',
     'game/demo-data/variant-provenance.json',
     ...new Set(
-      catalog.clips.flatMap(({ replayURL, replayVariants = [] }) =>
-        [replayURL, ...replayVariants].map((relative) => `game/${relative.slice(2)}`),
+      catalog.clips.flatMap(({ id, replayURL, replayVariants = [], runtimePerformances = [] }) =>
+        [
+          replayURL,
+          ...replayVariants,
+          ...runtimePerformances.map((performance) => performance.replayURL),
+        ].flatMap((relative) => [
+          `game/${relative.slice(2)}`,
+          ...(id.startsWith('solo-qualified-')
+            ? [`game/${relative.slice(2).replace(/\.replay\.json$/, '.diagnostics.json')}`]
+            : []),
+        ]),
       ),
     ),
   ];
@@ -260,6 +280,9 @@ export const EDITION_RUNTIME_ADAPTERS = Object.freeze({
   'game/external-chapter-source.mjs': 'game/editions/standalone/external-chapters.mjs',
   'game/replay-theater/examples.mjs': 'game/editions/standalone/replay-examples.mjs',
   'game/audio/reactions/actors.mjs': 'game/editions/standalone/actor-recordings.mjs',
+  'game/demo-modes/solo-builtins.mjs': 'game/editions/standalone/demo-builtins.mjs',
+  'game/demo-modes/sim.mjs': 'game/editions/standalone/unavailable-demo.mjs',
+  'game/demo-modes/survival.mjs': 'game/editions/standalone/unavailable-demo.mjs',
 });
 
 export const EDITION_RUNTIME_PAGES = Object.freeze([
@@ -288,6 +311,14 @@ export const EDITION_RUNTIME_RESOURCES = Object.freeze({
     'game/vendor/qrcodegen-1.8.0.json',
   ],
   'game/demo-bot-player.mjs': ['game/demo-bot-worker.mjs'],
+  'game/demo-modes/snake.mjs': [
+    'game/demo-data/snake/catalog.json',
+    ...CLASSIC_SNAKE_LEVELS.map((level) => {
+      if (!/^[a-z0-9][a-z0-9-]*$/.test(level.id))
+        throw new Error('Invalid authored Snake demo identity.');
+      return `game/demo-data/snake/${level.id}.replay.json`;
+    }),
+  ],
   'game/demo-catalog.mjs': editionDemoResources(
     readFileSync(new URL('../game/demo-data/catalog.json', import.meta.url), 'utf8'),
   ),

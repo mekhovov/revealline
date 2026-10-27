@@ -419,7 +419,7 @@ test('actual FPV application, native notebook and installation launcher close in
     admission = await validateOptionalPackageAdmission(f.envelope, f);
   assert.deepEqual(first.zip, second.zip);
   assert.equal(admission.publicEligible, false);
-  assert.equal(admission.packages[0].files, 149);
+  assert.equal(admission.packages[0].files, 150);
   for (const entry of first.entries.filter((entry) => entry.name.endsWith('.html'))) {
     assert.match(entry.bytes.toString(), /access-gate:start/, entry.name);
     assert.match(entry.bytes.toString(), /data-access-state="locked"/, entry.name);
@@ -443,7 +443,7 @@ test('actual FPV application, native notebook and installation launcher close in
   assert.equal(manifest.icons.length, 2);
   assert.equal(manifest.id, '/revealline/practice/civilian-fpv/');
   const source = readEditionZip(f.files.get(f.package.sourceArchive.path));
-  assert.equal(source.size, 151);
+  assert.equal(source.size, 152);
   const projectedAudio = source
     .get('optional-practice/civilian-fpv/sim-presentation.mjs')
     .toString();
@@ -569,13 +569,13 @@ test('explicit FPV package remains independently reproducible with complete pinn
   assert.deepEqual(first.zip, second.zip);
   assert.equal(first.manifest.id, 'civilian-fpv');
   assert.equal(first.manifest.installation.id, '/revealline/practice/civilian-fpv/');
-  assert.equal(first.entries.length, 149);
+  assert.equal(first.entries.length, 150);
   assert.ok(first.entries.reduce((sum, item) => sum + item.bytes.length, 0) < 12 * 1024 * 1024);
   assert.ok(first.entries.every(({ name }) => !name.includes('civilian-flight')));
   const f = candidate(first);
   const admitted = await validateOptionalPackageAdmission(f.envelope, f);
   assert.equal(admitted.publicEligible, false);
-  assert.equal(admitted.packages[0].files, 149);
+  assert.equal(admitted.packages[0].files, 150);
   const localeProjection = first.entries
     .find((entry) => entry.name === 'game/i18n/catalogs.mjs')
     .bytes.toString();
@@ -584,7 +584,7 @@ test('explicit FPV package remains independently reproducible with complete pinn
   const inventory = JSON.parse(f.files.get(f.package.sourceInventory.path));
   assert.equal(inventory.licenses.find((item) => item.dependency === 'three').version, '0.186.1');
   const source = readEditionZip(f.files.get(f.package.sourceArchive.path));
-  assert.equal(source.size, 151);
+  assert.equal(source.size, 152);
   for (const locale of ['en', 'uk'])
     assert.ok(inventory.inputs.some((row) => row.path === `game/locales/${locale}/common.json`));
   for (const asset of [

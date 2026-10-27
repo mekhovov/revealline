@@ -1,0 +1,48 @@
+{
+  "sourceRevision": "4f68b924ee74c1a02fa340b1d17ddadf5ffa2c3f",
+  "finished": "2026-10-18T05:47:08.154Z",
+  "complete": true,
+  "passed": 30,
+  "groups": [
+    {
+      "name": "upstream paused recovery and regional preparation",
+      "passed": 11,
+      "failures": 0,
+      "log": ".cache/sim-main-recovery-tests.log",
+      "sha256": "64049f74c6711e931ce0858b22b75e34fc9848509d364f0655190c3ee023c5f9",
+      "testFiles": [
+        "game/test/fpv-aircraft-recovery-stall.test.mjs",
+        "game/test/fpv-regional-preparation-clock.test.mjs"
+      ]
+    },
+    {
+      "name": "SIM demos and native input",
+      "passed": 15,
+      "failures": 0,
+      "log": ".cache/sim-main-demo-tests.log",
+      "sha256": "fac0f390353258387272ba86a57b823ebffdaf029c8a6a5c0c1b657cc8bb2177",
+      "testFiles": [
+        "game/test/demo-sim.test.mjs",
+        "game/test/demo-sim-input.test.mjs"
+      ]
+    },
+    {
+      "name": "Fresh exact response, cancellation and deferred Home focus",
+      "passed": 4,
+      "failures": 0,
+      "log": ".cache/sim-main-fresh-tests.log",
+      "sha256": "545001f7ba067e67d61f59dfa67b2b9398a2f36d1a0b768e7d35b1da777a2591",
+      "testFiles": [
+        "game/test/fpv-world-appearance-ui.test.mjs"
+      ],
+      "testNamePattern": "SIM cancelled Fresh|SIM demo Fresh|cannot steal Home focus after deferred"
+    }
+  ],
+  "upstreamRuntimeChange": {
+    "file": "optional-practice/civilian-fpv/world-app.mjs",
+    "previousSha256": "cf19640671cc8b10f089e9e16268ab227d5a62ce0d49a0bb940ca032e3daf5be",
+    "currentSha256": "ec4be59708578ca838836dfeac1b90ecf538c457a0e26408d951ca37fd33963d",
+    "byteDelta": -87,
+    "scope": "Paused and disarmed callbacks discard stale elapsed time without cancelling native recovery; explicit pause and active-flight freeze remain unchanged."
+  }
+}

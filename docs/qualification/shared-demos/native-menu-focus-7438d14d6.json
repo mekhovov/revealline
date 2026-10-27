@@ -1,0 +1,284 @@
+{
+  "format": "SharedDemoNativeMenuFocusBrowserV1",
+  "started": "2026-10-19T04:28:48.648Z",
+  "complete": true,
+  "checks": [
+    {
+      "type": "held-entry-and-neutral-remain-watching",
+      "origin": "snake",
+      "mode": "snake",
+      "source": "snake:classic-snake-open-loop:standard",
+      "phase": "playing",
+      "tick": "1",
+      "practice": false
+    },
+    {
+      "type": "focused-space-pauses-and-resumes-without-practice",
+      "origin": "snake",
+      "mode": "snake",
+      "source": "snake:classic-snake-open-loop:standard",
+      "phase": "playing",
+      "tick": "1",
+      "practice": false
+    },
+    {
+      "type": "focused-space-advances-performance-without-practice",
+      "origin": "snake",
+      "previousSource": "snake:classic-snake-open-loop:standard",
+      "mode": "snake",
+      "source": "snake:classic-living-frozen-opening:standard",
+      "phase": "playing",
+      "tick": "0",
+      "practice": false
+    },
+    {
+      "type": "captured-controller-moves-within-shared-toolbar",
+      "origin": "snake",
+      "focusedControl": "demo-next",
+      "mode": "snake",
+      "source": "snake:classic-living-frozen-opening:standard",
+      "phase": "playing",
+      "tick": "0",
+      "practice": false
+    },
+    {
+      "type": "captured-controller-confirms-once-without-practice",
+      "origin": "snake",
+      "previousSource": "snake:classic-living-frozen-opening:standard",
+      "mode": "snake",
+      "source": "snake:classic-expedition-four-routes-home:standard",
+      "phase": "playing",
+      "tick": "0",
+      "practice": false
+    },
+    {
+      "type": "captured-controller-back-leaves-shared-demo",
+      "origin": "snake"
+    },
+    {
+      "type": "isolated-preferences-and-persistence",
+      "origin": "snake"
+    },
+    {
+      "type": "held-entry-and-neutral-remain-watching",
+      "origin": "sim",
+      "mode": "sim",
+      "source": "sim:snake-hunt-chase-01-self-level-29d5f9a1eee0c54f",
+      "phase": "playing",
+      "tick": "18",
+      "practice": false
+    },
+    {
+      "type": "focused-space-pauses-and-resumes-without-practice",
+      "origin": "sim",
+      "mode": "sim",
+      "source": "sim:snake-hunt-chase-01-self-level-29d5f9a1eee0c54f",
+      "phase": "playing",
+      "tick": "18",
+      "practice": false
+    },
+    {
+      "type": "focused-space-advances-performance-without-practice",
+      "origin": "sim",
+      "previousSource": "sim:snake-hunt-chase-01-self-level-29d5f9a1eee0c54f",
+      "mode": "sim",
+      "source": "sim:beginner-14-acro-cea3c2b2d9a5dc24",
+      "phase": "playing",
+      "tick": "1",
+      "practice": false
+    },
+    {
+      "type": "captured-controller-moves-within-shared-toolbar",
+      "origin": "sim",
+      "focusedControl": "demo-next",
+      "mode": "sim",
+      "source": "sim:beginner-14-acro-cea3c2b2d9a5dc24",
+      "phase": "playing",
+      "tick": "14",
+      "practice": false
+    },
+    {
+      "type": "captured-controller-confirms-once-without-practice",
+      "origin": "sim",
+      "previousSource": "sim:beginner-14-acro-cea3c2b2d9a5dc24",
+      "mode": "sim",
+      "source": "sim:flight-10-self-level-17c60cf6ab703346",
+      "phase": "playing",
+      "tick": "17",
+      "practice": false
+    },
+    {
+      "type": "captured-controller-back-leaves-shared-demo",
+      "origin": "sim"
+    },
+    {
+      "type": "isolated-preferences-and-persistence",
+      "origin": "sim"
+    }
+  ],
+  "errors": [],
+  "errorOverflow": 0,
+  "headBefore": "7438d14d6cffa5b5995bfb4050a4ec21aff7dd82",
+  "sourceBefore": {
+    "sha256": "892df93b69ae0d56e7ae631ef4a1dc268950db818e42b8be122109d0834e036c",
+    "files": 9997,
+    "bytes": 404434188
+  },
+  "buildInputsBefore": {
+    "sha256": "31d7feed289f5e8f2e40f32c72422bb2a4a5a9ab9b8c802e1a0a77cbc2dc9e44",
+    "files": 9406,
+    "bytes": 348394334
+  },
+  "observerSHA256": "f06a1dad554ac801a5ecead041c34b7d5fde9043bcc0da382a4c77cfd2d2f6bb",
+  "emittedBefore": {
+    "manifest": {
+      "path": ".cache/shared-demo-scratch-c4c5fc3c/captures/shared-demos-emitted-ab47230-7438d14d6/manifest.json",
+      "bytes": 1304587,
+      "sha256": "7e3005f0577aa27b361a27f982be173504ead47cb57e74df6ad5fe0fc436d888"
+    },
+    "audit": {
+      "path": "docs/qualification/shared-demos/main-pages-demo-final-ab47230-7438d14d6.json",
+      "bytes": 2063648,
+      "sha256": "1186608f834442bbcd050d037240f957bb7cfab8640324a1d6c5557551ec241f"
+    },
+    "inventory": {
+      "path": "docs/qualification/shared-demos/main-pages-demo-final-ab47230-7438d14d6.inventory.json",
+      "bytes": 941265,
+      "sha256": "8bb758f29f8291e0f658d4404e778058c4a0b953d5bda11276f7c6926687d3f4"
+    },
+    "identity": {
+      "inventorySHA256": "d89d1e29792a85fb05e4b024f4c6ff097645ac349eb5194c1a5ce0f4bc9ceecc",
+      "sourceRevision": "7438d14d6cffa5b5995bfb4050a4ec21aff7dd82",
+      "sourceFingerprint": {
+        "sha256": "892df93b69ae0d56e7ae631ef4a1dc268950db818e42b8be122109d0834e036c",
+        "files": 9997,
+        "bytes": 404434188
+      },
+      "buildInputFingerprint": {
+        "sha256": "31d7feed289f5e8f2e40f32c72422bb2a4a5a9ab9b8c802e1a0a77cbc2dc9e44",
+        "files": 9406,
+        "bytes": 348394334
+      }
+    }
+  },
+  "evidenceHelperSHA256": "6b94daf1ec09b7e7e16faf905442d50d9e0f8c924479f994a67c89824bb39bc9",
+  "scope": "Actual native pages with seeded isolated shared preferences and a virtual standard gamepad. No runtime module or response routing. The preview changes access credentials only. The checks cover native Snake and SIM menu focus, keyboard button activation and held/neutral controller admission. Physical controllers/radios remain a separate human check.",
+  "preview": {
+    "mode": "generated-build",
+    "headers": "generated _headers (verified)",
+    "cache": "revalidate",
+    "fixtureAccess": true,
+    "emittedPreview": {
+      "directory": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/captures/shared-demos-emitted-ab47230-7438d14d6",
+      "manifestSHA256": "7e3005f0577aa27b361a27f982be173504ead47cb57e74df6ad5fe0fc436d888",
+      "inventorySHA256": "d89d1e29792a85fb05e4b024f4c6ff097645ac349eb5194c1a5ce0f4bc9ceecc",
+      "files": 5953,
+      "sourceRevision": "7438d14d6cffa5b5995bfb4050a4ec21aff7dd82",
+      "sourceFingerprint": {
+        "sha256": "892df93b69ae0d56e7ae631ef4a1dc268950db818e42b8be122109d0834e036c",
+        "files": 9997,
+        "bytes": 404434188
+      },
+      "buildInputFingerprint": {
+        "sha256": "31d7feed289f5e8f2e40f32c72422bb2a4a5a9ab9b8c802e1a0a77cbc2dc9e44",
+        "files": 9406,
+        "bytes": 348394334
+      },
+      "sourceVerified": true,
+      "sourceVerification": {
+        "head": "7438d14d6cffa5b5995bfb4050a4ec21aff7dd82",
+        "runtime": {
+          "sha256": "892df93b69ae0d56e7ae631ef4a1dc268950db818e42b8be122109d0834e036c",
+          "files": 9997,
+          "bytes": 404434188
+        },
+        "buildInput": {
+          "sha256": "31d7feed289f5e8f2e40f32c72422bb2a4a5a9ab9b8c802e1a0a77cbc2dc9e44",
+          "files": 9406,
+          "bytes": 348394334
+        }
+      }
+    },
+    "fixtureResponses": [
+      {
+        "path": "game/snake/play.html",
+        "original": {
+          "bytes": 17647,
+          "sha256": "884607b63aa1d690f1f91330bb4ff171d9b7fe79b914eb933e43ffc9fd07ba9a"
+        },
+        "served": {
+          "bytes": 17621,
+          "sha256": "29e74ec48d464393b04ce34fbdc9b3f18f2d73b1b1e100038699ea740f2ebd28"
+        },
+        "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+      },
+      {
+        "path": "optional-practice/fpv-worlds/index.html",
+        "original": {
+          "bytes": 49494,
+          "sha256": "f36752ecf688965c81db7828c0702fe4e41a3d2115602b8e6fd70ec8d085fe10"
+        },
+        "served": {
+          "bytes": 49468,
+          "sha256": "c793a25b5482c55229f65c9aafd7f784063063f71b0d9b5122a24ab2efd6d138"
+        },
+        "change": "Local access salt and verifier only; not an offline HTML integrity proof."
+      }
+    ]
+  },
+  "seededProfileKey": "revealline.library.release-0.151.1.v1",
+  "limitations": [
+    "Emitted bytes are verified against the held source; only local HTML access credentials differ. No offline HTML integrity or physical-controller claim."
+  ],
+  "browserEngine": "chromium",
+  "browserVersion": "155.0.8059.85",
+  "headAfter": "7438d14d6cffa5b5995bfb4050a4ec21aff7dd82",
+  "sourceAfter": {
+    "sha256": "892df93b69ae0d56e7ae631ef4a1dc268950db818e42b8be122109d0834e036c",
+    "files": 9997,
+    "bytes": 404434188
+  },
+  "buildInputsAfter": {
+    "sha256": "31d7feed289f5e8f2e40f32c72422bb2a4a5a9ab9b8c802e1a0a77cbc2dc9e44",
+    "files": 9406,
+    "bytes": 348394334
+  },
+  "observerSHA256After": "f06a1dad554ac801a5ecead041c34b7d5fde9043bcc0da382a4c77cfd2d2f6bb",
+  "emittedAfter": {
+    "manifest": {
+      "path": ".cache/shared-demo-scratch-c4c5fc3c/captures/shared-demos-emitted-ab47230-7438d14d6/manifest.json",
+      "bytes": 1304587,
+      "sha256": "7e3005f0577aa27b361a27f982be173504ead47cb57e74df6ad5fe0fc436d888"
+    },
+    "audit": {
+      "path": "docs/qualification/shared-demos/main-pages-demo-final-ab47230-7438d14d6.json",
+      "bytes": 2063648,
+      "sha256": "1186608f834442bbcd050d037240f957bb7cfab8640324a1d6c5557551ec241f"
+    },
+    "inventory": {
+      "path": "docs/qualification/shared-demos/main-pages-demo-final-ab47230-7438d14d6.inventory.json",
+      "bytes": 941265,
+      "sha256": "8bb758f29f8291e0f658d4404e778058c4a0b953d5bda11276f7c6926687d3f4"
+    },
+    "identity": {
+      "inventorySHA256": "d89d1e29792a85fb05e4b024f4c6ff097645ac349eb5194c1a5ce0f4bc9ceecc",
+      "sourceRevision": "7438d14d6cffa5b5995bfb4050a4ec21aff7dd82",
+      "sourceFingerprint": {
+        "sha256": "892df93b69ae0d56e7ae631ef4a1dc268950db818e42b8be122109d0834e036c",
+        "files": 9997,
+        "bytes": 404434188
+      },
+      "buildInputFingerprint": {
+        "sha256": "31d7feed289f5e8f2e40f32c72422bb2a4a5a9ab9b8c802e1a0a77cbc2dc9e44",
+        "files": 9406,
+        "bytes": 348394334
+      }
+    }
+  },
+  "evidenceHelperSHA256After": "6b94daf1ec09b7e7e16faf905442d50d9e0f8c924479f994a67c89824bb39bc9",
+  "sourceUnchanged": true,
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-19T04:29:03.661Z",
+  "previewClosed": true
+}

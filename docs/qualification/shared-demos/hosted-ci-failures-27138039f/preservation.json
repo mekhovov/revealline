@@ -1,0 +1,82 @@
+{
+  "format": "SharedDemoHostedFailuresPreservationV1",
+  "files": [
+    {
+      "source": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/hosted-evidence-814ab0c330a341618d949c5218443db0/hosted-27138039f-focused1-failure/job.json",
+      "preservedPath": "271-focused1-fresh/job.json",
+      "bytes": 3944,
+      "sha256": "8300acbebd0fe791c3e00480acae557e4148bc156a3425129e1cf762a9c4cac0"
+    },
+    {
+      "source": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/hosted-evidence-814ab0c330a341618d949c5218443db0/hosted-27138039f-focused1-failure/original.log.txt",
+      "preservedPath": "271-focused1-fresh/original.log.txt",
+      "bytes": 1093626,
+      "sha256": "95bb1d0f0628e464eb7511ab9c0cd6c36d9767eeff896dea8e6d22a345344ba9"
+    },
+    {
+      "source": "/Volumes/alex/.codex-shared-demo-scratch-37e0669ba44c4107b26c7f054b5a2412/hosted-evidence-814ab0c330a341618d949c5218443db0/hosted-27138039f-focused1-failure/receipt.json",
+      "preservedPath": "271-focused1-fresh/receipt.json",
+      "bytes": 3984,
+      "sha256": "1195e8870d8d83f7dd30fa55d988ca37fb50de67ff5cea2f4d49bd3968c75e2b"
+    },
+    {
+      "source": ".cache/hosted-27138039f-focused3-failure/job.json",
+      "preservedPath": "271-focused3-workflow/job.json",
+      "bytes": 3944,
+      "sha256": "df0adbddda1ce1b7a4ddec3a6d411113a78bd91f6307efeab40eabf73fadf2fc"
+    },
+    {
+      "source": ".cache/hosted-27138039f-focused3-failure/original.log.txt",
+      "preservedPath": "271-focused3-workflow/original.log.txt",
+      "bytes": 678739,
+      "sha256": "721e13ee77484108a5c6befb034bfcff01466918c7505fff12452ba759ed3b87"
+    },
+    {
+      "source": ".cache/hosted-27138039f-focused3-failure/receipt.json",
+      "preservedPath": "271-focused3-workflow/receipt.json",
+      "bytes": 1560,
+      "sha256": "102f2ea28224272c9f91eb96aadc1f2fd8c57779c1aaa141d1d18292dd42fed2"
+    },
+    {
+      "source": ".cache/hosted-27138039f-company-candidate-failure/job.json",
+      "preservedPath": "271-company-workflow/job.json",
+      "bytes": 3694,
+      "sha256": "ad05e206f20bb1314182737c1ad37f8d36e922c6a1f23f65e143717443758104"
+    },
+    {
+      "source": ".cache/hosted-27138039f-company-candidate-failure/original.log.txt",
+      "preservedPath": "271-company-workflow/original.log.txt",
+      "bytes": 694557,
+      "sha256": "914c8041010fe0f45f3f46bcc95bf9aabde5218386daed63c9bbdfea9eb764e6"
+    },
+    {
+      "source": ".cache/hosted-27138039f-company-candidate-failure/receipt.json",
+      "preservedPath": "271-company-workflow/receipt.json",
+      "bytes": 1163,
+      "sha256": "37596cf08a1b24fc6fd16a3775a8f8158b6b4f18c3693163f4f8a49016feb300"
+    },
+    {
+      "source": ".cache/hosted-443542a94-focused3-cancelled/job.json",
+      "preservedPath": "443-focused3-workflow/job.json",
+      "bytes": 3948,
+      "sha256": "084ffdcd5906af19a46f126fec6ac5461192aa866b69a447c5796c8d0cba07b4"
+    },
+    {
+      "source": ".cache/hosted-443542a94-focused3-cancelled/original.log.txt",
+      "preservedPath": "443-focused3-workflow/original.log.txt",
+      "bytes": 561279,
+      "sha256": "f5c185a0cf1ccc6f66dc5d9fbfed72a4be5411afad13eb80e3f2d92ab6ece92d"
+    },
+    {
+      "source": ".cache/hosted-443542a94-focused3-cancelled/receipt.json",
+      "preservedPath": "443-focused3-workflow/receipt.json",
+      "bytes": 981,
+      "sha256": "daaab513824bb021ad7ad32ed468241ae982c35f2cd55dc1ade83a8681231744"
+    }
+  ],
+  "originalsUnmodified": true,
+  "limits": [
+    "Every original failure remains failed; cancelled shard443 contains an actual assertion failure before cancellation.",
+    "Native and other successful checks are separately scoped; these logs do not constitute an aggregate result."
+  ]
+}

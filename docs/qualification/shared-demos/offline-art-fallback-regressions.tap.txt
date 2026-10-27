@@ -1,0 +1,180 @@
+TAP version 13
+# Subtest: worker rejects malformed omission lists and collisions before accepting fetch events
+ok 1 - worker rejects malformed omission lists and collisions before accepting fetch events
+  ---
+  duration_ms: 13.962333
+  ...
+# Subtest: only listed same-scope GET paths receive local404; unknown and no-store cache authorization stay unchanged
+ok 2 - only listed same-scope GET paths receive local404; unknown and no-store cache authorization stay unchanged
+  ---
+  duration_ms: 6.115792
+  ...
+# Subtest: real worker supplies exact embedded fallback to both readers online and offline without writes
+ok 3 - real worker supplies exact embedded fallback to both readers online and offline without writes
+  ---
+  duration_ms: 5228.10675
+  ...
+# Subtest: real worker supplies exact external fallback to both readers online and offline without writes
+ok 4 - real worker supplies exact external fallback to both readers online and offline without writes
+  ---
+  duration_ms: 2150.840417
+  ...
+# Subtest: an off-list offline original cannot acquire a fallback merely because native bytes are cached
+ok 5 - an off-list offline original cannot acquire a fallback merely because native bytes are cached
+  ---
+  duration_ms: 5.564042
+  ...
+# Subtest: worker404 leaves pin mismatches and cancellation as failures without cache writes
+ok 6 - worker404 leaves pin mismatches and cancellation as failures without cache writes
+  ---
+  duration_ms: 18.195667
+  ...
+# Subtest: Production preserves direct originals and falls back once to byte-identical pinned artwork only after 404
+ok 7 - Production preserves direct originals and falls back once to byte-identical pinned artwork only after 404
+  ---
+  duration_ms: 1305.759625
+  ...
+# Subtest: Production refuses unavailable, corrupt, redirected and unregistered originals without broader fallback
+ok 8 - Production refuses unavailable, corrupt, redirected and unregistered originals without broader fallback
+  ---
+  duration_ms: 4.503458
+  ...
+# Subtest: Production external fallback retires every temporary decoder and retains only the displayed original
+ok 9 - Production external fallback retires every temporary decoder and retains only the displayed original
+  ---
+  duration_ms: 1268.767458
+  ...
+# Subtest: Production cancellation during a temporary fallback decode retires its URL and rejects late completion
+ok 10 - Production cancellation during a temporary fallback decode retires its URL and rejects late completion
+  ---
+  duration_ms: 59.335208
+  ...
+# Subtest: Production exact original404 cannot admit a corrupted pinned fallback pack
+ok 11 - Production exact original404 cannot admit a corrupted pinned fallback pack
+  ---
+  duration_ms: 8.277709
+  ...
+# Subtest: main Pages keeps current content and omits archive and exclusive unused artwork
+ok 12 - main Pages keeps current content and omits archive and exclusive unused artwork
+  ---
+  duration_ms: 1.821166
+  ...
+# Subtest: ordinary builds keep the full optional-artwork contract
+ok 13 - ordinary builds keep the full optional-artwork contract
+  ---
+  duration_ms: 0.268042
+  ...
+# Subtest: publication profiles fail closed
+ok 14 - publication profiles fail closed
+  ---
+  duration_ms: 0.264208
+  ...
+# Subtest: main-pages removes only a registered redundant original and retains offline fallback ownership
+ok 15 - main-pages removes only a registered redundant original and retains offline fallback ownership
+  ---
+  duration_ms: 4.54775
+  ...
+# Subtest: complete releases keep authored originals and original download groups untouched
+ok 16 - complete releases keep authored originals and original download groups untouched
+  ---
+  duration_ms: 0.263208
+  ...
+# Subtest: other consumers or owners, stale images, and missing/mismatched fallback bodies preserve originals
+ok 17 - other consumers or owners, stale images, and missing/mismatched fallback bodies preserve originals
+  ---
+  duration_ms: 1.985708
+  ...
+# Subtest: all native owners must retain an exact fallback before a shared original may be omitted
+ok 18 - all native owners must retain an exact fallback before a shared original may be omitted
+  ---
+  duration_ms: 0.596667
+  ...
+# Subtest: emitted source catalog parsing admits static metadata and never evaluates executable expressions
+ok 19 - emitted source catalog parsing admits static metadata and never evaluates executable expressions
+  ---
+  duration_ms: 1.077083
+  ...
+# Subtest: retained authoring registers cannot lose their original without the shared native reader
+ok 20 - retained authoring registers cannot lose their original without the shared native reader
+  ---
+  duration_ms: 0.629
+  ...
+# Subtest: an image pin cannot redirect the original identity or use the omitted original as fallback
+ok 21 - an image pin cannot redirect the original identity or use the omitted original as fallback
+  ---
+  duration_ms: 0.5325
+  ...
+# Subtest: omitted-original callback reports only actual admitted removals and is absent for complete releases
+ok 22 - omitted-original callback reports only actual admitted removals and is absent for complete releases
+  ---
+  duration_ms: 0.616417
+  ...
+# Subtest: optional HTML descriptors bind final emitted bytes in catalogue, worker and core
+ok 23 - optional HTML descriptors bind final emitted bytes in catalogue, worker and core
+  ---
+  duration_ms: 2830.011958
+  ...
+# Subtest: finalization preserves ownership and soundtrack pins and rejects incomplete input atomically
+ok 24 - finalization preserves ownership and soundtrack pins and rejects incomplete input atomically
+  ---
+  duration_ms: 0.337625
+  ...
+# Subtest: main-only canonical projection preserves runtime and unknown original bytes
+ok 25 - main-only canonical projection preserves runtime and unknown original bytes
+  ---
+  duration_ms: 0.634083
+  ...
+# Subtest: complete release profile preserves every canonical original and all catalogue data
+ok 26 - complete release profile preserves every canonical original and all catalogue data
+  ---
+  duration_ms: 0.200333
+  ...
+# Subtest: canonical file dependency rejects main-only removal atomically
+ok 27 - canonical file dependency rejects main-only removal atomically
+  ---
+  duration_ms: 0.218917
+  ...
+# Subtest: canonical group dependency rejects main-only removal atomically
+ok 28 - canonical group dependency rejects main-only removal atomically
+  ---
+  duration_ms: 0.104041
+  ...
+# Subtest: incomplete canonical projection rejects game/i18n/catalogs.mjs
+ok 29 - incomplete canonical projection rejects game/i18n/catalogs.mjs
+  ---
+  duration_ms: 0.089625
+  ...
+# Subtest: incomplete canonical projection rejects app/i18n/catalogs.mjs
+ok 30 - incomplete canonical projection rejects app/i18n/catalogs.mjs
+  ---
+  duration_ms: 0.116666
+  ...
+# Subtest: incomplete canonical projection rejects game/locales/en/common.json
+ok 31 - incomplete canonical projection rejects game/locales/en/common.json
+  ---
+  duration_ms: 0.139458
+  ...
+# Subtest: new browser canonical original consumer blocks the main-only projection
+ok 32 - new browser canonical original consumer blocks the main-only projection
+  ---
+  duration_ms: 0.152333
+  ...
+# Subtest: empty duplicate compiled catalogue rejects atomically: game/i18n/catalogs.mjs
+ok 33 - empty duplicate compiled catalogue rejects atomically: game/i18n/catalogs.mjs
+  ---
+  duration_ms: 0.112042
+  ...
+# Subtest: empty duplicate compiled catalogue rejects atomically: app/i18n/catalogs.mjs
+ok 34 - empty duplicate compiled catalogue rejects atomically: app/i18n/catalogs.mjs
+  ---
+  duration_ms: 0.096667
+  ...
+1..34
+# tests 34
+# suites 0
+# pass 34
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 14232.491

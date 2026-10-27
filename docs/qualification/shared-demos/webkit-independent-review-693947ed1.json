@@ -1,0 +1,26 @@
+{
+  "format": "SharedDemoIndependentWebKitReviewV1",
+  "observed": "2026-10-19T01:12:38.391715+00:00",
+  "reviewer": "snake_adapter",
+  "sourceRevision": "693947ed1373db7a265def126a5eede2bf875013",
+  "method": "Read-only independent source/evidence review; no browser, retry, product edit or new test execution.",
+  "inputs": {
+    "restoration-webkit-final-emitted-dd337c8-693947ed1.json": "43a6a0d539c15484a220e8acb8012479fd2fd6093e38287297a1ed1ad0f36324",
+    "webkit-engine-navigation-693947ed1.json": "7b100cd4c544299b6a6ccd957f6c2ef7fe5edfa43ea6360b47ea9a35395dad65",
+    "webkit-engine-navigation-693947ed1-review.json": "1552f813571054ab0ff87b41ca14c3978d92a075f39f28f6bf65744131a54e99"
+  },
+  "finding": "No concrete additional product ownership defect demonstrated; no lifecycle patch recommended on current evidence.",
+  "evidence": [
+    "All twelve functional restoration checks pass; one native Fetch access-control pageerror is retained as strict failure.",
+    "Current error precedes old-document pagehide by 9ms.",
+    "Presentation image fetch uses AbortSignal; application owns and catches load rejection. Closure retires late results and aborts owned work. The exact presentation host bytes match the prior instrumented ownership trace.",
+    "Independent no-game replacement probe catches three Fetch failures and emits two native pageerrors with no DOM errors. Its original exact-three predicate remains target-not-reproduced."
+  ],
+  "limitations": [
+    "Installed-engine navigation behavior is strongly supported, but exclusive causation and exact current-request handler execution are not proven.",
+    "This review does not reclassify prior Fetch, Blob or Cache errors, and does not clear the strict WebKit gate.",
+    "Early beforeunload cleanup could disrupt cancelled navigation and existing saved-session protections."
+  ],
+  "requiredStatus": "WebKit strict diagnostic unresolved; continue independent automated qualification.",
+  "upstreamReference": "https://github.com/microsoft/playwright/issues/43120"
+}

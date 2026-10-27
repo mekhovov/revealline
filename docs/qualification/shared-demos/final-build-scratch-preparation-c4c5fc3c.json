@@ -1,0 +1,109 @@
+{
+  "format": "revealline-demo-build-scratch-preparation.v1",
+  "created": "2026-10-19T02:34:02.802285+00:00",
+  "status": "preparation-only-scratch-preserved-local-evidence-write-blocked",
+  "buildExecuted": false,
+  "browserExecuted": false,
+  "qualificationCredit": false,
+  "sourceRevisionObserved": "f4c86112ceca20b2e720590bd217d77f3b05ce65",
+  "scope": "Ignored build wrapper and isolated scratch helper/test only; no product or tracked harness edits, Git changes, mount creation, deletion, or device detach by this preparation.",
+  "priorWrapper": {
+    "path": "docs/qualification/shared-demos/final-build-wrapper-before-scratch-c4c5fc3c.mjs.txt",
+    "sha256": "a717cf42d8c3890fd6478cebaa1f4f8ac37b261ec6d9c1d3bae004409805ba73"
+  },
+  "sources": [
+    {
+      "path": ".cache/run-final-build-current.mjs",
+      "sha256": "dfbcb74bbff73b4a50af80e35cbbec8e99da7748abb41d83d55ad8d592f4c56d",
+      "bytes": 10929,
+      "preservedSource": ".cache/shared-demo-scratch-c4c5fc3c/tmp/preparation-evidence/final-build-scratch-preparation-c4c5fc3c/run-final-build-current.mjs.txt"
+    },
+    {
+      "path": ".cache/final-build-scratch.mjs",
+      "sha256": "1c8c537e0e9c68a57a5d568fccd641b6c26a7c5458115755c2125afd4546d6e7",
+      "bytes": 4580,
+      "preservedSource": ".cache/shared-demo-scratch-c4c5fc3c/tmp/preparation-evidence/final-build-scratch-preparation-c4c5fc3c/final-build-scratch.mjs.txt"
+    },
+    {
+      "path": ".cache/test-final-build-scratch.mjs",
+      "sha256": "1000b438d2ac47add5170f2c5c5f7cf6b4615d497927bfdff50873183193884f",
+      "bytes": 5122,
+      "preservedSource": ".cache/shared-demo-scratch-c4c5fc3c/tmp/preparation-evidence/final-build-scratch-preparation-c4c5fc3c/test-final-build-scratch.mjs.txt"
+    },
+    {
+      "path": ".cache/final-build-wrapper-support.mjs",
+      "sha256": "dfce473c01d09a65f15ae4f22d5936945c262e7fc5af93746da7704e3541b07e",
+      "bytes": 1742,
+      "preservedSource": ".cache/shared-demo-scratch-c4c5fc3c/tmp/preparation-evidence/final-build-scratch-preparation-c4c5fc3c/final-build-wrapper-support.mjs.txt"
+    },
+    {
+      "path": ".cache/test-final-build-wrapper-support.mjs",
+      "sha256": "5164a52791e8a30846aef413631ad6e4e887dc23e87a482b10ab73c4b0fe2640",
+      "bytes": 3650,
+      "preservedSource": ".cache/shared-demo-scratch-c4c5fc3c/tmp/preparation-evidence/final-build-scratch-preparation-c4c5fc3c/test-final-build-wrapper-support.mjs.txt"
+    }
+  ],
+  "verification": {
+    "command": "node --test .cache/test-final-build-scratch.mjs .cache/test-final-build-wrapper-support.mjs",
+    "exitCode": 0,
+    "tests": 14,
+    "pass": 14,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "durationMs": 43.803334,
+    "transcriptScope": "Summary of actual completed tool output; not a newly rerun or reconstructed full TAP log.",
+    "syntaxCommand": "node --check .cache/run-final-build-current.mjs",
+    "syntaxExitCode": 0,
+    "fixtureFilesystem": "In-memory filesystem doubles; no actual scratch writes from these tests.",
+    "ownedChildren": "Test and syntax Node processes completed; no browser/build child was launched."
+  },
+  "coveredFailures": [
+    "unsafe or missing scratch path",
+    "same-device unmounted fallback",
+    "symlink ancestor or redirected realpath",
+    "foreign owner",
+    "low source or scratch capacity",
+    "non-private/foreign/symlinked/cross-device child",
+    "mount disappearance or inode replacement during monitoring",
+    "scratch capacity falling below floor",
+    "existing primary child failure/required receipt and attempt-suffix behavior"
+  ],
+  "readOnlyMountObservation": {
+    "path": ".cache/shared-demo-scratch-c4c5fc3c",
+    "sourceDevice": 16777231,
+    "scratchDevice": 16777238,
+    "scratchInode": 2,
+    "ownerUid": 502,
+    "tmpMode": "0o700",
+    "capturesMode": "0o700",
+    "ownedStatePath": ".cache/owned-demo-scratch-state.json",
+    "ownedStateSHA256": "6f725d92a747ea9bb942ad03f286d98d05337f35091b4094422250e15b8a285e",
+    "creationAndDetachOwner": "Parent task; this helper neither mounts nor detaches devices."
+  },
+  "invocationAddition": "--scratch=.cache/shared-demo-scratch-c4c5fc3c",
+  "captureOutputTemplate": ".cache/shared-demo-scratch-c4c5fc3c/captures/shared-demos-emitted-<base7>-<head9>[-<attempt>]",
+  "childEnvironment": {
+    "TMPDIR": "<scratch>/tmp",
+    "GIT_NO_LAZY_FETCH": "1",
+    "NODE_DISABLE_COMPILE_CACHE": "1"
+  },
+  "guards": {
+    "sourceMinimumAvailableBytes": 209715200,
+    "scratchMinimumAvailableBytes": 209715200,
+    "monitorIntervalMs": 30000,
+    "stageTimeoutMs": 1200000,
+    "stageLogLimitBytes": 2097152,
+    "existingEvidenceOverwrite": "refused",
+    "sourceAndHelperBeforeAfterHashes": "required"
+  },
+  "limitations": [
+    "No build or browser qualification was performed by this preparation.",
+    "Scratch capacity observations do not explain or eliminate the previous local-space decline.",
+    "Small reports and the existing fixed metadata temporary directory remain on the source volume; its 200 MiB floor is unchanged.",
+    "No external image lifecycle or exclusive ownership guarantee is inferred from filesystem device identity alone; parent owns the recorded mount lifecycle.",
+    "Checks are sampled, not an atomic lock preventing another process from unmounting between filesystem operations."
+  ],
+  "preparationWriteIncident": "Initial shell heredoc failed before Python with ENOSPC. A no-heredoc retry failed mkdir of the intended docs evidence directory with ENOSPC. This receipt and exact copies are therefore preserved on the owned scratch volume, not yet in the durable docs tree. Read-only df showed 120037376 source bytes free, below the build floor; no build was launched."
+}

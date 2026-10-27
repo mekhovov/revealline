@@ -10,6 +10,17 @@ const failure = (error) =>
       ? 'blocked'
       : 'unavailable';
 
+/** Read the canonical shared choice without owning listeners or persistence. */
+export function readStoredTouchControls(storage) {
+  try {
+    const raw = storage?.getItem(TOUCH_PREFERENCES_KEY);
+    if (raw && raw.length <= 512) return resolveTouchControls(JSON.parse(raw));
+  } catch {
+    // Invalid/denied storage leaves the caller's valid fallback intact.
+  }
+  return null;
+}
+
 /** Shared presentation preference only. Never writes a campaign/profile or changes rules.
  * Writes remain synchronous. Fresh reads preserve observed unrelated edits; this
  * is verified readback, not an atomic transaction across concurrent browser tabs. */

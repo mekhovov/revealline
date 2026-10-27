@@ -1,0 +1,74 @@
+{
+  "format": "SharedDemoEnduranceRunnerPreparationV2",
+  "created": "2026-10-19T01:55:15.591638+00:00",
+  "preparationOnly": true,
+  "enduranceCreditSeconds": 0,
+  "browserStarted": false,
+  "observedHeadAtStart": "e6df275e677ff53cf38ab92bc7cd25c8b7f7ff12",
+  "observedHeadAtReceipt": "e6df275e677ff53cf38ab92bc7cd25c8b7f7ff12",
+  "change": {
+    "addedExactHarnessBinding": "scripts/shared-demo-endurance-progress.mjs",
+    "allOtherWrapperBytesUnchanged": true
+  },
+  "sourcePins": {
+    ".cache/run-endurance-emitted-final.py": {
+      "bytes": 26055,
+      "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c"
+    },
+    ".cache/test-endurance-process-ownership.py": {
+      "bytes": 9320,
+      "sha256": "877a47a061e744d8839997ff2305e34b00ad47bb401cb7bbf0efc53ca72e08f2"
+    },
+    "scripts/shared-demo-endurance-progress.mjs": {
+      "bytes": 1777,
+      "sha256": "1424182b8c2386043155517afab422df3df33d73ce20347e905d80b83ca0bcec"
+    },
+    "scripts/qualify-shared-demo-browser.mjs": {
+      "bytes": 17912,
+      "sha256": "159529e4bf00f7d6cad0a9ed8ecbf725535c3a3c560cd40fb2968b5e700a7675"
+    }
+  },
+  "preservedPriorWrapper": {
+    "path": "docs/qualification/shared-demos/endurance-source-emitted-693947ed1-final-wrapper.py.txt",
+    "sha256": "79b966bb098d69f014dbf34111c3ae7c13c6ce1c3f1137b3f0e8a8e17c07b3ab",
+    "unchanged": true
+  },
+  "preservedPriorSourceReceipt": {
+    "path": "docs/qualification/shared-demos/endurance-source-emitted-693947ed1-final.json",
+    "sha256": "39a90e227a6d356e0b77524984ec10332067fd87a412fc426deb2f2ff6c22ccb",
+    "unchanged": true
+  },
+  "tests": {
+    "command": [
+      "python3",
+      ".cache/test-endurance-process-ownership.py"
+    ],
+    "environment": {
+      "PYTHONDONTWRITEBYTECODE": "1"
+    },
+    "exitCode": 0,
+    "passed": 5,
+    "failed": 0,
+    "reportedDurationSeconds": 2.291,
+    "stdoutAndStderr": "docs/qualification/shared-demos/endurance-runner-preparation-e6df275e6/fixtures.log.txt",
+    "scope": "Existing lightweight no-browser process ownership, detached descendants/unrelated survivor, identity checks, bounded evidence and log-drain fixtures. Fixtures independently retire their own subprocesses."
+  },
+  "preservedSources": {
+    "wrapper": "docs/qualification/shared-demos/endurance-runner-preparation-e6df275e6/wrapper.py.txt",
+    "tests": "docs/qualification/shared-demos/endurance-runner-preparation-e6df275e6/tests.py.txt"
+  },
+  "unchangedRequirements": [
+    "7201 requested watching seconds; minimum7200 accepted",
+    "7800-second outer deadline",
+    "Owned process identity checks and bounded cleanup",
+    "Ownership/action evidence caps and byte-capped draining",
+    "Exact HEAD/runtime/build/capture before-and-after binding",
+    "Browser/server/worker/persistence gates remain in the unchanged tracked qualifier"
+  ],
+  "limitations": [
+    "No browser, replay, build, or endurance run was started.",
+    "This is runner preparation only; root supplies the next exact HEAD/runtime/capture after build.",
+    "No current full runtime fingerprint was recomputed by this preparation.",
+    "The old693947ed1 continuity analyzer remains historical; the new tracked observation-gap guard is qualified separately."
+  ]
+}

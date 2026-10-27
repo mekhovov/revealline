@@ -1,0 +1,197 @@
+{
+  "created": "2026-10-18T22:46:36.066466+00:00",
+  "head": "34752db83d1d58ac56f833082ccf796e8167031b",
+  "complete": true,
+  "scope": "Combined root shared-controls implementation plus reviewed native-origin preference corrections. These hashes were captured after the tests; they identify this dirty source state, not a new canonical freeze or a browser result.",
+  "sources": [
+    {
+      "path": "game/demo-settings.mjs",
+      "bytes": 4337,
+      "sha256": "015d8bd720cd13e1cccce721b2b013dd38d4703e1fb1fae4b2297251fe355dec"
+    },
+    {
+      "path": "game/ui/demo-entry.mjs",
+      "bytes": 3758,
+      "sha256": "14ddeaf79a442de3f4f3d3e218a332217e12301109b35e577a2080620837b731"
+    },
+    {
+      "path": "game/ui/demo-host.mjs",
+      "bytes": 55969,
+      "sha256": "fe775bf8636e29d1cedc84fba62f8be47d233c267296fd245bdcc53b83c03d61"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/demo-input.mjs",
+      "bytes": 14727,
+      "sha256": "5e7c2111259ca55b2702dfff21daf055e934705f6744398ec481b9f7d25ca9ab"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/input.mjs",
+      "bytes": 48971,
+      "sha256": "cb953e5b990f69d58ee74c75139e04b71baf3329f0cf22775937d6f0f65a472d"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/world-app.mjs",
+      "bytes": 418369,
+      "sha256": "16f4db92d8ad196dcbb41d095f6bbb3897d797d2d1f6f9f04399220c5132e66b"
+    },
+    {
+      "path": "game/touch-preferences.mjs",
+      "bytes": 2936,
+      "sha256": "cd06f151e6ccce3e4f2b4bdc32093c8db95e76d83faceaf6694b8003b87a24fb"
+    },
+    {
+      "path": "game/ui/demo-controller.mjs",
+      "bytes": 4537,
+      "sha256": "40009f55ae8148ca2aa87305cb19723d518ae8f4c2cff1f745434c8f6743c66a"
+    },
+    {
+      "path": "game/overflight/controller.mjs",
+      "bytes": 9437,
+      "sha256": "02a287526f719835d8829bf3cbcd5e586d4e4ea1da5b68e409b5579940563a25"
+    },
+    {
+      "path": "game/overflight/app.mjs",
+      "bytes": 94190,
+      "sha256": "fc415ae0525f22639ecc6c9ec06381ad176ec79638014f816c2622cd38f218cf"
+    }
+  ],
+  "tests": [
+    {
+      "path": "game/test/demo-controller.test.mjs",
+      "bytes": 14197,
+      "sha256": "4a12863e3c76d9fae6527c29189d8160d01848e49c1932d1c6d9d8f2cd0ef0b0"
+    },
+    {
+      "path": "game/test/demo-settings.test.mjs",
+      "bytes": 15070,
+      "sha256": "3a6a6d708722eba45f7687dc08595ab41f15291a95db2b80d59c7f29da8527a9"
+    },
+    {
+      "path": "game/test/demo-sim-input.test.mjs",
+      "bytes": 8547,
+      "sha256": "71d74fe139b4b526c9a114e7e8f0d82cb89dacccd64f14030a6ee6af84a48659"
+    },
+    {
+      "path": "game/test/shared-touch-preferences.test.mjs",
+      "bytes": 4615,
+      "sha256": "abe2a26c8fdd6a15ca97c8e2c8300c39b35563ea3c58e9679a51a1a936a9855b"
+    },
+    {
+      "path": "game/test/overflight-controller.test.mjs",
+      "bytes": 11577,
+      "sha256": "da2dbdad03a6f24a57064b4f4fc4b07b3f04ce7c32e864fed8ce83f7c1ad319e"
+    },
+    {
+      "path": "game/test/controller-router.test.mjs",
+      "bytes": 30890,
+      "sha256": "ef4bb75b0800a627300347d062985448c387df62a5da9fcc84538a28c26fdc13"
+    },
+    {
+      "path": "game/test/controller-router-bindings.test.mjs",
+      "bytes": 16106,
+      "sha256": "3c27da51837dba585757f89aa7d0750e8e5d305f9df2e97f0530c53d0c6b3c2d"
+    },
+    {
+      "path": "game/test/controller-boost.test.mjs",
+      "bytes": 13407,
+      "sha256": "80dce4b5f92d08bb0889d3b39e321d1ff61105c90ba44f8d1cc91525c9e15b21"
+    },
+    {
+      "path": "game/test/demo-input.test.mjs",
+      "bytes": 37083,
+      "sha256": "706855da54176873947b064bd515e940a922bad8a750c05baf5d37c042c9d837"
+    },
+    {
+      "path": "game/test/demo-native-host.test.mjs",
+      "bytes": 12280,
+      "sha256": "b8352f59b6c43bef3468641d8dd5019ef083d5b405ce5b3b21b26597004a9b91"
+    },
+    {
+      "path": "game/test/demo-confirm-host.test.mjs",
+      "bytes": 9912,
+      "sha256": "b4cc1a8136bb246d592de61e40c3ecd635ed7a03dd8492af67e20edc830283a3"
+    },
+    {
+      "path": "game/test/demo-confirm-settings-host.test.mjs",
+      "bytes": 8052,
+      "sha256": "700416842ddcd009d48a529c58811354a349f2562ccfc5bb62e2085d5c74bf55"
+    },
+    {
+      "path": "game/test/overflight-host.test.mjs",
+      "bytes": 44007,
+      "sha256": "b02f645f67de9ae15f59a00f684e88b2ccd8df9dd3120cbcd35966afb6272870"
+    },
+    {
+      "path": "game/test/touch-steering.test.mjs",
+      "bytes": 13933,
+      "sha256": "df6d30a6002a17f0043022552baab5e3e5822f4ec8d31431d0d17fae2682fda3"
+    }
+  ],
+  "testCommand": "node --test --test-concurrency=2 game/test/demo-controller.test.mjs game/test/demo-settings.test.mjs game/test/demo-sim-input.test.mjs game/test/shared-touch-preferences.test.mjs game/test/overflight-controller.test.mjs game/test/controller-router.test.mjs game/test/controller-router-bindings.test.mjs game/test/controller-boost.test.mjs game/test/demo-input.test.mjs game/test/demo-native-host.test.mjs game/test/demo-confirm-host.test.mjs game/test/demo-confirm-settings-host.test.mjs game/test/overflight-host.test.mjs game/test/touch-steering.test.mjs",
+  "testResult": {
+    "tests": 272,
+    "pass": 272,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "durationMs": 79409.161208,
+  "tap": {
+    "path": "docs/qualification/shared-demos/shared-controls-origin-regressions-final-237.tap.txt",
+    "bytes": 61453,
+    "sha256": "7592a07ea14d14f6247a10b805f66d0efe958b44f58e525f9a54419573548039"
+  },
+  "lint": {
+    "exitCode": 0,
+    "files": [
+      "game/demo-settings.mjs",
+      "game/ui/demo-entry.mjs",
+      "game/ui/demo-host.mjs",
+      "optional-practice/civilian-fpv/demo-input.mjs",
+      "optional-practice/civilian-fpv/input.mjs",
+      "optional-practice/civilian-fpv/world-app.mjs",
+      "game/touch-preferences.mjs",
+      "game/ui/demo-controller.mjs",
+      "game/overflight/controller.mjs",
+      "game/overflight/app.mjs",
+      "game/test/demo-controller.test.mjs",
+      "game/test/demo-settings.test.mjs",
+      "game/test/demo-sim-input.test.mjs"
+    ],
+    "log": {
+      "path": "docs/qualification/shared-demos/shared-controls-combined-lint-final-237.log.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "format": {
+    "exitCode": 0,
+    "scope": "Seven follow-up-owned files; root original controls formatting remains separately evidenced.",
+    "log": {
+      "path": "docs/qualification/shared-demos/shared-controls-origin-format-final-237.log.txt",
+      "bytes": 66,
+      "sha256": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20"
+    }
+  },
+  "diffCheck": {
+    "exitCode": 0,
+    "scope": "Ten combined production files and three changed tests only. Unrelated concurrent mission-library test whitespace was reported to parent and left untouched."
+  },
+  "behavior": [
+    "Only Survival-origin frames targeting Solo/Snake remap shared flight from the native-assigned captured device; native UI Confirm/release edges and Survival continuous vectors/dash remain unchanged.",
+    "Shared flight honors saved mappings and toggle Boost. Native raw radio admission/calibration is exposed through a read-only lookup; no extra hardware sample or listener is added.",
+    "Canonical shared touch settings use the existing bounded validated reader, with legacy library fallback; no second persistence owner, listener, migration or write.",
+    "Native SIM hints use native keyboard/controller/radio mappings; ordinary SIM help is factored without changing gameplay controls."
+  ],
+  "limitations": [
+    "No physical controller or mobile assessment was performed.",
+    "Browser checks are prepared but not launched; current source/HEAD freeze is required first.",
+    "The historical initial controls receipt remains unchanged and is not relabeled as this final state."
+  ],
+  "preparedBrowserObserver": {
+    "path": ".cache/qualify-shared-controls-237.mjs",
+    "bytes": 9928,
+    "sha256": "e4bc1db288622396b60cf6440c4c77978091927158f7eced4017926174613fae"
+  }
+}

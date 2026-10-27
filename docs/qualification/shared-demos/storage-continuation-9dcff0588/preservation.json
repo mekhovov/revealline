@@ -1,0 +1,70 @@
+{
+  "format": "SharedDemoStorageContinuationEvidencePreservationV1",
+  "complete": true,
+  "created": "2026-10-19T11:17:25.604704+00:00",
+  "head": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "files": [
+    {
+      "source": ".cache/task-worktree-sparse-historical-docs-9dcff0588.json",
+      "path": "docs/qualification/shared-demos/storage-continuation-9dcff0588/task-worktree-sparse-historical-docs-9dcff0588.json",
+      "bytes": 3629,
+      "sha256": "bf0e45f498b8b09d6a4c826fa0acbae6873941dc48dad66c7af52d5a51737786"
+    },
+    {
+      "source": ".cache/task-worktree-sparse-historical-docs-9dcff0588.files.json",
+      "path": "docs/qualification/shared-demos/storage-continuation-9dcff0588/task-worktree-sparse-historical-docs-9dcff0588.files.json",
+      "bytes": 2386899,
+      "sha256": "4ffa75550cd4f81c1758ed0a161281d1c0532dcbaa07208a58408ad34fec0f66"
+    },
+    {
+      "source": ".cache/omit-pristine-historical-docs-9dcff0588.py",
+      "path": "docs/qualification/shared-demos/storage-continuation-9dcff0588/omit-pristine-historical-docs-9dcff0588.py.txt",
+      "bytes": 10378,
+      "sha256": "d4b38ed9b7c4e66a76a6eb94dd351c8b37322f47f9bc7d7f177ff5a6beb246b9"
+    },
+    {
+      "source": ".cache/external-qualification-checkout-9dcff0588-preflight.json",
+      "path": "docs/qualification/shared-demos/storage-continuation-9dcff0588/external-qualification-checkout-9dcff0588-preflight.json",
+      "bytes": 1071,
+      "sha256": "ada38a75824031c0ef6bfb3b8b08f546cacd0dde2d128cee4a796ce71350fa65"
+    },
+    {
+      "source": ".cache/external-qualification-checkout-9dcff0588-create.json",
+      "path": "docs/qualification/shared-demos/storage-continuation-9dcff0588/external-qualification-checkout-9dcff0588-create.json",
+      "bytes": 26941,
+      "sha256": "c7dc638d37dacd076021a0e905f3e919b448c250418748a1c773b43e6555a9ca"
+    },
+    {
+      "source": ".cache/external-qualification-checkout-9dcff0588-create.log.txt",
+      "path": "docs/qualification/shared-demos/storage-continuation-9dcff0588/external-qualification-checkout-9dcff0588-create.log.txt",
+      "bytes": 31294,
+      "sha256": "f0620193895ee4943f4545756671199da1109bffa5165c01684d79c3a948cde6"
+    },
+    {
+      "source": ".cache/create-external-qualification-checkout.py",
+      "path": "docs/qualification/shared-demos/storage-continuation-9dcff0588/create-external-qualification-checkout.py.txt",
+      "bytes": 6385,
+      "sha256": "aac54b1280b7fa874849d22ab616993390ace0da7a59d012c3e56e5d3a893d7e"
+    },
+    {
+      "source": ".cache/preflight-external-qualification-checkout.py",
+      "path": "docs/qualification/shared-demos/storage-continuation-9dcff0588/preflight-external-qualification-checkout.py.txt",
+      "bytes": 3003,
+      "sha256": "0386544f8877de0c8596a87555cd614708729fa26c677c18204ac4b4562afea2"
+    },
+    {
+      "source": ".cache/external-tmp-supervisors-independent-review-9dcff0588.json",
+      "path": "docs/qualification/shared-demos/storage-continuation-9dcff0588/external-tmp-supervisors-independent-review-9dcff0588.json",
+      "bytes": 2380,
+      "sha256": "e4a9cfaac712edbc12cbccd13bc632adc248906bf59bf10167129bf222dced4d"
+    }
+  ],
+  "bytes": 2471980,
+  "freeBytesAfter": 268242944,
+  "conclusions": [
+    "External checkout failed its900second bound at15percent and exact-owned cleanup verified with no remaining processes; partial directory retained and no capture copied.",
+    "Worktree-only sparse omission proved5585 pristine tracked historical files and preserved all other index flags/source/capture/status/primary Git configuration.",
+    "Observed free-space increase was about12MB despite377MB summed allocated file blocks; actual500MiB browser-release threshold remains unmet. No cause for this discrepancy is asserted.",
+    "Read-only APFS Data snapshot query returned an empty snapshot array."
+  ]
+}

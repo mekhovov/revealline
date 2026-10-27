@@ -1,0 +1,28 @@
+import { execFileSync } from 'node:child_process';
+import { appendFileSync, readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { createHash } from 'node:crypto';
+const root="/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/";
+const ref='2d24aee29448667a2cbe0381ef1755529f59fb11';
+const log=new URL('./display-host-main-2d24-writer-diagnostic-modules.jsonl',import.meta.url);
+const env={...process.env,GIT_NO_LAZY_FETCH:'1'};
+const files=new Set(execFileSync('git',['ls-tree','-r','--name-only',ref],{cwd:root,env,encoding:'utf8',maxBuffer:16*1024*1024}).trim().split('\n'));
+const cached=new Map();
+export async function load(url,context,nextLoad){
+ const parsed=new URL(url);
+ if(parsed.protocol!=='file:') return nextLoad(url,context);
+ const path=fileURLToPath(parsed);
+ if(!path.startsWith(root)) return nextLoad(url,context);
+ const relative=path.slice(root.length);
+ if(!relative.endsWith('.mjs')||relative.startsWith('node_modules/')||relative.startsWith('.cache/')) return nextLoad(url,context);
+ if(!files.has(relative))throw new Error('Module absent from exact pinned main: '+relative);
+ if(relative==='game/test/display-preferences-host.test.mjs')return {format:'module',shortCircuit:true,source:readFileSync(new URL('./display-host-writer-diagnostic-source.mjs',import.meta.url),'utf8')};
+ let source=cached.get(relative);
+ if(source===undefined){
+  if(cached.size>=2048)throw new Error('Module limit exceeded');
+  source=execFileSync('git',['show',ref+':'+relative],{cwd:root,env,encoding:'utf8',maxBuffer:16*1024*1024});
+  cached.set(relative,source);
+  appendFileSync(log,JSON.stringify({path:relative,bytes:Buffer.byteLength(source),sha256:createHash('sha256').update(source).digest('hex')})+'\n');
+ }
+ return {format:'module',shortCircuit:true,source};
+}

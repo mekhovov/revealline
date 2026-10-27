@@ -1,0 +1,319 @@
+/* global document, window */
+import assert from 'node:assert/strict';
+import { readFile, mkdtemp, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { spawn, execFileSync } from 'node:child_process';
+import { pathToFileURL } from 'node:url';
+export const bounded = async (fn, ms) => {
+  let timer;
+  try {
+    return await Promise.race([Promise.resolve().then(fn), new Promise((_, reject) => {
+      timer = setTimeout(() => reject(new Error('Operation exceeded ' + ms + 'ms.')), ms);
+    })]);
+  } finally { clearTimeout(timer); }
+};
+const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+async function connectRaw(endpoint, onException) {
+  const socket = new WebSocket(endpoint);
+  const pending = new Map();
+  let serial = 0;
+  const opened = new Promise((resolve, reject) => {
+    socket.addEventListener('open', resolve, { once: true });
+    socket.addEventListener('error', () => reject(new Error('Owned raw CDP WebSocket failed.')), { once: true });
+  });
+  const closed = new Promise(resolve => socket.addEventListener('close', () => {
+    for (const { reject, timer } of pending.values()) {
+      clearTimeout(timer);
+      reject(new Error('Owned raw CDP connection closed.'));
+    }
+    pending.clear();
+    resolve();
+  }, { once: true }));
+  socket.addEventListener('message', event => {
+    const value = JSON.parse(event.data);
+    if (value.id) {
+      const row = pending.get(value.id);
+      if (!row) return;
+      pending.delete(value.id);
+      clearTimeout(row.timer);
+      if (value.error) row.reject(new Error(JSON.stringify(value.error)));
+      else row.resolve(value.result);
+    } else if (value.method === 'Runtime.exceptionThrown') {
+      onException(value.params);
+    }
+  });
+  try { await bounded(() => opened, 5000); }
+  catch (error) { socket.close(); throw error; }
+  return {
+    send(method, params = {}, sessionId) {
+      const id = ++serial;
+      return new Promise((resolve, reject) => {
+        const timer = setTimeout(() => {
+          pending.delete(id);
+          reject(new Error(`Raw CDP ${method} exceeded 3000ms.`));
+        }, 3000);
+        pending.set(id, { resolve, reject, timer });
+        socket.send(JSON.stringify({ id, method, params, ...(sessionId ? { sessionId } : {}) }));
+      });
+    },
+    async close() {
+      if (socket.readyState !== WebSocket.CLOSED) socket.close();
+      await bounded(() => closed, 2000);
+    },
+  };
+}
+function readNativeDiscardRow(targetURL, scroll = false) {
+  const roots = [document];
+  for (let i = 0; i < roots.length; i++) {
+    for (const element of roots[i].querySelectorAll('*')) {
+      if (element.shadowRoot) roots.push(element.shadowRoot);
+    }
+    if (roots.length > 100) throw new Error('Unexpected native UI shadow-tree size.');
+  }
+  const tables = roots.flatMap(root => [...root.querySelectorAll('#tab-discards-info-table-body')]);
+  if (tables.length !== 1) return { tables: tables.length, matches: 0 };
+  const matches = [...tables[0].querySelectorAll('tr')].filter(row =>
+    [...row.querySelectorAll('td')].some(cell => cell.textContent.trim() === targetURL));
+  if (matches.length !== 1) return { tables: 1, matches: matches.length };
+  const row = matches[0];
+  const actions = [...row.querySelectorAll('[data-id]')].filter(node => node.textContent.trim() === '[Urgent Discard]');
+  if (actions.length !== 1) return { tables: 1, matches: 1, actions: actions.length };
+  const urgent = actions[0];
+  if (scroll) urgent.scrollIntoView({ block: 'center', inline: 'center' });
+  const rect = urgent.getBoundingClientRect();
+  return { tables: 1, matches: 1, actions: 1,
+    cells: [...row.querySelectorAll('td')].map(cell => cell.textContent),
+    disabled: urgent.hasAttribute('disabled'), tabId: urgent.dataset.id,
+    rect: { x: rect.x, y: rect.y, width: rect.width, height: rect.height },
+    viewport: { width: window.innerWidth, height: window.innerHeight } };
+}
+
+
+export async function createNativeDiscardEnvironment({ runtime, executable, report, onError }) {
+  assert.equal(typeof WebSocket, 'function', 'Use the bundled Node24 runtime.');
+  let browser, browserSession, context, profile, child, childExit, endpoint, rawEndpoint, raw;
+  let childExited = false, closePromise;
+  report.actions = [];
+  report.errors = [];
+  const action = (type, data = {}) => {
+    if (report.actions.length >= 100) throw new Error('Native action observation overflow.');
+    report.actions.push({ at: new Date().toISOString(), type, ...data });
+  };
+  const { chromium } = await import(pathToFileURL(runtime).href);
+  const open = async () => {
+  profile = await mkdtemp(join(tmpdir(), 'codex-native-discard-owned-'));
+  const chromeArgs = [
+    '--headless', '--enable-automation', '--remote-debugging-port=0',
+    '--remote-debugging-address=127.0.0.1', `--user-data-dir=${profile}`,
+    '--no-first-run', '--no-default-browser-check', '--no-startup-window',
+    '--window-size=1024,768', '--disable-background-networking',
+    '--disk-cache-size=1048576', '--media-cache-size=1048576',
+  ];
+  report.launchEnvironment = chromeArgs;
+  report.ownedProcess = { executable: executable, profile, detachedProcessGroup: true };
+  child = spawn(executable, chromeArgs, { detached: true, stdio: ['ignore', 'ignore', 'pipe'] });
+  report.ownedProcess.pid = child.pid;
+  report.ownedProcess.stderr = '';
+  child.stderr.on('data', chunk => {
+    const remaining = 16384 - report.ownedProcess.stderr.length;
+    if (remaining > 0) report.ownedProcess.stderr += chunk.toString().slice(0, remaining);
+  });
+  childExit = new Promise(resolve => {
+    child.once('error', error => {
+      childExited = true;
+      report.ownedProcess.spawnError = String(error);
+      resolve();
+    });
+    child.once('exit', (code, signal) => {
+      childExited = true;
+      report.ownedProcess.exit = { code, signal, at: new Date().toISOString() };
+      resolve();
+    });
+  });
+  await bounded(() => new Promise((resolve, reject) => {
+    child.once('spawn', resolve);
+    child.once('error', reject);
+  }), 2000);
+  
+  const endpointDeadline = performance.now() + 10000;
+  for (;;) {
+    assert.equal(childExited, false, 'Owned Chrome exited before its native CDP endpoint was available.');
+    try {
+      const activePort = (await readFile(join(profile, 'DevToolsActivePort'), 'utf8')).trim().split('\n');
+      assert.match(activePort[0], /^\d+$/);
+      assert.match(activePort[1], /^\/devtools\/browser\/[a-f0-9-]+$/i);
+      endpoint = `http://127.0.0.1:${activePort[0]}`;
+      rawEndpoint = `ws://127.0.0.1:${activePort[0]}${activePort[1]}`;
+      break;
+    } catch (error) {
+      if (error.code !== 'ENOENT') throw error;
+      assert.ok(performance.now() < endpointDeadline, 'Owned Chrome did not expose its loopback CDP endpoint.');
+      await new Promise(resolve => setTimeout(resolve, 50));
+    }
+  }
+  action('attach-exact-owned-native-browser', { pid: child.pid, profile, endpoint, noDefaults: true });
+  browser = await chromium.connectOverCDP(endpoint, { noDefaults: true, timeout: 10000 });
+  report.browserVersion = browser.version();
+  browserSession = await bounded(() => browser.newBrowserCDPSession(), 3000);
+  const { arguments: commandLine } = await bounded(() => browserSession.send('Browser.getBrowserCommandLine'), 3000);
+  assert.ok(commandLine.includes(`--user-data-dir=${profile}`));
+  report.commandLineOwnedProfileVerified = true;
+  assert.equal(browser.contexts().length, 1, 'Use only the isolated default context of the exact owned browser.');
+  context = browser.contexts()[0];
+  assert.equal(context.pages().length, 0, 'The owned default context must begin without preexisting pages.');
+  context.setDefaultTimeout(3000);
+  context.setDefaultNavigationTimeout(10000);
+
+  };
+  const close = () => closePromise ??= (async () => {
+    let failure;
+    try {
+      if (browserSession) await bounded(() => browserSession.send('Browser.close'), 2000);
+      else if (raw) await bounded(() => raw.send('Browser.close'), 2000);
+      else if (child && !childExited) process.kill(-child.pid, 'SIGTERM');
+    } catch (error) { report.nativeCloseError = String(error).slice(0, 2048); }
+    try {
+      if (browser) await bounded(() => browser.close(), 3000);
+      if (raw) await raw.close();
+      if (child) await bounded(() => childExit, 5000);
+    } catch (error) { failure = error; }
+    if (child && !childExited) {
+      failure ??= new Error('Owned native Chrome required forced cleanup.');
+      report.forcedCleanup = [];
+      for (const signal of ['SIGTERM', 'SIGKILL']) {
+        if (childExited) break;
+        try {
+          process.kill(-child.pid, signal);
+          report.forcedCleanup.push(signal);
+          await bounded(() => childExit, 2000);
+        } catch (error) { report.cleanupError = String(error).slice(0, 2048); }
+      }
+    }
+    if (child && childExited) {
+      const deadline = performance.now() + 2000;
+      for (;;) {
+        const rows = execFileSync('ps', ['-axo', 'pid=,pgid=,command='], { encoding: 'utf8', timeout: 1000, maxBuffer: 2 * 1024 * 1024 }).split('\n');
+        report.remainingOwnedProcesses = rows.filter(row => {
+          const match = /^\s*([0-9]+)\s+([0-9]+)\s+(.*)$/.exec(row);
+          return match && (Number(match[2]) === child.pid || match[3].includes(profile));
+        }).map(row => row.trim());
+        if (!report.remainingOwnedProcesses.length) break;
+        if (performance.now() >= deadline) {
+          failure ??= new Error('Owned Chrome descendants remain after root exit.');
+          break;
+        }
+        await delay(100);
+      }
+    }
+    report.childExitConfirmed = !child || childExited;
+    if (profile && (!child || childExited) && !report.remainingOwnedProcesses?.length) {
+      await rm(profile, { recursive: true, force: true });
+      report.profileRemoved = true;
+    }
+    report.cleanupComplete = report.childExitConfirmed && !failure;
+    if (failure) throw failure;
+  })();
+  try { await open(); } catch (error) {
+    try { await close(); } catch (cleanupError) { report.cleanupError = String(cleanupError); }
+    throw error;
+  }
+  const trackPageErrors = page => page.on('pageerror', onError);
+  const setupControls = async controls => {
+    await controls.goto('chrome://chrome-urls/#internal-debug-pages');
+    await controls.getByRole('button', { name: 'Enable internal debugging pages', exact: true }).click({ timeout: 3000 });
+    await controls.getByRole('button', { name: 'Disable internal debugging pages', exact: true }).waitFor({ state: 'visible', timeout: 3000 });
+    await controls.goto('chrome://discards/');
+    await controls.locator('#tab-discards-info-table-body').waitFor({ state: 'visible', timeout: 10000 });
+    action('native-debug-ui-enabled');
+  };
+  const discard = async ({ target, controls, beforeDetach, attempt }) => {
+    assert.equal(context.pages().length, 2);
+    const targetURL = target.url();
+    const infos = await bounded(() => browserSession.send('Target.getTargets'), 3000);
+    const find = url => {
+      const rows = infos.targetInfos.filter(info => info.type === 'page' && info.url === url);
+      assert.equal(rows.length, 1);
+      return rows[0].targetId;
+    };
+    const targetId = find(targetURL), controlId = find(controls.url());
+    const windows = await Promise.all([targetId, controlId].map(targetId =>
+      bounded(() => browserSession.send('Browser.getWindowForTarget', { targetId }), 3000)));
+    assert.equal(windows[0].windowId, windows[1].windowId);
+    attempt.windowId = windows[0].windowId;
+    await controls.bringToFront();
+    await target.waitForFunction(() => document.hidden === true, null, { timeout: 3000, polling: 100 });
+    attempt.hiddenBeforeDiscard = true;
+    await beforeDetach();
+    const workerInfo = await bounded(() => browserSession.send('Target.getTargets'), 3000);
+    attempt.observedWorkerTargets = workerInfo.targetInfos.filter(info => info.type === 'worker');
+    raw = await connectRaw(rawEndpoint, native => onError(new Error(JSON.stringify(native))));
+    const { sessionId } = await raw.send('Target.attachToTarget', { targetId: controlId, flatten: true });
+    await raw.send('Runtime.enable', {}, sessionId);
+    await bounded(() => browser.close(), 3000);
+    browser = browserSession = undefined;
+    attempt.detachedAt = new Date().toISOString();
+    assert.equal(childExited, false);
+    const detached = await raw.send('Target.getTargets');
+    assert.equal(detached.targetInfos.find(info => info.targetId === targetId)?.attached, false);
+    attempt.workerTargetsImmediatelyAfterDetach = detached.targetInfos.filter(info => info.type === 'worker');
+    attempt.detachedTargetInfo = detached.targetInfos.filter(info => info.targetId === targetId || info.targetId === controlId);
+    const readRow = async scroll => {
+      const result = await raw.send('Runtime.evaluate', {
+        expression: '(' + readNativeDiscardRow.toString() + ')(' + JSON.stringify(targetURL) + ',' + !!scroll + ')',
+        returnByValue: true,
+      }, sessionId);
+      assert.equal(result.exceptionDetails, undefined);
+      return result.result.value;
+    };
+    let row;
+    const eligibilityDeadline = performance.now() + 10000;
+    for (;;) {
+      row = await readRow(false);
+      if (row.matches === 1 && row.actions === 1 && !row.disabled && !row.cells.join(' ').includes('DevTools')) break;
+      assert.ok(performance.now() < eligibilityDeadline, 'Native exact-owned urgent action remains unavailable.');
+      await delay(100);
+    }
+    row = await readRow(true);
+    assert.match(row.tabId ?? '', /^[0-9]+$/);
+    attempt.beforeCells = row.cells;
+    attempt.actionTabId = row.tabId;
+    const x = row.rect.x + row.rect.width / 2, y = row.rect.y + row.rect.height / 2;
+    assert.ok(row.rect.width > 0 && row.rect.height > 0 && x >= 0 && y >= 0 && x < row.viewport.width && y < row.viewport.height);
+    await raw.send('Input.dispatchMouseEvent', { type: 'mousePressed', x, y, button: 'left', clickCount: 1 }, sessionId);
+    await raw.send('Input.dispatchMouseEvent', { type: 'mouseReleased', x, y, button: 'left', clickCount: 1 }, sessionId);
+    const discardDeadline = performance.now() + 10000;
+    for (;;) {
+      row = await readRow(false);
+      attempt.lastNativeRow = row;
+      if (row.cells?.some(cell => /^discarded\b/i.test(cell.trim()))) break;
+      assert.ok(performance.now() < discardDeadline, 'Native urgent discard was not confirmed; eligibility protections remain authoritative.');
+      await delay(100);
+    }
+    attempt.discardedCells = row.cells;
+    attempt.discardedAt = new Date().toISOString();
+    const after = await raw.send('Target.getTargets');
+    attempt.workerTargetsAfterNativeDiscard = after.targetInfos.filter(info => info.type === 'worker');
+    const afterIds = new Set(after.targetInfos.map(info => info.targetId));
+    assert.ok(attempt.observedWorkerTargets.every(info => !afterIds.has(info.targetId)),
+      'Every observed pre-discard dedicated-worker native target ID must disappear.');
+    const candidates = after.targetInfos.filter(info => info.type === 'page' && info.url === targetURL);
+    assert.equal(candidates.length, 1);
+    assert.equal(candidates[0].attached, false);
+    attempt.restoredNativeTargetId = candidates[0].targetId;
+    await raw.send('Target.activateTarget', { targetId: candidates[0].targetId });
+    attempt.activatedAt = new Date().toISOString();
+    browser = await chromium.connectOverCDP(endpoint, { noDefaults: true, timeout: 10000 });
+    browserSession = await bounded(() => browser.newBrowserCDPSession(), 3000);
+    context = browser.contexts()[0];
+    const targetPages = context.pages().filter(page => page.url() === targetURL);
+    const controlPages = context.pages().filter(page => page.url() === 'chrome://discards/');
+    assert.equal(targetPages.length, 1); assert.equal(controlPages.length, 1);
+    targetPages.forEach(trackPageErrors); controlPages.forEach(trackPageErrors);
+    await raw.close(); raw = undefined;
+    attempt.reconnectedAt = new Date().toISOString();
+    return { browser, context, target: targetPages[0], controls: controlPages[0] };
+  };
+  return { get browser() { return browser; }, get context() { return context; },
+    setupControls, trackPageErrors, discard, close };
+}

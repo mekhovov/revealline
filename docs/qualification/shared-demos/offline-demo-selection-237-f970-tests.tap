@@ -1,0 +1,120 @@
+TAP version 13
+# Subtest: demo ownership retains exact native archive sources without exposing or installing archives
+ok 1 - demo ownership retains exact native archive sources without exposing or installing archives
+  ---
+  duration_ms: 1053.017125
+  ...
+# Subtest: native dependency matching rejects missing, ambiguous, altered and unavailable source identities
+ok 2 - native dependency matching rejects missing, ambiguous, altered and unavailable source identities
+  ---
+  duration_ms: 0.752375
+  ...
+# Subtest: recordings without the ordinary demo catalog do not invent native dependencies
+ok 3 - recordings without the ordinary demo catalog do not invent native dependencies
+  ---
+  duration_ms: 0.117917
+  ...
+# Subtest: current reviewed and qualified catalogs resolve the exact authored native pack inventory
+ok 4 - current reviewed and qualified catalogs resolve the exact authored native pack inventory
+  ---
+  duration_ms: 7337.200625
+  ...
+# Subtest: the visible demo selection owns indexed SIM bodies and its exact bridge while reusing the named simulator
+ok 5 - the visible demo selection owns indexed SIM bodies and its exact bridge while reusing the named simulator
+  ---
+  duration_ms: 1113.204625
+  ...
+# Subtest: SIM demo selection fails closed on missing owners, missing bridge/body, ambiguous entries and unsafe catalog paths
+ok 6 - SIM demo selection fails closed on missing owners, missing bridge/body, ambiguous entries and unsafe catalog paths
+  ---
+  duration_ms: 2243.31925
+  ...
+# Subtest: Journey demos share only exact referenced route and picture bodies, without archive or Versus package dependencies
+ok 7 - Journey demos share only exact referenced route and picture bodies, without archive or Versus package dependencies
+  ---
+  duration_ms: 908.701042
+  ...
+# Subtest: all current indexed SIM recordings have offline bodies and the bridge is the only addition to native package module ownership
+ok 8 - all current indexed SIM recordings have offline bodies and the bridge is the only addition to native package module ownership
+  ---
+  duration_ms: 137.067209
+  ...
+# Subtest: the complete shipped Journey demo inventory resolves exact full-source snapshots and all selected pictures
+ok 9 - the complete shipped Journey demo inventory resolves exact full-source snapshots and all selected pictures
+  ---
+  duration_ms: 1236.941625
+  ...
+# Subtest: all official missions have gameplay-only closure and soundtrack groups exactly match Audio settings
+ok 10 - all official missions have gameplay-only closure and soundtrack groups exactly match Audio settings
+  ---
+  duration_ms: 1049.132375
+  ...
+# Subtest: hosted extras stay selectable without entering shared or all-current gameplay downloads
+ok 11 - hosted extras stay selectable without entering shared or all-current gameplay downloads
+  ---
+  duration_ms: 1541.691583
+  ...
+# Subtest: publisher copies only the frozen lightweight launcher and points at the immutable edition
+ok 12 - publisher copies only the frozen lightweight launcher and points at the immutable edition
+  ---
+  duration_ms: 571.618541
+  ...
+# Subtest: the tar model reproduces the actual pinned baseline without building or materializing payloads
+ok 13 - the tar model reproduces the actual pinned baseline without building or materializing payloads
+  ---
+  duration_ms: 20.251125
+  ...
+# Subtest: tar accounting includes parent directories, long UTF-8 names, block padding, and terminal records
+ok 14 - tar accounting includes parent directories, long UTF-8 names, block padding, and terminal records
+  ---
+  duration_ms: 0.864875
+  ...
+# Subtest: every missing or mismatched dependency and either staged or modeled capacity breach fails the gate
+ok 15 - every missing or mismatched dependency and either staged or modeled capacity breach fails the gate
+  ---
+  duration_ms: 0.579375
+  ...
+# Subtest: CLI requires explicit fresh report path and rejects unknown or duplicated options
+ok 16 - CLI requires explicit fresh report path and rejects unknown or duplicated options
+  ---
+  duration_ms: 0.29175
+  ...
+# Subtest: existing evidence is rejected before any costly build or source snapshot
+ok 17 - existing evidence is rejected before any costly build or source snapshot
+  ---
+  duration_ms: 6.151875
+  ...
+# Subtest: only the existing mission-index compaction is admitted and semantic changes remain detectable
+ok 18 - only the existing mission-index compaction is admitted and semantic changes remain detectable
+  ---
+  duration_ms: 0.635375
+  ...
+# Subtest: emitted omitted-original inventory exactly covers actual omissions and retained offline fallback bodies
+ok 19 - emitted omitted-original inventory exactly covers actual omissions and retained offline fallback bodies
+  ---
+  duration_ms: 14.484125
+  ...
+# Subtest: a profile with no original omissions requires the optional worker field to stay absent
+ok 20 - a profile with no original omissions requires the optional worker field to stay absent
+  ---
+  duration_ms: 0.419042
+  ...
+# Subtest: emitted demo ownership proves real selected bodies, native imports and worker pins, retaining finite group metadata
+ok 21 - emitted demo ownership proves real selected bodies, native imports and worker pins, retaining finite group metadata
+  ---
+  duration_ms: 8.044959
+  ...
+# Subtest: emitted demo gate rejects hosted-but-unselected native/body dependencies, bad pins and missing worker registration
+ok 22 - emitted demo gate rejects hosted-but-unselected native/body dependencies, bad pins and missing worker registration
+  ---
+  duration_ms: 25.00725
+  ...
+1..22
+# tests 22
+# suites 0
+# pass 22
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 14796.62425

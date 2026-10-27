@@ -1,0 +1,100 @@
+TAP version 13
+# Subtest: native boot completes the exact Team-to-Solo briefing before ready and waits for Start
+ok 1 - native boot completes the exact Team-to-Solo briefing before ready and waits for Start
+  ---
+  duration_ms: 10741.012125
+  ...
+# Subtest: native incoming Solo handoff still yields to newer focus while metadata waits
+ok 2 - native incoming Solo handoff still yields to newer focus while metadata waits
+  ---
+  duration_ms: 2271.285042
+  ...
+# Subtest: native incoming Solo handoff still yields to newer hidden while metadata waits
+ok 3 - native incoming Solo handoff still yields to newer hidden while metadata waits
+  ---
+  duration_ms: 2193.147167
+  ...
+# Subtest: incoming Solo awaits its owned boot picture before exact launch
+ok 4 - incoming Solo awaits its owned boot picture before exact launch
+  ---
+  duration_ms: 8691.546666
+  ...
+# Subtest: incoming Solo retires without awaiting its pending boot picture
+ok 5 - incoming Solo retires without awaiting its pending boot picture
+  ---
+  duration_ms: 7309.749208
+  ...
+# Subtest: Team-to-Versus incoming selection finishes before normal lobby focus and starts both exact boards
+ok 6 - Team-to-Versus incoming selection finishes before normal lobby focus and starts both exact boards # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.04975
+  ...
+# Subtest: Team-to-Versus incoming selection cannot start while hidden after held metadata
+ok 7 - Team-to-Versus incoming selection cannot start while hidden after held metadata # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.025583
+  ...
+# Subtest: Solo legacy → selected Team owner retains source route and exact mission
+ok 8 - Solo legacy → selected Team owner retains source route and exact mission # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.01875
+  ...
+# Subtest: Solo whole-spatial-v5 → selected Team owner retains source route and exact mission
+ok 9 - Solo whole-spatial-v5 → selected Team owner retains source route and exact mission # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.0215
+  ...
+# Subtest: Solo opening → selected Team owner retains source route and exact mission
+ok 10 - Solo opening → selected Team owner retains source route and exact mission # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.022959
+  ...
+# Subtest: Versus legacy Team cards use saved Expert and retain source edition
+ok 11 - Versus legacy Team cards use saved Expert and retain source edition # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.016625
+  ...
+# Subtest: Versus opening Team cards use saved Expert and retain source edition
+ok 12 - Versus opening Team cards use saved Expert and retain source edition # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.015083
+  ...
+# Subtest: Legacy Solo → Journey Versus → Solo restores browsing independently of the checked retained runtime
+ok 13 - Legacy Solo → Journey Versus → Solo restores browsing independently of the checked retained runtime # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.017292
+  ...
+# Subtest: denied library return-token storage needs deliberate warned departure and keeps exact destination/source
+ok 14 - denied library return-token storage needs deliberate warned departure and keeps exact destination/source # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.015917
+  ...
+# Subtest: unfinished Legacy library departure checks its saved attempt before minting the Team return token
+ok 15 - unfinished Legacy library departure checks its saved attempt before minting the Team return token # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.014334
+  ...
+# Subtest: Legacy solo refreshes visible remote preset cards on storage/pageshow without writing or moving focus
+ok 16 - Legacy solo refreshes visible remote preset cards on storage/pageshow without writing or moving focus # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.015083
+  ...
+# Subtest: Legacy versus refreshes visible remote preset cards on storage/pageshow without writing or moving focus
+ok 17 - Legacy versus refreshes visible remote preset cards on storage/pageshow without writing or moving focus # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.014833
+  ...
+# Subtest: late Classic checked return without saved browse state uses the retained mission as a focus fallback
+ok 18 - late Classic checked return without saved browse state uses the retained mission as a focus fallback # SKIP test name does not match pattern
+  ---
+  duration_ms: 0.014166
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 13
+# todo 0
+# duration_ms 31575.011

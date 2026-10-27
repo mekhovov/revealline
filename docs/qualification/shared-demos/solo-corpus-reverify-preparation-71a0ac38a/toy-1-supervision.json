@@ -1,0 +1,76 @@
+{
+  "format": "SoloEmittedReverificationSupervisionV1",
+  "complete": false,
+  "started": "2026-10-19T04:43:10.106954+00:00",
+  "command": [
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/tmp/solo-reverify-sigterm-fc514dxb/toy-node.py",
+    ".cache/reverify-solo-emitted.mjs",
+    "--run=approved",
+    "--report=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/tmp/solo-reverify-sigterm-fc514dxb/cancel.json",
+    "--tmpdir=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/tmp/solo-reverify-sigterm-fc514dxb"
+  ],
+  "timeoutSeconds": 2700,
+  "tmpdir": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/tmp/solo-reverify-sigterm-fc514dxb",
+  "ownerSource": {
+    "path": ".cache/run-endurance-emitted-final.py",
+    "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c"
+  },
+  "supervisorSHA256": "89212bc352ff234d4c83c3ba92ffb7b3caa82eeb869359a137afe108c700bf93",
+  "interruptedSignal": "SIGTERM",
+  "failure": "InterruptedError('Solo qualification interrupted by SIGTERM')",
+  "ownedProcesses": {
+    "rootObserved": true,
+    "identityFields": [
+      "pid",
+      "started",
+      "uid",
+      "argv"
+    ],
+    "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+    "observationLimits": {
+      "ownershipLimit": 256,
+      "ownershipCount": 1,
+      "actionLimit": 1024,
+      "actionCount": 0,
+      "exceeded": false
+    },
+    "observed": [
+      {
+        "pid": 21654,
+        "ppid": 21652,
+        "pgid": 21654,
+        "uid": 502,
+        "started": "Mon Oct 19 06:43:10 2026",
+        "argv": "/usr/bin/env python3 /Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/tmp/solo-reverify-sigterm-fc514dxb/toy-node.py .cache/reverify-solo-emitted.mjs --run=approved --report=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/tmp/solo-reverify-sigterm-fc514dxb/cancel.json --tmpdir=/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/tmp/solo-reverify-sigterm-fc514dxb",
+        "profile": null,
+        "ownership": "exact newly spawned child",
+        "observedAt": "2026-10-19T04:43:10.163237+00:00"
+      }
+    ],
+    "actions": [],
+    "ownershipEvidenceTruncated": false,
+    "actionEvidenceTruncated": false,
+    "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "remaining": [],
+    "remainingCount": 0,
+    "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "remainingEvidenceTruncated": false,
+    "verified": true
+  },
+  "log": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/shared-demo-scratch-c4c5fc3c/tmp/solo-reverify-sigterm-fc514dxb/cancel.log",
+    "byteLimit": 8388608,
+    "totalBytes": 16,
+    "writtenBytes": 16,
+    "truncatedBytes": 0,
+    "tailLimit": 65536,
+    "tailBytes": 16,
+    "tailSHA256": "878fc3c1a11afe18d0b5823cd0064f8059e5d4262a901dcbf384252fe4e91d3c",
+    "tail": "toy-ready 21659\n",
+    "limitExceeded": false,
+    "complete": false,
+    "error": "Owned child log drain did not finish within 3 seconds."
+  },
+  "childExit": null,
+  "finished": "2026-10-19T04:43:23.338146+00:00"
+}

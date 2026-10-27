@@ -1,0 +1,1577 @@
+{
+  "scope": "Raw authored current and archive Classic catalog pack bodies; sizing evidence only, no proposed source mutation.",
+  "files": [
+    {
+      "path": "game/content/packs/fpv-arcade-r5.json",
+      "bytes": 11708176,
+      "sha256": "350d89cf41767668b3734b474e5dd3d1d301bb0b5612e5082c5d233a1a081a74"
+    },
+    {
+      "path": "game/content/packs/fpv-pressure-frontier.json",
+      "bytes": 11377254,
+      "sha256": "2ceba2a83670216da9443602f16ac30f4ed734ffba969c622dd1bff8153780c9"
+    },
+    {
+      "path": "game/content/packs/night-shift.json",
+      "bytes": 1061537,
+      "sha256": "0b5c7297bd5b63b306a3b9e24963883b3d685575500247d8adb2b9e52ba9d2b9"
+    },
+    {
+      "path": "game/content/packs/living-threads.json",
+      "bytes": 1204297,
+      "sha256": "970bd335a0e9ba9a9870ebb086123386274b1cd9985788e4035e923573679ce7"
+    },
+    {
+      "path": "game/content/packs/fieldcraft.json",
+      "bytes": 1396582,
+      "sha256": "c2e914d8326415398a84a2c8ad1f5c605d1e2af325b106783bb81af044e3a7a5"
+    },
+    {
+      "path": "game/content/packs/homeward-skies.json",
+      "bytes": 11371849,
+      "sha256": "4793e07a45484238bae483e2a2e9354c6d29e0ad2ba2d8d708169bd9e0250b8b"
+    },
+    {
+      "path": "game/content/packs/equipment-workshop.json",
+      "bytes": 11127024,
+      "sha256": "a015f79c47d8bac6cd09ba04e50c0c98d759e523eea7d225edbe62a8a5254054"
+    },
+    {
+      "path": "game/content/packs/sentinel-relay.json",
+      "bytes": 359919,
+      "sha256": "d4a07c6221cf7e9fef622f972e779d1c791e5fadd4d212ac0d8c1ca1dfd5f27c"
+    },
+    {
+      "path": "game/content/packs/neon-reference-pack.json",
+      "bytes": 6927774,
+      "sha256": "afe0315a9b96d0fb8edc55f063e3a5441626e4f86168e1272bfe1380a4125b10"
+    },
+    {
+      "path": "game/content/packs/neon-mosaic-pack.json",
+      "bytes": 15623239,
+      "sha256": "b7835f71ad45e7a8fcaae4b81f30fe91cf7c3e7e0e215a8a675f521b8f438ef6"
+    },
+    {
+      "path": "game/content/packs/fpv-arcade-r4.json",
+      "bytes": 11707106,
+      "sha256": "a7ab557d69f2bdd5473ee85d62ee0e7a03e6e75f01e79cc0dc7654b1c5ae6703"
+    },
+    {
+      "path": "game/content/packs/fpv-arcade-r3.json",
+      "bytes": 11706413,
+      "sha256": "af6387ab382e4f614832b1b96abaddbd23c8330a44cc96f64e50271cfe081848"
+    },
+    {
+      "path": "game/content/packs/fpv-arcade-r2.json",
+      "bytes": 11706060,
+      "sha256": "3235a0ae1f9f0ae9952f5d98d2001ec5022ab47fc459c3fb0093f48de620377f"
+    },
+    {
+      "path": "game/content/packs/fpv-arcade.json",
+      "bytes": 11701968,
+      "sha256": "7b8413aa8dc5cc99f6413f0d2b2bf8dd7b9ba5613c6fa02550a3dbd12a7b9904"
+    }
+  ],
+  "totalPackBytes": 118979198,
+  "inlineImageOccurrences": 436,
+  "uniqueInlineImages": 98,
+  "totalInlineImageBytes": 117996973,
+  "uniqueInlineImageBytes": 59812745,
+  "duplicateInlineImageBytes": 58184228,
+  "duplicateImages": [
+    {
+      "sha256": "02eb0173c88258ed8ff583a9726589c573064ca649d578398b4eab245a4e9c1a",
+      "bytes": 4229514,
+      "occurrences": [
+        {
+          "file": "game/content/packs/fpv-arcade-r5.json",
+          "field": "/levelVisuals/0/visualOverrides/background/dataUrl"
+        },
+        {
+          "file": "game/content/packs/fpv-arcade-r4.json",
+          "field": "/levelVisuals/0/visualOverrides/background/dataUrl"
+        },
+        {
+          "file": "game/content/packs/fpv-arcade-r3.json",
+          "field": "/levelVisuals/0/visualOverrides/background/dataUrl"
+        },
+        {
+          "file": "game/content/packs/fpv-arcade-r2.json",
+          "field": "/levelVisuals/0/visualOverrides/background/dataUrl"
+        },
+        {
+          "file": "game/content/packs/fpv-arcade.json",
+          "field": "/levelVisuals/0/visualOverrides/background/dataUrl"
+        }
+      ]
+    },
+    {
+      "sha256": "4e4d6b26a579c6b9e0cd76b50c58509bdb3e0c30df31cc1262950360d440ad6d",
+      "bytes": 3745918,
+      "occurrences": [
+        {
+          "file": "game/content/packs/fpv-arcade-r5.json",
+          "field": "/levelVisuals/1/visualOverrides/background/dataUrl"
+        },
+        {
+          "file": "game/content/packs/fpv-arcade-r4.json",
+          "field": "/levelVisuals/1/visualOverrides/background/dataUrl"
+        },
+        {
+          "file": "game/content/packs/fpv-arcade-r3.json",
+          "field": "/levelVisuals/1/visualOverrides/background/dataUrl"
+        },
+        {
+          "file": "game/content/packs/fpv-arcade-r2.json",
+          "field": "/levelVisuals/1/visualOverrides/background/dataUrl"
+        },
+        {
+          "file": "game/content/packs/fpv-arcade.json",
+          "field": "/levelVisuals/1/visualOverrides/background/dataUrl"
+        }
+      ]
+    },
+    {
+      "sha256": "0422de84ae4d657b4733a692664071efd40e2504258196950e6cab7a0e16b6bb",
+      "bytes": 3713502,
+      "occurrences": [
+        {
+          "file": "game/content/packs/fpv-arcade-r5.json",
+          "field": "/levelVisuals/2/visualOverrides/background/dataUrl"
+        },
+        {
+          "file": "game/content/packs/fpv-arcade-r4.json",
+          "field": "/levelVisuals/2/visualOverrides/background/dataUrl"
+        },
+        {
+          "file": "game/content/packs/fpv-arcade-r3.json",
+          "field": "/levelVisuals/2/visualOverrides/background/dataUrl"
+        },
+        {
+          "file": "game/content/packs/fpv-arcade-r2.json",
+          "field": "/levelVisuals/2/visualOverrides/background/dataUrl"
+        },
+        {
+          "file": "game/content/packs/fpv-arcade.json",
+          "field": "/levelVisuals/2/visualOverrides/background/dataUrl"
+        }
+      ]
+    },
+    {
+      "sha256": "ab124c66c513ac10add891dacd64feb048e91bdcbca729e3ac64b25b42707e43",
+      "bytes": 3933226,
+      "occurrences": [
+        {
+          "file": "game/content/packs/fpv-pressure-frontier.json",
+          "field": "/levelVisuals/0/visualOverrides/background/dataUrl"
+        },
+        {
+          "file": "game/content/packs/homeward-skies.json",
+          "field": "/levelVisuals/0/visualOverrides/background/dataUrl"
+        }
+      ]
+    },
+    {
+      "sha256": "cb4f58deb9b1e35ba4d66284427d25015c5da2555b15d01ebd0d7402007216ba",
+      "bytes": 3767230,
+      "occurrences": [
+        {
+          "file": "game/content/packs/fpv-pressure-frontier.json",
+          "field": "/levelVisuals/1/visualOverrides/background/dataUrl"
+        },
+        {
+          "file": "game/content/packs/homeward-skies.json",
+          "field": "/levelVisuals/1/visualOverrides/background/dataUrl"
+        }
+      ]
+    },
+    {
+      "sha256": "838e0beab04faba803fcd738e67c67fba71b5ec2e374b26e4d7a9e561acb667c",
+      "bytes": 3655718,
+      "occurrences": [
+        {
+          "file": "game/content/packs/fpv-pressure-frontier.json",
+          "field": "/levelVisuals/2/visualOverrides/background/dataUrl"
+        },
+        {
+          "file": "game/content/packs/homeward-skies.json",
+          "field": "/levelVisuals/2/visualOverrides/background/dataUrl"
+        }
+      ]
+    },
+    {
+      "sha256": "911ce567eee155dddd83e8ed5b7caa2862f023a1c8b9edccf75f02285624c6f0",
+      "bytes": 170,
+      "occurrences": [
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/0/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/11/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/12/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/13/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/14/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/15/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/0/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/1/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/2/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/3/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/4/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/5/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/6/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/7/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/8/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/9/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/10/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/11/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/12/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/13/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/14/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/15/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/16/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/17/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/18/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/19/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/20/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/21/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/22/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/23/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/24/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/25/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/26/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/27/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/28/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/29/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/30/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/31/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/32/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/33/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/34/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/35/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/36/visualOverrides/slowTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/37/visualOverrides/slowTerrain/dataUrl"
+        }
+      ]
+    },
+    {
+      "sha256": "2eb896eb2b285e4177e81e840eb68a539715bb26d5e2634d5674e142efdbd636",
+      "bytes": 246,
+      "occurrences": [
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/1/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/2/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/3/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/4/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/5/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/6/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/7/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/8/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/9/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/10/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/11/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/13/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/14/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/15/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/0/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/0/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/1/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/1/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/2/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/2/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/3/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/3/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/4/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/4/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/5/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/5/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/6/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/6/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/7/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/7/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/8/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/8/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/9/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/9/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/10/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/10/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/11/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/11/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/12/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/12/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/13/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/13/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/14/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/14/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/15/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/15/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/16/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/16/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/17/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/17/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/18/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/18/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/19/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/19/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/20/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/20/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/21/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/21/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/22/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/22/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/23/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/23/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/24/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/24/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/25/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/25/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/26/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/26/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/27/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/27/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/28/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/28/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/29/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/29/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/30/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/30/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/31/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/31/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/32/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/32/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/33/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/33/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/34/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/34/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/35/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/35/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/36/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/36/visualOverrides/contour/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/37/visualOverrides/patrol/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/37/visualOverrides/contour/dataUrl"
+        }
+      ]
+    },
+    {
+      "sha256": "497113585c15666c0f22a688dcb0cbde78e20fd49fb95b102b7ab6fd31ced591",
+      "bytes": 182,
+      "occurrences": [
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/1/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/2/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/3/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/4/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/5/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/6/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/7/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/9/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/12/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/13/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/14/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/0/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/1/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/2/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/3/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/4/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/5/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/6/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/7/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/8/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/9/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/10/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/11/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/12/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/13/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/14/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/15/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/16/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/17/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/18/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/19/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/20/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/21/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/22/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/23/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/24/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/25/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/26/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/27/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/28/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/29/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/30/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/31/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/32/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/33/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/34/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/35/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/36/visualOverrides/wall/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/37/visualOverrides/wall/dataUrl"
+        }
+      ]
+    },
+    {
+      "sha256": "bef24bf578803ee699f9e892c80cdf332fcd43fc2971b8ae2e35ee8b528629e5",
+      "bytes": 230,
+      "occurrences": [
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/2/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/3/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/4/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/5/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/6/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/7/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/8/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/9/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/10/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/11/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/12/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/13/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/14/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/15/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/0/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/1/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/2/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/3/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/4/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/5/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/6/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/7/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/8/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/9/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/10/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/11/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/12/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/13/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/14/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/15/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/16/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/17/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/18/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/19/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/20/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/21/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/22/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/23/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/24/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/25/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/26/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/27/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/28/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/29/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/30/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/31/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/32/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/33/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/34/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/35/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/36/visualOverrides/player/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/37/visualOverrides/player/dataUrl"
+        }
+      ]
+    },
+    {
+      "sha256": "d04c43d65a389427f06b251c6a65cf57b67d08207351827b260c37869df667da",
+      "bytes": 246,
+      "occurrences": [
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/2/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/3/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/4/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/6/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/7/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/8/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/9/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/10/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/11/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/12/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/13/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/14/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/15/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/0/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/1/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/2/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/3/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/4/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/5/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/6/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/7/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/8/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/9/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/10/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/11/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/12/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/13/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/14/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/15/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/16/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/17/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/18/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/19/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/20/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/21/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/22/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/23/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/24/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/25/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/26/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/27/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/28/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/29/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/30/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/31/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/32/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/33/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/34/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/35/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/36/visualOverrides/lethalTerrain/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/37/visualOverrides/lethalTerrain/dataUrl"
+        }
+      ]
+    },
+    {
+      "sha256": "9988eb7ebc168904495438c115ef51bed3be665d8a1999b33513390dc4c7427b",
+      "bytes": 242,
+      "occurrences": [
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/4/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/5/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/0/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/1/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/2/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/3/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/4/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/5/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/6/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/7/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/8/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/9/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/10/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/11/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/12/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/13/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/14/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/15/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/16/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/17/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/18/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/19/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/20/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/21/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/22/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/23/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/24/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/25/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/26/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/27/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/28/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/29/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/30/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/31/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/32/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/33/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/34/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/35/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/36/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-mosaic-pack.json",
+          "field": "/levelVisuals/37/visualOverrides/enemy/dataUrl"
+        }
+      ]
+    },
+    {
+      "sha256": "7b3886c3569797f720a363c63d4bd6d353ce40cc193a5f863870f91cee2f1eea",
+      "bytes": 306,
+      "occurrences": [
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/7/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/8/visualOverrides/enemy/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/11/visualOverrides/enemy/dataUrl"
+        }
+      ]
+    },
+    {
+      "sha256": "831e2863ca4a2233762c3e22e539db17c57ae4ce5d8509b22caa5433c3db7282",
+      "bytes": 298,
+      "occurrences": [
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/11/visualOverrides/eroder/dataUrl"
+        },
+        {
+          "file": "game/content/packs/neon-reference-pack.json",
+          "field": "/levelVisuals/12/visualOverrides/eroder/dataUrl"
+        }
+      ]
+    }
+  ],
+  "sourceRevision": "5c69d1d932815d44a5ceec87b74a119f0cd21d61",
+  "capturedAt": "2026-10-18T19:18:14.946439+00:00"
+}

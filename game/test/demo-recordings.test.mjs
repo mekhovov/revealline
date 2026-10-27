@@ -37,13 +37,14 @@ const pressureEntry = {
   },
   classRecipes: pressurePack.classRecipes,
 };
+const reviewedClips = catalog.clips.filter((clip) => !clip.id.startsWith('solo-qualified-'));
 
 test('curated complete routes reproduce current Standard tuning without scripted reversal excerpts', async (t) => {
   const generated = await buildDemoRecordings();
   assert.equal(generated.length, 14);
   assert.equal(new Set(generated.map(({ replay }) => replay.level.id)).size, 12);
   assert.deepEqual(
-    catalog.clips,
+    reviewedClips,
     generated.map(({ descriptor }) => descriptor),
   );
   const frozenRecordings = new Map();
@@ -215,12 +216,12 @@ test('personal replay compatibility reconstructs tuning from installed originals
   player.dispose();
 });
 
-test('frozen browser variants preserve the exact reviewed trace and every non-enemy outcome', async () => {
+test('frozen runtime variants preserve the exact reviewed trace and every non-enemy outcome', async () => {
   const provenance = await json('../demo-data/variant-provenance.json');
   assert.equal(provenance.format, 'revealline-demo-runtime-variants.v1');
   assert.equal(
     provenance.variants.length,
-    catalog.clips.reduce((count, clip) => count + clip.replayVariants.length, 0) -
+    reviewedClips.reduce((count, clip) => count + clip.replayVariants.length, 0) -
       (await json('../demo-data/ci-variant-provenance.json')).variants.length,
   );
   for (const id of [
@@ -293,7 +294,10 @@ test('Linux variants pin independently observed checkpoints without changing rev
 });
 
 test('catalogue admits only matching installed content and local bundled replay URLs', async () => {
-  assert.equal(resolveDemoCatalog(catalog, [entry]).length, 12);
+  assert.equal(
+    resolveDemoCatalog(catalog, [entry]).length,
+    catalog.clips.filter((clip) => clip.campaignId === campaign.id).length,
+  );
   assert.equal(resolveDemoCatalog(catalog, []).length, 0);
   const changed = structuredClone(entry);
   changed.campaign.levels[0].rules.moveSpeed++;

@@ -1,0 +1,31 @@
+{
+  "engine": "webkit",
+  "started": "2026-10-19T00:56:28.889Z",
+  "checks": [
+    {
+      "type": "fresh-start-exact-authored-setup-ready-disarmed",
+      "origin": "sim",
+      "course": "beginner-02",
+      "mode": "self-level",
+      "ticks": 0,
+      "courseIdentity": "ac0c4582c01659a5",
+      "responseIdentity": "73833493634ba989",
+      "savedCustomAircraftTuningUnchanged": true
+    },
+    {
+      "type": "fresh-start-exact-authored-setup-ready-disarmed",
+      "origin": "solo",
+      "course": "beginner-28",
+      "mode": "self-level",
+      "ticks": 0,
+      "courseIdentity": "7277f2d67ccd27c6",
+      "responseIdentity": "73833493634ba989",
+      "savedCustomAircraftTuningUnchanged": true
+    }
+  ],
+  "errors": [],
+  "complete": true,
+  "browserCloseAttempted": true,
+  "browserCloseCompleted": true,
+  "finished": "2026-10-19T00:56:48.962Z"
+}

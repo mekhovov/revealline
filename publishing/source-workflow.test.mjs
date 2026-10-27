@@ -4,6 +4,67 @@ import test from 'node:test';
 
 const workflows = new URL('../.github/workflows/', import.meta.url);
 
+function assertSharedDemoBrowserWorkflow(source) {
+  assert.match(source, /^  pull_request:$/mu);
+  assert.doesNotMatch(source, /^\s+(?:pull_request_target|workflow_run|push):/mu);
+  assert.match(source, /^permissions:\n  contents: read$/mu);
+  assert.doesNotMatch(
+    source,
+    /permissions:\s*write-all|[\w-]+:\s*write\b|environment:|github-pages|actions\/(?:upload-pages-artifact|deploy-pages)@/u,
+  );
+  assert.match(source, /^      DEMO_HEAD: \$\{\{ github.event.pull_request.head.sha \}\}$/mu);
+  assert.equal((source.match(/uses: actions\/checkout@/gu) ?? []).length, 1);
+  assert.match(
+    source,
+    /^          ref: \$\{\{ github.event.pull_request.head.sha \}\}\n          persist-credentials: false$/mu,
+  );
+  assert.ok(source.includes('test "$(git rev-parse HEAD)" = "$DEMO_HEAD"'));
+  assert.ok(source.includes('test -z "$(git status --porcelain --untracked-files=no)"'));
+  assert.match(source, /^    timeout-minutes: 90$/mu);
+  assert.ok(
+    source.includes(
+      'timeout --signal=TERM --kill-after=10s 11m node scripts/qualify-demo-main-pages.mjs --report=.cache/hosted-demo-browser/main-pages.json --preview-output=.cache/hosted-demo-emitted 2>&1 | head -c 4194305 > .cache/hosted-demo-browser/main-pages.log',
+    ),
+  );
+  assert.ok(
+    source.includes('test "$(wc -c < .cache/hosted-demo-browser/main-pages.log)" -le 4194304'),
+  );
+  const phases = [
+    ...source.matchAll(
+      /^        timeout-minutes: (\d+)\n        run: >-\n((?:          .+\n)+)/gmu,
+    ),
+  ];
+  assert.equal(phases.length, 3);
+  for (const [index, phase] of ['matrix', 'additional', 'offline'].entries()) {
+    const [, minutes, command] = phases[index];
+    assert.equal(Number(minutes), phase === 'offline' ? 11 : 32);
+    assert.ok(command.includes('python3 scripts/qualify-shared-demo-hosted-browser.py'));
+    for (const argument of [
+      '--node="$(command -v node)" --runtime="$DEMO_PLAYWRIGHT"',
+      '--head="$DEMO_HEAD" --base="$DEMO_BASE" --fingerprint="$DEMO_RUNTIME_SHA"',
+      '--emitted-preview=.cache/hosted-demo-emitted',
+      `--report=.cache/hosted-demo-browser/${phase}.json --phase=${phase}`,
+    ])
+      assert.ok(command.includes(argument), argument);
+  }
+  assert.match(
+    source,
+    /name: Retain exact-source reports and bounded incomplete diagnostics\n        if: \$\{\{ always\(\) \}\}\n        timeout-minutes: 3\n        uses: actions\/upload-artifact@[a-f0-9]{40}/u,
+  );
+  assert.ok(
+    source.includes(
+      'name: shared-demo-browser-${{ github.event.pull_request.head.sha }}-${{ github.run_attempt }}',
+    ),
+  );
+  assert.match(
+    source,
+    /path: \|\n            \.cache\/hosted-demo-browser\/\n            \.cache\/hosted-demo-emitted\/manifest.json/u,
+  );
+  assert.match(source, /include-hidden-files: true\n          if-no-files-found: error/u);
+  assert.match(source, /retention-days: 7/u);
+  assert.doesNotMatch(source, /continue-on-error: true|if-no-files-found: (?:ignore|warn)/u);
+}
+
 test('pull-request admission workflows do not require GitHub Pages', async () => {
   for (const name of await fs.readdir(workflows)) {
     if (!/\.ya?ml$/u.test(name)) continue;
@@ -47,7 +108,41 @@ test('pull-request admission workflows do not require GitHub Pages', async () =>
     }
     assert.doesNotMatch(source, /github-pages|pages:\s*write/u, name);
     assert.doesNotMatch(source, /actions\/(?:upload-pages-artifact|deploy-pages)@/u, name);
-    assert.doesNotMatch(source, /main-pages|stage-pages|pages-production/u, name);
+    let pagesReferences = source;
+    if (name === 'shared-demo-browser-qualification.yml') {
+      // This canonical builder only captures local emitted bytes for real browser
+      // admission. Permit its exact command/report names after verifying that
+      // the workflow has no publishing authority; retain the generic Pages ban.
+      assertSharedDemoBrowserWorkflow(source);
+      for (const localPath of [
+        'scripts/qualify-demo-main-pages.mjs',
+        '.cache/hosted-demo-browser/main-pages.json',
+        '.cache/hosted-demo-browser/main-pages.log',
+      ])
+        pagesReferences = pagesReferences.replaceAll(localPath, 'local-demo-capture');
+    }
+    assert.doesNotMatch(pagesReferences, /main-pages|stage-pages|pages-production/u, name);
+  }
+});
+
+test('shared demo browser admission rejects publishing authority and weakened qualification', async () => {
+  const source = await fs.readFile(
+    new URL('shared-demo-browser-qualification.yml', workflows),
+    'utf8',
+  );
+  assertSharedDemoBrowserWorkflow(source);
+  for (const [before, after] of [
+    ['contents: read', 'contents: write'],
+    ['    runs-on: ubuntu-24.04', '    environment: production\n    runs-on: ubuntu-24.04'],
+    ['actions/upload-artifact@', 'actions/upload-pages-artifact@'],
+    ['ref: ${{ github.event.pull_request.head.sha }}', 'ref: main'],
+    ['--preview-output=.cache/hosted-demo-emitted', '--preview-output=public'],
+    ['--phase=offline', '--phase=matrix'],
+    ['if: ${{ always() }}', 'if: ${{ success() }}'],
+    ['if-no-files-found: error', 'if-no-files-found: warn'],
+  ]) {
+    assert.ok(source.includes(before), before);
+    assert.throws(() => assertSharedDemoBrowserWorkflow(source.replace(before, after)), before);
   }
 });
 

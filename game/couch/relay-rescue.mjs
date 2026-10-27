@@ -203,7 +203,9 @@ import { teamReturnHref } from '../mode-return.mjs';
 import { releaseExplorerHref } from '../release-explorer.mjs';
 import { teamHomeRecommendation } from '../ui/team-home-recommendation.mjs';
 
-const $ = (id) => document.getElementById(id);
+// Retained localized labels belong to this page even after navigation retires it.
+const owningDocument = document;
+const $ = (id) => owningDocument.getElementById(id);
 // This host is loaded through the direct-tool launcher after parsing. Bind its
 // complete static setup here as well as in the classic startup adapter so live
 // switching remains complete in embedded and test hosts with no DOMContentLoaded handoff.

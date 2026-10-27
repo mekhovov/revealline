@@ -1,0 +1,50 @@
+export function installDemoMenuObserver() {
+  let active = false, raf = null, stopTimer = null;
+  const rows = [], events = [], longTasks = [];
+  const name = (node) => !node ? null : `${node.tagName ?? node.nodeName}${node.id ? `#${node.id}` : ''}${node.classList?.length ? `.${[...node.classList].slice(0, 3).join('.')}` : ''}`;
+  const snapshot = () => {
+    const node = document.querySelector('#shell-menu');
+    const rect = node?.getBoundingClientRect(), style = node ? getComputedStyle(node) : null;
+    const x = rect ? rect.x + rect.width / 2 : null, y = rect ? rect.y + rect.height / 2 : null;
+    return { at: performance.now(), wall: Date.now(), boot: document.documentElement.dataset.bootState ?? null,
+      readyState: document.readyState, bodyState: document.body?.dataset.flightState ?? null,
+      focused: document.hasFocus(), hidden: document.hidden, activeElement: name(document.activeElement),
+      scroll: [scrollX, scrollY], menu: node ? { disabled: node.disabled, hidden: node.hidden, inert: node.inert,
+        onclick: typeof node.onclick, rect: { x: rect.x, y: rect.y, width: rect.width, height: rect.height },
+        display: style.display, visibility: style.visibility, pointerEvents: style.pointerEvents,
+        position: style.position, zIndex: style.zIndex, transform: style.transform,
+        animation: style.animationName, transition: style.transitionProperty,
+        hit: document.elementsFromPoint(x, y).slice(0, 5).map(name) } : null,
+      dialogs: [...document.querySelectorAll('dialog[open]')].map(name),
+      animations: document.getAnimations().slice(0, 12).map((a) => ({ state: a.playState, time: a.currentTime, target: name(a.effect?.target) })) };
+  };
+  const sample = () => {
+    if (!active) return;
+    if (rows.length < 256) rows.push(snapshot());
+    raf = requestAnimationFrame(sample);
+  };
+  for (const capture of [true, false]) for (const type of ['pointerdown','pointerup','mousedown','mouseup','click'])
+    document.addEventListener(type, (event) => {
+      if (active && events.length < 64) events.push({ at: performance.now(), wall: Date.now(), type, capture,
+        trusted: event.isTrusted, defaultPrevented: event.defaultPrevented, target: name(event.target),
+        path: event.composedPath().slice(0, 6).map(name), x: event.clientX, y: event.clientY });
+    }, capture);
+  let observer = null;
+  if (globalThis.PerformanceObserver?.supportedEntryTypes?.includes('longtask')) {
+    observer = new PerformanceObserver((list) => {
+      if (active) for (const entry of list.getEntries()) if (longTasks.length < 64)
+        longTasks.push({ startTime: entry.startTime, duration: entry.duration, name: entry.name });
+    });
+    observer.observe({ type: 'longtask', buffered: false });
+  }
+  const stop = () => {
+    const final = snapshot(); active = false; cancelAnimationFrame(raf); clearTimeout(stopTimer);
+    return { documentId: window.demoRestorationObservation?.id ?? null, final, rows: [...rows], events: [...events], longTasks: [...longTasks],
+      limits: { rows: 256, events: 64, longTasks: 64 }, boundedObserverOnly: true };
+  };
+  window.demoMenuDiagnostic = {
+    start() { rows.length = events.length = longTasks.length = 0; active = true; sample(); stopTimer = setTimeout(() => { active = false; cancelAnimationFrame(raf); }, 5000); return snapshot(); },
+    stop,
+  };
+  window.addEventListener('pagehide', () => { active = false; cancelAnimationFrame(raf); clearTimeout(stopTimer); observer?.disconnect(); }, { once: true });
+}

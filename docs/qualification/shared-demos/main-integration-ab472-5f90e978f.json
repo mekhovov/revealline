@@ -1,0 +1,64 @@
+{
+  "format": "SharedDemoFiniteMainIntegrationV1",
+  "started": "2026-10-19T03:51:52.632Z",
+  "base": "ab47230fd8e0e68c5536fe9d76616c7fe9a03516",
+  "sourceBefore": {
+    "head": "5f90e978f6abf52b8ebbacf9dc3ba951f7796ce8",
+    "runtime": {
+      "sha256": "892df93b69ae0d56e7ae631ef4a1dc268950db818e42b8be122109d0834e036c",
+      "files": 9997,
+      "bytes": 404434188
+    },
+    "buildInput": {
+      "sha256": "31d7feed289f5e8f2e40f32c72422bb2a4a5a9ab9b8c802e1a0a77cbc2dc9e44",
+      "files": 9406,
+      "bytes": 348394334
+    }
+  },
+  "nodeVersion": "v20.19.5",
+  "command": [
+    "/Users/oleksandr.mekhovov/.local/share/mise/installs/node/20.19.5/bin/node",
+    "--test",
+    "--test-concurrency=1",
+    "game/test/capture-medal-goal.test.mjs",
+    "game/test/capture-medal-goal-host.test.mjs",
+    "game/test/fpv-flight-ui.test.mjs",
+    "game/test/fpv-world-appearance-ui.test.mjs",
+    "game/test/published-solo-entry-host.test.mjs"
+  ],
+  "complete": true,
+  "logPath": ".cache/shared-demo-scratch-c4c5fc3c/tmp/main-integration-ab472-5f90e978f.tap.txt",
+  "scope": "Five affected incoming presentation/host files; unchanged feature input/host tests retain the separately pinned repair qualification.",
+  "exit": {
+    "code": 0,
+    "signal": null
+  },
+  "timedOut": false,
+  "overflow": false,
+  "totals": {
+    "tests": 196,
+    "suites": 0,
+    "pass": 196,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "logBytes": 41972,
+  "logSHA256": "7345fe29af54d10b7a7874acdf33d9dea90024333c6665b97649de72ed1064b1",
+  "sourceAfter": {
+    "head": "5f90e978f6abf52b8ebbacf9dc3ba951f7796ce8",
+    "runtime": {
+      "sha256": "892df93b69ae0d56e7ae631ef4a1dc268950db818e42b8be122109d0834e036c",
+      "files": 9997,
+      "bytes": 404434188
+    },
+    "buildInput": {
+      "sha256": "31d7feed289f5e8f2e40f32c72422bb2a4a5a9ab9b8c802e1a0a77cbc2dc9e44",
+      "files": 9406,
+      "bytes": 348394334
+    }
+  },
+  "sourceStable": true,
+  "finished": "2026-10-19T03:53:35.714Z"
+}

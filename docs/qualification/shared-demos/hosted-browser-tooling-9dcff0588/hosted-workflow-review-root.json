@@ -1,0 +1,33 @@
+{
+  "format": "SharedDemoHostedWorkflowRootReviewV1",
+  "at": "2026-10-19T11:46:33.737572+00:00",
+  "baseHead": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "workflowSHA256": "5a2819d9fb51569ff3489bed85647217f9312562b6bc008e9be4662ee8ecb031",
+  "actionlint": "pass",
+  "review": [
+    "Read-only pull_request workflow checks out exact event head with credentials disabled and pinned action SHAs.",
+    "Locked root build dependencies; exact Playwright1.62.1 is separately installed in fresh private runner temporary directory. Package/core/browser manifest hashes retained.",
+    "Runtime declaration and HEAD are checked before fresh capture; all phases reuse unchanged emitted-source admission.",
+    "Browser phase command lines are sequential; failed phase blocks later phases and retains bounded diagnostics.",
+    "Capture retains stage-only timeout semantics; this review does not claim identity-owned capture subprocess cleanup.",
+    "Artifacts retain compact audit/inventory/preflight, phase receipts, logs, narrow screenshots and emitted manifest, excluding bulk capture/profile.",
+    "New QA scripts are outside the explicit optional-package local/shared source allowance; package limits are unchanged."
+  ],
+  "references": [
+    {
+      "url": "https://playwright.dev/docs/ci",
+      "scope": "Official installation guidance supports browser plus OS dependencies through install --with-deps and default headless CI."
+    },
+    {
+      "url": "https://registry.npmjs.org/playwright/1.62.1",
+      "scope": "Read-only registry lookup confirms published exact version and playwright-core1.62.1 dependency.",
+      "integrity": "sha512-0M+L3LAD8/nm554LOla9Ayx0j0tmFZ0FBcoQ7F1VuVHpM/XpiC8RcDzBQB8W5+hA8L22THxELzeF+2WcUzvcLg=="
+    }
+  ],
+  "pending": [
+    "Independent review and synthetic hosted execution of new Linux exact-owned supervisor.",
+    "Actual fresh capture and complete21 browser jobs on exact new commit."
+  ],
+  "browserRun": false,
+  "qualificationComplete": false
+}

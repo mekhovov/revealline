@@ -1,0 +1,62 @@
+{
+  "engine": "chromium",
+  "requestedDurationSeconds": 0,
+  "scope": "current",
+  "idleEntry": true,
+  "started": "2026-10-18T04:43:24.259Z",
+  "checks": [
+    {
+      "type": "idle-current-mode-entry",
+      "elapsedMs": 60123
+    },
+    {
+      "type": "native-playback",
+      "mode": "snake",
+      "source": "snake:classic-snake-open-loop:standard",
+      "phase": "playing",
+      "failureDetails": null,
+      "tick": "5",
+      "canvases": 3,
+      "nativeSurfaces": 1,
+      "title": "Snake Solo · Open Loop",
+      "resources": {
+        "ownedNativeScenes": 1,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 25,
+        "renderer": {}
+      }
+    },
+    {
+      "type": "live-localization",
+      "mode": "snake",
+      "caption": "Порожнє поле: рухайтеся широкими петлями, ловіть єдину ціль і стежте за зростанням хвоста."
+    },
+    {
+      "type": "takeover-and-return",
+      "mode": "snake"
+    },
+    {
+      "type": "pause",
+      "mode": "snake"
+    },
+    {
+      "type": "narrow-controls"
+    },
+    {
+      "type": "return-and-persistence",
+      "workers": 0,
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 25,
+        "renderer": {}
+      }
+    }
+  ],
+  "samples": [],
+  "errors": [],
+  "complete": true,
+  "enduranceStarted": "2026-10-18T04:44:33.399Z",
+  "enduranceFinished": "2026-10-18T04:44:33.399Z",
+  "finished": "2026-10-18T04:44:33.963Z"
+}

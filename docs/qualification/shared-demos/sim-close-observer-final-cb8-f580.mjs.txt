@@ -1,0 +1,75 @@
+import { openSync, writeSync, closeSync } from 'node:fs';
+import { basename } from 'node:path';
+import { pathToFileURL } from 'node:url';
+
+// Diagnostic only: observe public events/promises without joining, cancelling,
+// deleting or delaying any qualifier operation, export, context, or browser.
+export function observePlaywrightClose(playwright, emit) {
+  const downloads = new Map();
+  let next = 0;
+  const summary = () => [...downloads.values()].map(value => ({ ...value }));
+  const observe = (work, id, field) => {
+    const timer = setTimeout(() => emit('download-observation-timeout', { id, field, timeoutMs: 10000 }), 10000);
+    timer.unref();
+    Promise.resolve().then(work).then(value => {
+      clearTimeout(timer);
+      const state = downloads.get(id);
+      state[field] = field === 'path' && value ? basename(value) : value;
+      state[`${field}Settled`] = true;
+      emit('download-observation-settled', { id, field, value: state[field] });
+    }, error => {
+      clearTimeout(timer);
+      downloads.get(id)[`${field}Error`] = String(error).slice(0, 1000);
+      emit('download-observation-error', { id, field, error: String(error).slice(0, 1000) });
+    });
+  };
+  const launch = playwright.chromium.launch;
+  playwright.chromium.launch = async function (...args) {
+    emit('launch-start');
+    const browser = await launch.apply(this, args);
+    emit('launch-complete');
+    browser.on('disconnected', () => emit('browser-disconnected', { downloads: summary() }));
+    const newContext = browser.newContext;
+    browser.newContext = async function (...args) {
+      const context = await newContext.apply(this, args);
+      context.on('page', page => {
+        page.on('download', download => {
+          const id = ++next;
+          downloads.set(id, { id, filename: download.suggestedFilename(), failureSettled: false, pathSettled: false });
+          emit('download-start', { ...downloads.get(id) });
+          observe(() => download.failure(), id, 'failure');
+          observe(() => download.path(), id, 'path');
+        });
+      });
+      context.on('close', () => emit('context-closed'));
+      return context;
+    };
+    const close = browser.close;
+    browser.close = function (...args) {
+      emit('browser-close-start', { downloads: summary() });
+      const pending = close.apply(this, args);
+      pending.then(() => emit('browser-close-settled', { outcome: 'fulfilled', downloads: summary() }),
+        error => emit('browser-close-settled', { outcome: 'rejected', error: String(error).slice(0, 1000), downloads: summary() }));
+      return pending;
+    };
+    return browser;
+  };
+  return { snapshot: summary };
+}
+
+if (process.env.DEMO_CLOSE_OBSERVER_ACTIVE === '1') {
+  const fd = openSync(process.env.DEMO_CLOSE_OBSERVER_LOG, 'wx');
+  const started = performance.now();
+  let count = 0;
+  const emit = (event, detail = {}) => {
+    if (++count > 128) return;
+    writeSync(fd, JSON.stringify({ event, at: new Date().toISOString(), elapsedMs: performance.now() - started, ...detail }) + '\n');
+  };
+  const runtime = await import(pathToFileURL(process.env.DEMO_CLOSE_OBSERVER_RUNTIME).href);
+  const state = observePlaywrightClose(runtime, emit);
+  emit('observer-installed', { operations: 'Observe only; no joined download waits, artifact deletion, explicit context.close, or timeout change.' });
+  process.once('exit', code => {
+    emit('node-exit', { code, downloads: state.snapshot() });
+    closeSync(fd);
+  });
+}

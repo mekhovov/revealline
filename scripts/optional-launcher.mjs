@@ -9,6 +9,7 @@ export function buildOptionalLauncher({
   basePath,
   entries,
   contextSource,
+  navigationSource,
   installWorker = installPracticeWorker,
 }) {
   if (
@@ -16,6 +17,8 @@ export function buildOptionalLauncher({
     !/^\/(?:[A-Za-z0-9_-]+\/)*$/.test(basePath)
   )
     throw new Error('Optional launcher needs a stable package and absolute target directory.');
+  if (!Buffer.isBuffer(navigationSource) || !navigationSource.length)
+    throw new Error('Optional launcher needs its canonical navigation input.');
   const root = `${basePath}practice/${packageId}/`;
   const description = JSON.parse(entries.get(`optional-practice/${packageId}/package-info.json`));
   const original = JSON.parse(entries.get(`optional-practice/${packageId}/app.webmanifest`));
@@ -51,7 +54,7 @@ export function buildOptionalLauncher({
       ),
     ],
     ['context.mjs', contextSource],
-    ['navigation.mjs', entries.get('optional-practice/navigation.mjs')],
+    ['navigation.mjs', navigationSource],
     ['app.webmanifest', json(manifest)],
     ...[192, 512].map((size) => [
       `icons/icon-${size}.png`,

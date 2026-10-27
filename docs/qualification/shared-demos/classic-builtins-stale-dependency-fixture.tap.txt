@@ -1,0 +1,299 @@
+TAP version 13
+# Subtest: cross-mode Solo enumerates exact installed authored packs without downloading or writing
+ok 1 - cross-mode Solo enumerates exact installed authored packs without downloading or writing
+  ---
+  duration_ms: 1876.872042
+  ...
+# Subtest: built-in Journey sources enumerate bounded metadata and prepare only the selected native owner
+ok 2 - built-in Journey sources enumerate bounded metadata and prepare only the selected native owner
+  ---
+  duration_ms: 5001.35975
+  ...
+# Subtest: locked or unavailable installed inventory retains base Solo without repairing storage
+ok 3 - locked or unavailable installed inventory retains base Solo without repairing storage
+  ---
+  duration_ms: 17.751542
+  ...
+# Subtest: clean and Journey entry contexts enumerate the complete authored union from metadata only
+ok 4 - clean and Journey entry contexts enumerate the complete authored union from metadata only
+  ---
+  duration_ms: 176.116958
+  ...
+# Subtest: source merge preserves personal recordings, live bots, improvisation and reviewed choices
+ok 5 - source merge preserves personal recordings, live bots, improvisation and reviewed choices
+  ---
+  duration_ms: 0.146291
+  ...
+# Subtest: lazy handoffs name exact ordinary missions without granting installation or progress
+ok 6 - lazy handoffs name exact ordinary missions without granting installation or progress
+  ---
+  duration_ms: 26.516958
+  ...
+# Subtest: selected native packed replay strictly plays to its terminal outcome and releases its entry
+ok 7 - selected native packed replay strictly plays to its terminal outcome and releases its entry
+  ---
+  duration_ms: 130.1885
+  ...
+# Subtest: changed indexed bytes, canonical pack identity and replay content fail before adoption
+ok 8 - changed indexed bytes, canonical pack identity and replay content fail before adoption
+  ---
+  duration_ms: 74.532083
+  ...
+# Subtest: cancellation releases an ignored late transport and never adopts native content
+ok 9 - cancellation releases an ignored late transport and never adopts native content
+  ---
+  duration_ms: 26.116791
+  ...
+# Subtest: indexed metadata cannot escape the finite local authored pack paths
+ok 10 - indexed metadata cannot escape the finite local authored pack paths
+  ---
+  duration_ms: 20.223
+  ...
+# Subtest: cancelling native pack image preparation retires its image and prevents subsequent decodes
+ok 11 - cancelling native pack image preparation retires its image and prevents subsequent decodes
+  ---
+  duration_ms: 189.133834
+  ...
+# Subtest: lazy entry ownership preserves frozen live getters and releases once on disposal or cancellation
+ok 12 - lazy entry ownership preserves frozen live getters and releases once on disposal or cancellation
+  ---
+  duration_ms: 0.869084
+  ...
+# Subtest: a retired earlier lease cannot erase the currently owned entry
+ok 13 - a retired earlier lease cannot erase the currently owned entry
+  ---
+  duration_ms: 0.472667
+  ...
+# Subtest: already cancelled admission disposes the native player before retaining its entry
+ok 14 - already cancelled admission disposes the native player before retaining its entry
+  ---
+  duration_ms: 0.744875
+  ...
+# Subtest: actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily
+ok 15 - actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily
+  ---
+  duration_ms: 3303.242708
+  ...
+# Subtest: same map IDs in separately installed themed owners do not collide
+ok 16 - same map IDs in separately installed themed owners do not collide
+  ---
+  duration_ms: 55.006041
+  ...
+# Subtest: current main Journey host adds every installed Journey level without pretending base clips belong to Journey
+ok 17 - current main Journey host adds every installed Journey level without pretending base clips belong to Journey
+  ---
+  duration_ms: 3602.154584
+  ...
+# Subtest: actual public company editions expose only their own isolated installed levels
+ok 18 - actual public company editions expose only their own isolated installed levels
+  ---
+  duration_ms: 3580.403083
+  ...
+# Subtest: missing Worker and uninstalled content filter sources without downloading or installing packs
+ok 19 - missing Worker and uninstalled content filter sources without downloading or installing packs
+  ---
+  duration_ms: 46.291916
+  ...
+# Subtest: manually kept local recordings join the catalogue without enabling automatic collection
+ok 20 - manually kept local recordings join the catalogue without enabling automatic collection
+  ---
+  duration_ms: 144.458375
+  ...
+# Subtest: uncached optional bundled replays fall back to a retained recording or stay unavailable offline
+ok 21 - uncached optional bundled replays fall back to a retained recording or stay unavailable offline
+  ---
+  duration_ms: 213.054625
+  ...
+# Subtest: scene creation rejects a valid but wrong bundled recording and respects cancellation
+ok 22 - scene creation rejects a valid but wrong bundled recording and respects cancellation
+  ---
+  duration_ms: 18.014
+  ...
+# Subtest: cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation
+ok 23 - cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation
+  ---
+  duration_ms: 0.350333
+  ...
+# Subtest: frozen variants stay strict and reviewed routes qualify only an enemy checkpoint difference
+ok 24 - frozen variants stay strict and reviewed routes qualify only an enemy checkpoint difference
+  ---
+  duration_ms: 498.514083
+  ...
+# Subtest: the ordinary game build includes every dynamic demo asset and Worker module
+ok 25 - the ordinary game build includes every dynamic demo asset and Worker module
+  ---
+  duration_ms: 1165.14175
+  ...
+# Subtest: a personal cache that never settles times out without discarding bundled sources
+ok 26 - a personal cache that never settles times out without discarding bundled sources
+  ---
+  duration_ms: 29.021542
+  ...
+# Subtest: a never-settling catalogue falls through to local sources and cancellation settles a hung cache
+ok 27 - a never-settling catalogue falls through to local sources and cancellation settles a hung cache
+  ---
+  duration_ms: 0.474458
+  ...
+# Subtest: resource diagnostic reaches live source rehearsal before its player can be returned
+ok 28 - resource diagnostic reaches live source rehearsal before its player can be returned
+  ---
+  duration_ms: 20.098208
+  ...
+# Subtest: optional level arrays and registry normalize on a separate copy without browser allocation
+ok 29 - optional level arrays and registry normalize on a separate copy without browser allocation
+  ---
+  duration_ms: 2.759917
+  ...
+# Subtest: explicit and default fetched class recipes are independently copied
+ok 30 - explicit and default fetched class recipes are independently copied
+  ---
+  duration_ms: 0.607166
+  ...
+# Subtest: the original is validated before clone can invoke getters or discard forbidden data
+ok 31 - the original is validated before clone can invoke getters or discard forbidden data
+  ---
+  duration_ms: 2.450875
+  ...
+# Subtest: all image headers and aggregate budgets pass before any decoder is called
+ok 32 - all image headers and aggregate budgets pass before any decoder is called
+  ---
+  duration_ms: 2.887167
+  ...
+# Subtest: decoders run one at a time and bytes, metadata, warnings and presentation survive
+ok 33 - decoders run one at a time and bytes, metadata, warnings and presentation survive
+  ---
+  duration_ms: 0.9325
+  ...
+# Subtest: caller edits during decoding cannot modify the in-flight validated snapshot
+ok 34 - caller edits during decoding cannot modify the in-flight validated snapshot
+  ---
+  duration_ms: 0.469083
+  ...
+# Subtest: a failure stops subsequent decodes and leaves the caller current configuration intact
+ok 35 - a failure stops subsequent decodes and leaves the caller current configuration intact
+  ---
+  duration_ms: 0.6415
+  ...
+# Subtest: decoded natural dimensions must be finite integer dimensions matching the bounded header
+ok 36 - decoded natural dimensions must be finite integer dimensions matching the bounded header
+  ---
+  duration_ms: 12.711583
+  ...
+# Subtest: malformed decoder options and explicitly null arrays reject without normalization
+ok 37 - malformed decoder options and explicitly null arrays reject without normalization
+  ---
+  duration_ms: 0.548125
+  ...
+# Subtest: browser decoder validates headers before allocating Image and clears its temporary surface
+ok 38 - browser decoder validates headers before allocating Image and clears its temporary surface
+  ---
+  duration_ms: 0.759417
+  ...
+# Subtest: browser decode cancellation clears pending Image work and preserves abort identity
+ok 39 - browser decode cancellation clears pending Image work and preserves abort identity
+  ---
+  duration_ms: 0.337542
+  ...
+# Subtest: browser cancellation rejects even when the abort reason is falsy
+ok 40 - browser cancellation rejects even when the abort reason is falsy
+  ---
+  duration_ms: 0.269375
+  ...
+# Subtest: browser load failure rejects and cleans callbacks
+ok 41 - browser load failure rejects and cleans callbacks
+  ---
+  duration_ms: 0.160083
+  ...
+# Subtest: browser complete-decode failure rejects after load
+ok 42 - browser complete-decode failure rejects after load
+  ---
+  duration_ms: 0.270334
+  ...
+# Subtest: browser load still works without the optional Image.decode API
+ok 43 - browser load still works without the optional Image.decode API
+  ---
+  duration_ms: 0.128333
+  ...
+# Subtest: a non-browser environment receives a clear decoder-unavailable error
+ok 44 - a non-browser environment receives a clear decoder-unavailable error
+  ---
+  duration_ms: 0.27325
+  ...
+# Subtest: prepared scenarios preserve optional original procedural music descriptors
+ok 45 - prepared scenarios preserve optional original procedural music descriptors
+  ---
+  duration_ms: 0.374167
+  ...
+# Subtest: both built-in expansion packs validate and every map resolves to a compatible runtime scenario
+ok 46 - both built-in expansion packs validate and every map resolves to a compatible runtime scenario
+  ---
+  duration_ms: 844.630208
+  ...
+# Subtest: prepared pack installs, exports, roundtrips and removes without mutating previous library
+ok 47 - prepared pack installs, exports, roundtrips and removes without mutating previous library
+  ---
+  duration_ms: 303.767541
+  ...
+# Subtest: unsupported engine versions, remote media, executable fields and unknown references reject
+ok 48 - unsupported engine versions, remote media, executable fields and unknown references reject
+  ---
+  duration_ms: 123.807667
+  ...
+# Subtest: dependency pins reject missing versions, unsafe replacements, removals and cycles atomically
+not ok 49 - dependency pins reject missing versions, unsafe replacements, removals and cycles atomically
+  ---
+  duration_ms: 324.596708
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/packs.test.mjs:88:1'
+  failureType: 'testCodeFailure'
+  error: 'Living Threads requires foundation version 1.0.0.'
+  code: 'ERR_TEST_FAILURE'
+  name: 'TypeError'
+  stack: |-
+    required (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/data-json.mjs:120:25)
+    dependenciesValid (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/packs.mjs:598:7)
+    libraryChecks (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/packs.mjs:629:3)
+    registeredLibrary (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/packs.mjs:637:19)
+    installPack (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/packs.mjs:660:10)
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/packs.test.mjs:98:16)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+# Subtest: per-map role overrides merge over shared art and remain independently replaceable
+ok 50 - per-map role overrides merge over shared art and remain independently replaceable
+  ---
+  duration_ms: 4.563084
+  ...
+# Subtest: all headers, aggregate budgets and all pack dependencies pass before any image decoder runs
+ok 51 - all headers, aggregate budgets and all pack dependencies pass before any image decoder runs
+  ---
+  duration_ms: 224.142209
+  ...
+# Subtest: decoder failure, mismatched dimensions and caller edits during decode cannot partially install a pack
+ok 52 - decoder failure, mismatched dimensions and caller edits during decode cannot partially install a pack
+  ---
+  duration_ms: 200.015792
+  ...
+# Subtest: malicious object shapes never execute getters and files are bounded before parsing/decoding
+ok 53 - malicious object shapes never execute getters and files are bounded before parsing/decoding
+  ---
+  duration_ms: 10.276833
+  ...
+# Subtest: music descriptors accept the five procedural styles, reject payloads, invalid scales and extreme values
+ok 54 - music descriptors accept the five procedural styles, reject payloads, invalid scales and extreme values
+  ---
+  duration_ms: 2.640458
+  ...
+# Subtest: pack and library validation follows the active locale
+ok 55 - pack and library validation follows the active locale
+  ---
+  duration_ms: 421.0935
+  ...
+1..55
+# tests 55
+# suites 0
+# pass 54
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 14638.203416

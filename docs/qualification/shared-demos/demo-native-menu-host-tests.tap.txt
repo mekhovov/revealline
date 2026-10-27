@@ -1,0 +1,82 @@
+TAP version 13
+# Subtest: native watching advances without Solo effects and practice resumes on its visible surface
+ok 1 - native watching advances without Solo effects and practice resumes on its visible surface
+  ---
+  duration_ms: 20.933542
+  ...
+# Subtest: native readouts use shared playback time when the engine exposes no time field
+ok 2 - native readouts use shared playback time when the engine exposes no time field
+  ---
+  duration_ms: 4.389375
+  ...
+# Subtest: raw SIM-origin controller samples reach Snake practice through the mounted shared host
+ok 3 - raw SIM-origin controller samples reach Snake practice through the mounted shared host
+  ---
+  duration_ms: 11.766625
+  ...
+# Subtest: a quick close and reopen awaits asynchronous scene disposal
+ok 4 - a quick close and reopen awaits asynchronous scene disposal
+  ---
+  duration_ms: 4.968958
+  ...
+# Subtest: renderer disposal failure still retires physics and removes the owned surface
+ok 5 - renderer disposal failure still retires physics and removes the owned surface
+  ---
+  duration_ms: 10.739334
+  ...
+# Subtest: a practice world returned after cancellation is disposed exactly once
+ok 6 - a practice world returned after cancellation is disposed exactly once
+  ---
+  duration_ms: 2.490458
+  ...
+# Subtest: graphics loss retires the native engine and publishes its bounded diagnostic
+ok 7 - graphics loss retires the native engine and publishes its bounded diagnostic
+  ---
+  duration_ms: 8.818166
+  ...
+# Subtest: native preparation forwards one bounded reporter through source and renderer ownership
+ok 8 - native preparation forwards one bounded reporter through source and renderer ownership
+  ---
+  duration_ms: 2.552791
+  ...
+# Subtest: native entry supplies shared controller menu navigation, activation and Back without a page callback
+ok 9 - native entry supplies shared controller menu navigation, activation and Back without a page callback
+  ---
+  duration_ms: 6.945625
+  ...
+# Subtest: shared host forwards an explicit page-owned menu exactly once and creates no fallback navigation
+ok 10 - shared host forwards an explicit page-owned menu exactly once and creates no fallback navigation
+  ---
+  duration_ms: 2.310875
+  ...
+# Subtest: native adapters receive the shared menu and destroying its host removes owned document listeners
+not ok 11 - native adapters receive the shared menu and destroying its host removes owned document listeners
+  ---
+  duration_ms: 9.620458
+  location: '/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/demo-native-host.test.mjs:458:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + 'paused'
+    - 'playing'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'playing'
+  actual: 'paused'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/game/test/demo-native-host.test.mjs:470:10)
+    async Test.run (node:internal/test_runner/test:797:9)
+    async Test.processPendingSubtests (node:internal/test_runner/test:526:7)
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 10
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 391.334166

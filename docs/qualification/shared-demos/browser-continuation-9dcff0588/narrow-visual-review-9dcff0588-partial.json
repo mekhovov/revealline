@@ -1,0 +1,43 @@
+{
+  "format": "SharedDemoNarrowVisualReviewV1",
+  "sourceRevision": "9dcff05887ed573a9fef4037c8d451c8043653a9",
+  "reviewedAt": "2026-10-19T11:04:32.223833+00:00",
+  "complete": false,
+  "screenshots": [
+    {
+      "engine": "chromium",
+      "path": ".cache/native-matrix-evidence/mixed-chromium-final-emitted-403814d-9dcff0588-native-refresh-narrow.png",
+      "bytes": 49213,
+      "sha256": "42a126224208bb57fdc7dc9dd89524de61b64d033ed56324951a4387724780d4",
+      "visibleChecks": {
+        "headingAndModeReadable": true,
+        "sixToolbarActionsReadable": true,
+        "goalCaptionReadable": true,
+        "audioAndPracticeHintReadable": true,
+        "noVisibleHorizontalClipping": true
+      },
+      "depictedMode": "FPV Survival \u00b7 Shunting Yard"
+    },
+    {
+      "engine": "firefox",
+      "path": ".cache/native-matrix-evidence/mixed-firefox-final-emitted-403814d-9dcff0588-native-refresh-narrow.png",
+      "bytes": 76983,
+      "sha256": "f461c3f394052ad9f36033de8017176648310830409c2da07514ea3035750677",
+      "visibleChecks": {
+        "headingAndModeReadable": true,
+        "sixToolbarActionsReadable": true,
+        "goalCaptionReadable": true,
+        "audioAndPracticeHintReadable": true,
+        "noVisibleHorizontalClipping": true
+      },
+      "depictedMode": "Solo \u00b7 Long rail"
+    }
+  ],
+  "remaining": [
+    "WebKit screenshot after complete resumed job"
+  ],
+  "limitations": [
+    "Static desktop browser screenshots, not physical mobile or assistive-technology review.",
+    "Cannot establish audible quality or frame-to-frame motion from screenshots."
+  ]
+}

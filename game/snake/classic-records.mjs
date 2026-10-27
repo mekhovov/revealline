@@ -349,6 +349,7 @@ function availableDatabase() {
 export function createClassicSnakeRecords({
   onChange = () => {},
   onWarning = () => {},
+  canWrite = () => true,
   indexedDB = availableDatabase(),
   contentPack = null,
 } = {}) {
@@ -364,6 +365,7 @@ export function createClassicSnakeRecords({
       : CLASSIC_SNAKE_OFFICIAL_RECORDS_KEY,
     empty,
     indexedDB,
+    canWrite,
     // Replays never execute inside an IndexedDB transaction. Its timeout covers
     // bounded profile parsing, cache checks and storage only.
     validate: (source) => validate(source, { cachedOnly: true }),

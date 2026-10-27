@@ -1,0 +1,215 @@
+/** Ignored observation only; derive unchanged gameplay gates from the durable qualifier. */
+import assert from 'node:assert/strict';
+import { spawn, execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
+import { readFile, writeFile, mkdir, lstat } from 'node:fs/promises';
+import path from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { projectHost, projectApp, replaceOnce, observationCollectionComplete } from './projection.mjs';
+const root = process.cwd();
+const args = Object.fromEntries(process.argv.slice(2).map(arg => {
+  const at = arg.indexOf('=');
+  assert.ok(arg.startsWith('--') && at > 2);
+  return [arg.slice(2, at), arg.slice(at + 1)];
+}));
+assert.equal(args.run, 'approved', 'Explicit run approval is required.');
+for (const name of ['runtime', 'executable', 'report', 'head', 'fingerprint', 'emitted-preview'])
+  assert.ok(args[name], 'Missing ' + name);
+const port = Number(args.port ?? 18776);
+assert.ok(Number.isSafeInteger(port) && port > 1024 && port <= 65535);
+const sha = value => createHash('sha256').update(value).digest('hex');
+const pin = async name => {
+  const body = await readFile(name);
+  return { path: path.relative(root, name), bytes: body.length, sha256: sha(body) };
+};
+const head = () => execFileSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8', timeout: 3000 }).trim();
+const load = name => import(pathToFileURL(path.join(root, 'scripts', name)).href);
+const { fingerprintDemoSources } = await load('demo-source-fingerprint.mjs');
+const { openEmittedPreview } = await load('emitted-preview.mjs');
+const { writeQualificationReport } = await load('shared-demo-browser-report.mjs');
+const { emittedEvidenceSnapshot } = await import(pathToFileURL(path.join(root, '.cache/demo-probe-evidence.mjs')).href);
+const reportPath = path.resolve(args.report);
+try { await lstat(reportPath); throw Error('Refusing existing report.'); }
+catch (error) { if (error.code !== 'ENOENT') throw error; }
+const artifacts = reportPath.replace(/\.json$/, '') + '.artifacts';
+await mkdir(artifacts);
+const manifestPath = path.join(root, 'docs/qualification/shared-demos/source-freeze-latest.json');
+const manifest = JSON.parse(await readFile(manifestPath));
+const helperPaths = [fileURLToPath(import.meta.url), fileURLToPath(new URL('./projection.mjs', import.meta.url)), fileURLToPath(new URL('./supervise.py', import.meta.url)), path.join(root, '.cache/run-endurance-emitted-final.py'), path.join(root, '.cache/demo-probe-evidence.mjs')];
+const binding = async () => ({
+  head: head(), runtime: await fingerprintDemoSources(root),
+  buildInputs: await fingerprintDemoSources(root, ['scripts', 'authoring']),
+  declaration: await pin(manifestPath),
+  emitted: await emittedEvidenceSnapshot(root, args['emitted-preview']),
+  helpers: await Promise.all(helperPaths.map(pin)),
+});
+const before = await binding();
+assert.equal(before.head, args.head);
+assert.equal(before.runtime.sha256, args.fingerprint);
+assert.equal(manifest.sourceFingerprint, args.fingerprint);
+assert.equal(before.runtime.files, manifest.files);
+assert.equal(before.runtime.bytes, manifest.bytes);
+const provider = await openEmittedPreview(args['emitted-preview'], { root, verifySource: true });
+assert.deepEqual(provider.sourceVerification, { head: before.head, runtime: before.runtime, buildInput: before.buildInputs });
+const projections = [];
+for (const [name, transform] of [['game/presentation/host.mjs', projectHost], ['game/app.mjs', projectApp]]) {
+  const original = await provider.read(name), projected = Buffer.from(transform(original.toString('utf8')));
+  const stem = name.replaceAll('/', '__'), originalPath = path.join(artifacts, stem + '.original.txt'), projectedPath = path.join(artifacts, stem + '.projected.mjs');
+  await writeFile(originalPath, original, { flag: 'wx' });
+  await writeFile(projectedPath, projected, { flag: 'wx' });
+  projections.push({ name, original: await pin(originalPath), projected: await pin(projectedPath), absolute: projectedPath });
+}
+const harnessPath = path.join(root, 'scripts/qualify-demo-restoration-browser.mjs');
+let derived = (await readFile(harnessPath, 'utf8')).replaceAll(/(['"])\.\/([^'"]+)\1/g,
+  (_whole, quote, name) => quote + pathToFileURL(path.join(root, 'scripts', name)).href + quote);
+derived = 'import { installFinalOwnerObserver, OWNER_MARKER } from ' + JSON.stringify(pathToFileURL(fileURLToPath(new URL('./projection.mjs', import.meta.url))).href) + ';\n' + derived;
+derived = replaceOnce(derived, 'const report = {', 'const projectionPins = ' + JSON.stringify(projections) + ';\nconst projectedBodies = new Map(await Promise.all(projectionPins.map(async p => ["/" + p.name, { pin: p, body: await readFile(p.absolute) }])));\nfor (const {pin, body} of projectedBodies.values()) assert.equal(sha(body), pin.projected.sha256);\nconst report = {\n  diagnosticOnly: true, projectionPins, ownerTrace: [], nativeConsole: [], requestEvents: [], rawPageErrors: [], ownerOverflow: 0, nativeConsoleOverflow: 0, requestOverflow: 0,\n');
+derived = replaceOnce(derived, "  format: 'SharedDemoBrowserRestorationV2',", "  format: 'SharedDemoExistingOwnerObservationV1',");
+derived = replaceOnce(derived, "    path: 'scripts/qualify-demo-restoration-browser.mjs',",
+  '    path: ' + JSON.stringify(path.relative(root, path.join(artifacts, 'derived-qualifier.mjs'))) + ',\n    derivedFrom: ' + JSON.stringify(await pin(harnessPath)) + ',');
+derived = replaceOnce(derived,
+  'The preview serves the verified emitted inventory, with only the declared local HTML access-credential exception.',
+  'The preview is derived from the verified emitted inventory, with declared local HTML access credentials and the two hashed diagnostic JavaScript projections.');
+derived = replaceOnce(derived, '  limitations: [', "  limitations: [\n    'Declared emitted host/app projections add observation only. Native calls, original errors/returns and qualification gates remain unchanged; historical failures are not upgraded.',\n    'Decode labels bind the validated asset identity and existing main submission to its existing catch; they do not expose or infer a browser-internal blob URL. No Blob bytes are read again.',\n    'Only a DOM error/rejection carrying the same JavaScript object can share the observer WeakMap identity. Protocol/pageerror text, even a unique blob URL with matching target/document timing, supplies correlation rather than exact object identity.',\n    'Bounded observed prefixes cannot prove an old document had no undelivered final tail. Missing catches, ambiguous requests and observer failures remain unresolved.',\n    'All native diagnostics still fail the strict gate; there is no automatic adjudication or filtering.',\n    'The diagnostic adds read-only error/rejection and beforeunload observers for chronology. This is a reload-only probe and makes no BFCache admission claim.',");
+derived = replaceOnce(derived, "    if (request.url.startsWith('/demo-restoration-away')) {",
+  "    const projected = projectedBodies.get(request.url.split('?')[0]);\n    if (projected && ['GET', 'HEAD'].includes(request.method)) {\n      response.writeHead(200, { ...preview.headers, 'Content-Type': 'text/javascript; charset=utf-8', 'Cache-Control': 'public, max-age=0, must-revalidate' });\n      response.end(request.method === 'HEAD' ? undefined : projected.body);\n    } else if (request.url.startsWith('/demo-restoration-away')) {");
+derived = replaceOnce(derived, '    context = await browser.newContext({ viewport: { width: 1024, height: 768 } });',
+  '    context = await browser.newContext({ viewport: { width: 1024, height: 768 } });\n    await context.addInitScript(installFinalOwnerObserver);');
+derived = replaceOnce(derived, '      documentId: window.demoRestorationObservation.id,',
+  '      ownerObservation: globalThis.__demoFinalOwnerObserver?.snapshot() ?? null,\n      documentId: window.demoRestorationObservation.id,');
+derived = replaceOnce(derived, "    page.on('pageerror', (error) => {", String.raw`    page.on('console', message => {
+      const row = { receivedAt: new Date().toISOString(), stage, type: message.type(), text: message.text(), location: message.location() };
+      if (row.text.startsWith(OWNER_MARKER)) {
+        if (report.ownerTrace.length >= 5000) report.ownerOverflow++;
+        else {
+          try { report.ownerTrace.push({ receivedAt: row.receivedAt, stage, ...JSON.parse(row.text.slice(OWNER_MARKER.length)) }); }
+          catch { report.ownerOverflow++; }
+        }
+      } else if (report.nativeConsole.length < 200) report.nativeConsole.push(row);
+      else report.nativeConsoleOverflow++;
+    });
+    for (const kind of ['request', 'requestfinished', 'requestfailed'])
+      page.on(kind, request => {
+        if (!request.url().includes('/game/presentation/compiled/')) return;
+        if (report.requestEvents.length >= 1500) { report.requestOverflow++; return; }
+        report.requestEvents.push({ kind, url: request.url(), resourceType: request.resourceType(), failure: request.failure(), receivedAt: new Date().toISOString(), stage });
+      });
+    page.on('pageerror', error => {
+      if (report.rawPageErrors.length >= 48) { report.nativeConsoleOverflow++; return; }
+      report.rawPageErrors.push({ name: error.name, message: error.message, stack: error.stack, receivedAt: new Date().toISOString(), stage });
+    });
+    page.on('pageerror', (error) => {`);
+derived = replaceOnce(derived, '      await writeQualificationReport(...writeArgs);', String.raw`      try {
+        assert.equal(report.ownerOverflow, 0, 'Ownership collection overflow.');
+        assert.equal(report.nativeConsoleOverflow, 0, 'Native console collection overflow.');
+        assert.equal(report.requestOverflow, 0, 'Request collection overflow.');
+        assert.ok(!report.ownerTrace.some(row => row.kind === 'observer-overflow'));
+        const states = report.checks.flatMap(check => [check.state, check.active, check.restored]).filter(Boolean);
+        for (const state of states) {
+          const observation = state.ownerObservation;
+          assert.ok(observation, 'Checked document requires its observer.');
+          assert.equal(observation.observerFailures, 0);
+          assert.equal(observation.overflow, 0);
+          const received = report.ownerTrace.filter(row => row.documentIdentity === observation.documentIdentity);
+          for (const row of observation.rows)
+            assert.ok(received.some(item => item.sequence === row.sequence && item.kind === row.kind), 'Observed prefix must be delivered completely.');
+        }
+        report.observationPrefixComplete = true;
+        report.strictDiagnosticGate = restorationDiagnosticGate(report.errors, events);
+        assert.equal(report.strictDiagnosticGate, true, 'Late native/DOM diagnostic remains a strict failure.');
+      } catch (error) {
+        report.complete = false;
+        report.failure ??= browserErrorDescription(error);
+        report.observationFailure = browserErrorDescription(error);
+      }
+      await writeQualificationReport(...writeArgs);`);
+const childPath = path.join(artifacts, 'derived-qualifier.mjs');
+await writeFile(childPath, derived, { flag: 'wx' });
+const childReport = path.join(artifacts, 'restoration.json');
+const preparation = { before, harness: await pin(harnessPath), derived: await pin(childPath), projections,
+  scope: 'One existing Solo ordinary/watch/practice restoration sequence; unchanged 30s entry, 3s action and 240s suite gates. No BFCache/all-mode claim.',
+  providerIdentity: { manifestSHA256: provider.manifestSHA256, inventorySHA256: provider.manifest.inventorySHA256, sourceVerification: provider.sourceVerification },
+};
+await writeFile(path.join(artifacts, 'preparation.json'), JSON.stringify(preparation, null, 2) + '\n', { flag: 'wx' });
+const report = { format: 'SharedDemoSameRunOwnerProtocolV1', started: new Date().toISOString(), complete: false, collectionComplete: false, preparation,
+  childReport: path.relative(root, childReport), rawProtocol: [], protocolOverflow: 0, parseFailures: 0, outputTruncated: 0,
+  adjudication: 'NOT AUTOMATIC. Preserve strict native failures; exact same-document request/catch/cleanup linkage requires review.',
+};
+const selected = new Set(['Console.messageAdded', 'Runtime.executionContextCreated', 'Runtime.executionContextDestroyed', 'Runtime.executionContextsCleared', 'Page.frameNavigated', 'Page.frameDetached', 'Page.frameStartedLoading', 'Page.frameStoppedLoading', 'Target.targetCreated', 'Target.targetDestroyed', 'Target.didCommitProvisionalTarget']);
+let retainedBytes = 0, pendingLine = '', stdout = '', stderrTail = '';
+function observe(raw, receivedAt, transport = {}) {
+  if (raw.method === 'Target.dispatchMessageFromTarget') {
+    try { return observe(JSON.parse(raw.params.message), receivedAt, { ...transport, pageProxyId: raw.pageProxyId ?? transport.pageProxyId, targetId: raw.params.targetId }); }
+    catch { report.parseFailures++; return; }
+  }
+  if (!selected.has(raw.method)) return;
+  const row = { receivedAt, ...transport, ...raw }, bytes = Buffer.byteLength(JSON.stringify(row));
+  if (report.rawProtocol.length >= 5000 || retainedBytes + bytes > 5 * 1024 * 1024) { report.protocolOverflow++; return; }
+  retainedBytes += bytes;
+  report.rawProtocol.push(row);
+}
+const child = spawn(process.execPath, [childPath, '--browser=webkit', '--mode=solo', '--ordinary-reloads=1',
+  '--runtime=' + args.runtime, '--executable=' + args.executable, '--emitted-preview=' + args['emitted-preview'],
+  '--report=' + childReport, '--port=' + port], {
+  cwd: root, detached: true, stdio: ['ignore', 'pipe', 'pipe'],
+  env: { ...process.env, DEBUG: 'pw:protocol', DEBUG_COLORS: '0', DEBUG_FILE: '' },
+});
+report.childPID = child.pid;
+const terminate = signal => { if (child.exitCode === null && child.signalCode === null) { try { child.kill(signal); } catch (error) { if (error.code !== 'ESRCH') report.terminationError = String(error); } } };
+let killTimer;
+const watchdog = setTimeout(() => {
+  report.watchdogExpired = true; terminate('SIGTERM');
+  killTimer = setTimeout(() => terminate('SIGKILL'), 10000);
+}, 300000);
+child.stdout.on('data', bytes => {
+  stdout += bytes.toString();
+  if (stdout.length > 32000) { stdout = stdout.slice(-32000); report.outputTruncated++; }
+});
+child.stderr.on('data', bytes => {
+  const text = bytes.toString();
+  stderrTail = (stderrTail + text).slice(-16000);
+  pendingLine += text;
+  while (pendingLine.includes('\n')) {
+    const end = pendingLine.indexOf('\n'), line = pendingLine.slice(0, end);
+    pendingLine = pendingLine.slice(end + 1);
+    if (!line.includes('RECV')) continue;
+    const at = line.indexOf('{'); if (at < 0) continue;
+    try { observe(JSON.parse(line.slice(at)), new Date().toISOString()); }
+    catch { report.parseFailures++; }
+  }
+  if (pendingLine.length > 2 * 1024 * 1024) { report.parseFailures++; pendingLine = ''; }
+});
+const streamClosed = new Promise(resolve => child.once('close', (code, signal) => resolve({ code, signal })));
+report.childExit = await new Promise(resolve => {
+  child.once('error', error => resolve({ error: String(error) }));
+  child.once('exit', (code, signal) => resolve({ code, signal }));
+});
+let drainTimer;
+report.streamClosure = await Promise.race([streamClosed.then(result => ({ complete: true, ...result })), new Promise(resolve => { drainTimer = setTimeout(() => resolve({ complete: false, reason: 'Child stdout/stderr did not close within 3000ms after exit.' }), 3000); })]);
+clearTimeout(drainTimer); clearTimeout(watchdog); clearTimeout(killTimer);
+if (pendingLine.trim()) { report.parseFailures++; report.trailingProtocolText = pendingLine.slice(-2000); }
+report.stdout = stdout; report.stderrTail = stderrTail;
+try {
+  const body = await readFile(childReport), result = JSON.parse(body);
+  report.childReportSHA256 = sha(body);
+  for (const name of ['functionalComplete', 'strictDiagnosticGate', 'browserCloseCompleted', 'previewClosed', 'observationPrefixComplete'])
+    report[name] = result[name];
+  report.diagnostics = { pageErrors: result.rawPageErrors, strictErrors: result.errors };
+  report.after = await binding();
+  assert.deepEqual(report.after, before, 'All source/build/HEAD/manifest/capture/helper bindings remain immutable.');
+  for (const p of projections) {
+    assert.deepEqual(await pin(path.resolve(root, p.original.path)), p.original);
+    assert.deepEqual(await pin(path.resolve(root, p.projected.path)), p.projected);
+  }
+  assert.deepEqual(await pin(childPath), preparation.derived);
+  report.bindingsUnchanged = true;
+  report.collectionComplete = observationCollectionComplete(report, result);
+  report.complete = report.collectionComplete && report.streamClosure.complete === true && report.childExit.code === 0 && !report.childExit.signal && result.complete === true;
+} catch (error) { report.failure = String(error?.stack ?? error); }
+report.finished = new Date().toISOString();
+await writeQualificationReport(reportPath, report);
+console.log(JSON.stringify({ reportPath, complete: report.complete, collectionComplete: report.collectionComplete,
+  functionalComplete: report.functionalComplete, strictDiagnosticGate: report.strictDiagnosticGate,
+  browserCloseCompleted: report.browserCloseCompleted, previewClosed: report.previewClosed,
+  childExit: report.childExit, bindingsUnchanged: report.bindingsUnchanged }));
+if (!report.complete) process.exitCode = 1;

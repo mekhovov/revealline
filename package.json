@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "node scripts/game-cli.mjs serve --port 8768",
     "test": "node scripts/game-cli.mjs test",
+    "demos:check": "node scripts/qualify-solo-demos.mjs && node scripts/generate-snake-demos.mjs --check && node scripts/qualify-sim-demos.mjs && node scripts/generate-survival-demos.mjs --check",
     "test:mission-library-solo": "node --test --test-concurrency=1 game/test/mission-library-solo-custom-host.test.mjs game/test/mission-library-solo-host.test.mjs game/test/mission-library-solo-incoming-host.test.mjs game/test/mission-library-solo-handoff-host.test.mjs",
     "test:mission-library-solo-cold-opening-diagnostic": "node --test --test-concurrency=1 game/test/mission-library-solo-cold-opening.probe.mjs",
     "ai:inventory": "node scripts/inventory-ai-tooling.mjs",

@@ -1,0 +1,19 @@
+{
+  "format": "SurvivalCanonicalCheckIndependentReviewV1",
+  "observedAt": "2026-10-19T10:34:45.500053+00:00",
+  "source": {
+    "path": "scripts/generate-survival-demos.mjs",
+    "sha256": "05d670f4fabbd95fdd842f2cb58f5309b30dfa6bd9fee90b1f7cf3ebcd597149",
+    "bytes": 4167
+  },
+  "findings": [],
+  "assessment": [
+    "--check retains its original recomputed native simulation identity guard before any runtime recording selection.",
+    "Check-only resolves an actual fully verified body through the shared production resolver, which disposes its temporary player, then still constructs a second independent native world via unchanged verifySurvivalDemo(entry,proof,{yieldEvery:Infinity}).",
+    "The authoring branch, native inventory, identity emission, output file and catalog writes remain unchanged. No outcome/checkpoint substitution or verification bypass introduced."
+  ],
+  "reviewOnly": true,
+  "limitations": [
+    "No CLI replay/test execution by reviewer; companion actual-runtime CLI receipts are separate. Linux qualification remains pending."
+  ]
+}

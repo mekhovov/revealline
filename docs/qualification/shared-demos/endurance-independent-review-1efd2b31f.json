@@ -1,0 +1,227 @@
+{
+  "format": "SharedDemoIndependentEnduranceReviewV1",
+  "reviewedAt": "2026-10-19T07:58:26.965622+00:00",
+  "complete": true,
+  "verdict": "pass-with-documented-loading-limitations",
+  "scope": "Independent final receipt/source/hash/process audit of one actual Chromium watch interval on1efd2b31f. No browser/replay/test rerun, no source mutation, no credit for earlier partial intervals.",
+  "sourceRevision": "1efd2b31fe9de9de61ad8e57a6ce24faef18ea9b",
+  "integrationBase": "16ebd7b51984387c39622380a8e51a60e745152e",
+  "runtime": {
+    "sha256": "4187f7dbfa35ecaba7511243ad21fc2188194f5feb40b82c131305afdfa4971d",
+    "files": 9997,
+    "bytes": 404447584
+  },
+  "buildInputs": {
+    "sha256": "505c68f9e6369f02374bf5f466dfdbd3dfba05c1ddfe4e28ccf64ddb42777895",
+    "files": 9406,
+    "bytes": 348396513
+  },
+  "evidence": {
+    "source": {
+      "path": "docs/qualification/shared-demos/endurance-source-emitted-1efd2b31f-final.json",
+      "bytes": 40581,
+      "sha256": "eb90ee64ce467ff8f5165902b35ff0ad6c8bd1243d5f8735df4fec6d013ee2a7"
+    },
+    "browser": {
+      "path": "docs/qualification/shared-demos/rotation-chromium-emitted-1efd2b31f-final-two-hour.json",
+      "bytes": 2182756,
+      "sha256": "ee939c3ebcd39372a9ca18099dea559a79a11b24ea70f7e9f583d69ea86695b3"
+    },
+    "wrapper": {
+      "path": "docs/qualification/shared-demos/endurance-source-emitted-1efd2b31f-final-wrapper.py.txt",
+      "bytes": 26055,
+      "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c"
+    },
+    "log": {
+      "path": ".cache/rotation-chromium-emitted-1efd2b31f-final-two-hour.log",
+      "bytes": 303,
+      "sha256": "11a4b8b45014c63f064532d051465b92bf4011a1105ac5abf60629841783390f"
+    },
+    "cooperativeTimeoutReview": {
+      "path": "docs/qualification/shared-demos/solo-timeout-cooperative-review-1efd2b31f.json",
+      "bytes": 15012,
+      "sha256": "f81517d488c182f078c2dd91cae9e7ce12ca85465c0be3931d138444be2a4eaa"
+    }
+  },
+  "watch": {
+    "started": "2026-10-19T05:54:44.044Z",
+    "finished": "2026-10-19T07:54:45.050Z",
+    "elapsedSeconds": 7201.006,
+    "requestedSeconds": 7201,
+    "minimumSeconds": 7200,
+    "samples": 719,
+    "retentionLimit": 800,
+    "maxObservationGapMs": 11830,
+    "maxObservedNoProgressMs": 10391,
+    "finalObservationGapMs": 0,
+    "progressLimitMs": 45000,
+    "distinctSampledSourceIds": 61,
+    "modeSampleCounts": {
+      "snake": 62,
+      "sim": 107,
+      "solo": 137,
+      "survival": 413
+    },
+    "phaseSampleCounts": {
+      "playing": 639,
+      "loading": 44,
+      "complete": 36
+    },
+    "browserErrors": 0
+  },
+  "resources": {
+    "maxMountedNativeSurfaces": 1,
+    "maxOwnedNativeScenes": 1,
+    "practiceWorldCounts": [
+      0
+    ],
+    "hostListenerCounts": [
+      34
+    ],
+    "workerCounts": [
+      0
+    ],
+    "finalReturnAndPersistence": {
+      "type": "return-and-persistence",
+      "workers": 0,
+      "resources": {
+        "ownedNativeScenes": 0,
+        "practiceWorlds": 0,
+        "ownedHostListeners": 34,
+        "renderer": {}
+      }
+    },
+    "persistenceEvidence": "The unchanged hash-bound harness compares full localStorage snapshots before entry and after Back; reaching the final check records that assertion. Raw storage values are intentionally not retained."
+  },
+  "checks": {
+    "count": 28,
+    "byType": {
+      "native-playback": 4,
+      "live-localization": 4,
+      "takeover-and-return": 4,
+      "pause": 1,
+      "browser-freeze-resume-and-paused-intent": 1,
+      "scene-retirement": 12,
+      "narrow-controls": 1,
+      "return-and-persistence": 1
+    }
+  },
+  "recoveredSourceFailures": {
+    "count": 8,
+    "deduplication": "(at, sourceId, code) from retained snapshots; not an exhaustive transition trace.",
+    "events": [
+      {
+        "firstObservedSample": 49,
+        "at": 1792389781967,
+        "sourceId": "survival:river-port-twin-docks:standard",
+        "modeId": "survival",
+        "code": "demo-load-timeout",
+        "loadingMs": 15229.900000000373,
+        "stage": "verification"
+      },
+      {
+        "firstObservedSample": 76,
+        "at": 1792390051570,
+        "sourceId": "survival:relay-ruins-receiver-gardens:standard",
+        "modeId": "survival",
+        "code": "demo-load-timeout",
+        "loadingMs": 15146.099999999627,
+        "stage": "verification"
+      },
+      {
+        "firstObservedSample": 177,
+        "at": 1792391060048,
+        "sourceId": "survival:orchard-strongpoint-glasshouse-ruins:standard",
+        "modeId": "survival",
+        "code": "demo-load-timeout",
+        "loadingMs": 15846.60000000149,
+        "stage": "verification"
+      },
+      {
+        "firstObservedSample": 210,
+        "at": 1792391394966,
+        "sourceId": "survival:river-port-floodgate-yard:standard",
+        "modeId": "survival",
+        "code": "demo-load-timeout",
+        "loadingMs": 15520.199999999255,
+        "stage": "verification"
+      },
+      {
+        "firstObservedSample": 255,
+        "at": 1792391853421,
+        "sourceId": "solo-qualified-0cf6a5512cf875ec",
+        "modeId": "solo",
+        "code": "demo-load-timeout",
+        "loadingMs": 22256.299999998882,
+        "stage": "source"
+      },
+      {
+        "firstObservedSample": 264,
+        "at": 1792391933786,
+        "sourceId": "survival:relay-ruins-split-compound:standard",
+        "modeId": "survival",
+        "code": "demo-load-timeout",
+        "loadingMs": 15249.5,
+        "stage": "verification"
+      },
+      {
+        "firstObservedSample": 382,
+        "at": 1792393117947,
+        "sourceId": "survival:chalk-quarry-reclaimer-court:standard",
+        "modeId": "survival",
+        "code": "demo-load-timeout",
+        "loadingMs": 15191.300000000745,
+        "stage": "scene-import"
+      },
+      {
+        "firstObservedSample": 609,
+        "at": 1792395390999,
+        "sourceId": "survival:freight-depot-dispatch-junction:standard",
+        "modeId": "survival",
+        "code": "demo-load-timeout",
+        "loadingMs": 15072.799999998882,
+        "stage": "verification"
+      }
+    ],
+    "allObservedCodes": [
+      "demo-load-timeout"
+    ],
+    "interpretation": "Eight source timeouts recovered during continuing rotation; no unavailable sample or pageerror. Timers are cooperative. The22,256.3ms Solo event was already22,256.1ms at abort notification, with~0.2ms afterward; cause of delayed servicing is unknown. No hard15second source or every-transition30second wall-clock guarantee is established."
+  },
+  "bindings": {
+    "independentlyRecomputedRuntimeAndBuildInputs": true,
+    "headMatchesFrozenStartAndEnd": true,
+    "declarationPinAndBodyMatches": true,
+    "captureManifestAuditInventoryPinsMatch": true,
+    "semanticInventoryHashMatches": true,
+    "emittedSourceAdmissionMatches": true,
+    "harnessHashesMatchStartAndEndAndCurrentFiles": true,
+    "wrapperHashMatchesPreservedCopyAndCurrentHelper": true,
+    "sourceAndBrowserReceiptsStableDuringAudit": true,
+    "manifestSHA256": "7f5d15ca17f4fde15c275e5f2001f523292007de605ad02d2a827c5ace5f7e47",
+    "inventorySHA256": "db7b1e402eb450bb608480502e600669484d7dac8f66b429605138ea72642a90"
+  },
+  "cleanup": {
+    "childExitCode": 0,
+    "browserClosed": true,
+    "previewClosed": true,
+    "ownedIdentitiesObserved": 9,
+    "ownershipAncestryValidated": true,
+    "signalsIssued": 0,
+    "remainingAtRunnerEnd": 0,
+    "sameOwnedIdentitiesAliveAtReview": 0,
+    "previewPort18773HasListenerAtReview": false,
+    "logBytes": 303,
+    "logDrainComplete": true,
+    "logTruncatedBytes": 0,
+    "logWithin8MiB": true,
+    "ownershipAndActionBoundsExceeded": false
+  },
+  "limitations": [
+    "Sampled continuity/resource counts do not prove continuous painting, total process heap/GPU allocation or exhaustive per-transition timings.",
+    "The run exercises available modes and61 sampled sources, not all890 performances; separate full-corpus receipts retain their exact scope.",
+    "Loading recovery diagnostics are preserved separately from strict browser errors; successful endurance does not imply every source prepared below15seconds.",
+    "Local HTML access credentials are an explicit fixture; offline HTML integrity, public deployment and physical-controller/mobile/audible review are not covered.",
+    "This pass does not clear three failed hosted CI gates or qualify a future runtime-changing integration. Existing browser/native evidence can transfer only when its relevant identities remain unchanged."
+  ]
+}

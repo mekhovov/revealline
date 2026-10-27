@@ -1,0 +1,70 @@
+{
+  "format": "SharedDemoHostedReplayFailureV1",
+  "observedAt": "2026-10-19T09:14:15.845097+00:00",
+  "head": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+  "jobId": 117964159940,
+  "runId": 39223515789,
+  "jobURL": "https://github.com/mekhovov/revealline/actions/runs/39223515789/job/117964159940",
+  "strictComplete": false,
+  "counts": {
+    "tests": 85,
+    "pass": 84,
+    "fail": 1,
+    "skipped": 0,
+    "cancelled": 0
+  },
+  "environment": {
+    "node": "22.13.1",
+    "platform": "linux",
+    "arch": "x64"
+  },
+  "log": {
+    "path": ".cache/hosted-b4688ca21-job-117964159940.log.txt",
+    "sha256": "8425a1cb590f1be0c5d2fc660242e4b8de3ce8d861a899a8ed58009afea55d25",
+    "bytes": 71101
+  },
+  "sourceDiagnosticLine": 458,
+  "sourceFailure": {
+    "sourceId": "solo-qualified-478808a96f4fbf5e",
+    "levelId": "signal-08",
+    "campaignId": "first-signal",
+    "campaignKey": "first-signal/2/88639f3aab7b6cc1",
+    "attemptedURLs": [
+      "file:///home/runner/work/revealline/revealline/game/demo-data/solo-qualified-478808a96f4fbf5e.replay.json",
+      "file:///home/runner/work/revealline/revealline/game/demo-data/solo-qualified-478808a96f4fbf5e.diagnostics.json",
+      "file:///home/runner/work/revealline/revealline/game/demo-data/solo-qualified-478808a96f4fbf5e.chromium.replay.json",
+      "file:///home/runner/work/revealline/revealline/game/demo-data/solo-qualified-478808a96f4fbf5e.chromium.diagnostics.json",
+      "file:///home/runner/work/revealline/revealline/game/demo-data/solo-qualified-478808a96f4fbf5e.firefox.replay.json",
+      "file:///home/runner/work/revealline/revealline/game/demo-data/solo-qualified-478808a96f4fbf5e.firefox.diagnostics.json",
+      "file:///home/runner/work/revealline/revealline/game/demo-data/solo-qualified-478808a96f4fbf5e.webkit.replay.json",
+      "file:///home/runner/work/revealline/revealline/game/demo-data/solo-qualified-478808a96f4fbf5e.webkit.diagnostics.json"
+    ],
+    "omittedURLs": 0,
+    "diagnostics": [
+      {
+        "code": "state-mismatch",
+        "section": "enemies",
+        "message": "Authoritative enemies differs.",
+        "expected": "ed391a595d4e2fb9",
+        "actual": "c3ba914e89640524"
+      },
+      {
+        "code": "state-mismatch",
+        "section": "clock",
+        "message": "Authoritative clock differs.",
+        "expected": "ca39e0a04aa6d20e",
+        "actual": "83be6483dc2b7278"
+      },
+      {
+        "code": "diagnostic-checkpoint-mismatch",
+        "firstMismatchingCheckpointTick": 600,
+        "expected": "a693a2b0126e2de9",
+        "actual": "2de4810180a47587"
+      }
+    ]
+  },
+  "limits": [
+    "Diagnostics describe the final failed native-candidate attempt; no cross-run object identity or root-cause conclusion.",
+    "All listed native replay candidates were attempted; this Linux failure remains strict and is not cleared by macOS passes."
+  ]
+}

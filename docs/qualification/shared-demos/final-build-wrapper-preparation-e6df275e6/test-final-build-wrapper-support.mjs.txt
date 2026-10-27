@@ -1,0 +1,58 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { createHash } from 'node:crypto';
+import { buildAttemptSuffix, inspectBuildReceipt, buildStageFailure } from './final-build-wrapper-support.mjs';
+
+const row = (extra = {}) => ({ name: 'main-pages', exitCode: 0, exitSignal: null, logPath: 'owned.log', ...extra });
+const missing = async () => { throw Object.assign(new Error('child receipt absent'), { code: 'ENOENT' }); };
+
+test('disk stop takes precedence over absent child receipt, retaining both facts', async () => {
+  const info = await inspectBuildReceipt('child.json', { read: missing });
+  const stopped = row({ exitCode: null, exitSignal: 'SIGTERM', stopReason: 'Available disk fell below 200 MiB.', ...info });
+  assert.equal(stopped.receipt.missing, true);
+  assert.equal(stopped.receiptError, 'child receipt absent');
+  assert.match(buildStageFailure(stopped, { requiresReceipt: true }), /stopped: Available disk fell below 200 MiB.*SIGTERM/);
+  assert.doesNotMatch(buildStageFailure(stopped, { requiresReceipt: true }), /receipt absent/);
+});
+
+test('nonzero child exit stays primary even with a malformed receipt', async () => {
+  const body = Buffer.from('{bad');
+  const info = await inspectBuildReceipt('child.json', { read: async () => body });
+  assert.equal(info.receipt.sha256, createHash('sha256').update(body).digest('hex'));
+  assert.ok(info.receiptError);
+  assert.match(buildStageFailure(row({ exitCode: 7, ...info }), { requiresReceipt: true }), /failed \(exit code 7/);
+});
+
+test('existing child evidence is preserved on stopped builds even when complete', async () => {
+  const body = Buffer.from('{"complete":true}');
+  const info = await inspectBuildReceipt('child.json', { read: async () => body });
+  assert.equal(info.receipt.complete, true);
+  assert.equal(info.receipt.bytes, body.length);
+  assert.match(buildStageFailure(row({ stopReason: 'deadline', ...info }), { requiresReceipt: true }), /stopped: deadline/);
+});
+
+test('successful child still requires a readable complete receipt', async () => {
+  const absent = await inspectBuildReceipt('child.json', { read: missing });
+  assert.match(buildStageFailure(row(absent), { requiresReceipt: true }), /required receipt could not be read/);
+  assert.match(buildStageFailure(row({ receipt: { complete: false } }), { requiresReceipt: true }), /incomplete/);
+  assert.equal(buildStageFailure(row({ receipt: { complete: true } }), { requiresReceipt: true }), null);
+  assert.equal(buildStageFailure(row()), null);
+  assert.match(buildStageFailure(row({ logTruncated: true })), /evidence bound/);
+});
+
+test('secondary receipt diagnostics stay bounded without masking other read errors', async () => {
+  const info = await inspectBuildReceipt('child.json', { read: async () => { throw Object.assign(new Error('x'.repeat(5000)), { code: 'EACCES' }); } });
+  assert.equal(info.receipt.missing, false);
+  assert.equal(info.receiptError.length, 2048);
+  assert.deepEqual(await inspectBuildReceipt(undefined), {});
+});
+
+test('attempt names are optional, bounded safe path components and distinct without changing source suffix', () => {
+  const source = 'dd337c8-e6df275e6';
+  assert.equal(source + buildAttemptSuffix(undefined), source);
+  assert.equal(source + buildAttemptSuffix('retry-2'), `${source}-retry-2`);
+  assert.notEqual(source + buildAttemptSuffix('retry-2'), source + buildAttemptSuffix('retry-3'));
+  assert.equal(buildAttemptSuffix('a'.repeat(32)).length, 33);
+  for (const invalid of ['', '.', '..', '../x', '/tmp/x', 'a/b', '-x', 'x-', 'Retry', 'x y', 'x'.repeat(33)])
+    assert.throws(() => buildAttemptSuffix(invalid));
+});

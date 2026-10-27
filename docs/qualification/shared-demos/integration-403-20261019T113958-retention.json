@@ -1,0 +1,46 @@
+{
+  "format": "SharedDemoIntegrationEvidenceRetentionV1",
+  "observedAt": "2026-10-19T09:43:24.507686+00:00",
+  "sourceRevision": "3f84b51f8aa2d568bae22295fb45c227488397e3",
+  "files": [
+    {
+      "original": ".cache/integration-403-20261019T113958.json",
+      "retained": "docs/qualification/shared-demos/integration-403-20261019T113958.json",
+      "bytes": 116372,
+      "sha256": "787559f430814cbfee74fb95ccee958ec7f6d613912d7f3074aff6cd7f986bd3"
+    },
+    {
+      "original": ".cache/integration-403-20261019T113958.tap.txt",
+      "retained": "docs/qualification/shared-demos/integration-403-20261019T113958.tap.txt",
+      "bytes": 58736,
+      "sha256": "c4fc5fd9266968ba15f35ee70973f6413464df32aa26b950f0bf7dd80179b3c2"
+    },
+    {
+      "original": ".cache/integration-403-20261019T113958.py.txt",
+      "retained": "docs/qualification/shared-demos/integration-403-20261019T113958.py.txt",
+      "bytes": 9329,
+      "sha256": "121dbc105c5d40f254c093d4b0efb469574d53dda9da2db00c62812208794018"
+    }
+  ],
+  "complete": true,
+  "stats": {
+    "tests": 242,
+    "pass": 242,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "bindingsStable": true,
+  "ownedCleanupVerified": true,
+  "localStorage": {
+    "freeFloorBytes": 209715200,
+    "allocationCapBytes": 33554432,
+    "freeBeforeBytes": 264810496,
+    "minimumObservedFreeBytes": 247701504,
+    "maximumObservedFixtureBytes": 3760128,
+    "freeAfterBytes": 255246336,
+    "tmpEntriesAfter": 0
+  },
+  "scope": "The20 named existing incoming offline/suspend and shared-demo integration files. Includes the three newly added source-bound generic variants. No new test cases, source edits, full build or browser execution in this run."
+}

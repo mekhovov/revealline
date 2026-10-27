@@ -57,6 +57,7 @@ export function validateDemoCatalog(source) {
         'inputTraceIdentity',
         'replayURL',
         'replayVariants',
+        'runtimePerformances',
         'title',
         'provenance',
         'tags',
@@ -89,6 +90,55 @@ export function validateDemoCatalog(source) {
           new Set([clip.replayURL, ...clip.replayVariants]).size === clip.replayVariants.length + 1,
         'Demo variants must be distinct bounded bundled relative URLs.',
       );
+    if (clip.runtimePerformances !== undefined) {
+      required(
+        clip.id.startsWith('solo-qualified-') &&
+          Array.isArray(clip.runtimePerformances) &&
+          clip.runtimePerformances.length <= 3,
+        'Independent runtime performances are bounded qualified recordings.',
+      );
+      const engines = new Set(),
+        urls = new Set([clip.replayURL, ...(clip.replayVariants ?? [])]);
+      for (const performance of clip.runtimePerformances) {
+        exactKeys(
+          performance,
+          [
+            'engine',
+            'replayURL',
+            'recordingIdentity',
+            'inputTraceIdentity',
+            'durationSeconds',
+            'turnPolicy',
+            'outcome',
+          ],
+          'demo runtime performance',
+        );
+        required(
+          ['chromium', 'firefox', 'webkit'].includes(performance.engine) &&
+            !engines.has(performance.engine),
+          'Runtime performances need distinct supported engines.',
+        );
+        required(
+          bundledReplayURL(performance.replayURL) && !urls.has(performance.replayURL),
+          'Runtime performance needs a distinct bundled relative URL.',
+        );
+        required(
+          performance.recordingIdentity === clip.recordingIdentity &&
+            /^[0-9a-f]{16}$/.test(performance.inputTraceIdentity),
+          'Runtime performance must bind the same exact installed content and its own input trace.',
+        );
+        required(
+          Number.isFinite(performance.durationSeconds) &&
+            performance.durationSeconds > 0 &&
+            performance.durationSeconds <= 1800 &&
+            ['immediate', 'grid-center'].includes(performance.turnPolicy) &&
+            ['won', 'lost'].includes(performance.outcome),
+          'Runtime performance must declare a complete bounded outcome.',
+        );
+        engines.add(performance.engine);
+        urls.add(performance.replayURL);
+      }
+    }
     required(
       typeof clip.title === 'string' && clip.title.length > 0 && clip.title.length <= 160,
       'Invalid demo title.',
@@ -159,9 +209,10 @@ function loadBundledText(url, { fetch: fetcher, signal, maxBytes, label, ...load
 export async function loadDemoCatalog({
   fetch: fetcher = globalThis.fetch,
   signal,
+  catalogURL = DEMO_CATALOG_URL,
   ...loading
 } = {}) {
-  const text = await loadBundledText(DEMO_CATALOG_URL, {
+  const text = await loadBundledText(catalogURL, {
     ...loading,
     fetch: fetcher,
     signal,
@@ -244,6 +295,8 @@ export async function loadDemoRecording(
       actual.identity === clip.identity &&
       actual.recordingIdentity === clip.recordingIdentity &&
       actual.inputTraceIdentity === clip.inputTraceIdentity &&
+      actual.durationSeconds === clip.durationSeconds &&
+      actual.turnPolicy === clip.turnPolicy &&
       actual.campaignKey === clip.campaignKey,
     'The demo recording no longer matches its installed catalogue entry.',
   );

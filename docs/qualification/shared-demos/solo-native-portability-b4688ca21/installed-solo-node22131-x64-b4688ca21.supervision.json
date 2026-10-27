@@ -1,0 +1,183 @@
+{
+  "format": "SharedDemoInstalledSoloNodeX64SupervisionV1",
+  "complete": false,
+  "started": "2026-10-19T09:29:04.308107+00:00",
+  "command": [
+    "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+    ".cache/probe-installed-solo-node22131-x64.mjs",
+    "--run=approved",
+    "--head=b4688ca2199c01fe9a063a7260946bc42c3642f4",
+    "--fingerprint=c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+    "--report=.cache/installed-solo-node22131-x64-b4688ca21.json"
+  ],
+  "timeoutSeconds": 300,
+  "cleanupGraceSeconds": 16,
+  "tmpdir": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/browser-tmp-b4688ca21",
+  "before": {
+    "head": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+    "runtime": {
+      "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+      "files": 10000,
+      "bytes": 404485348
+    },
+    "buildInputs": {
+      "sha256": "6691874c36c2d7a5b6e29d3d849a1af5821245001fd1456380d6867644c69a19",
+      "files": 9406,
+      "bytes": 348401321
+    },
+    "helpers": {
+      ".cache/probe-installed-solo-node22131-x64.mjs": {
+        "sha256": "94063b180c6901e0b6bbefaf7a8ab5bab74480bd44598e1b44f02d14a46606de",
+        "bytes": 9263
+      },
+      ".cache/run-endurance-emitted-final.py": {
+        "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c",
+        "bytes": 26055
+      },
+      "game/test/demo-sources.test.mjs": {
+        "sha256": "9a62c3f9e2a9604e95e988321ffde8cd1227378457e1bacefa24a1b08bff5e86",
+        "bytes": 26080
+      },
+      "scripts/demo-source-fingerprint.mjs": {
+        "sha256": "ed795c9d63b6d2c983f10ed72e750585faedfce9eb00399c3f0db1f0aef1c413",
+        "bytes": 1064
+      },
+      ".cache/hosted-demo-admission-failure-b4688ca21.json": {
+        "sha256": "cdbb9431f9a46cd68113d67a0df40f5b188f603724debf4e7cda22a0b8e6e3bf",
+        "bytes": 2874
+      }
+    },
+    "node": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+      "sha256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd",
+      "bytes": 113991760
+    },
+    "supervisor": {
+      "sha256": "a044fd75af5986605105d02b719623f3b267387c8e8d233c0d290f5079b9bc88",
+      "bytes": 10711
+    }
+  },
+  "limitations": [
+    "Polled child execution and owned cleanup are bounded. Synchronous filesystem reads are not preemptible; late final validation is rejected after 360 seconds.",
+    "Read-only installed macOS x64 Node22.13.1 observation under Rosetta; not Linux proof. Completion may include strict replay rejections."
+  ],
+  "ownedProcesses": {
+    "rootObserved": true,
+    "identityFields": [
+      "pid",
+      "started",
+      "uid",
+      "argv"
+    ],
+    "scope": "Only identities observed as this spawned Node child or its descendants. PPID, PGID and any user-data-dir are retained as provenance; every signal rechecks start time, UID and exact argv. No process-group/name-wide signals.",
+    "observationLimits": {
+      "ownershipLimit": 256,
+      "ownershipCount": 2,
+      "actionLimit": 1024,
+      "actionCount": 0,
+      "exceeded": false
+    },
+    "observed": [
+      {
+        "pid": 62219,
+        "ppid": 62205,
+        "pgid": 62219,
+        "uid": 502,
+        "started": "Mon Oct 19 11:29:04 2026",
+        "argv": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/probe-installed-solo-node22131-x64.mjs --run=approved --head=b4688ca2199c01fe9a063a7260946bc42c3642f4 --fingerprint=c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918 --report=.cache/installed-solo-node22131-x64-b4688ca21.json",
+        "profile": null,
+        "ownership": "exact newly spawned child",
+        "observedAt": "2026-10-19T09:29:04.359016+00:00"
+      },
+      {
+        "pid": 62230,
+        "ppid": 62219,
+        "pgid": 62219,
+        "uid": 502,
+        "started": "Mon Oct 19 11:29:05 2026",
+        "argv": "git rev-parse HEAD",
+        "profile": null,
+        "ownership": "observed descendant",
+        "parentIdentity": [
+          62219,
+          "Mon Oct 19 11:29:04 2026",
+          502,
+          "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node .cache/probe-installed-solo-node22131-x64.mjs --run=approved --head=b4688ca2199c01fe9a063a7260946bc42c3642f4 --fingerprint=c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918 --report=.cache/installed-solo-node22131-x64-b4688ca21.json"
+        ],
+        "observedAt": "2026-10-19T09:29:05.440823+00:00"
+      }
+    ],
+    "actions": [],
+    "ownershipEvidenceTruncated": false,
+    "actionEvidenceTruncated": false,
+    "allActionsSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "remaining": [],
+    "remainingCount": 0,
+    "remainingSHA256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "remainingEvidenceTruncated": false,
+    "verified": true
+  },
+  "log": {
+    "path": ".cache/installed-solo-node22131-x64-b4688ca21.log",
+    "byteLimit": 1048576,
+    "totalBytes": 2889,
+    "writtenBytes": 2889,
+    "truncatedBytes": 0,
+    "tailLimit": 16384,
+    "tailBytes": 2889,
+    "tailSHA256": "915465056048bc7bb57216acda5b796f94ad9dc5a54d1e97a81114966bd8db51",
+    "tail": "xcrun: error: unable to load libxcrun (dlopen(/Library/Developer/CommandLineTools/usr/lib/libxcrun.dylib, 0x0005): tried: '/Library/Developer/CommandLineTools/usr/lib/libxcrun.dylib' (fat file, but missing compatible architecture (have 'arm64,arm64e', need 'x86_64')), '/System/Volumes/Preboot/Cryptexes/OS/Library/Developer/CommandLineTools/usr/lib/libxcrun.dylib' (no such file), '/Library/Developer/CommandLineTools/usr/lib/libxcrun.dylib' (fat file, but missing compatible architecture (have 'arm64,arm64e', need 'x86_64'))).\nnode:internal/errors:983\n  const err = new Error(message);\n              ^\n\nError: Command failed: git rev-parse HEAD\nxcrun: error: unable to load libxcrun (dlopen(/Library/Developer/CommandLineTools/usr/lib/libxcrun.dylib, 0x0005): tried: '/Library/Developer/CommandLineTools/usr/lib/libxcrun.dylib' (fat file, but missing compatible architecture (have 'arm64,arm64e', need 'x86_64')), '/System/Volumes/Preboot/Cryptexes/OS/Library/Developer/CommandLineTools/usr/lib/libxcrun.dylib' (no such file), '/Library/Developer/CommandLineTools/usr/lib/libxcrun.dylib' (fat file, but missing compatible architecture (have 'arm64,arm64e', need 'x86_64'))).\n\n    at genericNodeError (node:internal/errors:983:15)\n    at wrappedFn (node:internal/errors:537:14)\n    at checkExecSyncError (node:child_process:882:11)\n    at execFileSync (node:child_process:918:15)\n    at head (file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/probe-installed-solo-node22131-x64.mjs:16:16)\n    at file:///Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/probe-installed-solo-node22131-x64.mjs:22:13 {\n  status: 1,\n  signal: null,\n  output: [\n    null,\n    '',\n    \"xcrun: error: unable to load libxcrun (dlopen(/Library/Developer/CommandLineTools/usr/lib/libxcrun.dylib, 0x0005): tried: '/Library/Developer/CommandLineTools/usr/lib/libxcrun.dylib' (fat file, but missing compatible architecture (have 'arm64,arm64e', need 'x86_64')), '/System/Volumes/Preboot/Cryptexes/OS/Library/Developer/CommandLineTools/usr/lib/libxcrun.dylib' (no such file), '/Library/Developer/CommandLineTools/usr/lib/libxcrun.dylib' (fat file, but missing compatible architecture (have 'arm64,arm64e', need 'x86_64'))).\\n\"\n  ],\n  pid: 62230,\n  stdout: '',\n  stderr: \"xcrun: error: unable to load libxcrun (dlopen(/Library/Developer/CommandLineTools/usr/lib/libxcrun.dylib, 0x0005): tried: '/Library/Developer/CommandLineTools/usr/lib/libxcrun.dylib' (fat file, but missing compatible architecture (have 'arm64,arm64e', need 'x86_64')), '/System/Volumes/Preboot/Cryptexes/OS/Library/Developer/CommandLineTools/usr/lib/libxcrun.dylib' (no such file), '/Library/Developer/CommandLineTools/usr/lib/libxcrun.dylib' (fat file, but missing compatible architecture (have 'arm64,arm64e', need 'x86_64'))).\\n\"\n}\n\nNode.js v22.13.1\n",
+    "limitExceeded": false,
+    "complete": true,
+    "error": null
+  },
+  "childExit": 1,
+  "after": {
+    "head": "b4688ca2199c01fe9a063a7260946bc42c3642f4",
+    "runtime": {
+      "sha256": "c64b4875a1856e19151eb1bd96e2bf61c8bae19ec395f290a227f4ca41404918",
+      "files": 10000,
+      "bytes": 404485348
+    },
+    "buildInputs": {
+      "sha256": "6691874c36c2d7a5b6e29d3d849a1af5821245001fd1456380d6867644c69a19",
+      "files": 9406,
+      "bytes": 348401321
+    },
+    "helpers": {
+      ".cache/probe-installed-solo-node22131-x64.mjs": {
+        "sha256": "94063b180c6901e0b6bbefaf7a8ab5bab74480bd44598e1b44f02d14a46606de",
+        "bytes": 9263
+      },
+      ".cache/run-endurance-emitted-final.py": {
+        "sha256": "0cdc693b2ba3b567cc13a96d1345b97528664f9e13f15f0121c6170132e0cd5c",
+        "bytes": 26055
+      },
+      "game/test/demo-sources.test.mjs": {
+        "sha256": "9a62c3f9e2a9604e95e988321ffde8cd1227378457e1bacefa24a1b08bff5e86",
+        "bytes": 26080
+      },
+      "scripts/demo-source-fingerprint.mjs": {
+        "sha256": "ed795c9d63b6d2c983f10ed72e750585faedfce9eb00399c3f0db1f0aef1c413",
+        "bytes": 1064
+      },
+      ".cache/hosted-demo-admission-failure-b4688ca21.json": {
+        "sha256": "cdbb9431f9a46cd68113d67a0df40f5b188f603724debf4e7cda22a0b8e6e3bf",
+        "bytes": 2874
+      }
+    },
+    "node": {
+      "path": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.cache/worktrees/shared-game-demos/.cache/node-22.13.1-darwin-x64-20261019T092243Z-e94936ac/bin/node",
+      "sha256": "dd6f3352057e904b0b32b7e74829b82acb33958f20c8feab6c0f781f7d042ebd",
+      "bytes": 113991760
+    },
+    "supervisor": {
+      "sha256": "a044fd75af5986605105d02b719623f3b267387c8e8d233c0d290f5079b9bc88",
+      "bytes": 10711
+    }
+  },
+  "bindingsStable": true,
+  "resultFailure": "FileNotFoundError(2, 'No such file or directory')",
+  "elapsedSeconds": 3.9946647910001047,
+  "finished": "2026-10-19T09:29:08.303076+00:00"
+}
