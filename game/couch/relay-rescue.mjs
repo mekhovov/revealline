@@ -417,6 +417,7 @@ export function bootCoop({
   let prepareDisplayReveal,
     displayLayoutVersion = 0;
   const displayPreferences = createDisplayPreferences({
+    extraLarge: true,
     window,
     matchMedia,
     getStorage: () => localStorage,
@@ -429,7 +430,7 @@ export function bootCoop({
     document.body.dataset.textSize = state.effectiveTextSize ?? state.textSize;
     document.body.dataset.effects = state.effectiveReducedEffects ? 'reduced' : 'full';
     $('coop-text-face').value = state.textFace;
-    renderTextSizeControl($('coop-text-size'), state.textSize);
+    renderTextSizeControl($('coop-text-size'), state.textSize, { extraLarge: true });
     $('coop-reduced').checked = state.reducedEffects;
     localizedText($('coop-system-reduction'), () =>
       state.effectiveReducedEffects && !state.reducedEffects
@@ -2284,6 +2285,7 @@ export function bootCoop({
       encounterLevel: attemptTuning.get(run)?.encounterLevel ?? null,
       textFace: displayPreferences.snapshot().textFace,
       textSize: displayPreferences.snapshot().effectiveTextSize,
+      extraLargeText: true,
       picture: acceptedPicture?.binding ?? null,
       actorAppearance: acceptedPicture?.actorAppearance ?? null,
       pictureLevel: attemptTuning.get(run)?.pictureLevel ?? run.level,

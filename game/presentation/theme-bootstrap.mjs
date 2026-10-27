@@ -1511,7 +1511,9 @@
     /* Ignore damaged local data. */
   }
   const studio = doc.currentScript?.dataset.themeDensity === 'studio';
-  const primaryTextHost = ['solo', 'snake', 'versus'].includes(root.dataset.textScaling);
+  const primaryTextHost = ['solo', 'snake', 'versus', 'team'].includes(
+    root.dataset.textScaling,
+  );
   const extraLarge =
     display?.textSize === 'extra-large' &&
     (primaryTextHost || root.dataset.textScaling === 'overflight');

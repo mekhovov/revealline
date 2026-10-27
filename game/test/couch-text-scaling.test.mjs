@@ -139,7 +139,8 @@ test('Duel entry and literal deferred closure preserve each baseline size and ar
   assert.match(html, /data-text-scaling="versus"/);
   assert.match(html, /href="text-scaling.css"/);
   const team = await readFile(path.join(root, 'game/couch/relay-rescue.html'), 'utf8');
-  assert.doesNotMatch(team, /data-text-scaling|href="text-scaling.css"/);
+  assert.match(team, /data-text-scaling="team"/);
+  assert.match(team, /href="team-text-scaling.css"/);
   const exceptions = new Set([
     'game/couch/couch.css font-size: 27px',
     'game/couch/couch.css font-size: 21px',
