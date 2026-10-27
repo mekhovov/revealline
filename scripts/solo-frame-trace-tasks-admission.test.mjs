@@ -1,3 +1,8 @@
+import {
+  readDeclaredPreHeapTool,
+  PRE_HEAP_TOOLING_WITNESS,
+  preHeapTraceWorkflow,
+} from './solo-readiness-rejoin-declared-source.mjs';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
@@ -254,9 +259,9 @@ test('actual driver forwards v2 and assessment never promotes v1 or incomplete e
   }
 });
 
-test('every current v2 input is exact and historical adapter pins cannot start native work', async () => {
+test('every frozen v2 input is exact and historical adapter pins cannot start native work', async () => {
   for (const ref of [manifest.recipe, ...manifest.adapterInputs, ...manifest.frozenTools]) {
-    const b = await read(ref.path);
+    const b = (await readDeclaredPreHeapTool(path, ref)) ?? (await read(ref.path));
     assert.equal(b.length, ref.bytes, ref.path);
     assert.equal(hash(b), ref.sha256, ref.path);
   }
@@ -298,8 +303,12 @@ test('historical source adapter is test-only and refuses an altered witness', as
     assert(!(await read(path)).toString().includes('createExecutedFrameReader'));
 });
 
-test('fixed native lane selects only v2 with complete controls and unchanged owner limits', async () => {
-  const workflow = (await read('.github/workflows/solo-native-package-consumer.yml')).toString();
+test('frozen pre-heap lane selected v2 with complete controls and unchanged owner limits', async () => {
+  const workflow = preHeapTraceWorkflow(
+    await read(PRE_HEAP_TOOLING_WITNESS),
+    path,
+    await read(path),
+  ).toString();
   const body = workflow.split('\n  hud-cpu:\n')[1].split(/\n  [a-z][a-z-]+:\n/)[0];
   assert(body.includes('bind-plan ' + path));
   assert(

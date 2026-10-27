@@ -62,6 +62,7 @@ on:
             large-capture-erosion,
             jammer-steering,
             retry,
+            retry-heap-retainers,
             soak,
             long29,
           ]
@@ -401,6 +402,7 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json
             /scripts/solo-frame-trace-executed-source.mjs
             /docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json
             /scripts/solo-shared-owner-declared-source.mjs
@@ -746,6 +748,7 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json
             /docs/performance/fixtures/solo-readiness-797e03/9aaf-declared-tooling-source.json
             /scripts/solo-readiness-rejoin-declared-source.mjs
             /.github/workflows/solo-native-package-consumer.yml
@@ -1022,6 +1025,7 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json
             /scripts/solo-frame-trace-executed-source.mjs
             /docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json
             /scripts/solo-shared-owner-declared-source.mjs
@@ -1405,6 +1409,7 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json
             /scripts/solo-frame-trace-executed-source.mjs
             /docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json
             /scripts/solo-shared-owner-declared-source.mjs
@@ -1853,6 +1858,10 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json
+            /docs/performance/solo-browser-frame-trace-9d-failure-plan.json
+            /docs/performance/solo-browser-frame-trace-9d-tasks-plan.json
+            /docs/performance/solo-browser-frame-trace-warm-plan.json
             /scripts/solo-frame-trace-executed-source.mjs
             /docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json
             /.github/workflows/solo-native-package-consumer.yml
@@ -2411,6 +2420,7 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json
             /scripts/solo-frame-trace-executed-source.mjs
             /docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json
             /docs/performance/fixtures/solo-readiness-797e03/9aaf-declared-tooling-source.json
@@ -2762,7 +2772,7 @@ jobs:
       SOLO_CANDIDATE_SOURCE: ${{ github.workspace }}/candidate
       PYTHONDONTWRITEBYTECODE: 1
       SOLO_DIAGNOSTIC_LANE: ${{ inputs.lane }}
-      SOLO_DIAGNOSTIC_OUTPUT: ${{ inputs.lane == 'frame-trace' && 'solo-linux-9d5139-frame-tasks-v2' || 'solo-linux-797e03-hud-cpu' }}
+      SOLO_DIAGNOSTIC_OUTPUT: ${{ inputs.lane == 'frame-trace' && 'solo-linux-9d5139-frame-tasks-heap-tooling' || 'solo-linux-797e03-hud-cpu' }}
     steps:
       - timeout-minutes: 2
         uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
@@ -2773,6 +2783,9 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json
+            /docs/performance/solo-browser-frame-trace-9d-tasks-heap-tooling-plan.json
+            /scripts/solo-frame-trace-heap-tooling-admission.test.mjs
             /docs/performance/solo-browser-frame-trace-9d-tasks-plan.json
             /scripts/solo-frame-trace-tasks-admission.test.mjs
             /scripts/solo-frame-trace-executed-source.mjs
@@ -3108,10 +3121,10 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          node --test --test-concurrency=2 scripts/solo-frame-trace-tasks-admission.test.mjs scripts/test-solo-first-victory-cpu-797e03.mjs scripts/test-solo-native-consumer-current.mjs scripts/test-solo-first-victory-cpu-de332.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-final-long-rail-cpu-profile.mjs scripts/test-solo-qualification-replay-identity.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-qualification-next-route.mjs scripts/test-solo-first-victory-cpu-profile.mjs scripts/test-solo-first-victory-cpu-239.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
+          node --test --test-concurrency=2 scripts/solo-frame-trace-heap-tooling-admission.test.mjs scripts/solo-frame-trace-tasks-admission.test.mjs scripts/test-solo-first-victory-cpu-797e03.mjs scripts/test-solo-native-consumer-current.mjs scripts/test-solo-first-victory-cpu-de332.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-final-long-rail-cpu-profile.mjs scripts/test-solo-qualification-replay-identity.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-qualification-next-route.mjs scripts/test-solo-first-victory-cpu-profile.mjs scripts/test-solo-first-victory-cpu-239.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
           case "$SOLO_DIAGNOSTIC_LANE" in
             frame-trace)
-              node scripts/solo-remote-cpu-profile.mjs bind-plan docs/performance/solo-browser-frame-trace-9d-tasks-plan.json "$RUNNER_TEMP/solo-cpu-profile-job.json"
+              node scripts/solo-remote-cpu-profile.mjs bind-plan docs/performance/solo-browser-frame-trace-9d-tasks-heap-tooling-plan.json "$RUNNER_TEMP/solo-cpu-profile-job.json"
               ;;
             hud-cpu)
               node scripts/solo-remote-cpu-profile.mjs bind-plan docs/performance/solo-first-victory-cpu-797e03-plan.json "$RUNNER_TEMP/solo-cpu-profile-job.json"
@@ -3700,6 +3713,13 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json
+            /docs/performance/solo-797-retry-heap-retainers-plan.json
+            /docs/performance/solo-browser-frame-trace-9d-tasks-heap-tooling-plan.json
+            /scripts/solo-frame-trace-heap-tooling-admission.test.mjs
+            /scripts/solo-qualification-heap-retainers.mjs
+            /scripts/solo-qualification-heap-retainers.test.mjs
+            /scripts/solo-retry-heap-retainers-admission.test.mjs
             /docs/performance/fixtures/solo-readiness-797e03/9aaf-declared-tooling-source.json
             /scripts/solo-readiness-rejoin-declared-source.mjs
             /.github/workflows/solo-native-package-consumer.yml
@@ -4385,6 +4405,13 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json
+            /docs/performance/solo-797-retry-heap-retainers-plan.json
+            /docs/performance/solo-browser-frame-trace-9d-tasks-heap-tooling-plan.json
+            /scripts/solo-frame-trace-heap-tooling-admission.test.mjs
+            /scripts/solo-qualification-heap-retainers.mjs
+            /scripts/solo-qualification-heap-retainers.test.mjs
+            /scripts/solo-retry-heap-retainers-admission.test.mjs
             /docs/performance/fixtures/solo-readiness-797e03/9aaf-declared-tooling-source.json
             /scripts/solo-readiness-rejoin-declared-source.mjs
             /.github/workflows/solo-native-package-consumer.yml
@@ -5053,18 +5080,18 @@ jobs:
 
   lifecycle:
     # Only reviewed declarations execute; later predecessor holds remain, with no automatic launch.
-    if: github.repository == 'mekhovov/revealline' && github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.lane == 'lifecycle' && contains(fromJSON('["retry","soak","long29"]'), inputs.phase)
+    if: github.repository == 'mekhovov/revealline' && github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.lane == 'lifecycle' && contains(fromJSON('["retry","retry-heap-retainers","soak","long29"]'), inputs.phase)
     name: ${{ inputs.phase }} / ${{ matrix.engine }} / ${{ matrix.repetition }}
     runs-on: ubuntu-24.04
-    timeout-minutes: ${{ inputs.phase == 'retry' && 142 || 192 }}
+    timeout-minutes: ${{ (inputs.phase == 'retry' || inputs.phase == 'retry-heap-retainers') && 142 || 192 }}
     strategy:
       fail-fast: false
       max-parallel: 1
       matrix:
-        engine: [chromium, webkit]
-        repetition: [1, 2, 3]
+        engine: ${{ fromJSON(inputs.phase == 'retry-heap-retainers' && '["chromium"]' || '["chromium","webkit"]') }}
+        repetition: ${{ fromJSON(inputs.phase == 'retry-heap-retainers' && '[1]' || '[1,2,3]') }}
     env:
-      SOLO_OUTER_SECONDS: ${{ inputs.phase == 'retry' && 5820 || 8820 }}
+      SOLO_OUTER_SECONDS: ${{ (inputs.phase == 'retry' || inputs.phase == 'retry-heap-retainers') && 5820 || 8820 }}
       SOLO_MEASUREMENT_PHASE: ${{ inputs.phase }}
       SOLO_TOOLING_REVISION: ${{ github.sha }}
       SOLO_BASELINE_SOURCE: ${{ github.workspace }}/baseline
@@ -5080,6 +5107,13 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json
+            /docs/performance/solo-browser-frame-trace-9d-tasks-heap-tooling-plan.json
+            /scripts/solo-frame-trace-heap-tooling-admission.test.mjs
+            /docs/performance/solo-797-retry-heap-retainers-plan.json
+            /scripts/solo-qualification-heap-retainers.mjs
+            /scripts/solo-qualification-heap-retainers.test.mjs
+            /scripts/solo-retry-heap-retainers-admission.test.mjs
             /docs/performance/fixtures/solo-readiness-797e03/9aaf-declared-tooling-source.json
             /scripts/solo-readiness-rejoin-declared-source.mjs
             /.github/workflows/solo-native-package-consumer.yml
@@ -5689,16 +5723,17 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          node --test --test-concurrency=2 scripts/solo-de332-diagnostics.test.mjs scripts/solo-de332-timing.test.mjs scripts/solo-de332-lifecycle.test.mjs scripts/solo-native-measurement-consumer.test.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-shared-source-checkout.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
+          node --test --test-concurrency=2 scripts/solo-retry-heap-retainers-admission.test.mjs scripts/solo-de332-diagnostics.test.mjs scripts/solo-de332-timing.test.mjs scripts/solo-de332-lifecycle.test.mjs scripts/solo-native-measurement-consumer.test.mjs scripts/test-solo-source-verifier-smoke.mjs scripts/test-solo-remote-correctness.mjs scripts/test-solo-remote-baseline.mjs scripts/test-solo-shared-source-checkout.mjs 2>&1 | head -c 4194304 > "$RUNNER_TEMP/solo-linux-setup/wrapper-tests.tap"
           case "$SOLO_MEASUREMENT_PHASE" in
             retry) PLAN=docs/performance/solo-797-lifecycle-retry-plan.json ;;
+            retry-heap-retainers) PLAN=docs/performance/solo-797-retry-heap-retainers-plan.json ;;
             soak) PLAN=docs/performance/solo-797-lifecycle-soak-plan.json ;;
             long29) PLAN=docs/performance/solo-797-lifecycle-long29-plan.json ;;
             *) echo "Unsupported fixed measurement phase" >&2; exit 2 ;;
           esac
           node scripts/solo-remote-sustained.mjs bind-plan "$PLAN" "$RUNNER_TEMP/solo-diagnostics-job.json" '${{ matrix.engine }}' '${{ matrix.repetition }}'
       - name: Run one fixed diagnostic lifecycle phase with unchanged owners and clocks
-        timeout-minutes: ${{ inputs.phase == 'retry' && 98 || 148 }}
+        timeout-minutes: ${{ (inputs.phase == 'retry' || inputs.phase == 'retry-heap-retainers') && 98 || 148 }}
         working-directory: tools
         env:
           GH_TOKEN: ${{ github.token }}
@@ -5767,6 +5802,7 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json
             /scripts/solo-frame-trace-executed-source.mjs
             /docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json
             /docs/performance/solo-demo-recovery-797e03-current-tooling-plan.json
@@ -6311,6 +6347,7 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json
             /scripts/solo-frame-trace-executed-source.mjs
             /docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json
             /scripts/solo-demo-close-declared-source.mjs
@@ -6875,6 +6912,7 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json
             /scripts/solo-frame-trace-executed-source.mjs
             /docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json
             /scripts/solo-demo-close-declared-source.mjs
@@ -7433,6 +7471,7 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json
             /scripts/solo-frame-trace-executed-source.mjs
             /docs/performance/fixtures/solo-browser-frame-trace/fd787-executed-source.json
             /docs/performance/fixtures/solo-readiness-797e03/9aaf-declared-tooling-source.json
@@ -7802,6 +7841,7 @@ jobs:
           fetch-depth: 1
           sparse-checkout-cone-mode: false
           sparse-checkout: |
+            /docs/performance/fixtures/solo-heap-retainers/4d28-declared-tooling-source.json
             /docs/performance/fixtures/solo-readiness-797e03/9aaf-declared-tooling-source.json
             /scripts/solo-readiness-rejoin-declared-source.mjs
             /eslint.config.mjs

@@ -25,6 +25,7 @@ const timing = [
   'jammer-steering',
 ];
 const lifecycle = ['retry', 'soak', 'long29'];
+const lifecycleChoices = ['retry', 'retry-heap-retainers', 'soak', 'long29'];
 const boundedMatch = (value, pattern) =>
   assert(pattern.test(value), 'Missing workflow contract: ' + pattern);
 const sha = (bytes) => createHash('sha256').update(bytes).digest('hex');
@@ -33,9 +34,11 @@ const tree = 'bd53120f0cdfa462b8d63c2de5aa61e9c6658ac5';
 const baseline = '8b01991942dc764b8aa4726851699ce1985e53ae';
 const baselineTree = '9373b6a74aea8fa1ef47aa17ace140b4cf714609';
 const pathFor = (lane, phase) =>
-  'docs/performance/solo-797-' +
-  (lane === 'journal-cost' ? lane : lane + '-' + phase) +
-  '-plan.json';
+  phase === 'retry-heap-retainers'
+    ? 'docs/performance/solo-797-retry-heap-retainers-plan.json'
+    : 'docs/performance/solo-797-' +
+      (lane === 'journal-cost' ? lane : lane + '-' + phase) +
+      '-plan.json';
 const manifest = async (lane, phase) => JSON.parse(await read(pathFor(lane, phase)));
 function body(text, lane) {
   const result = text.split('\n  ' + lane + ':\n')[1];
@@ -101,7 +104,7 @@ function selection(text, lane) {
 }
 function checkJob(text, lane) {
   const job = body(text, lane);
-  const phases = lane === 'timing' ? timing : lifecycle;
+  const phases = lane === 'timing' ? timing : lifecycleChoices;
   const guard =
     "github.repository == 'mekhovov/revealline' && github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main' && inputs.lane == '" +
     lane +
@@ -112,9 +115,32 @@ function checkJob(text, lane) {
   assert.equal(job.match(/^    if: (.+)$/m)?.[1], guard);
   boundedMatch(job, /^      fail-fast: false$/m);
   boundedMatch(job, /^      max-parallel: 1$/m);
-  boundedMatch(job, /engine: \[chromium, webkit\]/);
-  if (lane !== 'journal-cost') boundedMatch(job, /repetition: \[1, 2, 3\]/);
-  else assert(!job.includes('repetition:'));
+  if (lane === 'lifecycle') {
+    const engines = job.match(/^        engine: \$\{\{ (.+) \}\}$/m)?.[1];
+    const repetitions = job.match(/^        repetition: \$\{\{ (.+) \}\}$/m)?.[1];
+    assert.equal(
+      engines,
+      'fromJSON(inputs.phase == \'retry-heap-retainers\' && \'["chromium"]\' || \'["chromium","webkit"]\')',
+    );
+    assert.equal(
+      repetitions,
+      "fromJSON(inputs.phase == 'retry-heap-retainers' && '[1]' || '[1,2,3]')",
+    );
+    for (const phase of lifecycleChoices) {
+      assert.deepEqual(
+        expression(engines, { phase }),
+        phase === 'retry-heap-retainers' ? ['chromium'] : ['chromium', 'webkit'],
+      );
+      assert.deepEqual(
+        expression(repetitions, { phase }),
+        phase === 'retry-heap-retainers' ? [1] : [1, 2, 3],
+      );
+    }
+  } else {
+    boundedMatch(job, /engine: \[chromium, webkit\]/);
+    if (lane !== 'journal-cost') boundedMatch(job, /repetition: \[1, 2, 3\]/);
+    else assert(!job.includes('repetition:'));
+  }
   boundedMatch(job, /SOLO_TOOLING_REVISION: \$\{\{ github.sha \}\}/);
   boundedMatch(job, /ref: \$\{\{ github.sha \}\}/);
   assert(
@@ -136,7 +162,11 @@ function checkJob(text, lane) {
   assert(sourceCommand);
   const sourceArgs = sourceCommand.trim().split(/\s+/);
   assert.deepEqual(sourceArgs.slice(0, 3), ['node', '--test', '--test-concurrency=2']);
-  assert.deepEqual(sourceArgs.slice(3, 6), [
+  const sourceStart = lane === 'lifecycle' ? 4 : 3;
+  if (lane === 'lifecycle')
+    assert.equal(sourceArgs[3], 'scripts/solo-retry-heap-retainers-admission.test.mjs');
+  else assert(!sourceArgs.includes('scripts/solo-retry-heap-retainers-admission.test.mjs'));
+  assert.deepEqual(sourceArgs.slice(sourceStart, sourceStart + 3), [
     'scripts/solo-de332-diagnostics.test.mjs',
     'scripts/solo-de332-timing.test.mjs',
     'scripts/solo-de332-lifecycle.test.mjs',
@@ -174,15 +204,25 @@ function checkJob(text, lane) {
     assert(job.includes('4620s node scripts/run-solo-remote-correctness.mjs'));
     assert(job.includes('bind-timing-plan "$PLAN" "$RUNNER_TEMP/solo-diagnostics-job.json"'));
   } else {
-    assert.equal(jobBound, "${{ inputs.phase == 'retry' && 142 || 192 }}");
-    assert.equal(stepBound, "${{ inputs.phase == 'retry' && 98 || 148 }}");
-    assert(job.includes("SOLO_OUTER_SECONDS: ${{ inputs.phase == 'retry' && 5820 || 8820 }}"));
+    assert.equal(
+      jobBound,
+      "${{ (inputs.phase == 'retry' || inputs.phase == 'retry-heap-retainers') && 142 || 192 }}",
+    );
+    assert.equal(
+      stepBound,
+      "${{ (inputs.phase == 'retry' || inputs.phase == 'retry-heap-retainers') && 98 || 148 }}",
+    );
+    assert(
+      job.includes(
+        "SOLO_OUTER_SECONDS: ${{ (inputs.phase == 'retry' || inputs.phase == 'retry-heap-retainers') && 5820 || 8820 }}",
+      ),
+    );
     assert(job.includes('"${SOLO_OUTER_SECONDS}s" node scripts/run-solo-remote-correctness.mjs'));
     assert(job.includes('bind-plan "$PLAN" "$RUNNER_TEMP/solo-diagnostics-job.json"'));
   }
   const native =
     lane === 'lifecycle'
-      ? "${{ inputs.phase == 'retry' && 98 || 148 }}"
+      ? "${{ (inputs.phase == 'retry' || inputs.phase == 'retry-heap-retainers') && 98 || 148 }}"
       : lane === 'timing'
         ? '78'
         : '88';
@@ -223,7 +263,7 @@ test('all three manual measurement jobs retain exact guards, source checkout, bu
     'replay-portability',
     'frame-trace',
   ]);
-  assert.deepEqual(choices('phase'), ['none', ...timing, ...lifecycle]);
+  assert.deepEqual(choices('phase'), ['none', ...timing, ...lifecycleChoices]);
   boundedMatch(workflow, /cancel-in-progress: false/);
   const github = {
     repository: 'mekhovov/revealline',
@@ -241,6 +281,11 @@ test('all three manual measurement jobs retain exact guards, source checkout, bu
         JSON.parse,
       );
     assert.equal(evaluate(github, { lane, phase }), true);
+    if (lane === 'lifecycle')
+      for (const selected of lifecycleChoices)
+        assert.equal(evaluate(github, { lane, phase: selected }), true);
+    else if (lane === 'timing')
+      assert.equal(evaluate(github, { lane, phase: 'retry-heap-retainers' }), false);
     for (const changed of [
       { ...github, repository: 'fork/repo' },
       { ...github, event_name: 'pull_request' },
@@ -265,6 +310,15 @@ test('all three manual measurement jobs retain exact guards, source checkout, bu
         ),
       );
     for (const [a, b] of [
+      ...(lane === 'lifecycle'
+        ? [
+            ["'[1]' || '[1,2,3]'", "'[1,2]' || '[1,2,3]'"],
+            [
+              '\'["chromium"]\' || \'["chromium","webkit"]\'',
+              '\'["chromium","webkit"]\' || \'["chromium","webkit"]\'',
+            ],
+          ]
+        : []),
       ['max-parallel: 1', 'max-parallel: 2'],
       ['fail-fast: false', 'fail-fast: true'],
       [source, '0'.repeat(40)],
@@ -279,7 +333,7 @@ test('all three manual measurement jobs retain exact guards, source checkout, bu
 test('actual shell selectors accept only the fixed phase-to-declaration map', () => {
   for (const [lane, phases] of [
     ['timing', timing],
-    ['lifecycle', lifecycle],
+    ['lifecycle', lifecycleChoices],
   ]) {
     const script = selection(workflow, lane);
     assert(script);
@@ -394,6 +448,25 @@ test('real lifecycle binders match actual job/outer expressions for36 independen
     }
   }
   assert.equal(count, 36);
+  const heap = await manifest('lifecycle', 'retry-heap-retainers');
+  const rows = sustainedMatrix(heap).include;
+  assert.equal(rows.length, 1);
+  assert.deepEqual([rows[0].engine, rows[0].repetition], ['chromium', 1]);
+  const phase = 'retry-heap-retainers';
+  assert.equal(rows[0].jobMinutes, get(/^    timeout-minutes: \$\{\{ (.+) \}\}$/m, phase));
+  assert.equal(rows[0].stepMinutes, get(/^        timeout-minutes: \$\{\{ (.+) \}\}$/m, phase));
+  assert.equal(rows[0].outerSeconds, get(/^      SOLO_OUTER_SECONDS: \$\{\{ (.+) \}\}$/m, phase));
+  assert.deepEqual(
+    [rows[0].jobMinutes, rows[0].stepMinutes, rows[0].outerSeconds],
+    [142, 98, 5820],
+  );
+  const bound = bindSustainedJob(heap, 'chromium', 1);
+  assert.deepEqual(
+    bound.rows.map((row) => row.source),
+    ['candidate'],
+  );
+  assert.equal(bound.rows[0].timeoutMs, 1140000);
+  assert.equal(bound.helperTimeoutMs, 95 * 60000);
 });
 
 test('every plan reference is current or exactly witnessed and retained in each sparse measurement job', async () => {

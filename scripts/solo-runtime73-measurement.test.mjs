@@ -67,3 +67,5 @@ import './test-solo-demo-activation-admission.mjs';
 import './solo-frame-trace-tasks-admission.test.mjs';
 
 import './test-solo-demo-geometry-admission.mjs';
+import './solo-frame-trace-heap-tooling-admission.test.mjs';
+import './solo-retry-heap-retainers-admission.test.mjs';
