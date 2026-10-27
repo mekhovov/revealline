@@ -1,0 +1,119 @@
+TAP version 13
+# Subtest: exact JSON byte boundary accepts null and booleans and rejects one byte less
+ok 1 - exact JSON byte boundary accepts null and booleans and rejects one byte less
+  ---
+  duration_ms: 1.855416
+  ...
+# Subtest: exact JSON byte boundary accepts numbers including zero and exponents and rejects one byte less
+ok 2 - exact JSON byte boundary accepts numbers including zero and exponents and rejects one byte less
+  ---
+  duration_ms: 0.195916
+  ...
+# Subtest: exact JSON byte boundary accepts empty and nested containers and rejects one byte less
+ok 3 - exact JSON byte boundary accepts empty and nested containers and rejects one byte less
+  ---
+  duration_ms: 0.260083
+  ...
+# Subtest: exact JSON byte boundary accepts Unicode text and keys and rejects one byte less
+ok 4 - exact JSON byte boundary accepts Unicode text and keys and rejects one byte less
+  ---
+  duration_ms: 0.109958
+  ...
+# Subtest: exact JSON byte boundary accepts escaped text and keys and rejects one byte less
+ok 5 - exact JSON byte boundary accepts escaped text and keys and rejects one byte less
+  ---
+  duration_ms: 0.361458
+  ...
+# Subtest: exact JSON byte boundary accepts lone surrogate text and keys and rejects one byte less
+ok 6 - exact JSON byte boundary accepts lone surrogate text and keys and rejects one byte less
+  ---
+  duration_ms: 1.108375
+  ...
+# Subtest: many short array values use their serialized bytes without charging index keys
+ok 7 - many short array values use their serialized bytes without charging index keys
+  ---
+  duration_ms: 3.004542
+  ...
+# Subtest: repeated scalar byte accounting remains exact across cache saturation and Unicode escapes
+ok 8 - repeated scalar byte accounting remains exact across cache saturation and Unicode escapes
+  ---
+  duration_ms: 26.217209
+  ...
+# Subtest: repeated text never gives mutable or caller-frozen objects validation authority
+ok 9 - repeated text never gives mutable or caller-frozen objects validation authority
+  ---
+  duration_ms: 0.75775
+  ...
+# Subtest: repeated field names do not require per-field UTF-8 encoding
+ok 10 - repeated field names do not require per-field UTF-8 encoding
+  ---
+  duration_ms: 8.700459
+  ...
+# Subtest: the default 4 MiB ceiling still accepts exactly the limit and rejects one byte over
+ok 11 - the default 4 MiB ceiling still accepts exactly the limit and rejects one byte over
+  ---
+  duration_ms: 114.701667
+  ...
+# Subtest: untrusted getters and toJSON hooks are rejected without invocation
+ok 12 - untrusted getters and toJSON hooks are rejected without invocation
+  ---
+  duration_ms: 0.903709
+  ...
+# Subtest: exact byte accounting retains structural and shape protections
+ok 13 - exact byte accounting retains structural and shape protections
+  ---
+  duration_ms: 1.325542
+  ...
+# Subtest: shared JSON boundary reports owned validation errors in the active locale
+ok 14 - shared JSON boundary reports owned validation errors in the active locale
+  ---
+  duration_ms: 1.065833
+  ...
+# Subtest: immediate: purposeful routes vary, close cuts and only lose to believable hazards
+ok 15 - immediate: purposeful routes vary, close cuts and only lose to believable hazards
+  ---
+  duration_ms: 12959.221209
+  ...
+# {"seed":123,"captures":12,"losses":3,"causes":["enemy-trail","enemy-trail","enemy-trail"],"bends":20,"ticks":8262}
+# {"seed":987654321,"captures":4,"losses":3,"causes":["enemy-trail","enemy-trail","enemy-trail"],"bends":9,"ticks":3270}
+# Subtest: grid-center: purposeful routes vary, close cuts and only lose to believable hazards
+ok 16 - grid-center: purposeful routes vary, close cuts and only lose to believable hazards
+  ---
+  duration_ms: 22314.511792
+  ...
+# {"seed":123,"captures":5,"losses":3,"causes":["enemy-trail","enemy-trail","enemy-trail"],"bends":10,"ticks":4888}
+# {"seed":987654321,"captures":25,"losses":3,"causes":["enemy-trail","enemy-trail","enemy-trail"],"bends":24,"ticks":14910}
+# Subtest: improvised preparation respects cancellation before it owns a player
+ok 17 - improvised preparation respects cancellation before it owns a player
+  ---
+  duration_ms: 0.982875
+  ...
+# Subtest: cancellation during route planning stops before publishing a recording
+ok 18 - cancellation during route planning stops before publishing a recording
+  ---
+  duration_ms: 62.117375
+  ...
+# Subtest: standalone planner loads without bootstrapping UI translations and retains validation errors
+ok 19 - standalone planner loads without bootstrapping UI translations and retains validation errors
+  ---
+  duration_ms: 60.903125
+  ...
+# Subtest: lightweight defaults stay identical to the English catalogue
+ok 20 - lightweight defaults stay identical to the English catalogue
+  ---
+  duration_ms: 6.9025
+  ...
+# Subtest: a booted validator follows live Ukrainian/English locale changes
+ok 21 - a booted validator follows live Ukrainian/English locale changes
+  ---
+  duration_ms: 303.132791
+  ...
+1..21
+# tests 21
+# suites 0
+# pass 21
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 36898.541958

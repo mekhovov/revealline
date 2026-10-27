@@ -224,10 +224,12 @@ export class FeedbackDirector {
       movement = false,
       maxDuration = null,
       humanReaction = false,
+      publishedName = null,
     } = {},
   ) {
     const cueFamily = name.replace(/-[12]$/, '');
     const routine = /^(focus|confirm|cancel|paper|pickup|closure|switch|reveal-)/.test(cueFamily);
+    const publishedKey = publishedName ? `${board}:published:${publishedName}:${cueFamily}` : null;
     if (['confirm', 'paper', 'pickup'].includes(name)) {
       const variant = this.serial++ % 3;
       if (variant) name += `-${variant}`;
@@ -285,6 +287,36 @@ export class FeedbackDirector {
     if (priority >= 4)
       for (const voice of [...s.voices])
         if (voice.feedback && voice.movement && !voice.source?.loop) voice.stop();
+    // Studio replacements own their semantic cue even when the native bank is
+    // already decoded. Unavailable/late custom bytes still use the native cue;
+    // decoding is preparation only and cannot replay the original event.
+    if (publishedName && s.publishedAudio) {
+      const key = `${board}:${cueFamily}`;
+      // A line-impact accent can precede player.failed in the same batch.
+      // Sharing its recording family must not consume the Studio failure's
+      // own cooldown. Retain the existing family scope and repeat windows.
+      if (
+        s.publishedAudio.has(publishedName) &&
+        c.currentTime - (this.recent.get(publishedKey) ?? -Infinity) < (routine ? 0.16 : 0.045)
+      )
+        return true;
+      if (
+        s.publishedAudio.play(publishedName, {
+          board,
+          pan,
+          priority,
+          gain,
+          rate,
+          feedback: true,
+          cueFamily,
+          replaceRoutine: routine,
+        })
+      ) {
+        this.recent.set(key, c.currentTime);
+        this.recent.set(publishedKey, c.currentTime);
+        return true;
+      }
+    }
     let buffer = this.buffers.get(name);
     if (!buffer) {
       this.load(name);
@@ -397,6 +429,9 @@ export class FeedbackDirector {
     // Re-enter a periodic texture at its global phase, without an attack restart.
     try {
       source.start(c.currentTime + delay, loop ? (c.currentTime * rate) % buffer.duration : 0);
+      // A successfully started cold fallback owns the same semantic repeat
+      // window if its Studio replacement becomes ready immediately afterward.
+      if (publishedKey && !loop) this.recent.set(publishedKey, c.currentTime);
       if (!loop) source.stop(start + duration + (humanReaction ? 0 : 0.01));
     } catch {
       voice.stop();
@@ -518,8 +553,12 @@ export class FeedbackDirector {
       if (event.type === 'cells.claimed') {
         if (!final) {
           const recipe = captureRecipe(event, run);
-          this.play(`reveal-${recipe.tier}`, { priority: 4, board });
-          if (!this.buffers.has(`reveal-${recipe.tier}`)) fallback();
+          const voice = this.play(`reveal-${recipe.tier}`, {
+            priority: 4,
+            board,
+            publishedName: 'capture',
+          });
+          if (!voice && !this.buffers.has(`reveal-${recipe.tier}`)) fallback();
           const [material, rate] = materialProfile(theme);
           const indices = event.indices ?? [];
           const center = indices.length
@@ -553,6 +592,12 @@ export class FeedbackDirector {
             pan: cue === 'warning' ? 0 : pan,
             gain: destruction ? (fullDestruction ? 0.55 : 0.22) : 0.55,
             rate: destruction ? (humanoid ? 0.8 : 0.72) : 1 + ((this.serial++ % 3) - 1) * 0.025,
+            publishedName:
+              event.type === 'run.completed' || event.type === 'player.failed'
+                ? 'failure'
+                : ['pickup.collected', 'powerup.collected'].includes(event.type)
+                  ? 'pickup'
+                  : null,
           });
           // A ready cue denied by pause, cooldown or voice ownership stays
           // denied. Decoding completion never queues an expired event.

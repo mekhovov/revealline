@@ -164,7 +164,17 @@ export function validateDemoCatalog(source) {
 function loadBundledText(url, { fetch: fetcher, signal, maxBytes, label, ...loading }) {
   return withDemoLoadingDeadline(
     async (signal) => {
-      const response = await fetcher(url, { signal });
+      const unavailable = (cause) =>
+        Object.assign(new Error(`The demo ${label} could not load.`, { cause }), {
+          code: 'demo-asset-unavailable',
+        });
+      let response;
+      try {
+        response = await fetcher(url, { signal });
+      } catch (error) {
+        if (signal.aborted) throw signal.reason;
+        throw unavailable(error);
+      }
       let bodyCancelled = false;
       const cancelBody = () => {
         if (bodyCancelled) return;
@@ -181,7 +191,7 @@ function loadBundledText(url, { fetch: fetcher, signal, maxBytes, label, ...load
       }
       signal.addEventListener('abort', cancelBody, { once: true });
       try {
-        if (!response.ok) throw new Error(`The demo ${label} could not load.`);
+        if (!response.ok) throw unavailable();
         if (Number(response.headers?.get?.('content-length')) > maxBytes)
           throw new Error(`The demo ${label} exceeds its size budget.`);
         return await response.text();

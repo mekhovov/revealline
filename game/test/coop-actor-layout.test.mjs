@@ -5,7 +5,7 @@ import { createHash } from 'node:crypto';
 import { createCoop } from '../coop/core.mjs';
 import { FIRST_CONNECTION } from '../coop/first-connection.mjs';
 import { RELAY_YARD } from '../coop/relay-yard.mjs';
-import { setLocale } from '../i18n/index.mjs';
+import { getLocale, setLocale } from '../i18n/index.mjs';
 import { createCoopPainter } from '../couch/coop-view.mjs';
 import { imagePresentation } from '../presentation/runtime.mjs';
 import { validateCompiledPresentation } from '../presentation/host.mjs';
@@ -992,5 +992,65 @@ test('replacing or removing presentation clears its previous compact cue layout'
       'Presentation replacement retires old packing.',
     );
     assert.deepEqual(view.run, before);
+  }
+});
+
+test('explicitly qualified Team canvas type doubles after its clamp and keeps default fallback', (t) => {
+  const locale = getLocale();
+  t.after(() => setLocale(locale, { persist: false }));
+  for (const width of [240, 292, 362, 1152]) {
+    const standard = coopCueScale(width);
+    const extra = coopCueScale(width, 72, 'extra-large', { extraLarge: true });
+    const fallback = coopCueScale(width, 72, 'extra-large');
+    const large = coopCueScale(width, 72, 'large');
+    assert.equal(extra.cell, standard.cell);
+    assert.equal(extra.width, standard.width);
+    for (const [cells, minimum] of [
+      [0.57, 12],
+      [0.66, 14],
+      [2, 12],
+    ]) {
+      assert.equal(extra.font(cells, minimum), standard.font(cells, minimum) * 2);
+      assert.equal(fallback.font(cells, minimum), large.font(cells, minimum));
+    }
+    for (const language of ['en', 'uk'])
+      for (const textFace of ['pixel', 'plain']) {
+        setLocale(language, { persist: false });
+        const ordinary = labelStudy(width, { textFace, reduced: true });
+        const enlarged = labelStudy(width, {
+          textFace,
+          reduced: true,
+          textSize: 'extra-large',
+          extraLargeText: true,
+        });
+        const labels = (view) => view.calls.filter((call) => call.name === 'fillText');
+        const before = labels(ordinary),
+          after = labels(enlarged);
+        assert.equal(
+          after.length,
+          before.length,
+          `${width}/${language}/${textFace}: retain every required label`,
+        );
+        for (const label of before) {
+          const next = after.find((call) => call.args[0] === label.args[0]);
+          assert.ok(next, `${width}/${language}: retain ${label.args[0]}`);
+          const size = (call) => Number(call.state.font.match(/([\d.]+)px/)[1]);
+          assert.ok(Math.abs(size(next) - size(label) * 2) < 1e-9, `${label.args[0]} doubles once`);
+          assert.equal(next.args.length, 3, 'No maxWidth text squeezing');
+        }
+        const bodies = (view) => view.calls.filter((call) => call.name === 'drawImage');
+        assert.deepEqual(
+          bodies(enlarged),
+          bodies(ordinary),
+          'Prepared world/actor geometry remains unchanged',
+        );
+        const contacts = (view) =>
+          view.calls.filter((call) => view.run.players.some((player) => contactAt(call, player)));
+        assert.deepEqual(
+          contacts(enlarged),
+          contacts(ordinary),
+          'Authoritative contact markers remain unchanged',
+        );
+      }
   }
 });

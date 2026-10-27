@@ -1,0 +1,25 @@
+{
+  "createdUTC": "2026-10-16T10:56:13.450605+00:00",
+  "sourceMetadataCutoffUTC": "2026-10-16T10:46:12.245598+00:00",
+  "laterNativeIndexComparisonUTC": "2026-10-16T10:48:35.760073+00:00",
+  "earlierMetadataOnlyHead": "96ecd57bb420a300d68e9358ceef8d8dcde1a746",
+  "earlierMetadataRawIndexNotReconstructedByLaterStageComparison": true,
+  "repository": "mekhovov/revealline",
+  "existingPublicSourceCommit": "ab78f45cab9c02f8b7d010cc48350ead198e1ee2",
+  "existingPublicSourceTree": "5bd90e91f67258084cf20f8fd9300ea161d18625",
+  "existingPublicSourceParents": [
+    "d5b3a62095bfce148f390df54411210b05610aa2"
+  ],
+  "observedSourceRef": "refs/heads/codex/solo-performance",
+  "earlierPublicRefMatched96ecdAtItsCapture": true,
+  "laterNativeSourceCommitConfirmedByGitHubAPI": true,
+  "branchAdvancedBetweenTwoCaptures": true,
+  "laterStagedComparisonAppliesOnlyToLaterSourceCommit": true,
+  "filteredAppStageSHA256": "fc0387715dbb9e35d59bb0f01ff1ccbeec7f37307fc527a50a73656ff3faf522",
+  "appStageEntryCount": 42227,
+  "appEntryVersionsChangedSinceOriginalSnapshot": 36,
+  "stagedAppDifferencesFromExactSourceHEAD": 0,
+  "sourceBodyCopiesOrAppExecution": false,
+  "historicalHeaderInventoryNotReplacedByLaterBranchCutoff": true,
+  "allVolumeComplete": false
+}

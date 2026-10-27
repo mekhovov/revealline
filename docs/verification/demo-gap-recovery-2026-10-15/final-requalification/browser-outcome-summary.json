@@ -1,0 +1,636 @@
+{
+  "sourceCommit": "f0136c2b0f2916af142f6e27a86b3ed2141b844a",
+  "outcome": "interrupted-invalid-not-a-two-hour-pass",
+  "reportSHA256": "eabf6dc013bebe2a78220cf3a3faab82f984e91967cd97e97420612b69a7bd05",
+  "startedAt": "2026-10-15T22:35:30.499Z",
+  "finishedAt": "2026-10-16T00:20:29.052Z",
+  "stopReason": "manual-stop",
+  "timing": {
+    "elapsedSeconds": 6298.309200000003,
+    "sampledIntervalSeconds": 6181.40530000001,
+    "unobservedLongGapSeconds": 116.90389999999105,
+    "calendarDiscontinuitySeconds": 0,
+    "longGaps": 2,
+    "maxGapSeconds": 103.02509999999404,
+    "droppedSamples": 0,
+    "droppedEvents": 0,
+    "calendarElapsedSeconds": 6298.553
+  },
+  "requestedSeconds": 7200,
+  "observedSamples": 1202,
+  "gameplaySamples": 1141,
+  "canvasSamples": 1104,
+  "visibilityAndFocus": {
+    "visible/visible/True/True": 1201,
+    "visible/visible/True/False": 1
+  },
+  "sampledSourceLabels": {
+    "Recorded play": 672,
+    "Live autoplay": 309,
+    "Live player": 160
+  },
+  "distinctActualLevels": [
+    "Courtyard Exits",
+    "Crosswind",
+    "First Signal",
+    "Hidden Frequency",
+    "Last Light",
+    "Night Crossfire",
+    "Night Patrol",
+    "Orchard Crossing",
+    "Relay Orchard",
+    "Relay Storm",
+    "Short Fuse",
+    "Signal Garden",
+    "Stone Lanes",
+    "Supply Circuit",
+    "The Crossing"
+  ],
+  "observedSceneEntries": [
+    {
+      "key": ["First Signal", "Recorded play"],
+      "elapsedSeconds": 0.00020000000298023223
+    },
+    {
+      "key": ["Relay Orchard", "Recorded play"],
+      "elapsedSeconds": 17.49620000000298
+    },
+    {
+      "key": ["Supply Circuit", "Recorded play"],
+      "elapsedSeconds": 77.48840000000597
+    },
+    {
+      "key": ["Orchard Crossing", "Live autoplay"],
+      "elapsedSeconds": 190.40120000000297
+    },
+    {
+      "key": ["Courtyard Exits", "Live autoplay"],
+      "elapsedSeconds": 249.6405
+    },
+    {
+      "key": ["Hidden Frequency", "Recorded play"],
+      "elapsedSeconds": 299.9875
+    },
+    {
+      "key": ["Last Light", "Recorded play"],
+      "elapsedSeconds": 353.5753000000119
+    },
+    {
+      "key": ["Night Crossfire", "Live player"],
+      "elapsedSeconds": 393.96590000000595
+    },
+    {
+      "key": ["Relay Storm", "Live player"],
+      "elapsedSeconds": 457.061
+    },
+    {
+      "key": ["First Signal", "Recorded play"],
+      "elapsedSeconds": 511.583200000003
+    },
+    {
+      "key": ["Signal Garden", "Recorded play"],
+      "elapsedSeconds": 551.883
+    },
+    {
+      "key": ["Courtyard Exits", "Live autoplay"],
+      "elapsedSeconds": 607.0433000000119
+    },
+    {
+      "key": ["Orchard Crossing", "Live autoplay"],
+      "elapsedSeconds": 637.4021000000089
+    },
+    {
+      "key": ["Crosswind", "Recorded play"],
+      "elapsedSeconds": 708.403700000003
+    },
+    {
+      "key": ["Orchard Crossing", "Live autoplay"],
+      "elapsedSeconds": 764.9786000000089
+    },
+    {
+      "key": ["The Crossing", "Recorded play"],
+      "elapsedSeconds": 847.840900000006
+    },
+    {
+      "key": ["Relay Orchard", "Recorded play"],
+      "elapsedSeconds": 890.544800000012
+    },
+    {
+      "key": ["Stone Lanes", "Recorded play"],
+      "elapsedSeconds": 944.038
+    },
+    {
+      "key": ["Night Patrol", "Recorded play"],
+      "elapsedSeconds": 977.6775
+    },
+    {
+      "key": ["Short Fuse", "Live player"],
+      "elapsedSeconds": 1033.6345
+    },
+    {
+      "key": ["Crosswind", "Recorded play"],
+      "elapsedSeconds": 1067.940700000003
+    },
+    {
+      "key": ["The Crossing", "Recorded play"],
+      "elapsedSeconds": 1123.171800000012
+    },
+    {
+      "key": ["Supply Circuit", "Recorded play"],
+      "elapsedSeconds": 1166.3679000000059
+    },
+    {
+      "key": ["Orchard Crossing", "Live autoplay"],
+      "elapsedSeconds": 1225.367700000003
+    },
+    {
+      "key": ["Relay Storm", "Live player"],
+      "elapsedSeconds": 1286.505700000003
+    },
+    {
+      "key": ["Last Light", "Recorded play"],
+      "elapsedSeconds": 1340.381200000003
+    },
+    {
+      "key": ["Courtyard Exits", "Live autoplay"],
+      "elapsedSeconds": 1376.724700000003
+    },
+    {
+      "key": ["Night Crossfire", "Live player"],
+      "elapsedSeconds": 1427.270700000003
+    },
+    {
+      "key": ["Relay Orchard", "Recorded play"],
+      "elapsedSeconds": 1448.8615
+    },
+    {
+      "key": ["First Signal", "Recorded play"],
+      "elapsedSeconds": 1502.477800000012
+    },
+    {
+      "key": ["Orchard Crossing", "Live autoplay"],
+      "elapsedSeconds": 1544.5315
+    },
+    {
+      "key": ["Stone Lanes", "Recorded play"],
+      "elapsedSeconds": 1627.770900000006
+    },
+    {
+      "key": ["First Signal", "Recorded play"],
+      "elapsedSeconds": 1661.101700000003
+    },
+    {
+      "key": ["Night Patrol", "Recorded play"],
+      "elapsedSeconds": 1700.398400000006
+    },
+    {
+      "key": ["Signal Garden", "Recorded play"],
+      "elapsedSeconds": 1755.2266000000088
+    },
+    {
+      "key": ["Courtyard Exits", "Live autoplay"],
+      "elapsedSeconds": 1810.650400000006
+    },
+    {
+      "key": ["Orchard Crossing", "Live autoplay"],
+      "elapsedSeconds": 1841.1555
+    },
+    {
+      "key": ["Hidden Frequency", "Recorded play"],
+      "elapsedSeconds": 1913.637600000009
+    },
+    {
+      "key": ["Short Fuse", "Live player"],
+      "elapsedSeconds": 1967.0398000000118
+    },
+    {
+      "key": ["Relay Orchard", "Recorded play"],
+      "elapsedSeconds": 1990.710600000009
+    },
+    {
+      "key": ["Crosswind", "Recorded play"],
+      "elapsedSeconds": 2045.597700000003
+    },
+    {
+      "key": ["Courtyard Exits", "Live autoplay"],
+      "elapsedSeconds": 2102.487100000009
+    },
+    {
+      "key": ["Orchard Crossing", "Live autoplay"],
+      "elapsedSeconds": 2134.338400000006
+    },
+    {
+      "key": ["Relay Orchard", "Recorded play"],
+      "elapsedSeconds": 2195.6798000000117
+    },
+    {
+      "key": ["Orchard Crossing", "Live autoplay"],
+      "elapsedSeconds": 2251.0965
+    },
+    {
+      "key": ["Signal Garden", "Recorded play"],
+      "elapsedSeconds": 2336.433800000012
+    },
+    {
+      "key": ["Hidden Frequency", "Recorded play"],
+      "elapsedSeconds": 2392.616900000006
+    },
+    {
+      "key": ["Night Crossfire", "Live player"],
+      "elapsedSeconds": 2448.503
+    },
+    {
+      "key": ["Night Patrol", "Recorded play"],
+      "elapsedSeconds": 2482.082700000003
+    },
+    {
+      "key": ["Stone Lanes", "Recorded play"],
+      "elapsedSeconds": 2535.635900000006
+    },
+    {
+      "key": ["Orchard Crossing", "Live autoplay"],
+      "elapsedSeconds": 2568.703400000006
+    },
+    {
+      "key": ["Supply Circuit", "Recorded play"],
+      "elapsedSeconds": 2638.012700000003
+    },
+    {
+      "key": ["First Signal", "Recorded play"],
+      "elapsedSeconds": 2695.914200000003
+    },
+    {
+      "key": ["Relay Orchard", "Recorded play"],
+      "elapsedSeconds": 2734.849400000006
+    },
+    {
+      "key": ["First Signal", "Recorded play"],
+      "elapsedSeconds": 2787.674300000012
+    },
+    {
+      "key": ["Short Fuse", "Live player"],
+      "elapsedSeconds": 2825.959400000006
+    },
+    {
+      "key": ["Last Light", "Recorded play"],
+      "elapsedSeconds": 2859.5548000000117
+    },
+    {
+      "key": ["Relay Storm", "Live player"],
+      "elapsedSeconds": 2897.922200000003
+    },
+    {
+      "key": ["The Crossing", "Recorded play"],
+      "elapsedSeconds": 2994.7051000000088
+    },
+    {
+      "key": ["Courtyard Exits", "Live autoplay"],
+      "elapsedSeconds": 3037.376
+    },
+    {
+      "key": ["Short Fuse", "Live player"],
+      "elapsedSeconds": 3086.3121000000087
+    },
+    {
+      "key": ["Hidden Frequency", "Recorded play"],
+      "elapsedSeconds": 3103.389100000009
+    },
+    {
+      "key": ["Relay Orchard", "Recorded play"],
+      "elapsedSeconds": 3155.2296000000088
+    },
+    {
+      "key": ["Courtyard Exits", "Live autoplay"],
+      "elapsedSeconds": 3208.008400000006
+    },
+    {
+      "key": ["Crosswind", "Recorded play"],
+      "elapsedSeconds": 3236.372200000003
+    },
+    {
+      "key": ["Night Crossfire", "Live player"],
+      "elapsedSeconds": 3293.282800000012
+    },
+    {
+      "key": ["First Signal", "Recorded play"],
+      "elapsedSeconds": 3347.610600000009
+    },
+    {
+      "key": ["Orchard Crossing", "Live autoplay"],
+      "elapsedSeconds": 3386.735600000009
+    },
+    {
+      "key": ["Last Light", "Recorded play"],
+      "elapsedSeconds": 3468.745
+    },
+    {
+      "key": ["Orchard Crossing", "Live autoplay"],
+      "elapsedSeconds": 3505.261100000009
+    },
+    {
+      "key": ["Night Patrol", "Recorded play"],
+      "elapsedSeconds": 3575.5035
+    },
+    {
+      "key": ["Orchard Crossing", "Live autoplay"],
+      "elapsedSeconds": 3630.579900000006
+    },
+    {
+      "key": ["Relay Storm", "Live player"],
+      "elapsedSeconds": 3689.373600000009
+    },
+    {
+      "key": ["Courtyard Exits", "Live autoplay"],
+      "elapsedSeconds": 3743.222800000012
+    },
+    {
+      "key": ["Signal Garden", "Recorded play"],
+      "elapsedSeconds": 3792.0531000000087
+    },
+    {
+      "key": ["Stone Lanes", "Recorded play"],
+      "elapsedSeconds": 3846.993700000003
+    },
+    {
+      "key": ["The Crossing", "Recorded play"],
+      "elapsedSeconds": 3879.445600000009
+    },
+    {
+      "key": ["Relay Orchard", "Recorded play"],
+      "elapsedSeconds": 3921.371
+    },
+    {
+      "key": ["Supply Circuit", "Recorded play"],
+      "elapsedSeconds": 3974.466400000006
+    },
+    {
+      "key": ["First Signal", "Recorded play"],
+      "elapsedSeconds": 4032.854300000012
+    },
+    {
+      "key": ["Relay Orchard", "Recorded play"],
+      "elapsedSeconds": 4072.226900000006
+    },
+    {
+      "key": ["Short Fuse", "Live player"],
+      "elapsedSeconds": 4125.678600000009
+    },
+    {
+      "key": ["Relay Storm", "Live player"],
+      "elapsedSeconds": 4153.989700000003
+    },
+    {
+      "key": ["Courtyard Exits", "Live autoplay"],
+      "elapsedSeconds": 4218.703
+    },
+    {
+      "key": ["Orchard Crossing", "Live autoplay"],
+      "elapsedSeconds": 4267.7385
+    },
+    {
+      "key": ["Last Light", "Recorded play"],
+      "elapsedSeconds": 4325.3695
+    },
+    {
+      "key": ["Signal Garden", "Recorded play"],
+      "elapsedSeconds": 4361.623400000006
+    },
+    {
+      "key": ["Courtyard Exits", "Live autoplay"],
+      "elapsedSeconds": 4416.111200000003
+    },
+    {
+      "key": ["Relay Orchard", "Recorded play"],
+      "elapsedSeconds": 4444.463400000006
+    },
+    {
+      "key": ["Orchard Crossing", "Live autoplay"],
+      "elapsedSeconds": 4498.203100000009
+    },
+    {
+      "key": ["First Signal", "Recorded play"],
+      "elapsedSeconds": 4568.176700000003
+    },
+    {
+      "key": ["Supply Circuit", "Recorded play"],
+      "elapsedSeconds": 4606.3629000000055
+    },
+    {
+      "key": ["Orchard Crossing", "Live autoplay"],
+      "elapsedSeconds": 4665.161
+    },
+    {
+      "key": ["Stone Lanes", "Recorded play"],
+      "elapsedSeconds": 4746.2755
+    },
+    {
+      "key": ["First Signal", "Recorded play"],
+      "elapsedSeconds": 4778.010400000006
+    },
+    {
+      "key": ["Hidden Frequency", "Recorded play"],
+      "elapsedSeconds": 4816.805200000003
+    },
+    {
+      "key": ["Night Patrol", "Recorded play"],
+      "elapsedSeconds": 4867.845800000012
+    },
+    {
+      "key": ["The Crossing", "Recorded play"],
+      "elapsedSeconds": 4921.6045
+    },
+    {
+      "key": ["Crosswind", "Recorded play"],
+      "elapsedSeconds": 4963.124200000003
+    },
+    {
+      "key": ["Night Crossfire", "Live player"],
+      "elapsedSeconds": 5018.624300000012
+    },
+    {
+      "key": ["Courtyard Exits", "Live autoplay"],
+      "elapsedSeconds": 5060.3311000000085
+    },
+    {
+      "key": ["Night Crossfire", "Live player"],
+      "elapsedSeconds": 5111.480300000012
+    },
+    {
+      "key": ["Relay Storm", "Live player"],
+      "elapsedSeconds": 5182.677300000012
+    },
+    {
+      "key": ["Relay Orchard", "Recorded play"],
+      "elapsedSeconds": 5260.346
+    },
+    {
+      "key": ["First Signal", "Recorded play"],
+      "elapsedSeconds": 5313.103600000009
+    },
+    {
+      "key": ["Orchard Crossing", "Live autoplay"],
+      "elapsedSeconds": 5351.402900000006
+    },
+    {
+      "key": ["Relay Orchard", "Recorded play"],
+      "elapsedSeconds": 5422.395
+    },
+    {
+      "key": ["Stone Lanes", "Recorded play"],
+      "elapsedSeconds": 5518.810800000012
+    },
+    {
+      "key": ["Crosswind", "Recorded play"],
+      "elapsedSeconds": 5553.174
+    },
+    {
+      "key": ["The Crossing", "Recorded play"],
+      "elapsedSeconds": 5618.488700000003
+    },
+    {
+      "key": ["Night Patrol", "Recorded play"],
+      "elapsedSeconds": 5762.493700000003
+    },
+    {
+      "key": ["Short Fuse", "Live player"],
+      "elapsedSeconds": 5816.2548000000115
+    },
+    {
+      "key": ["Orchard Crossing", "Live autoplay"],
+      "elapsedSeconds": 5839.870700000003
+    },
+    {
+      "key": ["Last Light", "Recorded play"],
+      "elapsedSeconds": 5896.269400000006
+    },
+    {
+      "key": ["Signal Garden", "Recorded play"],
+      "elapsedSeconds": 5930.919200000003
+    },
+    {
+      "key": ["First Signal", "Recorded play"],
+      "elapsedSeconds": 5984.559
+    }
+  ],
+  "sceneEntryCount": 116,
+  "pauseMusicStateCounts": [
+    {
+      "demoLabel": "Pause",
+      "musicStatus": "paused",
+      "samples": 29
+    },
+    {
+      "demoLabel": "Pause",
+      "musicStatus": "playing",
+      "samples": 1100
+    },
+    {
+      "demoLabel": "Resume",
+      "musicStatus": "playing",
+      "samples": 11
+    },
+    {
+      "demoLabel": "Pause",
+      "musicStatus": "loading",
+      "samples": 1
+    }
+  ],
+  "songTitles": ["Carol of the Bells (Metal Version)"],
+  "lastActiveDemoSample": {
+    "elapsedSeconds": 5990.082300000012,
+    "level": "First Signal",
+    "statusAndTimer": "3% captured \u00b7 3 lives \u00b7 5s"
+  },
+  "childNavigations": 1,
+  "attachmentFailure": {
+    "attached": false,
+    "targets": 0,
+    "failures": 1,
+    "error": {
+      "scope": "observer-window",
+      "type": "observer-attachment-failed",
+      "at": "2026-10-16T00:15:43.734Z",
+      "elapsedSeconds": 6013.238700000003,
+      "name": "TypeError",
+      "message": "Observer target #demo-dialog is missing or is not a Node of this document.",
+      "stack": "TypeError: Observer target #demo-dialog is missing or is not a Node of this document.\n    at http://127.0.0.1:8832/game/test/browser/demo-watch.mjs:141:15\n    at Array.map (<anonymous>)\n    at observationTargets (http://127.0.0.1:8832/game/test/browser/demo-watch.mjs:137:6)\n    at attachChild (http://127.0.0.1:8832/game/test/browser/demo-watch.mjs:820:23)\n    at HTMLIFrameElement.<anonymous> (http://127.0.0.1:8832/game/test/browser/demo-watch.mjs:1139:5)"
+    }
+  },
+  "diagnostics": [
+    {
+      "scope": "observer-window",
+      "type": "checkpoint-storage-unavailable",
+      "at": "2026-10-15T22:53:27.323Z",
+      "elapsedSeconds": 1076.838100000009,
+      "name": "InvalidStateError",
+      "message": "Failed to execute 'transaction' on 'IDBDatabase': The database connection is closing.",
+      "stack": "InvalidStateError: Failed to execute 'transaction' on 'IDBDatabase': The database connection is closing.\n    at http://127.0.0.1:8832/game/test/browser/demo-watch.mjs:392:21\n    at http://127.0.0.1:8832/game/test/browser/demo-watch.mjs:349:18\n    at new Promise (<anonymous>)\n    at operation (http://127.0.0.1:8832/game/test/browser/demo-watch.mjs:327:12)\n    at transaction (http://127.0.0.1:8832/game/test/browser/demo-watch.mjs:391:12)\n    at async Object.write (http://127.0.0.1:8832/game/test/browser/demo-watch.mjs:445:7)\n    at async http://127.0.0.1:8832/game/test/browser/demo-watch.mjs:590:13"
+    },
+    {
+      "scope": "observer-window",
+      "type": "observer-attachment-failed",
+      "at": "2026-10-16T00:15:43.734Z",
+      "elapsedSeconds": 6013.238700000003,
+      "name": "TypeError",
+      "message": "Observer target #demo-dialog is missing or is not a Node of this document.",
+      "stack": "TypeError: Observer target #demo-dialog is missing or is not a Node of this document.\n    at http://127.0.0.1:8832/game/test/browser/demo-watch.mjs:141:15\n    at Array.map (<anonymous>)\n    at observationTargets (http://127.0.0.1:8832/game/test/browser/demo-watch.mjs:137:6)\n    at attachChild (http://127.0.0.1:8832/game/test/browser/demo-watch.mjs:820:23)\n    at HTMLIFrameElement.<anonymous> (http://127.0.0.1:8832/game/test/browser/demo-watch.mjs:1139:5)"
+    }
+  ],
+  "sourceInventoryStable": true,
+  "localSourceChangesAfterCollection": [],
+  "sourceChanges": {
+    "changed": [],
+    "removed": [],
+    "added": []
+  },
+  "storageChanges": {
+    "changed": [],
+    "removed": [],
+    "added": [
+      "3cc8c539691c9187babbf536b2b5b0eee1fed185bd7131442bb7843724b5cc03",
+      "5c599d8cf493a77cdfb31e61c21ce85181eb82f7ee246da65289be2d615f9b98",
+      "966763c08fe4da57f57a590c404e7569874d4ce4eab27dee4058026ac281cf6b",
+      "b38e79d9dec952b978d047599cb9036f9688aa70cfde634776e19c399c6ff331",
+      "ce3cb6d635c1a8f1cf78f149ee920360e37f7ac1a104a986e94f14c799f044eb"
+    ]
+  },
+  "memoryRangeBytes": {
+    "min": 68680162,
+    "max": 508478940,
+    "first": 253942852,
+    "last": 88106457,
+    "limitation": "Includes observer and changed child page; not proof of leak freedom or game teardown."
+  },
+  "simulationTime": "Not directly measured by this read-only DOM observer; level timers are per-scene display values, not accumulated simulation proof.",
+  "workerFollowup": {
+    "status": "skipped",
+    "reason": "Browser observation was interrupted by child navigation and lost attachment; no replacement or retry is authorized."
+  },
+  "cleanup": {
+    "observerTab": "closed after exact final report saved",
+    "viewport": "1200x900 override reset",
+    "browserPresentation": "prior false preserved",
+    "serverPID": 43127,
+    "serverPort": 8832,
+    "serverCommand": "node scripts/game-cli.mjs serve --port 8832",
+    "termination": "SIGTERM sent after listener and command verification; lsof subsequently found no port 8832 listener (exit 1, empty output).",
+    "otherResources": "Ports 8779/8820, other tabs, shared checkout and unrelated processes untouched.",
+    "finalScreenshot": {
+      "width": 164,
+      "height": 6129,
+      "limitation": "Screenshot adapter produced a narrow document image despite fullPage false; final responsive layout is not qualified by it.",
+      "format": "JPEG",
+      "file": "browser-interrupted-final.jpg"
+    },
+    "heartbeatStatus": "PAUSED"
+  },
+  "limitations": [
+    "No cause established for game exit/navigation; no steering or navigation by this monitor.",
+    "No actual hidden/unfocused samples.",
+    "Two long callback gaps are unobserved.",
+    "Automatic observer IndexedDB recovery failed; exact DOM reports saved directly.",
+    "Initial ~194 seconds lack drawable viewport.",
+    "Five redacted storage keys added; no attribution to rewards or assertion of no writes.",
+    "No physical iPhone/audio/device, human viewing quality, or release qualification."
+  ]
+}

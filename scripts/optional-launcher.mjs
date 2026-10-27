@@ -50,7 +50,7 @@ export function buildOptionalLauncher({
     [
       'app.mjs',
       Buffer.from(
-        `import { optionalInstallationKey, validateOptionalInstallationReference, inspectOptionalOffline, prepareOptionalOffline, removeOptionalOffline } from './context.mjs';\nimport { mountPracticeNavigation } from './navigation.mjs';\n(${installOptionalLauncher.toString()})(${JSON.stringify({ packageId, root, description })}, { optionalInstallationKey, validateOptionalInstallationReference, inspectOptionalOffline, prepareOptionalOffline, removeOptionalOffline, mountPracticeNavigation });\n`,
+        `import { optionalInstallationKey, validateOptionalInstallationReference, inspectOptionalOffline, prepareOptionalOffline, removeOptionalOffline, optionalOfflineFailureMessage } from './context.mjs';\nimport { mountPracticeNavigation } from './navigation.mjs';\n(${installOptionalLauncher.toString()})(${JSON.stringify({ packageId, root, description })}, { optionalInstallationKey, validateOptionalInstallationReference, inspectOptionalOffline, prepareOptionalOffline, removeOptionalOffline, optionalOfflineFailureMessage, mountPracticeNavigation });\n`,
       ),
     ],
     ['context.mjs', contextSource],

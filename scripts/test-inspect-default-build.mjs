@@ -113,9 +113,12 @@ async function committedInspectorFixture(t) {
   for (const relative of [
     'scripts/inspect-default-build.mjs',
     'scripts/game-cli.mjs',
+    'scripts/distribution-zip.mjs',
     'scripts/brand-icons.mjs',
     'scripts/build-entry-writer.mjs',
     'scripts/main-pages-source-originals.mjs',
+    'scripts/published-content-ownership.mjs',
+    'game/editions/model.mjs',
     'scripts/frozen-source.mjs',
     'scripts/check-edition-source.mjs',
     'scripts/pack-indexes.mjs',

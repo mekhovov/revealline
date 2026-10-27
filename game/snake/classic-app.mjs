@@ -1,9 +1,14 @@
+import { renderTextSizeControl } from '../ui/text-size-control.mjs';
 import { installDemoEntry, demoLaunchURL } from '../ui/demo-entry.mjs';
 import { createDemoMusicTransport } from '../ui/demo-music-transport.mjs';
 import { classicOperationStatus } from './classic-operation-status.mjs';
 import { CLASSIC_SNAKE_CAMPAIGN_REVISION } from './classic-campaign.mjs';
 import { classicBoardPreferences, isClassicWorldStyle } from './classic-worlds.mjs';
 import { claimProfileWriter } from '../profile-writer.mjs';
+import { createCouchKeyboardPreferences } from '../couch/keyboard-preferences.mjs';
+import { mountCouchKeyboardSettings } from '../couch/keyboard-settings.mjs';
+import { couchKeyMap, couchDirectionLabel } from '../couch/keyboard-bindings.mjs';
+import { keyCodeForEvent } from '../key-bindings.mjs';
 import {
   createEnemyStats,
   validateEnemyStatsSession,
@@ -25,6 +30,9 @@ import {
 } from '../ui/celebration.mjs';
 import { createSignalReception } from '../ui/signal-reception.mjs';
 import { mountGlobalSettingsTools } from '../ui/global-settings-tools.mjs';
+import { attachLocalSupportSummary } from '../ui/local-support-summary.mjs';
+import { offlineAvailability } from '../offline.mjs';
+import { nativePlatform } from '../platform.mjs';
 import { attachInstallOfflinePanel } from '../ui/install-offline-panel.mjs';
 import { attachMenuAudioSettings } from '../ui/menu-audio.mjs';
 import { attachDefeatSoundControls } from '../ui/defeat-sound-controls.mjs';
@@ -32,6 +40,7 @@ import { mountGlobalSettings } from '../ui/global-settings-view.mjs';
 import { attachThemeFamilyControls } from '../ui/theme-family-controls.mjs';
 import { mountBattlefieldGroundControls } from '../ui/battlefield-ground-controls.mjs';
 import { menuAnimationBinding } from '../ui/menu-animation-preferences.mjs';
+import { mountComfortPresets } from '../ui/comfort-presets.mjs';
 import { mountModeSettings } from '../ui/mode-settings-view.mjs';
 import {
   attachSettingsPanels,
@@ -115,6 +124,7 @@ import {
   createClassicSnakeRatings,
   classicSnakeRatingForRecord,
   classicSnakeRatingCriteriaText,
+  classicSnakeRatingResultText,
 } from './classic-ratings.mjs';
 import { createClassicSnakeRecords } from './classic-records.mjs';
 import { resolveClassicSnakeRecipeEntry } from './classic-catalogue-archive.mjs';
@@ -254,7 +264,9 @@ let playShell = null,
   libraryInfo = null,
   libraryToolsRefresh = null,
   snakeSettingsView = null,
+  snakeSupportSummary = null,
   snakeGlobalSettings = null,
+  snakeComfortPresets = null,
   snakeOfflinePanel = null,
   touchPresentationControls = null,
   menuController = null,
@@ -284,6 +296,14 @@ let celebration = null,
   resultPreview = null,
   resultPlayback = null,
   transitionJustStarted = false;
+const keyboardPreferences = createCouchKeyboardPreferences({
+  mode: 'snake',
+  getStorage: () => globalThis.localStorage,
+  getLockManager: () => globalThis.navigator?.locks,
+});
+let keyboardMap = couchKeyMap(keyboardPreferences.snapshot().bindings, 'snake'),
+  keyboardSettings = null,
+  stopKeyboard = () => {};
 const recentReplay = createClassicRecentReplay();
 const continuousPreferences = continuousPlayPreferences();
 const signalReception = [createSignalReception(), createSignalReception()];
@@ -296,6 +316,9 @@ const transition = createContinuousPlayController({
 });
 const gamepadState = new Map(),
   gamepadSeats = new Map();
+// Latest presence/assignment only, from the existing polling owner. Snake does
+// not produce the primary shell's neutral/Confirm readiness observations.
+const supportController = { sampledAt: null, status: 'unavailable', assigned: null };
 const effects = [createHuntDestruction(), createHuntDestruction()];
 let acceptedArtRevision = runtimeActorArtRevision(),
   acceptedAppearance = null,
@@ -303,6 +326,7 @@ let acceptedArtRevision = runtimeActorArtRevision(),
 const destruction = createDestructionPreferences(),
   remains = createEncounterDisplayPreferences();
 const display = createDisplayPreferences({
+  extraLarge: true,
   onWarning: (message, key) => {
     $('snake-display-status').textContent = key ? t(key) : message;
   },
@@ -708,6 +732,10 @@ function beginResultPlayback() {
   refreshReplayControl();
 }
 function refreshReplayControl() {
+  resultPreview?.setAttribute(
+    'aria-label',
+    locale === 'uk' ? 'Повтор останніх 8 ходів Snake' : 'Snake final 8 moves replay',
+  );
   const button = $('review');
   if (!button) return;
   const playing = !!resultPlayback?.playing;
@@ -830,7 +858,13 @@ function installTransitionControls() {
   media.append(resultPreview, replayControls);
   const overview = el('div', null, 'snake-result-overview');
   const summary = el('div', null, 'snake-result-summary');
-  summary.append($('result-detail'), $('snake-stars'), $('result-record'), $('result-save-notice'));
+  summary.append(
+    $('result-detail'),
+    $('snake-stars'),
+    $('snake-rating-goal'),
+    $('result-record'),
+    $('result-save-notice'),
+  );
   overview.append(media, summary);
   $('snake-results').prepend(overview);
   for (const [container, variant] of [
@@ -1389,6 +1423,15 @@ function renderModeLinks() {
     guidesContainer: snakeSettingsView?.panels.extras ?? $('snake-workshop'),
   });
 }
+function refreshKeyboardHelp() {
+  $('controls-help').textContent =
+    mode === 'solo'
+      ? text('controls')
+      : t('interface:couchKeyboard.snakeKeys', {
+          first: couchDirectionLabel(keyboardPreferences.snapshot().bindings, 0, 'snake'),
+          second: couchDirectionLabel(keyboardPreferences.snapshot().bindings, 1, 'snake'),
+        });
+}
 function renderCopy() {
   doc.documentElement.lang = locale;
   doc.title = `${text('title')} · FPV / LINE`;
@@ -1473,7 +1516,7 @@ function renderCopy() {
         : mode === 'versus'
           ? text('vsHelp')
           : '';
-  $('controls-help').textContent = text(mode === 'solo' ? 'controls' : 'twoControls');
+  refreshKeyboardHelp();
   for (const id of ['next']) $(id).textContent = text(id);
   $('home-link').textContent = text('home');
   $('home-link').href = nativeArtReviewURL(`../?lang=${locale}`, globalThis.location.href);
@@ -1483,6 +1526,7 @@ function renderCopy() {
   playShell?.setLocale(locale);
   snakeSettingsView?.refresh(locale);
   snakeGlobalSettings?.refresh(locale);
+  statsViews.forEach((view) => view.refresh());
   touchPresentationControls?.refresh();
   for (const view of touchViews) view.apply(touch.snapshot());
   renderModeLinks();
@@ -1843,6 +1887,13 @@ function renderRatings() {
   const starsLabel = grade?.stars ? `${grade.stars} / 3` : starsText;
   if ($('snake-stars').getAttribute('aria-label') !== starsLabel)
     $('snake-stars').setAttribute('aria-label', starsLabel);
+  const goalText =
+    result() === 'won' && liveProvenance !== 'import'
+      ? classicSnakeRatingResultText(grade, runs[0].tick, locale)
+      : '';
+  $('snake-rating-goal').hidden = !goalText;
+  if ($('snake-rating-goal').textContent !== goalText)
+    $('snake-rating-goal').textContent = goalText;
   $('snake-rating-criteria').textContent = ratingCriteriaText(runs[0]);
 }
 function restore(raw, { provenance = 'import' } = {}) {
@@ -2061,7 +2112,8 @@ remains.subscribe(primeEffects);
 display.subscribe(primeEffects);
 display.subscribe((choice) => {
   doc.body.dataset.textFace = $('snake-text-face').value = choice.textFace;
-  doc.body.dataset.textSize = $('snake-text-size').value = choice.textSize;
+  doc.body.dataset.textSize = choice.effectiveTextSize ?? choice.textSize;
+  renderTextSizeControl($('snake-text-size'), choice.textSize, { extraLarge: true });
   footprint?.refresh();
 });
 $('snake-text-face').addEventListener('change', () =>
@@ -2268,21 +2320,25 @@ doc.addEventListener('keydown', (event) => {
     }
     return;
   }
-  const direction = {
-    arrowup: 'up',
-    arrowright: 'right',
-    arrowdown: 'down',
-    arrowleft: 'left',
-    w: 'up',
-    d: 'right',
-    s: 'down',
-    a: 'left',
-  }[key];
+  const binding = mode === 'solo' ? null : keyboardMap[keyCodeForEvent(event)];
+  const direction =
+    mode === 'solo'
+      ? {
+          arrowup: 'up',
+          arrowright: 'right',
+          arrowdown: 'down',
+          arrowleft: 'left',
+          w: 'up',
+          d: 'right',
+          s: 'down',
+          a: 'left',
+        }[key]
+      : binding?.[1];
   if (!direction) return;
   event.preventDefault();
-  if (!event.repeat) turn(mode !== 'solo' && key.startsWith('arrow') ? 1 : 0, direction);
+  if (!event.repeat) turn(mode === 'solo' ? 0 : binding[0], direction);
 });
-function pollGamepads() {
+function pollGamepads(now) {
   const pads = Array.from(globalThis.navigator.getGamepads?.() ?? []).filter(Boolean),
     present = new Set();
   if (demoHost?.active) {
@@ -2321,6 +2377,7 @@ function pollGamepads() {
     if (!pad) gamepadState.clear();
     return;
   }
+  let assigned = false;
   for (const pad of pads) {
     present.add(pad.index);
     if (!gamepadSeats.has(pad.index)) {
@@ -2332,6 +2389,7 @@ function pollGamepads() {
     }
     const seat = gamepadSeats.get(pad.index);
     if (mode === 'solo' && seat !== 0) continue;
+    assigned = true;
     const buttons = [
       pad.buttons[12]?.pressed || pad.axes[1] < -0.55,
       pad.buttons[15]?.pressed || pad.axes[0] > 0.55,
@@ -2383,6 +2441,16 @@ function pollGamepads() {
       gamepadSeats.delete(id);
       pause();
     }
+  const available = typeof globalThis.navigator.getGamepads === 'function';
+  supportController.sampledAt = now;
+  supportController.status = !available
+    ? 'unavailable'
+    : pads.length
+      ? 'observed'
+      : ['observed', 'disconnected'].includes(supportController.status)
+        ? 'disconnected'
+        : 'waiting-controller';
+  supportController.assigned = available ? assigned : null;
 }
 doc
   .querySelectorAll('#snake-settings details, #snake-help details, #snake-workshop details')
@@ -2392,6 +2460,7 @@ doc
     }),
   );
 function suspendAudio() {
+  snakeSupportSummary?.invalidate();
   if (disposed || audioInactive) return;
   if (demoHost?.backgroundAudio) {
     demoHost.foregroundLost();
@@ -2439,12 +2508,16 @@ globalThis.addEventListener('pagehide', (event) => {
     disposed = true;
     demoHost?.destroy();
     music?.dispose();
+    keyboardSettings?.dispose();
+    stopKeyboard();
+    keyboardPreferences.dispose();
     classicAudio.dispose();
     disposeTouchControls();
     touchPresentationControls?.dispose();
     touch.destroy();
     snakeDefeatSoundControls.dispose();
     snakeOfflinePanel?.dispose();
+    snakeComfortPresets?.destroy();
     sound.dispose?.();
     audioPreferences.dispose?.();
     audioMaster.dispose?.();
@@ -2496,12 +2569,7 @@ function frame(now) {
   }
   const elapsed = previousFrame === null ? 0 : Math.max(0, now - previousFrame);
   previousFrame = now;
-  pollGamepads();
-  demoHost?.update(elapsed / 1000);
-  if (demoHost?.active) {
-    globalThis.requestAnimationFrame(frame);
-    return;
-  }
+  pollGamepads(now);
   if (!ready && !paused && !result()) {
     if (elapsed > 1000 || !pageActive()) pause();
     else {
@@ -2735,6 +2803,10 @@ playShell = mountModePlayShell({
   },
   initial: params.has('level') || communityIdentity ? 'play' : 'home',
   onSurfaceChange: (surface) => {
+    snakeSupportSummary?.invalidate();
+    keyboardSettings?.cancel();
+    if (surface === 'settings') keyboardSettings?.refresh();
+    else keyboardPreferences.suspend();
     if (surface === 'results' && result()) beginResultPlayback();
     if (!['play', 'results'].includes(surface)) {
       transition.cancel(surface);
@@ -2762,6 +2834,7 @@ music = attachCouchMusicHost({
     playShell?.topDialog()?.dataset.modeSurface === 'settings',
   getOwner: () => playShell?.topDialog(),
   onOpen: () => pause({ showMenu: false }),
+  onPresentationChange: () => snakeSupportSummary?.invalidate(),
   onClose: () => refresh(),
 });
 const snakeSettingsSections = [...$('snake-settings').children].filter(
@@ -2774,6 +2847,7 @@ snakeSettingsView = mountModeSettings({
   locale,
   setMenuIcon,
   attachPanels: attachSettingsPanels,
+  onPresentationChange: () => snakeSupportSummary?.invalidate(),
   groups: {
     gameplay: [playShell.elements.buttons.expert, playShell.elements.buttons['home-retry']],
     controls: [$('steering').closest('label')],
@@ -2825,6 +2899,7 @@ snakeGlobalSettings = mountGlobalSettings({
   panels: snakeSettingsView.panels,
   prefix: 'snake-global',
   locale,
+  extraLargeText: true,
   controls: {
     language: $('language').closest('label'),
     appearance: snakeSettingsView.panels.display.querySelector('[data-theme-controls]'),
@@ -2839,7 +2914,28 @@ snakeGlobalSettings = mountGlobalSettings({
     menuAnimation: menuAnimationBinding(globalThis),
   },
 });
+keyboardSettings = mountCouchKeyboardSettings({
+  root: snakeSettingsView.panels.controls,
+  mode: 'snake',
+  preferences: keyboardPreferences,
+  document: doc,
+  window: globalThis,
+  isOpen: () =>
+    !disposed &&
+    playShell?.topDialog()?.dataset.modeSurface === 'settings' &&
+    (ready || paused || result()),
+});
+stopKeyboard = keyboardPreferences.subscribe(({ bindings }) => {
+  keyboardMap = couchKeyMap(bindings, 'snake');
+  refreshKeyboardHelp();
+});
 const snakeTouchSettings = el('section');
+snakeComfortPresets = mountComfortPresets({
+  document: doc,
+  window: globalThis,
+  root: snakeSettingsView.panels.accessibility,
+  display,
+});
 touchPresentationControls = mountTouchPresentationSettings({
   document: doc,
   mount: snakeTouchSettings,
@@ -2874,6 +2970,7 @@ const snakeGlobalTools = mountGlobalSettingsTools({
   panels: snakeSettingsView.panels,
   prefix: 'snake-global-tools',
   onOpen: pause,
+  onPresentationChange: () => snakeSupportSummary?.invalidate(),
   offlinePanel: snakeOfflinePanel,
   coreURL: new URL('../', globalThis.location.href),
 });
@@ -2882,6 +2979,57 @@ snakeGlobalSettings.update({
     audioCues: snakeAudioCues,
     touchPresentation: snakeTouchSettings,
     ...snakeGlobalTools.controls,
+  },
+});
+const snakeSupportRoot = el('section');
+snakeSupportRoot.id = 'support-summary-root';
+snakeSettingsView.panels.data.append(snakeSupportRoot);
+snakeSupportSummary = attachLocalSupportSummary({
+  document: doc,
+  window: globalThis,
+  root: snakeSupportRoot,
+  settings: playShell.elements.dialogs.settings,
+  getSettingsOpen: () => {
+    const settings = playShell.elements.dialogs.settings,
+      data = snakeSettingsView.panels.data,
+      compact =
+        settings.classList.contains('native-settings') &&
+        (doc.defaultView?.innerWidth ?? doc.documentElement.clientWidth ?? Infinity) <= 700;
+    return (
+      !disposed &&
+      !pageDeparted &&
+      playShell.topDialog() === settings &&
+      settings.open === true &&
+      snakeSettingsView.navigation.panel() === data &&
+      !data.hidden &&
+      !data.inert &&
+      (!compact || settings.getAttribute('data-settings-view') === 'panel')
+    );
+  },
+  getHost: () => {
+    const offline = offlineAvailability(),
+      version = doc.documentElement.dataset.buildVersion,
+      packaged = !!version && !version.includes('__');
+    return {
+      version: packaged ? version : null,
+      packaged,
+      kind: `snake-${mode}`,
+      state: result()
+        ? ['won', 'lost'].includes(result())
+          ? result()
+          : 'finished'
+        : ready
+          ? 'idle'
+          : paused
+            ? 'paused'
+            : 'running',
+      locale,
+      writable: sessionWriter.writable,
+      writerReason: sessionWriter.writable ? 'owned' : sessionWriter.reasonCode,
+      platform: nativePlatform() ?? 'browser',
+      offline: offline.available ? 'configured' : offline.messageCode,
+      controller: supportController,
+    };
   },
 });
 $('snake-settings').hidden = true;

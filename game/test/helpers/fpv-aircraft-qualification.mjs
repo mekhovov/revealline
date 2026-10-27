@@ -7,6 +7,9 @@ import {
   listAircraftPresets,
 } from '../../../optional-practice/civilian-fpv/aircraft-presets.mjs';
 import { createRateEvaluator } from '../../../optional-practice/civilian-fpv/rates.mjs';
+import { aircraftCourseTerrain } from '../../../optional-practice/civilian-fpv/aircraft-course-session.mjs';
+import { FLIGHT_COURSES } from '../../../optional-practice/civilian-fpv/catalogue.mjs';
+import { AIRCRAFT_FREQUENCY } from '../../../optional-practice/civilian-fpv/advanced-aircraft-runtime.mjs';
 const axes = ['roll', 'pitch', 'yaw'];
 const candidates = [250, 500, 1000];
 const check = (condition, message) => {
@@ -93,6 +96,37 @@ function contact(id, frequency) {
     sim.dispose();
   }
 }
+function landing(id, frequency) {
+  const sim = createAdvancedSimulation({
+    ...createPresetConfiguration(id),
+    frequency,
+    numericalReference: frequency === 2000,
+    floor: false,
+    terrain: { format: 'AdvancedRegionalTerrain.v1' },
+    spawn: { x: 0, y: 1, z: 0 },
+  });
+  try {
+    const frame = sim.stageTerrainFrame(aircraftCourseTerrain(FLIGHT_COURSES[0]));
+    sim.commitTerrainFrame({ transaction: frame.transaction, accepted: true });
+    let minimumSupportY = Infinity;
+    const started = performance.now();
+    for (let tick = 0; tick < 75; tick++)
+      for (const p of sim.stepMission().trace)
+        minimumSupportY = Math.min(minimumSupportY, p.y - p.supportHeight);
+    const elapsedMs = performance.now() - started,
+      final = sim.telemetry();
+    return {
+      grounded: final.contact.grounded,
+      support: final.contact.support?.id ?? null,
+      minimumSupportY,
+      finalSupportY: final.position.y - final.supportHeight,
+      capacity: 1500 / elapsedMs,
+      finalHash: sim.stateHash(),
+    };
+  } finally {
+    sim.dispose();
+  }
+}
 /** Numerical and local runtime capacity checks, not hardware/flight validation.
  * Includes production Rapier controller, motors, bodies, recording and contacts.
  * Keep this browser-importable for subsequent architecture/device qualification. */
@@ -109,6 +143,7 @@ export async function runAircraftTimingQualification({ repetitions = 2, onPreset
       frequency: 2000,
       axes: Object.fromEntries(axes.map((a) => [a, response(preset.id, 2000, a)])),
       contact: contact(preset.id, 2000),
+      landing: landing(preset.id, 2000),
     };
     const results = candidates.map((frequency) => {
       const axisResults = Object.fromEntries(
@@ -134,16 +169,31 @@ export async function runAircraftTimingQualification({ repetitions = 2, onPreset
         }),
       );
       const collision = contact(preset.id, frequency);
+      const landings = Array.from({ length: repetitions }, () => landing(preset.id, frequency));
+      const supported = (result) =>
+        result.grounded &&
+        result.support === 'course-boundary-y-min' &&
+        result.minimumSupportY >= -0.003;
       return {
         frequency,
         axes: axisResults,
         contact: collision,
+        landing: landings[0],
+        minimumLandingCapacity: Math.min(...landings.map((result) => result.capacity)),
         accuracyPass: Object.values(axisResults).every((a) =>
           Object.values(a.relativeErrors).every((error) => error <= 0.02),
         ),
-        capacityPass: Object.values(axisResults).every((a) => a.minimumCapacity >= 2),
-        contactsPass: collision.blocked && reference.contact.blocked,
-        repetitionPass: Object.values(axisResults).every((a) => a.repeatHashesAgree),
+        capacityPass:
+          Object.values(axisResults).every((a) => a.minimumCapacity >= 2) &&
+          landings.every((result) => result.capacity >= 2),
+        contactsPass:
+          collision.blocked &&
+          reference.contact.blocked &&
+          supported(reference.landing) &&
+          landings.every(supported),
+        repetitionPass:
+          Object.values(axisResults).every((a) => a.repeatHashesAgree) &&
+          landings.every((result) => result.finalHash === landings[0].finalHash),
       };
     });
     const result = { preset: preset.id, reference, candidates: results };
@@ -175,14 +225,19 @@ export async function runAircraftDeterminismQualification({ worker = false } = {
   const { createAdvancedWorkerClient } = await import(
     '../../../optional-practice/civilian-fpv/advanced-worker-client.mjs'
   );
-  const { verifyAdvancedRecovery } = await import(
+  const { verifyAdvancedRecovery, replayAdvancedRecording } = await import(
     '../../../optional-practice/civilian-fpv/advanced-simulation.mjs'
   );
   await initAdvancedRuntime();
   const results = [];
+  const capacities = [];
   for (const preset of listAircraftPresets())
     for (const mode of ['acro', 'self-level']) {
-      const config = { ...createPresetConfiguration(preset.id), mode, frequency: 500 };
+      const config = {
+        ...createPresetConfiguration(preset.id),
+        mode,
+        frequency: AIRCRAFT_FREQUENCY,
+      };
       const sample = (tick) => ({
         sequence: tick,
         timestampUs: tick * 20000,
@@ -206,12 +261,42 @@ export async function runAircraftDeterminismQualification({ worker = false } = {
       await initialize();
       try {
         let saved;
+        const started = performance.now();
         for (let tick = 0; tick < 80; tick++) {
           await step(tick);
           if (tick === 39) saved = await snapshot();
         }
+        capacities.push({
+          preset: preset.id,
+          mode,
+          capacity: 1600 / (performance.now() - started),
+        });
         const final = await snapshot();
         const recording = await sim.recording();
+        check(
+          recording.config.backend === 'civilian-quad-aircraft.v3',
+          'Qualification must use current v3',
+        );
+        check(recording.config.frequency === 1000, 'Qualification must use frozen 1000 Hz');
+        check(
+          recording.startMissionTick === 0 && recording.missionTicks === 80,
+          'Qualification replay must retain its whole bounded flight',
+        );
+        check(recording.finalHash === final.hash, `${preset.id} recording hash diverged`);
+        await new Promise((resolve) => setTimeout(resolve, 10));
+        check((await snapshot()).hash === final.hash, `${preset.id} paused owner advanced`);
+        const replay = worker
+          ? await sim.verifyRecording(recording)
+          : await replayAdvancedRecording(recording);
+        check(
+          replay.verified && replay.verificationScope === 'checkpoint-clip',
+          `${preset.id} replay failed`,
+        );
+        check(
+          worker ? replay.sourceSampleCount === 81 : replay.snapshot.hash === final.hash,
+          `${preset.id} complete replay diverged`,
+        );
+        check((await snapshot()).hash === final.hash, `${preset.id} replay changed live state`);
         if (worker) {
           sim.dispose();
           sim = createAdvancedWorkerClient();
@@ -224,13 +309,25 @@ export async function runAircraftDeterminismQualification({ worker = false } = {
           final.hash === continued.hash,
           `${preset.id} ${mode} ${worker ? 'worker' : 'direct'} recovery diverged`,
         );
+        await sim.reset();
+        for (let tick = 0; tick < 80; tick++) await step(tick);
+        const reset = await snapshot();
+        check(final.hash === reset.hash, `${preset.id} ${mode} reset diverged`);
         results.push({
           preset: preset.id,
           mode,
           identity: final.identity,
           finalHash: final.hash,
           continuationHash: continued.hash,
+          resetHash: reset.hash,
           recordedFinalHash: recording.finalHash,
+          replayVerified: replay.verified,
+          replayScope: replay.verificationScope,
+          replayFromMission: recording.startMissionTick,
+          replayThroughMission: recording.missionTicks,
+          backend: recording.config.backend,
+          periodicHashes: recording.segments.flatMap((segment) => segment.hashes),
+          pausedHash: final.hash,
           consumedSequence: final.checkpoint.state.consumedSequence,
           consumedTimestampUs: final.checkpoint.state.consumedTimestampUs,
         });
@@ -238,5 +335,5 @@ export async function runAircraftDeterminismQualification({ worker = false } = {
         sim.dispose();
       }
     }
-  return { frequency: 500, worker, cases: results };
+  return { frequency: AIRCRAFT_FREQUENCY, worker, cases: results, capacities };
 }

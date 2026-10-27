@@ -429,6 +429,9 @@ test('paused menu/display edits retain HUD continuity and the accepted picture w
   assert.equal(values.get(reactionKey), savedReaction);
   // This recorder spans boot and Start as well as Settings: include the existing
   // preference/cursor readers, while the write check below stays Settings-only.
+  // This includes initial host preparation, which now reads the statistics,
+  // encounter and reaction owners as well as the shared Settings preferences.
+  // Paused edits must still write only display/menu preferences below.
   assert.deepEqual([...new Set(storageReads)].sort(), [
     'revealline-enemy-stats-session.v1:host:team',
     'revealline-enemy-stats.v1:writer',

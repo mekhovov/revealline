@@ -106,6 +106,13 @@ const tiles = {
     ),
   ]),
   timber: tile(192, 128, wood),
+  // Planed light timber has long, irregular growth lines with quiet intervals.
+  // Keep this separate from dark waxed timber and from the shared RNG stream.
+  // The 384px repeat avoids lining up identical knots across adjacent controls.
+  planed: tile(384, 256, [
+    `<path fill='none' stroke='#000' stroke-opacity='.025' d='M17 28h39v-1h21v1h32M42 34h26v-2h22v1h38M213 61h31v1h17v2h23v-1h42M236 70h20v2h31v-1h19M21 141h28v1h19v-1h42M85 153h34v-2h27v1h41M248 194h26v-2h19v-1h33M215 203h36v-2h28v-1h14M46 226h43v1h18v-1h35'/>`,
+    `<path fill='none' stroke='#fff' stroke-opacity='.018' d='M22 29h33v-1h19v1h29M219 62h23v1h15v2h24M26 142h20v1h17v-1h31M92 154h25v-2h25M253 195h20v-2h16M52 227h35v1h17'/>`,
+  ]),
   stone: tile(192, 128, [layer('#fff', '.028', stone[0]), layer('#000', '.04', stone[1])]),
   fiber: tile(192, 128, [layer('#fff', '.035', fiber[0]), layer('#000', '.033', fiber[1])]),
   // Industrial machining is authored geometry, separate from powdercoat.

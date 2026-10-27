@@ -1,0 +1,16 @@
+{
+  "started": "2026-10-20T01:36:25.386Z",
+  "browser": "155.0.8059.85",
+  "hardware": {
+    "platform": "darwin",
+    "release": "25.6.0",
+    "cpu": "Apple M4 Pro",
+    "logicalCpus": 14,
+    "memoryBytes": 51539607552
+  },
+  "scope": "Full local application, native stadium-01, actual simulation and renderer, scripted keyboard yaw, vertical hover control and sustained firing near the starting point. Assisted invulnerability and Balanced resources. This is not a human gameplay or physical radio qualification.",
+  "timing": "Aggregated synchronous requestAnimationFrame callback CPU work per display frame; asynchronous worker CPU and GPU execution excluded. Frame intervals include scheduling/GL presentation. Ten-minute wall-clock windows are not guaranteed ten minutes accepted simulation when frames are slow.",
+  "runs": [],
+  "failure": "page.waitForFunction: Timeout 30000ms exceeded.\n    at /Users/oleksandr.mekhovov/work/my_projects/go_test_radio_fix/docs/evidence/fpv-combat/overhaul-app-stress.cjs:6:838",
+  "finished": "2026-10-20T01:36:56.128Z"
+}

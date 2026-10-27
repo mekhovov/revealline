@@ -1,0 +1,19 @@
+{
+  "base": "9e98c4fb3472e4b04104220a0e5d109abac24d59",
+  "flightDeckSteelRecipeUnchanged": true,
+  "steelRecipeSha256": "71fca935dd15ab9e25ee0ab23746e6eb4de845a0d0793f9b8e273b0e6483422d",
+  "allGrainTilesUnchanged": [
+    "brush",
+    "bulkhead",
+    "edge-wear",
+    "fiber",
+    "glaze",
+    "machining",
+    "powder",
+    "stone",
+    "thread",
+    "timber",
+    "vent"
+  ],
+  "cssByteDelta": 1970
+}

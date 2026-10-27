@@ -1,4 +1,5 @@
 import { continuousPlayBindings } from './continuous-play.mjs';
+import { renderTextSizeControl } from './text-size-control.mjs';
 // One logical settings inventory. Shared flow preferences have one lightweight
 // owner; hosts retain audio, simulation and profile lifecycle ownership.
 export const GLOBAL_SETTINGS = Object.freeze(
@@ -96,6 +97,7 @@ const globalSettingsOwners = new WeakMap();
 /** Adopt real controls, or render missing fields through injected services.
  * Repeated calls add lazy providers without replacing focused controls.
  * `duplicates` retires aliases by logical setting while retaining their handlers.
+ * `extraLargeText` belongs to the initial host; lazy providers cannot grant or revoke it.
  */
 export function mountGlobalSettings({
   document: doc = globalThis.document,
@@ -106,6 +108,7 @@ export function mountGlobalSettings({
   controls = {},
   bindings = {},
   duplicates = {},
+  extraLargeText = false,
 } = {}) {
   if (!root || !panels || !doc) return null;
   bindings = { ...continuousPlayBindings(), ...bindings };
@@ -156,6 +159,8 @@ export function mountGlobalSettings({
     if (!row.input || !row.binding) return;
     const value = row.binding.get();
     if (row.spec.type === 'checkbox') row.input.checked = !!value;
+    else if (row.spec.key === 'textSize')
+      renderTextSizeControl(row.input, value, { locale, extraLarge: extraLargeText });
     else row.input.value = String(value);
     if (row.output) row.output.textContent = `${Math.round(Number(value) * 100)}%`;
     const feedback = row.binding.feedback?.(locale),

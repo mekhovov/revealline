@@ -1,5 +1,9 @@
 export const OVERFLIGHT_COPY = Object.freeze({
   en: {
+    touchVisitTitle: 'This visit',
+    boostCompact: 'Boost',
+    touchVisibilityHelp:
+      'Control visibility lasts for this visit. Always keeps steering and Boost available with a mouse. Menus still hide the controls.',
     suspendRetryHelp:
       'Retry when device storage is available. Restore requires the same complete game package and appearance settings.',
     suspendOpen: 'Saved flight',
@@ -192,12 +196,19 @@ export const OVERFLIGHT_COPY = Object.freeze({
     rerollHint: 'Uses 1 reroll. Some or all cards may repeat.',
     rerolls: 'rerolls left',
     emptySlot: 'Empty slot',
+    commitmentPayload: 'Selects this payload path for the sortie.',
+    commitmentSupport: 'Selects this support type for the sortie.',
+    commitmentCombat: 'After this choice: {used} of {capacity} combat slots used in this mission.',
+    commitmentCombatFinal:
+      'After this choice: {used} of {capacity} combat slots used in this mission — final available slot.',
+    commitmentMaximum: 'Reaches the maximum module level.',
     ready: 'Ready',
     won: 'Sortie complete',
     lost: 'Sortie ended',
     elapsed: 'Time',
     salvage: 'Salvage',
     build: 'Your build',
+    flightDetails: 'Flight details',
     resultHint: 'Try another combination on the same battlefield.',
     workshop: 'Overflight Studio',
     workshopHelp: 'Edit an encounter and preview it with this same runtime.',
@@ -258,6 +269,10 @@ export const OVERFLIGHT_COPY = Object.freeze({
     runtimeError: 'The sortie stopped after an error. Retry to prepare a new attempt.',
   },
   uk: {
+    touchVisitTitle: 'Це відвідування',
+    boostCompact: 'Ривок',
+    touchVisibilityHelp:
+      'Видимість керування діє до кінця цього відвідування. «Завжди» залишає керування й прискорення доступними для миші. У меню вони приховані.',
     suspendRetryHelp:
       'Повторіть спробу, коли сховище пристрою стане доступним. Відновлення потребує того самого повного пакета гри й оформлення.',
     suspendOpen: 'Збережений політ',
@@ -461,12 +476,20 @@ export const OVERFLIGHT_COPY = Object.freeze({
     rerollHint: 'Витрачає 1 заміну. Деякі або всі картки можуть повторитися.',
     rerolls: 'замін залишилося',
     emptySlot: 'Вільне місце',
+    commitmentPayload: 'Обирає цей шлях розвитку заряду на весь виліт.',
+    commitmentSupport: 'Обирає цей тип підтримки на весь виліт.',
+    commitmentCombat:
+      'Після цього вибору: використано {used} із {capacity} бойових слотів цієї місії.',
+    commitmentCombatFinal:
+      'Після цього вибору: використано {used} із {capacity} бойових слотів цієї місії — останній доступний слот.',
+    commitmentMaximum: 'Досягає найвищого рівня модуля.',
     ready: 'Готово',
     won: 'Виліт виконано',
     lost: 'Виліт завершено',
     elapsed: 'Час',
     salvage: 'Ресурси',
     build: 'Ваше спорядження',
+    flightDetails: 'Подробиці польоту',
     resultHint: 'Спробуйте іншу комбінацію на тому самому полі.',
     workshop: 'Студія «Проліт»',
     workshopHelp: 'Редагуйте сутичку й перевіряйте її в цьому самому рушії.',

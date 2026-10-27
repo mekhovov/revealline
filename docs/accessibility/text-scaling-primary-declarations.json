@@ -1,0 +1,211 @@
+{
+  "base": "0fa88f0bed68de9730e8619528e712f361d73403",
+  "files": [
+    {
+      "path": "game/access-gate.css",
+      "declarations": 2,
+      "baseSha256": "18a5079bf8211a4546db46ee76c518fcdef2ce24ea5fb51efb9b6e8a27b632bd"
+    },
+    {
+      "path": "game/boot.css",
+      "declarations": 7,
+      "baseSha256": "23b913e3ff609c8463dea178bab1033fa41c38058a5d5d34315eb3d3f3b36fe0"
+    },
+    {
+      "path": "game/presentation/industrial-workshop.css",
+      "declarations": 9,
+      "baseSha256": "91ce430661a02939b276e069559cc767978275bca24b32a5349a2d6a621bb00d"
+    },
+    {
+      "path": "game/style.css",
+      "declarations": 131,
+      "baseSha256": "0a5b5adfbfa17ec86f907670e03479c22f624484c022fdb4841c71fd5bfbb050"
+    },
+    {
+      "path": "game/ui/authoring-input.css",
+      "declarations": 3,
+      "baseSha256": "2c48406ec0e4dba7848e29ea5b306d8820890ee7890d71787f6bf9f3c478e68d"
+    },
+    {
+      "path": "game/ui/backup-set.css",
+      "declarations": 2,
+      "baseSha256": "39df6ce97442fd284452520cb590a2e0fdef2bb3ff5dab863585807e363c9109"
+    },
+    {
+      "path": "game/ui/capture-flight-limits.css",
+      "declarations": 3,
+      "baseSha256": "e43d22d98f30f240f1712cd3c75b231be557eab78129aafdcde2f3b377c13dd7"
+    },
+    {
+      "path": "game/ui/controller-field-editor.css",
+      "declarations": 3,
+      "baseSha256": "8c9a57a82c6f877039fa56394356cc2aa554017a2cbd58ef9b584917b58f9fc0"
+    },
+    {
+      "path": "game/ui/controller-settings.css",
+      "declarations": 6,
+      "baseSha256": "aea1deb30202b9c0c8877dd574e0cd321b1993ae09c1b47c8eb34c938d2c19ea"
+    },
+    {
+      "path": "game/ui/demo.css",
+      "declarations": 24,
+      "baseSha256": "10dbbc77f9b0e1f0ed520af68f67b20c3cce71ea66f58e15d7593d9544f6844c"
+    },
+    {
+      "path": "game/ui/device-controls.css",
+      "declarations": 19,
+      "baseSha256": "ca6439e116779616f84020cd2d23fd18776a417ec0bf605723e9abb25b0a1d7e"
+    },
+    {
+      "path": "game/ui/edition-play.css",
+      "declarations": 13,
+      "baseSha256": "47255480c77722cca495d2e815eec38729754003b87e882ccf7c562a71c06a54"
+    },
+    {
+      "path": "game/ui/edition-solo.css",
+      "declarations": 13,
+      "baseSha256": "972009fb330d12363eb0e7e07f886e13f70f26fe5de80af3b73a6b19f05a7ded"
+    },
+    {
+      "path": "game/ui/enemy-guide.css",
+      "declarations": 4,
+      "baseSha256": "91f1c618bec8f69dc0a7fea313f6f7cf00a92586b5f14f3ab2c0fcb1e35bda58"
+    },
+    {
+      "path": "game/ui/field-kit-compiled.css",
+      "declarations": 2,
+      "baseSha256": "ad02c7ab73c330bdd61c7c333de155ac8650036ec253951f9086a22cc7f20bb2"
+    },
+    {
+      "path": "game/ui/field-kit-components.css",
+      "declarations": 14,
+      "baseSha256": "165221c97aab8b3fe94180688ebf8aff1e68df5be464ad4ed23c9d8db3b21f04"
+    },
+    {
+      "path": "game/ui/field-kit-flow.css",
+      "declarations": 16,
+      "baseSha256": "a6ba197f6343719cc0105af60fafb1d0e92faf76b5cd078c4efbf40593e697ef"
+    },
+    {
+      "path": "game/ui/field-kit-surfaces.css",
+      "declarations": 31,
+      "baseSha256": "763309cf4f9b8110984e63c2f7dd36f043428df3a25613a5a4df48b480a6aa96"
+    },
+    {
+      "path": "game/ui/game-shell.css",
+      "declarations": 14,
+      "baseSha256": "8891f70a056dac366b10e141272bdfbca1b536d8d021bc3902d10b40ce22bdea"
+    },
+    {
+      "path": "game/ui/global-settings-tools.css",
+      "declarations": 1,
+      "baseSha256": "5adf034ecf6f20d84dacd55cabf0058369f05f8a254301eac72c532bb6456eac"
+    },
+    {
+      "path": "game/ui/global-settings-view.css",
+      "declarations": 1,
+      "baseSha256": "1babd7e3417207058d71c6aee4c3b52b7724e8c39a1694bd7132235380680348"
+    },
+    {
+      "path": "game/ui/handheld-play.css",
+      "declarations": 38,
+      "baseSha256": "085af8115b6b03ea1dab0876d3e9557d859cea758f2c85fd05bc43ca65e264c3"
+    },
+    {
+      "path": "game/ui/hunt-feedback.css",
+      "declarations": 2,
+      "baseSha256": "dd2c38f325c4ccc54b725f5204e12466bac4270f83db70a0662e9ec140ff552f"
+    },
+    {
+      "path": "game/ui/install-offline-panel.css",
+      "declarations": 1,
+      "baseSha256": "973ae9ac8266e79df81ff205ca996030652a75fb1c2cac11cdcd55727aca0c16"
+    },
+    {
+      "path": "game/ui/journey.css",
+      "declarations": 37,
+      "baseSha256": "4cbad1caafc772dff3a0997dd97d01badda82ffaa1ab74d7665923cb90cf1477"
+    },
+    {
+      "path": "game/ui/mission-brief.css",
+      "declarations": 9,
+      "baseSha256": "7b1108b9fe7b114b9c680f35c363b15c735b5be0f3c389a5f2f66d86827fc44e"
+    },
+    {
+      "path": "game/ui/mission-picker.css",
+      "declarations": 2,
+      "baseSha256": "04e2ae47c4f1526f119fdd8ca4bdc100bf40a48aebc142e58e8e47aa64f62f31"
+    },
+    {
+      "path": "game/ui/mode-choice.css",
+      "declarations": 11,
+      "baseSha256": "bdfa47a370c30ac0ea5775e29bd6e63e65432265302ccce023a990bf688487e4"
+    },
+    {
+      "path": "game/ui/native-menu.css",
+      "declarations": 16,
+      "baseSha256": "3c45acec9eeb1e782ad000fd167785f406f50c3452684fb98c44b0aa5359ac23"
+    },
+    {
+      "path": "game/ui/operation-status.css",
+      "declarations": 1,
+      "baseSha256": "c16fcdd5ab7ed7715576b6fe29ccdf523660e564494a8e8360b311aa9ce7516e"
+    },
+    {
+      "path": "game/ui/optional-practice-panel.css",
+      "declarations": 1,
+      "baseSha256": "700745359dcdc5538b090467d1a6632065615e777c945ed013c5ef31c1249774"
+    },
+    {
+      "path": "game/ui/pause-menu.css",
+      "declarations": 8,
+      "baseSha256": "56a8d2867438b07144f3476101f60483b622b127ee362d047329ec0608b9c6a6"
+    },
+    {
+      "path": "game/ui/pixel-theme.css",
+      "declarations": 67,
+      "baseSha256": "69409a0b484f7778f05a72dbc539cdbe0efcdbd5c0ac33c7a1c095df998d7f3e"
+    },
+    {
+      "path": "game/ui/profile-recovery-dialog.css",
+      "declarations": 1,
+      "baseSha256": "fc7c71c89eda0ee8ae05ca164c1eb5661cdc395343331fa3e36ef4eeba1f00f4"
+    },
+    {
+      "path": "game/ui/quick-music-controls.css",
+      "declarations": 1,
+      "baseSha256": "180733204148033593eec45f4f29ea690525386617c3fe25ea568714f761669a"
+    },
+    {
+      "path": "game/ui/settings.css",
+      "declarations": 1,
+      "baseSha256": "11431e4d887ca6baf432e773d524812ed1da122b13b256135d1bedc6f9b43cda"
+    },
+    {
+      "path": "game/ui/soundtrack-panel.css",
+      "declarations": 15,
+      "baseSha256": "c5b77233195ed0f844bef0df7e0cd07e2a140f38a0b5576d0c240fefaa8c580e"
+    },
+    {
+      "path": "game/ui/story-dialog.css",
+      "declarations": 3,
+      "baseSha256": "02372e3114d2c7a981a7610dad8bdeca20b65ca470ce3defbff4dd73255ce6bb"
+    },
+    {
+      "path": "game/ui/terminal-recording-export.css",
+      "declarations": 1,
+      "baseSha256": "13b8506a14ce1bbfc5e539e5b6423f7ec3c008686fafb963d2973c7e03745142"
+    },
+    {
+      "path": "game/ui/touch-steering.css",
+      "declarations": 3,
+      "baseSha256": "88dd286007ec965d9c4068da98257c13a0e3fb8616b304c7dc3d88457ca4c8cc"
+    },
+    {
+      "path": "game/ui/win-picture.css",
+      "declarations": 5,
+      "baseSha256": "f8e73ff4228d2c0c68dc0dd64851a65e3cf3a1e0428a1dd28efeccc80b18a118"
+    }
+  ],
+  "totalDeclarations": 541
+}

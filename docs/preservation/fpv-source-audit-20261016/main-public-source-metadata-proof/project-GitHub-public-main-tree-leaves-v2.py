@@ -1,0 +1,27 @@
+from pathlib import Path
+import json,subprocess,os,hashlib,datetime,signal,collections
+C=Path(__file__).parent;D=C/'expanded-main-source-closure';repo=D/'GitHub-only-small-source-baseline.git';env={k:v for k,v in os.environ.items() if not k.startswith('GIT_')};env.update(GIT_NO_LAZY_FETCH='1',GIT_OPTIONAL_LOCKS='0',GIT_TERMINAL_PROMPT='0',GIT_CONFIG_GLOBAL='/dev/null',GIT_CONFIG_NOSYSTEM='1');cmd=['git','--git-dir='+str(repo)];assert not (repo/'objects/info/alternates').exists();assert subprocess.check_output(cmd+['config','--get','remote.origin.url'],env=env).strip()==b'https://example.invalid/no-lazy-fetch';m=json.loads((D/'additional-main-source-bundle-allowlist.json').read_text());pub=m['GitHubPublicPrerequisiteCommitSHAs'];commits=D/'GitHub-13537-public-commit-metadata-v2.batch';negative={'createdUTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),'nativeFilteredRevListTimedOutSeconds':600,'partialOutputBytes':(D/'GitHub-13537-public-blob-filter-native-output.txt').stat().st_size,'partialOutputSHA256':hashlib.sha256((D/'GitHub-13537-public-blob-filter-native-output.txt').read_bytes()).hexdigest(),'partialNotAcceptedAsIdentityProof':True,'originalFailureLogSHA256':hashlib.sha256((C/'GitHub-13537-public-blob-projection-progress.log').read_bytes()).hexdigest(),'replacement':'Raw SHA1-verified public commit/tree metadata traversal only from the already GitHub-fetched recovery repository; no original store or source-blob body reads.'};(D/'GitHub-public-blob-projection-attempt1-timeout-negative.json').write_text(json.dumps(negative,indent=2)+'\n')
+def timeout(a,b):raise TimeoutError('bounded public metadata projection1200s')
+signal.signal(signal.SIGALRM,timeout);signal.alarm(1200)
+with commits.open('xb') as f:subprocess.run(cmd+['cat-file','--batch'],input=('\n'.join(pub)+'\n').encode(),stdout=f,stderr=subprocess.PIPE,env=env,check=True,timeout=300)
+roots=[]
+with commits.open('rb') as f:
+ for expected in pub:
+  h,t,n=f.readline().split();n=int(n);body=f.read(n);assert f.read(1)==b'\n' and h.decode()==expected and t==b'commit' and hashlib.sha1(b'commit '+str(n).encode()+b'\0'+body).hexdigest()==expected;tree=next(l[5:].decode() for l in body.split(b'\n\n',1)[0].splitlines() if l.startswith(b'tree '));roots.append({'commit':expected,'tree':tree})
+ assert f.read()==b''
+rootfile=D/'GitHub-13537-public-commit-tree-bindings-v2.json';rootfile.write_text(json.dumps(roots,separators=(',',':'))+'\n');pending={r['tree'] for r in roots};seen=set();blobs=set();links=set();trees=[];totalbytes=0;proc=subprocess.Popen(cmd+['cat-file','--batch'],stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=subprocess.DEVNULL,env=env)
+try:
+ while pending:
+  h=pending.pop()
+  if h in seen:continue
+  proc.stdin.write((h+'\n').encode());proc.stdin.flush();line=proc.stdout.readline().split();assert len(line)==3 and line[0].decode()==h and line[1]==b'tree';n=int(line[2]);body=proc.stdout.read(n);assert proc.stdout.read(1)==b'\n' and len(body)==n and hashlib.sha1(b'tree '+str(n).encode()+b'\0'+body).hexdigest()==h;seen.add(h);trees.append({'sha':h,'bodyBytes':n,'bodySHA256':hashlib.sha256(body).hexdigest()});totalbytes+=n;i=0
+  while i<n:
+   j=body.index(b' ',i);mode=body[i:j];k=body.index(b'\0',j);oid=body[k+1:k+21].hex();assert len(oid)==40;i=k+21
+   if mode in [b'40000',b'040000']:
+    if oid not in seen:pending.add(oid)
+   elif mode==b'160000':links.add(oid)
+   else:assert mode in [b'100644',b'100755',b'120000'];blobs.add(oid)
+  if len(seen)%5000==0:print(json.dumps({'publicTreesVerified':len(seen),'uniquePublicBlobLeafIDs':len(blobs),'pendingTrees':len(pending)}),flush=True)
+finally:
+ proc.stdin.close();proc.wait(timeout=30)
+assert proc.returncode==0;signal.alarm(0);dest=D/'GitHub-13537-public-typed-blob-IDs-v2.txt';dest.write_text('\n'.join(sorted(blobs))+'\n');tr=D/'GitHub-13537-public-tree-object-readback-v2.json';tr.write_text(json.dumps(trees,separators=(',',':'))+'\n');pubManifest=hashlib.sha256((D/'additional-main-source-bundle-allowlist.json').read_bytes()).hexdigest();out={'createdUTC':datetime.datetime.now(datetime.timezone.utc).isoformat(),'scope':'Exactly the13537 declared existing-public GitHub prerequisite commits and their complete recursively traversed trees, typed leaf identities only; all raw commit/tree hashes verified. No source blob body reads or original source stores.','publicPrerequisiteCommitCount':len(pub),'published815ManifestSHA256':pubManifest,'publicCommitTreeBindingsSHA256':hashlib.sha256(rootfile.read_bytes()).hexdigest(),'publicTreeReadbackSHA256':hashlib.sha256(tr.read_bytes()).hexdigest(),'publicTreesRawSHA1Verified':len(seen),'publicTreeBodyBytesRead':totalbytes,'typedPublicBlobLeafIDs':len(blobs),'setFile':dest.name,'setSHA256':hashlib.sha256(dest.read_bytes()).hexdigest(),'gitlinkTargets':sorted(links),'remoteInvalidAndLazyFetchDisabled':True,'noOriginalSourceStoresAlternatesOrFallback':True,'knownPublicPinProofs':['3854ea0e74bc73c05df1531a3d0fcfc87c9b5298','be46a8344fdc61c65e09ad01a9965a2d8fab8c11','a3e9201d3b3075d1fe1a2336b1b0eaa974055db8'],'pinQualification':'Declared public prerequisite IDs require the earlier accepted original public commit ancestry/pin receipts (including independent269refs) plus nine a3e existing-public source parents; a single umbrella alone was never claimed to retain all independent refs.','allVolumeComplete':False};(D/'GitHub-13537-public-typed-blob-projection-receipt-v2.json').write_text(json.dumps(out,indent=2)+'\n');print(json.dumps(out),flush=True)

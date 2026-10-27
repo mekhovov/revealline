@@ -221,3 +221,39 @@ test('omitted-original callback reports only actual admitted removals and is abs
   });
   assert(complete.entries.some((entry) => entry.name === complete.original.name));
 });
+
+function preservedOriginalFixture() {
+  const f = fixture();
+  const oldPath = f.original.name;
+  f.original.name = 'authoring/library/1994-forever-art/originals/last-train-cassette.png';
+  f.source.sourceImagePath = f.original.name;
+  f.source.image = pin(f.original);
+  for (const group of f.catalogue.groups)
+    group.files = group.files.map((name) => name === oldPath ? f.original.name : name);
+  f.catalogue.files = f.entries.filter((entry) => entry.name !== 'game/presentation/current-art-sources.mjs').map(pin);
+  f.entries.find((entry) => entry.name === 'game/presentation/current-art-sources.mjs').bytes =
+    Buffer.from(`export const CURRENT_ART_SOURCES = ${JSON.stringify(f.sources)};`);
+  return f;
+}
+
+test('current-main original URLs override earlier profile exclusions without omitting their bodies', () => {
+  const f = preservedOriginalFixture();
+  const omitted = new Set([f.original.name]);
+  const audit = mainPagesSourceOriginals(f.entries, f.catalogue, omitted);
+  assert.equal(omitted.has(f.original.name), false);
+  assert.equal(audit.paths.has(f.original.name), false);
+  assert.ok(f.entries.some((entry) => entry.name === f.original.name));
+  assert.ok(f.catalogue.files.some((entry) => entry.path === f.original.name));
+  assert.match(audit.candidates.find((row) => row.path === f.original.name).reasons.join(' '),
+    /Current-main original URL is protected/);
+});
+
+test('missing current-main originals fail closed even when an earlier profile exclusion named them', () => {
+  for (const earlierExclusion of [false, true]) {
+    const f = preservedOriginalFixture();
+    f.entries = f.entries.filter((entry) => entry.name !== f.original.name);
+    assert.throws(() => mainPagesSourceOriginals(f.entries, f.catalogue,
+      new Set(earlierExclusion ? [f.original.name] : [])),
+      /Preserved current-main original is missing from build entries/);
+  }
+});

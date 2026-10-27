@@ -29,8 +29,10 @@ export function attachGameShell({
   separateTeam = false,
   titleDestination,
   titleContinueDestination,
+  titleRecommendation,
   navigationContext = () =>
     t('interface:captureNavigation.context', { mode: t('interface:solo2') }),
+  titleActionDetail,
   onWorlds,
   onMissions,
   getTopDialog,
@@ -250,6 +252,12 @@ export function attachGameShell({
     }
     $('shell-continue').hidden = !continued;
     if ($('shell-featured')) $('shell-featured').hidden = isolated || continued;
+    if ($('shell-action-context')) $('shell-action-context').hidden = isolated;
+    if ($('shell-action-detail')) {
+      $('shell-action-detail').hidden = isolated || !titleActionDetail;
+      if (!isolated && titleActionDetail)
+        localizedText($('shell-action-detail'), titleActionDetail);
+    }
     if ($('shell-destination'))
       localizedText($('shell-destination'), () =>
         isolated
@@ -257,11 +265,26 @@ export function attachGameShell({
           : continued
             ? copy('title.continueDestination', {
                 destination: !$('continue-saved').hidden
-                  ? $('continue-saved').title
+                  ? $('continue-saved').getAttribute('title') || t('interface:loadSavedFlight2')
                   : titleContinueDestination?.() || $('mission-brief-title').textContent,
               })
             : titleDestination?.() || copy('title.deployDestination'),
       );
+    const recommendation = $('capture-home-recommendation');
+    if (recommendation) {
+      const message = () => (isolated ? '' : titleRecommendation?.() || '');
+      recommendation.hidden = !message();
+      localizedText(recommendation, message);
+      for (const action of [$('shell-featured'), $('shell-continue')]) {
+        const descriptions = new Set(
+          (action.getAttribute('aria-describedby') || '').split(/\s+/).filter(Boolean),
+        );
+        descriptions.delete(recommendation.id);
+        if (!recommendation.hidden && !action.hidden) descriptions.add(recommendation.id);
+        if (descriptions.size) action.setAttribute('aria-describedby', [...descriptions].join(' '));
+        else action.removeAttribute('aria-describedby');
+      }
+    }
   };
   const openHome = ({ focus = true, returnGuard = null } = {}) => {
     if (destroyed) return;
@@ -442,10 +465,45 @@ export function attachGameShell({
   if (worlds) {
     worlds.hidden = isolated || !onWorlds;
     worlds.onclick = () => {
+      const parent = topDialog();
+      if (
+        destroyed ||
+        isolated ||
+        !onWorlds ||
+        !parent?.open ||
+        doc.hidden ||
+        doc.hasFocus?.() === false
+      )
+        return;
       pause(true);
-      closeHome();
-      if (missions.open) missions.close();
-      onWorlds?.();
+      const visit = homeVisit,
+        missionVisit = missionsRevision;
+      const isCurrent = () =>
+        !destroyed &&
+        homeVisit === visit &&
+        missionsRevision === missionVisit &&
+        topDialog() === parent &&
+        parent.open &&
+        !doc.hidden &&
+        doc.hasFocus?.() !== false;
+      if (!isCurrent()) return;
+      // Keep the current menu usable until the host has its optional module.
+      return onWorlds(worlds, {
+        isCurrent,
+        leave() {
+          if (!isCurrent()) return false;
+          closeHome();
+          if (missions.open) missions.close();
+          // Native close callbacks must not let a stale opening cover a new modal.
+          const remaining = topDialog();
+          return (
+            !destroyed &&
+            (!remaining || remaining === parent) &&
+            !doc.hidden &&
+            doc.hasFocus?.() !== false
+          );
+        },
+      });
     };
   }
   const overlayBrief = $('overlay-brief');
@@ -848,6 +906,7 @@ export function attachGameShell({
       focusClearance.destroy();
       missions.removeEventListener('close', closedMissions);
       missions.removeEventListener('cancel', cancelMissions);
+      if (worlds) worlds.onclick = null;
       if (overlayMenu) overlayMenu.onclick = null;
       if (overlayBrief) overlayBrief.onclick = null;
       home.removeEventListener('cancel', cancelHome);

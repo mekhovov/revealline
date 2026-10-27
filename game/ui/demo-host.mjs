@@ -489,7 +489,8 @@ export function attachDemoHost({
         (current.quality ?? 'full') === 'full' &&
         !interrupted &&
         !loading &&
-        ['demo:tipClose', 'demo:tipPowerup', 'demo:tipObjective'].includes(caption)
+        (captions.reacting ||
+          ['demo:tipClose', 'demo:tipPowerup', 'demo:tipObjective'].includes(caption))
           ? 'react'
           : 'idle'
       ];
@@ -1415,7 +1416,11 @@ export function attachDemoHost({
       result?.events?.some((event) => ['capture.stopped', 'player.failed'].includes(event.type))
     )
       clear();
-    if (!practice && !interrupted) caption = captions.advance(seconds, result?.events);
+    if (!practice && !interrupted)
+      caption = captions.advance(seconds, result?.events, {
+        reactions: guidePreferences.snapshot().enabled,
+        fresh: fresh && !doc.hidden,
+      });
     if (!doc.hidden) refreshReadout();
     if (!practice && !interrupted && director.phase === 'complete') {
       captions.complete(
@@ -1540,7 +1545,11 @@ export function attachDemoHost({
   });
   const unsubscribe = onLocaleChange(preferencesChanged);
   const unsubscribeAudio = audio?.subscribe?.(audioChanged);
-  const unsubscribeGuide = guidePreferences.subscribe(renderControls);
+  const unsubscribeGuide = guidePreferences.subscribe(() => {
+    if (!guidePreferences.snapshot().enabled)
+      caption = captions.advance(0, [], { reactions: false });
+    renderControls();
+  });
   return {
     get active() {
       return active;

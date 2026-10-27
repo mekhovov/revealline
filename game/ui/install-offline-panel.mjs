@@ -58,6 +58,15 @@ export function attachInstallOfflinePanel({
   const origin = url.origin,
     editionScope = new URL('../', url).href;
   const install = captureInstallPrompt(win);
+  const activations = new Set();
+  const cancelActivations = () => {
+    for (const controller of activations) controller.abort();
+  };
+  const hidden = () => {
+    if (doc.hidden) cancelActivations();
+  };
+  doc?.addEventListener?.('visibilitychange', hidden);
+  win?.addEventListener?.('pagehide', cancelActivations);
   const statusLoad = new AbortController();
   let dialog,
     frame,
@@ -83,6 +92,9 @@ export function attachInstallOfflinePanel({
   const tellFrame = (action, fields = {}) =>
     frame?.contentWindow?.postMessage({ format: protocol, action, ...fields }, origin);
   const close = () => {
+    // Native close dispatch is queued. Retire pending mutations immediately,
+    // before a completed storage read can resume in the intervening microtasks.
+    cancelActivations();
     if (dialog?.open) dialog.close();
   };
   const message = async (event) => {
@@ -116,12 +128,19 @@ export function attachInstallOfflinePanel({
       return;
     }
     if (event.data.action !== 'activate' || !event.ports?.[0]) return;
-    const reply = event.ports[0];
+    const reply = event.ports[0],
+      controller = new AbortController();
+    activations.add(controller);
+    // The request's own port fences cancellation without affecting a newer
+    // download or accepting cancellation from an unrelated window.
+    reply.onmessage = ({ data }) => {
+      if (data?.format === protocol && data.action === 'cancel') controller.abort();
+    };
     try {
       const candidate = validateInstalledEdition(event.data.candidate, win.location);
       if (candidate.scope !== editionScope)
         throw new Error(t('interface:downloads.preparedEditionMismatch'));
-      if (!canActivate()) {
+      if (disposed || !dialog?.open || doc.hidden || !canActivate()) {
         reply.postMessage({
           activated: false,
           deferred: true,
@@ -135,6 +154,7 @@ export function attachInstallOfflinePanel({
         locationRef: win.location,
         locks: win.navigator?.locks,
         readAsset: readAssetStore,
+        signal: controller.signal,
         ownsWriter: (key) =>
           canActivate() && owned?.key === key && ownsProfileWriter(owned.lease, key),
       });
@@ -142,6 +162,8 @@ export function attachInstallOfflinePanel({
     } catch (error) {
       reply.postMessage({ activated: false, message: error.message });
     } finally {
+      activations.delete(controller);
+      reply.onmessage = null;
       reply.close();
     }
   };
@@ -192,7 +214,9 @@ export function attachInstallOfflinePanel({
     dialog.append(header, frame);
     mountRoot.append(dialog);
     ownedFrames.set(doc, { dialog, frame });
+    dialog.addEventListener('cancel', cancelActivations);
     dialog.addEventListener('close', () => {
+      cancelActivations();
       if (pendingPackage) {
         const pending = pendingPackage;
         pendingPackage = null;
@@ -269,11 +293,14 @@ export function attachInstallOfflinePanel({
     },
     dispose() {
       disposed = true;
+      cancelActivations();
       statusLoad.abort();
       stopLocaleStatus();
       if (ownedFrames.get(doc)?.frame === frame) ownedFrames.delete(doc);
       unsubscribe?.();
       win?.removeEventListener?.('message', message);
+      win?.removeEventListener?.('pagehide', cancelActivations);
+      doc?.removeEventListener?.('visibilitychange', hidden);
       dialog?.remove();
     },
   };

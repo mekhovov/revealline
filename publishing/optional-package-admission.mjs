@@ -357,8 +357,18 @@ export async function validateOptionalPackageAdmission(envelope, { read } = {}) 
     const launcherStart = launcherTemplate.indexOf('export function installOptionalLauncher(');
     if (launcherStart < 0) fail('Optional launcher template is missing its registered entry.');
     const launcherFunction = launcherTemplate.slice(launcherStart + 'export '.length).trim();
+    // The v1 wrapper gained an additive failure-copy service. Reconstruct the
+    // exact wrapper selected by the archived template's parameter signature;
+    // do not accept either wrapper interchangeably or execute archive code.
+    const launcherParameters = launcherFunction.match(
+      /^function installOptionalLauncher\([\s\S]*?\n\) \{/,
+    )?.[0];
+    if (!launcherParameters) fail('Optional launcher parameter signature differs.');
+    const failureService = /\boptionalOfflineFailureMessage\s*,/.test(launcherParameters)
+      ? ', optionalOfflineFailureMessage'
+      : '';
     const launcherApp = Buffer.from(
-      `import { optionalInstallationKey, validateOptionalInstallationReference, inspectOptionalOffline, prepareOptionalOffline, removeOptionalOffline } from './context.mjs';\nimport { mountPracticeNavigation } from './navigation.mjs';\n(${launcherFunction})(${JSON.stringify({ packageId: item.id, root: installation.id, description: parse(runtime.get(policy.root + 'package-info.json')) })}, { optionalInstallationKey, validateOptionalInstallationReference, inspectOptionalOffline, prepareOptionalOffline, removeOptionalOffline, mountPracticeNavigation });\n`,
+      `import { optionalInstallationKey, validateOptionalInstallationReference, inspectOptionalOffline, prepareOptionalOffline, removeOptionalOffline${failureService} } from './context.mjs';\nimport { mountPracticeNavigation } from './navigation.mjs';\n(${launcherFunction})(${JSON.stringify({ packageId: item.id, root: installation.id, description: parse(runtime.get(policy.root + 'package-info.json')) })}, { optionalInstallationKey, validateOptionalInstallationReference, inspectOptionalOffline, prepareOptionalOffline, removeOptionalOffline${failureService}, mountPracticeNavigation });\n`,
     );
     if (
       !launcherFunction.endsWith('}') ||

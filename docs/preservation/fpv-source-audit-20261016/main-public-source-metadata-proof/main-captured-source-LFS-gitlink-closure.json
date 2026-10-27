@@ -1,0 +1,25 @@
+{
+  "format": "MainCapturedSourceLFSGitlinkClosure.v1",
+  "createdUTC": "2026-10-16T07:20:28.055017+00:00",
+  "scope": "Original16 + seven expanded main-app stores captured commit/tree closure and all declared public source prerequisite trees; no large blob bodies or original stores read in this pass. Public shallow prerequisite trees were fetched from GitHub using blob:limit=1024; original selected and expanded selected objects came from full authenticated GitHub bundle downloads.",
+  "sourceColdReceiptSHA256": "dcaf818a927c42cccf3488315ffa21a194a50faaa51f2d06addbc4a1abe1a2ea",
+  "allObjectHeadersSHA256": "f9da12c2ea4257d62bcd9629a9a2f5a9772d488b0a1ce118077f20a343e565fb",
+  "presentObjectTypes": {
+    "commit": 16549,
+    "tree": 62519,
+    "blob": 9757,
+    "tag": 4
+  },
+  "allPresentSmallBlobsMax1024Read": 4966,
+  "allPresentTreesRead": 62519,
+  "metadataAndSmallBodyBytesRead": 631536992,
+  "everyReadObjectRawSHA1Verified": true,
+  "canonicalLFSPointers": [],
+  "gitlinks": [],
+  "localLFSObjectStoresIn23MainCommonStores": 0,
+  "customLFSStorageConfiguredIn23MainCommonStores": 0,
+  "onlyGitHubRecoveryStoreRead": true,
+  "noOriginalAlternatesOrFallback": true,
+  "remoteInvalidAndLazyFetchDisabled": true,
+  "allVolumePreservationComplete": false
+}

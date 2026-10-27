@@ -45,7 +45,10 @@ class LazyWorker {
     throw new Error('Source enumeration must not create a Worker.');
   }
 }
-const assetFetch = async (url) => ({ ok: true, text: async () => readFile(url, 'utf8') });
+const assetFetch = async (url) => ({
+  ok: true,
+  text: async () => readFile(url, 'utf8'),
+});
 
 test('actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily', async (t) => {
   const requests = [];
@@ -192,7 +195,10 @@ test('actual public company editions expose only their own isolated installed le
       catalogURL: new URL('game/editions/catalog.json', root).href,
       contentBaseURL: root.href,
       editionId,
-      fetcher: async (url) => ({ ok: true, text: async () => readFile(new URL(url), 'utf8') }),
+      fetcher: async (url) => ({
+        ok: true,
+        text: async () => readFile(new URL(url), 'utf8'),
+      }),
     });
     const host = await createSoloRouteHost(bootstrap.route, {
       themes: bootstrap.boot.themes.themes,
@@ -244,8 +250,14 @@ test('missing Worker and uninstalled content filter sources without downloading 
     return assetFetch(url);
   };
   assert.equal(
-    (await loadDemoSources({ entries, library: emptyLibrary, fetch: fetcher, WorkerClass: null }))
-      .length,
+    (
+      await loadDemoSources({
+        entries,
+        library: emptyLibrary,
+        fetch: fetcher,
+        WorkerClass: null,
+      })
+    ).length,
     17,
   );
   assert.deepEqual(
@@ -283,9 +295,14 @@ test('manually kept local recordings join the catalogue without enabling automat
   });
   const source = await json('../demo-data/first-signal-left.replay.json');
   await library.keep(source, { entry: base, practice: false, manual: true });
-  const sources = await loadDemoSources({ entries, library, fetch: assetFetch, WorkerClass: null });
+  const sources = await loadDemoSources({
+    entries,
+    library,
+    fetch: assetFetch,
+    WorkerClass: null,
+  });
   assert.equal(library.enabled, false);
-  assert.equal(sources.length, 18);
+  assert.equal(sources.length, eligibleClips(entries).length + 1);
   const local = sources.find((candidate) => candidate.source === 'local');
   assert.ok(local);
   assert.equal(
@@ -340,7 +357,12 @@ test('uncached optional bundled replays fall back to a retained recording or sta
     });
     let director;
     try {
-      if (retained) await library.keep(recording, { entry: base, practice: false, manual: true });
+      if (retained)
+        await library.keep(recording, {
+          entry: base,
+          practice: false,
+          manual: true,
+        });
       const storedBefore = structuredClone(stored);
       const allSources = await loadDemoSources({
         entries: installedEntries,
@@ -358,7 +380,11 @@ test('uncached optional bundled replays fall back to a retained recording or sta
       const bundled = sources.filter((source) => source.source !== 'local');
       assert.equal(bundled.length, eligibleClips(installedEntries).length);
       assert.ok(sources.every((source) => source.kind === 'replay'));
-      director = createDemoDirector({ sources, random: () => 0, loading: clock.options });
+      director = createDemoDirector({
+        sources,
+        random: () => 0,
+        loading: clock.options,
+      });
       assert.equal(await director.start(), retained);
       assert.deepEqual(
         new Set(director.failedSourceIds),
@@ -371,16 +397,12 @@ test('uncached optional bundled replays fall back to a retained recording or sta
           ...bundled.flatMap((clip) =>
             [
               clip.replayURL,
-              ...(clip.id.startsWith('solo-qualified-')
-                ? [
-                    ...(clip.replayVariants ?? []),
-                    ...(clip.runtimePerformances ?? []).map((performance) => performance.replayURL),
-                  ]
-                : []),
+              ...(clip.replayVariants ?? []),
+              ...(clip.runtimePerformances ?? []).map((performance) => performance.replayURL),
             ].map((url) => new URL(`../${url.slice(2)}`, import.meta.url).href),
           ),
         ]),
-        'Each bounded recording candidate is attempted once; no pack or media download is attempted.',
+        'Every pinned ordinary or qualified alternative is eligible once; no pack or media download is attempted.',
       );
       const requestCount = requested.length;
       if (retained) {
@@ -436,7 +458,9 @@ test('scene creation rejects a valid but wrong bundled recording and respects ca
   await assert.rejects(orchard.create({ signal: new AbortController().signal }), /match/);
   const controller = new AbortController();
   controller.abort();
-  await assert.rejects(sources[0].create({ signal: controller.signal }), { name: 'AbortError' });
+  await assert.rejects(sources[0].create({ signal: controller.signal }), {
+    name: 'AbortError',
+  });
 });
 
 test('cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation', async () => {
@@ -459,6 +483,47 @@ test('cancelled source discovery cannot return a late catalogue whose fetch igno
   await assert.rejects(pending, { name: 'AbortError' });
   release();
   await settleDemoLoading();
+});
+
+test('a missing primary recording uses an available pinned variant without changing its inputs', async () => {
+  const catalog = await json('../demo-data/catalog.json');
+  const clip = catalog.clips[0];
+  const candidates = await Promise.all(
+    [clip.replayURL, ...clip.replayVariants].map(async (url) => ({
+      url,
+      replay: await json(`../${url.slice(2)}`),
+    })),
+  );
+  const good = candidates.find(({ replay }) => verifyReplay(replay).match);
+  const missing = candidates.find(({ url }) => url !== good.url);
+  clip.replayURL = missing.url;
+  clip.replayVariants = [good.url];
+  catalog.clips = [clip];
+  for (const networkError of [false, true]) {
+    const requested = [];
+    const [source] = await loadDemoSources({
+      entries,
+      library: emptyLibrary,
+      WorkerClass: null,
+      fetch: async (url) => {
+        requested.push(url.href);
+        if (url.href.endsWith('/catalog.json'))
+          return { ok: true, text: async () => JSON.stringify(catalog) };
+        if (url.href.endsWith(missing.url.slice(2))) {
+          if (networkError) throw new TypeError('Failed to fetch');
+          return { ok: false, status: 404 };
+        }
+        return assetFetch(url);
+      },
+    });
+    const player = await source.create({});
+    try {
+      assert.deepEqual(player.exportRecording(), good.replay);
+      assert.equal(requested.length, 3);
+    } finally {
+      player.dispose();
+    }
+  }
 });
 
 test('frozen variants stay strict and reviewed routes qualify only an enemy checkpoint difference', async () => {
@@ -519,7 +584,9 @@ test('frozen variants stay strict and reviewed routes qualify only an enemy chec
       return fetcher(url);
     },
   });
-  await assert.rejects(cancelled.create({ signal: controller.signal }), { name: 'AbortError' });
+  await assert.rejects(cancelled.create({ signal: controller.signal }), {
+    name: 'AbortError',
+  });
   assert.equal(alternateRequests, 0, 'Cancellation must not start the next runtime variant.');
 
   clip.replayVariants = [];
@@ -548,7 +615,9 @@ test('frozen variants stay strict and reviewed routes qualify only an enemy chec
         ? { ok: true, text: async () => JSON.stringify(unsafe) }
         : fetcher(url),
   });
-  await assert.rejects(rejected.create({}), { name: 'ReplayVerificationError' });
+  await assert.rejects(rejected.create({}), {
+    name: 'ReplayVerificationError',
+  });
 });
 
 test('the ordinary game build includes every dynamic demo asset and Worker module', async () => {
@@ -603,7 +672,7 @@ test('a personal cache that never settles times out without discarding bundled s
   assert.ok(librarySignal);
   clock.advance(15000);
   const sources = await pending;
-  assert.equal(sources.length, 17);
+  assert.equal(sources.length, eligibleClips(entries).length);
   assert.equal(
     sources.filter((source) => source.kind === 'replay').length,
     eligibleClips(entries).length,
@@ -621,7 +690,9 @@ test('a never-settling catalogue falls through to local sources and cancellation
     WorkerClass: null,
     loading: clock.options,
     fetch: () => new Promise(() => {}),
-    library: { list: async () => [{ id: 'local-owner', levelId: 'one', campaignKey: 'local' }] },
+    library: {
+      list: async () => [{ id: 'local-owner', levelId: 'one', campaignKey: 'local' }],
+    },
   });
   clock.advance(15000);
   assert.deepEqual(
@@ -652,6 +723,43 @@ test('a never-settling catalogue falls through to local sources and cancellation
   await assert.rejects(cancelled, { name: 'AbortError' });
   assert.equal(signal.aborted, true);
   assert.equal(clock.pending, 0);
+});
+
+test('installed Pressure Lines keeps playing a complete recording when live Worker preparation fails', async () => {
+  class FailedWorker {
+    constructor() {
+      throw new Error('Worker unavailable on this device');
+    }
+  }
+  const sources = await loadDemoSources({
+    entries: createExecutionCatalog([installed]).entries,
+    library: emptyLibrary,
+    fetch: assetFetch,
+    WorkerClass: FailedWorker,
+  });
+  const bot = sources.find((source) => source.kind === 'bot');
+  const replays = sources.filter((source) => source.kind === 'replay');
+  assert.deepEqual(
+    new Set(replays.map((source) => source.levelId)),
+    new Set(['orchard-crossing', 'courtyard-exits']),
+  );
+  const director = createDemoDirector({
+    sources: [
+      { ...bot, approachable: true },
+      ...replays.map((source) => ({ ...source, approachable: false })),
+    ],
+    random: () => 0,
+  });
+  try {
+    assert.equal(await director.start(), true);
+    assert.equal(director.source.kind, 'replay');
+    assert.deepEqual(director.failedSourceIds, [bot.id]);
+    while (director.phase === 'playing') director.advance(0.25);
+    assert.equal(director.player.state.status, 'won');
+    assert.equal(director.player.finalCheckpoint.matched, true);
+  } finally {
+    director.dispose();
+  }
 });
 
 test('resource diagnostic reaches live source rehearsal before its player can be returned', async () => {

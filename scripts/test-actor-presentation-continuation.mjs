@@ -1,3 +1,4 @@
+import { matchesRetainedReviewEvidence } from './retained-review-evidence.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
@@ -26,7 +27,7 @@ const currentPredecessor = {
   sha256: ACTOR_EFFECTS20_REVIEW_SHA256,
 };
 // The older actor branch lacks five newer main records. Retain exact bytes in a
-// test-only fixture, without adding or changing canonical approval documents.
+// test-only fixture. Explicit retained-text projections carry separate migration receipts.
 const mainFixtures = JSON.parse(
   await readFile(new URL('./fixtures/actor-effects20-predecessors.json', import.meta.url)),
 );
@@ -51,7 +52,7 @@ async function loadAncestor(ref, records = ancestors) {
     if (error.code !== 'ENOENT' || !retainedMainBytes.has(ref.path)) throw error;
     bytes = retainedMainBytes.get(ref.path);
   }
-  assert.equal(hash(bytes), ref.sha256, `immutable fixture ${ref.path}`);
+  assert.ok(matchesRetainedReviewEvidence(ref.path, bytes, ref.sha256), `retained fixture ${ref.path}`);
   records.set(ref.path, bytes);
   const value = JSON.parse(bytes);
   for (const child of [

@@ -1,16 +1,50 @@
 // Restore-only proof over exact verified render/collision triangles. Never a flight solver.
 const EPSILON = 1e-5; // metres; numerical boundary cases are deliberately unavailable.
 const MAX_TRIANGLES = 16384;
+const MAX_BOUNDS_VERTICES = 131072;
 const MAX_PLANE_TESTS = 2000000;
 const MAX_CERTIFICATE_BYTES = 512 * 1024;
 const unavailable = (reason) => ({ status: 'ambiguous', reason });
 
-async function certificate(meshes, current) {
+async function certificate(meshes, current, column = null) {
   const yieldWork = async () => {
     current();
     await new Promise((resolve) => setTimeout(resolve, 0));
     current();
   };
+  if (column) {
+    const relevant = [];
+    let scanned = 0;
+    for (const mesh of meshes) {
+      let minX = Infinity,
+        maxX = -Infinity,
+        minZ = Infinity,
+        maxZ = -Infinity;
+      for (let index = 0; index < mesh.positions.length; index += 3) {
+        if (++scanned > MAX_BOUNDS_VERTICES) return { failure: 'work-budget', bytes: 0 };
+        if (scanned % 4096 === 0) await yieldWork();
+        const x = mesh.positions[index] + mesh.translation.x,
+          y = mesh.positions[index + 1] + mesh.translation.y,
+          z = mesh.positions[index + 2] + mesh.translation.z;
+        if (![x, y, z].every(Number.isFinite))
+          throw new TypeError('Invalid verified triangle position');
+        minX = Math.min(minX, x);
+        maxX = Math.max(maxX, x);
+        minZ = Math.min(minZ, z);
+        maxZ = Math.max(maxZ, z);
+      }
+      // Only omit complete meshes proved outside the whole vertical body column.
+      // Their triangles cannot intersect its destination sphere or exterior sweep.
+      if (
+        maxX >= column.minX - EPSILON &&
+        minX <= column.maxX + EPSILON &&
+        maxZ >= column.minZ - EPSILON &&
+        minZ <= column.maxZ + EPSILON
+      )
+        relevant.push(mesh);
+    }
+    meshes = relevant;
+  }
   let triangles = 0;
   for (const [index, mesh] of meshes.entries()) {
     if (index % 128 === 0) await yieldWork();
@@ -144,7 +178,7 @@ async function certificate(meshes, current) {
     if (bytes > MAX_CERTIFICATE_BYTES) return { failure: 'certificate-budget', bytes: 0 };
     result.push({ bounds, planes: retained });
   }
-  return { components: result, bytes };
+  return { components: result, bytes, column };
 }
 
 /** Lazily certify once per exact owner; references and certificate are released with that owner. */
@@ -162,13 +196,24 @@ export function createRestoreContainment(meshes) {
       certified: Boolean(cached),
       preparing: !disposed && Boolean(pending),
     }),
-    async prepare(assertCurrent = () => {}) {
+    async prepare(assertCurrent = () => {}, column = null) {
       current();
       if (cached) return;
-      pending ??= certificate(source, () => {
-        current();
-        assertCurrent();
-      })
+      if (
+        column &&
+        (!['minX', 'maxX', 'minZ', 'maxZ'].every((key) => Number.isFinite(column[key])) ||
+          column.minX > column.maxX ||
+          column.minZ > column.maxZ)
+      )
+        throw new TypeError('Invalid restore proof column');
+      pending ??= certificate(
+        source,
+        () => {
+          current();
+          assertCurrent();
+        },
+        column && { ...column },
+      )
         .then((result) => {
           current();
           cached = result;
@@ -179,12 +224,25 @@ export function createRestoreContainment(meshes) {
         });
       await pending;
     },
-    classify(point) {
+    classify(point, radius = 0) {
       if (disposed) throw new Error('Restore containment disposed');
-      if (!point || !['x', 'y', 'z'].every((axis) => Number.isFinite(point[axis])))
+      if (
+        !point ||
+        !['x', 'y', 'z'].every((axis) => Number.isFinite(point[axis])) ||
+        !Number.isFinite(radius) ||
+        radius < 0
+      )
         throw new TypeError('Invalid restore containment point');
       if (!cached) return unavailable('certificate-unavailable');
       if (cached.failure) return unavailable(cached.failure);
+      if (
+        cached.column &&
+        (point.x - radius < cached.column.minX - EPSILON ||
+          point.x + radius > cached.column.maxX + EPSILON ||
+          point.z - radius < cached.column.minZ - EPSILON ||
+          point.z + radius > cached.column.maxZ + EPSILON)
+      )
+        return unavailable('outside-certified-column');
       const p = [point.x, point.y, point.z];
       for (const component of cached.components) {
         if (
@@ -213,6 +271,31 @@ export function createRestoreContainment(meshes) {
         return { status: 'inside-solid' };
       }
       return { status: 'outside-solids' };
+    },
+    exteriorAbove(point, radius) {
+      current();
+      if (!cached || cached.failure) return null;
+      if (
+        !point ||
+        !['x', 'y', 'z'].every((axis) => Number.isFinite(point[axis])) ||
+        !Number.isFinite(radius) ||
+        radius <= 0
+      )
+        throw new TypeError('Invalid exterior clearance query');
+      if (
+        cached.column &&
+        (point.x - radius < cached.column.minX - EPSILON ||
+          point.x + radius > cached.column.maxX + EPSILON ||
+          point.z - radius < cached.column.minZ - EPSILON ||
+          point.z + radius > cached.column.maxZ + EPSILON)
+      )
+        return null;
+      // A full sphere above every verified component is an exterior starting point.
+      // This does not certify the destination: its entire connecting sweep must be clear.
+      let y = point.y;
+      for (const component of cached.components)
+        y = Math.max(y, component.bounds[4] + radius + 0.01);
+      return { x: point.x, y, z: point.z };
     },
     dispose() {
       disposed = true;

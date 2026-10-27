@@ -1,0 +1,13 @@
+{
+  "excludedOriginalCommitSHAs": [
+    "042733a8cae3d5926dfbb7577c6dba44321e8ba2",
+    "8dc2818d315526507119ef036da4c9aee3d510b9"
+  ],
+  "reason": "Existing stash untracked parent contains two explicitly excluded private migration/session files. Exact raw ancestry cannot be publicly preserved without those files. App-only untracked review doc and tracked/index state will be separately preserved/identity-verified.",
+  "untrackedAppPath": "docs/team-duel-expansion-priority-review-2026-10-15.md",
+  "rawPrivateContentsReadOrUploaded": false,
+  "owningCommonGitStore": "/Users/oleksandr.mekhovov/work/my_projects/go_test/.git",
+  "owningLocation": "Internal primary checkout; original Git object store remains intact and outside /Volumes/alex",
+  "alexDisconnectionRemovesOriginalPrivateStash": false,
+  "sourceMutation": false
+}

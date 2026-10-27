@@ -1,0 +1,22 @@
+{
+  "createdUTC": "2026-10-16T06:41:09.213322+00:00",
+  "path": "/Volumes/alex/CodexMigrationStaging/fpv-temp/source-preservation-closure-20261016/expanded-main-source-closure/fpv-additional-main-source-history-20261016.bundle",
+  "bytes": 16420788,
+  "sha256": "d9e35b9a98f2e337fb1236d9a6e1857ad7fdb39c9dad2df6bf04203498913f4d",
+  "packSHA1": "7c1f842a39f4ba1458a4dda702e1f16fde5e1e6a",
+  "objects": 815,
+  "types": {
+    "tree": 445,
+    "blob": 163,
+    "commit": 203,
+    "tag": 4
+  },
+  "sourceCommits": 203,
+  "sourceTips": 88,
+  "annotatedTags": 4,
+  "GitHubPublicPrerequisites": 13537,
+  "originalSourcePackageDependency": 646261949,
+  "allOriginalInputsPreserved": true,
+  "fullRestoreValidation": "PENDING",
+  "allVolumeComplete": false
+}

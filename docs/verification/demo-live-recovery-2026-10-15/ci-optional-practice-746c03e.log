@@ -1,0 +1,2214 @@
+﻿2026-10-15T18:10:16.1374822Z Current runner version: '2.337.0'
+2026-10-15T18:10:16.1411264Z ##[group]Runner Image Provisioner
+2026-10-15T18:10:16.1412751Z Hosted Compute Agent
+2026-10-15T18:10:16.1413948Z Version: 20261012.601
+2026-10-15T18:10:16.1415007Z Commit: f3dc54e1fb89da6852db922499a0233137369e1d
+2026-10-15T18:10:16.1416296Z Build Date: 2026-10-12T17:48:21Z
+2026-10-15T18:10:16.1417454Z Worker ID: {d8cf6c3b-ef2f-47ad-9f48-a6aa81bd0ec9}
+2026-10-15T18:10:16.1418688Z Region: eastus
+2026-10-15T18:10:16.1419609Z Cloud: Azure
+2026-10-15T18:10:16.1420508Z ##[endgroup]
+2026-10-15T18:10:16.1423480Z ##[group]Operating System
+2026-10-15T18:10:16.1424556Z Ubuntu
+2026-10-15T18:10:16.1425382Z 24.04.5
+2026-10-15T18:10:16.1426330Z LTS
+2026-10-15T18:10:16.1427145Z ##[endgroup]
+2026-10-15T18:10:16.1428278Z ##[group]Runner Image
+2026-10-15T18:10:16.1429281Z Image: ubuntu-24.04
+2026-10-15T18:10:16.1430245Z Version: 20261012.334.1
+2026-10-15T18:10:16.1432628Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20261012.334/images/ubuntu/Ubuntu2404-Readme.md
+2026-10-15T18:10:16.1435441Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20261012.334
+2026-10-15T18:10:16.1437141Z ##[endgroup]
+2026-10-15T18:10:16.1439006Z ##[group]GITHUB_TOKEN Permissions
+2026-10-15T18:10:16.1441861Z Contents: read
+2026-10-15T18:10:16.1443234Z Metadata: read
+2026-10-15T18:10:16.1444145Z ##[endgroup]
+2026-10-15T18:10:16.1447209Z Secret source: Actions
+2026-10-15T18:10:16.1448740Z Cache mode: write
+2026-10-15T18:10:16.1450403Z Prepare workflow directory
+2026-10-15T18:10:16.1919240Z Prepare all required actions
+2026-10-15T18:10:16.1989502Z Getting action download info
+2026-10-15T18:10:16.4131758Z Download action repository 'actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09' (SHA:fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09)
+2026-10-15T18:10:16.5735996Z Download action repository 'actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444' (SHA:a0853c24544627f65ddf259abe73b1d18a591444)
+2026-10-15T18:10:16.8487747Z Download action repository 'actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f' (SHA:b7c566a772e6b6bfb58ed0dc250532a479d7789f)
+2026-10-15T18:10:17.0401877Z Complete job name: optional-practice
+2026-10-15T18:10:17.1206417Z ##[group]Run actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09
+2026-10-15T18:10:17.1207648Z with:
+2026-10-15T18:10:17.1208169Z   ref: 746c03e75fa0496ad0bf0300cd6bc3bda9418731
+2026-10-15T18:10:17.1208773Z   persist-credentials: false
+2026-10-15T18:10:17.1209285Z   repository: mekhovov/revealline
+2026-10-15T18:10:17.1213463Z   token: ***
+2026-10-15T18:10:17.1213897Z   ssh-strict: true
+2026-10-15T18:10:17.1214321Z   ssh-user: git
+2026-10-15T18:10:17.1214733Z   clean: true
+2026-10-15T18:10:17.1215170Z   sparse-checkout-cone-mode: true
+2026-10-15T18:10:17.1215690Z   fetch-depth: 1
+2026-10-15T18:10:17.1216121Z   fetch-tags: false
+2026-10-15T18:10:17.1216567Z   show-progress: true
+2026-10-15T18:10:17.1217015Z   lfs: false
+2026-10-15T18:10:17.1217421Z   submodules: false
+2026-10-15T18:10:17.1217881Z   set-safe-directory: true
+2026-10-15T18:10:17.1218385Z   allow-unsafe-pr-checkout: false
+2026-10-15T18:10:17.1219173Z ##[endgroup]
+2026-10-15T18:10:17.2296226Z Syncing repository: mekhovov/revealline
+2026-10-15T18:10:17.2299075Z ##[group]Getting Git version info
+2026-10-15T18:10:17.2300420Z Working directory is '/home/runner/work/revealline/revealline'
+2026-10-15T18:10:17.2302663Z [command]/usr/bin/git version
+2026-10-15T18:10:17.2414432Z git version 2.55.0
+2026-10-15T18:10:17.2449592Z ##[endgroup]
+2026-10-15T18:10:17.2466919Z Temporarily overriding HOME='/home/runner/work/_temp/b5a015f8-8ea5-4d40-ba3f-03e1c61b8bdf' before making global git config changes
+2026-10-15T18:10:17.2493738Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-15T18:10:17.2499185Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/revealline/revealline
+2026-10-15T18:10:17.2570929Z Deleting the contents of '/home/runner/work/revealline/revealline'
+2026-10-15T18:10:17.2574150Z ##[group]Initializing the repository
+2026-10-15T18:10:17.2575825Z [command]/usr/bin/git init /home/runner/work/revealline/revealline
+2026-10-15T18:10:17.2690139Z hint: Using 'master' as the name for the initial branch. This default branch name
+2026-10-15T18:10:17.2691939Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+2026-10-15T18:10:17.2693765Z hint: to use in all of your new repositories, which will suppress this warning,
+2026-10-15T18:10:17.2695309Z hint: call:
+2026-10-15T18:10:17.2696058Z hint:
+2026-10-15T18:10:17.2696966Z hint: 	git config --global init.defaultBranch <name>
+2026-10-15T18:10:17.2698057Z hint:
+2026-10-15T18:10:17.2699040Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2026-10-15T18:10:17.2700606Z hint: 'development'. The just-created branch can be renamed via this command:
+2026-10-15T18:10:17.2701939Z hint:
+2026-10-15T18:10:17.2702940Z hint: 	git branch -m <name>
+2026-10-15T18:10:17.2703782Z hint:
+2026-10-15T18:10:17.2704874Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2026-10-15T18:10:17.2713526Z Initialized empty Git repository in /home/runner/work/revealline/revealline/.git/
+2026-10-15T18:10:17.2724037Z [command]/usr/bin/git remote add origin https://github.com/mekhovov/revealline
+2026-10-15T18:10:17.2774535Z ##[endgroup]
+2026-10-15T18:10:17.2775766Z ##[group]Disabling automatic garbage collection
+2026-10-15T18:10:17.2783439Z [command]/usr/bin/git config --local gc.auto 0
+2026-10-15T18:10:17.2816859Z ##[endgroup]
+2026-10-15T18:10:17.2818087Z ##[group]Setting up auth
+2026-10-15T18:10:17.2824057Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-15T18:10:17.2859360Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-15T18:10:17.3231393Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-15T18:10:17.3281651Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-15T18:10:17.3506349Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-15T18:10:17.3542539Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-15T18:10:17.3767400Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2026-10-15T18:10:17.3809515Z ##[endgroup]
+2026-10-15T18:10:17.3810898Z ##[group]Fetching the repository
+2026-10-15T18:10:17.3821177Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin 746c03e75fa0496ad0bf0300cd6bc3bda9418731
+2026-10-15T18:10:48.5425223Z From https://github.com/mekhovov/revealline
+2026-10-15T18:10:48.5426370Z  * branch              746c03e75fa0496ad0bf0300cd6bc3bda9418731 -> FETCH_HEAD
+2026-10-15T18:10:48.5436217Z ##[endgroup]
+2026-10-15T18:10:48.5437141Z ##[group]Determining the checkout info
+2026-10-15T18:10:48.5438126Z ##[endgroup]
+2026-10-15T18:10:48.5441881Z [command]/usr/bin/git sparse-checkout disable
+2026-10-15T18:10:48.5576054Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2026-10-15T18:10:48.5584759Z ##[group]Checking out the ref
+2026-10-15T18:10:48.5585690Z [command]/usr/bin/git checkout --progress --force 746c03e75fa0496ad0bf0300cd6bc3bda9418731
+2026-10-15T18:10:49.6109088Z Updating files:  18% (7487/40468)
+2026-10-15T18:10:49.6503439Z Updating files:  19% (7689/40468)
+2026-10-15T18:10:49.6881074Z Updating files:  20% (8094/40468)
+2026-10-15T18:10:49.7281095Z Updating files:  21% (8499/40468)
+2026-10-15T18:10:49.7666799Z Updating files:  22% (8903/40468)
+2026-10-15T18:10:49.8045832Z Updating files:  23% (9308/40468)
+2026-10-15T18:10:49.8434149Z Updating files:  24% (9713/40468)
+2026-10-15T18:10:49.8812118Z Updating files:  25% (10117/40468)
+2026-10-15T18:10:49.9189794Z Updating files:  26% (10522/40468)
+2026-10-15T18:10:49.9696227Z Updating files:  27% (10927/40468)
+2026-10-15T18:10:50.0073417Z Updating files:  28% (11332/40468)
+2026-10-15T18:10:50.1075502Z Updating files:  29% (11736/40468)
+2026-10-15T18:10:50.1565527Z Updating files:  30% (12141/40468)
+2026-10-15T18:10:50.5919734Z Updating files:  31% (12546/40468)
+2026-10-15T18:10:50.6026030Z Updating files:  31% (12929/40468)
+2026-10-15T18:10:51.0230345Z Updating files:  32% (12950/40468)
+2026-10-15T18:10:51.2493660Z Updating files:  33% (13355/40468)
+2026-10-15T18:10:51.4357959Z Updating files:  34% (13760/40468)
+2026-10-15T18:10:51.5918444Z Updating files:  35% (14164/40468)
+2026-10-15T18:10:51.6006947Z Updating files:  35% (14489/40468)
+2026-10-15T18:10:51.7167982Z Updating files:  36% (14569/40468)
+2026-10-15T18:10:51.7718948Z Updating files:  37% (14974/40468)
+2026-10-15T18:10:51.8297160Z Updating files:  38% (15378/40468)
+2026-10-15T18:10:51.8711876Z Updating files:  39% (15783/40468)
+2026-10-15T18:10:51.9354377Z Updating files:  40% (16188/40468)
+2026-10-15T18:10:52.0931179Z Updating files:  41% (16592/40468)
+2026-10-15T18:10:52.2947620Z Updating files:  42% (16997/40468)
+2026-10-15T18:10:52.4473067Z Updating files:  43% (17402/40468)
+2026-10-15T18:10:52.4946788Z Updating files:  44% (17806/40468)
+2026-10-15T18:10:52.5919498Z Updating files:  45% (18211/40468)
+2026-10-15T18:10:52.6009314Z Updating files:  45% (18598/40468)
+2026-10-15T18:10:52.6538979Z Updating files:  46% (18616/40468)
+2026-10-15T18:10:52.7047096Z Updating files:  47% (19020/40468)
+2026-10-15T18:10:52.7477599Z Updating files:  48% (19425/40468)
+2026-10-15T18:10:52.7899476Z Updating files:  49% (19830/40468)
+2026-10-15T18:10:52.8858406Z Updating files:  50% (20234/40468)
+2026-10-15T18:10:52.9203770Z Updating files:  51% (20639/40468)
+2026-10-15T18:10:52.9604965Z Updating files:  52% (21044/40468)
+2026-10-15T18:10:53.0128178Z Updating files:  53% (21449/40468)
+2026-10-15T18:10:53.0531802Z Updating files:  54% (21853/40468)
+2026-10-15T18:10:53.1081399Z Updating files:  55% (22258/40468)
+2026-10-15T18:10:53.1543144Z Updating files:  56% (22663/40468)
+2026-10-15T18:10:53.1881878Z Updating files:  57% (23067/40468)
+2026-10-15T18:10:53.2365459Z Updating files:  58% (23472/40468)
+2026-10-15T18:10:53.3023873Z Updating files:  59% (23877/40468)
+2026-10-15T18:10:53.4094354Z Updating files:  60% (24281/40468)
+2026-10-15T18:10:53.4839451Z Updating files:  61% (24686/40468)
+2026-10-15T18:10:53.5278143Z Updating files:  62% (25091/40468)
+2026-10-15T18:10:53.5917802Z Updating files:  63% (25495/40468)
+2026-10-15T18:10:53.5954010Z Updating files:  63% (25883/40468)
+2026-10-15T18:10:53.6657740Z Updating files:  64% (25900/40468)
+2026-10-15T18:10:53.7265459Z Updating files:  65% (26305/40468)
+2026-10-15T18:10:53.8182641Z Updating files:  66% (26709/40468)
+2026-10-15T18:10:54.1677849Z Updating files:  67% (27114/40468)
+2026-10-15T18:10:54.5813278Z Updating files:  68% (27519/40468)
+2026-10-15T18:10:54.5920803Z Updating files:  69% (27923/40468)
+2026-10-15T18:10:54.8291142Z Updating files:  69% (27998/40468)
+2026-10-15T18:10:54.8971067Z Updating files:  70% (28328/40468)
+2026-10-15T18:10:54.9590434Z Updating files:  71% (28733/40468)
+2026-10-15T18:10:54.9915600Z Updating files:  72% (29137/40468)
+2026-10-15T18:10:55.0458322Z Updating files:  73% (29542/40468)
+2026-10-15T18:10:55.0788099Z Updating files:  74% (29947/40468)
+2026-10-15T18:10:55.1092969Z Updating files:  75% (30351/40468)
+2026-10-15T18:10:55.1403425Z Updating files:  76% (30756/40468)
+2026-10-15T18:10:55.2029709Z Updating files:  77% (31161/40468)
+2026-10-15T18:10:55.3034885Z Updating files:  78% (31566/40468)
+2026-10-15T18:10:55.3879744Z Updating files:  79% (31970/40468)
+2026-10-15T18:10:55.4334768Z Updating files:  80% (32375/40468)
+2026-10-15T18:10:55.5479173Z Updating files:  81% (32780/40468)
+2026-10-15T18:10:55.5831546Z Updating files:  82% (33184/40468)
+2026-10-15T18:10:55.5922849Z Updating files:  83% (33589/40468)
+2026-10-15T18:10:55.6097044Z Updating files:  83% (33753/40468)
+2026-10-15T18:10:55.7050227Z Updating files:  84% (33994/40468)
+2026-10-15T18:10:55.8190024Z Updating files:  85% (34398/40468)
+2026-10-15T18:10:55.8506640Z Updating files:  86% (34803/40468)
+2026-10-15T18:10:55.8867393Z Updating files:  87% (35208/40468)
+2026-10-15T18:10:55.9659616Z Updating files:  88% (35612/40468)
+2026-10-15T18:10:56.0068799Z Updating files:  89% (36017/40468)
+2026-10-15T18:10:56.0821913Z Updating files:  90% (36422/40468)
+2026-10-15T18:10:56.1405831Z Updating files:  91% (36826/40468)
+2026-10-15T18:10:56.2398004Z Updating files:  92% (37231/40468)
+2026-10-15T18:10:56.2884735Z Updating files:  93% (37636/40468)
+2026-10-15T18:10:56.3322708Z Updating files:  94% (38040/40468)
+2026-10-15T18:10:56.3888484Z Updating files:  95% (38445/40468)
+2026-10-15T18:10:56.4407341Z Updating files:  96% (38850/40468)
+2026-10-15T18:10:56.4753081Z Updating files:  97% (39254/40468)
+2026-10-15T18:10:56.5821136Z Updating files:  98% (39659/40468)
+2026-10-15T18:10:56.5917045Z Updating files:  99% (40064/40468)
+2026-10-15T18:10:56.6121217Z Updating files:  99% (40196/40468)
+2026-10-15T18:10:56.6121996Z Updating files: 100% (40468/40468)
+2026-10-15T18:10:56.6126123Z Updating files: 100% (40468/40468), done.
+2026-10-15T18:10:56.6521474Z Note: switching to '746c03e75fa0496ad0bf0300cd6bc3bda9418731'.
+2026-10-15T18:10:56.6522532Z 
+2026-10-15T18:10:56.6523156Z You are in 'detached HEAD' state. You can look around, make experimental
+2026-10-15T18:10:56.6524152Z changes and commit them, and you can discard any commits you make in this
+2026-10-15T18:10:56.6525118Z state without impacting any branches by switching back to a branch.
+2026-10-15T18:10:56.6525773Z 
+2026-10-15T18:10:56.6526250Z If you want to create a new branch to retain commits you create, you may
+2026-10-15T18:10:56.6527179Z do so (now or later) by using -c with the switch command. Example:
+2026-10-15T18:10:56.6527797Z 
+2026-10-15T18:10:56.6528139Z   git switch -c <new-branch-name>
+2026-10-15T18:10:56.6528626Z 
+2026-10-15T18:10:56.6528960Z Or undo this operation with:
+2026-10-15T18:10:56.6529397Z 
+2026-10-15T18:10:56.6529703Z   git switch -
+2026-10-15T18:10:56.6530326Z 
+2026-10-15T18:10:56.6530885Z Turn off this advice by setting config variable advice.detachedHead to false
+2026-10-15T18:10:56.6531609Z 
+2026-10-15T18:10:56.6532474Z HEAD is now at 746c03e7 Finish live demo routes and remove translation startup from workers
+2026-10-15T18:10:56.6855813Z ##[endgroup]
+2026-10-15T18:10:56.6911283Z [command]/usr/bin/git log -1 --format=%H
+2026-10-15T18:10:56.6943954Z 746c03e75fa0496ad0bf0300cd6bc3bda9418731
+2026-10-15T18:10:56.6962784Z ##[group]Removing auth
+2026-10-15T18:10:56.6963454Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-15T18:10:56.7003240Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-15T18:10:56.7327836Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-15T18:10:56.7358355Z http.https://github.com/.extraheader
+2026-10-15T18:10:56.7365884Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2026-10-15T18:10:56.7638704Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-15T18:10:56.7900289Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-15T18:10:56.7953518Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-15T18:10:56.8199571Z ##[endgroup]
+2026-10-15T18:10:56.8453929Z ##[group]Run actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444
+2026-10-15T18:10:56.8454351Z with:
+2026-10-15T18:10:56.8454763Z   package-manager-cache: false
+2026-10-15T18:10:56.8455024Z   node-version: 22.13.1
+2026-10-15T18:10:56.8455237Z   cache: npm
+2026-10-15T18:10:56.8455431Z   always-auth: false
+2026-10-15T18:10:56.8455643Z   check-latest: false
+2026-10-15T18:10:56.8458431Z   token: ***
+2026-10-15T18:10:56.8458628Z ##[endgroup]
+2026-10-15T18:10:56.9936203Z Attempting to download 22.13.1...
+2026-10-15T18:10:57.0045849Z (node:2412) [DEP0040] DeprecationWarning: The `punycode` module is deprecated. Please use a userland alternative instead.
+2026-10-15T18:10:57.0047538Z (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-10-15T18:10:57.5153819Z Acquiring 22.13.1 - x64 from https://github.com/actions/node-versions/releases/download/22.13.1-12900459766/node-22.13.1-linux-x64.tar.gz
+2026-10-15T18:10:57.9068279Z Extracting ...
+2026-10-15T18:10:57.9186866Z [command]/usr/bin/tar xz --strip 1 --warning=no-unknown-keyword --overwrite -C /home/runner/work/_temp/ba71b626-b174-42c2-af5b-3f2057e36f2a -f /home/runner/work/_temp/1da8e35e-df44-431b-8b3a-e5a340846c7b
+2026-10-15T18:10:59.0598035Z Adding to the cache ...
+2026-10-15T18:11:01.1494134Z ##[group]Environment details
+2026-10-15T18:11:01.3731830Z node: v22.13.1
+2026-10-15T18:11:01.3732463Z npm: 10.9.2
+2026-10-15T18:11:01.3732879Z yarn: 1.22.22
+2026-10-15T18:11:01.3733460Z ##[endgroup]
+2026-10-15T18:11:01.3757664Z [command]/opt/hostedtoolcache/node/22.13.1/x64/bin/npm config get cache
+2026-10-15T18:11:01.4664711Z /home/runner/.npm
+2026-10-15T18:11:01.5717779Z Cache hit for: node-cache-Linux-x64-npm-c4d90588a7de33efc505559194e3f745660379af2a85dc9bed412adb669838e1
+2026-10-15T18:11:01.5836209Z (node:2412) [DEP0169] DeprecationWarning: `url.parse()` behavior is not standardized and prone to errors that have security implications. Use the WHATWG URL API instead. CVEs are not issued for `url.parse()` vulnerabilities.
+2026-10-15T18:11:01.8716488Z Received 26721198 of 26721198 (100.0%), 103.6 MBs/sec
+2026-10-15T18:11:01.8717231Z Cache Size: ~25 MB (26721198 B)
+2026-10-15T18:11:01.8743823Z [command]/usr/bin/tar -xf /home/runner/work/_temp/994be089-3f88-42a9-bd3b-3602597f2788/cache.tzst -P -C /home/runner/work/revealline/revealline --use-compress-program unzstd
+2026-10-15T18:11:01.9377178Z Cache restored successfully
+2026-10-15T18:11:01.9393944Z Cache restored from key: node-cache-Linux-x64-npm-c4d90588a7de33efc505559194e3f745660379af2a85dc9bed412adb669838e1
+2026-10-15T18:11:01.9595919Z ##[group]Run node publishing/test-policy.mjs
+2026-10-15T18:11:01.9596349Z [36;1mnode publishing/test-policy.mjs[0m
+2026-10-15T18:11:01.9853517Z shell: /usr/bin/bash -e {0}
+2026-10-15T18:11:01.9853816Z ##[endgroup]
+2026-10-15T18:11:02.0255713Z {"policy":{"format":"revealline-release-test-policy.v1","mode":"required","authorization":"explicit-user-request-20261004","scope":"automated-test-suites","reason":"User requested continuous feature implementation with completed testing on 4 October 2026; the temporary automated-suite waiver is withdrawn.","restoration":"Required verification is restored in this reviewed PR. Prior waiver receipts remain historical; no test pass is inferred from policy. Lint, formatting, validation, source identity, provenance and committed-source builds remain mandatory."},"policySha256":"ed52029154df24dcc9c0b9c808b632abdfac7478b6b718f312863ab41c3082b2","policyMode":"required","mode":"required","runTests":"true","qualification":"tests-required","forced":false}
+2026-10-15T18:11:02.0350543Z ##[group]Run npm ci
+2026-10-15T18:11:02.0350819Z [36;1mnpm ci[0m
+2026-10-15T18:11:02.0414364Z shell: /usr/bin/bash -e {0}
+2026-10-15T18:11:02.0414633Z ##[endgroup]
+2026-10-15T18:11:04.7101278Z 
+2026-10-15T18:11:04.7102795Z added 89 packages, and audited 90 packages in 3s
+2026-10-15T18:11:04.7103852Z 
+2026-10-15T18:11:04.7104451Z 22 packages are looking for funding
+2026-10-15T18:11:04.7105328Z   run `npm fund` for details
+2026-10-15T18:11:04.7114167Z 
+2026-10-15T18:11:04.7114662Z found 0 vulnerabilities
+2026-10-15T18:11:04.8065077Z ##[group]Run npm run practice:test
+2026-10-15T18:11:04.8065829Z [36;1mnpm run practice:test[0m
+2026-10-15T18:11:04.8151937Z shell: /usr/bin/bash -e {0}
+2026-10-15T18:11:04.8152542Z ##[endgroup]
+2026-10-15T18:11:04.9549435Z 
+2026-10-15T18:11:04.9550204Z > revealline@0.151.1 practice:test
+2026-10-15T18:11:04.9563890Z > node --test --test-concurrency=2 game/test/practice-directory.test.mjs game/test/practice-guide-current-copy.test.mjs game/test/civilian-practice.test.mjs game/test/civilian-practice-ui.test.mjs game/test/optional-installation.test.mjs game/test/optional-offline-lifecycle.test.mjs game/test/fpv-offline-controls.test.mjs game/test/optional-practice-panel.test.mjs scripts/test-optional-practice.mjs scripts/test-practice-capacity.mjs scripts/test-audit-practice-png-capacity.mjs scripts/test-optional-installation-observer.mjs scripts/test-frozen-source.mjs scripts/test-bundle-optional-practice.mjs scripts/test-publish-optional-packages.mjs publishing/optional-package-admission.test.mjs publishing/optional-package-promotion.test.mjs publishing/optional-package-delivery.test.mjs game/test/fpv-radio.test.mjs game/test/fpv-flight-model.test.mjs game/test/fpv-flight-boundaries.test.mjs game/test/fpv-cooperative-replay.test.mjs game/test/fpv-notebook.test.mjs game/test/practice-rewards.test.mjs scripts/test-optional-fpv-package.mjs game/test/fpv-flight-ui.test.mjs game/test/fpv-replay-rate.test.mjs game/test/fpv-studio-setup.test.mjs scripts/test-analyze-fpv-heap.mjs game/test/data-json.test.mjs scripts/test-observe-fpv-completion.mjs scripts/test-fpv-observation-artifact.mjs
+2026-10-15T18:11:04.9581235Z 
+2026-10-15T18:11:05.0094957Z TAP version 13
+2026-10-15T18:11:05.9654947Z # Subtest: actual optional page is playable with canvas fallback and verifies a complete keyboard practice transcript
+2026-10-15T18:11:05.9656959Z ok 1 - actual optional page is playable with canvas fallback and verifies a complete keyboard practice transcript
+2026-10-15T18:11:05.9658168Z   ---
+2026-10-15T18:11:05.9658774Z   duration_ms: 376.59988
+2026-10-15T18:11:05.9659405Z   ...
+2026-10-15T18:11:06.1441173Z # Subtest: reading and failed imports pause the gym and cannot grant completions or resume a held control
+2026-10-15T18:11:06.1463877Z ok 2 - reading and failed imports pause the gym and cannot grant completions or resume a held control
+2026-10-15T18:11:06.1471881Z   ---
+2026-10-15T18:11:06.1472794Z   duration_ms: 182.786286
+2026-10-15T18:11:06.1473235Z   ...
+2026-10-15T18:11:06.3029694Z # Subtest: final gym exit retires reparented controls before removing their shell
+2026-10-15T18:11:06.3063506Z ok 3 - final gym exit retires reparented controls before removing their shell
+2026-10-15T18:11:06.3067770Z   ---
+2026-10-15T18:11:06.3102917Z   duration_ms: 157.171482
+2026-10-15T18:11:06.3123052Z   ...
+2026-10-15T18:11:06.4518794Z # Subtest: gym title and settings reuse the accepted drill without starting or resuming it
+2026-10-15T18:11:06.4520673Z ok 4 - gym title and settings reuse the accepted drill without starting or resuming it
+2026-10-15T18:11:06.4558802Z   ---
+2026-10-15T18:11:06.4583240Z   duration_ms: 148.733282
+2026-10-15T18:11:06.4612957Z   ...
+2026-10-15T18:11:06.5853908Z # Subtest: a gym Pause pointer keeps its intent when moving focus first pauses flight input
+2026-10-15T18:11:06.5855223Z ok 5 - a gym Pause pointer keeps its intent when moving focus first pauses flight input
+2026-10-15T18:11:06.5856170Z   ---
+2026-10-15T18:11:06.5856533Z   duration_ms: 132.689256
+2026-10-15T18:11:06.5856926Z   ...
+2026-10-15T18:11:06.7703707Z # Subtest: gym reuses neutral controller menu navigation without arming on device join
+2026-10-15T18:11:06.7733367Z ok 6 - gym reuses neutral controller menu navigation without arming on device join
+2026-10-15T18:11:06.7782779Z   ---
+2026-10-15T18:11:06.7783172Z   duration_ms: 184.624723
+2026-10-15T18:11:06.7783580Z   ...
+2026-10-15T18:11:06.9133693Z # Subtest: gym controller Pause requires a fresh explicit Continue and samples hardware once per frame
+2026-10-15T18:11:06.9137543Z ok 7 - gym controller Pause requires a fresh explicit Continue and samples hardware once per frame
+2026-10-15T18:11:06.9139597Z   ---
+2026-10-15T18:11:06.9140352Z   duration_ms: 145.351476
+2026-10-15T18:11:06.9141158Z   ...
+2026-10-15T18:11:07.0746375Z # Subtest: gym menu keyboard navigation owns arrows and returns from nested help without flight input
+2026-10-15T18:11:07.0748282Z ok 8 - gym menu keyboard navigation owns arrows and returns from nested help without flight input
+2026-10-15T18:11:07.0749495Z   ---
+2026-10-15T18:11:07.0750103Z   duration_ms: 161.183451
+2026-10-15T18:11:07.0750788Z   ...
+2026-10-15T18:11:07.2488514Z # Subtest: gym Select Mission starts the selected drill with one action
+2026-10-15T18:11:07.2503397Z ok 9 - gym Select Mission starts the selected drill with one action
+2026-10-15T18:11:07.2504260Z   ---
+2026-10-15T18:11:07.2504946Z   duration_ms: 172.965286
+2026-10-15T18:11:07.2505572Z   ...
+2026-10-15T18:11:07.4024027Z # Subtest: gym shared selector keeps search and pause state, rejects filtered cards and supports controller Back
+2026-10-15T18:11:07.4033845Z ok 10 - gym shared selector keeps search and pause state, rejects filtered cards and supports controller Back
+2026-10-15T18:11:07.4035132Z   ---
+2026-10-15T18:11:07.4044303Z   duration_ms: 154.525936
+2026-10-15T18:11:07.4073169Z   ...
+2026-10-15T18:11:07.5859921Z # Subtest: gym imported catalogue replaces selector authority and exact route without inheriting completion
+2026-10-15T18:11:07.5878980Z ok 11 - gym imported catalogue replaces selector authority and exact route without inheriting completion
+2026-10-15T18:11:07.5880098Z   ---
+2026-10-15T18:11:07.5880592Z   duration_ms: 182.971636
+2026-10-15T18:11:07.5881451Z   ...
+2026-10-15T18:11:07.6988786Z # Subtest: a flight arrow released inside a controller menu is usable on the first press after Resume
+2026-10-15T18:11:07.6990838Z ok 12 - a flight arrow released inside a controller menu is usable on the first press after Resume
+2026-10-15T18:11:07.6992016Z   ---
+2026-10-15T18:11:07.6992994Z   duration_ms: 112.630069
+2026-10-15T18:11:07.6993658Z   ...
+2026-10-15T18:11:07.9208689Z # Subtest: gym adopts the complete common preference inventory and keeps practice tools reachable without changing the drill
+2026-10-15T18:11:07.9216672Z ok 13 - gym adopts the complete common preference inventory and keeps practice tools reachable without changing the drill
+2026-10-15T18:11:07.9218601Z   ---
+2026-10-15T18:11:07.9218983Z   duration_ms: 222.945279
+2026-10-15T18:11:07.9219442Z   ...
+2026-10-15T18:11:08.0266750Z # Subtest: gym shares six ordered Ukrainian mode choices and mobile category keyboard/controller Back without restarting practice
+2026-10-15T18:11:08.0308442Z ok 14 - gym shares six ordered Ukrainian mode choices and mobile category keyboard/controller Back without restarting practice
+2026-10-15T18:11:08.0309667Z   ---
+2026-10-15T18:11:08.0310337Z   duration_ms: 105.018109
+2026-10-15T18:11:08.0311117Z   ...
+2026-10-15T18:11:08.1710016Z # Subtest: gym cancels an imminent auto-next before a stalled animation timestamp
+2026-10-15T18:11:08.1711448Z ok 15 - gym cancels an imminent auto-next before a stalled animation timestamp
+2026-10-15T18:11:08.1733853Z   ---
+2026-10-15T18:11:08.1734454Z   duration_ms: 144.279413
+2026-10-15T18:11:08.1737784Z   ...
+2026-10-15T18:11:08.3156780Z # Subtest: gym cancels an imminent auto-next before a stalled callback execution
+2026-10-15T18:11:08.3158516Z ok 16 - gym cancels an imminent auto-next before a stalled callback execution
+2026-10-15T18:11:08.3159530Z   ---
+2026-10-15T18:11:08.3160146Z   duration_ms: 145.295485
+2026-10-15T18:11:08.3160828Z   ...
+2026-10-15T18:11:08.3498176Z # Subtest: all twelve authored civilian routes have ordered deterministic completion proofs
+2026-10-15T18:11:08.3499800Z ok 17 - all twelve authored civilian routes have ordered deterministic completion proofs
+2026-10-15T18:11:08.3500886Z   ---
+2026-10-15T18:11:08.3501562Z   duration_ms: 280.686862
+2026-10-15T18:11:08.3502447Z   ...
+2026-10-15T18:11:08.3504118Z # Subtest: landing alone, partial dwell and claimed completion never skip ordered checkpoints
+2026-10-15T18:11:08.3505848Z ok 18 - landing alone, partial dwell and claimed completion never skip ordered checkpoints
+2026-10-15T18:11:08.3506831Z   ---
+2026-10-15T18:11:08.3507395Z   duration_ms: 31.936316
+2026-10-15T18:11:08.3508014Z   ...
+2026-10-15T18:11:08.3509074Z # Subtest: pause freezes model, reset clears it, and hostile fixtures never enter authoring
+2026-10-15T18:11:08.3510530Z ok 19 - pause freezes model, reset clears it, and hostile fixtures never enter authoring
+2026-10-15T18:11:08.3529673Z   ---
+2026-10-15T18:11:08.3530293Z   duration_ms: 24.784883
+2026-10-15T18:11:08.3530885Z   ...
+2026-10-15T18:11:08.3533673Z # Subtest: keyboard and touch have explicit input ownership and require fresh controls after pause
+2026-10-15T18:11:08.3534696Z ok 20 - keyboard and touch have explicit input ownership and require fresh controls after pause
+2026-10-15T18:11:08.3535353Z   ---
+2026-10-15T18:11:08.3535710Z   duration_ms: 3.777153
+2026-10-15T18:11:08.3536102Z   ...
+2026-10-15T18:11:08.3536786Z # Subtest: standard gamepad is opt-in, neutral-gated, and disconnect/blur always pause with fallback
+2026-10-15T18:11:08.3537763Z ok 21 - standard gamepad is opt-in, neutral-gated, and disconnect/blur always pause with fallback
+2026-10-15T18:11:08.3538397Z   ---
+2026-10-15T18:11:08.3538735Z   duration_ms: 1.507513
+2026-10-15T18:11:08.3539090Z   ...
+2026-10-15T18:11:08.3539773Z # Subtest: optional removal unregisters only exact app scope and deletes only its own path-specific cache
+2026-10-15T18:11:08.3540767Z ok 22 - optional removal unregisters only exact app scope and deletes only its own path-specific cache
+2026-10-15T18:11:08.3541393Z   ---
+2026-10-15T18:11:08.3541730Z   duration_ms: 1.578926
+2026-10-15T18:11:08.3542082Z   ...
+2026-10-15T18:11:08.3549121Z # Subtest: exact JSON byte boundary accepts null and booleans and rejects one byte less
+2026-10-15T18:11:08.3550192Z ok 23 - exact JSON byte boundary accepts null and booleans and rejects one byte less
+2026-10-15T18:11:08.3551006Z   ---
+2026-10-15T18:11:08.3551476Z   duration_ms: 5.448399
+2026-10-15T18:11:08.3552000Z   ...
+2026-10-15T18:11:08.3553355Z # Subtest: exact JSON byte boundary accepts numbers including zero and exponents and rejects one byte less
+2026-10-15T18:11:08.3554733Z ok 24 - exact JSON byte boundary accepts numbers including zero and exponents and rejects one byte less
+2026-10-15T18:11:08.3582789Z   ---
+2026-10-15T18:11:08.3597844Z   duration_ms: 0.679855
+2026-10-15T18:11:08.3660069Z   ...
+2026-10-15T18:11:08.3670389Z # Subtest: exact JSON byte boundary accepts empty and nested containers and rejects one byte less
+2026-10-15T18:11:08.3672004Z ok 25 - exact JSON byte boundary accepts empty and nested containers and rejects one byte less
+2026-10-15T18:11:08.3673182Z   ---
+2026-10-15T18:11:08.3673721Z   duration_ms: 0.69351
+2026-10-15T18:11:08.3674339Z   ...
+2026-10-15T18:11:08.3675228Z # Subtest: exact JSON byte boundary accepts Unicode text and keys and rejects one byte less
+2026-10-15T18:11:08.3676526Z ok 26 - exact JSON byte boundary accepts Unicode text and keys and rejects one byte less
+2026-10-15T18:11:08.3677302Z   ---
+2026-10-15T18:11:08.3677646Z   duration_ms: 0.341315
+2026-10-15T18:11:08.3678042Z   ...
+2026-10-15T18:11:08.3678853Z # Subtest: exact JSON byte boundary accepts escaped text and keys and rejects one byte less
+2026-10-15T18:11:08.3680089Z ok 27 - exact JSON byte boundary accepts escaped text and keys and rejects one byte less
+2026-10-15T18:11:08.3680831Z   ---
+2026-10-15T18:11:08.3681178Z   duration_ms: 0.636173
+2026-10-15T18:11:08.3681542Z   ...
+2026-10-15T18:11:08.3682790Z # Subtest: exact JSON byte boundary accepts lone surrogate text and keys and rejects one byte less
+2026-10-15T18:11:08.3684145Z ok 28 - exact JSON byte boundary accepts lone surrogate text and keys and rejects one byte less
+2026-10-15T18:11:08.3684931Z   ---
+2026-10-15T18:11:08.3685280Z   duration_ms: 0.325625
+2026-10-15T18:11:08.3685646Z   ...
+2026-10-15T18:11:08.3686835Z # Subtest: many short array values use their serialized bytes without charging index keys
+2026-10-15T18:11:08.3688328Z ok 29 - many short array values use their serialized bytes without charging index keys
+2026-10-15T18:11:08.3689057Z   ---
+2026-10-15T18:11:08.3689393Z   duration_ms: 6.322625
+2026-10-15T18:11:08.3689781Z   ...
+2026-10-15T18:11:08.3690673Z # Subtest: repeated scalar byte accounting remains exact across cache saturation and Unicode escapes
+2026-10-15T18:11:08.3692094Z ok 30 - repeated scalar byte accounting remains exact across cache saturation and Unicode escapes
+2026-10-15T18:11:08.3693212Z   ---
+2026-10-15T18:11:08.3693545Z   duration_ms: 49.584718
+2026-10-15T18:11:08.3693941Z   ...
+2026-10-15T18:11:08.3694742Z # Subtest: repeated text never gives mutable or caller-frozen objects validation authority
+2026-10-15T18:11:08.3695943Z ok 31 - repeated text never gives mutable or caller-frozen objects validation authority
+2026-10-15T18:11:08.3696671Z   ---
+2026-10-15T18:11:08.3697015Z   duration_ms: 3.528641
+2026-10-15T18:11:08.3697462Z   ...
+2026-10-15T18:11:08.3698281Z # Subtest: repeated field names do not require per-field UTF-8 encoding
+2026-10-15T18:11:08.3699289Z ok 32 - repeated field names do not require per-field UTF-8 encoding
+2026-10-15T18:11:08.3699899Z   ---
+2026-10-15T18:11:08.3700245Z   duration_ms: 11.548601
+2026-10-15T18:11:08.3700636Z   ...
+2026-10-15T18:11:08.3701442Z # Subtest: the default 4 MiB ceiling still accepts exactly the limit and rejects one byte over
+2026-10-15T18:11:08.3702929Z ok 33 - the default 4 MiB ceiling still accepts exactly the limit and rejects one byte over
+2026-10-15T18:11:08.3703689Z   ---
+2026-10-15T18:11:08.3704034Z   duration_ms: 138.503905
+2026-10-15T18:11:08.3704419Z   ...
+2026-10-15T18:11:08.3705125Z # Subtest: untrusted getters and toJSON hooks are rejected without invocation
+2026-10-15T18:11:08.3706179Z ok 34 - untrusted getters and toJSON hooks are rejected without invocation
+2026-10-15T18:11:08.3706838Z   ---
+2026-10-15T18:11:08.3707176Z   duration_ms: 0.659757
+2026-10-15T18:11:08.3707571Z   ...
+2026-10-15T18:11:08.3708241Z # Subtest: exact byte accounting retains structural and shape protections
+2026-10-15T18:11:08.3709266Z ok 35 - exact byte accounting retains structural and shape protections
+2026-10-15T18:11:08.3709899Z   ---
+2026-10-15T18:11:08.3710236Z   duration_ms: 1.470384
+2026-10-15T18:11:08.3710609Z   ...
+2026-10-15T18:11:08.3711362Z # Subtest: shared JSON boundary reports owned validation errors in the active locale
+2026-10-15T18:11:08.3712737Z ok 36 - shared JSON boundary reports owned validation errors in the active locale
+2026-10-15T18:11:08.3713448Z   ---
+2026-10-15T18:11:08.3713765Z   duration_ms: 2.258278
+2026-10-15T18:11:08.3714160Z   ...
+2026-10-15T18:11:08.9404294Z # Subtest: cooperative replay matches every complete synchronous state and sampled path for all24 demonstrations
+2026-10-15T18:11:08.9406470Z ok 37 - cooperative replay matches every complete synchronous state and sampled path for all24 demonstrations
+2026-10-15T18:11:08.9407701Z   ---
+2026-10-15T18:11:08.9408357Z   duration_ms: 2276.903084
+2026-10-15T18:11:08.9409021Z   ...
+2026-10-15T18:11:08.9440613Z # Subtest: cooperative replay owns its inspected input and stops before the next200-tick batch after cancellation
+2026-10-15T18:11:08.9442902Z ok 38 - cooperative replay owns its inspected input and stops before the next200-tick batch after cancellation
+2026-10-15T18:11:08.9444041Z   ---
+2026-10-15T18:11:08.9444593Z   duration_ms: 48.475975
+2026-10-15T18:11:08.9445204Z   ...
+2026-10-15T18:11:08.9819790Z # Subtest: aborting transfer verification after an earlier valid proof grants and writes nothing, then allows a fresh import
+2026-10-15T18:11:08.9833663Z ok 39 - aborting transfer verification after an earlier valid proof grants and writes nothing, then allows a fresh import
+2026-10-15T18:11:08.9834693Z   ---
+2026-10-15T18:11:08.9835074Z   duration_ms: 63.919869
+2026-10-15T18:11:08.9835469Z   ...
+2026-10-15T18:11:09.0144266Z # Subtest: closing cancels active and queued verification immediately and a late verifier cannot mutate memory or disk
+2026-10-15T18:11:09.0156232Z ok 40 - closing cancels active and queued verification immediately and a late verifier cannot mutate memory or disk
+2026-10-15T18:11:09.0157670Z   ---
+2026-10-15T18:11:09.0158217Z   duration_ms: 26.704599
+2026-10-15T18:11:09.0158818Z   ...
+2026-10-15T18:11:09.0391870Z # Subtest: cancellation reaches the owned IndexedDB write transaction before an attempt can be durable
+2026-10-15T18:11:09.0428132Z ok 41 - cancellation reaches the owned IndexedDB write transaction before an attempt can be durable
+2026-10-15T18:11:09.0432899Z   ---
+2026-10-15T18:11:09.0462954Z   duration_ms: 32.794091
+2026-10-15T18:11:09.0483304Z   ...
+2026-10-15T18:11:10.7914077Z # Subtest: Node exactly matches all24 successful demonstration golden checkpoints without awarding progress
+2026-10-15T18:11:10.7933528Z ok 42 - Node exactly matches all24 successful demonstration golden checkpoints without awarding progress
+2026-10-15T18:11:10.7992761Z   ---
+2026-10-15T18:11:10.8022985Z   duration_ms: 1003.740164
+2026-10-15T18:11:10.8023833Z   ...
+2026-10-15T18:11:10.8053693Z # Subtest: portable authority stress pins every250ticks across full acro rotations, yaw quadrants, gravity and bounded contacts
+2026-10-15T18:11:10.8065634Z ok 43 - portable authority stress pins every250ticks across full acro rotations, yaw quadrants, gravity and bounded contacts
+2026-10-15T18:11:10.8066791Z   ---
+2026-10-15T18:11:10.8067235Z   duration_ms: 1203.296367
+2026-10-15T18:11:10.8067728Z   ...
+2026-10-15T18:11:10.8068801Z # Subtest: a denied browser Gamepad request remains a diagnosable, unarmed device-selection failure
+2026-10-15T18:11:10.8070442Z ok 44 - a denied browser Gamepad request remains a diagnosable, unarmed device-selection failure
+2026-10-15T18:11:10.8071427Z   ---
+2026-10-15T18:11:10.8071918Z   duration_ms: 0.879395
+2026-10-15T18:11:10.8072722Z   ...
+2026-10-15T18:11:10.8073850Z # Subtest: real Three.js poses agree with model right-roll, forward-pitch and right-yaw controls in both modes
+2026-10-15T18:11:10.8075681Z ok 45 - real Three.js poses agree with model right-roll, forward-pitch and right-yaw controls in both modes
+2026-10-15T18:11:10.8076750Z   ---
+2026-10-15T18:11:10.8077309Z   duration_ms: 22.17593
+2026-10-15T18:11:10.8077892Z   ...
+2026-10-15T18:11:10.8079131Z # Subtest: touchdown preserves impact speed: the exact landing threshold passes and one unit below remains incomplete
+2026-10-15T18:11:10.8081015Z ok 46 - touchdown preserves impact speed: the exact landing threshold passes and one unit below remains incomplete
+2026-10-15T18:11:10.8082120Z   ---
+2026-10-15T18:11:10.8082937Z   duration_ms: 35.509522
+2026-10-15T18:11:10.8083497Z   ...
+2026-10-15T18:11:10.8084622Z # Subtest: swept obstacles stop a real directional flight without tunnelling and ignore author array order
+2026-10-15T18:11:10.8086308Z ok 47 - swept obstacles stop a real directional flight without tunnelling and ignore author array order
+2026-10-15T18:11:10.8087507Z   ---
+2026-10-15T18:11:10.8088159Z   duration_ms: 63.490353
+2026-10-15T18:11:10.8088827Z   ...
+2026-10-15T18:11:10.8182501Z # Subtest: checked-in integer rotation identities and bounded square roots
+2026-10-15T18:11:10.8184220Z ok 48 - checked-in integer rotation identities and bounded square roots
+2026-10-15T18:11:10.8184893Z   ---
+2026-10-15T18:11:10.8185239Z   duration_ms: 2.159835
+2026-10-15T18:11:10.8185621Z   ...
+2026-10-15T18:11:10.8187801Z # Subtest: all twelve bilingual courses and both criteria sets validate; older assisted model remains distinct
+2026-10-15T18:11:10.8189334Z ok 49 - all twelve bilingual courses and both criteria sets validate; older assisted model remains distinct
+2026-10-15T18:11:10.8205040Z   ---
+2026-10-15T18:11:10.8272961Z   duration_ms: 5.026896
+2026-10-15T18:11:10.8273595Z   ...
+2026-10-15T18:11:10.8274841Z # Subtest: manual throttle produces thrust, gravity and momentum; neutral attitude never silently holds position
+2026-10-15T18:11:10.8277158Z ok 50 - manual throttle produces thrust, gravity and momentum; neutral attitude never silently holds position
+2026-10-15T18:11:10.8278249Z   ---
+2026-10-15T18:11:10.8278931Z   duration_ms: 19.805251
+2026-10-15T18:11:10.8279469Z   ...
+2026-10-15T18:11:10.8280354Z # Subtest: Self-level centres attitude while Acro keeps tilt; both retain translation
+2026-10-15T18:11:10.8281672Z ok 51 - Self-level centres attitude while Acro keeps tilt; both retain translation
+2026-10-15T18:11:10.8282838Z   ---
+2026-10-15T18:11:10.8283325Z   duration_ms: 19.341699
+2026-10-15T18:11:10.8283819Z   ...
+2026-10-15T18:11:10.8285160Z # Subtest: swept gate detects directed crossings between steps with inclusive boundaries at ±1 unit
+2026-10-15T18:11:10.8286798Z ok 52 - swept gate detects directed crossings between steps with inclusive boundaries at ±1 unit
+2026-10-15T18:11:10.8287704Z   ---
+2026-10-15T18:11:10.8288111Z   duration_ms: 0.375268
+2026-10-15T18:11:10.8288585Z   ...
+2026-10-15T18:11:10.8289406Z # Subtest: holds require consecutive ticks and pause never integrates or catches up
+2026-10-15T18:11:10.8290697Z ok 53 - holds require consecutive ticks and pause never integrates or catches up
+2026-10-15T18:11:10.8291486Z   ---
+2026-10-15T18:11:10.8291945Z   duration_ms: 2.252478
+2026-10-15T18:11:10.8292626Z   ...
+2026-10-15T18:11:10.8293703Z # Subtest: fixed-width proof round trips exact state and rejects mode/course/response/continuation tampering
+2026-10-15T18:11:10.8295375Z ok 54 - fixed-width proof round trips exact state and rejects mode/course/response/continuation tampering
+2026-10-15T18:11:10.8296375Z   ---
+2026-10-15T18:11:10.8296812Z   duration_ms: 48.608963
+2026-10-15T18:11:10.8297376Z   ...
+2026-10-15T18:11:10.8298527Z # Subtest: continuously changing input recording fits the longest attempt with explicit overflow, never truncation
+2026-10-15T18:11:10.8300318Z ok 55 - continuously changing input recording fits the longest attempt with explicit overflow, never truncation
+2026-10-15T18:11:10.8301354Z   ---
+2026-10-15T18:11:10.8301834Z   duration_ms: 75.853364
+2026-10-15T18:11:10.8302541Z   ...
+2026-10-15T18:11:13.4300998Z # Subtest: SIM world selection freezes on first arm and applies queued preference only on reset
+2026-10-15T18:11:13.4303917Z ok 56 - SIM world selection freezes on first arm and applies queued preference only on reset
+2026-10-15T18:11:13.4314821Z   ---
+2026-10-15T18:11:13.4315433Z   duration_ms: 387.386061
+2026-10-15T18:11:13.4315860Z   ...
+2026-10-15T18:11:13.4316776Z # Subtest: a superseded appearance preparation cannot arm or overwrite the newer flight appearance
+2026-10-15T18:11:13.4318172Z ok 57 - a superseded appearance preparation cannot arm or overwrite the newer flight appearance
+2026-10-15T18:11:13.4318977Z   ---
+2026-10-15T18:11:13.4319301Z   duration_ms: 221.991718
+2026-10-15T18:11:13.4319543Z   ...
+2026-10-15T18:11:13.4320162Z # Subtest: unavailable recorded appearance remains visible after graphics preparation without altering its proof
+2026-10-15T18:11:13.4321374Z ok 58 - unavailable recorded appearance remains visible after graphics preparation without altering its proof
+2026-10-15T18:11:13.4322042Z   ---
+2026-10-15T18:11:13.4322572Z   duration_ms: 278.084097
+2026-10-15T18:11:13.4322837Z   ...
+2026-10-15T18:11:13.4323657Z # Subtest: native optional shell lists twelve drills, uses exclusive keyboard input, and neutralizes blur/dialog/reset
+2026-10-15T18:11:13.4324829Z ok 59 - native optional shell lists twelve drills, uses exclusive keyboard input, and neutralizes blur/dialog/reset
+2026-10-15T18:11:13.4325436Z   ---
+2026-10-15T18:11:13.4325828Z   duration_ms: 813.018167
+2026-10-15T18:11:13.4326243Z   ...
+2026-10-15T18:11:19.2510934Z # Subtest: synthetic USB samples drive the real shell/model to one verified practice completion; reviewing and demonstrations never deliver evidence
+2026-10-15T18:11:19.2518380Z ok 60 - synthetic USB samples drive the real shell/model to one verified practice completion; reviewing and demonstrations never deliver evidence
+2026-10-15T18:11:19.2519770Z   ---
+2026-10-15T18:11:19.2520559Z   duration_ms: 5588.020049
+2026-10-15T18:11:19.2521264Z   ...
+2026-10-15T18:11:19.2523346Z # Subtest: radio switch edges while blurred or hidden cannot rearm; return requires a fresh visible OFF then ON
+2026-10-15T18:11:19.2528593Z ok 61 - radio switch edges while blurred or hidden cannot rearm; return requires a fresh visible OFF then ON
+2026-10-15T18:11:19.2529729Z   ---
+2026-10-15T18:11:19.2530303Z   duration_ms: 349.590007
+2026-10-15T18:11:19.2530928Z   ...
+2026-10-15T18:11:21.8074246Z # Subtest: immediate Retry preserves the completed proof while notebook verification yields
+2026-10-15T18:11:21.8103578Z ok 62 - immediate Retry preserves the completed proof while notebook verification yields
+2026-10-15T18:11:21.8104738Z   ---
+2026-10-15T18:11:21.8105139Z   duration_ms: 1847.856576
+2026-10-15T18:11:21.8105568Z   ...
+2026-10-15T18:11:21.8106385Z # Subtest: Controls camera chooser and toolbar stay synchronized for the narrow layout
+2026-10-15T18:11:21.8107573Z ok 63 - Controls camera chooser and toolbar stay synchronized for the narrow layout
+2026-10-15T18:11:21.8108296Z   ---
+2026-10-15T18:11:21.8108689Z   duration_ms: 161.643992
+2026-10-15T18:11:21.8109092Z   ...
+2026-10-15T18:11:21.8110162Z # Subtest: Studio preview runs the actual course as authoring and never reaches the notebook earning callback
+2026-10-15T18:11:21.8111682Z ok 64 - Studio preview runs the actual course as authoring and never reaches the notebook earning callback
+2026-10-15T18:11:21.8112818Z   ---
+2026-10-15T18:11:21.8113179Z   duration_ms: 1454.835229
+2026-10-15T18:11:21.8113578Z   ...
+2026-10-15T18:11:21.8114428Z # Subtest: radio loss pauses instead of borrowing keyboard and reset drops old throttle pickup
+2026-10-15T18:11:21.8115711Z ok 65 - radio loss pauses instead of borrowing keyboard and reset drops old throttle pickup
+2026-10-15T18:11:21.8116477Z   ---
+2026-10-15T18:11:21.8117034Z   duration_ms: 284.077019
+2026-10-15T18:11:21.8117416Z   ...
+2026-10-15T18:11:21.8118414Z # Subtest: graphics failure leaves readable choices and never advances; context loss freezes an existing attempt
+2026-10-15T18:11:21.8119986Z ok 66 - graphics failure leaves readable choices and never advances; context loss freezes an existing attempt
+2026-10-15T18:11:21.8120910Z   ---
+2026-10-15T18:11:21.8121241Z   duration_ms: 434.177625
+2026-10-15T18:11:21.8121642Z   ...
+2026-10-15T18:11:22.0970841Z # Subtest: replay owns a verified clone, rejects forged course data and cannot be used as a practice source
+2026-10-15T18:11:22.0973007Z ok 67 - replay owns a verified clone, rejects forged course data and cannot be used as a practice source
+2026-10-15T18:11:22.0974489Z   ---
+2026-10-15T18:11:22.0975340Z   duration_ms: 324.149665
+2026-10-15T18:11:22.0975992Z   ...
+2026-10-15T18:11:22.4465112Z # Subtest: Academy shared menu resumes paused playback without restarting or granting practice evidence
+2026-10-15T18:11:22.4483253Z ok 68 - Academy shared menu resumes paused playback without restarting or granting practice evidence
+2026-10-15T18:11:22.4484208Z   ---
+2026-10-15T18:11:22.4484582Z   duration_ms: 369.385389
+2026-10-15T18:11:22.4484996Z   ...
+2026-10-15T18:11:25.4148209Z # Subtest: Academy exhausted unfinished playback offers Results instead of a nonfunctional Continue
+2026-10-15T18:11:25.4149966Z ok 69 - Academy exhausted unfinished playback offers Results instead of a nonfunctional Continue
+2026-10-15T18:11:25.4150934Z   ---
+2026-10-15T18:11:25.4151390Z   duration_ms: 338.746928
+2026-10-15T18:11:25.4151869Z   ...
+2026-10-15T18:11:25.4153183Z # Subtest: touch release holds throttle, centers yaw, and cancellation clears all input and listener ownership
+2026-10-15T18:11:25.4154821Z ok 70 - touch release holds throttle, centers yaw, and cancellation clears all input and listener ownership
+2026-10-15T18:11:25.4155704Z   ---
+2026-10-15T18:11:25.4156075Z   duration_ms: 0.881329
+2026-10-15T18:11:25.4156467Z   ...
+2026-10-15T18:11:25.4157473Z # Subtest: full-length replay admission yields through the shared verifier and cannot earn a practice receipt
+2026-10-15T18:11:25.4159850Z ok 71 - full-length replay admission yields through the shared verifier and cannot earn a practice receipt
+2026-10-15T18:11:25.4160814Z   ---
+2026-10-15T18:11:25.4161475Z   duration_ms: 2583.082579
+2026-10-15T18:11:25.4161914Z   ...
+2026-10-15T18:11:28.0916061Z # Subtest: pending review aborts on reset, input change, dialog close and disposal without late playback
+2026-10-15T18:11:28.0923881Z ok 72 - pending review aborts on reset, input change, dialog close and disposal without late playback
+2026-10-15T18:11:28.0924880Z   ---
+2026-10-15T18:11:28.0925435Z   duration_ms: 794.942683
+2026-10-15T18:11:28.0926124Z   ...
+2026-10-15T18:11:28.0927206Z # Subtest: closing a replay import during file reading prevents verification and late playback
+2026-10-15T18:11:28.0928686Z ok 73 - closing a replay import during file reading prevents verification and late playback
+2026-10-15T18:11:28.0929637Z   ---
+2026-10-15T18:11:28.0930146Z   duration_ms: 206.859578
+2026-10-15T18:11:28.0930699Z   ...
+2026-10-15T18:11:28.0931829Z # Subtest: actual renderer detects unavailable WebGL without allocating a running fallback simulation
+2026-10-15T18:11:28.0933645Z ok 74 - actual renderer detects unavailable WebGL without allocating a running fallback simulation
+2026-10-15T18:11:28.0934662Z   ---
+2026-10-15T18:11:28.0935161Z   duration_ms: 2.360808
+2026-10-15T18:11:28.0935710Z   ...
+2026-10-15T18:11:28.0936971Z # Subtest: disposing releases generated course callbacks; retained old buttons are inert and unrelated host content remains
+2026-10-15T18:11:28.0938902Z ok 75 - disposing releases generated course callbacks; retained old buttons are inert and unrelated host content remains
+2026-10-15T18:11:28.0940026Z   ---
+2026-10-15T18:11:28.0940528Z   duration_ms: 180.096819
+2026-10-15T18:11:28.0941082Z   ...
+2026-10-15T18:11:28.0942514Z # Subtest: stale queued animation timestamps cannot advance after a long execution gap; explicit resume keeps input ownership
+2026-10-15T18:11:28.0944469Z ok 76 - stale queued animation timestamps cannot advance after a long execution gap; explicit resume keeps input ownership
+2026-10-15T18:11:28.0945622Z   ---
+2026-10-15T18:11:28.0946129Z   duration_ms: 1118.013861
+2026-10-15T18:11:28.0946697Z   ...
+2026-10-15T18:11:28.0947839Z # Subtest: cached Back restore preserves paused flight and requires explicit resume without duplicate frames
+2026-10-15T18:11:28.0949530Z ok 77 - cached Back restore preserves paused flight and requires explicit resume without duplicate frames
+2026-10-15T18:11:28.0950556Z   ---
+2026-10-15T18:11:28.0951067Z   duration_ms: 195.151541
+2026-10-15T18:11:28.0951622Z   ...
+2026-10-15T18:11:28.0952726Z # Subtest: cached radio restore requires a fresh arm edge and matching control pickup
+2026-10-15T18:11:28.0954073Z ok 78 - cached radio restore requires a fresh arm edge and matching control pickup
+2026-10-15T18:11:28.0954956Z   ---
+2026-10-15T18:11:28.0955468Z   duration_ms: 238.914024
+2026-10-15T18:11:28.0956013Z   ...
+2026-10-15T18:11:28.2444232Z # Subtest: game return keeps scoped offline controls available and serializes preparation/removal
+2026-10-15T18:11:28.2464874Z ok 79 - game return keeps scoped offline controls available and serializes preparation/removal
+2026-10-15T18:11:28.2466022Z   ---
+2026-10-15T18:11:28.2466557Z   duration_ms: 160.40548
+2026-10-15T18:11:28.2467078Z   ...
+2026-10-15T18:11:28.8213288Z # Subtest: disposing Academy cancels an owned offline verification and releases its progress panel
+2026-10-15T18:11:28.8215157Z ok 80 - disposing Academy cancels an owned offline verification and releases its progress panel
+2026-10-15T18:11:28.8216179Z   ---
+2026-10-15T18:11:28.8216699Z   duration_ms: 134.638397
+2026-10-15T18:11:28.8217284Z   ...
+2026-10-15T18:11:32.7161955Z # Subtest: unavailable offline capability stays explanatory and a failed prepare never reports ready
+2026-10-15T18:11:32.7174125Z ok 81 - unavailable offline capability stays explanatory and a failed prepare never reports ready
+2026-10-15T18:11:32.7175722Z   ---
+2026-10-15T18:11:32.7176319Z   duration_ms: 602.67167
+2026-10-15T18:11:32.7176926Z   ...
+2026-10-15T18:11:32.7178385Z # Subtest: ordinary unload disposes permanently and a late pageshow cannot revive it
+2026-10-15T18:11:32.7180121Z ok 82 - ordinary unload disposes permanently and a late pageshow cannot revive it
+2026-10-15T18:11:32.7181132Z   ---
+2026-10-15T18:11:32.7181688Z   duration_ms: 155.31382
+2026-10-15T18:11:32.7182597Z   ...
+2026-10-15T18:11:32.7183653Z # Subtest: selecting USB radio restores saved axis arm and button reset after reload
+2026-10-15T18:11:32.7185162Z ok 83 - selecting USB radio restores saved axis arm and button reset after reload
+2026-10-15T18:11:32.7186109Z   ---
+2026-10-15T18:11:32.7186489Z   duration_ms: 337.753089
+2026-10-15T18:11:32.7186897Z   ...
+2026-10-15T18:11:32.7187670Z # Subtest: tested TX15 default loads without saved calibration and does not auto-arm
+2026-10-15T18:11:32.7188797Z ok 84 - tested TX15 default loads without saved calibration and does not auto-arm
+2026-10-15T18:11:32.7189476Z   ---
+2026-10-15T18:11:32.7189811Z   duration_ms: 215.160115
+2026-10-15T18:11:32.7190198Z   ...
+2026-10-15T18:11:32.7190775Z # Subtest: TX15 default does not match an unrelated joystick
+2026-10-15T18:11:32.7191573Z ok 85 - TX15 default does not match an unrelated joystick
+2026-10-15T18:11:32.7192037Z   ---
+2026-10-15T18:11:32.7192637Z   duration_ms: 166.600229
+2026-10-15T18:11:32.7192888Z   ...
+2026-10-15T18:11:32.7193466Z # Subtest: camera focus preserves global pause for keyboard, touch and radio owners without resuming held input
+2026-10-15T18:11:32.7194368Z ok 86 - camera focus preserves global pause for keyboard, touch and radio owners without resuming held input
+2026-10-15T18:11:32.7194870Z   ---
+2026-10-15T18:11:32.7195077Z   duration_ms: 1307.05226
+2026-10-15T18:11:32.7195312Z   ...
+2026-10-15T18:11:32.7195848Z # Subtest: pause shortcuts release local controls but preserve text, dialogs and modified browser keys
+2026-10-15T18:11:32.7196661Z ok 87 - pause shortcuts release local controls but preserve text, dialogs and modified browser keys
+2026-10-15T18:11:32.7197142Z   ---
+2026-10-15T18:11:32.7197342Z   duration_ms: 0.772838
+2026-10-15T18:11:32.7197576Z   ...
+2026-10-15T18:11:32.7198099Z # Subtest: Academy title focus loss before flight initialization keeps the menu usable and disarmed
+2026-10-15T18:11:32.7198874Z ok 88 - Academy title focus loss before flight initialization keeps the menu usable and disarmed
+2026-10-15T18:11:32.7199331Z   ---
+2026-10-15T18:11:32.7199535Z   duration_ms: 193.961089
+2026-10-15T18:11:32.7199780Z   ...
+2026-10-15T18:11:32.7200240Z # Subtest: Academy shell keeps menu input out of native flight and requires explicit Start
+2026-10-15T18:11:32.7200924Z ok 89 - Academy shell keeps menu input out of native flight and requires explicit Start
+2026-10-15T18:11:32.7201359Z   ---
+2026-10-15T18:11:32.7201557Z   duration_ms: 354.14646
+2026-10-15T18:11:32.7201805Z   ...
+2026-10-15T18:11:32.7202566Z # Subtest: Academy categories retain every authored preference control and restore nested dialog focus
+2026-10-15T18:11:32.7203385Z ok 90 - Academy categories retain every authored preference control and restore nested dialog focus
+2026-10-15T18:11:32.7203860Z   ---
+2026-10-15T18:11:32.7204074Z   duration_ms: 355.493975
+2026-10-15T18:11:32.7204305Z   ...
+2026-10-15T18:11:32.7204803Z # Subtest: Academy global settings bind canonical records without startup writes or duplicate fields
+2026-10-15T18:11:32.7205593Z ok 91 - Academy global settings bind canonical records without startup writes or duplicate fields
+2026-10-15T18:11:32.7206051Z   ---
+2026-10-15T18:11:32.7206242Z   duration_ms: 536.513704
+2026-10-15T18:11:32.7206471Z   ...
+2026-10-15T18:11:41.5403732Z # Subtest: Academy shared tool iframe retains D-pad focus and controller Back restores paused Settings
+2026-10-15T18:11:41.5405822Z ok 92 - Academy shared tool iframe retains D-pad focus and controller Back restores paused Settings
+2026-10-15T18:11:41.5407023Z   ---
+2026-10-15T18:11:41.5407697Z   duration_ms: 373.220837
+2026-10-15T18:11:41.5408405Z   ...
+2026-10-15T18:11:41.5410091Z # Subtest: fresh Ukrainian Academy launch localizes shared Appearance and cue controls before any language change
+2026-10-15T18:11:41.5412092Z ok 93 - fresh Ukrainian Academy launch localizes shared Appearance and cue controls before any language change
+2026-10-15T18:11:41.5413959Z   ---
+2026-10-15T18:11:41.5414631Z   duration_ms: 187.93235
+2026-10-15T18:11:41.5415347Z   ...
+2026-10-15T18:11:41.5416644Z # Subtest: Academy flight feedback and shared menu sound retain separate sliders and preference records
+2026-10-15T18:11:41.5418457Z ok 94 - Academy flight feedback and shared menu sound retain separate sliders and preference records
+2026-10-15T18:11:41.5419644Z   ---
+2026-10-15T18:11:41.5420392Z   duration_ms: 192.198392
+2026-10-15T18:11:41.5421043Z   ...
+2026-10-15T18:11:41.5422124Z # Subtest: Academy result shortcuts choose once and launch a random prepared lesson directly
+2026-10-15T18:11:41.5423892Z ok 95 - Academy result shortcuts choose once and launch a random prepared lesson directly
+2026-10-15T18:11:41.5424839Z   ---
+2026-10-15T18:11:41.5425450Z   duration_ms: 266.844387
+2026-10-15T18:11:41.5426029Z   ...
+2026-10-15T18:11:41.5426986Z # Subtest: Academy cancels an imminent auto-next before a stalled animation timestamp
+2026-10-15T18:11:41.5428347Z ok 96 - Academy cancels an imminent auto-next before a stalled animation timestamp
+2026-10-15T18:11:41.5429247Z   ---
+2026-10-15T18:11:41.5429806Z   duration_ms: 3734.207006
+2026-10-15T18:11:41.5430363Z   ...
+2026-10-15T18:11:41.5431294Z # Subtest: Academy cancels an imminent auto-next before a stalled callback execution
+2026-10-15T18:11:41.5432935Z ok 97 - Academy cancels an imminent auto-next before a stalled callback execution
+2026-10-15T18:11:41.5433904Z   ---
+2026-10-15T18:11:41.5434546Z   duration_ms: 3769.864916
+2026-10-15T18:11:41.5435257Z   ...
+2026-10-15T18:11:41.5436551Z # Subtest: Academy shared library shows every course, previews the selected flight mode, and launches once
+2026-10-15T18:11:41.5438398Z ok 98 - Academy shared library shows every course, previews the selected flight mode, and launches once
+2026-10-15T18:11:41.5439654Z   ---
+2026-10-15T18:11:41.5440569Z   duration_ms: 221.46678
+2026-10-15T18:11:41.5441505Z   ...
+2026-10-15T18:11:41.5443316Z # Subtest: Academy mission library owns controller navigation and isolated pinned goals
+2026-10-15T18:11:41.5445210Z ok 99 - Academy mission library owns controller navigation and isolated pinned goals
+2026-10-15T18:11:41.5446647Z   ---
+2026-10-15T18:11:41.5447525Z   duration_ms: 303.402259
+2026-10-15T18:11:41.5448411Z   ...
+2026-10-15T18:11:41.6006905Z # Subtest: flight attempts reverify before persistence, reject demonstration or completion flags and isolate transcript records
+2026-10-15T18:11:41.6009515Z ok 100 - flight attempts reverify before persistence, reject demonstration or completion flags and isolate transcript records
+2026-10-15T18:11:41.6011289Z   ---
+2026-10-15T18:11:41.6012045Z   duration_ms: 90.053563
+2026-10-15T18:11:41.6013015Z   ...
+2026-10-15T18:11:41.6014392Z # Subtest: flight finale remains locked at 11/12 and repeats never substitute; twelve Acro is separate
+2026-10-15T18:11:41.6016199Z ok 101 - flight finale remains locked at 11/12 and repeats never substitute; twelve Acro is separate
+2026-10-15T18:11:41.6017556Z   ---
+2026-10-15T18:11:41.6018286Z   duration_ms: 1516.668072
+2026-10-15T18:11:41.6019078Z   ...
+2026-10-15T18:11:41.6020524Z # Subtest: whole transfer verifies before granting any reward and failed saves remain explicitly recoverable
+2026-10-15T18:11:41.6027340Z ok 102 - whole transfer verifies before granting any reward and failed saves remain explicitly recoverable
+2026-10-15T18:11:41.6028810Z   ---
+2026-10-15T18:11:41.6044927Z   duration_ms: 45.629174
+2026-10-15T18:11:41.6045581Z   ...
+2026-10-15T18:11:41.6046826Z # Subtest: studio bundle round trip retains exact criteria, source text, verified demonstration and typed rewards
+2026-10-15T18:11:41.6048645Z ok 103 - studio bundle round trip retains exact criteria, source text, verified demonstration and typed rewards
+2026-10-15T18:11:41.6049753Z   ---
+2026-10-15T18:11:41.6050345Z   duration_ms: 22.592896
+2026-10-15T18:11:41.6051470Z   ...
+2026-10-15T18:11:41.6053116Z # Subtest: changed mode recomputes outcome, response changes require exact identity and proof digest pins every frame
+2026-10-15T18:11:41.6055737Z ok 104 - changed mode recomputes outcome, response changes require exact identity and proof digest pins every frame
+2026-10-15T18:11:41.6057173Z   ---
+2026-10-15T18:11:41.6057791Z   duration_ms: 39.794245
+2026-10-15T18:11:41.6058461Z   ...
+2026-10-15T18:11:41.6059536Z # Subtest: accepted flight return data cannot mutate later proof exports or verified projections
+2026-10-15T18:11:41.6061140Z ok 105 - accepted flight return data cannot mutate later proof exports or verified projections
+2026-10-15T18:11:41.6062419Z   ---
+2026-10-15T18:11:41.6063035Z   duration_ms: 22.032774
+2026-10-15T18:11:41.6063637Z   ...
+2026-10-15T18:11:41.6064764Z # Subtest: flight archive accepts a repeated proof at capacity but rejects a new one before mutation
+2026-10-15T18:11:41.6066519Z ok 106 - flight archive accepts a repeated proof at capacity but rejects a new one before mutation
+2026-10-15T18:11:41.6067601Z   ---
+2026-10-15T18:11:41.6068165Z   duration_ms: 86.865173
+2026-10-15T18:11:41.6068753Z   ...
+2026-10-15T18:11:41.6069980Z # Subtest: explicit retry revalidates a temporarily unreadable index and persists session-only verified work
+2026-10-15T18:11:41.6071843Z ok 107 - explicit retry revalidates a temporarily unreadable index and persists session-only verified work
+2026-10-15T18:11:41.6073209Z   ---
+2026-10-15T18:11:41.6073745Z   duration_ms: 25.666261
+2026-10-15T18:11:41.6074338Z   ...
+2026-10-15T18:11:41.6075458Z # Subtest: missing exact proof keeps a recovery warning while its previously earned discovery is preserved
+2026-10-15T18:11:41.6077112Z ok 108 - missing exact proof keeps a recovery warning while its previously earned discovery is preserved
+2026-10-15T18:11:41.6078139Z   ---
+2026-10-15T18:11:41.6078658Z   duration_ms: 150.576465
+2026-10-15T18:11:41.6079227Z   ...
+2026-10-15T18:11:41.6080301Z # Subtest: notebook close cancels initial hydration before ready and rejects queued or later evidence work
+2026-10-15T18:11:41.6082000Z ok 109 - notebook close cancels initial hydration before ready and rejects queued or later evidence work
+2026-10-15T18:11:41.6083247Z   ---
+2026-10-15T18:11:41.6083772Z   duration_ms: 8.299845
+2026-10-15T18:11:41.6084353Z   ...
+2026-10-15T18:11:41.6085280Z # Subtest: notebook forwards explicit import cancellation without a receipt or proof write
+2026-10-15T18:11:41.6086652Z ok 110 - notebook forwards explicit import cancellation without a receipt or proof write
+2026-10-15T18:11:41.6087547Z   ---
+2026-10-15T18:11:41.6088056Z   duration_ms: 45.033399
+2026-10-15T18:11:41.6088604Z   ...
+2026-10-15T18:11:41.6089559Z # Subtest: offline actions serialize button intent and retain the invoking dialog owner
+2026-10-15T18:11:41.6090953Z ok 111 - offline actions serialize button intent and retain the invoking dialog owner
+2026-10-15T18:11:41.6091950Z   ---
+2026-10-15T18:11:41.6092791Z   duration_ms: 7.530224
+2026-10-15T18:11:41.6093405Z   ...
+2026-10-15T18:11:41.6094384Z # Subtest: native offload uses only the runtime remover and retains world and proof data
+2026-10-15T18:11:41.6095833Z ok 112 - native offload uses only the runtime remover and retains world and proof data
+2026-10-15T18:11:41.6096774Z   ---
+2026-10-15T18:11:41.6097295Z   duration_ms: 6.416743
+2026-10-15T18:11:41.6097864Z   ...
+2026-10-15T18:11:41.6098852Z # Subtest: unavailable workers disable both native controls without invoking operations
+2026-10-15T18:11:41.6100437Z ok 113 - unavailable workers disable both native controls without invoking operations
+2026-10-15T18:11:41.6101422Z   ---
+2026-10-15T18:11:41.6102048Z   duration_ms: 0.641312
+2026-10-15T18:11:41.6102950Z   ...
+2026-10-15T18:11:41.6103965Z # Subtest: disposal aborts the download and a late success cannot repaint the removed host
+2026-10-15T18:11:41.6105404Z ok 114 - disposal aborts the download and a late success cannot repaint the removed host
+2026-10-15T18:11:41.6106362Z   ---
+2026-10-15T18:11:41.6107128Z   duration_ms: 0.479472
+2026-10-15T18:11:41.6107888Z   ...
+2026-10-15T18:11:41.6108932Z # Subtest: pagehide cancels preparation, reports cancellation and releases busy ownership
+2026-10-15T18:11:41.6110451Z ok 115 - pagehide cancels preparation, reports cancellation and releases busy ownership
+2026-10-15T18:11:41.6111435Z   ---
+2026-10-15T18:11:41.6111984Z   duration_ms: 5.708536
+2026-10-15T18:11:41.6112790Z   ...
+2026-10-15T18:11:41.6113757Z # Subtest: failed removal remains retryable and never reports a removed installation
+2026-10-15T18:11:41.6115153Z ok 116 - failed removal remains retryable and never reports a removed installation
+2026-10-15T18:11:41.6116065Z   ---
+2026-10-15T18:11:41.6116589Z   duration_ms: 5.193158
+2026-10-15T18:11:41.6117161Z   ...
+2026-10-15T18:11:41.6118450Z # Subtest: reordered unmapped radio, reversed pitch and full noncentring throttle normalize independently of stick diagram
+2026-10-15T18:11:41.6120403Z ok 117 - reordered unmapped radio, reversed pitch and full noncentring throttle normalize independently of stick diagram
+2026-10-15T18:11:41.6121583Z   ---
+2026-10-15T18:11:41.6122100Z   duration_ms: 3.227883
+2026-10-15T18:11:41.6122935Z   ...
+2026-10-15T18:11:41.6123954Z # Subtest: asymmetric centres and deadzones calibrate without a hidden response curve
+2026-10-15T18:11:41.6125386Z ok 118 - asymmetric centres and deadzones calibrate without a hidden response curve
+2026-10-15T18:11:41.6126301Z   ---
+2026-10-15T18:11:41.6126820Z   duration_ms: 0.737321
+2026-10-15T18:11:41.6127389Z   ...
+2026-10-15T18:11:41.6128736Z # Subtest: bounded imports reject duplicate channels, malformed counts, incomplete calibration, unknown fields and nonfinite input
+2026-10-15T18:11:41.6130896Z ok 119 - bounded imports reject duplicate channels, malformed counts, incomplete calibration, unknown fields and nonfinite input
+2026-10-15T18:11:41.6132317Z   ---
+2026-10-15T18:11:41.6132880Z   duration_ms: 2.97881
+2026-10-15T18:11:41.6133434Z   ...
+2026-10-15T18:11:41.6134428Z # Subtest: response profiles use an explicit bounded integer cubic blend and round trip
+2026-10-15T18:11:41.6135813Z ok 120 - response profiles use an explicit bounded integer cubic blend and round trip
+2026-10-15T18:11:41.6136828Z   ---
+2026-10-15T18:11:41.6137357Z   duration_ms: 0.458883
+2026-10-15T18:11:41.6137953Z   ...
+2026-10-15T18:11:41.6139039Z # Subtest: arming explains high throttle and neutral attitude requirements; held timestamps remain valid
+2026-10-15T18:11:41.6140684Z ok 121 - arming explains high throttle and neutral attitude requirements; held timestamps remain valid
+2026-10-15T18:11:41.6141699Z   ---
+2026-10-15T18:11:41.6142449Z   duration_ms: 1.47864
+2026-10-15T18:11:41.6143019Z   ...
+2026-10-15T18:11:41.6144253Z # Subtest: same-slot replacement and disconnect clear input; reappearance requires explicit verification and arm
+2026-10-15T18:11:41.6146054Z ok 122 - same-slot replacement and disconnect clear input; reappearance requires explicit verification and arm
+2026-10-15T18:11:41.6147096Z   ---
+2026-10-15T18:11:41.6147591Z   duration_ms: 1.115605
+2026-10-15T18:11:41.6148137Z   ...
+2026-10-15T18:11:41.6149211Z # Subtest: airborne pause requires pickup at previous controls, not low throttle; reset clears pickup
+2026-10-15T18:11:41.6150811Z ok 123 - airborne pause requires pickup at previous controls, not low throttle; reset clears pickup
+2026-10-15T18:11:41.6151871Z   ---
+2026-10-15T18:11:41.6152693Z   duration_ms: 0.6775
+2026-10-15T18:11:41.6153303Z   ...
+2026-10-15T18:11:41.6154792Z # Subtest: latched arm starts OFF, needs fresh OFF→ON after focus loss and cannot reconnect armed
+2026-10-15T18:11:41.6156505Z ok 124 - latched arm starts OFF, needs fresh OFF→ON after focus loss and cannot reconnect armed
+2026-10-15T18:11:41.6157498Z   ---
+2026-10-15T18:11:41.6158020Z   duration_ms: 0.602
+2026-10-15T18:11:41.6158578Z   ...
+2026-10-15T18:11:41.6159850Z # Subtest: calibration profile replacement invalidates verification; malformed or throwing browser API is diagnosable
+2026-10-15T18:11:41.6162030Z ok 125 - calibration profile replacement invalidates verification; malformed or throwing browser API is diagnosable
+2026-10-15T18:11:41.6163689Z   ---
+2026-10-15T18:11:41.6164245Z   duration_ms: 0.792614
+2026-10-15T18:11:41.6164813Z   ...
+2026-10-15T18:11:41.6166034Z # Subtest: profiles have validated export/import and failed writes are visible session-only without changing Journey
+2026-10-15T18:11:41.6168011Z ok 126 - profiles have validated export/import and failed writes are visible session-only without changing Journey
+2026-10-15T18:11:41.6169150Z   ---
+2026-10-15T18:11:41.6169760Z   duration_ms: 12.477156
+2026-10-15T18:11:41.6170355Z   ...
+2026-10-15T18:11:41.6171457Z # Subtest: radio arm switch disarms on OFF and held reset restarts only once, requiring a fresh arm edge
+2026-10-15T18:11:41.6173321Z ok 127 - radio arm switch disarms on OFF and held reset restarts only once, requiring a fresh arm edge
+2026-10-15T18:11:41.6174328Z   ---
+2026-10-15T18:11:41.6174884Z   duration_ms: 1.519766
+2026-10-15T18:11:41.6175477Z   ...
+2026-10-15T18:11:41.6176590Z # Subtest: v2 axis switches preserve v1 calibration, reject flight-axis overlap and require fresh arming
+2026-10-15T18:11:41.6178256Z ok 128 - v2 axis switches preserve v1 calibration, reject flight-axis overlap and require fresh arming
+2026-10-15T18:11:41.6179322Z   ---
+2026-10-15T18:11:41.6179844Z   duration_ms: 2.175506
+2026-10-15T18:11:41.6180401Z   ...
+2026-10-15T18:11:41.6181561Z # Subtest: 0.5x self-level review displays every fixed model step, reaches the verified outcome and cannot earn
+2026-10-15T18:11:41.6183582Z ok 129 - 0.5x self-level review displays every fixed model step, reaches the verified outcome and cannot earn
+2026-10-15T18:11:41.6184673Z   ---
+2026-10-15T18:11:41.6185200Z   duration_ms: 2922.871005
+2026-10-15T18:11:41.6185783Z   ...
+2026-10-15T18:11:41.6186949Z # Subtest: 1x self-level review displays every fixed model step, reaches the verified outcome and cannot earn
+2026-10-15T18:11:41.6188673Z ok 130 - 1x self-level review displays every fixed model step, reaches the verified outcome and cannot earn
+2026-10-15T18:11:41.6189731Z   ---
+2026-10-15T18:11:41.6190253Z   duration_ms: 1654.158922
+2026-10-15T18:11:41.6190839Z   ...
+2026-10-15T18:11:41.6191943Z # Subtest: 0.5x acro review displays every fixed model step, reaches the verified outcome and cannot earn
+2026-10-15T18:11:41.6193783Z ok 131 - 0.5x acro review displays every fixed model step, reaches the verified outcome and cannot earn
+2026-10-15T18:11:41.6194797Z   ---
+2026-10-15T18:11:41.6195378Z   duration_ms: 2600.602692
+2026-10-15T18:11:41.6195984Z   ...
+2026-10-15T18:11:41.6197075Z # Subtest: 1x acro review displays every fixed model step, reaches the verified outcome and cannot earn
+2026-10-15T18:11:41.6198656Z ok 132 - 1x acro review displays every fixed model step, reaches the verified outcome and cannot earn
+2026-10-15T18:11:41.6199665Z   ---
+2026-10-15T18:11:41.6200192Z   duration_ms: 1632.085683
+2026-10-15T18:11:41.6200755Z   ...
+2026-10-15T18:11:41.6201986Z # Subtest: changing review speed preserves pause and blur recovery, rejects foreign rates, and never buffers a catch-up
+2026-10-15T18:11:41.6204090Z ok 133 - changing review speed preserves pause and blur recovery, rejects foreign rates, and never buffers a catch-up
+2026-10-15T18:11:41.6205279Z   ---
+2026-10-15T18:11:41.6205893Z   duration_ms: 633.87022
+2026-10-15T18:11:41.6206765Z   ...
+2026-10-15T18:11:41.6207885Z # Subtest: replay speed is localized and cannot change practice or start a replay by itself
+2026-10-15T18:11:41.6209411Z ok 134 - replay speed is localized and cannot change practice or start a replay by itself
+2026-10-15T18:11:41.6210373Z   ---
+2026-10-15T18:11:41.6210925Z   duration_ms: 455.737238
+2026-10-15T18:11:41.6211560Z   ...
+2026-10-15T18:11:41.6213199Z # Subtest: Flight Studio actual import/export preserves authored rewards and locale switches keep unapplied fields
+2026-10-15T18:11:41.6215196Z ok 135 - Flight Studio actual import/export preserves authored rewards and locale switches keep unapplied fields
+2026-10-15T18:11:41.6216672Z   ---
+2026-10-15T18:11:41.6217351Z   duration_ms: 109.645567
+2026-10-15T18:11:41.6218269Z   ...
+2026-10-15T18:11:41.6219592Z # Subtest: practice studio rejects foreign ownership, unsupported dependencies and unchanged rebind revisions
+2026-10-15T18:11:41.6221526Z ok 136 - practice studio rejects foreign ownership, unsupported dependencies and unchanged rebind revisions
+2026-10-15T18:11:41.6223066Z   ---
+2026-10-15T18:11:41.6223685Z   duration_ms: 16.711803
+2026-10-15T18:11:41.6224309Z   ...
+2026-10-15T18:11:41.6225430Z # Subtest: Radio setup import, explicit verification and save retain switch threshold and inversion
+2026-10-15T18:11:41.6227203Z ok 137 - Radio setup import, explicit verification and save retain switch threshold and inversion
+2026-10-15T18:11:41.6228369Z   ---
+2026-10-15T18:11:41.6229023Z   duration_ms: 29.059866
+2026-10-15T18:11:41.6229752Z   ...
+2026-10-15T18:11:41.6230766Z # Subtest: Acro notebook review chooses only evidence satisfying its mode rule
+2026-10-15T18:11:41.6232511Z ok 138 - Acro notebook review chooses only evidence satisfying its mode rule
+2026-10-15T18:11:41.6233586Z   ---
+2026-10-15T18:11:41.6234223Z   duration_ms: 77.675161
+2026-10-15T18:11:41.6234822Z   ...
+2026-10-15T18:11:41.6235980Z # Subtest: a custom imported course remains selectable with its exact reward and demonstration slot
+2026-10-15T18:11:41.6237976Z ok 139 - a custom imported course remains selectable with its exact reward and demonstration slot
+2026-10-15T18:11:41.6239211Z   ---
+2026-10-15T18:11:41.6239840Z   duration_ms: 15.696546
+2026-10-15T18:11:41.6240489Z   ...
+2026-10-15T18:11:41.6241731Z # Subtest: notebook import has a neutral localized Cancel action and disposal aborts a pending transfer
+2026-10-15T18:11:41.6243885Z ok 140 - notebook import has a neutral localized Cancel action and disposal aborts a pending transfer
+2026-10-15T18:11:41.6245086Z   ---
+2026-10-15T18:11:41.6245674Z   duration_ms: 28.600883
+2026-10-15T18:11:41.6246319Z   ...
+2026-10-15T18:11:41.6247687Z # Subtest: optional installations preserve previous versions and isolate stable roots without touching Journey
+2026-10-15T18:11:41.6249696Z ok 141 - optional installations preserve previous versions and isolate stable roots without touching Journey
+2026-10-15T18:11:41.6250912Z   ---
+2026-10-15T18:11:41.6251536Z   duration_ms: 1.932242
+2026-10-15T18:11:41.6252464Z   ...
+2026-10-15T18:11:41.6253635Z # Subtest: optional launch references reject foreign origins, roots, entries and versions
+2026-10-15T18:11:41.6255148Z ok 142 - optional launch references reject foreign origins, roots, entries and versions
+2026-10-15T18:11:41.6256201Z   ---
+2026-10-15T18:11:41.6256809Z   duration_ms: 1.266694
+2026-10-15T18:11:41.6257424Z   ...
+2026-10-15T18:11:41.6258603Z # Subtest: an installation pointer is recorded only after a verified worker activates
+2026-10-15T18:11:41.6260088Z ok 143 - an installation pointer is recorded only after a verified worker activates
+2026-10-15T18:11:41.6261110Z   ---
+2026-10-15T18:11:41.6261747Z   duration_ms: 29.869772
+2026-10-15T18:11:41.6262656Z   ...
+2026-10-15T18:11:41.6263948Z # Subtest: stable launcher forwards a bounded cosmetic pin without admitting navigation or storage context
+2026-10-15T18:11:41.6265821Z ok 144 - stable launcher forwards a bounded cosmetic pin without admitting navigation or storage context
+2026-10-15T18:11:41.6267003Z   ---
+2026-10-15T18:11:41.6267655Z   duration_ms: 11.844296
+2026-10-15T18:11:41.6268353Z   ...
+2026-10-15T18:11:41.6269583Z # Subtest: launcher keeps missing-file repair and removal visible after checking an available release
+2026-10-15T18:11:41.6270983Z ok 145 - launcher keeps missing-file repair and removal visible after checking an available release
+2026-10-15T18:11:41.6271641Z   ---
+2026-10-15T18:11:41.6271995Z   duration_ms: 11.06635
+2026-10-15T18:11:41.6272910Z   ...
+2026-10-15T18:11:41.6273964Z # Subtest: launcher distinguishes unfinished verification from missing files without inventing readiness
+2026-10-15T18:11:41.6285545Z ok 146 - launcher distinguishes unfinished verification from missing files without inventing readiness
+2026-10-15T18:11:41.6286627Z   ---
+2026-10-15T18:11:41.6286982Z   duration_ms: 8.743022
+2026-10-15T18:11:41.6287356Z   ...
+2026-10-15T18:11:41.6288216Z # Subtest: stable launcher keeps locale and appearance on auto-play and verified offline fallback
+2026-10-15T18:11:41.6289515Z ok 147 - stable launcher keeps locale and appearance on auto-play and verified offline fallback
+2026-10-15T18:11:41.6290286Z   ---
+2026-10-15T18:11:41.6290624Z   duration_ms: 2.583882
+2026-10-15T18:11:41.6290986Z   ...
+2026-10-15T18:11:41.6291866Z # Subtest: stable launcher reads only a bounded explicit pointer and cancels abandoned checks
+2026-10-15T18:11:41.6293376Z ok 148 - stable launcher reads only a bounded explicit pointer and cancels abandoned checks
+2026-10-15T18:11:41.6294130Z   ---
+2026-10-15T18:11:41.6294463Z   duration_ms: 7.318123
+2026-10-15T18:11:41.6294839Z   ...
+2026-10-15T18:11:41.6295722Z # Subtest: status cancellation owns lookup and reply lifetime without cancelling a playing worker
+2026-10-15T18:11:41.6297037Z ok 149 - status cancellation owns lookup and reply lifetime without cancelling a playing worker
+2026-10-15T18:11:41.6297817Z   ---
+2026-10-15T18:11:41.6298148Z   duration_ms: 9.490581
+2026-10-15T18:11:41.6298523Z   ...
+2026-10-15T18:11:41.6299400Z # Subtest: detailed readiness distinguishes missing dependencies from an inconclusive worker check
+2026-10-15T18:11:41.6300758Z ok 150 - detailed readiness distinguishes missing dependencies from an inconclusive worker check
+2026-10-15T18:11:41.6301555Z   ---
+2026-10-15T18:11:41.6301890Z   duration_ms: 37.113062
+2026-10-15T18:11:41.6302466Z   ...
+2026-10-15T18:11:41.6303261Z # Subtest: cancelling initial verification never records a late successful installation
+2026-10-15T18:11:41.6304447Z ok 151 - cancelling initial verification never records a late successful installation
+2026-10-15T18:11:41.6305165Z   ---
+2026-10-15T18:11:41.6305498Z   duration_ms: 5.74033
+2026-10-15T18:11:41.6305860Z   ...
+2026-10-15T18:11:41.6306702Z # Subtest: cancelling final verification rejects after activation without publishing a receipt
+2026-10-15T18:11:41.6307998Z ok 152 - cancelling final verification rejects after activation without publishing a receipt
+2026-10-15T18:11:41.6308759Z   ---
+2026-10-15T18:11:41.6309097Z   duration_ms: 11.743529
+2026-10-15T18:11:41.6309477Z   ...
+2026-10-15T18:11:41.6310209Z # Subtest: pagehide cancels its package operation and a fresh owner can reinstall
+2026-10-15T18:11:41.6311291Z ok 153 - pagehide cancels its package operation and a fresh owner can reinstall
+2026-10-15T18:11:41.6311967Z   ---
+2026-10-15T18:11:41.6342697Z   duration_ms: 12.783562
+2026-10-15T18:11:41.6343147Z   ...
+2026-10-15T18:11:41.6344012Z # Subtest: default progress belongs to the invoking native modal and Cancel restores its focus
+2026-10-15T18:11:41.6345293Z ok 154 - default progress belongs to the invoking native modal and Cancel restores its focus
+2026-10-15T18:11:41.6346047Z   ---
+2026-10-15T18:11:41.6346406Z   duration_ms: 8.764521
+2026-10-15T18:11:41.6346789Z   ...
+2026-10-15T18:11:41.6347569Z # Subtest: closing a moved settings owner cancels its download without reclaiming focus
+2026-10-15T18:11:41.6348740Z ok 155 - closing a moved settings owner cancels its download without reclaiming focus
+2026-10-15T18:11:41.6349461Z   ---
+2026-10-15T18:11:41.6349799Z   duration_ms: 7.040728
+2026-10-15T18:11:41.6350173Z   ...
+2026-10-15T18:11:41.6351024Z # Subtest: successful preparation removes progress without stealing focus from another control
+2026-10-15T18:11:41.6352552Z ok 156 - successful preparation removes progress without stealing focus from another control
+2026-10-15T18:11:41.6353351Z   ---
+2026-10-15T18:11:41.6353691Z   duration_ms: 6.643089
+2026-10-15T18:11:41.6354014Z   ...
+2026-10-15T18:11:41.6354478Z # Subtest: custom progress keeps caller-owned UI, focus and dialog lifetime unchanged
+2026-10-15T18:11:41.6355165Z ok 157 - custom progress keeps caller-owned UI, focus and dialog lifetime unchanged
+2026-10-15T18:11:41.6355914Z   ---
+2026-10-15T18:11:41.6356286Z   duration_ms: 5.890599
+2026-10-15T18:11:41.6356826Z   ...
+2026-10-15T18:11:41.6357514Z # Subtest: a closed explicit progress owner cannot start a hidden download
+2026-10-15T18:11:41.6358511Z ok 158 - a closed explicit progress owner cannot start a hidden download
+2026-10-15T18:11:41.6359144Z   ---
+2026-10-15T18:11:41.6359476Z   duration_ms: 1.216011
+2026-10-15T18:11:41.6359919Z   ...
+2026-10-15T18:11:41.6360709Z # Subtest: late registration is cancelled and cannot recreate an installation receipt
+2026-10-15T18:11:41.6361857Z ok 159 - late registration is cancelled and cannot recreate an installation receipt
+2026-10-15T18:11:41.6362779Z   ---
+2026-10-15T18:11:41.6363118Z   duration_ms: 11.79218
+2026-10-15T18:11:41.6363495Z   ...
+2026-10-15T18:11:41.6364573Z # Subtest: removal retains registration ownership after caller cancellation until even a late activated worker is removed
+2026-10-15T18:11:41.6366278Z ok 160 - removal retains registration ownership after caller cancellation until even a late activated worker is removed
+2026-10-15T18:11:41.6367224Z   ---
+2026-10-15T18:11:41.6367562Z   duration_ms: 6.352136
+2026-10-15T18:11:41.6367931Z   ...
+2026-10-15T18:11:41.6368915Z # (node:2651) ExperimentalWarning: The MockTimers API is an experimental feature and might change at any time
+2026-10-15T18:11:41.6370147Z # (Use `node --trace-warnings ...` to show where the warning was created)
+2026-10-15T18:11:41.6371331Z # Subtest: a stuck registration bounds removal waiting and a timed-out removal never runs later
+2026-10-15T18:11:41.6393254Z ok 161 - a stuck registration bounds removal waiting and a timed-out removal never runs later
+2026-10-15T18:11:41.6394247Z   ---
+2026-10-15T18:11:41.6394634Z   duration_ms: 9.137284
+2026-10-15T18:11:41.6395069Z   ...
+2026-10-15T18:11:41.6395993Z # Subtest: offload waits for worker write settlement and both game wrappers use scoped removal
+2026-10-15T18:11:41.6397381Z ok 162 - offload waits for worker write settlement and both game wrappers use scoped removal
+2026-10-15T18:11:41.6398228Z   ---
+2026-10-15T18:11:41.6398605Z   duration_ms: 12.001929
+2026-10-15T18:11:41.6399035Z   ...
+2026-10-15T18:11:41.6399918Z # Subtest: offload cancels an old verification before its pointer and exact cache are removed
+2026-10-15T18:11:41.6401284Z ok 163 - offload cancels an old verification before its pointer and exact cache are removed
+2026-10-15T18:11:41.6402408Z   ---
+2026-10-15T18:11:41.6402800Z   duration_ms: 5.9283
+2026-10-15T18:11:41.6403214Z   ...
+2026-10-15T18:11:41.6404294Z # Subtest: missing dependencies require repair, then exact offload and a fresh install restore the same receipt
+2026-10-15T18:11:41.6405944Z ok 164 - missing dependencies require repair, then exact offload and a fresh install restore the same receipt
+2026-10-15T18:11:41.6406904Z   ---
+2026-10-15T18:11:41.6407298Z   duration_ms: 20.310828
+2026-10-15T18:11:41.6407728Z   ...
+2026-10-15T18:11:41.6408616Z # Subtest: civilian-flight worker keeps cancellation received before its controller exists
+2026-10-15T18:11:41.6409950Z ok 165 - civilian-flight worker keeps cancellation received before its controller exists
+2026-10-15T18:11:41.6410783Z   ---
+2026-10-15T18:11:41.6411157Z   duration_ms: 1.644026
+2026-10-15T18:11:41.6411566Z   ...
+2026-10-15T18:11:41.6412906Z # Subtest: civilian-flight worker waits for final writes then rejects cancellation, without announcing ready
+2026-10-15T18:11:41.6414474Z ok 166 - civilian-flight worker waits for final writes then rejects cancellation, without announcing ready
+2026-10-15T18:11:41.6415566Z   ---
+2026-10-15T18:11:41.6415927Z   duration_ms: 10.63078
+2026-10-15T18:11:41.6416318Z   ...
+2026-10-15T18:11:41.6417318Z # Subtest: civilian-flight old controlling worker does not recreate an offloaded cache on a later asset read
+2026-10-15T18:11:41.6418924Z ok 167 - civilian-flight old controlling worker does not recreate an offloaded cache on a later asset read
+2026-10-15T18:11:41.6419829Z   ---
+2026-10-15T18:11:41.6420207Z   duration_ms: 2.815444
+2026-10-15T18:11:41.6420897Z   ...
+2026-10-15T18:11:41.6421898Z # Subtest: civilian-flight read-only status does not recreate a cache removed after its names were read
+2026-10-15T18:11:41.6424156Z ok 168 - civilian-flight read-only status does not recreate a cache removed after its names were read
+2026-10-15T18:11:41.6425097Z   ---
+2026-10-15T18:11:41.6425531Z   duration_ms: 2.624238
+2026-10-15T18:11:41.6425923Z   ...
+2026-10-15T18:11:41.6426793Z # Subtest: civilian-flight status cannot certify an empty dependency set or a missing package
+2026-10-15T18:11:41.6428144Z ok 169 - civilian-flight status cannot certify an empty dependency set or a missing package
+2026-10-15T18:11:41.6428947Z   ---
+2026-10-15T18:11:41.6429293Z   duration_ms: 0.432935
+2026-10-15T18:11:41.6429676Z   ...
+2026-10-15T18:11:41.6430485Z # Subtest: package worker keeps cancellation received before its controller exists
+2026-10-15T18:11:41.6431723Z ok 170 - package worker keeps cancellation received before its controller exists
+2026-10-15T18:11:41.6432772Z   ---
+2026-10-15T18:11:41.6433165Z   duration_ms: 0.791531
+2026-10-15T18:11:41.6433593Z   ...
+2026-10-15T18:11:41.6434547Z # Subtest: package worker waits for final writes then rejects cancellation, without announcing ready
+2026-10-15T18:11:41.6435972Z ok 171 - package worker waits for final writes then rejects cancellation, without announcing ready
+2026-10-15T18:11:41.6436834Z   ---
+2026-10-15T18:11:41.6437230Z   duration_ms: 6.281075
+2026-10-15T18:11:41.6437661Z   ...
+2026-10-15T18:11:41.6438606Z # Subtest: package old controlling worker does not recreate an offloaded cache on a later asset read
+2026-10-15T18:11:41.6440016Z ok 172 - package old controlling worker does not recreate an offloaded cache on a later asset read
+2026-10-15T18:11:41.6440894Z   ---
+2026-10-15T18:11:41.6441276Z   duration_ms: 4.116318
+2026-10-15T18:11:41.6441689Z   ...
+2026-10-15T18:11:41.6442960Z # Subtest: package read-only status does not recreate a cache removed after its names were read
+2026-10-15T18:11:41.6444350Z ok 173 - package read-only status does not recreate a cache removed after its names were read
+2026-10-15T18:11:41.6445191Z   ---
+2026-10-15T18:11:41.6445587Z   duration_ms: 1.213566
+2026-10-15T18:11:41.6446004Z   ...
+2026-10-15T18:11:41.6446834Z # Subtest: package status cannot certify an empty dependency set or a missing package
+2026-10-15T18:11:41.6448181Z ok 174 - package status cannot certify an empty dependency set or a missing package
+2026-10-15T18:11:41.6448996Z   ---
+2026-10-15T18:11:41.6449388Z   duration_ms: 0.404111
+2026-10-15T18:11:41.6449811Z   ...
+2026-10-15T18:11:41.6450883Z # Subtest: optional navigation resolves source and frozen default/edition hosts without forwarding query choices
+2026-10-15T18:11:41.6452835Z ok 175 - optional navigation resolves source and frozen default/edition hosts without forwarding query choices
+2026-10-15T18:11:41.6453835Z   ---
+2026-10-15T18:11:41.6454223Z   duration_ms: 1.535674
+2026-10-15T18:11:41.6454649Z   ...
+2026-10-15T18:11:41.6455422Z # Subtest: unqualified source previews are limited to the loopback source entry
+2026-10-15T18:11:41.6456647Z ok 176 - unqualified source previews are limited to the loopback source entry
+2026-10-15T18:11:41.6457402Z   ---
+2026-10-15T18:11:41.6457766Z   duration_ms: 1.407236
+2026-10-15T18:11:41.6458180Z   ...
+2026-10-15T18:11:41.6459024Z # Subtest: Snake offers the exact World source preview only at a loopback source root
+2026-10-15T18:11:41.6460293Z ok 177 - Snake offers the exact World source preview only at a loopback source root
+2026-10-15T18:11:41.6461090Z   ---
+2026-10-15T18:11:41.6461458Z   duration_ms: 0.259863
+2026-10-15T18:11:41.6461857Z   ...
+2026-10-15T18:11:41.6463113Z # Subtest: launcher catalog rejects external links, encoded paths, duplicates and oversized responses
+2026-10-15T18:11:41.6464650Z ok 178 - launcher catalog rejects external links, encoded paths, duplicates and oversized responses
+2026-10-15T18:11:41.6465563Z   ---
+2026-10-15T18:11:41.6465956Z   duration_ms: 20.516335
+2026-10-15T18:11:41.6466386Z   ...
+2026-10-15T18:11:41.6467545Z # Subtest: shared practice entry is explicit, pauses once and never prefetches package bytes
+2026-10-15T18:11:41.6469175Z ok 179 - shared practice entry is explicit, pauses once and never prefetches package bytes
+2026-10-15T18:11:41.6470035Z   ---
+2026-10-15T18:11:41.6470427Z   duration_ms: 17.23674
+2026-10-15T18:11:41.6470858Z   ...
+2026-10-15T18:11:41.6471809Z # Subtest: closing an in-flight optional catalog discards late results and restores its opener
+2026-10-15T18:11:41.6473504Z ok 180 - closing an in-flight optional catalog discards late results and restores its opener
+2026-10-15T18:11:41.6474356Z   ---
+2026-10-15T18:11:41.6474756Z   duration_ms: 2.60366
+2026-10-15T18:11:41.6475184Z   ...
+2026-10-15T18:11:41.6476005Z # Subtest: a stalled optional catalog times out and leaves an explicit retry available
+2026-10-15T18:11:41.6477311Z ok 181 - a stalled optional catalog times out and leaves an explicit retry available
+2026-10-15T18:11:41.6478116Z   ---
+2026-10-15T18:11:41.6478506Z   duration_ms: 7.47219
+2026-10-15T18:11:41.6478955Z   ...
+2026-10-15T18:11:41.6479920Z # Subtest: Home and More share one public loader and restore the actual opener without resuming play
+2026-10-15T18:11:41.6481401Z ok 182 - Home and More share one public loader and restore the actual opener without resuming play
+2026-10-15T18:11:41.6482617Z   ---
+2026-10-15T18:11:41.6483014Z   duration_ms: 7.8655
+2026-10-15T18:11:41.6483424Z   ...
+2026-10-15T18:11:41.6484386Z # Subtest: local gym and FPV previews stay separate and usable while the public catalog is unavailable
+2026-10-15T18:11:41.6485906Z ok 183 - local gym and FPV previews stay separate and usable while the public catalog is unavailable
+2026-10-15T18:11:41.6486803Z   ---
+2026-10-15T18:11:41.6487197Z   duration_ms: 9.58144
+2026-10-15T18:11:41.6487622Z   ...
+2026-10-15T18:11:41.6488594Z # Subtest: SIM opens the checked bundled entry directly without an interstitial or package download
+2026-10-15T18:11:41.6490096Z ok 184 - SIM opens the checked bundled entry directly without an interstitial or package download
+2026-10-15T18:11:41.6490966Z   ---
+2026-10-15T18:11:41.6491357Z   duration_ms: 6.978962
+2026-10-15T18:11:41.6491764Z   ...
+2026-10-15T18:11:41.6493137Z # Subtest: unavailable SIM offers recovery without navigating or downloading, and closing cancels late entry checks
+2026-10-15T18:11:41.6494918Z ok 185 - unavailable SIM offers recovery without navigating or downloading, and closing cancels late entry checks
+2026-10-15T18:11:41.6495930Z   ---
+2026-10-15T18:11:41.6496329Z   duration_ms: 8.374818
+2026-10-15T18:11:41.6496756Z   ...
+2026-10-15T18:11:41.6497764Z # Subtest: installed practice links retain launch intent and refresh the appearance pin on activation
+2026-10-15T18:11:41.6499340Z ok 186 - installed practice links retain launch intent and refresh the appearance pin on activation
+2026-10-15T18:11:41.6500238Z   ---
+2026-10-15T18:11:41.6500593Z   duration_ms: 6.399966
+2026-10-15T18:11:41.6500994Z   ...
+2026-10-15T18:11:41.6501944Z # Subtest: standalone directory preserves selected locale for main game, guide and package links
+2026-10-15T18:11:41.6503693Z ok 187 - standalone directory preserves selected locale for main game, guide and package links
+2026-10-15T18:11:41.6504546Z   ---
+2026-10-15T18:11:41.6504923Z   duration_ms: 3.304102
+2026-10-15T18:11:41.6505327Z   ...
+2026-10-15T18:11:41.6506156Z # Subtest: directory introduction stays accurate for empty and extended catalogues
+2026-10-15T18:11:41.6507427Z ok 188 - directory introduction stays accurate for empty and extended catalogues
+2026-10-15T18:11:41.6508222Z   ---
+2026-10-15T18:11:41.6508611Z   duration_ms: 0.343018
+2026-10-15T18:11:41.6509045Z   ...
+2026-10-15T18:11:41.6510101Z # Subtest: standard-controller menu edges move visible focus and activate once, never repeat a held confirm
+2026-10-15T18:11:41.6511741Z ok 189 - standard-controller menu edges move visible focus and activate once, never repeat a held confirm
+2026-10-15T18:11:41.6512971Z   ---
+2026-10-15T18:11:41.6513359Z   duration_ms: 2.37263
+2026-10-15T18:11:41.6514020Z   ...
+2026-10-15T18:11:41.6515010Z # Subtest: bounded metadata binds to the authoritative catalogue and rejects executable redirects
+2026-10-15T18:11:41.6516775Z ok 190 - bounded metadata binds to the authoritative catalogue and rejects executable redirects
+2026-10-15T18:11:41.6517659Z   ---
+2026-10-15T18:11:41.6518051Z   duration_ms: 21.540469
+2026-10-15T18:11:41.6518492Z   ...
+2026-10-15T18:11:41.6519448Z # Subtest: last-known catalogue stays dated on request failure and bad details keep basic v1 cards
+2026-10-15T18:11:41.6520927Z ok 191 - last-known catalogue stays dated on request failure and bad details keep basic v1 cards
+2026-10-15T18:11:41.6521815Z   ---
+2026-10-15T18:11:41.6522452Z   duration_ms: 27.387781
+2026-10-15T18:11:41.6522903Z   ...
+2026-10-15T18:11:41.6523960Z # Subtest: play intent keeps only a validated locale and destination, never forwards arbitrary query routes
+2026-10-15T18:11:41.6525572Z ok 192 - play intent keeps only a validated locale and destination, never forwards arbitrary query routes
+2026-10-15T18:11:41.6526500Z   ---
+2026-10-15T18:11:41.6526923Z   duration_ms: 6.810759
+2026-10-15T18:11:41.6527358Z   ...
+2026-10-15T18:11:41.6528144Z # Subtest: an installation without an exact owning worker is not ready offline
+2026-10-15T18:11:41.6529319Z ok 193 - an installation without an exact owning worker is not ready offline
+2026-10-15T18:11:41.6530065Z   ---
+2026-10-15T18:11:41.6530459Z   duration_ms: 0.979331
+2026-10-15T18:11:41.6530885Z   ...
+2026-10-15T18:11:41.6531912Z # Subtest: an intentionally empty publication emits a catalogue, and a missing public catalogue fails verification
+2026-10-15T18:11:41.6533810Z ok 194 - an intentionally empty publication emits a catalogue, and a missing public catalogue fails verification
+2026-10-15T18:11:41.6534796Z   ---
+2026-10-15T18:11:41.6535174Z   duration_ms: 5.337932
+2026-10-15T18:11:41.6535572Z   ...
+2026-10-15T18:11:41.6536408Z # Subtest: all shipped player guides retain the same bilingual offline and input instructions
+2026-10-15T18:11:41.6537692Z ok 195 - all shipped player guides retain the same bilingual offline and input instructions
+2026-10-15T18:11:41.6538467Z   ---
+2026-10-15T18:11:41.6538814Z   duration_ms: 9.481054
+2026-10-15T18:11:41.6539222Z   ...
+2026-10-15T18:11:41.6540137Z # Subtest: player guide navigation preserves only a supported locale in published and source routes
+2026-10-15T18:11:41.6541540Z ok 196 - player guide navigation preserves only a supported locale in published and source routes
+2026-10-15T18:11:41.6542674Z   ---
+2026-10-15T18:11:41.6543033Z   duration_ms: 7.135644
+2026-10-15T18:11:41.6543414Z   ...
+2026-10-15T18:11:41.6544324Z # Subtest: repository and shipped guides name the current rendered radio setup control in both locales
+2026-10-15T18:11:41.6545530Z ok 197 - repository and shipped guides name the current rendered radio setup control in both locales
+2026-10-15T18:11:41.6546015Z   ---
+2026-10-15T18:11:41.6546218Z   duration_ms: 13.382946
+2026-10-15T18:11:41.6546451Z   ...
+2026-10-15T18:11:41.6546913Z # Subtest: both guide formats distinguish incomplete verification from confirmed repair
+2026-10-15T18:11:41.6547606Z ok 198 - both guide formats distinguish incomplete verification from confirmed repair
+2026-10-15T18:11:41.6548048Z   ---
+2026-10-15T18:11:41.6548257Z   duration_ms: 6.312664
+2026-10-15T18:11:41.6548483Z   ...
+2026-10-15T18:11:41.6548922Z # Subtest: v1 promise, receipt and state bytes remain v1 with no practice additions
+2026-10-15T18:11:41.6549578Z ok 199 - v1 promise, receipt and state bytes remain v1 with no practice additions
+2026-10-15T18:11:41.6549984Z   ---
+2026-10-15T18:11:41.6550185Z   duration_ms: 12.231386
+2026-10-15T18:11:41.6550412Z   ...
+2026-10-15T18:11:41.6550843Z # Subtest: twelve distinct exact courses are required, independent of arcade clears
+2026-10-15T18:11:41.6551480Z ok 200 - twelve distinct exact courses are required, independent of arcade clears
+2026-10-15T18:11:41.6551879Z   ---
+2026-10-15T18:11:41.6552069Z   duration_ms: 12.289324
+2026-10-15T18:11:41.6552556Z   ...
+2026-10-15T18:11:41.6553265Z # Subtest: main reward accepts either declared mode; Acro distinction requires all twelve Acro attempts
+2026-10-15T18:11:41.6554185Z ok 201 - main reward accepts either declared mode; Acro distinction requires all twelve Acro attempts
+2026-10-15T18:11:41.6554659Z   ---
+2026-10-15T18:11:41.6554859Z   duration_ms: 12.892916
+2026-10-15T18:11:41.6555081Z   ...
+2026-10-15T18:11:41.6555561Z # Subtest: exact model, course, mode and explicit response policy constrain verifier projections
+2026-10-15T18:11:41.6556297Z ok 202 - exact model, course, mode and explicit response policy constrain verifier projections
+2026-10-15T18:11:41.6556738Z   ---
+2026-10-15T18:11:41.6556933Z   duration_ms: 6.675676
+2026-10-15T18:11:41.6557147Z   ...
+2026-10-15T18:11:41.6557675Z # Subtest: v2 requirements are explicit and bounded; practice scope cannot smuggle arcade or other courses
+2026-10-15T18:11:41.6558497Z ok 203 - v2 requirements are explicit and bounded; practice scope cannot smuggle arcade or other courses
+2026-10-15T18:11:41.6558974Z   ---
+2026-10-15T18:11:41.6559173Z   duration_ms: 5.716445
+2026-10-15T18:11:41.6559392Z   ...
+2026-10-15T18:11:41.6559897Z # Subtest: mixed v1/v2 state round-trips with strict container/receipt versions and exact evidence pins
+2026-10-15T18:11:41.6560684Z ok 204 - mixed v1/v2 state round-trips with strict container/receipt versions and exact evidence pins
+2026-10-15T18:11:41.6561146Z   ---
+2026-10-15T18:11:41.6561342Z   duration_ms: 12.518189
+2026-10-15T18:11:41.6561568Z   ...
+2026-10-15T18:11:41.6562060Z # Subtest: practice inputs are copied and deeply frozen; external frozen graphs are still validated
+2026-10-15T18:11:41.6563052Z ok 205 - practice inputs are copied and deeply frozen; external frozen graphs are still validated
+2026-10-15T18:11:41.6563515Z   ---
+2026-10-15T18:11:41.6563707Z   duration_ms: 0.852595
+2026-10-15T18:11:41.6563927Z   ...
+2026-10-15T18:11:41.6564445Z # Subtest: practice promises do not overwrite old promises and explicit conflicting imports fail closed
+2026-10-15T18:11:41.6565247Z ok 206 - practice promises do not overwrite old promises and explicit conflicting imports fail closed
+2026-10-15T18:11:41.6565719Z   ---
+2026-10-15T18:11:41.6565913Z   duration_ms: 3.320953
+2026-10-15T18:11:41.6566136Z   ...
+2026-10-15T18:11:41.6566681Z # Subtest: shared store persists/reloads mixed practice and arcade rewards without manufactured Journey clears
+2026-10-15T18:11:41.6567539Z ok 207 - shared store persists/reloads mixed practice and arcade rewards without manufactured Journey clears
+2026-10-15T18:11:41.6568037Z   ---
+2026-10-15T18:11:41.6568226Z   duration_ms: 14.165501
+2026-10-15T18:11:41.6568442Z   ...
+2026-10-15T18:11:41.6568973Z # Subtest: v2 explicit import uses versioned reservation fragments and rejects a conflicting durable promise
+2026-10-15T18:11:41.6569808Z ok 208 - v2 explicit import uses versioned reservation fragments and rejects a conflicting durable promise
+2026-10-15T18:11:41.6570292Z   ---
+2026-10-15T18:11:41.6570487Z   duration_ms: 10.984357
+2026-10-15T18:11:41.6570708Z   ...
+2026-10-15T18:11:41.6571246Z # Subtest: late mixed-version reconciliation releases a practice reservation without changing committed pins
+2026-10-15T18:11:41.6572305Z ok 209 - late mixed-version reconciliation releases a practice reservation without changing committed pins
+2026-10-15T18:11:41.6572916Z   ---
+2026-10-15T18:11:41.6573118Z   duration_ms: 12.097647
+2026-10-15T18:11:41.6573338Z   ...
+2026-10-15T18:11:41.6573821Z # file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:22
+2026-10-15T18:11:41.6574371Z #   if (!condition) throw new Error(message);
+2026-10-15T18:11:41.6574685Z #                         ^
+2026-10-15T18:11:41.6575167Z # Error: Optional practice dependency is not admitted: game/data-json-messages.mjs
+2026-10-15T18:11:41.6575996Z #     at requireValid (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:22:25)
+2026-10-15T18:11:41.6577103Z #     at buildOptionalPractice (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:300:5)
+2026-10-15T18:11:41.6578184Z #     at async file:///home/runner/work/revealline/revealline/publishing/optional-package-admission.test.mjs:38:15
+2026-10-15T18:11:41.6578748Z # Node.js v22.13.1
+2026-10-15T18:11:41.6579107Z # Subtest: publishing/optional-package-admission.test.mjs
+2026-10-15T18:11:41.6579598Z not ok 19 - publishing/optional-package-admission.test.mjs
+2026-10-15T18:11:41.6579931Z   ---
+2026-10-15T18:11:41.6580139Z   duration_ms: 2834.965384
+2026-10-15T18:11:41.6580695Z   location: '/home/runner/work/revealline/revealline/publishing/optional-package-admission.test.mjs:1:1'
+2026-10-15T18:11:41.6581262Z   failureType: 'testCodeFailure'
+2026-10-15T18:11:41.6581528Z   exitCode: 1
+2026-10-15T18:11:41.6581736Z   signal: ~
+2026-10-15T18:11:41.6581937Z   error: 'test failed'
+2026-10-15T18:11:41.6582401Z   code: 'ERR_TEST_FAILURE'
+2026-10-15T18:11:41.6582647Z   ...
+2026-10-15T18:11:41.6583135Z # Subtest: stable delivery pins destination, uploads envelope last and keeps unrelated assets
+2026-10-15T18:11:41.6583886Z ok 211 - stable delivery pins destination, uploads envelope last and keeps unrelated assets
+2026-10-15T18:11:41.6584336Z   ---
+2026-10-15T18:11:41.6584533Z   duration_ms: 7.309976
+2026-10-15T18:11:41.6584749Z   ...
+2026-10-15T18:11:41.6585085Z # Subtest: matching originals are verified without another POST
+2026-10-15T18:11:41.6585578Z ok 212 - matching originals are verified without another POST
+2026-10-15T18:11:41.6585906Z   ---
+2026-10-15T18:11:41.6586094Z   duration_ms: 1.012182
+2026-10-15T18:11:41.6586312Z   ...
+2026-10-15T18:11:41.6586785Z # Subtest: other-envelope originals exceeding the combined budget prevent every optional POST
+2026-10-15T18:11:41.6587517Z ok 213 - other-envelope originals exceeding the combined budget prevent every optional POST
+2026-10-15T18:11:41.6587963Z   ---
+2026-10-15T18:11:41.6588154Z   duration_ms: 0.740327
+2026-10-15T18:11:41.6588364Z   ...
+2026-10-15T18:11:41.6588827Z # Subtest: shared evidence already present in an edition counts once and is still downloaded
+2026-10-15T18:11:41.6589536Z ok 214 - shared evidence already present in an edition counts once and is still downloaded
+2026-10-15T18:11:41.6589960Z   ---
+2026-10-15T18:11:41.6590148Z   duration_ms: 1.197767
+2026-10-15T18:11:41.6590367Z   ...
+2026-10-15T18:11:41.6590721Z # Subtest: every conflicting original is rejected before any upload
+2026-10-15T18:11:41.6591242Z ok 215 - every conflicting original is rejected before any upload
+2026-10-15T18:11:41.6591591Z   ---
+2026-10-15T18:11:41.6591781Z   duration_ms: 0.667481
+2026-10-15T18:11:41.6591993Z   ...
+2026-10-15T18:11:41.6592662Z # Subtest: downloaded original mismatch is rejected before any upload
+2026-10-15T18:11:41.6593216Z ok 216 - downloaded original mismatch is rejected before any upload
+2026-10-15T18:11:41.6593571Z   ---
+2026-10-15T18:11:41.6593781Z   duration_ms: 0.509387
+2026-10-15T18:11:41.6594004Z   ...
+2026-10-15T18:11:41.6594320Z # Subtest: preflight rejects missing-id with zero POSTs
+2026-10-15T18:11:41.6594761Z ok 217 - preflight rejects missing-id with zero POSTs
+2026-10-15T18:11:41.6595084Z   ---
+2026-10-15T18:11:41.6595281Z   duration_ms: 0.351624
+2026-10-15T18:11:41.6595496Z   ...
+2026-10-15T18:11:41.6595802Z # Subtest: preflight rejects wrong-id with zero POSTs
+2026-10-15T18:11:41.6596222Z ok 218 - preflight rejects wrong-id with zero POSTs
+2026-10-15T18:11:41.6596533Z   ---
+2026-10-15T18:11:41.6596737Z   duration_ms: 0.239525
+2026-10-15T18:11:41.6596953Z   ...
+2026-10-15T18:11:41.6597299Z # Subtest: preflight rejects foreign-repository with zero POSTs
+2026-10-15T18:11:41.6597797Z ok 219 - preflight rejects foreign-repository with zero POSTs
+2026-10-15T18:11:41.6598141Z   ---
+2026-10-15T18:11:41.6598336Z   duration_ms: 0.415022
+2026-10-15T18:11:41.6598547Z   ...
+2026-10-15T18:11:41.6598850Z # Subtest: preflight rejects published with zero POSTs
+2026-10-15T18:11:41.6610819Z ok 220 - preflight rejects published with zero POSTs
+2026-10-15T18:11:41.6611182Z   ---
+2026-10-15T18:11:41.6611584Z   duration_ms: 0.511211
+2026-10-15T18:11:41.6611835Z   ...
+2026-10-15T18:11:41.6612608Z # Subtest: preflight rejects prerelease with zero POSTs
+2026-10-15T18:11:41.6613105Z ok 221 - preflight rejects prerelease with zero POSTs
+2026-10-15T18:11:41.6613435Z   ---
+2026-10-15T18:11:41.6613649Z   duration_ms: 0.274591
+2026-10-15T18:11:41.6613876Z   ...
+2026-10-15T18:11:41.6614203Z # Subtest: preflight rejects wrong-target with zero POSTs
+2026-10-15T18:11:41.6614662Z ok 222 - preflight rejects wrong-target with zero POSTs
+2026-10-15T18:11:41.6614977Z   ---
+2026-10-15T18:11:41.6615192Z   duration_ms: 0.183611
+2026-10-15T18:11:41.6615411Z   ...
+2026-10-15T18:11:41.6615753Z # Subtest: preflight rejects foreign-endpoint with zero POSTs
+2026-10-15T18:11:41.6616255Z ok 223 - preflight rejects foreign-endpoint with zero POSTs
+2026-10-15T18:11:41.6616589Z   ---
+2026-10-15T18:11:41.6616787Z   duration_ms: 0.211323
+2026-10-15T18:11:41.6617010Z   ...
+2026-10-15T18:11:41.6617350Z # Subtest: preflight rejects duplicate-name with zero POSTs
+2026-10-15T18:11:41.6617813Z ok 224 - preflight rejects duplicate-name with zero POSTs
+2026-10-15T18:11:41.6618147Z   ---
+2026-10-15T18:11:41.6618348Z   duration_ms: 0.245557
+2026-10-15T18:11:41.6618563Z   ...
+2026-10-15T18:11:41.6618887Z # Subtest: preflight rejects duplicate-id with zero POSTs
+2026-10-15T18:11:41.6619357Z ok 225 - preflight rejects duplicate-id with zero POSTs
+2026-10-15T18:11:41.6619675Z   ---
+2026-10-15T18:11:41.6619869Z   duration_ms: 0.240617
+2026-10-15T18:11:41.6620083Z   ...
+2026-10-15T18:11:41.6620418Z # Subtest: preflight rejects missing-digest with zero POSTs
+2026-10-15T18:11:41.6620885Z ok 226 - preflight rejects missing-digest with zero POSTs
+2026-10-15T18:11:41.6621202Z   ---
+2026-10-15T18:11:41.6621404Z   duration_ms: 0.241549
+2026-10-15T18:11:41.6621621Z   ...
+2026-10-15T18:11:41.6622031Z # Subtest: replacement before the first POST fails the explicit draft ID guard
+2026-10-15T18:11:41.6622821Z ok 227 - replacement before the first POST fails the explicit draft ID guard
+2026-10-15T18:11:41.6623219Z   ---
+2026-10-15T18:11:41.6623420Z   duration_ms: 0.427916
+2026-10-15T18:11:41.6623640Z   ...
+2026-10-15T18:11:41.6624067Z # Subtest: replacement between check and upload cannot redirect the ID-specific POST
+2026-10-15T18:11:41.6624740Z ok 228 - replacement between check and upload cannot redirect the ID-specific POST
+2026-10-15T18:11:41.6625151Z   ---
+2026-10-15T18:11:41.6625344Z   duration_ms: 0.611768
+2026-10-15T18:11:41.6625562Z   ...
+2026-10-15T18:11:41.6625910Z # Subtest: replacement between files cannot receive the next asset
+2026-10-15T18:11:41.6626416Z ok 229 - replacement between files cannot receive the next asset
+2026-10-15T18:11:41.6626759Z   ---
+2026-10-15T18:11:41.6626949Z   duration_ms: 1.050484
+2026-10-15T18:11:41.6627161Z   ...
+2026-10-15T18:11:41.6627489Z # Subtest: replacement before final receipt prevents success
+2026-10-15T18:11:41.6627974Z ok 230 - replacement before final receipt prevents success
+2026-10-15T18:11:41.6628295Z   ---
+2026-10-15T18:11:41.6628493Z   duration_ms: 2.033252
+2026-10-15T18:11:41.6628708Z   ...
+2026-10-15T18:11:41.6629064Z # Subtest: publication between assets stops the remaining delivery
+2026-10-15T18:11:41.6629566Z ok 231 - publication between assets stops the remaining delivery
+2026-10-15T18:11:41.6629906Z   ---
+2026-10-15T18:11:41.6630096Z   duration_ms: 0.746117
+2026-10-15T18:11:41.6630307Z   ...
+2026-10-15T18:11:41.6630657Z # Subtest: tag-movement between assets stops the remaining delivery
+2026-10-15T18:11:41.6631177Z ok 232 - tag-movement between assets stops the remaining delivery
+2026-10-15T18:11:41.6631519Z   ---
+2026-10-15T18:11:41.6631708Z   duration_ms: 0.828751
+2026-10-15T18:11:41.6631926Z   ...
+2026-10-15T18:11:41.6632487Z # Subtest: foreign-asset between assets stops the remaining delivery
+2026-10-15T18:11:41.6633025Z ok 233 - foreign-asset between assets stops the remaining delivery
+2026-10-15T18:11:41.6633378Z   ---
+2026-10-15T18:11:41.6633570Z   duration_ms: 1.073717
+2026-10-15T18:11:41.6633779Z   ...
+2026-10-15T18:11:41.6634334Z # Subtest: ambiguous upload failure records unresolved outcome and never retries
+2026-10-15T18:11:41.6635192Z ok 234 - ambiguous upload failure records unresolved outcome and never retries
+2026-10-15T18:11:41.6635929Z   ---
+2026-10-15T18:11:41.6636275Z   duration_ms: 0.828652
+2026-10-15T18:11:41.6636664Z   ...
+2026-10-15T18:11:41.6637264Z # Subtest: attempt journal failure stops before sending a POST
+2026-10-15T18:11:41.6638122Z ok 235 - attempt journal failure stops before sending a POST
+2026-10-15T18:11:41.6638696Z   ---
+2026-10-15T18:11:41.6639034Z   duration_ms: 0.684152
+2026-10-15T18:11:41.6639414Z   ...
+2026-10-15T18:11:41.6640418Z # Subtest: reconciliation keeps all original receipt pins while allowing only the verified status distinction
+2026-10-15T18:11:41.6641614Z ok 236 - reconciliation keeps all original receipt pins while allowing only the verified status distinction
+2026-10-15T18:11:41.6642533Z   ---
+2026-10-15T18:11:41.6642796Z   duration_ms: 2.095167
+2026-10-15T18:11:41.6643035Z   ...
+2026-10-15T18:11:41.6643574Z # Subtest: only reviewed original package bytes enter isolated versioned paths and the stable launcher
+2026-10-15T18:11:41.6644410Z not ok 237 - only reviewed original package bytes enter isolated versioned paths and the stable launcher
+2026-10-15T18:11:41.6644890Z   ---
+2026-10-15T18:11:41.6645097Z   duration_ms: 2322.28674
+2026-10-15T18:11:41.6645655Z   location: '/home/runner/work/revealline/revealline/publishing/optional-package-promotion.test.mjs:28:1'
+2026-10-15T18:11:41.6646244Z   failureType: 'testCodeFailure'
+2026-10-15T18:11:41.6646723Z   error: 'Optional practice dependency is not admitted: game/data-json-messages.mjs'
+2026-10-15T18:11:41.6647166Z   code: 'ERR_TEST_FAILURE'
+2026-10-15T18:11:41.6647431Z   stack: |-
+2026-10-15T18:11:41.6647959Z     requireValid (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:22:25)
+2026-10-15T18:11:41.6648860Z     buildOptionalPractice (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:300:5)
+2026-10-15T18:11:41.6649827Z     async optionalPackageFixture (file:///home/runner/work/revealline/revealline/publishing/optional-package-fixture.mjs:14:17)
+2026-10-15T18:11:41.6650880Z     async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/publishing/optional-package-promotion.test.mjs:29:13)
+2026-10-15T18:11:41.6651627Z     async Test.run (node:internal/test_runner/test:932:9)
+2026-10-15T18:11:41.6652355Z     async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+2026-10-15T18:11:41.6652797Z   ...
+2026-10-15T18:11:41.6653298Z # Subtest: rollback changes only active launcher pointers and retains every frozen release byte
+2026-10-15T18:11:41.6654062Z not ok 238 - rollback changes only active launcher pointers and retains every frozen release byte
+2026-10-15T18:11:41.6654525Z   ---
+2026-10-15T18:11:41.6654734Z   duration_ms: 299.46436
+2026-10-15T18:11:41.6655293Z   location: '/home/runner/work/revealline/revealline/publishing/optional-package-promotion.test.mjs:70:1'
+2026-10-15T18:11:41.6655862Z   failureType: 'testCodeFailure'
+2026-10-15T18:11:41.6656340Z   error: 'Optional practice dependency is not admitted: game/data-json-messages.mjs'
+2026-10-15T18:11:41.6656789Z   code: 'ERR_TEST_FAILURE'
+2026-10-15T18:11:41.6657019Z   stack: |-
+2026-10-15T18:11:41.6657532Z     requireValid (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:22:25)
+2026-10-15T18:11:41.6658396Z     buildOptionalPractice (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:300:5)
+2026-10-15T18:11:41.6659352Z     async optionalPackageFixture (file:///home/runner/work/revealline/revealline/publishing/optional-package-fixture.mjs:14:17)
+2026-10-15T18:11:41.6660383Z     async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/publishing/optional-package-promotion.test.mjs:71:15)
+2026-10-15T18:11:41.6661097Z     async Test.run (node:internal/test_runner/test:932:9)
+2026-10-15T18:11:41.6661802Z     async Test.processPendingSubtests (node:internal/test_runner/test:629:7)
+2026-10-15T18:11:41.6662522Z   ...
+2026-10-15T18:11:41.6663101Z # Subtest: the exact core release contract admits optional additions only with complete review and no unknown extras
+2026-10-15T18:11:41.6664021Z not ok 239 - the exact core release contract admits optional additions only with complete review and no unknown extras
+2026-10-15T18:11:41.6664543Z   ---
+2026-10-15T18:11:41.6664740Z   duration_ms: 309.709821
+2026-10-15T18:11:41.6665291Z   location: '/home/runner/work/revealline/revealline/publishing/optional-package-promotion.test.mjs:107:1'
+2026-10-15T18:11:41.6665865Z   failureType: 'testCodeFailure'
+2026-10-15T18:11:41.6666323Z   error: 'Optional practice dependency is not admitted: game/data-json-messages.mjs'
+2026-10-15T18:11:41.6666763Z   code: 'ERR_TEST_FAILURE'
+2026-10-15T18:11:41.6666992Z   stack: |-
+2026-10-15T18:11:41.6667497Z     requireValid (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:22:25)
+2026-10-15T18:11:41.6668363Z     buildOptionalPractice (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:300:5)
+2026-10-15T18:11:41.6669314Z     async optionalPackageFixture (file:///home/runner/work/revealline/revealline/publishing/optional-package-fixture.mjs:14:17)
+2026-10-15T18:11:41.6670345Z     async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/publishing/optional-package-promotion.test.mjs:108:13)
+2026-10-15T18:11:41.6671064Z     async Test.run (node:internal/test_runner/test:932:9)
+2026-10-15T18:11:41.6671554Z     async Test.processPendingSubtests (node:internal/test_runner/test:629:7)
+2026-10-15T18:11:41.6671957Z   ...
+2026-10-15T18:11:41.6672840Z # Subtest: reports shallow population and exact strong paths without traversing weak-only detached node
+2026-10-15T18:11:41.6673701Z ok 240 - reports shallow population and exact strong paths without traversing weak-only detached node
+2026-10-15T18:11:41.6674180Z   ---
+2026-10-15T18:11:41.6674386Z   duration_ms: 12.507922
+2026-10-15T18:11:41.6674629Z   ...
+2026-10-15T18:11:41.6675097Z # Subtest: comparison distinguishes same-sized replacement from surviving object identity
+2026-10-15T18:11:41.6675805Z ok 241 - comparison distinguishes same-sized replacement from surviving object identity
+2026-10-15T18:11:41.6676235Z   ---
+2026-10-15T18:11:41.6676436Z   duration_ms: 1.001603
+2026-10-15T18:11:41.6676648Z   ...
+2026-10-15T18:11:41.6677198Z # Subtest: rejects malformed graph widths, missing fields, dangling edges, duplicate IDs and unknown detachedness
+2026-10-15T18:11:41.6678079Z ok 242 - rejects malformed graph widths, missing fields, dangling edges, duplicate IDs and unknown detachedness
+2026-10-15T18:11:41.6678575Z   ---
+2026-10-15T18:11:41.6678764Z   duration_ms: 0.954786
+2026-10-15T18:11:41.6678981Z   ...
+2026-10-15T18:11:41.6679386Z # Subtest: missing detachedness remains explicitly unavailable rather than zero
+2026-10-15T18:11:41.6680006Z ok 243 - missing detachedness remains explicitly unavailable rather than zero
+2026-10-15T18:11:41.6680404Z   ---
+2026-10-15T18:11:41.6680592Z   duration_ms: 0.281964
+2026-10-15T18:11:41.6680799Z   ...
+2026-10-15T18:11:41.6681241Z # Subtest: file loader binds exact bytes and rejects oversized sparse input before parsing
+2026-10-15T18:11:41.6681922Z ok 244 - file loader binds exact bytes and rejects oversized sparse input before parsing
+2026-10-15T18:11:41.6682642Z   ---
+2026-10-15T18:11:41.6682841Z   duration_ms: 11.712774
+2026-10-15T18:11:41.6683065Z   ...
+2026-10-15T18:11:41.6683364Z # Subtest: RGB decoder reverses all five filters exactly
+2026-10-15T18:11:41.6683791Z ok 245 - RGB decoder reverses all five filters exactly
+2026-10-15T18:11:41.6684098Z   ---
+2026-10-15T18:11:41.6684283Z   duration_ms: 4.848176
+2026-10-15T18:11:41.6684496Z   ...
+2026-10-15T18:11:41.6684799Z # Subtest: RGBA decoder reverses all five filters exactly
+2026-10-15T18:11:41.6685229Z ok 246 - RGBA decoder reverses all five filters exactly
+2026-10-15T18:11:41.6685530Z   ---
+2026-10-15T18:11:41.6685866Z   duration_ms: 2.432734
+2026-10-15T18:11:41.6686189Z   ...
+2026-10-15T18:11:41.6686597Z # Subtest: input bytes remain unchanged and metadata/chunk integrity is verified
+2026-10-15T18:11:41.6687212Z ok 247 - input bytes remain unchanged and metadata/chunk integrity is verified
+2026-10-15T18:11:41.6687600Z   ---
+2026-10-15T18:11:41.6687792Z   duration_ms: 1.190995
+2026-10-15T18:11:41.6688005Z   ...
+2026-10-15T18:11:41.6688473Z # Subtest: unsupported animation, bit depths and row filters fail rather than imply equality
+2026-10-15T18:11:41.6689183Z ok 248 - unsupported animation, bit depths and row filters fail rather than imply equality
+2026-10-15T18:11:41.6689611Z   ---
+2026-10-15T18:11:41.6689804Z   duration_ms: 1.035195
+2026-10-15T18:11:41.6690018Z   ...
+2026-10-15T18:11:41.6690365Z # Subtest: audit bounds are checked before network or output access
+2026-10-15T18:11:41.6690880Z ok 249 - audit bounds are checked before network or output access
+2026-10-15T18:11:41.6691224Z   ---
+2026-10-15T18:11:41.6691421Z   duration_ms: 0.761305
+2026-10-15T18:11:41.6691638Z   ...
+2026-10-15T18:11:41.6692437Z # Subtest: sparse publication checkouts include the full admitted directory import closure
+2026-10-15T18:11:41.6693209Z not ok 250 - sparse publication checkouts include the full admitted directory import closure
+2026-10-15T18:11:41.6693662Z   ---
+2026-10-15T18:11:41.6693867Z   duration_ms: 239.833321
+2026-10-15T18:11:41.6694389Z   location: '/home/runner/work/revealline/revealline/scripts/test-bundle-optional-practice.mjs:15:1'
+2026-10-15T18:11:41.6694934Z   failureType: 'testCodeFailure'
+2026-10-15T18:11:41.6695338Z   error: 'fastline-release.yml misses game/data-json-messages.mjs'
+2026-10-15T18:11:41.6695714Z   code: 'ERR_ASSERTION'
+2026-10-15T18:11:41.6695949Z   name: 'AssertionError'
+2026-10-15T18:11:41.6696187Z   expected: true
+2026-10-15T18:11:41.6696396Z   actual: false
+2026-10-15T18:11:41.6696600Z   operator: '=='
+2026-10-15T18:11:41.6696798Z   stack: |-
+2026-10-15T18:11:41.6697399Z     TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/scripts/test-bundle-optional-practice.mjs:37:14)
+2026-10-15T18:11:41.6698084Z     async Test.run (node:internal/test_runner/test:932:9)
+2026-10-15T18:11:41.6698588Z     async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+2026-10-15T18:11:41.6698996Z   ...
+2026-10-15T18:11:41.6699597Z # Subtest: maintainer recipe adds a temporary fourth app, launches, updates, rolls back and retires it without publication
+2026-10-15T18:11:41.6700560Z not ok 251 - maintainer recipe adds a temporary fourth app, launches, updates, rolls back and retires it without publication
+2026-10-15T18:11:41.6701110Z   ---
+2026-10-15T18:11:41.6701309Z   duration_ms: 3545.509953
+2026-10-15T18:11:41.6701826Z   location: '/home/runner/work/revealline/revealline/scripts/test-bundle-optional-practice.mjs:58:1'
+2026-10-15T18:11:41.6702486Z   failureType: 'testCodeFailure'
+2026-10-15T18:11:41.6702952Z   error: 'Optional practice dependency is not admitted: game/data-json-messages.mjs'
+2026-10-15T18:11:41.6703391Z   code: 'ERR_TEST_FAILURE'
+2026-10-15T18:11:41.6703633Z   stack: |-
+2026-10-15T18:11:41.6704136Z     requireValid (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:22:25)
+2026-10-15T18:11:41.6704995Z     buildOptionalPractice (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:300:5)
+2026-10-15T18:11:41.6705953Z     async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/scripts/test-bundle-optional-practice.mjs:67:19)
+2026-10-15T18:11:41.6706642Z     async Test.run (node:internal/test_runner/test:932:9)
+2026-10-15T18:11:41.6707139Z     async Test.processPendingSubtests (node:internal/test_runner/test:629:7)
+2026-10-15T18:11:41.6707537Z   ...
+2026-10-15T18:11:41.6708077Z # Subtest: frozen optional CLI builds twice from actual committed inputs and refuses dirty or existing outputs
+2026-10-15T18:11:41.6709080Z not ok 252 - frozen optional CLI builds twice from actual committed inputs and refuses dirty or existing outputs
+2026-10-15T18:11:41.6709712Z   ---
+2026-10-15T18:11:41.6709914Z   duration_ms: 265.479927
+2026-10-15T18:11:41.6710450Z   location: '/home/runner/work/revealline/revealline/scripts/test-bundle-optional-practice.mjs:288:1'
+2026-10-15T18:11:41.6710994Z   failureType: 'testCodeFailure'
+2026-10-15T18:11:41.6711452Z   error: 'Optional practice dependency is not admitted: game/data-json-messages.mjs'
+2026-10-15T18:11:41.6711888Z   code: 'ERR_TEST_FAILURE'
+2026-10-15T18:11:41.6712255Z   stack: |-
+2026-10-15T18:11:41.6712763Z     requireValid (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:22:25)
+2026-10-15T18:11:41.6713641Z     buildOptionalPractice (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:300:5)
+2026-10-15T18:11:41.6714598Z     async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/scripts/test-bundle-optional-practice.mjs:291:17)
+2026-10-15T18:11:41.6715292Z     async Test.run (node:internal/test_runner/test:932:9)
+2026-10-15T18:11:41.6715793Z     async Test.processPendingSubtests (node:internal/test_runner/test:629:7)
+2026-10-15T18:11:41.6716185Z   ...
+2026-10-15T18:11:41.6716710Z # Subtest: runtime and retention require distinct bounded procedures with the same exact artifact identity
+2026-10-15T18:11:41.6717542Z ok 253 - runtime and retention require distinct bounded procedures with the same exact artifact identity
+2026-10-15T18:11:41.6718021Z   ---
+2026-10-15T18:11:41.6718213Z   duration_ms: 4.070099
+2026-10-15T18:11:41.6718433Z   ...
+2026-10-15T18:11:41.6718946Z # Subtest: both observer entry points preserve failed admission and refuse to overwrite earlier evidence
+2026-10-15T18:11:41.6719746Z ok 254 - both observer entry points preserve failed admission and refuse to overwrite earlier evidence
+2026-10-15T18:11:41.6720222Z   ---
+2026-10-15T18:11:41.6720416Z   duration_ms: 44.661276
+2026-10-15T18:11:41.6720637Z   ...
+2026-10-15T18:11:41.6721147Z # Subtest: artifact loader rejects a symlink outside the selected bundle before reading envelope content
+2026-10-15T18:11:41.6721979Z ok 255 - artifact loader rejects a symlink outside the selected bundle before reading envelope content
+2026-10-15T18:11:41.6722751Z   ---
+2026-10-15T18:11:41.6722955Z   duration_ms: 2.508846
+2026-10-15T18:11:41.6723181Z   ...
+2026-10-15T18:11:41.6723785Z # Subtest: shared loader admits complete frozen runtime and source bytes and rejects corrupt source even with intact runtime
+2026-10-15T18:11:41.6724759Z not ok 256 - shared loader admits complete frozen runtime and source bytes and rejects corrupt source even with intact runtime
+2026-10-15T18:11:41.6725313Z   ---
+2026-10-15T18:11:41.6725506Z   duration_ms: 2278.179657
+2026-10-15T18:11:41.6726023Z   location: '/home/runner/work/revealline/revealline/scripts/test-fpv-observation-artifact.mjs:117:1'
+2026-10-15T18:11:41.6726586Z   failureType: 'testCodeFailure'
+2026-10-15T18:11:41.6727051Z   error: 'Optional practice dependency is not admitted: game/data-json-messages.mjs'
+2026-10-15T18:11:41.6727488Z   code: 'ERR_TEST_FAILURE'
+2026-10-15T18:11:41.6727729Z   stack: |-
+2026-10-15T18:11:41.6728233Z     requireValid (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:22:25)
+2026-10-15T18:11:41.6729089Z     buildOptionalPractice (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:300:5)
+2026-10-15T18:11:41.6730078Z     async optionalFPVSourceFixture (file:///home/runner/work/revealline/revealline/publishing/optional-package-source-fixture.mjs:12:17)
+2026-10-15T18:11:41.6731111Z     async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/scripts/test-fpv-observation-artifact.mjs:118:19)
+2026-10-15T18:11:41.6731801Z     async Test.run (node:internal/test_runner/test:932:9)
+2026-10-15T18:11:41.6732418Z     async Test.processPendingSubtests (node:internal/test_runner/test:629:7)
+2026-10-15T18:11:41.6732815Z   ...
+2026-10-15T18:11:41.6733383Z # Subtest: cleanup records a failure while still closing every other owned resource
+2026-10-15T18:11:41.6734157Z ok 257 - cleanup records a failure while still closing every other owned resource
+2026-10-15T18:11:41.6734561Z   ---
+2026-10-15T18:11:41.6734767Z   duration_ms: 1.15105
+2026-10-15T18:11:41.6734986Z   ...
+2026-10-15T18:11:41.6735496Z # Subtest: a stalled observation wait times out without claiming that its underlying operation stopped
+2026-10-15T18:11:41.6736296Z ok 258 - a stalled observation wait times out without claiming that its underlying operation stopped
+2026-10-15T18:11:41.6736769Z   ---
+2026-10-15T18:11:41.6737009Z   duration_ms: 5.124119
+2026-10-15T18:11:41.6737229Z   ...
+2026-10-15T18:11:41.6737735Z # Subtest: frozen input checking rejects dirty, ignored or assumed-unchanged bytes and symlink objects
+2026-10-15T18:11:41.6738517Z ok 259 - frozen input checking rejects dirty, ignored or assumed-unchanged bytes and symlink objects
+2026-10-15T18:11:41.6738978Z   ---
+2026-10-15T18:11:41.6739179Z   duration_ms: 69.233677
+2026-10-15T18:11:41.6739414Z   ...
+2026-10-15T18:11:41.6739969Z # Subtest: plan fixes the protocol and bounds every external choice instead of accepting arbitrary input scripts
+2026-10-15T18:11:41.6740842Z ok 260 - plan fixes the protocol and bounds every external choice instead of accepting arbitrary input scripts
+2026-10-15T18:11:41.6741347Z   ---
+2026-10-15T18:11:41.6741545Z   duration_ms: 2.924688
+2026-10-15T18:11:41.6741766Z   ...
+2026-10-15T18:11:41.6742354Z # Subtest: artifact source and envelope pins are checked before reading any selected original
+2026-10-15T18:11:41.6743116Z ok 261 - artifact source and envelope pins are checked before reading any selected original
+2026-10-15T18:11:41.6743559Z   ---
+2026-10-15T18:11:41.6743759Z   duration_ms: 13.548405
+2026-10-15T18:11:41.6743993Z   ...
+2026-10-15T18:11:41.6744475Z # Subtest: an existing evidence directory is never overwritten, including a failed prior attempt
+2026-10-15T18:11:41.6745222Z ok 262 - an existing evidence directory is never overwritten, including a failed prior attempt
+2026-10-15T18:11:41.6745672Z   ---
+2026-10-15T18:11:41.6745876Z   duration_ms: 3.47382
+2026-10-15T18:11:41.6746106Z   ...
+2026-10-15T18:11:41.6746612Z # Subtest: failed admission retains exact plan and observer authority pins without launching a browser
+2026-10-15T18:11:41.6747393Z ok 263 - failed admission retains exact plan and observer authority pins without launching a browser
+2026-10-15T18:11:41.6747861Z   ---
+2026-10-15T18:11:41.6748055Z   duration_ms: 8.223773
+2026-10-15T18:11:41.6748272Z   ...
+2026-10-15T18:11:41.6748800Z # Subtest: trace overflow retains exactly the bounded prefix, closes the stream and is visibly nonpassing
+2026-10-15T18:11:41.6749606Z ok 264 - trace overflow retains exactly the bounded prefix, closes the stream and is visibly nonpassing
+2026-10-15T18:11:41.6750077Z   ---
+2026-10-15T18:11:41.6750276Z   duration_ms: 1.078655
+2026-10-15T18:11:41.6750494Z   ...
+2026-10-15T18:11:41.6750997Z # Subtest: complete traces preserve bytes; timeout and close failure stay separate capture failures
+2026-10-15T18:11:41.6751776Z ok 265 - complete traces preserve bytes; timeout and close failure stay separate capture failures
+2026-10-15T18:11:41.6752406Z   ---
+2026-10-15T18:11:41.6752663Z   duration_ms: 21.543705
+2026-10-15T18:11:41.6752890Z   ...
+2026-10-15T18:11:41.6753443Z # Subtest: capture failure never suppresses actual Retry/export/reload, and those follow the passive window
+2026-10-15T18:11:41.6754281Z ok 266 - capture failure never suppresses actual Retry/export/reload, and those follow the passive window
+2026-10-15T18:11:41.6754763Z   ---
+2026-10-15T18:11:41.6754961Z   duration_ms: 0.718966
+2026-10-15T18:11:41.6755178Z   ...
+2026-10-15T18:11:41.6755818Z # Subtest: route failure is retained without Retry or additional attempts; passive failure still allows independent functional check
+2026-10-15T18:11:41.6756851Z ok 267 - route failure is retained without Retry or additional attempts; passive failure still allows independent functional check
+2026-10-15T18:11:41.6757558Z   ---
+2026-10-15T18:11:41.6757766Z   duration_ms: 0.525998
+2026-10-15T18:11:41.6758100Z   ...
+2026-10-15T18:11:41.6758606Z # Subtest: cleanup attempts every owned resource and cannot report completion after one close fails
+2026-10-15T18:11:41.6759380Z ok 268 - cleanup attempts every owned resource and cannot report completion after one close fails
+2026-10-15T18:11:41.6759853Z   ---
+2026-10-15T18:11:41.6760055Z   duration_ms: 0.52667
+2026-10-15T18:11:41.6760275Z   ...
+2026-10-15T18:11:41.6760916Z # Subtest: task analysis retains full slow boundary intervals, accepts both actual Chrome task names and never claims exclusive cost
+2026-10-15T18:11:41.6761959Z ok 269 - task analysis retains full slow boundary intervals, accepts both actual Chrome task names and never claims exclusive cost
+2026-10-15T18:11:41.6762938Z   ---
+2026-10-15T18:11:41.6763166Z   duration_ms: 1.104535
+2026-10-15T18:11:41.6763395Z   ...
+2026-10-15T18:11:41.6764016Z # Subtest: task analysis rejects ambiguous renderers/markers/task families, missing task coverage and malformed intervals
+2026-10-15T18:11:41.6764997Z ok 270 - task analysis rejects ambiguous renderers/markers/task families, missing task coverage and malformed intervals
+2026-10-15T18:11:41.6765550Z   ---
+2026-10-15T18:11:41.6765751Z   duration_ms: 1.182259
+2026-10-15T18:11:41.6765972Z   ...
+2026-10-15T18:11:41.6766531Z # Subtest: frame summary retains slow samples and marks visibility/focus loss rather than filtering them away
+2026-10-15T18:11:41.6767375Z ok 271 - frame summary retains slow samples and marks visibility/focus loss rather than filtering them away
+2026-10-15T18:11:41.6767865Z   ---
+2026-10-15T18:11:41.6768063Z   duration_ms: 0.421013
+2026-10-15T18:11:41.6768284Z   ...
+2026-10-15T18:11:44.1351360Z # Subtest: bundled FPV pins final default bytes and has its own bounded cache outside core
+2026-10-15T18:11:44.1369579Z not ok 272 - bundled FPV pins final default bytes and has its own bounded cache outside core
+2026-10-15T18:11:44.1370663Z   ---
+2026-10-15T18:11:44.1371282Z   duration_ms: 2852.58891
+2026-10-15T18:11:44.1372748Z   location: '/home/runner/work/revealline/revealline/scripts/test-optional-fpv-package.mjs:75:1'
+2026-10-15T18:11:44.1374021Z   failureType: 'testCodeFailure'
+2026-10-15T18:11:44.1375086Z   error: 'Optional practice dependency is not admitted: game/data-json-messages.mjs'
+2026-10-15T18:11:44.1376139Z   code: 'ERR_TEST_FAILURE'
+2026-10-15T18:11:44.1376776Z   stack: |-
+2026-10-15T18:11:44.1377943Z     requireValid (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:22:25)
+2026-10-15T18:11:44.1379891Z     buildBundledOptionalPractice (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:207:5)
+2026-10-15T18:11:44.1381744Z     addOfflineEntries (file:///home/runner/work/revealline/revealline/scripts/game-cli.mjs:705:29)
+2026-10-15T18:11:44.1383976Z     async prepare (file:///home/runner/work/revealline/revealline/scripts/test-optional-fpv-package.mjs:82:7)
+2026-10-15T18:11:44.1390428Z     async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/scripts/test-optional-fpv-package.mjs:85:13)
+2026-10-15T18:11:44.1391968Z     async Test.run (node:internal/test_runner/test:932:9)
+2026-10-15T18:11:44.1393372Z     async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+2026-10-15T18:11:44.1394277Z   ...
+2026-10-15T18:11:46.3163524Z # Subtest: bundled FPV rejects missing, unadmitted, changed-vendor and oversized dependencies
+2026-10-15T18:11:46.3165694Z not ok 273 - bundled FPV rejects missing, unadmitted, changed-vendor and oversized dependencies
+2026-10-15T18:11:46.3166797Z   ---
+2026-10-15T18:11:46.3167382Z   duration_ms: 2185.683145
+2026-10-15T18:11:46.3168708Z   location: '/home/runner/work/revealline/revealline/scripts/test-optional-fpv-package.mjs:167:1'
+2026-10-15T18:11:46.3169746Z   failureType: 'testCodeFailure'
+2026-10-15T18:11:46.3170346Z   error: |-
+2026-10-15T18:11:46.3171558Z     The input did not match the regular expression /Complete bundled optional output exceeds/. Input:
+2026-10-15T18:11:46.3172724Z     
+2026-10-15T18:11:46.3173667Z     'Error: Optional practice dependency is not admitted: game/data-json-messages.mjs'
+2026-10-15T18:11:46.3174427Z     
+2026-10-15T18:11:46.3174804Z   code: 'ERR_ASSERTION'
+2026-10-15T18:11:46.3175193Z   name: 'AssertionError'
+2026-10-15T18:11:46.3175585Z   expected:
+2026-10-15T18:11:46.3175912Z   actual:
+2026-10-15T18:11:46.3176600Z   error: 'Optional practice dependency is not admitted: game/data-json-messages.mjs'
+2026-10-15T18:11:46.3177422Z   stack: |-
+2026-10-15T18:11:46.3178346Z     requireValid (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:22:25)
+2026-10-15T18:11:46.3180111Z     buildBundledOptionalPractice (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:207:5)
+2026-10-15T18:11:46.3181542Z     file:///home/runner/work/revealline/revealline/scripts/test-optional-fpv-package.mjs:208:7
+2026-10-15T18:11:46.3182640Z     getActual (node:assert:805:5)
+2026-10-15T18:11:46.3183210Z     Function.throws (node:assert:951:24)
+2026-10-15T18:11:46.3184351Z     TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/scripts/test-optional-fpv-package.mjs:206:10)
+2026-10-15T18:11:46.3185492Z     async Test.run (node:internal/test_runner/test:932:9)
+2026-10-15T18:11:46.3186370Z     async Test.processPendingSubtests (node:internal/test_runner/test:629:7)
+2026-10-15T18:11:46.3187063Z   operator: 'throws'
+2026-10-15T18:11:46.3187423Z   stack: |-
+2026-10-15T18:11:46.3188449Z     TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/scripts/test-optional-fpv-package.mjs:206:10)
+2026-10-15T18:11:46.3189581Z     async Test.run (node:internal/test_runner/test:932:9)
+2026-10-15T18:11:46.3190448Z     async Test.processPendingSubtests (node:internal/test_runner/test:629:7)
+2026-10-15T18:11:46.3191134Z   ...
+2026-10-15T18:11:47.0234112Z # Subtest: actual FPV application, native notebook and installation launcher close inside admitted runtime/source budgets
+2026-10-15T18:11:47.0236395Z not ok 274 - actual FPV application, native notebook and installation launcher close inside admitted runtime/source budgets
+2026-10-15T18:11:47.0248965Z   ---
+2026-10-15T18:11:47.0249688Z   duration_ms: 704.98905
+2026-10-15T18:11:47.0251062Z   location: '/home/runner/work/revealline/revealline/scripts/test-optional-fpv-package.mjs:215:1'
+2026-10-15T18:11:47.0252418Z   failureType: 'testCodeFailure'
+2026-10-15T18:11:47.0253312Z   error: 'Optional practice dependency is not admitted: game/data-json-messages.mjs'
+2026-10-15T18:11:47.0254078Z   code: 'ERR_TEST_FAILURE'
+2026-10-15T18:11:47.0254455Z   stack: |-
+2026-10-15T18:11:47.0255277Z     requireValid (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:22:25)
+2026-10-15T18:11:47.0256683Z     buildOptionalPractice (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:300:5)
+2026-10-15T18:11:47.0258221Z     async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/scripts/test-optional-fpv-package.mjs:219:13)
+2026-10-15T18:11:47.0259316Z     async Test.run (node:internal/test_runner/test:932:9)
+2026-10-15T18:11:47.0260183Z     async Test.processPendingSubtests (node:internal/test_runner/test:629:7)
+2026-10-15T18:11:47.0260932Z   ...
+2026-10-15T18:11:47.2858458Z # Subtest: explicit FPV package remains independently reproducible with complete pinned runtime and source closures
+2026-10-15T18:11:47.2860170Z not ok 275 - explicit FPV package remains independently reproducible with complete pinned runtime and source closures
+2026-10-15T18:11:47.2861368Z   ---
+2026-10-15T18:11:47.2861929Z   duration_ms: 266.136119
+2026-10-15T18:11:47.2863317Z   location: '/home/runner/work/revealline/revealline/scripts/test-optional-fpv-package.mjs:256:1'
+2026-10-15T18:11:47.2864514Z   failureType: 'testCodeFailure'
+2026-10-15T18:11:47.2865572Z   error: 'Optional practice dependency is not admitted: game/data-json-messages.mjs'
+2026-10-15T18:11:47.2867048Z   code: 'ERR_TEST_FAILURE'
+2026-10-15T18:11:47.2867614Z   stack: |-
+2026-10-15T18:11:47.2868764Z     requireValid (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:22:25)
+2026-10-15T18:11:47.2870270Z     buildOptionalPractice (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:300:5)
+2026-10-15T18:11:47.2871961Z     async optionalFPVSourceFixture (file:///home/runner/work/revealline/revealline/publishing/optional-package-source-fixture.mjs:12:17)
+2026-10-15T18:11:47.2874055Z     async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/scripts/test-optional-fpv-package.mjs:257:19)
+2026-10-15T18:11:47.2875510Z     async Test.run (node:internal/test_runner/test:932:9)
+2026-10-15T18:11:47.2876631Z     async Test.processPendingSubtests (node:internal/test_runner/test:629:7)
+2026-10-15T18:11:47.2877597Z   ...
+2026-10-15T18:11:47.5381765Z # Subtest: vendor pins are checked before parser exemptions while application fetch and foreign imports stay forbidden
+2026-10-15T18:11:47.5384330Z not ok 276 - vendor pins are checked before parser exemptions while application fetch and foreign imports stay forbidden
+2026-10-15T18:11:47.5385868Z   ---
+2026-10-15T18:11:47.5386640Z   duration_ms: 252.199528
+2026-10-15T18:11:47.5387931Z   location: '/home/runner/work/revealline/revealline/scripts/test-optional-fpv-package.mjs:305:1'
+2026-10-15T18:11:47.5389179Z   failureType: 'testCodeFailure'
+2026-10-15T18:11:47.5390120Z   error: 'Optional practice dependency is not admitted: game/data-json-messages.mjs'
+2026-10-15T18:11:47.5391090Z   code: 'ERR_TEST_FAILURE'
+2026-10-15T18:11:47.5391623Z   stack: |-
+2026-10-15T18:11:47.5392856Z     requireValid (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:22:25)
+2026-10-15T18:11:47.5394460Z     buildOptionalPractice (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:300:5)
+2026-10-15T18:11:47.5396502Z     async optionalFPVSourceFixture (file:///home/runner/work/revealline/revealline/publishing/optional-package-source-fixture.mjs:12:17)
+2026-10-15T18:11:47.5398879Z     async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/scripts/test-optional-fpv-package.mjs:306:13)
+2026-10-15T18:11:47.5400484Z     async Test.run (node:internal/test_runner/test:932:9)
+2026-10-15T18:11:47.5401633Z     async Test.processPendingSubtests (node:internal/test_runner/test:629:7)
+2026-10-15T18:11:47.5402826Z   ...
+2026-10-15T18:11:47.7773124Z # Subtest: rewritten archive hashes cannot replace a reviewed vendor dependency
+2026-10-15T18:11:47.7774553Z not ok 277 - rewritten archive hashes cannot replace a reviewed vendor dependency
+2026-10-15T18:11:47.7775708Z   ---
+2026-10-15T18:11:47.7776524Z   duration_ms: 237.950516
+2026-10-15T18:11:47.7777485Z   location: '/home/runner/work/revealline/revealline/scripts/test-optional-fpv-package.mjs:319:1'
+2026-10-15T18:11:47.7778440Z   failureType: 'testCodeFailure'
+2026-10-15T18:11:47.7779281Z   error: 'Optional practice dependency is not admitted: game/data-json-messages.mjs'
+2026-10-15T18:11:47.7780068Z   code: 'ERR_TEST_FAILURE'
+2026-10-15T18:11:47.7780483Z   stack: |-
+2026-10-15T18:11:47.7781379Z     requireValid (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:22:25)
+2026-10-15T18:11:47.7783238Z     buildOptionalPractice (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:300:5)
+2026-10-15T18:11:47.7785014Z     async optionalFPVSourceFixture (file:///home/runner/work/revealline/revealline/publishing/optional-package-source-fixture.mjs:12:17)
+2026-10-15T18:11:47.7786812Z     async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/scripts/test-optional-fpv-package.mjs:320:19)
+2026-10-15T18:11:47.7788010Z     async Test.run (node:internal/test_runner/test:932:9)
+2026-10-15T18:11:47.7788886Z     async Test.processPendingSubtests (node:internal/test_runner/test:629:7)
+2026-10-15T18:11:47.7789572Z   ...
+2026-10-15T18:11:47.7790804Z # Subtest: package selection rejects unknown, duplicate and empty lists before touching frozen inputs
+2026-10-15T18:11:47.7792692Z ok 278 - package selection rejects unknown, duplicate and empty lists before touching frozen inputs
+2026-10-15T18:11:47.7793533Z   ---
+2026-10-15T18:11:47.7793879Z   duration_ms: 1.212083
+2026-10-15T18:11:47.7794250Z   ...
+2026-10-15T18:11:48.0294453Z # Subtest: source budget includes the final source-inventory member, not only its listed dependencies
+2026-10-15T18:11:48.0296510Z not ok 279 - source budget includes the final source-inventory member, not only its listed dependencies
+2026-10-15T18:11:48.0297981Z   ---
+2026-10-15T18:11:48.0298707Z   duration_ms: 250.698638
+2026-10-15T18:11:48.0299975Z   location: '/home/runner/work/revealline/revealline/scripts/test-optional-fpv-package.mjs:363:1'
+2026-10-15T18:11:48.0301349Z   failureType: 'testCodeFailure'
+2026-10-15T18:11:48.0302830Z   error: 'Optional practice dependency is not admitted: game/data-json-messages.mjs'
+2026-10-15T18:11:48.0304060Z   code: 'ERR_TEST_FAILURE'
+2026-10-15T18:11:48.0304823Z   stack: |-
+2026-10-15T18:11:48.0306093Z     requireValid (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:22:25)
+2026-10-15T18:11:48.0308121Z     buildOptionalPractice (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:300:5)
+2026-10-15T18:11:48.0310404Z     async optionalFPVSourceFixture (file:///home/runner/work/revealline/revealline/publishing/optional-package-source-fixture.mjs:12:17)
+2026-10-15T18:11:48.0313034Z     async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/scripts/test-optional-fpv-package.mjs:364:19)
+2026-10-15T18:11:48.0314690Z     async Test.run (node:internal/test_runner/test:932:9)
+2026-10-15T18:11:48.0315950Z     async Test.processPendingSubtests (node:internal/test_runner/test:629:7)
+2026-10-15T18:11:48.0317028Z   ...
+2026-10-15T18:11:48.0318092Z # Subtest: generic optional worker cleanup owns only its exact package scope
+2026-10-15T18:11:48.0319626Z ok 280 - generic optional worker cleanup owns only its exact package scope
+2026-10-15T18:11:48.0320681Z   ---
+2026-10-15T18:11:48.0321345Z   duration_ms: 1.392259
+2026-10-15T18:11:48.0322028Z   ...
+2026-10-15T18:11:48.0614154Z # Subtest: browser restart requires all pages closed and a confirmed persistent-context shutdown
+2026-10-15T18:11:48.0615325Z ok 281 - browser restart requires all pages closed and a confirmed persistent-context shutdown
+2026-10-15T18:11:48.0615986Z   ---
+2026-10-15T18:11:48.0616452Z   duration_ms: 12.378612
+2026-10-15T18:11:48.0616927Z   ...
+2026-10-15T18:11:48.0617796Z # Subtest: timed-out startup retains resource ownership and a late close failure cannot imply cleanup
+2026-10-15T18:11:48.0618882Z ok 282 - timed-out startup retains resource ownership and a late close failure cannot imply cleanup
+2026-10-15T18:11:48.0619539Z   ---
+2026-10-15T18:11:48.0619993Z   duration_ms: 2.571091
+2026-10-15T18:11:48.0620450Z   ...
+2026-10-15T18:11:48.0621265Z # Subtest: an expired restart cannot start browser acquisition after cleanup has begun
+2026-10-15T18:11:48.0622476Z ok 283 - an expired restart cannot start browser acquisition after cleanup has begun
+2026-10-15T18:11:48.0623285Z   ---
+2026-10-15T18:11:48.0634325Z   duration_ms: 2.419469
+2026-10-15T18:11:48.0634812Z   ...
+2026-10-15T18:11:48.0635682Z # Subtest: offline action requires fresh observable work, native Enter and a fresh terminal status
+2026-10-15T18:11:48.0636741Z ok 284 - offline action requires fresh observable work, native Enter and a fresh terminal status
+2026-10-15T18:11:48.0637380Z   ---
+2026-10-15T18:11:48.0637833Z   duration_ms: 8.536986
+2026-10-15T18:11:48.0638283Z   ...
+2026-10-15T18:11:48.0639119Z # Subtest: overall observation deadline encloses the journey but preserves report and cleanup
+2026-10-15T18:11:48.0640137Z ok 285 - overall observation deadline encloses the journey but preserves report and cleanup
+2026-10-15T18:11:48.0640768Z   ---
+2026-10-15T18:11:48.0641222Z   duration_ms: 3.439908
+2026-10-15T18:11:48.0642025Z   ...
+2026-10-15T18:11:48.0644105Z # Subtest: installation observer covers all three public app identities and current offline controls
+2026-10-15T18:11:48.0645194Z ok 286 - installation observer covers all three public app identities and current offline controls
+2026-10-15T18:11:48.0645681Z   ---
+2026-10-15T18:11:48.0645890Z   duration_ms: 5.592559
+2026-10-15T18:11:48.0646126Z   ...
+2026-10-15T18:11:48.0646638Z # Subtest: launcher destinations preserve exact app identity and the defined locale query
+2026-10-15T18:11:48.0647385Z ok 287 - launcher destinations preserve exact app identity and the defined locale query
+2026-10-15T18:11:48.0647827Z   ---
+2026-10-15T18:11:48.0648030Z   duration_ms: 1.251006
+2026-10-15T18:11:48.0648260Z   ...
+2026-10-15T18:11:48.0648695Z # Subtest: bounded operation returns results, preserves errors, and rejects stalls
+2026-10-15T18:11:48.0649341Z ok 288 - bounded operation returns results, preserves errors, and rejects stalls
+2026-10-15T18:11:48.0649748Z   ---
+2026-10-15T18:11:48.0649955Z   duration_ms: 6.188228
+2026-10-15T18:11:48.0650179Z   ...
+2026-10-15T18:11:48.0650700Z # Subtest: Academy offline controls expand the ordinary closed Workshop disclosure in every offline flow
+2026-10-15T18:11:48.0651521Z ok 289 - Academy offline controls expand the ordinary closed Workshop disclosure in every offline flow
+2026-10-15T18:11:48.0651996Z   ---
+2026-10-15T18:11:48.0652490Z   duration_ms: 1.784679
+2026-10-15T18:11:48.0653088Z   ...
+2026-10-15T18:11:48.0654063Z # Subtest: profile import and every export open the ordinary transfer disclosure without toggling it closed
+2026-10-15T18:11:48.0654959Z ok 290 - profile import and every export open the ordinary transfer disclosure without toggling it closed
+2026-10-15T18:11:48.0655460Z   ---
+2026-10-15T18:11:48.0655661Z   duration_ms: 3.202978
+2026-10-15T18:11:48.0655880Z   ...
+2026-10-15T18:11:48.0656396Z # Subtest: profile export expectations preserve the entire legacy fixture and current radio library
+2026-10-15T18:11:48.0657196Z ok 291 - profile export expectations preserve the entire legacy fixture and current radio library
+2026-10-15T18:11:48.0657666Z   ---
+2026-10-15T18:11:48.0657866Z   duration_ms: 0.677791
+2026-10-15T18:11:48.0658080Z   ...
+2026-10-15T18:11:48.0658466Z # Subtest: offline restart closes every page and rejects surviving windows
+2026-10-15T18:11:48.0659054Z ok 292 - offline restart closes every page and rejects surviving windows
+2026-10-15T18:11:48.0659423Z   ---
+2026-10-15T18:11:48.0659619Z   duration_ms: 0.498607
+2026-10-15T18:11:48.0659832Z   ...
+2026-10-15T18:11:48.0660337Z # Subtest: access-gated candidates require normal-form credentials and never expose them in errors
+2026-10-15T18:11:48.0661109Z ok 293 - access-gated candidates require normal-form credentials and never expose them in errors
+2026-10-15T18:11:48.0661563Z   ---
+2026-10-15T18:11:48.0661768Z   duration_ms: 0.728375
+2026-10-15T18:11:48.0661982Z   ...
+2026-10-15T18:11:48.0663288Z # Subtest: optional practice archives are reproducible, admitted completely and absent from core build inputs
+2026-10-15T18:11:48.0664881Z not ok 294 - optional practice archives are reproducible, admitted completely and absent from core build inputs
+2026-10-15T18:11:48.0665770Z   ---
+2026-10-15T18:11:48.0666099Z   duration_ms: 2432.593073
+2026-10-15T18:11:48.0666620Z   location: '/home/runner/work/revealline/revealline/scripts/test-optional-practice.mjs:20:1'
+2026-10-15T18:11:48.0667157Z   failureType: 'testCodeFailure'
+2026-10-15T18:11:48.0667641Z   error: 'Optional practice dependency is not admitted: game/data-json-messages.mjs'
+2026-10-15T18:11:48.0668097Z   code: 'ERR_TEST_FAILURE'
+2026-10-15T18:11:48.0668336Z   stack: |-
+2026-10-15T18:11:48.0668859Z     requireValid (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:22:25)
+2026-10-15T18:11:48.0669741Z     buildOptionalPractice (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:300:5)
+2026-10-15T18:11:48.0670888Z     async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/scripts/test-optional-practice.mjs:21:17)
+2026-10-15T18:11:48.0671727Z     async Test.run (node:internal/test_runner/test:932:9)
+2026-10-15T18:11:48.0672574Z     async startSubtestAfterBootstrap (node:internal/test_runner/harness:296:3)
+2026-10-15T18:11:48.0673301Z   ...
+2026-10-15T18:11:48.0673927Z # Subtest: release-qualified practice retains the full shared menu stylesheet closure within its limit
+2026-10-15T18:11:48.0674796Z not ok 295 - release-qualified practice retains the full shared menu stylesheet closure within its limit
+2026-10-15T18:11:48.0675296Z   ---
+2026-10-15T18:11:48.0675499Z   duration_ms: 392.548468
+2026-10-15T18:11:48.0676003Z   location: '/home/runner/work/revealline/revealline/scripts/test-optional-practice.mjs:85:1'
+2026-10-15T18:11:48.0676522Z   failureType: 'testCodeFailure'
+2026-10-15T18:11:48.0676995Z   error: 'Optional practice dependency is not admitted: game/data-json-messages.mjs'
+2026-10-15T18:11:48.0677456Z   code: 'ERR_TEST_FAILURE'
+2026-10-15T18:11:48.0677691Z   stack: |-
+2026-10-15T18:11:48.0678230Z     requireValid (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:22:25)
+2026-10-15T18:11:48.0679100Z     buildOptionalPractice (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:300:5)
+2026-10-15T18:11:48.0680024Z     async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/scripts/test-optional-practice.mjs:86:17)
+2026-10-15T18:11:48.0680692Z     async Test.run (node:internal/test_runner/test:932:9)
+2026-10-15T18:11:48.0681193Z     async Test.processPendingSubtests (node:internal/test_runner/test:629:7)
+2026-10-15T18:11:48.0681590Z   ...
+2026-10-15T18:11:48.0682037Z # Subtest: an unexpected runtime import fails closed before a package can be published
+2026-10-15T18:11:48.0682993Z not ok 296 - an unexpected runtime import fails closed before a package can be published
+2026-10-15T18:11:48.0683421Z   ---
+2026-10-15T18:11:48.0683636Z   duration_ms: 315.354879
+2026-10-15T18:11:48.0684121Z   location: '/home/runner/work/revealline/revealline/scripts/test-optional-practice.mjs:103:1'
+2026-10-15T18:11:48.0684637Z   failureType: 'testCodeFailure'
+2026-10-15T18:11:48.0685096Z   error: 'Optional practice dependency is not admitted: game/data-json-messages.mjs'
+2026-10-15T18:11:48.0685532Z   code: 'ERR_TEST_FAILURE'
+2026-10-15T18:11:48.0685762Z   stack: |-
+2026-10-15T18:11:48.0686269Z     requireValid (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:22:25)
+2026-10-15T18:11:48.0687129Z     buildOptionalPractice (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:300:5)
+2026-10-15T18:11:48.0688072Z     async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/scripts/test-optional-practice.mjs:104:17)
+2026-10-15T18:11:48.0688748Z     async Test.run (node:internal/test_runner/test:932:9)
+2026-10-15T18:11:48.0689244Z     async Test.processPendingSubtests (node:internal/test_runner/test:629:7)
+2026-10-15T18:11:48.0689686Z   ...
+2026-10-15T18:11:48.0690271Z # Subtest: worker reports progress, validates cached dependencies and detects eviction
+2026-10-15T18:11:48.0691195Z ok 297 - worker reports progress, validates cached dependencies and detects eviction
+2026-10-15T18:11:48.0702725Z   ---
+2026-10-15T18:11:48.0702968Z   duration_ms: 8.923249
+2026-10-15T18:11:48.0703216Z   ...
+2026-10-15T18:11:48.0703728Z # Subtest: cancel discards only the incomplete version and keeps previous and foreign caches
+2026-10-15T18:11:48.0704477Z ok 298 - cancel discards only the incomplete version and keeps previous and foreign caches
+2026-10-15T18:11:48.0704937Z   ---
+2026-10-15T18:11:48.0705154Z   duration_ms: 1.325243
+2026-10-15T18:11:48.0705389Z   ...
+2026-10-15T18:11:48.0706325Z # Subtest: optional worker verifies every byte before activation and only replaces its own scope cache
+2026-10-15T18:11:48.0707639Z ok 299 - optional worker verifies every byte before activation and only replaces its own scope cache
+2026-10-15T18:11:48.0708665Z   ---
+2026-10-15T18:11:48.0709033Z   duration_ms: 2.33465
+2026-10-15T18:11:48.0709263Z   ...
+2026-10-15T18:11:48.0709801Z # Subtest: corruption or quota prevents optional activation and preserves previously installed caches
+2026-10-15T18:11:48.0710618Z ok 300 - corruption or quota prevents optional activation and preserves previously installed caches
+2026-10-15T18:11:48.0711097Z   ---
+2026-10-15T18:11:48.0711305Z   duration_ms: 3.091898
+2026-10-15T18:11:48.0711526Z   ...
+2026-10-15T18:11:48.0712035Z # Subtest: counts complete manifest bytes, stable launcher copies and pointer only for active version
+2026-10-15T18:11:48.0713165Z ok 301 - counts complete manifest bytes, stable launcher copies and pointer only for active version
+2026-10-15T18:11:48.0713638Z   ---
+2026-10-15T18:11:48.0713842Z   duration_ms: 2.230487
+2026-10-15T18:11:48.0714071Z   ...
+2026-10-15T18:11:48.0714533Z # Subtest: explicit future reserve is not a fictitious retained release or a capacity pass
+2026-10-15T18:11:48.0715239Z ok 302 - explicit future reserve is not a fictitious retained release or a capacity pass
+2026-10-15T18:11:48.0715678Z   ---
+2026-10-15T18:11:48.0715879Z   duration_ms: 0.207637
+2026-10-15T18:11:48.0716102Z   ...
+2026-10-15T18:11:48.0716564Z # Subtest: even an empty selection exactly at the guard still requires complete-site assembly
+2026-10-15T18:11:48.0717277Z ok 303 - even an empty selection exactly at the guard still requires complete-site assembly
+2026-10-15T18:11:48.0717707Z   ---
+2026-10-15T18:11:48.0717903Z   duration_ms: 0.170698
+2026-10-15T18:11:48.0718127Z   ...
+2026-10-15T18:11:48.0718535Z # Subtest: rejects duplicate immutable versions and competing stable launchers
+2026-10-15T18:11:48.0719149Z ok 304 - rejects duplicate immutable versions and competing stable launchers
+2026-10-15T18:11:48.0719551Z   ---
+2026-10-15T18:11:48.0719754Z   duration_ms: 0.778367
+2026-10-15T18:11:48.0719980Z   ...
+2026-10-15T18:11:48.0720352Z # Subtest: rejects invalid core claims, counts and overflowing sums
+2026-10-15T18:11:48.0720876Z ok 305 - rejects invalid core claims, counts and overflowing sums
+2026-10-15T18:11:48.0721224Z   ---
+2026-10-15T18:11:48.0721425Z   duration_ms: 0.446461
+2026-10-15T18:11:48.0721645Z   ...
+2026-10-15T18:11:48.0722080Z # Subtest: rejects unsafe and duplicate pins, absent entry and absent active launcher
+2026-10-15T18:11:48.0722999Z ok 306 - rejects unsafe and duplicate pins, absent entry and absent active launcher
+2026-10-15T18:11:48.0723417Z   ---
+2026-10-15T18:11:48.0723622Z   duration_ms: 0.916484
+2026-10-15T18:11:48.0723846Z   ...
+2026-10-15T18:11:48.0724380Z # Subtest: config resolves paths relative to itself and pins candidate manifests without admitting archives
+2026-10-15T18:11:48.0725214Z ok 307 - config resolves paths relative to itself and pins candidate manifests without admitting archives
+2026-10-15T18:11:48.0725700Z   ---
+2026-10-15T18:11:48.0725899Z   duration_ms: 1147.77621
+2026-10-15T18:11:48.0726124Z   ...
+2026-10-15T18:11:49.4324562Z # Subtest: the production main workflow stages practice before capacity and verifies the deployed selector
+2026-10-15T18:11:49.4325553Z ok 308 - the production main workflow stages practice before capacity and verifies the deployed selector
+2026-10-15T18:11:49.4326059Z   ---
+2026-10-15T18:11:49.4326274Z   duration_ms: 10.349941
+2026-10-15T18:11:49.4326515Z   ...
+2026-10-15T18:11:49.4329378Z # Subtest: main Pages staging emits an explicit empty catalogue without GitHub and refuses replacement
+2026-10-15T18:11:49.4330267Z ok 309 - main Pages staging emits an explicit empty catalogue without GitHub and refuses replacement
+2026-10-15T18:11:49.4330754Z   ---
+2026-10-15T18:11:49.4330968Z   duration_ms: 142.841628
+2026-10-15T18:11:49.4331212Z   ...
+2026-10-15T18:11:49.4331781Z # Subtest: optional CLI verifies local originals without GitHub and stages only downloaded reviewed selectors
+2026-10-15T18:11:49.4332990Z not ok 310 - optional CLI verifies local originals without GitHub and stages only downloaded reviewed selectors
+2026-10-15T18:11:49.4333859Z   ---
+2026-10-15T18:11:49.4334094Z   duration_ms: 2177.975935
+2026-10-15T18:11:49.4334813Z   location: '/home/runner/work/revealline/revealline/scripts/test-publish-optional-packages.mjs:188:1'
+2026-10-15T18:11:49.4335400Z   failureType: 'testCodeFailure'
+2026-10-15T18:11:49.4335890Z   error: 'Optional practice dependency is not admitted: game/data-json-messages.mjs'
+2026-10-15T18:11:49.4336353Z   code: 'ERR_TEST_FAILURE'
+2026-10-15T18:11:49.4336606Z   stack: |-
+2026-10-15T18:11:49.4337139Z     requireValid (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:22:25)
+2026-10-15T18:11:49.4338035Z     buildOptionalPractice (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:300:5)
+2026-10-15T18:11:49.4339006Z     async optionalPackageFixture (file:///home/runner/work/revealline/revealline/publishing/optional-package-fixture.mjs:14:17)
+2026-10-15T18:11:49.4339964Z     async fixture (file:///home/runner/work/revealline/revealline/scripts/test-publish-optional-packages.mjs:74:21)
+2026-10-15T18:11:49.4340967Z     async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/scripts/test-publish-optional-packages.mjs:189:13)
+2026-10-15T18:11:49.4341704Z     async Test.run (node:internal/test_runner/test:932:9)
+2026-10-15T18:11:49.4342482Z     async Test.processPendingSubtests (node:internal/test_runner/test:629:7)
+2026-10-15T18:11:49.4343195Z   ...
+2026-10-15T18:11:49.7127188Z # Subtest: main Pages stages reviewed originals and public verification rejects stale versions or changed bytes
+2026-10-15T18:11:49.7129529Z not ok 311 - main Pages stages reviewed originals and public verification rejects stale versions or changed bytes
+2026-10-15T18:11:49.7130587Z   ---
+2026-10-15T18:11:49.7130862Z   duration_ms: 280.144918
+2026-10-15T18:11:49.7131610Z   location: '/home/runner/work/revealline/revealline/scripts/test-publish-optional-packages.mjs:212:1'
+2026-10-15T18:11:49.7132580Z   failureType: 'testCodeFailure'
+2026-10-15T18:11:49.7133253Z   error: 'Optional practice dependency is not admitted: game/data-json-messages.mjs'
+2026-10-15T18:11:49.7133782Z   code: 'ERR_TEST_FAILURE'
+2026-10-15T18:11:49.7134029Z   stack: |-
+2026-10-15T18:11:49.7134564Z     requireValid (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:22:25)
+2026-10-15T18:11:49.7135480Z     buildOptionalPractice (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:300:5)
+2026-10-15T18:11:49.7136487Z     async optionalPackageFixture (file:///home/runner/work/revealline/revealline/publishing/optional-package-fixture.mjs:14:17)
+2026-10-15T18:11:49.7137445Z     async fixture (file:///home/runner/work/revealline/revealline/scripts/test-publish-optional-packages.mjs:74:21)
+2026-10-15T18:11:49.7138418Z     async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/scripts/test-publish-optional-packages.mjs:213:13)
+2026-10-15T18:11:49.7139130Z     async Test.run (node:internal/test_runner/test:932:9)
+2026-10-15T18:11:49.7139639Z     async Test.processPendingSubtests (node:internal/test_runner/test:629:7)
+2026-10-15T18:11:49.7140049Z   ...
+2026-10-15T18:11:49.9523300Z # Subtest: optional selector remains unchanged after foreign tags, changed downloads or concurrent edits
+2026-10-15T18:11:49.9524310Z     # Subtest: tag
+2026-10-15T18:11:49.9524980Z     not ok 1 - tag
+2026-10-15T18:11:49.9525524Z       ---
+2026-10-15T18:11:49.9525981Z       duration_ms: 239.393963
+2026-10-15T18:11:49.9527057Z       location: '/home/runner/work/revealline/revealline/scripts/test-publish-optional-packages.mjs:274:13'
+2026-10-15T18:11:49.9527828Z       failureType: 'testCodeFailure'
+2026-10-15T18:11:49.9528478Z       error: 'Optional practice dependency is not admitted: game/data-json-messages.mjs'
+2026-10-15T18:11:49.9529089Z       code: 'ERR_TEST_FAILURE'
+2026-10-15T18:11:49.9529413Z       stack: |-
+2026-10-15T18:11:49.9530443Z         requireValid (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:22:25)
+2026-10-15T18:11:49.9531681Z         buildOptionalPractice (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:300:5)
+2026-10-15T18:11:49.9533424Z         async optionalPackageFixture (file:///home/runner/work/revealline/revealline/publishing/optional-package-fixture.mjs:14:17)
+2026-10-15T18:11:49.9534720Z         async fixture (file:///home/runner/work/revealline/revealline/scripts/test-publish-optional-packages.mjs:74:21)
+2026-10-15T18:11:49.9536029Z         async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/scripts/test-publish-optional-packages.mjs:275:17)
+2026-10-15T18:11:49.9536987Z         async Test.run (node:internal/test_runner/test:932:9)
+2026-10-15T18:11:49.9537988Z         async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/scripts/test-publish-optional-packages.mjs:274:5)
+2026-10-15T18:11:49.9538715Z         async Test.run (node:internal/test_runner/test:932:9)
+2026-10-15T18:11:49.9539241Z         async Test.processPendingSubtests (node:internal/test_runner/test:629:7)
+2026-10-15T18:11:49.9539666Z       ...
+2026-10-15T18:11:50.1816109Z     # Subtest: bytes
+2026-10-15T18:11:50.1819748Z     not ok 2 - bytes
+2026-10-15T18:11:50.1820228Z       ---
+2026-10-15T18:11:50.1820632Z       duration_ms: 229.267236
+2026-10-15T18:11:50.1821776Z       location: '/home/runner/work/revealline/revealline/scripts/test-publish-optional-packages.mjs:274:13'
+2026-10-15T18:11:50.1823110Z       failureType: 'testCodeFailure'
+2026-10-15T18:11:50.1824068Z       error: 'Optional practice dependency is not admitted: game/data-json-messages.mjs'
+2026-10-15T18:11:50.1824974Z       code: 'ERR_TEST_FAILURE'
+2026-10-15T18:11:50.1825422Z       stack: |-
+2026-10-15T18:11:50.1826388Z         requireValid (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:22:25)
+2026-10-15T18:11:50.1827982Z         buildOptionalPractice (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:300:5)
+2026-10-15T18:11:50.1829749Z         async optionalPackageFixture (file:///home/runner/work/revealline/revealline/publishing/optional-package-fixture.mjs:14:17)
+2026-10-15T18:11:50.1831462Z         async fixture (file:///home/runner/work/revealline/revealline/scripts/test-publish-optional-packages.mjs:74:21)
+2026-10-15T18:11:50.1833254Z         async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/scripts/test-publish-optional-packages.mjs:275:17)
+2026-10-15T18:11:50.1834378Z         async Test.run (node:internal/test_runner/test:932:9)
+2026-10-15T18:11:50.1835542Z         async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/scripts/test-publish-optional-packages.mjs:274:5)
+2026-10-15T18:11:50.1836642Z         async Test.run (node:internal/test_runner/test:932:9)
+2026-10-15T18:11:50.1837423Z         async Test.processPendingSubtests (node:internal/test_runner/test:629:7)
+2026-10-15T18:11:50.1838114Z       ...
+2026-10-15T18:11:50.4203526Z     # Subtest: concurrent
+2026-10-15T18:11:50.4205464Z     not ok 3 - concurrent
+2026-10-15T18:11:50.4205953Z       ---
+2026-10-15T18:11:50.4206344Z       duration_ms: 238.199542
+2026-10-15T18:11:50.4207418Z       location: '/home/runner/work/revealline/revealline/scripts/test-publish-optional-packages.mjs:274:13'
+2026-10-15T18:11:50.4208480Z       failureType: 'testCodeFailure'
+2026-10-15T18:11:50.4209388Z       error: 'Optional practice dependency is not admitted: game/data-json-messages.mjs'
+2026-10-15T18:11:50.4210036Z       code: 'ERR_TEST_FAILURE'
+2026-10-15T18:11:50.4210330Z       stack: |-
+2026-10-15T18:11:50.4211306Z         requireValid (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:22:25)
+2026-10-15T18:11:50.4212977Z         buildOptionalPractice (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:300:5)
+2026-10-15T18:11:50.4214459Z         async optionalPackageFixture (file:///home/runner/work/revealline/revealline/publishing/optional-package-fixture.mjs:14:17)
+2026-10-15T18:11:50.4215665Z         async fixture (file:///home/runner/work/revealline/revealline/scripts/test-publish-optional-packages.mjs:74:21)
+2026-10-15T18:11:50.4217012Z         async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/scripts/test-publish-optional-packages.mjs:275:17)
+2026-10-15T18:11:50.4217772Z         async Test.run (node:internal/test_runner/test:932:9)
+2026-10-15T18:11:50.4218539Z         async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/scripts/test-publish-optional-packages.mjs:274:5)
+2026-10-15T18:11:50.4219261Z         async Test.run (node:internal/test_runner/test:932:9)
+2026-10-15T18:11:50.4219780Z         async Test.processPendingSubtests (node:internal/test_runner/test:629:7)
+2026-10-15T18:11:50.4220192Z       ...
+2026-10-15T18:11:50.4220402Z     1..3
+2026-10-15T18:11:50.4220959Z not ok 312 - optional selector remains unchanged after foreign tags, changed downloads or concurrent edits
+2026-10-15T18:11:50.4221461Z   ---
+2026-10-15T18:11:50.4221669Z   duration_ms: 708.160838
+2026-10-15T18:11:50.4222557Z   location: '/home/runner/work/revealline/revealline/scripts/test-publish-optional-packages.mjs:272:1'
+2026-10-15T18:11:50.4223152Z   failureType: 'subtestsFailed'
+2026-10-15T18:11:50.4223434Z   error: '3 subtests failed'
+2026-10-15T18:11:50.4223700Z   code: 'ERR_TEST_FAILURE'
+2026-10-15T18:11:50.4224091Z   ...
+2026-10-15T18:11:50.6577793Z # Subtest: optional upload refuses already published releases without sending any write request
+2026-10-15T18:11:50.6579620Z not ok 313 - optional upload refuses already published releases without sending any write request
+2026-10-15T18:11:50.6580588Z   ---
+2026-10-15T18:11:50.6580994Z   duration_ms: 237.048725
+2026-10-15T18:11:50.6582027Z   location: '/home/runner/work/revealline/revealline/scripts/test-publish-optional-packages.mjs:316:1'
+2026-10-15T18:11:50.6583362Z   failureType: 'testCodeFailure'
+2026-10-15T18:11:50.6584323Z   error: 'Optional practice dependency is not admitted: game/data-json-messages.mjs'
+2026-10-15T18:11:50.6585186Z   code: 'ERR_TEST_FAILURE'
+2026-10-15T18:11:50.6585574Z   stack: |-
+2026-10-15T18:11:50.6586396Z     requireValid (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:22:25)
+2026-10-15T18:11:50.6587823Z     buildOptionalPractice (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:300:5)
+2026-10-15T18:11:50.6589363Z     async optionalPackageFixture (file:///home/runner/work/revealline/revealline/publishing/optional-package-fixture.mjs:14:17)
+2026-10-15T18:11:50.6590910Z     async fixture (file:///home/runner/work/revealline/revealline/scripts/test-publish-optional-packages.mjs:74:21)
+2026-10-15T18:11:50.6592930Z     async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/scripts/test-publish-optional-packages.mjs:317:13)
+2026-10-15T18:11:50.6594336Z     async Test.run (node:internal/test_runner/test:932:9)
+2026-10-15T18:11:50.6595359Z     async Test.processPendingSubtests (node:internal/test_runner/test:629:7)
+2026-10-15T18:11:50.6596162Z   ...
+2026-10-15T18:11:50.8758415Z # Subtest: draft delivery uploads the envelope last, verifies downloaded originals and resumes without replacement
+2026-10-15T18:11:50.8760304Z not ok 314 - draft delivery uploads the envelope last, verifies downloaded originals and resumes without replacement
+2026-10-15T18:11:50.8761340Z   ---
+2026-10-15T18:11:50.8761744Z   duration_ms: 218.018338
+2026-10-15T18:11:50.8763045Z   location: '/home/runner/work/revealline/revealline/scripts/test-publish-optional-packages.mjs:330:1'
+2026-10-15T18:11:50.8764157Z   failureType: 'testCodeFailure'
+2026-10-15T18:11:50.8765076Z   error: 'Optional practice dependency is not admitted: game/data-json-messages.mjs'
+2026-10-15T18:11:50.8765807Z   code: 'ERR_TEST_FAILURE'
+2026-10-15T18:11:50.8766163Z   stack: |-
+2026-10-15T18:11:50.8766959Z     requireValid (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:22:25)
+2026-10-15T18:11:50.8768651Z     buildOptionalPractice (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:300:5)
+2026-10-15T18:11:50.8770372Z     async optionalPackageFixture (file:///home/runner/work/revealline/revealline/publishing/optional-package-fixture.mjs:14:17)
+2026-10-15T18:11:50.8772043Z     async fixture (file:///home/runner/work/revealline/revealline/scripts/test-publish-optional-packages.mjs:74:21)
+2026-10-15T18:11:50.8774160Z     async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/scripts/test-publish-optional-packages.mjs:331:13)
+2026-10-15T18:11:50.8775551Z     async Test.run (node:internal/test_runner/test:932:9)
+2026-10-15T18:11:50.8776474Z     async Test.processPendingSubtests (node:internal/test_runner/test:629:7)
+2026-10-15T18:11:50.8777177Z   ...
+2026-10-15T18:11:51.0908405Z # Subtest: optional delivery requires an explicit canonical positive release ID before any network access
+2026-10-15T18:11:51.0910169Z not ok 315 - optional delivery requires an explicit canonical positive release ID before any network access
+2026-10-15T18:11:51.0911180Z   ---
+2026-10-15T18:11:51.0911592Z   duration_ms: 215.047405
+2026-10-15T18:11:51.0912913Z   location: '/home/runner/work/revealline/revealline/scripts/test-publish-optional-packages.mjs:393:1'
+2026-10-15T18:11:51.0914031Z   failureType: 'testCodeFailure'
+2026-10-15T18:11:51.0914954Z   error: 'Optional practice dependency is not admitted: game/data-json-messages.mjs'
+2026-10-15T18:11:51.0915836Z   code: 'ERR_TEST_FAILURE'
+2026-10-15T18:11:51.0916293Z   stack: |-
+2026-10-15T18:11:51.0917279Z     requireValid (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:22:25)
+2026-10-15T18:11:51.0918982Z     buildOptionalPractice (file:///home/runner/work/revealline/revealline/scripts/build-optional-practice.mjs:300:5)
+2026-10-15T18:11:51.0920826Z     async optionalPackageFixture (file:///home/runner/work/revealline/revealline/publishing/optional-package-fixture.mjs:14:17)
+2026-10-15T18:11:51.0922857Z     async fixture (file:///home/runner/work/revealline/revealline/scripts/test-publish-optional-packages.mjs:74:21)
+2026-10-15T18:11:51.0924750Z     async TestContext.<anonymous> (file:///home/runner/work/revealline/revealline/scripts/test-publish-optional-packages.mjs:394:13)
+2026-10-15T18:11:51.0926109Z     async Test.run (node:internal/test_runner/test:932:9)
+2026-10-15T18:11:51.0927087Z     async Test.processPendingSubtests (node:internal/test_runner/test:629:7)
+2026-10-15T18:11:51.0927891Z   ...
+2026-10-15T18:11:51.1101832Z 1..315
+2026-10-15T18:11:51.1102828Z # tests 318
+2026-10-15T18:11:51.1103183Z # suites 0
+2026-10-15T18:11:51.1103590Z # pass 291
+2026-10-15T18:11:51.1103799Z # fail 27
+2026-10-15T18:11:51.1104010Z # cancelled 0
+2026-10-15T18:11:51.1104232Z # skipped 0
+2026-10-15T18:11:51.1104434Z # todo 0
+2026-10-15T18:11:51.1104669Z # duration_ms 46124.179612
+2026-10-15T18:11:51.1215709Z ##[error]Process completed with exit code 1.
+2026-10-15T18:11:51.1378162Z Post job cleanup.
+2026-10-15T18:11:51.2202989Z [command]/usr/bin/git version
+2026-10-15T18:11:51.2247042Z git version 2.55.0
+2026-10-15T18:11:51.2289978Z Temporarily overriding HOME='/home/runner/work/_temp/9b964450-c57c-416a-a60b-523346dc590f' before making global git config changes
+2026-10-15T18:11:51.2291743Z Adding repository directory to the temporary git global config as a safe directory
+2026-10-15T18:11:51.2294995Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/revealline/revealline
+2026-10-15T18:11:51.2335192Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2026-10-15T18:11:51.2373098Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2026-10-15T18:11:51.2658079Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2026-10-15T18:11:51.2694469Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2026-10-15T18:11:51.2989476Z [command]/usr/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+2026-10-15T18:11:51.3031369Z [command]/usr/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+2026-10-15T18:11:51.3487855Z Cleaning up orphan processes

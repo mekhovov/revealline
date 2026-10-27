@@ -5,8 +5,9 @@
   "provenance": {
     "path": "authoring/library/fpv-field-kit/production.rltheme",
     "gitBlob": "0489a211bf926eedbfd35dd83f914fbaf178c9a9",
-    "bytes": 8324280,
-    "sha256": "faf48769df378b53888fc7598e86f70477b3fe2d0ee10fb7d14aab1c171f5731"
+    "bytes": 8215400,
+    "sha256": "f7dd274bf80c27a20cf04f597704a3f11c34ca25e8b212c6056f28e9a4788b0c",
+    "scope": "Derived retained-content oracle after an ownership migration. Source commit and tag identify the original artifact; these new bytes are not that release or its historical qualification."
   },
   "metadata": {
     "format": "revealline-theme-bundle.v1",
@@ -26,27 +27,37 @@
   },
   "groups": {
     "slots": {
-      "count": 335,
-      "sha256": "f2d853890e884c926450d6cbe7ed2648676e62a079a9e8768fc73a8fc12d1051"
+      "count": 302,
+      "sha256": "93cd0c41cf186805569b72f283fbeb803cf31623b3935cbc3cd0aa494f1fac22"
     },
     "assets": {
-      "count": 2638,
-      "sha256": "325afbc833068eed2583c201f1d0d061d9c106609d9419446f9c5a5800dff2dd"
+      "count": 2605,
+      "sha256": "704f8694610bb28852193651960856165116fc7dea2342a1f6356bea58bb7dc4"
     },
     "themes": {
       "count": 102,
-      "sha256": "7a7f140f9a7962dbd8058f40d9cb6dd353d5e4b60eefa7d4f17278561a8214f4"
+      "sha256": "0916972eea2862bcb3776d642ff313a7198663600171ec254ef0a163c58a05ed"
     },
     "collections": {
       "count": 1,
-      "sha256": "74daee988fe6fe616d1ecc4a6ffd9f6c9c47b2fc00584259232f8f1477db1b57"
+      "sha256": "84f512c5583368c0d68f138d2d3f7821e0492c0693e931751f8ec3311f6f30cc"
     }
   },
   "payloads": {
     "count": 132,
-    "bytes": 4009342,
     "sha256": "4932cc57542adc364f44cb548011a7ca26afa7e0cb1eb00e00647fe5c381738c"
   },
   "audioRecords": 432,
-  "scope": "Exact production101 predecessor, independently read from immutable d541946f4e9d49e97cfcb2b0ce4054f3dac7d2cf Git bytes before the scoped WebP UI continuation. Includes the preserved source-stage UI23 checkpoint and reviewed audio53 records. This oracle records historical bytes, not UI, listening, device or release approval."
+  "scope": "Exact production101 predecessor, independently read from immutable d541946f4e9d49e97cfcb2b0ce4054f3dac7d2cf Git bytes before the scoped WebP UI continuation. Includes the preserved source-stage UI23 checkpoint and reviewed audio53 records. This oracle records historical bytes, not UI, listening, device or release approval.",
+  "migration": {
+    "format": "revealline-retained-production-oracle.v1",
+    "originalBundleSHA256": "faf48769df378b53888fc7598e86f70477b3fe2d0ee10fb7d14aab1c171f5731",
+    "originalFixtureSHA256": "bb8ef5f69c674d36737dcfd8a23267eb5207fd0bc2757965ae841da552b2551c",
+    "removedSlots": 33,
+    "removedAssets": 33,
+    "preservedPayloads": {
+      "count": 132,
+      "sha256": "4932cc57542adc364f44cb548011a7ca26afa7e0cb1eb00e00647fe5c381738c"
+    }
+  }
 }

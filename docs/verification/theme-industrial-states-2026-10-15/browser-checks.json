@@ -1,0 +1,50 @@
+[
+  {
+    "label": "Ember normal",
+    "result": "\t\t\t\t\t\t23 text ember-foundry · steel · textured · bevel Action semantics: passed · Field semantics: passed · 0 failures"
+  },
+  {
+    "label": "Ember decoration Off",
+    "result": "\t\t\t\t\t\t23 text ember-foundry · steel · quiet · bevel Action semantics: passed · Field semantics: passed · 0 failures"
+  },
+  {
+    "label": "Ember high contrast / reduced motion / large",
+    "result": "\t\t\t\t\t\t23 text ember-foundry · steel · quiet · flat Action semantics: passed · Field semantics: passed · 0 failures"
+  },
+  {
+    "label": "Polar normal",
+    "result": "\t\t\t\t\t\t23 text polar-relay · steel · textured · bevel Action semantics: passed · Field semantics: passed · 0 failures"
+  },
+  {
+    "label": "Polar decoration Off",
+    "result": "\t\t\t\t\t\t23 text polar-relay · steel · quiet · bevel Action semantics: passed · Field semantics: passed · 0 failures"
+  },
+  {
+    "label": "Polar high contrast / reduced motion / large",
+    "result": "\t\t\t\t\t\t23 text polar-relay · steel · quiet · flat Action semantics: passed · Field semantics: passed · 0 failures"
+  },
+  {
+    "label": "Desktop 98 r3 normal",
+    "result": "\t\t\t\t\t\t23 text windows-classic · classic · quiet · bevel Action semantics: passed · Field semantics: passed · 0 failures"
+  },
+  {
+    "label": "Desktop 98 r3 decoration Off",
+    "result": "\t\t\t\t\t\t23 text windows-classic · classic · quiet · bevel Action semantics: passed · Field semantics: passed · 0 failures"
+  },
+  {
+    "label": "Desktop 98 r3 high contrast / reduced motion / large",
+    "result": "\t\t\t\t\t\t23 text windows-classic · classic · quiet · flat Action semantics: passed · Field semantics: passed · 0 failures"
+  },
+  {
+    "label": "DOS normal",
+    "result": "\t\t\t\t\t\t23 text dos · terminal · quiet · flat Action semantics: passed · Field semantics: passed · 0 failures"
+  },
+  {
+    "label": "DOS inside Ember",
+    "result": "\t\t\t\t\t\t23 text dos · terminal · quiet · flat Action semantics: passed · Field semantics: passed · 0 failures"
+  },
+  {
+    "label": "Polar inside Ember",
+    "result": "\t\t\t\t\t\t23 text polar-relay · steel · textured · bevel Action semantics: passed · Field semantics: passed · 0 failures"
+  }
+]

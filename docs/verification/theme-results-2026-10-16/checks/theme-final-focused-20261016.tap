@@ -1,0 +1,310 @@
+TAP version 13
+# Subtest: enemy recordings are registered in the same Studio/voice-library catalogue as existing reactions
+ok 1 - enemy recordings are registered in the same Studio/voice-library catalogue as existing reactions
+  ---
+  duration_ms: 19.636334
+  ...
+# Subtest: enemy captions use existing priority, once-only events, cooldown and per-attempt budget
+ok 2 - enemy captions use existing priority, once-only events, cooldown and per-attempt budget
+  ---
+  duration_ms: 0.604125
+  ...
+# Subtest: result fixture is a verified unfinished journal prefix and only the next accepted move completes it
+ok 3 - result fixture is a verified unfinished journal prefix and only the next accepted move completes it
+  ---
+  duration_ms: 1478.533459
+  ...
+# Subtest: result fixture follows current campaign storage and protects unowned current and legacy saves
+ok 4 - result fixture follows current campaign storage and protects unowned current and legacy saves
+  ---
+  duration_ms: 97.551709
+  ...
+# Subtest: Company actor originals are exact pinned optional media; pilot voices remain core
+ok 5 - Company actor originals are exact pinned optional media; pilot voices remain core
+  ---
+  duration_ms: 1094.841959
+  ...
+# Subtest: construction, inspection and cache miss never download; explicit locale download enables offline reads
+ok 6 - construction, inspection and cache miss never download; explicit locale download enables offline reads
+  ---
+  duration_ms: 600.50175
+  ...
+# Subtest: corrupt bytes fail closed and cannot become a complete optional pack
+ok 7 - corrupt bytes fail closed and cannot become a complete optional pack
+  ---
+  duration_ms: 3.319334
+  ...
+# Subtest: offloading one Company cannot remove another owner’s originals
+ok 8 - offloading one Company cannot remove another owner’s originals
+  ---
+  duration_ms: 145.618917
+  ...
+# Subtest: an already-aborted download does not fetch and an explicit retry remains available
+ok 9 - an already-aborted download does not fetch and an explicit retry remains available
+  ---
+  duration_ms: 62.528792
+  ...
+# Subtest: missing optional cache retains online pilot originals, captions and precedence of custom actor recordings
+ok 10 - missing optional cache retains online pilot originals, captions and precedence of custom actor recordings
+  ---
+  duration_ms: 113.129083
+  ...
+# Subtest: voice download cancellation follows Settings moved into a dialog after mount
+ok 11 - voice download cancellation follows Settings moved into a dialog after mount
+  ---
+  duration_ms: 12.86
+  ...
+# Subtest: another tab removing the same voice pack invalidates the visible verified status through the reaction library
+ok 12 - another tab removing the same voice pack invalidates the visible verified status through the reaction library
+  ---
+  duration_ms: 97.071667
+  ...
+# Subtest: returning to Settings rechecks optional voice ownership without repeated render inspections
+ok 13 - returning to Settings rechecks optional voice ownership without repeated render inspections
+  ---
+  duration_ms: 51.489041
+  ...
+# Subtest: cross-tab status inspection does not interrupt or repaint an active voice download
+ok 14 - cross-tab status inspection does not interrupt or repaint an active voice download
+  ---
+  duration_ms: 2.999209
+  ...
+# Subtest: closing a host retires queued statistics work without late writes or rejected callbacks
+ok 15 - closing a host retires queued statistics work without late writes or rejected callbacks
+  ---
+  duration_ms: 68.65325
+  ...
+# Subtest: closing during a pending database open settles accepted observations without disposal warnings
+ok 16 - closing during a pending database open settles accepted observations without disposal warnings
+  ---
+  duration_ms: 12.712125
+  ...
+# Subtest: a queued backup import cancelled by close cannot rotate the writer or mutate storage
+ok 17 - a queued backup import cancelled by close cannot rotate the writer or mutate storage
+  ---
+  duration_ms: 1.85625
+  ...
+# Subtest: ordinary departure drains an unawaited observation before closing and restores its cursor once
+ok 18 - ordinary departure drains an unawaited observation before closing and restores its cursor once
+  ---
+  duration_ms: 10.248584
+  ...
+# Subtest: live catch batches count once, include bonus enemies, and do not write on empty ticks
+ok 19 - live catch batches count once, include bonus enemies, and do not write on empty ticks
+  ---
+  duration_ms: 0.997041
+  ...
+# Subtest: continue carries cursor and board attribution while replay, imported proof and preview never award
+ok 20 - continue carries cursor and board attribution while replay, imported proof and preview never award
+  ---
+  duration_ms: 5.577584
+  ...
+# Subtest: forked local Continue preserves run totals and tick boundaries without awarding historical catches
+ok 21 - forked local Continue preserves run totals and tick boundaries without awarding historical catches
+  ---
+  duration_ms: 7.058125
+  ...
+# Subtest: serialized independent tab attempts retain both contributions and duplicate continue callbacks do not add
+ok 22 - serialized independent tab attempts retain both contributions and duplicate continue callbacks do not add
+  ---
+  duration_ms: 10.546291
+  ...
+# Subtest: repeated backup import and independently played descendants use component maxima
+ok 23 - repeated backup import and independently played descendants use component maxima
+  ---
+  duration_ms: 133.034667
+  ...
+# Subtest: failed writes stay visible and retry exactly once; absent IndexedDB remains playable
+ok 24 - failed writes stay visible and retry exactly once; absent IndexedDB remains playable
+  ---
+  duration_ms: 266.688542
+  ...
+# Subtest: an already-open host adopts a backup importer’s new lineage before its next live catch
+ok 25 - an already-open host adopts a backup importer’s new lineage before its next live catch
+  ---
+  duration_ms: 148.586458
+  ...
+# Subtest: an aggregate importer drains another host’s failed optimistic contribution before merging its snapshot
+ok 26 - an aggregate importer drains another host’s failed optimistic contribution before merging its snapshot
+  ---
+  duration_ms: 47.135834
+  ...
+# Subtest: session-only play uses an independent component and preserves it after gaining the saving lease
+ok 27 - session-only play uses an independent component and preserves it after gaining the saving lease
+  ---
+  duration_ms: 7.581375
+  ...
+# Subtest: unknown sidecars are preserved byte-for-byte and never replaced by optimistic totals
+ok 28 - unknown sidecars are preserved byte-for-byte and never replaced by optimistic totals
+  ---
+  duration_ms: 9.159166
+  ...
+# Subtest: session-only writers cannot persist and malformed counts never merge
+ok 29 - session-only writers cannot persist and malformed counts never merge
+  ---
+  duration_ms: 1.258208
+  ...
+# Subtest: a protected browser storage getter cannot prevent game bootstrap
+ok 30 - a protected browser storage getter cannot prevent game bootstrap
+  ---
+  duration_ms: 0.417917
+  ...
+# Subtest: portable game backup v3 includes stats, while historical v1 remains byte-compatible in shape
+ok 31 - portable game backup v3 includes stats, while historical v1 remains byte-compatible in shape
+  ---
+  duration_ms: 160.961792
+  ...
+# Subtest: shared panel localizes, filters lifetime cards, and never changes the picture host
+ok 32 - shared panel localizes, filters lifetime cards, and never changes the picture host
+  ---
+  duration_ms: 48.719958
+  ...
+# Subtest: Worlds drone and vehicle victories use localized distinct canvas portraits without image requests
+ok 33 - Worlds drone and vehicle victories use localized distinct canvas portraits without image requests
+  ---
+  duration_ms: 4.730625
+  ...
+# Subtest: legacy host Continue uses a bounded adjacent cursor without rewriting the game session
+ok 34 - legacy host Continue uses a bounded adjacent cursor without rewriting the game session
+  ---
+  duration_ms: 1.570416
+  ...
+# Subtest: milestones acknowledge live progress without replaying import history or taking focus
+ok 35 - milestones acknowledge live progress without replaying import history or taking focus
+  ---
+  duration_ms: 0.866875
+  ...
+# Subtest: compact menu stats keep enemy rows behind a native disclosure and retain focus/open state during updates
+ok 36 - compact menu stats keep enemy rows behind a native disclosure and retain focus/open state during updates
+  ---
+  duration_ms: 4.369208
+  ...
+# Subtest: compact HUD puts current-run defeats before lifetime and has no disclosure or family gallery
+ok 37 - compact HUD puts current-run defeats before lifetime and has no disclosure or family gallery
+  ---
+  duration_ms: 1.266708
+  ...
+# Subtest: rendered-material fixture uses matched native control pairs without replacing runtime paint
+ok 38 - rendered-material fixture uses matched native control pairs without replacing runtime paint
+  ---
+  duration_ms: 289.928458
+  ...
+# Subtest: material semantic checks reject active disabled paint and a pressed danger recolored as selection
+ok 39 - material semantic checks reject active disabled paint and a pressed danger recolored as selection
+  ---
+  duration_ms: 11.076917
+  ...
+# Subtest: material close-up composes native player, Studio and tall-card surfaces without replacing paint
+ok 40 - material close-up composes native player, Studio and tall-card surfaces without replacing paint
+  ---
+  duration_ms: 1.525833
+  ...
+# Subtest: danger pressed and disabled recipes retain their semantic pairs across themes and contrast preferences
+ok 41 - danger pressed and disabled recipes retain their semantic pairs across themes and contrast preferences
+  ---
+  duration_ms: 343.433459
+  ...
+# Subtest: all production and future specimen interfaces validate and meet text contrast
+ok 42 - all production and future specimen interfaces validate and meet text contrast
+  ---
+  duration_ms: 248.190125
+  ...
+# Subtest: accessibility wins over theme and compact density, while selection/focus remain independent
+ok 43 - accessibility wins over theme and compact density, while selection/focus remain independent
+  ---
+  duration_ms: 24.199208
+  ...
+# Subtest: ornaments Off removes frame wear and interface sampling never chooses SIM nearest filtering
+ok 44 - ornaments Off removes frame wear and interface sampling never chooses SIM nearest filtering
+  ---
+  duration_ms: 3.81925
+  ...
+# Subtest: ornaments Off suppresses texture for every installed family without removing semantic state cues
+ok 45 - ornaments Off suppresses texture for every installed family without removing semantic state cues
+  ---
+  duration_ms: 187.393458
+  ...
+# Subtest: shared material layers preserve semantic state colors and reset at every presentation scope
+ok 46 - shared material layers preserve semantic state colors and reset at every presentation scope
+  ---
+  duration_ms: 6.194459
+  ...
+# Subtest: authored and retained Industrial identities keep their own material capability for scoped recipes
+ok 47 - authored and retained Industrial identities keep their own material capability for scoped recipes
+  ---
+  duration_ms: 2576.39675
+  ...
+# Subtest: decorative face recipes require their own enabled texture and contrast scope
+ok 48 - decorative face recipes require their own enabled texture and contrast scope
+  ---
+  duration_ms: 5.120417
+  ...
+# Subtest: gallery and nested backdrops consume their nearest scope material while retaining palette and focus cues
+ok 49 - gallery and nested backdrops consume their nearest scope material while retaining palette and focus cues
+  ---
+  duration_ms: 3.134458
+  ...
+# Subtest: interface validation rejects executable styles, unknown fields and missing provenance
+ok 50 - interface validation rejects executable styles, unknown fields and missing provenance
+  ---
+  duration_ms: 5.865917
+  ...
+# Subtest: DOM application keeps controls and focus, restores only its owned styles
+ok 51 - DOM application keeps controls and focus, restores only its owned styles
+  ---
+  duration_ms: 1.8295
+  ...
+# Subtest: custom interface identity retains its material recipe and restores the prior DOM lease
+ok 52 - custom interface identity retains its material recipe and restores the prior DOM lease
+  ---
+  duration_ms: 165.958875
+  ...
+# Subtest: new theme preferences preserve defaults and do not touch legacy state on read
+ok 53 - new theme preferences preserve defaults and do not touch legacy state on read
+  ---
+  duration_ms: 13.472417
+  ...
+# Subtest: failed/session-only saving retains local intent instead of stale cross-tab state
+ok 54 - failed/session-only saving retains local intent instead of stale cross-tab state
+  ---
+  duration_ms: 0.98075
+  ...
+# Subtest: theme host applies only latest prepared selection and a failed load retains the accepted presentation
+ok 55 - theme host applies only latest prepared selection and a failed load retains the accepted presentation
+  ---
+  duration_ms: 86.784167
+  ...
+# Subtest: theme host recovers from stylesheet failure without applying a partial theme
+ok 56 - theme host recovers from stylesheet failure without applying a partial theme
+  ---
+  duration_ms: 238.910334
+  ...
+# Subtest: family documents pin independent revisions and reject mutable or unexpected references
+ok 57 - family documents pin independent revisions and reject mutable or unexpected references
+  ---
+  duration_ms: 75.888417
+  ...
+# Subtest: DOS uses a mono stack before the Plain accessibility override
+ok 58 - DOS uses a mono stack before the Plain accessibility override
+  ---
+  duration_ms: 35.634875
+  ...
+# Subtest: Canvas consumes interface fonts independently from authored arcade artwork
+ok 59 - Canvas consumes interface fonts independently from authored arcade artwork
+  ---
+  duration_ms: 5.261958
+  ...
+# Subtest: shared appearance bounds native option widths and nested help within compact panels
+ok 60 - shared appearance bounds native option widths and nested help within compact panels
+  ---
+  duration_ms: 10.652333
+  ...
+1..60
+# tests 60
+# suites 0
+# pass 60
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 7122.010666

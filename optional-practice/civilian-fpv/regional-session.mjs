@@ -1,3 +1,4 @@
+import { dataIdentity } from '../../game/data-json.mjs';
 import { attitude, rotate, Q } from './math.mjs';
 import { quantizeFlightInput } from './model.mjs';
 import { createRegionalFlightPrototype } from './regional/flight-prototype.mjs';
@@ -270,6 +271,18 @@ export function createRegionalSession(configuration) {
     };
   };
   return Object.freeze({
+    get identity() {
+      return {
+        format: 'FPVRegionalEncounterBase.v1',
+        environment: runtime.identity,
+        terrain: dataIdentity(configuration.manifest),
+        scenery: configuration.scenery?.manifest
+          ? dataIdentity(configuration.scenery.manifest)
+          : null,
+        mode: configuration.mode ?? 'self-level',
+        response: configuration.response ? dataIdentity(configuration.response) : null,
+      };
+    },
     root: runtime.root,
     snapshot: () => present(runtime.snapshot()),
     prepare: runtime.prepare,
@@ -277,6 +290,12 @@ export function createRegionalSession(configuration) {
     arm: runtime.arm,
     pause: runtime.pause,
     dispose: runtime.dispose,
+    encounterGeometry: runtime.encounterGeometry,
+    configureEncounterActors: runtime.configureEncounterActors,
+    stageEncounterActors: runtime.stageEncounterActors,
+    encounterMotion: runtime.encounterMotion,
+    encounterCheckpoint: runtime.encounterCheckpoint,
+    restoreEncounterCheckpoint: runtime.restoreEncounterCheckpoint,
     step(input) {
       const axes = Object.fromEntries(
         ['roll', 'pitch', 'yaw', 'throttle'].map((key) => [key, input[key]]),

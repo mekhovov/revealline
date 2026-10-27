@@ -1,0 +1,362 @@
+{
+  "format": "FpvGeckoContactSamples.v1",
+  "profileVersion": 34,
+  "configuration": {
+    "features": [
+      "js",
+      "stackwalk",
+      "cpu",
+      "processcpu"
+    ],
+    "threads": [
+      "GeckoMain",
+      "DOM Worker"
+    ],
+    "interval": 1,
+    "capacity": 16777216,
+    "duration": 15,
+    "activeTabID": 0
+  },
+  "process": {
+    "pid": 91683,
+    "tid": 248278,
+    "name": "Web Content",
+    "thread": "GeckoMain"
+  },
+  "results": [
+    {
+      "repeat": 0,
+      "start": 564.061,
+      "end": 2098.012208,
+      "replaySamples": 1518,
+      "stepSamples": 1236,
+      "wasmLeafSamples": 1210,
+      "topSelf": [
+        {
+          "functionLocation": "wasm-function[30]@83077",
+          "samples": 497
+        },
+        {
+          "functionLocation": "wasm-function[552]@1762278",
+          "samples": 280
+        },
+        {
+          "functionLocation": "wasm-function[93]@697442",
+          "samples": 139
+        },
+        {
+          "functionLocation": "wasm-function[83]@637868",
+          "samples": 126
+        },
+        {
+          "functionLocation": "wasm-function[2664]@2617602",
+          "samples": 120
+        },
+        {
+          "functionLocation": "wasm-function[107]@763136",
+          "samples": 9
+        },
+        {
+          "functionLocation": "wasm-function[356]@1469431",
+          "samples": 7
+        },
+        {
+          "functionLocation": "wasm-function[2020]@2527542",
+          "samples": 3
+        },
+        {
+          "functionLocation": "wasm-function[29]@43641",
+          "samples": 3
+        },
+        {
+          "functionLocation": "wasm-function[1507]@2394311",
+          "samples": 2
+        },
+        {
+          "functionLocation": "wasm-function[175]@1077635",
+          "samples": 2
+        },
+        {
+          "functionLocation": "wasm-function[184]@1099172",
+          "samples": 2
+        }
+      ],
+      "topInclusive": [
+        {
+          "functionLocation": "wasm-function[2664]@2617602",
+          "samples": 1214
+        },
+        {
+          "functionLocation": "wasm-function[297]@1324612",
+          "samples": 1214
+        },
+        {
+          "functionLocation": "wasm-function[29]@43641",
+          "samples": 602
+        },
+        {
+          "functionLocation": "wasm-function[30]@83077",
+          "samples": 599
+        },
+        {
+          "functionLocation": "wasm-function[93]@697442",
+          "samples": 288
+        },
+        {
+          "functionLocation": "wasm-function[552]@1762278",
+          "samples": 280
+        },
+        {
+          "functionLocation": "wasm-function[83]@637868",
+          "samples": 126
+        },
+        {
+          "functionLocation": "wasm-function[356]@1469431",
+          "samples": 11
+        },
+        {
+          "functionLocation": "wasm-function[107]@763136",
+          "samples": 9
+        },
+        {
+          "functionLocation": "wasm-function[2020]@2527542",
+          "samples": 5
+        },
+        {
+          "functionLocation": "wasm-function[124]@883404",
+          "samples": 4
+        },
+        {
+          "functionLocation": "wasm-function[161]@1039895",
+          "samples": 4
+        }
+      ]
+    },
+    {
+      "repeat": 1,
+      "start": 2102.9345,
+      "end": 3476.985625,
+      "replaySamples": 1364,
+      "stepSamples": 1167,
+      "wasmLeafSamples": 1156,
+      "topSelf": [
+        {
+          "functionLocation": "wasm-function[30]@83077",
+          "samples": 460
+        },
+        {
+          "functionLocation": "wasm-function[552]@1762278",
+          "samples": 286
+        },
+        {
+          "functionLocation": "wasm-function[93]@697442",
+          "samples": 145
+        },
+        {
+          "functionLocation": "wasm-function[83]@637868",
+          "samples": 108
+        },
+        {
+          "functionLocation": "wasm-function[2664]@2617602",
+          "samples": 102
+        },
+        {
+          "functionLocation": "wasm-function[356]@1469431",
+          "samples": 11
+        },
+        {
+          "functionLocation": "wasm-function[29]@43641",
+          "samples": 6
+        },
+        {
+          "functionLocation": "wasm-function[901]@2008328",
+          "samples": 6
+        },
+        {
+          "functionLocation": "wasm-function[200]@1137267",
+          "samples": 3
+        },
+        {
+          "functionLocation": "wasm-function[297]@1324612",
+          "samples": 3
+        },
+        {
+          "functionLocation": "wasm-function[64]@520605",
+          "samples": 3
+        },
+        {
+          "functionLocation": "wasm-function[1054]@2079760",
+          "samples": 2
+        }
+      ],
+      "topInclusive": [
+        {
+          "functionLocation": "wasm-function[297]@1324612",
+          "samples": 1158
+        },
+        {
+          "functionLocation": "wasm-function[2664]@2617602",
+          "samples": 1155
+        },
+        {
+          "functionLocation": "wasm-function[29]@43641",
+          "samples": 578
+        },
+        {
+          "functionLocation": "wasm-function[30]@83077",
+          "samples": 572
+        },
+        {
+          "functionLocation": "wasm-function[93]@697442",
+          "samples": 292
+        },
+        {
+          "functionLocation": "wasm-function[552]@1762278",
+          "samples": 286
+        },
+        {
+          "functionLocation": "wasm-function[83]@637868",
+          "samples": 108
+        },
+        {
+          "functionLocation": "wasm-function[356]@1469431",
+          "samples": 19
+        },
+        {
+          "functionLocation": "wasm-function[124]@883404",
+          "samples": 6
+        },
+        {
+          "functionLocation": "wasm-function[1319]@2211068",
+          "samples": 6
+        },
+        {
+          "functionLocation": "wasm-function[161]@1039895",
+          "samples": 6
+        },
+        {
+          "functionLocation": "wasm-function[2887]@2980152",
+          "samples": 6
+        }
+      ]
+    },
+    {
+      "repeat": 2,
+      "start": 3481.380875,
+      "end": 4784.861625,
+      "replaySamples": 1303,
+      "stepSamples": 1148,
+      "wasmLeafSamples": 1137,
+      "topSelf": [
+        {
+          "functionLocation": "wasm-function[30]@83077",
+          "samples": 460
+        },
+        {
+          "functionLocation": "wasm-function[552]@1762278",
+          "samples": 279
+        },
+        {
+          "functionLocation": "wasm-function[93]@697442",
+          "samples": 140
+        },
+        {
+          "functionLocation": "wasm-function[83]@637868",
+          "samples": 109
+        },
+        {
+          "functionLocation": "wasm-function[2664]@2617602",
+          "samples": 106
+        },
+        {
+          "functionLocation": "wasm-function[356]@1469431",
+          "samples": 10
+        },
+        {
+          "functionLocation": "wasm-function[29]@43641",
+          "samples": 5
+        },
+        {
+          "functionLocation": "wasm-function[901]@2008328",
+          "samples": 5
+        },
+        {
+          "functionLocation": "wasm-function[316]@1412935",
+          "samples": 4
+        },
+        {
+          "functionLocation": "wasm-function[107]@763136",
+          "samples": 3
+        },
+        {
+          "functionLocation": "wasm-function[184]@1099172",
+          "samples": 2
+        },
+        {
+          "functionLocation": "wasm-function[110]@775414",
+          "samples": 1
+        }
+      ],
+      "topInclusive": [
+        {
+          "functionLocation": "wasm-function[297]@1324612",
+          "samples": 1142
+        },
+        {
+          "functionLocation": "wasm-function[2664]@2617602",
+          "samples": 1141
+        },
+        {
+          "functionLocation": "wasm-function[29]@43641",
+          "samples": 575
+        },
+        {
+          "functionLocation": "wasm-function[30]@83077",
+          "samples": 570
+        },
+        {
+          "functionLocation": "wasm-function[93]@697442",
+          "samples": 285
+        },
+        {
+          "functionLocation": "wasm-function[552]@1762278",
+          "samples": 279
+        },
+        {
+          "functionLocation": "wasm-function[83]@637868",
+          "samples": 109
+        },
+        {
+          "functionLocation": "wasm-function[356]@1469431",
+          "samples": 16
+        },
+        {
+          "functionLocation": "wasm-function[2020]@2527542",
+          "samples": 6
+        },
+        {
+          "functionLocation": "wasm-function[1319]@2211068",
+          "samples": 5
+        },
+        {
+          "functionLocation": "wasm-function[2887]@2980152",
+          "samples": 5
+        },
+        {
+          "functionLocation": "wasm-function[901]@2008328",
+          "samples": 5
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Sample counts are neither measured function durations nor exclusive CPU percentages.",
+    "Only replay intervals and stacks containing the pinned vendor step wrappers are counted.",
+    "WASM function indices/offsets are bound to the exact binary; source function names and generated machine instructions remain unresolved."
+  ],
+  "profile": {
+    "path": "/Users/oleksandr.mekhovov/work/my_projects/fpv-firefox-profile-20261019-results-2/gecko-profile.json",
+    "bytes": 12110507,
+    "sha256": "a7d160e76c076697e8dae8bbdd162169120200405c5d52c1ccdb1c231b463a0a"
+  }
+}

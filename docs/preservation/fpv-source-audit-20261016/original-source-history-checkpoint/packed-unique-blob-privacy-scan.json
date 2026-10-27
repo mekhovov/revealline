@@ -1,0 +1,51 @@
+{
+  "format": "SelectedPackedUniqueBlobPrivacyScan.v1",
+  "createdUTC": "2026-10-16T05:30:54.849468+00:00",
+  "uniqueBlobCount": 4677,
+  "blobBytes": 858750152,
+  "everyRawGitObjectSHA1Verified": true,
+  "exactBlobPatternCandidates": [
+    {
+      "gitBlob": "aa5079969da9bcc396a687222ec29afa2e142d25",
+      "paths": [
+        "game/test/landing-release-history-host.test.mjs"
+      ],
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "gitBlob": "f7150f1726be3907a7e8550d6aa589a8817f590f",
+      "paths": [
+        "game/test/mission-library-handoff.test.mjs"
+      ],
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "gitBlob": "de8d70cc3b3b8245d37fe843e60d9be9d937d852",
+      "paths": [
+        "game/test/edition-offline-client.test.mjs"
+      ],
+      "secretPattern": "credential_url",
+      "matchSHA256": "c604d4eecc9010177eb941b7d66cc680b44732bbfee77bce699072713037e370"
+    },
+    {
+      "gitBlob": "f5f1a4dda73166182d622020e36be0e5c4f272cd",
+      "paths": [
+        "services/community/test/deployed-tus-resume.test.mjs"
+      ],
+      "secretPattern": "credential_url",
+      "matchSHA256": "fd3411554212f1dfbe4f17051eb6cafd5ea95d666051fdd1d9d3760bdbf53931"
+    },
+    {
+      "gitBlob": "49c62b894132884c5dbb5b190db8a8ee18f19b6d",
+      "paths": [
+        "scripts/test-optional-installation-quota-probe.mjs"
+      ],
+      "secretPattern": "credential_url",
+      "matchSHA256": "a28b8176f57374f4f478f28ad1530d57fff8e37cdb58a74e5146350154124e29"
+    }
+  ],
+  "matchedValuesIncluded": false,
+  "source": "Exact private bundle object allowlist only; no broad cache/archive scan. All known-public leaf IDs excluded before this scan; every private blob scanned once with exact token boundaries."
+}

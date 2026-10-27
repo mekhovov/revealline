@@ -1,0 +1,1138 @@
+{
+  "format": "revealline-native-pressure-comparison.v1",
+  "scope": "Eight bounded native observations, repeated baseline/candidate comparisons. Comparable activity, not identical workloads or a budget/improvement verdict.",
+  "runs": [
+    {
+      "mode": "team",
+      "mission": "team-expedition-homecoming",
+      "requestedMission": "team-expedition-homecoming",
+      "scope": "active",
+      "durationMs": 30001.099999999627,
+      "frameIntervals": {
+        "count": 3601,
+        "medianMs": 8.400000000372529,
+        "p95Ms": 10.5,
+        "p99Ms": 11.900000000372529,
+        "maxMs": 14.800000000745058,
+        "over33ms": 0,
+        "over50ms": 0
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 561,
+        "dpr": 2
+      },
+      "environment": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+        "hardwareConcurrency": 14,
+        "pageUrl": "http://127.0.0.1:63765/game/couch/relay-rescue.html?journey=team-expedition-v1&library-mission=%5B%22journey%3Ateam-expedition-v1%22%2C%22team-expedition-v1%22%2C%22%5B%5C%22candidate%5C%22%2C%5C%22team-expedition-aurora-pack%5C%22%2C%5C%22team-expedition-aurora%5C%22%5D%22%2C%22candidate%2Fteam-expedition-aurora-pack%2Fteam-expedition-aurora%2Fteam-expedition-homecoming%22%2C%22%22%5D&library-intent=select",
+        "buildVersion": "__REVEALLINE_VERSION__"
+      },
+      "inputs": {
+        "player1Keydowns": 24,
+        "player2Keydowns": 24,
+        "trustedKeydowns": 48,
+        "untrustedKeydowns": 0
+      },
+      "hudBefore": {
+        "coop-stage": "EXPEDITION HOMECOMING",
+        "coop-clock": "0:00",
+        "coop-coverage": "0.0%",
+        "coop-reserves": "4 reserves",
+        "coop-state-0": "On reclaimed ground",
+        "coop-state-1": "On reclaimed ground",
+        "coop-charge-0": "Interceptor ready",
+        "coop-charge-1": "Disruptor ready"
+      },
+      "hudAfter": {
+        "coop-stage": "EXPEDITION HOMECOMING",
+        "coop-clock": "0:30",
+        "coop-coverage": "35.1%",
+        "coop-reserves": "4 reserves",
+        "coop-state-0": "Line exposed",
+        "coop-state-1": "On reclaimed ground",
+        "coop-charge-0": "Interceptor ready",
+        "coop-charge-1": "Disruptor ready"
+      },
+      "encounterBefore": {
+        "supported": false,
+        "reason": "Independent encounter cards are observed only in Duel."
+      },
+      "encounterAfter": {
+        "supported": false,
+        "reason": "Independent encounter cards are observed only in Duel."
+      },
+      "longTasks": {
+        "supported": true,
+        "count": 0,
+        "over50Ms": 0,
+        "maxMs": 0,
+        "omittedCount": 0
+      },
+      "newResourceEntries": 0,
+      "label": "baseline-team-1",
+      "activitySamples": 60,
+      "heapSamples": 7,
+      "sampledHeapPeakBytes": 101442874,
+      "inputRunnerDurationMs": 31513,
+      "gestureStartLatenessMs": {
+        "min": 0,
+        "max": 33
+      },
+      "seatStateSnapshotCounts": [
+        {
+          "On reclaimed ground": 29,
+          "Line exposed": 31
+        },
+        {
+          "On reclaimed ground": 33,
+          "Line exposed": 27
+        }
+      ],
+      "recoverySnapshots": []
+    },
+    {
+      "mode": "team",
+      "mission": "team-expedition-homecoming",
+      "requestedMission": "team-expedition-homecoming",
+      "scope": "active",
+      "durationMs": 30003.300000000745,
+      "frameIntervals": {
+        "count": 3600,
+        "medianMs": 8.299999998882413,
+        "p95Ms": 10.5,
+        "p99Ms": 10.900000000372529,
+        "maxMs": 18.59999999962747,
+        "over33ms": 0,
+        "over50ms": 0
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 561,
+        "dpr": 2
+      },
+      "environment": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+        "hardwareConcurrency": 14,
+        "pageUrl": "http://127.0.0.1:63766/game/couch/relay-rescue.html?journey=team-expedition-v1&library-mission=%5B%22journey%3Ateam-expedition-v1%22%2C%22team-expedition-v1%22%2C%22%5B%5C%22candidate%5C%22%2C%5C%22team-expedition-aurora-pack%5C%22%2C%5C%22team-expedition-aurora%5C%22%5D%22%2C%22candidate%2Fteam-expedition-aurora-pack%2Fteam-expedition-aurora%2Fteam-expedition-homecoming%22%2C%22%22%5D&library-intent=select",
+        "buildVersion": "__REVEALLINE_VERSION__"
+      },
+      "inputs": {
+        "player1Keydowns": 24,
+        "player2Keydowns": 24,
+        "trustedKeydowns": 48,
+        "untrustedKeydowns": 0
+      },
+      "hudBefore": {
+        "coop-stage": "EXPEDITION HOMECOMING",
+        "coop-clock": "0:00",
+        "coop-coverage": "0.0%",
+        "coop-reserves": "4 reserves",
+        "coop-state-0": "On reclaimed ground",
+        "coop-state-1": "On reclaimed ground",
+        "coop-charge-0": "Interceptor ready",
+        "coop-charge-1": "Disruptor ready"
+      },
+      "hudAfter": {
+        "coop-stage": "EXPEDITION HOMECOMING",
+        "coop-clock": "0:30",
+        "coop-coverage": "35.7%",
+        "coop-reserves": "4 reserves",
+        "coop-state-0": "Line exposed",
+        "coop-state-1": "On reclaimed ground",
+        "coop-charge-0": "Interceptor ready",
+        "coop-charge-1": "Disruptor ready"
+      },
+      "encounterBefore": {
+        "supported": false,
+        "reason": "Independent encounter cards are observed only in Duel."
+      },
+      "encounterAfter": {
+        "supported": false,
+        "reason": "Independent encounter cards are observed only in Duel."
+      },
+      "longTasks": {
+        "supported": true,
+        "count": 0,
+        "over50Ms": 0,
+        "maxMs": 0,
+        "omittedCount": 0
+      },
+      "newResourceEntries": 0,
+      "label": "candidate-team-1",
+      "activitySamples": 60,
+      "heapSamples": 7,
+      "sampledHeapPeakBytes": 65620324,
+      "inputRunnerDurationMs": 31509,
+      "gestureStartLatenessMs": {
+        "min": 0,
+        "max": 52
+      },
+      "seatStateSnapshotCounts": [
+        {
+          "On reclaimed ground": 18,
+          "Line exposed": 37,
+          "Rescue · 1s": 1,
+          "Recovery shield · reclaimed ground only": 4
+        },
+        {
+          "On reclaimed ground": 33,
+          "Line exposed": 27
+        }
+      ],
+      "recoverySnapshots": [
+        {
+          "atMs": 9593.099999999627,
+          "hud": {
+            "coop-stage": "EXPEDITION HOMECOMING",
+            "coop-clock": "0:09",
+            "coop-coverage": "11.4%",
+            "coop-reserves": "4 reserves",
+            "coop-state-0": "Rescue · 1s",
+            "coop-state-1": "Line exposed",
+            "coop-charge-0": "Crawl to your partner",
+            "coop-charge-1": "Disruptor ready"
+          },
+          "encounter": {
+            "supported": false,
+            "reason": "Independent encounter cards are observed only in Duel."
+          }
+        },
+        {
+          "atMs": 10101.300000000745,
+          "hud": {
+            "coop-stage": "EXPEDITION HOMECOMING",
+            "coop-clock": "0:10",
+            "coop-coverage": "15.8%",
+            "coop-reserves": "4 reserves",
+            "coop-state-0": "Recovery shield · reclaimed ground only",
+            "coop-state-1": "On reclaimed ground",
+            "coop-charge-0": "Interceptor ready",
+            "coop-charge-1": "Disruptor ready"
+          },
+          "encounter": {
+            "supported": false,
+            "reason": "Independent encounter cards are observed only in Duel."
+          }
+        },
+        {
+          "atMs": 10609.5,
+          "hud": {
+            "coop-stage": "EXPEDITION HOMECOMING",
+            "coop-clock": "0:10",
+            "coop-coverage": "15.8%",
+            "coop-reserves": "4 reserves",
+            "coop-state-0": "Recovery shield · reclaimed ground only",
+            "coop-state-1": "On reclaimed ground",
+            "coop-charge-0": "Interceptor ready",
+            "coop-charge-1": "Disruptor ready"
+          },
+          "encounter": {
+            "supported": false,
+            "reason": "Independent encounter cards are observed only in Duel."
+          }
+        },
+        {
+          "atMs": 11116.199999999255,
+          "hud": {
+            "coop-stage": "EXPEDITION HOMECOMING",
+            "coop-clock": "0:11",
+            "coop-coverage": "15.8%",
+            "coop-reserves": "4 reserves",
+            "coop-state-0": "Recovery shield · reclaimed ground only",
+            "coop-state-1": "Line exposed",
+            "coop-charge-0": "Interceptor ready",
+            "coop-charge-1": "Disruptor ready"
+          },
+          "encounter": {
+            "supported": false,
+            "reason": "Independent encounter cards are observed only in Duel."
+          }
+        },
+        {
+          "atMs": 11618.400000000373,
+          "hud": {
+            "coop-stage": "EXPEDITION HOMECOMING",
+            "coop-clock": "0:11",
+            "coop-coverage": "15.8%",
+            "coop-reserves": "4 reserves",
+            "coop-state-0": "Recovery shield · reclaimed ground only",
+            "coop-state-1": "Line exposed",
+            "coop-charge-0": "Interceptor ready",
+            "coop-charge-1": "Disruptor ready"
+          },
+          "encounter": {
+            "supported": false,
+            "reason": "Independent encounter cards are observed only in Duel."
+          }
+        }
+      ]
+    },
+    {
+      "mode": "team",
+      "mission": "team-expedition-homecoming",
+      "requestedMission": "team-expedition-homecoming",
+      "scope": "active",
+      "durationMs": 30004,
+      "frameIntervals": {
+        "count": 3600,
+        "medianMs": 8.300000000745058,
+        "p95Ms": 10.299999998882413,
+        "p99Ms": 10.800000000745058,
+        "maxMs": 16.699999999254942,
+        "over33ms": 0,
+        "over50ms": 0
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 561,
+        "dpr": 2
+      },
+      "environment": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+        "hardwareConcurrency": 14,
+        "pageUrl": "http://127.0.0.1:63765/game/couch/relay-rescue.html?journey=team-expedition-v1&library-mission=%5B%22journey%3Ateam-expedition-v1%22%2C%22team-expedition-v1%22%2C%22%5B%5C%22candidate%5C%22%2C%5C%22team-expedition-aurora-pack%5C%22%2C%5C%22team-expedition-aurora%5C%22%5D%22%2C%22candidate%2Fteam-expedition-aurora-pack%2Fteam-expedition-aurora%2Fteam-expedition-homecoming%22%2C%22%22%5D&library-intent=select",
+        "buildVersion": "__REVEALLINE_VERSION__"
+      },
+      "inputs": {
+        "player1Keydowns": 24,
+        "player2Keydowns": 24,
+        "trustedKeydowns": 48,
+        "untrustedKeydowns": 0
+      },
+      "hudBefore": {
+        "coop-stage": "EXPEDITION HOMECOMING",
+        "coop-clock": "0:00",
+        "coop-coverage": "0.0%",
+        "coop-reserves": "4 reserves",
+        "coop-state-0": "On reclaimed ground",
+        "coop-state-1": "On reclaimed ground",
+        "coop-charge-0": "Interceptor ready",
+        "coop-charge-1": "Disruptor ready"
+      },
+      "hudAfter": {
+        "coop-stage": "EXPEDITION HOMECOMING",
+        "coop-clock": "0:30",
+        "coop-coverage": "36.0%",
+        "coop-reserves": "4 reserves",
+        "coop-state-0": "Line exposed",
+        "coop-state-1": "On reclaimed ground",
+        "coop-charge-0": "Interceptor ready",
+        "coop-charge-1": "Disruptor ready"
+      },
+      "encounterBefore": {
+        "supported": false,
+        "reason": "Independent encounter cards are observed only in Duel."
+      },
+      "encounterAfter": {
+        "supported": false,
+        "reason": "Independent encounter cards are observed only in Duel."
+      },
+      "longTasks": {
+        "supported": true,
+        "count": 0,
+        "over50Ms": 0,
+        "maxMs": 0,
+        "omittedCount": 0
+      },
+      "newResourceEntries": 0,
+      "label": "baseline-team-2",
+      "activitySamples": 60,
+      "heapSamples": 7,
+      "sampledHeapPeakBytes": 61996983,
+      "inputRunnerDurationMs": 31512,
+      "gestureStartLatenessMs": {
+        "min": 1,
+        "max": 36
+      },
+      "seatStateSnapshotCounts": [
+        {
+          "On reclaimed ground": 29,
+          "Line exposed": 31
+        },
+        {
+          "On reclaimed ground": 32,
+          "Line exposed": 28
+        }
+      ],
+      "recoverySnapshots": []
+    },
+    {
+      "mode": "team",
+      "mission": "team-expedition-homecoming",
+      "requestedMission": "team-expedition-homecoming",
+      "scope": "active",
+      "durationMs": 30002.400000000373,
+      "frameIntervals": {
+        "count": 3594,
+        "medianMs": 8.299999998882413,
+        "p95Ms": 10.599999999627471,
+        "p99Ms": 11.299999998882413,
+        "maxMs": 69.19999999925494,
+        "over33ms": 1,
+        "over50ms": 1
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 561,
+        "dpr": 2
+      },
+      "environment": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+        "hardwareConcurrency": 14,
+        "pageUrl": "http://127.0.0.1:63766/game/couch/relay-rescue.html?journey=team-expedition-v1&library-mission=%5B%22journey%3Ateam-expedition-v1%22%2C%22team-expedition-v1%22%2C%22%5B%5C%22candidate%5C%22%2C%5C%22team-expedition-aurora-pack%5C%22%2C%5C%22team-expedition-aurora%5C%22%5D%22%2C%22candidate%2Fteam-expedition-aurora-pack%2Fteam-expedition-aurora%2Fteam-expedition-homecoming%22%2C%22%22%5D&library-intent=select",
+        "buildVersion": "__REVEALLINE_VERSION__"
+      },
+      "inputs": {
+        "player1Keydowns": 24,
+        "player2Keydowns": 24,
+        "trustedKeydowns": 48,
+        "untrustedKeydowns": 0
+      },
+      "hudBefore": {
+        "coop-stage": "EXPEDITION HOMECOMING",
+        "coop-clock": "0:00",
+        "coop-coverage": "0.0%",
+        "coop-reserves": "4 reserves",
+        "coop-state-0": "On reclaimed ground",
+        "coop-state-1": "On reclaimed ground",
+        "coop-charge-0": "Interceptor ready",
+        "coop-charge-1": "Disruptor ready"
+      },
+      "hudAfter": {
+        "coop-stage": "EXPEDITION HOMECOMING",
+        "coop-clock": "0:30",
+        "coop-coverage": "36.6%",
+        "coop-reserves": "4 reserves",
+        "coop-state-0": "Line exposed",
+        "coop-state-1": "On reclaimed ground",
+        "coop-charge-0": "Interceptor ready",
+        "coop-charge-1": "Disruptor ready"
+      },
+      "encounterBefore": {
+        "supported": false,
+        "reason": "Independent encounter cards are observed only in Duel."
+      },
+      "encounterAfter": {
+        "supported": false,
+        "reason": "Independent encounter cards are observed only in Duel."
+      },
+      "longTasks": {
+        "supported": true,
+        "count": 0,
+        "over50Ms": 0,
+        "maxMs": 0,
+        "omittedCount": 0
+      },
+      "newResourceEntries": 0,
+      "label": "candidate-team-2",
+      "activitySamples": 60,
+      "heapSamples": 7,
+      "sampledHeapPeakBytes": 69752208,
+      "inputRunnerDurationMs": 31529,
+      "gestureStartLatenessMs": {
+        "min": 0,
+        "max": 43
+      },
+      "seatStateSnapshotCounts": [
+        {
+          "On reclaimed ground": 18,
+          "Line exposed": 37,
+          "Rescue · 1s": 1,
+          "Recovery shield · reclaimed ground only": 4
+        },
+        {
+          "On reclaimed ground": 37,
+          "Line exposed": 23
+        }
+      ],
+      "recoverySnapshots": [
+        {
+          "atMs": 9566.099999999627,
+          "hud": {
+            "coop-stage": "EXPEDITION HOMECOMING",
+            "coop-clock": "0:09",
+            "coop-coverage": "11.4%",
+            "coop-reserves": "4 reserves",
+            "coop-state-0": "Rescue · 1s",
+            "coop-state-1": "Line exposed",
+            "coop-charge-0": "Crawl to your partner",
+            "coop-charge-1": "Disruptor ready"
+          },
+          "encounter": {
+            "supported": false,
+            "reason": "Independent encounter cards are observed only in Duel."
+          }
+        },
+        {
+          "atMs": 10066.199999999255,
+          "hud": {
+            "coop-stage": "EXPEDITION HOMECOMING",
+            "coop-clock": "0:10",
+            "coop-coverage": "15.8%",
+            "coop-reserves": "4 reserves",
+            "coop-state-0": "Recovery shield · reclaimed ground only",
+            "coop-state-1": "On reclaimed ground",
+            "coop-charge-0": "Interceptor ready",
+            "coop-charge-1": "Disruptor ready"
+          },
+          "encounter": {
+            "supported": false,
+            "reason": "Independent encounter cards are observed only in Duel."
+          }
+        },
+        {
+          "atMs": 10566.400000000373,
+          "hud": {
+            "coop-stage": "EXPEDITION HOMECOMING",
+            "coop-clock": "0:10",
+            "coop-coverage": "15.8%",
+            "coop-reserves": "4 reserves",
+            "coop-state-0": "Recovery shield · reclaimed ground only",
+            "coop-state-1": "On reclaimed ground",
+            "coop-charge-0": "Interceptor ready",
+            "coop-charge-1": "Disruptor ready"
+          },
+          "encounter": {
+            "supported": false,
+            "reason": "Independent encounter cards are observed only in Duel."
+          }
+        },
+        {
+          "atMs": 11066.5,
+          "hud": {
+            "coop-stage": "EXPEDITION HOMECOMING",
+            "coop-clock": "0:11",
+            "coop-coverage": "15.8%",
+            "coop-reserves": "4 reserves",
+            "coop-state-0": "Recovery shield · reclaimed ground only",
+            "coop-state-1": "Line exposed",
+            "coop-charge-0": "Interceptor ready",
+            "coop-charge-1": "Disruptor ready"
+          },
+          "encounter": {
+            "supported": false,
+            "reason": "Independent encounter cards are observed only in Duel."
+          }
+        },
+        {
+          "atMs": 11574.900000000373,
+          "hud": {
+            "coop-stage": "EXPEDITION HOMECOMING",
+            "coop-clock": "0:11",
+            "coop-coverage": "15.8%",
+            "coop-reserves": "4 reserves",
+            "coop-state-0": "Recovery shield · reclaimed ground only",
+            "coop-state-1": "Line exposed",
+            "coop-charge-0": "Interceptor ready",
+            "coop-charge-1": "Disruptor ready"
+          },
+          "encounter": {
+            "supported": false,
+            "reason": "Independent encounter cards are observed only in Duel."
+          }
+        }
+      ]
+    },
+    {
+      "mode": "versus",
+      "mission": "candidate/versus-expedition-sentinel-pack/versus-expedition-sentinel/versus-crown-photo-finish/gentle",
+      "requestedMission": "candidate/versus-expedition-sentinel-pack/versus-expedition-sentinel/versus-crown-photo-finish",
+      "scope": "active",
+      "durationMs": 30011.400000000373,
+      "frameIntervals": {
+        "count": 3558,
+        "medianMs": 8.199999999254942,
+        "p95Ms": 12.299999998882413,
+        "p99Ms": 18.59999999962747,
+        "maxMs": 50,
+        "over33ms": 1,
+        "over50ms": 0
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 561,
+        "dpr": 2
+      },
+      "environment": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+        "hardwareConcurrency": 14,
+        "pageUrl": "http://127.0.0.1:63765/game/couch/?journey=duel-expedition-v1&library-mission=%5B%22journey%3Aduel-expedition-v1%22%2C%22duel-expedition-v1%22%2C%22%5B%5C%22candidate%5C%22%2C%5C%22versus-expedition-sentinel-pack%5C%22%2C%5C%22versus-expedition-sentinel%5C%22%5D%22%2C%22candidate%2Fversus-expedition-sentinel-pack%2Fversus-expedition-sentinel%2Fversus-crown-photo-finish%22%2C%22%22%5D&library-intent=select",
+        "buildVersion": "__REVEALLINE_VERSION__"
+      },
+      "inputs": {
+        "player1Keydowns": 24,
+        "player2Keydowns": 24,
+        "trustedKeydowns": 48,
+        "untrustedKeydowns": 0
+      },
+      "hudBefore": {
+        "race-clock": "No countdown",
+        "racer-stats-0": "1: 0.0% / 70% · 5 lives · 0 points",
+        "racer-stats-1": "2: 0.0% / 70% · 5 lives · 0 points",
+        "racer-state-0": "running",
+        "racer-state-1": "running",
+        "series-score": "0 : 0"
+      },
+      "hudAfter": {
+        "race-clock": "No countdown",
+        "racer-stats-0": "1: 9.8% / 70% · 5 lives · 2,170 points",
+        "racer-stats-1": "2: 9.8% / 70% · 5 lives · 2,170 points",
+        "racer-state-0": "running",
+        "racer-state-1": "running",
+        "series-score": "0 : 0"
+      },
+      "encounterBefore": {
+        "supported": true,
+        "players": [
+          {
+            "player": 1,
+            "available": true,
+            "shown": true,
+            "phase": "delay",
+            "phaseTruncated": false,
+            "title": {
+              "text": "1 / 2 · SHIELD RELAYS · 2.0s",
+              "truncated": false
+            },
+            "instruction": {
+              "text": "Shield relays 0 / 2. Capture every remaining relay. Return every line to reclaimed ground.",
+              "truncated": false
+            }
+          },
+          {
+            "player": 2,
+            "available": true,
+            "shown": true,
+            "phase": "delay",
+            "phaseTruncated": false,
+            "title": {
+              "text": "1 / 2 · SHIELD RELAYS · 2.0s",
+              "truncated": false
+            },
+            "instruction": {
+              "text": "Shield relays 0 / 2. Capture every remaining relay. Return every line to reclaimed ground.",
+              "truncated": false
+            }
+          }
+        ]
+      },
+      "encounterAfter": {
+        "supported": true,
+        "players": [
+          {
+            "player": 1,
+            "available": true,
+            "shown": true,
+            "phase": "warning",
+            "phaseTruncated": false,
+            "title": {
+              "text": "1 / 2 · LANE WARNING · 0.6s",
+              "truncated": false
+            },
+            "instruction": {
+              "text": "Shield relays 0 / 2. Capture every remaining relay. Watch row 9.",
+              "truncated": false
+            }
+          },
+          {
+            "player": 2,
+            "available": true,
+            "shown": true,
+            "phase": "warning",
+            "phaseTruncated": false,
+            "title": {
+              "text": "1 / 2 · LANE WARNING · 0.6s",
+              "truncated": false
+            },
+            "instruction": {
+              "text": "Shield relays 0 / 2. Capture every remaining relay. Watch row 9.",
+              "truncated": false
+            }
+          }
+        ]
+      },
+      "longTasks": {
+        "supported": true,
+        "count": 0,
+        "over50Ms": 0,
+        "maxMs": 0,
+        "omittedCount": 0
+      },
+      "newResourceEntries": 0,
+      "label": "baseline-duel-1",
+      "activitySamples": 60,
+      "heapSamples": 7,
+      "sampledHeapPeakBytes": 123499009,
+      "inputRunnerDurationMs": 31521,
+      "gestureStartLatenessMs": {
+        "min": 0,
+        "max": 109
+      },
+      "seatPhaseSnapshotCounts": [
+        {
+          "delay": 9,
+          "warning": 19,
+          "active": 4,
+          "rest": 28
+        },
+        {
+          "delay": 9,
+          "warning": 19,
+          "active": 4,
+          "rest": 28
+        }
+      ]
+    },
+    {
+      "mode": "versus",
+      "mission": "candidate/versus-expedition-sentinel-pack/versus-expedition-sentinel/versus-crown-photo-finish/gentle",
+      "requestedMission": "candidate/versus-expedition-sentinel-pack/versus-expedition-sentinel/versus-crown-photo-finish",
+      "scope": "active",
+      "durationMs": 30003.400000000373,
+      "frameIntervals": {
+        "count": 3545,
+        "medianMs": 8.199999999254942,
+        "p95Ms": 13.099999999627471,
+        "p99Ms": 19.40000000037253,
+        "maxMs": 44.79999999888241,
+        "over33ms": 2,
+        "over50ms": 0
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 561,
+        "dpr": 2
+      },
+      "environment": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+        "hardwareConcurrency": 14,
+        "pageUrl": "http://127.0.0.1:63766/game/couch/?journey=duel-expedition-v1&library-mission=%5B%22journey%3Aduel-expedition-v1%22%2C%22duel-expedition-v1%22%2C%22%5B%5C%22candidate%5C%22%2C%5C%22versus-expedition-sentinel-pack%5C%22%2C%5C%22versus-expedition-sentinel%5C%22%5D%22%2C%22candidate%2Fversus-expedition-sentinel-pack%2Fversus-expedition-sentinel%2Fversus-crown-photo-finish%22%2C%22%22%5D&library-intent=select",
+        "buildVersion": "__REVEALLINE_VERSION__"
+      },
+      "inputs": {
+        "player1Keydowns": 24,
+        "player2Keydowns": 24,
+        "trustedKeydowns": 48,
+        "untrustedKeydowns": 0
+      },
+      "hudBefore": {
+        "race-clock": "No countdown",
+        "racer-stats-0": "1: 0.0% / 70% · 5 lives · 0 points",
+        "racer-stats-1": "2: 0.0% / 70% · 5 lives · 0 points",
+        "racer-state-0": "running",
+        "racer-state-1": "running",
+        "series-score": "0 : 0"
+      },
+      "hudAfter": {
+        "race-clock": "No countdown",
+        "racer-stats-0": "1: 9.7% / 70% · 5 lives · 2,140 points",
+        "racer-stats-1": "2: 9.7% / 70% · 5 lives · 2,140 points",
+        "racer-state-0": "running",
+        "racer-state-1": "running",
+        "series-score": "0 : 0"
+      },
+      "encounterBefore": {
+        "supported": true,
+        "players": [
+          {
+            "player": 1,
+            "available": true,
+            "shown": true,
+            "phase": "delay",
+            "phaseTruncated": false,
+            "title": {
+              "text": "1 / 2 · SHIELD RELAYS · 2.0s",
+              "truncated": false
+            },
+            "instruction": {
+              "text": "Shield relays 0 / 2. Capture every remaining relay. Return every line to reclaimed ground.",
+              "truncated": false
+            }
+          },
+          {
+            "player": 2,
+            "available": true,
+            "shown": true,
+            "phase": "delay",
+            "phaseTruncated": false,
+            "title": {
+              "text": "1 / 2 · SHIELD RELAYS · 2.0s",
+              "truncated": false
+            },
+            "instruction": {
+              "text": "Shield relays 0 / 2. Capture every remaining relay. Return every line to reclaimed ground.",
+              "truncated": false
+            }
+          }
+        ]
+      },
+      "encounterAfter": {
+        "supported": true,
+        "players": [
+          {
+            "player": 1,
+            "available": true,
+            "shown": true,
+            "phase": "warning",
+            "phaseTruncated": false,
+            "title": {
+              "text": "1 / 2 · LANE WARNING · 0.7s",
+              "truncated": false
+            },
+            "instruction": {
+              "text": "Shield relays 0 / 2. Capture every remaining relay. Watch row 9.",
+              "truncated": false
+            }
+          },
+          {
+            "player": 2,
+            "available": true,
+            "shown": true,
+            "phase": "warning",
+            "phaseTruncated": false,
+            "title": {
+              "text": "1 / 2 · LANE WARNING · 0.7s",
+              "truncated": false
+            },
+            "instruction": {
+              "text": "Shield relays 0 / 2. Capture every remaining relay. Watch row 9.",
+              "truncated": false
+            }
+          }
+        ]
+      },
+      "longTasks": {
+        "supported": true,
+        "count": 0,
+        "over50Ms": 0,
+        "maxMs": 0,
+        "omittedCount": 0
+      },
+      "newResourceEntries": 0,
+      "label": "candidate-duel-1",
+      "activitySamples": 60,
+      "heapSamples": 7,
+      "sampledHeapPeakBytes": 126192660,
+      "inputRunnerDurationMs": 31523,
+      "gestureStartLatenessMs": {
+        "min": 0,
+        "max": 59
+      },
+      "seatPhaseSnapshotCounts": [
+        {
+          "delay": 9,
+          "warning": 19,
+          "active": 4,
+          "rest": 28
+        },
+        {
+          "delay": 9,
+          "warning": 19,
+          "active": 4,
+          "rest": 28
+        }
+      ]
+    },
+    {
+      "mode": "versus",
+      "mission": "candidate/versus-expedition-sentinel-pack/versus-expedition-sentinel/versus-crown-photo-finish/gentle",
+      "requestedMission": "candidate/versus-expedition-sentinel-pack/versus-expedition-sentinel/versus-crown-photo-finish",
+      "scope": "active",
+      "durationMs": 30003,
+      "frameIntervals": {
+        "count": 3547,
+        "medianMs": 8.199999999254942,
+        "p95Ms": 12.399999998509884,
+        "p99Ms": 19,
+        "maxMs": 51,
+        "over33ms": 2,
+        "over50ms": 1
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 561,
+        "dpr": 2
+      },
+      "environment": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+        "hardwareConcurrency": 14,
+        "pageUrl": "http://127.0.0.1:63765/game/couch/?journey=duel-expedition-v1&library-mission=%5B%22journey%3Aduel-expedition-v1%22%2C%22duel-expedition-v1%22%2C%22%5B%5C%22candidate%5C%22%2C%5C%22versus-expedition-sentinel-pack%5C%22%2C%5C%22versus-expedition-sentinel%5C%22%5D%22%2C%22candidate%2Fversus-expedition-sentinel-pack%2Fversus-expedition-sentinel%2Fversus-crown-photo-finish%22%2C%22%22%5D&library-intent=select",
+        "buildVersion": "__REVEALLINE_VERSION__"
+      },
+      "inputs": {
+        "player1Keydowns": 24,
+        "player2Keydowns": 24,
+        "trustedKeydowns": 48,
+        "untrustedKeydowns": 0
+      },
+      "hudBefore": {
+        "race-clock": "No countdown",
+        "racer-stats-0": "1: 0.0% / 70% · 5 lives · 0 points",
+        "racer-stats-1": "2: 0.0% / 70% · 5 lives · 0 points",
+        "racer-state-0": "running",
+        "racer-state-1": "running",
+        "series-score": "0 : 0"
+      },
+      "hudAfter": {
+        "race-clock": "No countdown",
+        "racer-stats-0": "1: 9.9% / 70% · 5 lives · 2,180 points",
+        "racer-stats-1": "2: 12.2% / 70% · 5 lives · 2,700 points",
+        "racer-state-0": "running",
+        "racer-state-1": "running",
+        "series-score": "0 : 0"
+      },
+      "encounterBefore": {
+        "supported": true,
+        "players": [
+          {
+            "player": 1,
+            "available": true,
+            "shown": true,
+            "phase": "delay",
+            "phaseTruncated": false,
+            "title": {
+              "text": "1 / 2 · SHIELD RELAYS · 2.0s",
+              "truncated": false
+            },
+            "instruction": {
+              "text": "Shield relays 0 / 2. Capture every remaining relay. Return every line to reclaimed ground.",
+              "truncated": false
+            }
+          },
+          {
+            "player": 2,
+            "available": true,
+            "shown": true,
+            "phase": "delay",
+            "phaseTruncated": false,
+            "title": {
+              "text": "1 / 2 · SHIELD RELAYS · 2.0s",
+              "truncated": false
+            },
+            "instruction": {
+              "text": "Shield relays 0 / 2. Capture every remaining relay. Return every line to reclaimed ground.",
+              "truncated": false
+            }
+          }
+        ]
+      },
+      "encounterAfter": {
+        "supported": true,
+        "players": [
+          {
+            "player": 1,
+            "available": true,
+            "shown": true,
+            "phase": "warning",
+            "phaseTruncated": false,
+            "title": {
+              "text": "1 / 2 · LANE WARNING · 0.7s",
+              "truncated": false
+            },
+            "instruction": {
+              "text": "Shield relays 0 / 2. Capture every remaining relay. Watch row 9.",
+              "truncated": false
+            }
+          },
+          {
+            "player": 2,
+            "available": true,
+            "shown": true,
+            "phase": "warning",
+            "phaseTruncated": false,
+            "title": {
+              "text": "1 / 2 · LANE WARNING · 0.7s",
+              "truncated": false
+            },
+            "instruction": {
+              "text": "Shield relays 0 / 2. Capture every remaining relay. Watch row 14.",
+              "truncated": false
+            }
+          }
+        ]
+      },
+      "longTasks": {
+        "supported": true,
+        "count": 0,
+        "over50Ms": 0,
+        "maxMs": 0,
+        "omittedCount": 0
+      },
+      "newResourceEntries": 0,
+      "label": "baseline-duel-2",
+      "activitySamples": 60,
+      "heapSamples": 7,
+      "sampledHeapPeakBytes": 123024782,
+      "inputRunnerDurationMs": 31532,
+      "gestureStartLatenessMs": {
+        "min": 0,
+        "max": 150
+      },
+      "seatPhaseSnapshotCounts": [
+        {
+          "delay": 9,
+          "warning": 19,
+          "active": 4,
+          "rest": 28
+        },
+        {
+          "delay": 9,
+          "warning": 19,
+          "active": 4,
+          "rest": 28
+        }
+      ]
+    },
+    {
+      "mode": "versus",
+      "mission": "candidate/versus-expedition-sentinel-pack/versus-expedition-sentinel/versus-crown-photo-finish/gentle",
+      "requestedMission": "candidate/versus-expedition-sentinel-pack/versus-expedition-sentinel/versus-crown-photo-finish",
+      "scope": "active",
+      "durationMs": 30010.300000000745,
+      "frameIntervals": {
+        "count": 3565,
+        "medianMs": 8.199999999254942,
+        "p95Ms": 11.300000000745058,
+        "p99Ms": 19,
+        "maxMs": 46.29999999888241,
+        "over33ms": 1,
+        "over50ms": 0
+      },
+      "viewport": {
+        "width": 1280,
+        "height": 561,
+        "dpr": 2
+      },
+      "environment": {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/155.0.0.0 Safari/537.36",
+        "hardwareConcurrency": 14,
+        "pageUrl": "http://127.0.0.1:63766/game/couch/?journey=duel-expedition-v1&library-mission=%5B%22journey%3Aduel-expedition-v1%22%2C%22duel-expedition-v1%22%2C%22%5B%5C%22candidate%5C%22%2C%5C%22versus-expedition-sentinel-pack%5C%22%2C%5C%22versus-expedition-sentinel%5C%22%5D%22%2C%22candidate%2Fversus-expedition-sentinel-pack%2Fversus-expedition-sentinel%2Fversus-crown-photo-finish%22%2C%22%22%5D&library-intent=select",
+        "buildVersion": "__REVEALLINE_VERSION__"
+      },
+      "inputs": {
+        "player1Keydowns": 24,
+        "player2Keydowns": 24,
+        "trustedKeydowns": 48,
+        "untrustedKeydowns": 0
+      },
+      "hudBefore": {
+        "race-clock": "No countdown",
+        "racer-stats-0": "1: 0.0% / 70% · 5 lives · 0 points",
+        "racer-stats-1": "2: 0.0% / 70% · 5 lives · 0 points",
+        "racer-state-0": "running",
+        "racer-state-1": "running",
+        "series-score": "0 : 0"
+      },
+      "hudAfter": {
+        "race-clock": "No countdown",
+        "racer-stats-0": "1: 9.8% / 70% · 5 lives · 2,160 points",
+        "racer-stats-1": "2: 9.8% / 70% · 5 lives · 2,160 points",
+        "racer-state-0": "running",
+        "racer-state-1": "running",
+        "series-score": "0 : 0"
+      },
+      "encounterBefore": {
+        "supported": true,
+        "players": [
+          {
+            "player": 1,
+            "available": true,
+            "shown": true,
+            "phase": "delay",
+            "phaseTruncated": false,
+            "title": {
+              "text": "1 / 2 · SHIELD RELAYS · 2.0s",
+              "truncated": false
+            },
+            "instruction": {
+              "text": "Shield relays 0 / 2. Capture every remaining relay. Return every line to reclaimed ground.",
+              "truncated": false
+            }
+          },
+          {
+            "player": 2,
+            "available": true,
+            "shown": true,
+            "phase": "delay",
+            "phaseTruncated": false,
+            "title": {
+              "text": "1 / 2 · SHIELD RELAYS · 2.0s",
+              "truncated": false
+            },
+            "instruction": {
+              "text": "Shield relays 0 / 2. Capture every remaining relay. Return every line to reclaimed ground.",
+              "truncated": false
+            }
+          }
+        ]
+      },
+      "encounterAfter": {
+        "supported": true,
+        "players": [
+          {
+            "player": 1,
+            "available": true,
+            "shown": true,
+            "phase": "warning",
+            "phaseTruncated": false,
+            "title": {
+              "text": "1 / 2 · LANE WARNING · 0.6s",
+              "truncated": false
+            },
+            "instruction": {
+              "text": "Shield relays 0 / 2. Capture every remaining relay. Watch row 9.",
+              "truncated": false
+            }
+          },
+          {
+            "player": 2,
+            "available": true,
+            "shown": true,
+            "phase": "warning",
+            "phaseTruncated": false,
+            "title": {
+              "text": "1 / 2 · LANE WARNING · 0.6s",
+              "truncated": false
+            },
+            "instruction": {
+              "text": "Shield relays 0 / 2. Capture every remaining relay. Watch row 9.",
+              "truncated": false
+            }
+          }
+        ]
+      },
+      "longTasks": {
+        "supported": true,
+        "count": 0,
+        "over50Ms": 0,
+        "maxMs": 0,
+        "omittedCount": 0
+      },
+      "newResourceEntries": 0,
+      "label": "candidate-duel-2",
+      "activitySamples": 60,
+      "heapSamples": 7,
+      "sampledHeapPeakBytes": 122111884,
+      "inputRunnerDurationMs": 31540,
+      "gestureStartLatenessMs": {
+        "min": 0,
+        "max": 78
+      },
+      "seatPhaseSnapshotCounts": [
+        {
+          "delay": 9,
+          "warning": 19,
+          "active": 4,
+          "rest": 28
+        },
+        {
+          "delay": 9,
+          "warning": 19,
+          "active": 4,
+          "rest": 28
+        }
+      ]
+    }
+  ]
+}

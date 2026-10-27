@@ -7,7 +7,7 @@
     background-color: var(--fk-bg);
     color: var(--fk-text);
     font-family: var(--fk-font-ui);
-    font-size: var(--fk-text-body);
+    font-size: calc(var(--fk-text-body) * var(--primary-text-scale, 1));
     line-height: var(--fk-leading-body);
     font-synthesis: none;
     scrollbar-color: var(--fk-line) var(--fk-bg);
@@ -27,14 +27,14 @@
   }
 
   .field-kit-support :is(p, li, dd) {
-    font-size: var(--fk-text-body);
+    font-size: calc(var(--fk-text-body) * var(--primary-text-scale, 1));
     line-height: var(--fk-leading-body);
   }
 
   .field-kit :is(label, legend, .field),
   .field-kit.game-shell[data-text-size] :is(label, legend, .field),
   .field-kit-support .range-field > span {
-    font-size: var(--fk-text-control);
+    font-size: calc(var(--fk-text-control) * var(--primary-text-scale, 1));
     line-height: var(--fk-leading-control);
   }
 
@@ -59,14 +59,14 @@
       .site-footer
     ) {
     font-family: var(--fk-font-ui);
-    font-size: var(--fk-text-secondary);
+    font-size: calc(var(--fk-text-secondary) * var(--primary-text-scale, 1));
     line-height: 1.45;
     letter-spacing: normal;
   }
 
   .field-kit :is(output, .readout-value) {
     font-family: var(--fk-font-mono);
-    font-size: var(--fk-text-control);
+    font-size: calc(var(--fk-text-control) * var(--primary-text-scale, 1));
     font-weight: 500;
     font-variant-numeric: tabular-nums;
   }
@@ -84,7 +84,7 @@
 
   .field-kit .field-kit-copy {
     max-inline-size: 65ch;
-    font-size: var(--fk-text-body);
+    font-size: calc(var(--fk-text-body) * var(--primary-text-scale, 1));
     line-height: var(--fk-leading-body);
   }
 
@@ -95,7 +95,7 @@
   .field-kit.game-shell .game-overlay .pause-label {
     font-family: var(--fk-font-display);
     font-weight: 600;
-    font-size: var(--fk-text-display);
+    font-size: calc(var(--fk-text-display) * var(--primary-text-scale, 1));
     line-height: var(--fk-leading-display);
     letter-spacing: 0.015em;
     text-shadow: none;
@@ -103,7 +103,7 @@
   }
 
   .field-kit #shell-title {
-    font-size: clamp(56px, 8vw, 104px);
+    font-size: calc(clamp(56px, 8vw, 104px) * var(--primary-text-scale, 1));
   }
 
   .field-kit.game-shell .telemetry strong,
@@ -120,7 +120,7 @@
   .field-kit.game-shell .telemetry strong,
   .field-kit .field-kit-counter {
     color: var(--fk-amber);
-    font-size: var(--fk-text-counter);
+    font-size: calc(var(--fk-text-counter) * var(--primary-text-scale, 1));
   }
 
   .field-kit
@@ -130,7 +130,7 @@
   .field-kit.game-shell .telemetry :is(.stat-label, span, label, em) {
     color: var(--fk-muted);
     font-family: var(--fk-font-ui);
-    font-size: var(--fk-text-secondary);
+    font-size: calc(var(--fk-text-secondary) * var(--primary-text-scale, 1));
     line-height: 1.45;
     letter-spacing: normal;
     opacity: 1;
@@ -142,7 +142,7 @@
     border-color: var(--fk-line);
     border-radius: var(--fk-corner);
     font-family: var(--fk-font-ui);
-    font-size: var(--fk-text-body);
+    font-size: calc(var(--fk-text-body) * var(--primary-text-scale, 1));
   }
 
   .field-kit .field-kit-panel {
@@ -171,7 +171,7 @@
     min-block-size: var(--fk-target-size);
     color: var(--fk-text);
     font-family: var(--fk-font-ui);
-    font-size: var(--fk-text-control);
+    font-size: calc(var(--fk-text-control) * var(--primary-text-scale, 1));
     font-weight: 500;
     line-height: var(--fk-leading-control);
     letter-spacing: normal;
@@ -366,7 +366,7 @@
     border-inline-start: 4px solid var(--fk-cyan);
     padding: var(--fk-space-2) var(--fk-space-3);
     background: var(--fk-panel);
-    font-size: var(--fk-text-control);
+    font-size: calc(var(--fk-text-control) * var(--primary-text-scale, 1));
   }
 
   .field-kit .field-kit-status[data-kind='error'] {
@@ -385,7 +385,7 @@
     border: 1px solid var(--fk-line);
     border-bottom-width: 3px;
     border-radius: var(--fk-corner);
-    font-size: var(--fk-text-secondary);
+    font-size: calc(var(--fk-text-secondary) * var(--primary-text-scale, 1));
   }
 
   /* Actual controller navigation adds .controller-focus; it must match keyboard focus. */

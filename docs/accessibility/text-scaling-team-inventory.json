@@ -1,0 +1,2004 @@
+{
+  "revision": "5a1cf9839da554e762e23178aba583b340555e9d",
+  "entry": "game/couch/relay-rescue.html",
+  "scope": "Entry data-module bindings, static imports, literal deferred imports and literal stylesheet references; not executed-host reachability or all-theme/device qualification.",
+  "moduleCount": 615,
+  "modules": [
+    "authoring/motion-lab/animation.mjs",
+    "game/access-gate.mjs",
+    "game/actor-style-preferences.mjs",
+    "game/audio-preferences.mjs",
+    "game/audio/dialogue-mix.mjs",
+    "game/audio/effects/bank.mjs",
+    "game/audio/reactions/actors.mjs",
+    "game/audio/reactions/pilot.mjs",
+    "game/base-artwork.mjs",
+    "game/body-derivative.mjs",
+    "game/campaign-contexts.mjs",
+    "game/campaign-difficulty.mjs",
+    "game/classic-rules-session.mjs",
+    "game/community-routes.mjs",
+    "game/content-design/actor-marker.mjs",
+    "game/content-design/apex-art.mjs",
+    "game/content-design/apex-candidates.mjs",
+    "game/content-design/apex-cultural-routes-candidates.mjs",
+    "game/content-design/apex-pressure-pair-candidates.mjs",
+    "game/content-design/assets.mjs",
+    "game/content-design/attempt.mjs",
+    "game/content-design/border-art.mjs",
+    "game/content-design/border-candidates.mjs",
+    "game/content-design/border-cultural-completion-candidates.mjs",
+    "game/content-design/border-cultural-next-batch-candidates.mjs",
+    "game/content-design/border-frontier-pocket-candidates.mjs",
+    "game/content-design/border-signal-cultural-next-batch-candidates.mjs",
+    "game/content-design/campaign-actor-presentation.mjs",
+    "game/content-design/campaign-presentation.mjs",
+    "game/content-design/catalogs.mjs",
+    "game/content-design/content-lifecycle.mjs",
+    "game/content-design/contested-wall-triptych-candidates.mjs",
+    "game/content-design/cooling-loop-erosion-candidates.mjs",
+    "game/content-design/crosswind-art.mjs",
+    "game/content-design/crosswind-candidates.mjs",
+    "game/content-design/crosswind-cultural-completion-candidates.mjs",
+    "game/content-design/crosswind-cultural-routes-candidates.mjs",
+    "game/content-design/cultural-pressure-triptych-candidates.mjs",
+    "game/content-design/cultural-timed-bonus-pressure-candidates.mjs",
+    "game/content-design/current-remix-pressure-candidates.mjs",
+    "game/content-design/default-entry.mjs",
+    "game/content-design/diagnostics.mjs",
+    "game/content-design/discovery-schema.mjs",
+    "game/content-design/early-cultural-routes-candidates.mjs",
+    "game/content-design/erosion-pressure-pair-candidates.mjs",
+    "game/content-design/execution-entry.mjs",
+    "game/content-design/execution.mjs",
+    "game/content-design/fracture-apex-cultural-completion-candidates.mjs",
+    "game/content-design/fracture-art.mjs",
+    "game/content-design/fracture-candidates.mjs",
+    "game/content-design/fracture-cultural-routes-candidates.mjs",
+    "game/content-design/horizon-art.mjs",
+    "game/content-design/horizon-candidates.mjs",
+    "game/content-design/horizon-next-batch-candidates.mjs",
+    "game/content-design/hunt-training-candidates.mjs",
+    "game/content-design/journey-crosswind-spatial-pair.mjs",
+    "game/content-design/journey-ornament-spatial-pair.mjs",
+    "game/content-design/journey-rover-spatial-pair.mjs",
+    "game/content-design/journey.mjs",
+    "game/content-design/late-pressure-pair-candidates.mjs",
+    "game/content-design/limits.mjs",
+    "game/content-design/livewire-art.mjs",
+    "game/content-design/livewire-candidates.mjs",
+    "game/content-design/livewire-cultural-routes-candidates.mjs",
+    "game/content-design/map.mjs",
+    "game/content-design/material-markers.mjs",
+    "game/content-design/mission-card.mjs",
+    "game/content-design/mode-href.mjs",
+    "game/content-design/multiplayer-expansion-layouts.mjs",
+    "game/content-design/multiplayer-expansion.mjs",
+    "game/content-design/multiplayer-wave-one.mjs",
+    "game/content-design/multiplayer-wave-three.mjs",
+    "game/content-design/multiplayer-wave-two.mjs",
+    "game/content-design/neon-art.mjs",
+    "game/content-design/neon-candidates.mjs",
+    "game/content-design/neon-cultural-completion-candidates.mjs",
+    "game/content-design/neon-cultural-routes-candidates.mjs",
+    "game/content-design/neon-cultural-routes-finale-candidates.mjs",
+    "game/content-design/phase-art.mjs",
+    "game/content-design/phase-candidates.mjs",
+    "game/content-design/phaseworks-cultural-routes-candidates.mjs",
+    "game/content-design/picture.mjs",
+    "game/content-design/pressure-candidates.mjs",
+    "game/content-design/pressure-corridor-triptych-candidates.mjs",
+    "game/content-design/project.mjs",
+    "game/content-design/published-journey.mjs",
+    "game/content-design/pursuit-campaign-candidates.mjs",
+    "game/content-design/pursuit-layouts.mjs",
+    "game/content-design/pursuit-pilot-candidates.mjs",
+    "game/content-design/relay-art.mjs",
+    "game/content-design/relay-candidates.mjs",
+    "game/content-design/relay-cultural-completion-candidates.mjs",
+    "game/content-design/relay-cultural-routes-candidates.mjs",
+    "game/content-design/remix-pressure-pair-candidates.mjs",
+    "game/content-design/route-definition.mjs",
+    "game/content-design/route-loader.mjs",
+    "game/content-design/route-snapshot.mjs",
+    "game/content-design/rover-art.mjs",
+    "game/content-design/rover-candidates.mjs",
+    "game/content-design/rover-cultural-completion-candidates.mjs",
+    "game/content-design/rover-cultural-routes-candidates.mjs",
+    "game/content-design/rover-teaching-candidates.mjs",
+    "game/content-design/sentinel-art.mjs",
+    "game/content-design/sentinel-candidates.mjs",
+    "game/content-design/sentinel-cultural-routes-candidates.mjs",
+    "game/content-design/sequence.mjs",
+    "game/content-design/signal-art.mjs",
+    "game/content-design/signal-candidates.mjs",
+    "game/content-design/signal-cultural-routes-candidates.mjs",
+    "game/content-design/snake-hunt-candidates.mjs",
+    "game/content-design/solo-host.mjs",
+    "game/content-design/spatial-next-batch-candidates.mjs",
+    "game/content-design/starter.mjs",
+    "game/content-design/team-art.mjs",
+    "game/content-design/team-candidates.mjs",
+    "game/content-design/team-capture-teaching.mjs",
+    "game/content-design/team-chamber-specialist-originals.mjs",
+    "game/content-design/team-complete-specialist-originals.mjs",
+    "game/content-design/team-cultural-specialist-originals.mjs",
+    "game/content-design/team-cultural-specialist-v2-originals.mjs",
+    "game/content-design/team-depot-spatial-candidates.mjs",
+    "game/content-design/team-entry.mjs",
+    "game/content-design/team-host.mjs",
+    "game/content-design/team-hunt-training-candidates.mjs",
+    "game/content-design/team-impact-originals.mjs",
+    "game/content-design/team-journey-candidates.mjs",
+    "game/content-design/team-material-candidates.mjs",
+    "game/content-design/team-material-specialist-originals.mjs",
+    "game/content-design/team-mission-card.mjs",
+    "game/content-design/team-partner-specialist-originals.mjs",
+    "game/content-design/team-pressure-originals.mjs",
+    "game/content-design/team-progress.mjs",
+    "game/content-design/team-qualification.mjs",
+    "game/content-design/team-return-specialist-originals.mjs",
+    "game/content-design/team-roamer-candidates.mjs",
+    "game/content-design/team-roamer-spatial-candidates.mjs",
+    "game/content-design/team-runtime.mjs",
+    "game/content-design/team-signal-candidates.mjs",
+    "game/content-design/team-snake-hunt-candidates.mjs",
+    "game/content-design/team-spatial-originals.mjs",
+    "game/content-design/team-specialist-originals.mjs",
+    "game/content-design/team-timed-art.mjs",
+    "game/content-design/team-timed-candidates.mjs",
+    "game/content-design/team-timed-entry.mjs",
+    "game/content-design/team-timed-originals.mjs",
+    "game/content-design/team-window-spatial-candidates.mjs",
+    "game/content-design/ukrainian-ornament-atlas-registry.mjs",
+    "game/content-design/ukrainian-ornament-atlas.mjs",
+    "game/content-design/ukrainian-ornament-candidates.mjs",
+    "game/content-design/ukrainian-ornament-core.mjs",
+    "game/content-design/ukrainian-ornament-optional.mjs",
+    "game/content-design/versus-host.mjs",
+    "game/content-design/whole-journey-candidates.mjs",
+    "game/content-design/whole-journey-order.mjs",
+    "game/content-design/whole-spatial-candidates.mjs",
+    "game/content-design/whole-spatial-data.mjs",
+    "game/content.mjs",
+    "game/content/soundtrack-catalogue.mjs",
+    "game/controller-bindings.mjs",
+    "game/controller-boost.mjs",
+    "game/coop/attempt-history.mjs",
+    "game/coop/attempt-identity.mjs",
+    "game/coop/bonus-opportunity.mjs",
+    "game/coop/combat-patrols.mjs",
+    "game/coop/core.mjs",
+    "game/coop/enemy-stats-ownership.mjs",
+    "game/coop/expedition-environment.mjs",
+    "game/coop/expedition-version.mjs",
+    "game/coop/first-connection.mjs",
+    "game/coop/foundations.mjs",
+    "game/coop/geometry.mjs",
+    "game/coop/hunt-attempts.mjs",
+    "game/coop/input-policy.mjs",
+    "game/coop/library.mjs",
+    "game/coop/picture-source.mjs",
+    "game/coop/presentation-envelope.mjs",
+    "game/coop/recipes.mjs",
+    "game/coop/relay-yard.mjs",
+    "game/coop/roamers.mjs",
+    "game/coop/running-enemies.mjs",
+    "game/coop/terrain.mjs",
+    "game/coop/threats.mjs",
+    "game/coop/timed-bonuses.mjs",
+    "game/core/abilities.mjs",
+    "game/core/arcade-actions.mjs",
+    "game/core/bonus-opportunity.mjs",
+    "game/core/capture-regions.mjs",
+    "game/core/capture.mjs",
+    "game/core/classic-contour.mjs",
+    "game/core/classic-definition.mjs",
+    "game/core/classic-motion.mjs",
+    "game/core/classic-state.mjs",
+    "game/core/classic-step.mjs",
+    "game/core/classic-topology.mjs",
+    "game/core/combat-definition.mjs",
+    "game/core/combat-motion.mjs",
+    "game/core/combat-patrols.mjs",
+    "game/core/contacts.mjs",
+    "game/core/coverage.mjs",
+    "game/core/directional-fields.mjs",
+    "game/core/encounter.mjs",
+    "game/core/enemy-pressure.mjs",
+    "game/core/field-course.mjs",
+    "game/core/foundations.mjs",
+    "game/core/geometry.mjs",
+    "game/core/index.mjs",
+    "game/core/level.mjs",
+    "game/core/line-impact.mjs",
+    "game/core/movement.mjs",
+    "game/core/registry.mjs",
+    "game/core/relay-gates.mjs",
+    "game/core/systems.mjs",
+    "game/core/timed-bonuses.mjs",
+    "game/core/versions.mjs",
+    "game/couch/candidate-pictures.mjs",
+    "game/couch/candidate-team-pictures.mjs",
+    "game/couch/controller-profiles.mjs",
+    "game/couch/controller-restore.mjs",
+    "game/couch/controller-session.mjs",
+    "game/couch/controller-setup.mjs",
+    "game/couch/coop-actor-layout.mjs",
+    "game/couch/coop-actor-presentation.mjs",
+    "game/couch/coop-anchor-presentation.mjs",
+    "game/couch/coop-bonus-view.mjs",
+    "game/couch/coop-briefing.mjs",
+    "game/couch/coop-copy.mjs",
+    "game/couch/coop-core-presentation.mjs",
+    "game/couch/coop-cue-overflow.mjs",
+    "game/couch/coop-emitter-presentation.mjs",
+    "game/couch/coop-enemy-slots.mjs",
+    "game/couch/coop-feedback.mjs",
+    "game/couch/coop-ground.mjs",
+    "game/couch/coop-import-source.mjs",
+    "game/couch/coop-outcome-presentation.mjs",
+    "game/couch/coop-owned-presentation.mjs",
+    "game/couch/coop-picture-bindings.mjs",
+    "game/couch/coop-picture-image.mjs",
+    "game/couch/coop-pilot-cues.mjs",
+    "game/couch/coop-pilot-slots.mjs",
+    "game/couch/coop-presentation.mjs",
+    "game/couch/coop-rescue-presentation.mjs",
+    "game/couch/coop-retained-presentation.mjs",
+    "game/couch/coop-support-presentation.mjs",
+    "game/couch/coop-terrain-trail.mjs",
+    "game/couch/coop-view.mjs",
+    "game/couch/couch-chapter-install.mjs",
+    "game/couch/couch-input.mjs",
+    "game/couch/couch-music-context.mjs",
+    "game/couch/couch-music-host.mjs",
+    "game/couch/couch-music-library.mjs",
+    "game/couch/couch-music-session.mjs",
+    "game/couch/creator-team-import.mjs",
+    "game/couch/mode-entry.js",
+    "game/couch/relay-rescue.mjs",
+    "game/couch/team-arena-preference.mjs",
+    "game/couch/team-contextual-teaching.mjs",
+    "game/couch/team-entry.js",
+    "game/couch/team-library-preview.mjs",
+    "game/couch/tx15-presets.mjs",
+    "game/creator/bytes.mjs",
+    "game/creator/team-installed.mjs",
+    "game/creator/team-media.mjs",
+    "game/creator/team-source.mjs",
+    "game/creator/team.mjs",
+    "game/data-json.mjs",
+    "game/display-preferences.mjs",
+    "game/download-catalogue.mjs",
+    "game/edition-context.mjs",
+    "game/encounter-display-preferences.mjs",
+    "game/enemy-catalog.mjs",
+    "game/enemy-presentations.mjs",
+    "game/enemy-stats.mjs",
+    "game/external-chapter-catalog.mjs",
+    "game/external-chapter-host.mjs",
+    "game/external-chapter-install.mjs",
+    "game/external-chapter-pointer.mjs",
+    "game/external-chapter-source.mjs",
+    "game/external-chapter.mjs",
+    "game/external-recovery-catalog.mjs",
+    "game/flight-media-pins.mjs",
+    "game/fpv-entry.mjs",
+    "game/game-updates.mjs",
+    "game/gameplay-tuning-v1.mjs",
+    "game/gameplay-tuning-v2.mjs",
+    "game/gameplay-tuning-v3.mjs",
+    "game/gameplay-tuning.mjs",
+    "game/hunt/actor-art.mjs",
+    "game/hunt/actor-catalog.mjs",
+    "game/hunt/actor-facing.mjs",
+    "game/hunt/actor-reactions.mjs",
+    "game/hunt/copy.mjs",
+    "game/hunt/destruction-budget.mjs",
+    "game/hunt/destruction.mjs",
+    "game/hunt/industrial-soldier-kit.mjs",
+    "game/hunt/level.mjs",
+    "game/hunt/preferences.mjs",
+    "game/hunt/presentation-catalog.mjs",
+    "game/hunt/pursuit-goals-v2.mjs",
+    "game/hunt/pursuit-goals.mjs",
+    "game/hunt/pursuit-specialists.mjs",
+    "game/hunt/records.mjs",
+    "game/hunt/rules.mjs",
+    "game/hunt/running-enemies.mjs",
+    "game/hunt/running-enemy-definition.mjs",
+    "game/hunt/running-enemy-placement.mjs",
+    "game/hunt/running-enemy-preferences.mjs",
+    "game/hunt/team-running-enemies.mjs",
+    "game/hunt/variant-guidance.mjs",
+    "game/hunt/variants.mjs",
+    "game/i18n/bootstrap.mjs",
+    "game/i18n/catalogs.mjs",
+    "game/i18n/content-registry.mjs",
+    "game/i18n/content.mjs",
+    "game/i18n/index.mjs",
+    "game/imports.mjs",
+    "game/input-presentation.mjs",
+    "game/installed-app.mjs",
+    "game/journey/campaign-feedback.mjs",
+    "game/journey/catalog.mjs",
+    "game/journey/performance-store.mjs",
+    "game/journey/performance.mjs",
+    "game/journey/pictures.mjs",
+    "game/journey/preferences.mjs",
+    "game/journey/profile.mjs",
+    "game/journey/reaction-options.mjs",
+    "game/journey/reaction-portraits.mjs",
+    "game/journey/reaction-preferences.mjs",
+    "game/journey/reaction-recording-format.mjs",
+    "game/journey/reaction-voice-cache.mjs",
+    "game/journey/reaction-voice-library.mjs",
+    "game/journey/reactions.mjs",
+    "game/journey/stars.mjs",
+    "game/key-bindings.mjs",
+    "game/level-numbering.mjs",
+    "game/library.mjs",
+    "game/managed-media-store.mjs",
+    "game/mastery-catalog.mjs",
+    "game/mastery-equipment.mjs",
+    "game/mastery-records.mjs",
+    "game/mastery.mjs",
+    "game/media-audio.mjs",
+    "game/media-bundle.mjs",
+    "game/media-library.mjs",
+    "game/media-presentation.mjs",
+    "game/media-still.mjs",
+    "game/media-storage-record.mjs",
+    "game/media-store.mjs",
+    "game/menu-style-preferences.mjs",
+    "game/mission-brief.mjs",
+    "game/mission-library/classic-current-rules.mjs",
+    "game/mission-library/classic-presentation.mjs",
+    "game/mission-library/classic-source.mjs",
+    "game/mission-library/continuous-next.mjs",
+    "game/mission-library/cross-mode-journey.mjs",
+    "game/mission-library/goal-preferences.mjs",
+    "game/mission-library/handoff.mjs",
+    "game/mission-library/included-bundled-pack.mjs",
+    "game/mission-library/installed-inventory.mjs",
+    "game/mission-library/journey-presentation.mjs",
+    "game/mission-library/journey-source.mjs",
+    "game/mission-library/library.mjs",
+    "game/mission-library/metadata-custom-source.mjs",
+    "game/mission-library/metadata-installed-library.mjs",
+    "game/mission-library/multiplayer-expeditions.mjs",
+    "game/mission-library/opening-intent.mjs",
+    "game/mission-library/pack-identity.mjs",
+    "game/mission-library/remote-solo-versus.mjs",
+    "game/mission-library/spatial-next-editions.mjs",
+    "game/mission-library/supplemental-hunt.mjs",
+    "game/mission-library/team-source.mjs",
+    "game/mode-return.mjs",
+    "game/mp3-inspection-worker.mjs",
+    "game/mp3-inspection.mjs",
+    "game/mp3.mjs",
+    "game/multiplayer-recording.mjs",
+    "game/multiplayer-terminal-observation.mjs",
+    "game/multiplayer.mjs",
+    "game/official-chapter-source.mjs",
+    "game/official-downloads.mjs",
+    "game/offline-download-access.mjs",
+    "game/offline.mjs",
+    "game/online-soundtrack-catalogue.mjs",
+    "game/online-soundtrack-source-store.mjs",
+    "game/online-soundtrack-sources.mjs",
+    "game/opening-soundtrack.mjs",
+    "game/optional-chapters.mjs",
+    "game/optional-practice-catalog.mjs",
+    "game/optional-practice-details.mjs",
+    "game/optional-practice-preview.mjs",
+    "game/overflight/reactions.mjs",
+    "game/overflight/terrain.mjs",
+    "game/overflight/world-layout-presentation.mjs",
+    "game/overflight/worlds.mjs",
+    "game/packs.mjs",
+    "game/picture-receipts.mjs",
+    "game/platform.mjs",
+    "game/presentation-pins.mjs",
+    "game/presentation/actor-animation.mjs",
+    "game/presentation/actor-appearance-lease.mjs",
+    "game/presentation/actor-appearance-pin.mjs",
+    "game/presentation/actor-art-pool.mjs",
+    "game/presentation/actor-style-policy.mjs",
+    "game/presentation/attempt-appearance.mjs",
+    "game/presentation/battlefield-ground.mjs",
+    "game/presentation/bundle.mjs",
+    "game/presentation/catalog.mjs",
+    "game/presentation/current-pictures.mjs",
+    "game/presentation/document-codec.mjs",
+    "game/presentation/dom-ownership.mjs",
+    "game/presentation/host.mjs",
+    "game/presentation/industrial-arcade-builtins.mjs",
+    "game/presentation/industrial-arcade.mjs",
+    "game/presentation/industrial-environments-data.mjs",
+    "game/presentation/industrial-environments.mjs",
+    "game/presentation/industrial-machinery.mjs",
+    "game/presentation/industrial-materials.mjs",
+    "game/presentation/journey-actor-materials.mjs",
+    "game/presentation/manifest-path.mjs",
+    "game/presentation/menu-styles.mjs",
+    "game/presentation/military-field-art.mjs",
+    "game/presentation/model.mjs",
+    "game/presentation/overflight-actor-slots.mjs",
+    "game/presentation/overflight-field-kit-art.mjs",
+    "game/presentation/overflight-world-art-v2.mjs",
+    "game/presentation/overflight-world-art.mjs",
+    "game/presentation/overflight-world-slots.mjs",
+    "game/presentation/page.mjs",
+    "game/presentation/pixel-art.mjs",
+    "game/presentation/runtime.mjs",
+    "game/presentation/team-runtime-slots.mjs",
+    "game/presentation/theme-bootstrap.mjs",
+    "game/presentation/theme-host.mjs",
+    "game/presentation/theme-preferences.mjs",
+    "game/presentation/theme-system.mjs",
+    "game/presentation/visual-theme-catalogue.mjs",
+    "game/presentation/visual-theme-identities.mjs",
+    "game/presentation/visual-theme-pin.mjs",
+    "game/profile-channel-assets.mjs",
+    "game/profile-channel-json.mjs",
+    "game/profile-channel-reader.mjs",
+    "game/profile-channel.mjs",
+    "game/profile-database.mjs",
+    "game/profile-original-recovery.mjs",
+    "game/profile-recovery-catalogs.mjs",
+    "game/profile-shared-media.mjs",
+    "game/profile-storage.mjs",
+    "game/profile-writer.mjs",
+    "game/progress.mjs",
+    "game/published-cue-inspection.mjs",
+    "game/release-explorer.mjs",
+    "game/replay-installed-rules.mjs",
+    "game/replay.mjs",
+    "game/rewards/audio-original.mjs",
+    "game/rewards/media-format.mjs",
+    "game/selection-bookmark.mjs",
+    "game/session-actor-pin.mjs",
+    "game/session-visual-pin.mjs",
+    "game/sessions.mjs",
+    "game/snake/classic-structure-art.mjs",
+    "game/snake/copy.mjs",
+    "game/snake/route.js",
+    "game/snake/rules.mjs",
+    "game/soundtrack-album-download.mjs",
+    "game/soundtrack-albums.mjs",
+    "game/soundtrack-archive.mjs",
+    "game/soundtrack-bundle.mjs",
+    "game/soundtrack-bundled.mjs",
+    "game/soundtrack-download-volumes.mjs",
+    "game/soundtrack-portable.mjs",
+    "game/soundtrack-private-intake.mjs",
+    "game/soundtrack-rights.mjs",
+    "game/soundtrack-share.mjs",
+    "game/soundtrack-source.mjs",
+    "game/soundtrack-store-legacy.mjs",
+    "game/soundtrack-store.mjs",
+    "game/soundtrack-style-selection.mjs",
+    "game/soundtrack-style-taxonomy.mjs",
+    "game/soundtrack.mjs",
+    "game/storage.mjs",
+    "game/story-bindings.mjs",
+    "game/story-receipts.mjs",
+    "game/story-storage-record.mjs",
+    "game/text-face.mjs",
+    "game/text-size.mjs",
+    "game/touch-controls.mjs",
+    "game/touch-preferences.mjs",
+    "game/ui/actor-defeat-presentation.mjs",
+    "game/ui/actor-presentation.mjs",
+    "game/ui/actor-recipes.mjs",
+    "game/ui/analog-signal.mjs",
+    "game/ui/art-review-navigation.mjs",
+    "game/ui/audio-master.mjs",
+    "game/ui/audio-output.mjs",
+    "game/ui/audio.mjs",
+    "game/ui/authored-mode-routes.mjs",
+    "game/ui/battlefield-ground-controls.mjs",
+    "game/ui/brand-identity.mjs",
+    "game/ui/celebration.mjs",
+    "game/ui/classic-view.mjs",
+    "game/ui/combat-presentation.mjs",
+    "game/ui/contact-cue.mjs",
+    "game/ui/contextual-reactions.mjs",
+    "game/ui/continuous-celebration.mjs",
+    "game/ui/continuous-play.mjs",
+    "game/ui/controller-confirm-guard.mjs",
+    "game/ui/controller-field-editor.mjs",
+    "game/ui/controller-navigation.mjs",
+    "game/ui/controller-reading.mjs",
+    "game/ui/controller-router.mjs",
+    "game/ui/controller-text-draft.mjs",
+    "game/ui/couch-touch.mjs",
+    "game/ui/defeat-sound-controls.mjs",
+    "game/ui/destruction-audio.mjs",
+    "game/ui/destruction-controls.mjs",
+    "game/ui/destruction-level.mjs",
+    "game/ui/dialogue-channel.mjs",
+    "game/ui/direct-tool-launch.js",
+    "game/ui/encounter-audio.mjs",
+    "game/ui/encounter-display-controls.mjs",
+    "game/ui/encounter-variant-controls.mjs",
+    "game/ui/enemy-appearance-controls.mjs",
+    "game/ui/enemy-body-assets.mjs",
+    "game/ui/enemy-body-motion.mjs",
+    "game/ui/enemy-field-guide.mjs",
+    "game/ui/enemy-stats-events.mjs",
+    "game/ui/enemy-stats.mjs",
+    "game/ui/export-copy.mjs",
+    "game/ui/feedback-cues.mjs",
+    "game/ui/feedback-director.mjs",
+    "game/ui/foundation-feedback.mjs",
+    "game/ui/fpv-body-recipes.mjs",
+    "game/ui/fullscreen.mjs",
+    "game/ui/game-updates.mjs",
+    "game/ui/game-wake-lock.mjs",
+    "game/ui/gameplay-copy.mjs",
+    "game/ui/gameplay-tuning.mjs",
+    "game/ui/global-settings-tools.mjs",
+    "game/ui/global-settings-view.mjs",
+    "game/ui/human-reaction-policy.mjs",
+    "game/ui/hunt-feedback-layout.mjs",
+    "game/ui/hunt-record-controls.mjs",
+    "game/ui/hunt-status.mjs",
+    "game/ui/input.mjs",
+    "game/ui/install-offline-panel.mjs",
+    "game/ui/journey-artwork.mjs",
+    "game/ui/journey-mode-pictures.mjs",
+    "game/ui/journey-reactions.mjs",
+    "game/ui/journey-save-cue.mjs",
+    "game/ui/level-card.mjs",
+    "game/ui/media-preparation.mjs",
+    "game/ui/menu-animation-preferences.mjs",
+    "game/ui/menu-appearance.mjs",
+    "game/ui/menu-audio.mjs",
+    "game/ui/menu-navigation-groups.mjs",
+    "game/ui/menu-retune.mjs",
+    "game/ui/menu-scene-catalog.mjs",
+    "game/ui/menu-scene-motion.mjs",
+    "game/ui/menu-scenes.mjs",
+    "game/ui/menu-signal-loss.mjs",
+    "game/ui/menu-style-controls.mjs",
+    "game/ui/mission-library-browser.mjs",
+    "game/ui/mission-library-chooser.mjs",
+    "game/ui/mission-library-goal.mjs",
+    "game/ui/mode-choice-view.mjs",
+    "game/ui/mode-choice.mjs",
+    "game/ui/mode-play-shell.mjs",
+    "game/ui/mode-settings-view.mjs",
+    "game/ui/movement-audio.mjs",
+    "game/ui/movement-profiles.mjs",
+    "game/ui/mp3-inspector.mjs",
+    "game/ui/music-credit.mjs",
+    "game/ui/music-credits.mjs",
+    "game/ui/music.mjs",
+    "game/ui/native-menu-icons.mjs",
+    "game/ui/native-menus.mjs",
+    "game/ui/offline-tool-navigation.mjs",
+    "game/ui/operation-status.mjs",
+    "game/ui/optional-practice-panel.mjs",
+    "game/ui/pause-menu.mjs",
+    "game/ui/picture-identity.mjs",
+    "game/ui/playfield-context-menu.mjs",
+    "game/ui/playground-tab-boundary.mjs",
+    "game/ui/preference-restoration.mjs",
+    "game/ui/presentation-draw-image.mjs",
+    "game/ui/presentation-image.mjs",
+    "game/ui/profile-recovery-dialog.mjs",
+    "game/ui/profile-recovery.mjs",
+    "game/ui/published-audio.mjs",
+    "game/ui/pwa-install.mjs",
+    "game/ui/quick-music-controls.mjs",
+    "game/ui/radio-audio.mjs",
+    "game/ui/reaction-caption.mjs",
+    "game/ui/reading-input-prompt.mjs",
+    "game/ui/recording-verification.mjs",
+    "game/ui/result-continuation.mjs",
+    "game/ui/rotor-presentation.mjs",
+    "game/ui/running-enemy-controls.mjs",
+    "game/ui/settings-panels.mjs",
+    "game/ui/snake-view.mjs",
+    "game/ui/soundtrack-error-copy.mjs",
+    "game/ui/soundtrack-panel.mjs",
+    "game/ui/soundtrack-player.mjs",
+    "game/ui/storage-retention.mjs",
+    "game/ui/team-expedition-view.mjs",
+    "game/ui/team-hunt-save.mjs",
+    "game/ui/terminal-recording-export.mjs",
+    "game/ui/terrain-feedback.mjs",
+    "game/ui/text-size-control.mjs",
+    "game/ui/theme-family-controls.mjs",
+    "game/ui/theme-material-preview.mjs",
+    "game/ui/touch-steering.mjs",
+    "game/ui/world-ambience.mjs",
+    "game/vendor/i18next-26.4.2.min.js",
+    "game/victory-story.mjs",
+    "game/video-poster.mjs"
+  ],
+  "styles": [
+    {
+      "path": "game/access-gate.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font",
+          "value": "calc(17px * var(--primary-text-scale, 1)) / 1.5 'Field Kit UI',\n      system-ui,\n      sans-serif",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(clamp(2rem, 8vw, 3.4rem) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        }
+      ]
+    },
+    {
+      "path": "game/couch/relay-rescue.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font-size",
+          "value": "0.8rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "0.8rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "0.85rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "0.75rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "var(--fk-text-secondary, 14px)",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "var(--fk-text-secondary, 14px)",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "var(--fk-text-body, 18px)",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "0.8rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "1.3rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "0.875rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "0.72rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "clamp(2.8rem, 5vw, 5rem)",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "1.08rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "0.8rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "0.7rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "1rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "0.8rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "0.7rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "0.72rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "2rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "var(--handheld-label, 14px)",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "0.8rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "var(--fk-text-secondary, 0.875rem)",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "clamp(1.5rem, 3vw, 2.8rem)",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "var(--fk-text-body)",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "1rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "0.8rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "0.75rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "0.8rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "0.66rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "0.6rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "1.5rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "0.7rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "0.8rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "0.8rem",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "var(--fk-text-secondary)",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "var(--fk-text-secondary)",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "var(--fk-text-secondary)",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "var(--fk-text-secondary)",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "var(--fk-text-counter)",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "var(--fk-text-secondary)",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "var(--fk-text-secondary)",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "var(--fk-text-display)",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "var(--fk-text-body)",
+          "alreadyWrapped": false
+        },
+        {
+          "property": "font-size",
+          "value": "var(--fk-text-secondary)",
+          "alreadyWrapped": false
+        }
+      ]
+    },
+    {
+      "path": "game/i18n/style.css",
+      "absoluteDeclarations": []
+    },
+    {
+      "path": "game/presentation/industrial-workshop.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font-size",
+          "value": "calc(var(--iw-text-size) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--iw-text-size) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "max(calc(18px * var(--primary-text-scale, 1)), 1em)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(13px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--iw-text-size, 16px) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(12px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(16px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.75rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--fk-text-secondary) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        }
+      ]
+    },
+    {
+      "path": "game/ui/brand-identity.css",
+      "absoluteDeclarations": []
+    },
+    {
+      "path": "game/ui/controller-field-editor.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font",
+          "value": "calc(16px * var(--primary-text-scale, 1)) / 1.4 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font",
+          "value": "calc(16px * var(--primary-text-scale, 1)) / 1.4 monospace",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(clamp(12px, 2vw, 18px) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        }
+      ]
+    },
+    {
+      "path": "game/ui/field-kit-compiled.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font-size",
+          "value": "calc(var(--fk-text-secondary) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--fk-text-secondary) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        }
+      ]
+    },
+    {
+      "path": "game/ui/field-kit-components.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font-size",
+          "value": "calc(var(--fk-text-body) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--fk-text-body) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--fk-text-control) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--fk-text-secondary) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--fk-text-control) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--fk-text-body) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--fk-text-display) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(clamp(56px, 8vw, 104px) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--fk-text-counter) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--fk-text-secondary) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--fk-text-body) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--fk-text-control) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--fk-text-control) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--fk-text-secondary) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        }
+      ]
+    },
+    {
+      "path": "game/ui/field-kit-fonts.css",
+      "absoluteDeclarations": []
+    },
+    {
+      "path": "game/ui/field-kit-tokens.css",
+      "absoluteDeclarations": []
+    },
+    {
+      "path": "game/ui/global-settings-view.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font",
+          "value": "600 calc(12px * var(--primary-text-scale, 1)) / 1.4 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": true
+        }
+      ]
+    },
+    {
+      "path": "game/ui/handheld-play.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-value) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-label) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-label) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-label) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-value) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-label) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-label) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-value) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-label) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-value) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-label) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-label) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(14px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-label) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-label) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(12px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-label) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-value) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-label) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(14px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-label) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-value) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-label) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-label) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-label) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-label) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-value) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-label) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-label) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(clamp(28px, 7.5vw, 48px) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-label) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-label) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-label) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-label) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-label) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-label) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-label) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(var(--handheld-label) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        }
+      ]
+    },
+    {
+      "path": "game/ui/hunt-feedback.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font",
+          "value": "calc(var(--fk-text-secondary, 0.875rem) * var(--primary-text-scale, 1)) / 1.35\n    var(--fk-font-ui, system-ui, sans-serif)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font",
+          "value": "calc(var(--reaction-caption-size, 1rem) * var(--primary-text-scale, 1)) / 1.45 system-ui,\n    sans-serif",
+          "alreadyWrapped": true
+        }
+      ]
+    },
+    {
+      "path": "game/ui/install-offline-panel.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font-size",
+          "value": "calc(1.1rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        }
+      ]
+    },
+    {
+      "path": "game/ui/journey-save-cue.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font-size",
+          "value": "1rem",
+          "alreadyWrapped": false
+        }
+      ]
+    },
+    {
+      "path": "game/ui/journey.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font-size",
+          "value": "calc(clamp(1.5rem, 4vw, 2.5rem) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.72rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.85rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(1.35rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(2rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(1.1rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.85rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.85rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.85rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.75rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.8rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.95rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.8rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.8rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(1.25rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.8rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(1.35rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(1rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.75rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.78rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.9rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.78rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.94rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.7rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.7rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.68rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.82rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.65rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.78rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.78rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.78rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(1.35rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.72rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(1.1rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.68rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(1.5rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(1rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        }
+      ]
+    },
+    {
+      "path": "game/ui/menu-appearance.css",
+      "absoluteDeclarations": []
+    },
+    {
+      "path": "game/ui/menu-retune.css",
+      "absoluteDeclarations": []
+    },
+    {
+      "path": "game/ui/menu-scenes.css",
+      "absoluteDeclarations": []
+    },
+    {
+      "path": "game/ui/mode-boot.css",
+      "absoluteDeclarations": []
+    },
+    {
+      "path": "game/ui/mode-choice.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font-size",
+          "value": "calc(var(--fk-text-secondary, 14px) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font",
+          "value": "600 calc(clamp(11px, 2.6vw, 16px) * var(--primary-text-scale, 1)) / 1.2\n    var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font",
+          "value": "600 calc(9px * var(--primary-text-scale, 1)) / 1 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(11px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font",
+          "value": "600 calc(16px * var(--primary-text-scale, 1)) / 1.3 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font",
+          "value": "600 calc(14px * var(--primary-text-scale, 1)) / 1.3 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(12px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(20px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(clamp(12px, 3.5vw, 16px) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(14px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(20px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        }
+      ]
+    },
+    {
+      "path": "game/ui/native-menu.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font-size",
+          "value": "calc(66px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(44px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font",
+          "value": "600 calc(clamp(11px, 2.6vw, 16px) * var(--primary-text-scale, 1)) / 1.2\n      var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font",
+          "value": "400 calc(var(--native-action-size) * var(--primary-text-scale, 1)) / 1.35\n      var(--fk-font-pixel, 'Reveal Line Pixel', monospace)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font",
+          "value": "400 calc(var(--native-action-size, 22px) * var(--primary-text-scale, 1)) / 1.4\n      var(--fk-font-pixel, monospace)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font",
+          "value": "400 calc(14px * var(--primary-text-scale, 1)) / 1.35 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font",
+          "value": "400 calc(14px * var(--primary-text-scale, 1)) / 1.4 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font",
+          "value": "400 calc(14px * var(--primary-text-scale, 1)) / 1.4 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font",
+          "value": "400 calc(16px * var(--primary-text-scale, 1)) / 1.4 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font",
+          "value": "600 calc(22px * var(--primary-text-scale, 1)) / 1.25 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font",
+          "value": "400 calc(18px * var(--primary-text-scale, 1)) / 1.3 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font",
+          "value": "400 calc(var(--native-action-size) * var(--primary-text-scale, 1)) / 1.25\n      var(--fk-font-pixel, 'Reveal Line Pixel', monospace)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(22px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(44px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font",
+          "value": "600 calc(18px * var(--primary-text-scale, 1)) / 1.25 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font",
+          "value": "400 calc(13px * var(--primary-text-scale, 1)) / 1.4 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": true
+        }
+      ]
+    },
+    {
+      "path": "game/ui/operation-status.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font",
+          "value": "400 calc(var(--fk-text-control, 16px) * var(--primary-text-scale, 1)) / 1.5\n      var(--fk-font-ui, system-ui, sans-serif)",
+          "alreadyWrapped": true
+        }
+      ]
+    },
+    {
+      "path": "game/ui/optional-practice-panel.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font-size",
+          "value": "calc(1.25rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        }
+      ]
+    },
+    {
+      "path": "game/ui/pause-menu.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font",
+          "value": "600 calc(11px * var(--primary-text-scale, 1)) / 1.2 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(14px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(clamp(11px, 2.8vw, 14px) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(20px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font",
+          "value": "600 calc(18px * var(--primary-text-scale, 1)) / 1.25 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(11px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(12px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(20px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        }
+      ]
+    },
+    {
+      "path": "game/ui/quick-music-controls.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font-size",
+          "value": "calc(0.8rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        }
+      ]
+    },
+    {
+      "path": "game/ui/settings.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font-size",
+          "value": "calc(1.25rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        }
+      ]
+    },
+    {
+      "path": "game/ui/soundtrack-panel.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font",
+          "value": "calc(14px * var(--primary-text-scale, 1)) / 1.5 var(--fk-font-mono, monospace)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(clamp(20px, 3vw, 30px) * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(16px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(12px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(18px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(0.8rem * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(12px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(16px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(12px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(11px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(23px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(14px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(11px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(12px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font-size",
+          "value": "calc(12px * var(--primary-text-scale, 1))",
+          "alreadyWrapped": true
+        }
+      ]
+    },
+    {
+      "path": "game/ui/terminal-recording-export.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font",
+          "value": "calc(0.8rem * var(--primary-text-scale, 1)) / 1.4 monospace",
+          "alreadyWrapped": true
+        }
+      ]
+    },
+    {
+      "path": "game/ui/touch-steering.css",
+      "absoluteDeclarations": [
+        {
+          "property": "font",
+          "value": "calc(13px * var(--primary-text-scale, 1)) / 1.4 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font",
+          "value": "calc(54px * var(--primary-text-scale, 1)) / 1.3 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": true
+        },
+        {
+          "property": "font",
+          "value": "bold calc(25px * var(--primary-text-scale, 1)) / 1 var(--fk-font-ui, sans-serif)",
+          "alreadyWrapped": true
+        }
+      ]
+    }
+  ],
+  "runtimeTextCandidates": [
+    {
+      "path": "game/content-design/mission-card.mjs",
+      "line": 103,
+      "source": "ctx.font = 'bold 10px sans-serif';"
+    },
+    {
+      "path": "game/ui/enemy-stats.mjs",
+      "line": 99,
+      "source": ".enemy-stats[data-variant=panel]{width:100%;margin:8px 0 0;border-top:1px solid #87958c44;font-size:.875rem}"
+    },
+    {
+      "path": "game/ui/enemy-stats.mjs",
+      "line": 105,
+      "source": ".enemy-stats[data-variant=collection] .enemy-stats-summary{margin:12px 0}.enemy-stats[data-variant=collection] .enemy-stats-total{font-size:clamp(1.7rem,3vw,2.8rem);line-height:1.1}"
+    },
+    {
+      "path": "game/ui/enemy-stats.mjs",
+      "line": 110,
+      "source": ".enemy-stats-disclosure-label{margin-inline-start:auto;opacity:.8;font-size:.85em}"
+    },
+    {
+      "path": "game/ui/enemy-stats.mjs",
+      "line": 113,
+      "source": ".enemy-stats-breakdown-label{margin:0 0 4px;text-align:end;font-size:.8em;opacity:.7}"
+    },
+    {
+      "path": "game/ui/enemy-stats.mjs",
+      "line": 115,
+      "source": ".enemy-stats-card{display:grid;grid-template-columns:40px minmax(0,1fr);align-items:center;gap:10px;padding:10px;border:1px solid #87958c44;background:#10181b77}.enemy-stats-card strong{display:block;font-variant-numeric:tabular-nums;font-size:1.4em;color:var(--stats-gold)}.enemy-stats-card span{font-size:.85em}"
+    },
+    {
+      "path": "game/ui/enemy-stats.mjs",
+      "line": 118,
+      "source": ".enemy-stats select{max-width:100%;min-height:40px;color:inherit;background:#20292f;border:1px solid #83908a;padding:5px 9px;font:inherit}"
+    },
+    {
+      "path": "game/ui/enemy-stats.mjs",
+      "line": 119,
+      "source": ".enemy-stats[data-variant=hud]{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;font-size:.8rem;line-height:1.35}.enemy-stats[data-variant=hud] .enemy-stats-summary{gap:4px 10px}.enemy-stats[data-variant=hud] .enemy-stats-lifetime{font-size:.9em}"
+    },
+    {
+      "path": "game/ui/enemy-stats.mjs",
+      "line": 120,
+      "source": ".enemy-stats-warning{color:#e6c68b;font-size:.8em;margin:4px 0}.enemy-stats-note{font-size:.85em;margin:8px 0 0;opacity:.8}.enemy-stats-milestone{font-size:.8em;color:var(--stats-gold)}.enemy-stats [hidden]{display:none!important}"
+    },
+    {
+      "path": "game/ui/enemy-stats.mjs",
+      "line": 121,
+      "source": "@media(max-width:360px){.enemy-stats[data-variant=panel]{font-size:.8rem}.enemy-stats-summary{gap:5px 10px}.enemy-stats-disclosure-label{font-size:.9em}.enemy-stats[data-variant=hud]{font-size:.75rem}}"
+    },
+    {
+      "path": "game/ui/continuous-play.mjs",
+      "line": 244,
+      "source": ".continuous-play-controls {display:flex;align-items:center;flex-wrap:wrap;gap:.35rem .65rem;min-width:0;max-width:100%;margin:0;font-size:.85rem;}"
+    },
+    {
+      "path": "game/ui/continuous-play.mjs",
+      "line": 247,
+      "source": ".continuous-play-controls .button {min-height:44px;padding:.35rem .65rem;font-size:inherit;}"
+    },
+    {
+      "path": "game/ui/contextual-reactions.mjs",
+      "line": 391,
+      "source": "caption.style.fontSize = `calc(${state.scale}rem * var(--primary-text-scale, 1))`;"
+    },
+    {
+      "path": "game/ui/reaction-caption.mjs",
+      "line": 31,
+      "source": "node.style.fontSize = `calc(${options.scale}rem * var(--primary-text-scale, 1))`;"
+    },
+    {
+      "path": "game/presentation/model.mjs",
+      "line": 108,
+      "source": "font: ['font/ttf', 'font/otf', 'font/woff2'],"
+    },
+    {
+      "path": "game/presentation/runtime.mjs",
+      "line": 63,
+      "source": "`Invalid CSS font: ${name}.`,"
+    },
+    {
+      "path": "game/couch/coop-view.mjs",
+      "line": 576,
+      "source": "drawSnakeTargetOrder(ctx, run, combat?.actors, { palette, font: fonts.numeric });"
+    },
+    {
+      "path": "game/couch/coop-view.mjs",
+      "line": 606,
+      "source": "ctx.font = labelFont;"
+    },
+    {
+      "path": "game/couch/coop-view.mjs",
+      "line": 632,
+      "source": "ctx.font = labelFont;"
+    },
+    {
+      "path": "game/couch/coop-view.mjs",
+      "line": 696,
+      "source": "ctx.font = `600 ${cueScale.font(0.66, 14, 18)}px ${fonts.numeric}`;"
+    },
+    {
+      "path": "game/couch/coop-view.mjs",
+      "line": 710,
+      "source": "ctx.font = `600 ${cueScale.px(12) / cssCell}px ${fonts.numeric}`;"
+    },
+    {
+      "path": "game/couch/coop-view.mjs",
+      "line": 759,
+      "source": "ctx.font = `600 0.85px ${fonts.ui}`;"
+    },
+    {
+      "path": "game/couch/coop-view.mjs",
+      "line": 810,
+      "source": "ctx.font = `600 0.65px ${fonts.ui}`;"
+    },
+    {
+      "path": "game/couch/coop-view.mjs",
+      "line": 967,
+      "source": "ctx.font = `600 0.57px ${fonts.ui}`;"
+    },
+    {
+      "path": "game/couch/coop-view.mjs",
+      "line": 1053,
+      "source": "ctx.font = `600 ${size}px ${fonts.ui}`;"
+    },
+    {
+      "path": "game/couch/coop-view.mjs",
+      "line": 1087,
+      "source": "ctx.font = outcomeFont;"
+    },
+    {
+      "path": "game/ui/snake-view.mjs",
+      "line": 39,
+      "source": "ctx.font = `bold ${unit * 0.72}px ${font ?? 'monospace'}`;"
+    },
+    {
+      "path": "game/couch/coop-support-presentation.mjs",
+      "line": 78,
+      "source": "ctx.font = '700 1.15px sans-serif';"
+    },
+    {
+      "path": "game/couch/coop-actor-layout.mjs",
+      "line": 16,
+      "source": "font: (cells, minimum = 12, maximum = 18) =>"
+    },
+    {
+      "path": "game/ui/classic-view.mjs",
+      "line": 500,
+      "source": "ctx.font = 'bold 10px monospace';"
+    },
+    {
+      "path": "game/ui/classic-view.mjs",
+      "line": 746,
+      "source": "ctx.font = `500 14px ${fonts?.ui || '\"Field Kit UI\", \"Field Kit Mono\", sans-serif'}`;"
+    },
+    {
+      "path": "game/ui/classic-view.mjs",
+      "line": 828,
+      "source": "ctx.font = `500 ${14 * unit}px ${fonts?.numeric || '\"Field Kit Mono\", monospace'}`;"
+    }
+  ],
+  "dynamicBoundaries": [
+    {
+      "path": "game/ui/direct-tool-launch.js",
+      "source": "import(moduleURL)"
+    },
+    {
+      "path": "game/platform.mjs",
+      "source": "import(new URL('../native/bridge.mjs', import.meta.url).href)"
+    }
+  ]
+}

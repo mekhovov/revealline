@@ -1,0 +1,261 @@
+TAP version 13
+# Subtest: live whitelist pins actual standard maps, rules and roster while allowing translated names
+ok 1 - live whitelist pins actual standard maps, rules and roster while allowing translated names
+  ---
+  duration_ms: 39.832583
+  ...
+# Subtest: orchard-crossing/immediate: three qualified seeds finish varied no-loss performances with exact recordings
+ok 2 - orchard-crossing/immediate: three qualified seeds finish varied no-loss performances with exact recordings
+  ---
+  duration_ms: 7071.651459
+  ...
+# {"seed":1,"ticks":4798,"status":"won","coverage":0.6868600682593856,"captures":7,"bends":10,"endReason":null,"maxPlanningMs":562}
+# {"seed":2,"ticks":3899,"status":"won","coverage":0.7039249146757679,"captures":6,"bends":7,"endReason":null,"maxPlanningMs":455}
+# {"seed":3,"ticks":5227,"status":"won","coverage":0.7158703071672355,"captures":8,"bends":12,"endReason":null,"maxPlanningMs":312}
+# Subtest: orchard-crossing/grid-center: three qualified seeds finish varied no-loss performances with exact recordings
+ok 3 - orchard-crossing/grid-center: three qualified seeds finish varied no-loss performances with exact recordings
+  ---
+  duration_ms: 7482.287917
+  ...
+# {"seed":1,"ticks":5366,"status":"won","coverage":0.7133105802047781,"captures":8,"bends":11,"endReason":null,"maxPlanningMs":333}
+# {"seed":2,"ticks":5122,"status":"won","coverage":0.7103242320819113,"captures":10,"bends":14,"endReason":null,"maxPlanningMs":390}
+# {"seed":3,"ticks":5231,"status":"won","coverage":0.7047781569965871,"captures":8,"bends":12,"endReason":null,"maxPlanningMs":326}
+# Subtest: courtyard-exits/immediate: three qualified seeds finish varied no-loss performances with exact recordings
+ok 4 - courtyard-exits/immediate: three qualified seeds finish varied no-loss performances with exact recordings
+  ---
+  duration_ms: 12056.704
+  ...
+# {"seed":1,"ticks":6895,"status":"won","coverage":0.7772491349480969,"captures":13,"bends":19,"endReason":null,"maxPlanningMs":630}
+# {"seed":2,"ticks":5659,"status":"won","coverage":0.759083044982699,"captures":9,"bends":13,"endReason":null,"maxPlanningMs":382}
+# {"seed":3,"ticks":5374,"status":"won","coverage":0.7811418685121108,"captures":10,"bends":13,"endReason":null,"maxPlanningMs":429}
+# Subtest: courtyard-exits/grid-center: three qualified seeds finish varied no-loss performances with exact recordings
+ok 5 - courtyard-exits/grid-center: three qualified seeds finish varied no-loss performances with exact recordings
+  ---
+  duration_ms: 9335.345916
+  ...
+# {"seed":1,"ticks":4325,"status":"won","coverage":0.8858131487889274,"captures":7,"bends":11,"endReason":null,"maxPlanningMs":509}
+# {"seed":2,"ticks":6245,"status":"won","coverage":0.8853806228373703,"captures":11,"bends":15,"endReason":null,"maxPlanningMs":425}
+# {"seed":3,"ticks":5867,"status":"won","coverage":0.7508650519031141,"captures":9,"bends":11,"endReason":null,"maxPlanningMs":334}
+# Subtest: planning is deterministic and declines an exposed cut without changing it
+ok 6 - planning is deterministic and declines an exposed cut without changing it
+  ---
+  duration_ms: 698.0325
+  ...
+# Subtest: actual Worker player records frame-independent live inputs, pauses exactly, forks and resets
+ok 7 - actual Worker player records frame-independent live inputs, pauses exactly, forks and resets
+  ---
+  duration_ms: 3682.779291
+  ...
+# Subtest: background advancement budget waits before a pending boundary, preserves fractional time and exact replay
+ok 8 - background advancement budget waits before a pending boundary, preserves fractional time and exact replay
+  ---
+  duration_ms: 841.7425
+  ...
+# Subtest: background budget releases a rejected stale result to the unchanged fault boundary
+ok 9 - background budget releases a rejected stale result to the unchanged fault boundary
+  ---
+  duration_ms: 413.940417
+  ...
+# Subtest: background budget never bypasses the existing planning watchdog
+ok 10 - background budget never bypasses the existing planning watchdog
+  ---
+  duration_ms: 407.257666
+  ...
+# Subtest: missing Worker, abort and planning watchdog fail closed and release every worker
+ok 11 - missing Worker, abort and planning watchdog fail closed and release every worker
+  ---
+  duration_ms: 11.930958
+  ...
+# Subtest: future search exhaustion ends only after the current safe macro, never runs an old heading
+ok 12 - future search exhaustion ends only after the current safe macro, never runs an old heading
+  ---
+  duration_ms: 424.673792
+  ...
+# Subtest: a stale future plan remains a fault, not a successful exhaustion handoff
+ok 13 - a stale future plan remains a fault, not a successful exhaustion handoff
+  ---
+  duration_ms: 395.825792
+  ...
+# Subtest: live playback crosses the old 60 second cutoff without claiming completion
+ok 14 - live playback crosses the old 60 second cutoff without claiming completion
+  ---
+  duration_ms: 388.616625
+  ...
+# Subtest: full live admission now finishes the formerly exhausted seed and resets before display
+ok 15 - full live admission now finishes the formerly exhausted seed and resets before display
+  ---
+  duration_ms: 5342.443208
+  ...
+# Subtest: immediate: purposeful routes vary, close cuts and only lose to believable hazards
+ok 16 - immediate: purposeful routes vary, close cuts and only lose to believable hazards
+  ---
+  duration_ms: 26806.030833
+  ...
+# {"seed":123,"captures":44,"losses":1,"causes":["enemy-trail"],"bends":67,"ticks":16794}
+# {"seed":987654321,"captures":30,"losses":2,"causes":["boss-lane","enemy-trail"],"bends":41,"ticks":12378}
+# Subtest: grid-center: purposeful routes vary, close cuts and only lose to believable hazards
+ok 17 - grid-center: purposeful routes vary, close cuts and only lose to believable hazards
+  ---
+  duration_ms: 35187.496958
+  ...
+# {"seed":123,"captures":60,"losses":1,"causes":["enemy-trail"],"bends":87,"ticks":21588}
+# {"seed":987654321,"captures":35,"losses":1,"causes":["boss-lane"],"bends":52,"ticks":12944}
+# Subtest: improvised preparation respects cancellation before it owns a player
+ok 18 - improvised preparation respects cancellation before it owns a player
+  ---
+  duration_ms: 0.780208
+  ...
+# Subtest: cancellation during route planning stops before publishing a recording
+ok 19 - cancellation during route planning stops before publishing a recording
+  ---
+  duration_ms: 72.397125
+  ...
+# Subtest: curated complete routes reproduce current Standard tuning without scripted reversal excerpts
+ok 20 - curated complete routes reproduce current Standard tuning without scripted reversal excerpts
+  ---
+  duration_ms: 6293.99
+  ...
+# Subtest: personal replay compatibility reconstructs tuning from installed originals and rejects admin or forged recipes
+ok 21 - personal replay compatibility reconstructs tuning from installed originals and rejects admin or forged recipes
+  ---
+  duration_ms: 45.370333
+  ...
+# Subtest: frozen browser variants preserve the exact reviewed trace and every non-enemy outcome
+ok 22 - frozen browser variants preserve the exact reviewed trace and every non-enemy outcome
+  ---
+  duration_ms: 11.659542
+  ...
+# Subtest: Linux variants pin independently observed checkpoints without changing reviewed inputs or results
+ok 23 - Linux variants pin independently observed checkpoints without changing reviewed inputs or results
+  ---
+  duration_ms: 5.993916
+  ...
+# Subtest: catalogue admits only matching installed content and local bundled replay URLs
+ok 24 - catalogue admits only matching installed content and local bundled replay URLs
+  ---
+  duration_ms: 19.470459
+  ...
+# Subtest: immediate: practice forks match all four core branches and own every mutable value
+ok 25 - immediate: practice forks match all four core branches and own every mutable value
+  ---
+  duration_ms: 648.31325
+  ...
+# Subtest: grid-center: practice forks match all four core branches and own every mutable value
+ok 26 - grid-center: practice forks match all four core branches and own every mutable value
+  ---
+  duration_ms: 593.308417
+  ...
+# Subtest: practice preparation rejects stale, cancelled, terminal or altered playback and owns exports
+ok 27 - practice preparation rejects stale, cancelled, terminal or altered playback and owns exports
+  ---
+  duration_ms: 74.736625
+  ...
+# Subtest: practice forks preserve live-cut releases at exact RLE boundaries and a trailing pause
+ok 28 - practice forks preserve live-cut releases at exact RLE boundaries and a trailing pause
+  ---
+  duration_ms: 47.291708
+  ...
+# Subtest: disposing replay playback cancels pending practice and prevents an abandoned player from advancing
+ok 29 - disposing replay playback cancels pending practice and prevents an abandoned player from advancing
+  ---
+  duration_ms: 42.918375
+  ...
+# Subtest: a takeover retains both hangar loadouts, a live support field and impact recovery timing
+ok 30 - a takeover retains both hangar loadouts, a live support field and impact recovery timing
+  ---
+  duration_ms: 49.928459
+  ...
+# Subtest: immediate: staged encounter takeover preserves warning, active and transition authority
+ok 31 - immediate: staged encounter takeover preserves warning, active and transition authority
+  ---
+  duration_ms: 71.475167
+  ...
+# Subtest: grid-center: staged encounter takeover preserves warning, active and transition authority
+ok 32 - grid-center: staged encounter takeover preserves warning, active and transition authority
+  ---
+  duration_ms: 85.800417
+  ...
+# Subtest: actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily
+ok 33 - actual installed Standard/Gentle catalogue exposes reviewed, qualified and uncovered live sources lazily
+  ---
+  duration_ms: 1602.084958
+  ...
+# Subtest: same map IDs in separately installed themed owners do not collide
+ok 34 - same map IDs in separately installed themed owners do not collide
+  ---
+  duration_ms: 75.339334
+  ...
+# Subtest: current main Journey host adds every installed Journey level without pretending base clips belong to Journey
+ok 35 - current main Journey host adds every installed Journey level without pretending base clips belong to Journey
+  ---
+  duration_ms: 4571.546417
+  ...
+# Subtest: actual public company editions expose only their own isolated installed levels
+ok 36 - actual public company editions expose only their own isolated installed levels
+  ---
+  duration_ms: 3933.725041
+  ...
+# Subtest: missing Worker and uninstalled content filter sources without downloading or installing packs
+ok 37 - missing Worker and uninstalled content filter sources without downloading or installing packs
+  ---
+  duration_ms: 34.84025
+  ...
+# Subtest: manually kept local recordings join the catalogue without enabling automatic collection
+ok 38 - manually kept local recordings join the catalogue without enabling automatic collection
+  ---
+  duration_ms: 164.537541
+  ...
+# Subtest: uncached optional bundled replays fall back to a retained recording or stay unavailable offline
+ok 39 - uncached optional bundled replays fall back to a retained recording or stay unavailable offline
+  ---
+  duration_ms: 189.211208
+  ...
+# Subtest: scene creation rejects a valid but wrong bundled recording and respects cancellation
+ok 40 - scene creation rejects a valid but wrong bundled recording and respects cancellation
+  ---
+  duration_ms: 18.245083
+  ...
+# Subtest: cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation
+ok 41 - cancelled source discovery cannot return a late catalogue whose fetch ignored cancellation
+  ---
+  duration_ms: 0.358833
+  ...
+# Subtest: a missing primary recording uses an available pinned variant without changing its inputs
+ok 42 - a missing primary recording uses an available pinned variant without changing its inputs
+  ---
+  duration_ms: 172.616542
+  ...
+# Subtest: frozen variants stay strict and reviewed routes qualify only an enemy checkpoint difference
+ok 43 - frozen variants stay strict and reviewed routes qualify only an enemy checkpoint difference
+  ---
+  duration_ms: 398.128
+  ...
+# Subtest: the ordinary game build includes every dynamic demo asset and Worker module
+ok 44 - the ordinary game build includes every dynamic demo asset and Worker module
+  ---
+  duration_ms: 678.413583
+  ...
+# Subtest: a personal cache that never settles times out without discarding bundled sources
+ok 45 - a personal cache that never settles times out without discarding bundled sources
+  ---
+  duration_ms: 11.027792
+  ...
+# Subtest: a never-settling catalogue falls through to local sources and cancellation settles a hung cache
+ok 46 - a never-settling catalogue falls through to local sources and cancellation settles a hung cache
+  ---
+  duration_ms: 0.651834
+  ...
+# Subtest: installed Pressure Lines keeps playing a complete recording when live Worker preparation fails
+ok 47 - installed Pressure Lines keeps playing a complete recording when live Worker preparation fails
+  ---
+  duration_ms: 619.92275
+  ...
+1..47
+# tests 47
+# suites 0
+# pass 47
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 133121.321292

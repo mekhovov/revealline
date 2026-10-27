@@ -1,0 +1,19 @@
+{
+  "format": "ExistingPublic96IndependentActualParentAnchorReview.v1",
+  "publicOnly": true,
+  "createdUTC": "2026-10-16T10:31:53.791786+00:00",
+  "repository": "mekhovov/revealline",
+  "receiptPublicationHead": "5f7fd7e3b1761e86db7ea360c9f388f5aa7e9f28",
+  "receiptPath": "docs/preservation/fpv-source-audit-20261016/late-existing-public-source/final96-existing-public-commit-anchor-receipt-v1.json",
+  "receiptGitBlobSHA1": "cde3dd071b82e54535cd968e3a87a171251cc629",
+  "receiptReadbackSHA256": "5ce55fe1c3d74336327278567996aec853ee06c3256b050378aba89f6e7c207c",
+  "exactAnchorHead": "b0fa131f5fec68d39fd8893c2bff7df75b8f1448",
+  "previousAnchorHead": "fe1940b10e556d47d590e1ff7c1b8f2059349028",
+  "unchangedApplicationTree": "2834bbd364b6c4e155c70c3e8ede2fc654b75c49",
+  "allTwoBatchExactParentAndTreeAPIReadbacks": true,
+  "capturedExistingPublicCommitIDsReachableFromAnchor": 96,
+  "receiptPublicationIsGitHubVerifiedDescendantOfAnchor": true,
+  "newBodyOrHistoryWalk": false,
+  "publicSourceAlreadyPublicOnly": true,
+  "allVolumeComplete": false
+}

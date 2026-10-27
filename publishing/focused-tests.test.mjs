@@ -92,6 +92,118 @@ test('rolling metadata scripts retain their publishing regression gates', () => 
   }
 });
 
+test('pinned source review selects its real Git transport boundary checks', () => {
+  for (const file of [
+    'scripts/serve-pinned-game-review.py',
+    'scripts/test_pinned_game_review.py',
+    'scripts/test-pinned-game-review.mjs',
+  ]) {
+    const plan = focusedTestPlan([file], manifest);
+    assert.deepEqual(plan.unknownRuntime, []);
+    const command = plan.commands.find(({ id }) => id === 'pinned-game-review');
+    assert.deepEqual(command.args, ['--test', 'scripts/test-pinned-game-review.mjs']);
+  }
+});
+
+test('archive writer and sparse workflow changes retain real-source and dependency-boundary checks', () => {
+  for (const file of [
+    'scripts/distribution-zip.mjs',
+    '.github/workflows/assemble-full-release-evidence.yml',
+    '.github/workflows/qualify-release-source.yml',
+    '.github/workflows/upload-release-originals.yml',
+  ]) {
+    const plan = focusedTestPlan([file], manifest);
+    const command = plan.commands.find(({ id }) => id === 'release-utility-checkout');
+    assert.ok(command.args.includes('publishing/utility-sparse-checkout.test.mjs'));
+  }
+  const plan = focusedTestPlan(['scripts/distribution-zip.mjs'], manifest);
+  const command = plan.commands.find(({ id }) => id === 'distribution-archive-format');
+  assert.ok(command.args.includes('scripts/test-external-distribution.mjs'));
+  assert.ok(command.args.includes('scripts/test-equipment-offline-ownership.mjs'));
+  assert.ok(command.args.includes('scripts/test-inspect-default-build.mjs'));
+  assert.ok(command.args.includes('scripts/test-soundtrack-distribution.mjs'));
+});
+
+test('release reader changes select frozen-consumer policy and original archive regressions', () => {
+  for (const file of [
+    'publishing/utility/assemble_full_qualification.py',
+    'publishing/utility/release_artifact.py',
+    'publishing/utility/test_assemble_full_qualification.py',
+    'publishing/utility/test_waived_qualification.py',
+    'publishing/release-evidence-compatibility.test.mjs',
+  ]) {
+    const plan = focusedTestPlan([file], manifest);
+    assert.deepEqual(plan.unknownRuntime, []);
+    const command = plan.commands.find(({ id }) => id === 'release-evidence-compatibility');
+    assert.ok(command.args.includes('publishing/release-evidence-compatibility.test.mjs'));
+    assert.ok(command.args.includes('publishing/distribution-archive.test.mjs'));
+  }
+});
+
+test('multiplayer observer sources retain phase, visibility and lifecycle regressions', () => {
+  for (const file of [
+    'docs/verification/journey-performance.mjs',
+    'docs/verification/journey-performance.html',
+    'scripts/test-journey-performance-observer.mjs',
+  ]) {
+    const plan = focusedTestPlan([file], manifest);
+    assert.deepEqual(plan.unknownRuntime, []);
+    const command = plan.commands.find(({ id }) => id === 'multiplayer-performance-observer');
+    assert.deepEqual(command.args, ['--test', 'scripts/test-journey-performance-observer.mjs']);
+  }
+});
+
+test('Studio gameplay audio and the shared picture fixture retain both host transports', () => {
+  for (const file of [
+    'game/test/team-duel-studio-gameplay-host.test.mjs',
+    'game/test/helpers/coop-presentation-fixture.mjs',
+    'game/test/coop-presentation-bootstrap-retry.test.mjs',
+    'game/test/coop-picture-host.test.mjs',
+  ]) {
+    const plan = focusedTestPlan([file], manifest);
+    assert.deepEqual(plan.unknownRuntime, []);
+    const command = plan.commands.find(({ id }) => id === 'multiplayer-delivery-acceptance');
+    for (const expected of [
+      'game/test/team-duel-studio-audio.test.mjs',
+      'game/test/team-duel-studio-gameplay-host.test.mjs',
+      'game/test/coop-presentation-bootstrap-retry.test.mjs',
+      'game/test/coop-picture-host.test.mjs',
+    ])
+      assert.ok(command.args.includes(expected));
+  }
+});
+
+test('native gameplay audio observation retains passive semantics and native buffer identity checks', () => {
+  for (const file of [
+    'docs/verification/team-duel-desktop-audio/gameplay.html',
+    'docs/verification/team-duel-desktop-audio/gameplay.mjs',
+    'docs/verification/team-duel-desktop-audio/gameplay-observer.mjs',
+    'docs/verification/team-duel-desktop-audio/gameplay-observer.test.mjs',
+  ]) {
+    const plan = focusedTestPlan([file], manifest);
+    assert.deepEqual(plan.unknownRuntime, []);
+    const command = plan.commands.find(({ id }) => id === 'native-gameplay-audio-observer');
+    assert.deepEqual(command.args, [
+      '--test',
+      'docs/verification/team-duel-desktop-audio/gameplay-observer.test.mjs',
+    ]);
+  }
+});
+
+test('the separate codec observer retains capture and codec ownership coverage', () => {
+  const plan = focusedTestPlan(
+    ['docs/verification/team-duel-desktop-audio/studio-codecs.mjs'],
+    manifest,
+  );
+  const command = plan.commands.find(({ id }) => id === 'restored-studio-audio-observer');
+  assert.ok(
+    command.args.includes('docs/verification/team-duel-desktop-audio/studio-probe-model.test.mjs'),
+  );
+  assert.ok(
+    command.args.includes('docs/verification/team-duel-desktop-audio/studio-codecs-model.test.mjs'),
+  );
+});
+
 test('the real company package script exposes all tests to exact focused deduplication', async () => {
   const { scripts } = JSON.parse(await readFile(path.join(directory, '../package.json'), 'utf8'));
   const prefix = 'node --test ';
@@ -1098,7 +1210,11 @@ test('focused CI installs the locked native fixture owner before selected checks
   );
   const execute = steps.findIndex((step) => step.startsWith('name: Run selected focused gates\n'));
   assert.ok(rootInstall >= 0 && install > rootInstall && execute > install);
-  assert.match(steps[install], /if: steps\.plan\.outputs\.required == 'true'/);
+  assert.match(
+    focused,
+    /needs\.preflight\.outputs\.focusedContract == 'revealline-focused-plan\.v2'/,
+  );
+  assert.match(focused, /needs\.preflight\.outputs\.focusedShards != '0'/);
   assert.match(steps[install], /working-directory: source/);
   assert.match(
     steps[install],
@@ -1511,4 +1627,37 @@ test('actual CLI preserves failed output and fails closed on invalid options, ch
   result = f.verify();
   assert.equal(result.status, 1);
   assert.match(result.stderr, /exceeds its bound/);
+});
+
+test('Solo Mission Library edits select every complete native file with its own five-minute ceiling', () => {
+  const groups = [
+    ['mission-library-solo-native-custom', 'game/test/mission-library-solo-custom-host.test.mjs'],
+    ['mission-library-solo-native-setup', 'game/test/mission-library-solo-host.test.mjs'],
+    ['mission-library-solo-native-incoming', 'game/test/mission-library-solo-incoming-host.test.mjs'],
+    ['mission-library-solo-native-handoff', 'game/test/mission-library-solo-handoff-host.test.mjs'],
+  ];
+  for (const changed of ['game/test/mission-library-solo-fixture.mjs', ...groups.map(([, file]) => file)]) {
+    const plan = focusedTestPlan([changed], manifest);
+    assert.deepEqual(plan.unknownRuntime, []);
+    assert.deepEqual(plan.deferredTests, []);
+    assert.deepEqual(plan.commands.map(({ id }) => id), groups.map(([id]) => id));
+    for (const [index, [, file]] of groups.entries()) {
+      assert.equal(plan.commands[index].command, 'node');
+      assert.deepEqual(plan.commands[index].args, ['--test', '--test-concurrency=1', file]);
+      assert.equal(plan.commands[index].timeoutMs, 300000);
+    }
+  }
+});
+
+test('unrelated native edits do not select or defer the Solo Mission Library cohort', () => {
+  for (const changed of [
+    'game/test/controller-navigation.test.mjs',
+    'game/test/mission-library-solo-lifecycle-host.test.mjs',
+  ]) {
+    const plan = focusedTestPlan([changed], manifest);
+    assert.equal(plan.categories.includes('mission-library-solo-native'), false);
+    assert.equal(plan.commands.some(({ id }) => id.startsWith('mission-library-solo-native-')), false);
+    assert.deepEqual(plan.deferredTests, []);
+    assert.equal(plan.commands.some(({ args }) => args.includes(changed)), true);
+  }
 });

@@ -1,0 +1,475 @@
+TAP version 13
+# Subtest: one edited candidate is reusable in two unrelated source drafts and exact offline publications
+ok 1 - one edited candidate is reusable in two unrelated source drafts and exact offline publications
+  ---
+  duration_ms: 231.978917
+  ...
+# Subtest: candidate admission excludes unrelated records, protects immutable identity and rejects missing or executable dependencies
+ok 2 - candidate admission excludes unrelated records, protects immutable identity and rejects missing or executable dependencies
+  ---
+  duration_ms: 331.752667
+  ...
+# Subtest: normal shared host resolves the admitted custom identity and preserves personal override and exact installed artwork
+ok 3 - normal shared host resolves the admitted custom identity and preserves personal override and exact installed artwork
+  ---
+  duration_ms: 27.098416
+  ...
+# Subtest: compact export preserves edited candidate scope and unsupported selected source assets are rejected before assignment
+ok 4 - compact export preserves edited candidate scope and unsupported selected source assets are rejected before assignment
+  ---
+  duration_ms: 557.108875
+  ...
+# Subtest: custom SIM handoff carries only validated cosmetic context and follows independent personal and world overrides
+ok 5 - custom SIM handoff carries only validated cosmetic context and follows independent personal and world overrides
+  ---
+  duration_ms: 31.030375
+  ...
+# Subtest: compiled first paint uses exact custom palette without preference writes and rejects arbitrary style injection
+ok 6 - compiled first paint uses exact custom palette without preference writes and rejects arbitrary style injection
+  ---
+  duration_ms: 12.427542
+  ...
+# Subtest: retained custom presentation keeps exact curated bytes and late admission advances affected owner revisions
+ok 7 - retained custom presentation keeps exact curated bytes and late admission advances affected owner revisions
+  ---
+  duration_ms: 231.742333
+  ...
+# Subtest: unavailable or expired custom SIM context uses authored world with retained intent while explicit world choice wins
+ok 8 - unavailable or expired custom SIM context uses authored world with retained intent while explicit world choice wins
+  ---
+  duration_ms: 24.897042
+  ...
+# Subtest: unfinished low-contrast candidate stays previewable but cannot be registered or published
+ok 9 - unfinished low-contrast candidate stays previewable but cannot be registered or published
+  ---
+  duration_ms: 222.964042
+  ...
+# Subtest: noopener optional launch transfers one bounded context to a separate tab without sharing session storage or preferences
+ok 10 - noopener optional launch transfers one bounded context to a separate tab without sharing session storage or preferences
+  ---
+  duration_ms: 608.296167
+  ...
+# Subtest: only atomic accepted custom context reaches auxiliary pages and expires with its first-paint seed
+ok 11 - only atomic accepted custom context reaches auxiliary pages and expires with its first-paint seed
+  ---
+  duration_ms: 204.800917
+  ...
+# Subtest: rendered control audit catches unreadable validation, missing focus, and disabled material leakage
+ok 12 - rendered control audit catches unreadable validation, missing focus, and disabled material leakage
+  ---
+  duration_ms: 5.795542
+  ...
+# Subtest: rendered loading audit requires a visible progress rail with relief, selection, and focus
+ok 13 - rendered loading audit requires a visible progress rail with relief, selection, and focus
+  ---
+  duration_ms: 26.855041
+  ...
+# Subtest: Theme Studio opens the real workspace editor and shared material gallery without editing a theme
+ok 14 - Theme Studio opens the real workspace editor and shared material gallery without editing a theme
+  ---
+  duration_ms: 775.710292
+  ...
+# Subtest: saved workspace, duplicate, native and runtime exports retain dnipro-porcelain@r1
+ok 15 - saved workspace, duplicate, native and runtime exports retain dnipro-porcelain@r1
+  ---
+  duration_ms: 2717.594041
+  ...
+# Subtest: saved workspace, duplicate, native and runtime exports retain industrial-workshop@r1
+ok 16 - saved workspace, duplicate, native and runtime exports retain industrial-workshop@r1
+  ---
+  duration_ms: 2040.443875
+  ...
+# Subtest: missing exact basis stays portable and editable without silently becoming latest Industrial
+ok 17 - missing exact basis stays portable and editable without silently becoming latest Industrial
+  ---
+  duration_ms: 751.589542
+  ...
+# Subtest: v1 native data remains exact and malformed or unversioned basis metadata is rejected
+ok 18 - v1 native data remains exact and malformed or unversioned basis metadata is rejected
+  ---
+  duration_ms: 676.237458
+  ...
+# Subtest: workbench reload shows the saved exact basis, stages changes and visibly blocks unavailable exports
+ok 19 - workbench reload shows the saved exact basis, stages changes and visibly blocks unavailable exports
+  ---
+  duration_ms: 787.672666
+  ...
+# Subtest: Studio chrome lists and immediately applies admitted custom themes without editing the workspace
+ok 20 - Studio chrome lists and immediately applies admitted custom themes without editing the workspace
+  ---
+  duration_ms: 228.673167
+  ...
+# Subtest: role inspector uses runtime semantics without inline paint or stealing selector focus
+ok 21 - role inspector uses runtime semantics without inline paint or stealing selector focus
+  ---
+  duration_ms: 772.081667
+  ...
+# Subtest: first-paint seed is generated from the exact admitted registry and shared migration parser
+ok 22 - first-paint seed is generated from the exact admitted registry and shared migration parser
+  ---
+  duration_ms: 409.602458
+  ...
+# Subtest: every admitted appearance paints exact paired tokens and frames before module execution
+ok 23 - every admitted appearance paints exact paired tokens and frames before module execution
+  ---
+  duration_ms: 272.2435
+  ...
+# Subtest: retained and current context pins paint exact material bytes through every accessibility override
+ok 24 - retained and current context pins paint exact material bytes through every accessibility override
+  ---
+  duration_ms: 663.026917
+  ...
+# Subtest: read-only startup matches runtime migration for new, existing, damaged and unavailable preferences
+ok 25 - read-only startup matches runtime migration for new, existing, damaged and unavailable preferences
+  ---
+  duration_ms: 15.665
+  ...
+# Subtest: changing shared accessibility preferences does not change theme intent in the next game
+ok 26 - changing shared accessibility preferences does not change theme intent in the next game
+  ---
+  duration_ms: 5.278583
+  ...
+# Subtest: first-paint density, motion, legibility and cosmetic context use bounded canonical choices
+ok 27 - first-paint density, motion, legibility and cosmetic context use bounded canonical choices
+  ---
+  duration_ms: 10.810208
+  ...
+# Subtest: every production game, authoring and site entry seeds appearance before other scripts and styles
+ok 28 - every production game, authoring and site entry seeds appearance before other scripts and styles
+  ---
+  duration_ms: 759.958209
+  ...
+# Subtest: Neon gallery generators retain shared appearance and exact authored image references on regeneration
+ok 29 - Neon gallery generators retain shared appearance and exact authored image references on regeneration
+  ---
+  duration_ms: 89.688666
+  ...
+# Subtest: profile-owned players seed appearance without acquiring an auxiliary host lease
+ok 30 - profile-owned players seed appearance without acquiring an auxiliary host lease
+  ---
+  duration_ms: 7.106583
+  ...
+# Subtest: current red Vyshyvanka has new exact interface/Arcade pins while the original bytes and SIM binding remain retained
+ok 31 - current red Vyshyvanka has new exact interface/Arcade pins while the original bytes and SIM binding remain retained
+  ---
+  duration_ms: 140.145333
+  ...
+# Subtest: Signal Blue keeps both earlier named revisions and its original identity
+ok 32 - Signal Blue keeps both earlier named revisions and its original identity
+  ---
+  duration_ms: 0.345667
+  ...
+# Subtest: Desktop 98 separates white entry fields from its desktop while retaining saved r2 appearances
+ok 33 - Desktop 98 separates white entry fields from its desktop while retaining saved r2 appearances
+  ---
+  duration_ms: 6.949833
+  ...
+# Subtest: new players start with Flight Deck while saved personal and community themes remain respected
+ok 34 - new players start with Flight Deck while saved personal and community themes remain respected
+  ---
+  duration_ms: 0.254084
+  ...
+# Subtest: each new family resolves complete interface, Arcade and SIM contracts with readable state pairs
+ok 35 - each new family resolves complete interface, Arcade and SIM contracts with readable state pairs
+  ---
+  duration_ms: 69.795875
+  ...
+# Subtest: new Arcade finishes are distinct, deterministic and leave alpha, dimensions and source pixels intact
+ok 36 - new Arcade finishes are distinct, deterministic and leave alpha, dimensions and source pixels intact
+  ---
+  duration_ms: 553.744542
+  ...
+# Subtest: dark additions retain dark reading surfaces and distinct complete SIM pixel libraries
+ok 37 - dark additions retain dark reading surfaces and distinct complete SIM pixel libraries
+  ---
+  duration_ms: 297.441584
+  ...
+# Subtest: new dark collections leave every previously installed exact interface, Arcade pixel and SIM material revision unchanged
+ok 38 - new dark collections leave every previously installed exact interface, Arcade pixel and SIM material revision unchanged
+  ---
+  duration_ms: 474.471041
+  ...
+# Subtest: finish variants follow exact interface bases independently of family without altering serialized assets
+ok 39 - finish variants follow exact interface bases independently of family without altering serialized assets
+  ---
+  duration_ms: 968.555459
+  ...
+# Subtest: actual game and standalone SIM hosts retain custom interface finish and clear it on independent override
+ok 40 - actual game and standalone SIM hosts retain custom interface finish and clear it on independent override
+  ---
+  duration_ms: 810.590917
+  ...
+# Subtest: first-paint custom finish uses a bounded style-compatible variant and retains old seed compatibility
+ok 41 - first-paint custom finish uses a bounded style-compatible variant and retains old seed compatibility
+  ---
+  duration_ms: 629.281791
+  ...
+# Subtest: Versus controller applies gallery choices without starting or replacing Ready
+ok 42 - Versus controller applies gallery choices without starting or replacing Ready
+  ---
+  duration_ms: 5207.008292
+  ...
+# Subtest: theme picker shows each runtime material without nested interactive controls or preference writes
+ok 43 - theme picker shows each runtime material without nested interactive controls or preference writes
+  ---
+  duration_ms: 264.624584
+  ...
+# Subtest: Follow and curated card previews retain the accepted interface basis independently of the art family
+ok 44 - Follow and curated card previews retain the accepted interface basis independently of the art family
+  ---
+  duration_ms: 656.756667
+  ...
+# Subtest: material previews honor immediate accessibility changes without replacing focus or selection
+ok 45 - material previews honor immediate accessibility changes without replacing focus or selection
+  ---
+  duration_ms: 387.272708
+  ...
+# Subtest: disposing a picker releases scoped presentation and detaches selection handlers
+ok 46 - disposing a picker releases scoped presentation and detaches selection handlers
+  ---
+  duration_ms: 70.004542
+  ...
+# Subtest: shared appearance owns one injected enemy selector and disposes its subscription
+ok 47 - shared appearance owns one injected enemy selector and disposes its subscription
+  ---
+  duration_ms: 67.133084
+  ...
+# Subtest: all registered candidate families pin exact interface revisions and edited paired colors
+ok 48 - all registered candidate families pin exact interface revisions and edited paired colors
+  ---
+  duration_ms: 717.212875
+  ...
+# Subtest: original candidate envelopes retain their r1 interface after the builtin upgrade
+ok 49 - original candidate envelopes retain their r1 interface after the builtin upgrade
+  ---
+  duration_ms: 704.532459
+  ...
+# Subtest: candidate preview and runtime interface derive the same source tokens with separate immutable identities
+ok 50 - candidate preview and runtime interface derive the same source tokens with separate immutable identities
+  ---
+  duration_ms: 817.524666
+  ...
+# Subtest: one bounded same-tab payload hands off the candidate once without touching player preferences
+ok 51 - one bounded same-tab payload hands off the candidate once without touching player preferences
+  ---
+  duration_ms: 218.365541
+  ...
+# Subtest: malformed, oversized, expired and substituted resource payloads fail closed and are consumed
+ok 52 - malformed, oversized, expired and substituted resource payloads fail closed and are consumed
+  ---
+  duration_ms: 169.252542
+  ...
+# Subtest: failed handoff preserves the previous usable candidate
+ok 53 - failed handoff preserves the previous usable candidate
+  ---
+  duration_ms: 165.7075
+  ...
+# Subtest: rendered-material fixture uses matched native control pairs without replacing runtime paint
+ok 54 - rendered-material fixture uses matched native control pairs without replacing runtime paint
+  ---
+  duration_ms: 21.759
+  ...
+# Subtest: material semantic checks reject active disabled paint and a pressed danger recolored as selection
+ok 55 - material semantic checks reject active disabled paint and a pressed danger recolored as selection
+  ---
+  duration_ms: 6.415875
+  ...
+# Subtest: material close-up composes native player, Studio and tall-card surfaces without replacing paint
+ok 56 - material close-up composes native player, Studio and tall-card surfaces without replacing paint
+  ---
+  duration_ms: 3.146542
+  ...
+# Subtest: danger pressed and disabled recipes retain their semantic pairs across themes and contrast preferences
+ok 57 - danger pressed and disabled recipes retain their semantic pairs across themes and contrast preferences
+  ---
+  duration_ms: 80.9665
+  ...
+# Subtest: all production and future specimen interfaces validate and meet text contrast
+ok 58 - all production and future specimen interfaces validate and meet text contrast
+  ---
+  duration_ms: 51.534625
+  ...
+# Subtest: accessibility wins over theme and compact density, while selection/focus remain independent
+ok 59 - accessibility wins over theme and compact density, while selection/focus remain independent
+  ---
+  duration_ms: 2.446125
+  ...
+# Subtest: ornaments Off removes frame wear and interface sampling never chooses SIM nearest filtering
+ok 60 - ornaments Off removes frame wear and interface sampling never chooses SIM nearest filtering
+  ---
+  duration_ms: 3.744834
+  ...
+# Subtest: ornaments Off suppresses texture for every installed family without removing semantic state cues
+ok 61 - ornaments Off suppresses texture for every installed family without removing semantic state cues
+  ---
+  duration_ms: 54.051541
+  ...
+# Subtest: shared material layers preserve semantic state colors and reset at every presentation scope
+ok 62 - shared material layers preserve semantic state colors and reset at every presentation scope
+  ---
+  duration_ms: 3.455
+  ...
+# Subtest: authored and retained Industrial identities keep their own material capability for scoped recipes
+ok 63 - authored and retained Industrial identities keep their own material capability for scoped recipes
+  ---
+  duration_ms: 320.421792
+  ...
+# Subtest: decorative face recipes require their own enabled texture and contrast scope
+ok 64 - decorative face recipes require their own enabled texture and contrast scope
+  ---
+  duration_ms: 4.945625
+  ...
+# Subtest: gallery and nested backdrops consume their nearest scope material while retaining palette and focus cues
+ok 65 - gallery and nested backdrops consume their nearest scope material while retaining palette and focus cues
+  ---
+  duration_ms: 8.202708
+  ...
+# Subtest: interface validation rejects executable styles, unknown fields and missing provenance
+ok 66 - interface validation rejects executable styles, unknown fields and missing provenance
+  ---
+  duration_ms: 3.80325
+  ...
+# Subtest: DOM application keeps controls and focus, restores only its owned styles
+ok 67 - DOM application keeps controls and focus, restores only its owned styles
+  ---
+  duration_ms: 7.304833
+  ...
+# Subtest: custom interface identity retains its material recipe and restores the prior DOM lease
+ok 68 - custom interface identity retains its material recipe and restores the prior DOM lease
+  ---
+  duration_ms: 1.294583
+  ...
+# Subtest: new theme preferences preserve defaults and do not touch legacy state on read
+ok 69 - new theme preferences preserve defaults and do not touch legacy state on read
+  ---
+  duration_ms: 0.609333
+  ...
+# Subtest: failed/session-only saving retains local intent instead of stale cross-tab state
+ok 70 - failed/session-only saving retains local intent instead of stale cross-tab state
+  ---
+  duration_ms: 0.176084
+  ...
+# Subtest: theme host applies only latest prepared selection and a failed load retains the accepted presentation
+ok 71 - theme host applies only latest prepared selection and a failed load retains the accepted presentation
+  ---
+  duration_ms: 19.767084
+  ...
+# Subtest: theme host recovers from stylesheet failure without applying a partial theme
+ok 72 - theme host recovers from stylesheet failure without applying a partial theme
+  ---
+  duration_ms: 10.164125
+  ...
+# Subtest: family documents pin independent revisions and reject mutable or unexpected references
+ok 73 - family documents pin independent revisions and reject mutable or unexpected references
+  ---
+  duration_ms: 10.61225
+  ...
+# Subtest: DOS uses a mono stack before the Plain accessibility override
+ok 74 - DOS uses a mono stack before the Plain accessibility override
+  ---
+  duration_ms: 7.201834
+  ...
+# Subtest: Canvas consumes interface fonts independently from authored arcade artwork
+ok 75 - Canvas consumes interface fonts independently from authored arcade artwork
+  ---
+  duration_ms: 5.641792
+  ...
+# Subtest: shared appearance bounds native option widths and nested help within compact panels
+ok 76 - shared appearance bounds native option widths and nested help within compact panels
+  ---
+  duration_ms: 1.989417
+  ...
+# Subtest: prepared context leaves the accepted interface and preferences unchanged until a synchronous single-use commit
+ok 77 - prepared context leaves the accepted interface and preferences unchanged until a synchronous single-use commit
+  ---
+  duration_ms: 54.920541
+  ...
+# Subtest: prepared context rejects stale highContrast intent and leaves the current context in charge
+ok 78 - prepared context rejects stale highContrast intent and leaves the current context in charge
+  ---
+  duration_ms: 7.571542
+  ...
+# Subtest: prepared context rejects stale arcadeArt intent and leaves the current context in charge
+ok 79 - prepared context rejects stale arcadeArt intent and leaves the current context in charge
+  ---
+  duration_ms: 12.970125
+  ...
+# Subtest: prepared context rejects an intervening different context or a disposed owner
+ok 80 - prepared context rejects an intervening different context or a disposed owner
+  ---
+  duration_ms: 13.6235
+  ...
+# Subtest: failed font preparation retains the exact accepted context and lets a later preparation recover
+ok 81 - failed font preparation retains the exact accepted context and lets a later preparation recover
+  ---
+  duration_ms: 13.245958
+  ...
+# Subtest: failed stylesheet preparation never adopts its requested context and the original context recovers
+ok 82 - failed stylesheet preparation never adopts its requested context and the original context recovers
+  ---
+  duration_ms: 11.395083
+  ...
+# Subtest: a late earlier refresh cannot overwrite a synchronously committed prepared context
+ok 83 - a late earlier refresh cannot overwrite a synchronously committed prepared context
+  ---
+  duration_ms: 23.026709
+  ...
+# Subtest: an old context family pin reaches Arcade unchanged and a later context uses its own revision
+ok 84 - an old context family pin reaches Arcade unchanged and a later context uses its own revision
+  ---
+  duration_ms: 20.018959
+  ...
+# Subtest: compact theme cards immediately apply complete choices without replacing focused controls
+ok 85 - compact theme cards immediately apply complete choices without replacing focused controls
+  ---
+  duration_ms: 355.003584
+  ...
+# Subtest: Follow, original Field Kit and curated revisions have complete cards and exact context/custom colors
+ok 86 - Follow, original Field Kit and curated revisions have complete cards and exact context/custom colors
+  ---
+  duration_ms: 960.484
+  ...
+# Subtest: rapid immediate choices retain the accepted theme until resources load, ignore superseded loads and preserve newest focus on failure
+ok 87 - rapid immediate choices retain the accepted theme until resources load, ignore superseded loads and preserve newest focus on failure
+  ---
+  duration_ms: 215.002833
+  ...
+# Subtest: v1 preference migration is read-only, preserves unknown intent and permits explicit recovery
+ok 88 - v1 preference migration is read-only, preserves unknown intent and permits explicit recovery
+  ---
+  duration_ms: 10.71
+  ...
+# Subtest: Signal Blue paints its advertised palette independently of old menu skins, while exact r1 stays legacy
+ok 89 - Signal Blue paints its advertised palette independently of old menu skins, while exact r1 stays legacy
+  ---
+  duration_ms: 24.308125
+  ...
+# Subtest: complete Apply clears independent SIM appearance but preserves accessibility and legacy records
+ok 90 - complete Apply clears independent SIM appearance but preserves accessibility and legacy records
+  ---
+  duration_ms: 0.20525
+  ...
+# Subtest: installed Arcade finishes retain native coverage or exact declared replacement silhouettes without editing sources
+ok 91 - installed Arcade finishes retain native coverage or exact declared replacement silhouettes without editing sources
+  ---
+  duration_ms: 538.879792
+  ...
+# Subtest: theme cache isolates all installed variants and retained Industrial history without touching original media
+ok 92 - theme cache isolates all installed variants and retained Industrial history without touching original media
+  ---
+  duration_ms: 8.020083
+  ...
+# Subtest: an already failed preload is replaced and fetched before the host accepts a theme
+ok 93 - an already failed preload is replaced and fetched before the host accepts a theme
+  ---
+  duration_ms: 5.063917
+  ...
+1..93
+# tests 93
+# suites 0
+# pass 93
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 17681.940875

@@ -1,0 +1,17 @@
+{
+  "createdUTC": "2026-10-16T07:47:18.208203+00:00",
+  "scope": "All present <=1024-byte source blobs from accepted GitHub-only original+expanded main recovery, including all declared public prerequisite small blobs.",
+  "smallGitBlobBodiesRawSHA1Verified": 4966,
+  "recognizedVersionAliases": [
+    "http://git-media.io/v/2",
+    "https://hawser.github.com/spec/v1",
+    "https://git-lfs.github.com/spec/v1"
+  ],
+  "nonemptyCanonicalOrLegacyPointerHeaders": [],
+  "allLFSHeaderAliasFindings": 0,
+  "emptyBlobsNeedNoExternalLFSObject": true,
+  "GitLFSSpec": "https://github.com/git-lfs/git-lfs/blob/main/docs/spec.md",
+  "GitLFSPointerParser": "https://github.com/git-lfs/git-lfs/blob/main/lfs/pointer.go",
+  "noOriginalStoreRead": true,
+  "remoteInvalidAndNoLazyFetch": true
+}

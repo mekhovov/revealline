@@ -1,0 +1,49 @@
+{
+  "format": "AircraftStaticCourseToolQualification.v1",
+  "toolingOnly": true,
+  "scored": false,
+  "sourceRevision": "a1d883ccedb68704acc320352ec6a3f895d8b580",
+  "sourceTree": "83d2bf39a48b607f5a0426d43200957000cc1d36",
+  "workingTreeChangesBeforeAndAfter": false,
+  "baseRevision": "a2e7943b42a51ac3e855514275b1c108fe6acd7e",
+  "changedFiles": [
+    "docs/fpv-static-course-proof.md",
+    "scripts/fpv-static-course-proof.mjs",
+    "scripts/test-fpv-static-course-proof.mjs"
+  ],
+  "selectedSourceSha256": {
+    "scripts/fpv-static-course-proof.mjs": "f7d0521d2972c48a7465db5d63ae5467a394a3fe3ad677ed2b9ebc537e44a38a",
+    "scripts/test-fpv-static-course-proof.mjs": "db47369d3faf2cefe0d987dfe964ce0311602ae1d485a250fd1d677dec47cafe",
+    "docs/fpv-static-course-proof.md": "1899821ec34dbedc252f193e0cac1b4e732f8f21aeb754b71f6b2f76ce899606"
+  },
+  "check": {
+    "command": "node --test scripts/test-fpv-static-course-proof.mjs",
+    "tests": 42,
+    "passed": 42,
+    "failed": 0,
+    "skipped": 0,
+    "durationMs": 40151.108833,
+    "log": "/private/tmp/fpv-static-proof-final-committed-42.log",
+    "logSha256": "3c4b1775c9e08ac007177aba50bcea8ec4b6f5952f98eb9364bbf4d58ca9f8da"
+  },
+  "otherChecks": [
+    "ESLint for both tooling scripts",
+    "Prettier for all three files",
+    "git diff --check"
+  ],
+  "scope": [
+    "15 current civilian catalog aircraft \u00d7 Acro/self-level on one introductory static lesson",
+    "Ordinary-input static gate crossing, aperture miss and wrong direction",
+    "Known v1/v2 mission adapters and frozen pre-change v1 identity/hash without mission upgrade",
+    "Two-pass complete physical recording and canonical static course reconstruction",
+    "Tampering, unsupported/partial archives, cancellation and callback failure in both passes, private proof ownership, bounded clocks and CLI files"
+  ],
+  "limits": [
+    "Selected hashes/repository metadata are diagnostic, not a complete transitive or loaded-module integrity proof.",
+    "39,000-tick cursor test is bounded schedule traversal, not a separate long physical flight.",
+    "No browser/native/device/all-course/real-aircraft qualification.",
+    "No shipped runtime, archive format, package-cap or production scoring changes.",
+    "Parsed/cloned report objects are not trusted; no production comparison registration."
+  ],
+  "independentReview": "Source/test/docs reviewed by root and status_scope_audit; no blocking findings."
+}

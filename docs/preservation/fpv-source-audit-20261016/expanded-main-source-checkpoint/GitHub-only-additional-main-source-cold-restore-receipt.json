@@ -1,0 +1,35 @@
+{
+  "format": "AdditionalMainCapturedShallowSourceGitHubOnlyColdRestore.v1",
+  "createdUTC": "2026-10-16T07:11:48.000981+00:00",
+  "assetId": 646421685,
+  "assetBytes": 16420788,
+  "assetSHA256": "d9e35b9a98f2e337fb1236d9a6e1857ad7fdb39c9dad2df6bf04203498913f4d",
+  "authenticatedFullGitHubAssetReadbackPassed": true,
+  "GitHubPublicPrerequisites": 13537,
+  "originalSourceBundleDependency": 646261949,
+  "originalAndAdditionalBundleVerifyAndUnbundlePassedInRetainedAttempt1": true,
+  "nativeFsckConnectivityPassedAfterReproducingCapturedBoundary": true,
+  "actualPackIDsExactly815Allowlist": true,
+  "all815NewRawGitObjectSHA1ReadbacksPassed": true,
+  "all203CapturedSourceCommitObjectsReachable": true,
+  "fourAnnotatedTagObjectsPreserved": true,
+  "capturedOriginalShallowBoundary": [
+    "91f3f76fe347fde44dd0ec6c854c272182423219"
+  ],
+  "unmaterializedOriginalParentCommitSHAs": [
+    "81415edaf9efd6147f7d1bf41bb46cf5619dbdf8",
+    "54c7c38b0cfae74b6c520830095de3e794cb7f00"
+  ],
+  "fullPreBoundaryAncestryClaim": false,
+  "GitHubSidecarGitBlob": "ce79d3b602db1092ec5c79751463a6d653e5c4a3",
+  "GitHubSidecarSHA256": "8435776f9879171ed0735d9fec0dec34b98ea524bf84fd549130e8c98422879a",
+  "onlyDeclaredGitHubPublicInputsAndFullDownloadedAssetsUsed": true,
+  "noOriginalSourceStoresAlternatesOrFallback": true,
+  "remoteAndLazyFetchDisabledDuringVerification": true,
+  "originalCheckoutMutation": false,
+  "localRecoveryHead": "ce723af994e1598b6ca7ca64d197654b7d08965b",
+  "newObjectReadbackManifestSHA256": "cfc1bcfcd4cc4a2ddb99299cee39c85af0c72637b5deecd97ef4ad0d0581eaf1",
+  "physicalDriveUnmounted": false,
+  "allVolumePreservationComplete": false,
+  "qualification": "Captured source-byte and shallow-state recovery only. Pre-existing two-parent ancestry gap remains explicit; no deletion/eviction or other cause inferred. Original16 accepted graph unchanged. Other app families, source indexes, old workingtree payloads and opaque archive qualification remain separate."
+}

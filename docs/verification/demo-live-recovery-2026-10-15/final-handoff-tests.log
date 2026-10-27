@@ -1,0 +1,209 @@
+TAP version 13
+# Subtest: an accessible demo on an idle Legacy host prepares the same level without automatic Start
+ok 1 - an accessible demo on an idle Legacy host prepares the same level without automatic Start
+  ---
+  duration_ms: 13336.589333
+  ...
+# Subtest: default Journey demo Fresh transfers exact Legacy mission ownership and arrives at Ready
+    # Subtest: the Journey host requests its verified destination without adopting a Legacy run
+    ok 1 - the Journey host requests its verified destination without adopting a Legacy run
+      ---
+      duration_ms: 29215.380834
+      ...
+    # Subtest: the receiving Legacy host prepares exact art and remains at tick zero
+    ok 2 - the receiving Legacy host prepares exact art and remains at tick zero
+      ---
+      duration_ms: 45841.406375
+      ...
+    # Subtest: a Ready hint cannot authorize an unearned locked Legacy mission
+    ok 3 - a Ready hint cannot authorize an unearned locked Legacy mission
+      ---
+      duration_ms: 35225.509583
+      ...
+    1..3
+ok 2 - default Journey demo Fresh transfers exact Legacy mission ownership and arrives at Ready
+  ---
+  duration_ms: 110283.314584
+  ...
+# Subtest: keyboard: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+ok 3 - keyboard: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+  ---
+  duration_ms: 18997.329167
+  ...
+# Subtest: touch: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+ok 4 - touch: fresh gameplay intent takes over independently while preserving the ordinary cut/save
+  ---
+  duration_ms: 13234.906416
+  ...
+# Subtest: actual idle home entry resets on activity and does not write game data
+ok 5 - actual idle home entry resets on activity and does not write game data
+  ---
+  duration_ms: 16566.560208
+  ...
+# Subtest: Watch from Settings restores its dialog and focus on Back, while Fresh leaves Settings closed
+ok 6 - Watch from Settings restores its dialog and focus on Back, while Fresh leaves Settings closed
+  ---
+  duration_ms: 11317.958958
+  ...
+# Subtest: leaving a Journey demo restores exactly one truthful title action without saving
+ok 7 - leaving a Journey demo restores exactly one truthful title action without saving
+  ---
+  duration_ms: 11305.771792
+  ...
+# Subtest: fresh start of an installed locked demonstrated level stays in isolated exact-level practice
+ok 8 - fresh start of an installed locked demonstrated level stays in isolated exact-level practice
+  ---
+  duration_ms: 10834.641417
+  ...
+# Subtest: takeover reconstructs the shown board into practice without advancing the recorded or ordinary owners
+ok 9 - takeover reconstructs the shown board into practice without advancing the recorded or ordinary owners
+  ---
+  duration_ms: 23650.036333
+  ...
+# Subtest: controller gameplay action takes over while preserving one hardware read per frame
+ok 10 - controller gameplay action takes over while preserving one hardware read per frame
+  ---
+  duration_ms: 6541.77875
+  ...
+# Subtest: a single remaining source prepares a new painter on repetition without reusing disposed media
+ok 11 - a single remaining source prepares a new painter on repetition without reusing disposed media
+  ---
+  duration_ms: 8637.140708
+  ...
+# Subtest: unattended playback bounds a visible stall and automatically repeats completed scenes without opening a menu
+ok 12 - unattended playback bounds a visible stall and automatically repeats completed scenes without opening a menu
+  ---
+  duration_ms: 106743.969416
+  ...
+# Subtest: fresh gameplay input on a completed demo starts exact-level practice without a confirmation menu
+ok 13 - fresh gameplay input on a completed demo starts exact-level practice without a confirmation menu
+  ---
+  duration_ms: 32029.611958
+  ...
+# Subtest: a replay fork completing after blur cannot arm hidden practice or replace its current owner
+ok 14 - a replay fork completing after blur cannot arm hidden practice or replace its current owner
+  ---
+  duration_ms: 12893.03025
+  ...
+# Subtest: locked Fresh handoff cancelled by blur remains paused until another explicit choice
+ok 15 - locked Fresh handoff cancelled by blur remains paused until another explicit choice
+  ---
+  duration_ms: 9319.078875
+  ...
+# Subtest: locked Fresh handoff cancelled by hidden remains paused until another explicit choice
+ok 16 - locked Fresh handoff cancelled by hidden remains paused until another explicit choice
+  ---
+  duration_ms: 10526.693334
+  ...
+# Subtest: a failed saved-flight write keeps Fresh behind replacement review and Stay retains the ordinary cut
+ok 17 - a failed saved-flight write keeps Fresh behind replacement review and Stay retains the ordinary cut
+  ---
+  duration_ms: 9224.704167
+  ...
+# Subtest: accessible Fresh opens the demonstrated level at Ready and preserves the previous unfinished flight without rewards
+ok 18 - accessible Fresh opens the demonstrated level at Ready and preserves the previous unfinished flight without rewards
+  ---
+  duration_ms: 15099.249875
+  ...
+# Subtest: demo control hints show the saved keyboard bindings in the actual app
+ok 19 - demo control hints show the saved keyboard bindings in the actual app
+  ---
+  duration_ms: 5727.383583
+  ...
+# Subtest: spectator information and play invitation stay visible while details remain optional
+ok 20 - spectator information and play invitation stay visible while details remain optional
+  ---
+  duration_ms: 8481.664084
+  ...
+# Subtest: demo guide respects the shared character-reactions preference without hiding teaching captions
+ok 21 - demo guide respects the shared character-reactions preference without hiding teaching captions
+  ---
+  duration_ms: 5923.943875
+  ...
+# Subtest: fixed destinations preserve release prefix across every current/destination mode
+ok 22 - fixed destinations preserve release prefix across every current/destination mode
+  ---
+  duration_ms: 4.5605
+  ...
+# Subtest: HTTP and file deployments retain their own directories and encoded identifiers
+ok 23 - HTTP and file deployments retain their own directories and encoded identifiers
+  ---
+  duration_ms: 0.221125
+  ...
+# Subtest: builder admits only known authored routes, explicit Legacy and supported host modes
+ok 24 - builder admits only known authored routes, explicit Legacy and supported host modes
+  ---
+  duration_ms: 5.740125
+  ...
+# Subtest: opaque query reader distinguishes absent, malformed and duplicate requests
+ok 25 - opaque query reader distinguishes absent, malformed and duplicate requests
+  ---
+  duration_ms: 0.500209
+  ...
+# Subtest: session state is stable across releases, isolated by host mode and touches only its key
+ok 26 - session state is stable across releases, isolated by host mode and touches only its key
+  ---
+  duration_ms: 0.530459
+  ...
+# Subtest: failed storage retains an in-memory copy and malformed data never deletes other content
+ok 27 - failed storage retains an in-memory copy and malformed data never deletes other content
+  ---
+  duration_ms: 0.200584
+  ...
+# Subtest: Archive browsing survives a page return without rewriting legacy session records or progress
+ok 28 - Archive browsing survives a page return without rewriting legacy session records or progress
+  ---
+  duration_ms: 0.33975
+  ...
+# Subtest: a failed newer write cannot be replaced by older readable storage
+ok 29 - a failed newer write cannot be replaced by older readable storage
+  ---
+  duration_ms: 0.09625
+  ...
+# Subtest: select-only Versus mode links keep exact identity without upgrading malformed intent to Play
+ok 30 - select-only Versus mode links keep exact identity without upgrading malformed intent to Play
+  ---
+  duration_ms: 0.447458
+  ...
+# Subtest: metadata links preserve exact public Original/Current owners without preparing playable content
+not ok 31 - metadata links preserve exact public Original/Current owners without preparing playable content
+  ---
+  duration_ms: 53.365375
+  location: '/Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/played-level-link-metadata.test.mjs:23:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    + actual - expected
+    
+    + '/releases/v0.151.1/site/game/'
+    - '/releases/v0.151.1/site/game/index.html'
+                                    ^
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: '/releases/v0.151.1/site/game/index.html'
+  actual: '/releases/v0.151.1/site/game/'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///Users/oleksandr.mekhovov/.codex/worktrees/community-admission/go_test/game/test/played-level-link-metadata.test.mjs:45:14)
+    Test.runInAsyncScope (node:async_hooks:206:9)
+    Test.run (node:internal/test_runner/test:796:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:526:18)
+    node:internal/test_runner/harness:255:12
+    node:internal/process/task_queues:140:7
+    AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    AsyncResource.runMicrotask (node:internal/process/task_queues:137:8)
+  ...
+# Subtest: unregistered or changed ownership cannot receive a public-looking link
+ok 32 - unregistered or changed ownership cannot receive a public-looking link
+  ---
+  duration_ms: 17.412792
+  ...
+1..32
+# tests 35
+# suites 0
+# pass 34
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 468962.471875

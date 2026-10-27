@@ -20,6 +20,8 @@ import { onNativeInactive, exportJSONFile } from '../platform.mjs';
 import { drawClassicBoard, classicCatchMarks } from '../snake/classic-view.mjs';
 import { createHuntDestruction } from '../hunt/destruction.mjs';
 import { mountRoomUI } from './room-ui.mjs';
+import { mountRoomInvitationActions } from './room-invitation-actions.mjs';
+import { roomSupportState } from './room-support-summary.mjs';
 import { createRoomBoardPresentation, reconcileRoomPresentationRuns } from './room-events.mjs';
 import { advanceClassicFlight } from '../snake/classic-flight-art.mjs';
 import { createClassicPresentation } from '../snake/classic-presentation.mjs';
@@ -121,6 +123,19 @@ if (uk) {
 const notice = (value) => {
   $('notice').textContent = value;
 };
+const invitationActions = mountRoomInvitationActions({
+  field: $('invite'),
+  after: $('invitation'),
+  getVisible: () => {
+    const shell = roomUI?.shell;
+    return (
+      !!shell &&
+      !stopped &&
+      !$('invitation').hidden &&
+      shell.topDialog() === shell.elements.dialogs.missions
+    );
+  },
+});
 const reconnect = document.createElement('button');
 reconnect.id = 'reconnect';
 reconnect.hidden = true;
@@ -163,6 +178,7 @@ function suspendLocal() {
   syncControls();
 }
 function abandonLocal(message) {
+  invitationActions.update(null);
   roomUI?.suspend();
   roomUI?.shell.open('missions');
   lifecycle.abandon();
@@ -253,6 +269,7 @@ async function own(value, { restoring = false, catalogueId = null, expectedHash 
     throw roomError('The invitation refers to different room content.', 'ROOM_IDENTITY_MISMATCH');
   if (catalogueId) value = { ...value, catalogueId };
   credentials = value;
+  invitationActions.update(null);
   state = null;
   teamPresentation.reset();
   acceptedRecipeJSON = null;
@@ -446,6 +463,7 @@ $('receipt').addEventListener('click', async () => {
 });
 function leave() {
   const owner = credentials;
+  invitationActions.update(null);
   if (owner && lifecycle.snapshot().phase !== 'abandoned')
     void api('/leave', {}, owner).catch(() => {});
   credentials = null;
@@ -695,6 +713,7 @@ async function poll() {
       const invite = roomInvitationLink(location.href, { ...owner, recipe: snapshot.recipe });
       if ($('invite').value !== invite) $('invite').value = invite;
       $('invitation').hidden = false;
+      invitationActions.update(invite);
     }
     $('seats').textContent = snapshot.seats
       .map(
@@ -904,7 +923,9 @@ setInterval(() => void poll(), 150);
 window.addEventListener('pagehide', (event) => {
   suspend();
   stopped = true;
+  invitationActions.invalidate();
   if (!event.persisted) {
+    invitationActions.dispose();
     roomUI?.dispose();
     effects.forEach((effect) => effect.reset());
     void removeNativeInactive?.();
@@ -913,17 +934,20 @@ window.addEventListener('pagehide', (event) => {
 });
 window.addEventListener('pageshow', () => {
   stopped = false;
+  invitationActions.refresh();
   previousFrame = null;
   void poll();
 });
 roomUI = mountRoomUI({
   getState: () => state,
+  getSupportState: () => roomSupportState(lifecycle.snapshot()),
   getSeat: () => credentials?.seat ?? 0,
   canPlay: () => lifecycle.canPlay() && !stopped && !document.hidden,
   submit: (control) => lifecycle.submit(control),
   pause: suspend,
   display,
   destruction,
+  onSurfaceChange: () => invitationActions.invalidate(),
 });
 requestAnimationFrame(frame);
 void boot();

@@ -71,6 +71,49 @@ function fixture(
 const vector = (frame) => ({ x: frame.x, y: frame.y, boost: frame.boost });
 const zero = { x: 0, y: 0, boost: false };
 
+test('support snapshots observe existing samples without another poll, identity or consumed edge', (t) => {
+  const observed = fixture(t),
+    control = fixture(t);
+  observed.sample('menu:settings');
+  control.sample('menu:settings');
+  observed.sample('menu:settings');
+  control.sample('menu:settings');
+  const reads = observed.reads();
+  const report = observed.controller.supportSnapshot();
+  assert.equal(report.status, 'connected');
+  assert.equal(report.assigned, true);
+  assert.equal(typeof report.neutral, 'boolean');
+  assert.equal(typeof report.blocked, 'boolean');
+  assert.equal(report.sampledAt, 40);
+  assert.doesNotMatch(JSON.stringify(report), /Test Xbox|buttons|axes|mapping|index/);
+  report.status = 'modified';
+  assert.equal(observed.controller.supportSnapshot().status, 'connected');
+  assert.equal(observed.reads(), reads);
+  observed.pad.buttons[0].pressed = control.pad.buttons[0].pressed = true;
+  assert.deepEqual(observed.sample('menu:settings'), control.sample('menu:settings'));
+  for (let n = 0; n < 5; n++) observed.controller.supportSnapshot();
+  observed.pad.buttons[0].pressed = control.pad.buttons[0].pressed = false;
+  assert.deepEqual(observed.sample('menu:settings'), control.sample('menu:settings'));
+  assert.equal(observed.reads(), control.reads());
+});
+
+test('support readiness is invalidated on input clear, preference changes and disposal', (t) => {
+  const f = fixture(t);
+  assert.equal(f.controller.supportSnapshot().sampledAt, null);
+  f.sample();
+  assert.equal(f.controller.supportSnapshot().assigned, true);
+  f.controller.clear();
+  assert.deepEqual(f.controller.supportSnapshot(), { sampledAt: null, status: 'unavailable' });
+  f.sample();
+  f.controller.setPreferences({ enabled: false });
+  assert.deepEqual(f.controller.supportSnapshot(), { sampledAt: null, status: 'unavailable' });
+  const reads = f.reads();
+  assert.deepEqual(vector(f.sample()), zero);
+  assert.equal(f.reads(), reads);
+  f.controller.destroy();
+  assert.deepEqual(f.controller.supportSnapshot(), { sampledAt: null, status: 'disposed' });
+});
+
 test('mode RT default applies only when shared controller bindings are absent', (t) => {
   assert.equal(overflightControllerBindings().flight.buttons.boost, 7);
   const saved = resolveControllerBindings();

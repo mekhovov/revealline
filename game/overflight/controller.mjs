@@ -84,6 +84,7 @@ export function createOverflightController({
     confirmActive = false,
     abilityHeld = false,
     last = null,
+    support = null,
     destroyed = false;
   const radio = createSoloRadioInput({
     readPads,
@@ -116,6 +117,7 @@ export function createOverflightController({
   function clear() {
     reset();
     router.clear();
+    support = null;
   }
   function sample({
     scope: nextScope,
@@ -138,6 +140,16 @@ export function createOverflightController({
     scope = nextScope;
     const frame = router.sample({ scope, timeMs, spectator, toggleBoostEligible });
     last = frame;
+    // Observe the existing owner's result only. Support reads never poll a pad,
+    // retain its identity or consume a navigation/flight edge.
+    support = {
+      sampledAt: Number.isFinite(timeMs) && timeMs >= 0 ? timeMs : null,
+      status: frame.status.code,
+      assigned: Boolean(frame.assigned),
+      neutral: frame.confirmSnapshot.neutral,
+      blocked: frame.confirmSnapshot.blocked,
+      reason: frame.confirmSnapshot.reason,
+    };
     const nextIdentity = JSON.stringify(frame.assigned);
     if (nextIdentity !== identity) reset();
     identity = nextIdentity;
@@ -252,7 +264,14 @@ export function createOverflightController({
       enabled = next.enabled !== false;
       router.setBindings(bindings);
       reset();
+      support = null;
     },
+    supportSnapshot: () =>
+      destroyed
+        ? { sampledAt: null, status: 'disposed' }
+        : !enabled || !support
+          ? { sampledAt: null, status: 'unavailable' }
+          : { ...support },
     labels() {
       if (last?.assigned?.mapping === '')
         return {

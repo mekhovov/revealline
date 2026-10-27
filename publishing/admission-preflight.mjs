@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { admissionBinding, validationPolicyDigest } from './admission-binding.mjs';
 import { focusedTestPlan } from './focused-tests.mjs';
+import { admissionPaths } from './admission-paths.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const exactSha = (value) => typeof value === 'string' && /^[a-f0-9]{40}$/u.test(value);
@@ -215,7 +216,7 @@ export async function admissionPreflight({
     pull.base.sha !== expected.base?.sha
   )
     throw new Error('PR changed before preflight; await its new gate.');
-  const paths = await completeChangedPaths(pull, { api, repository });
+  const paths = [...(await admissionPaths(pull, api))];
   const receipt = admissionBinding(pull, {
     workflowRevision,
     policyDigest: await validationPolicyDigest(directory),

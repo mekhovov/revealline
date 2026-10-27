@@ -1,0 +1,8 @@
+{
+  "head": "1fb21f01fe3ac6b1345a8c7475c604e684faedf8",
+  "mainBase": "2f5e3ee978eeecaad823e1b2d0ac914f1bc8b1c6",
+  "availabilityReport": "availability-final.json",
+  "comparedFiles": 95,
+  "changedSampledSources": [],
+  "limitation": "Only the exact sampled file list from availability-final; not all repository dependencies or release qualification."
+}

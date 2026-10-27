@@ -1,0 +1,1594 @@
+{
+  "sourceRevision": "81c0d6587cdb582835a64e3d69c4c130460fb11a",
+  "scope": "Synthetic component only. No DB, WebGL, flight, player storage, physical input or full theme host.",
+  "toolIssues": [
+    "exact getByLabel Language had no-match although visible DOM select exists; grounded #fixture-language used",
+    "5-second preview resolve exceeds one observed tool waitFor 3-second cap; no extra input before later resolved-state read"
+  ],
+  "results": [
+    {
+      "case": "deferred-preserve-original81c",
+      "result": "FAIL",
+      "observation": {
+        "currentPrimary": "fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7",
+        "focusReport": "No Library action focused (actual active element: BODY).",
+        "focusTag": "BODY",
+        "phase": "Metadata resolved: another saved edition is now active; exact prior Fly must remain intended unless you moved focus.",
+        "scrollWidth": 390,
+        "versionsOpen": false,
+        "viewport": [
+          390,
+          844
+        ]
+      }
+    },
+    {
+      "case": "portrait-retained-en",
+      "observation": {
+        "controls": [
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Refresh saved regions",
+            "w": 179.609375,
+            "x": 25
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Download: Alpine Highlands — connected mountain study · Station approach",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Versions for Alpine Highlands (6)",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Download: Lunar Basin — flight study · Shelter detail",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Versions for Lunar Basin (2)",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Download: Canal City — bridges and courtyards",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Versions for Canal City (1)",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Fly: Desert Expedition — 16 km relief study · Open desert terrain · Version fixture-6ecb9197",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Versions for Desert Expedition (3)",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Download: Tropical coast — connected harbour · Connected harbour",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Versions for Tropical coast (3)",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Download: Railway Valley — six districts",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Versions for Railway Valley (2)",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Download: Coaster Gardens — connected park study · Connected park routes",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Versions for Coaster Gardens (2)",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Download: Hillside Town — civic court materials · Civic courtyard materials",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Versions for Hillside Town (2)",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Download: Canyon Expanse — broad relief study",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Versions for Canyon worlds (3)",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Download: Urban earthworks — regional preview",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Versions for Urban earthworks (1)",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Fly: My retained landscape · Version fixture-retained-r1",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Versions for My retained landscape (1)",
+            "w": 306,
+            "x": 42
+          }
+        ],
+        "families": [
+          {
+            "family": "alpine",
+            "versions": 6
+          },
+          {
+            "family": "lunar",
+            "versions": 2
+          },
+          {
+            "family": "canal",
+            "versions": 1
+          },
+          {
+            "family": "desert",
+            "versions": 3
+          },
+          {
+            "family": "tropical",
+            "versions": 3
+          },
+          {
+            "family": "railway",
+            "versions": 2
+          },
+          {
+            "family": "coaster",
+            "versions": 2
+          },
+          {
+            "family": "hillside",
+            "versions": 2
+          },
+          {
+            "family": "canyon",
+            "versions": 3
+          },
+          {
+            "family": "urban",
+            "versions": 1
+          },
+          {
+            "family": "retained:personal-landscape",
+            "versions": 1
+          }
+        ],
+        "language": "en",
+        "viewport": [
+          390,
+          844
+        ],
+        "width": 390
+      }
+    },
+    {
+      "case": "landscape-retained-en",
+      "observation": {
+        "controls": [
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Refresh saved regions",
+            "w": 179.609375,
+            "x": 25
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Download: Alpine Highlands — connected mountain study · Station approach",
+            "w": 228,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Versions for Alpine Highlands (6)",
+            "w": 228,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Download: Alpine Highlands — connected mountain study · Station approach",
+            "w": 228,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Download: Alpine Highlands — connected mountain study · Station concourse",
+            "w": 228,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Download: Alpine Highlands — connected mountain study · Quieter station surfaces",
+            "w": 228,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Download: Alpine Highlands — connected mountain study · Station surface details",
+            "w": 228,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Download: Alpine Highlands — connected mountain study · Refined contours",
+            "w": 228,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Download: Alpine Highlands — connected mountain study · Original study",
+            "w": 228,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Download: Lunar Basin — flight study · Shelter detail",
+            "w": 228,
+            "x": 308
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Versions for Lunar Basin (2)",
+            "w": 228,
+            "x": 308
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Download: Canal City — bridges and courtyards",
+            "w": 228,
+            "x": 574
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Versions for Canal City (1)",
+            "w": 228,
+            "x": 574
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Fly: Desert Expedition — 16 km relief study · Open desert terrain · Version fixture-6ecb9197",
+            "w": 228,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Versions for Desert Expedition (3)",
+            "w": 228,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Download: Tropical coast — connected harbour · Connected harbour",
+            "w": 228,
+            "x": 308
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Versions for Tropical coast (3)",
+            "w": 228,
+            "x": 308
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Download: Railway Valley — six districts",
+            "w": 228,
+            "x": 574
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Versions for Railway Valley (2)",
+            "w": 228,
+            "x": 574
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Download: Coaster Gardens — connected park study · Connected park routes",
+            "w": 228,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Versions for Coaster Gardens (2)",
+            "w": 228,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Download: Hillside Town — civic court materials · Civic courtyard materials",
+            "w": 228,
+            "x": 308
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Versions for Hillside Town (2)",
+            "w": 228,
+            "x": 308
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Download: Canyon Expanse — broad relief study",
+            "w": 228,
+            "x": 574
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Versions for Canyon worlds (3)",
+            "w": 228,
+            "x": 574
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Download: Urban earthworks — regional preview",
+            "w": 228,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Versions for Urban earthworks (1)",
+            "w": 228,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Fly: My retained landscape · Version fixture-retained-r1",
+            "w": 228,
+            "x": 308
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Versions for My retained landscape (1)",
+            "w": 228,
+            "x": 308
+          }
+        ],
+        "families": [
+          {
+            "family": "alpine",
+            "versions": 6
+          },
+          {
+            "family": "lunar",
+            "versions": 2
+          },
+          {
+            "family": "canal",
+            "versions": 1
+          },
+          {
+            "family": "desert",
+            "versions": 3
+          },
+          {
+            "family": "tropical",
+            "versions": 3
+          },
+          {
+            "family": "railway",
+            "versions": 2
+          },
+          {
+            "family": "coaster",
+            "versions": 2
+          },
+          {
+            "family": "hillside",
+            "versions": 2
+          },
+          {
+            "family": "canyon",
+            "versions": 3
+          },
+          {
+            "family": "urban",
+            "versions": 1
+          },
+          {
+            "family": "retained:personal-landscape",
+            "versions": 1
+          }
+        ],
+        "language": "en",
+        "viewport": [
+          844,
+          390
+        ],
+        "width": 844
+      }
+    },
+    {
+      "case": "landscape-empty-uk",
+      "observation": {
+        "controls": [
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Оновити збережені регіони",
+            "w": 224.515625,
+            "x": 25
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Завантажити: Альпійське високогір’я — пробний гірський світ · Підхід до станції",
+            "w": 228,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Альпійське високогір’я (6)",
+            "w": 228,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Завантажити: Місячна улоговина — тренувальна зона · Деталізовані укриття",
+            "w": 228,
+            "x": 308
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Місячна улоговина (2)",
+            "w": 228,
+            "x": 308
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Завантажити: Місто каналів — мости й подвір’я",
+            "w": 228,
+            "x": 574
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Місто каналів (1)",
+            "w": 228,
+            "x": 574
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Завантажити: Пустельна експедиція — маршрути серед скель · Маршрути серед скель",
+            "w": 228,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Пустельна експедиція (2)",
+            "w": 228,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Завантажити: Тропічне узбережжя — сполучені пірси гавані · Сполучена гавань",
+            "w": 228,
+            "x": 308
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Тропічне узбережжя (3)",
+            "w": 228,
+            "x": 308
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Завантажити: Залізнична долина — шість районів",
+            "w": 228,
+            "x": 574
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Залізнична долина (2)",
+            "w": 228,
+            "x": 574
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Завантажити: Сади атракціонів — дослідження парку зі сполученими доріжками · Сполучені паркові маршрути",
+            "w": 228,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Сад атракціонів (2)",
+            "w": 228,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Завантажити: Містечко на схилі — матеріали міського подвір’я · Матеріали міського подвір’я",
+            "w": 228,
+            "x": 308
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Містечко на схилі (2)",
+            "w": 228,
+            "x": 308
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Завантажити: Простори каньйону — дослідження рельєфу",
+            "w": 228,
+            "x": 574
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Світи каньйонів (3)",
+            "w": 228,
+            "x": 574
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Завантажити: Міські земляні споруди — огляд регіону",
+            "w": 228,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Міські земляні споруди (1)",
+            "w": 228,
+            "x": 42
+          }
+        ],
+        "families": [
+          {
+            "family": "alpine",
+            "versions": 6
+          },
+          {
+            "family": "lunar",
+            "versions": 2
+          },
+          {
+            "family": "canal",
+            "versions": 1
+          },
+          {
+            "family": "desert",
+            "versions": 2
+          },
+          {
+            "family": "tropical",
+            "versions": 3
+          },
+          {
+            "family": "railway",
+            "versions": 2
+          },
+          {
+            "family": "coaster",
+            "versions": 2
+          },
+          {
+            "family": "hillside",
+            "versions": 2
+          },
+          {
+            "family": "canyon",
+            "versions": 3
+          },
+          {
+            "family": "urban",
+            "versions": 1
+          }
+        ],
+        "language": "uk",
+        "viewport": [
+          844,
+          390
+        ],
+        "width": 844
+      }
+    },
+    {
+      "case": "handheld-empty-uk",
+      "observation": {
+        "controls": [
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Оновити збережені регіони",
+            "w": 224.515625,
+            "x": 105
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Завантажити: Альпійське високогір’я — пробний гірський світ · Підхід до станції",
+            "w": 230.5,
+            "x": 122
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Альпійське високогір’я (6)",
+            "w": 230.5,
+            "x": 122
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Завантажити: Місячна улоговина — тренувальна зона · Деталізовані укриття",
+            "w": 230.5,
+            "x": 390.5
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Місячна улоговина (2)",
+            "w": 230.5,
+            "x": 390.5
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Завантажити: Місто каналів — мости й подвір’я",
+            "w": 230.5,
+            "x": 659
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Місто каналів (1)",
+            "w": 230.5,
+            "x": 659
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Завантажити: Пустельна експедиція — маршрути серед скель · Маршрути серед скель",
+            "w": 230.5,
+            "x": 927.5
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Пустельна експедиція (2)",
+            "w": 230.5,
+            "x": 927.5
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Завантажити: Тропічне узбережжя — сполучені пірси гавані · Сполучена гавань",
+            "w": 230.5,
+            "x": 122
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Тропічне узбережжя (3)",
+            "w": 230.5,
+            "x": 122
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Завантажити: Залізнична долина — шість районів",
+            "w": 230.5,
+            "x": 390.5
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Залізнична долина (2)",
+            "w": 230.5,
+            "x": 390.5
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Завантажити: Сади атракціонів — дослідження парку зі сполученими доріжками · Сполучені паркові маршрути",
+            "w": 230.5,
+            "x": 659
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Сад атракціонів (2)",
+            "w": 230.5,
+            "x": 659
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Завантажити: Містечко на схилі — матеріали міського подвір’я · Матеріали міського подвір’я",
+            "w": 230.5,
+            "x": 927.5
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Містечко на схилі (2)",
+            "w": 230.5,
+            "x": 927.5
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Завантажити: Простори каньйону — дослідження рельєфу",
+            "w": 230.5,
+            "x": 122
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Світи каньйонів (3)",
+            "w": 230.5,
+            "x": 122
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Завантажити: Міські земляні споруди — огляд регіону",
+            "w": 230.5,
+            "x": 390.5
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Міські земляні споруди (1)",
+            "w": 230.5,
+            "x": 390.5
+          }
+        ],
+        "families": [
+          {
+            "family": "alpine",
+            "versions": 6
+          },
+          {
+            "family": "lunar",
+            "versions": 2
+          },
+          {
+            "family": "canal",
+            "versions": 1
+          },
+          {
+            "family": "desert",
+            "versions": 2
+          },
+          {
+            "family": "tropical",
+            "versions": 3
+          },
+          {
+            "family": "railway",
+            "versions": 2
+          },
+          {
+            "family": "coaster",
+            "versions": 2
+          },
+          {
+            "family": "hillside",
+            "versions": 2
+          },
+          {
+            "family": "canyon",
+            "versions": 3
+          },
+          {
+            "family": "urban",
+            "versions": 1
+          }
+        ],
+        "language": "uk",
+        "viewport": [
+          1280,
+          800
+        ],
+        "width": 1280
+      }
+    },
+    {
+      "case": "handheld-all-uk",
+      "observation": {
+        "controls": [
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Оновити збережені регіони",
+            "w": 224.515625,
+            "x": 105
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Летіти: Альпійське високогір’я — пробний гірський світ · Початковий варіант · Версія fixture-8b49b885",
+            "w": 230.5,
+            "x": 122
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Альпійське високогір’я (6)",
+            "w": 230.5,
+            "x": 122
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Летіти: Альпійське високогір’я — пробний гірський світ · Підхід до станції · Версія fixture-92b7ed6a",
+            "w": 230.5,
+            "x": 122
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Вилучити цю версію: Альпійське високогір’я — пробний гірський світ · Підхід до станції · Версія fixture-92b7ed6a",
+            "w": 230.5,
+            "x": 122
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Вилучити всі версії",
+            "w": 230.5,
+            "x": 122
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Летіти: Альпійське високогір’я — пробний гірський світ · Майданчик між корпусами · Версія fixture-32c5338b",
+            "w": 230.5,
+            "x": 122
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Вилучити цю версію: Альпійське високогір’я — пробний гірський світ · Майданчик між корпусами · Версія fixture-32c5338b",
+            "w": 230.5,
+            "x": 122
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Вилучити всі версії",
+            "w": 230.5,
+            "x": 122
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Летіти: Альпійське високогір’я — пробний гірський світ · Стриманіші поверхні станції · Версія fixture-00969348",
+            "w": 230.5,
+            "x": 122
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Вилучити цю версію: Альпійське високогір’я — пробний гірський світ · Стриманіші поверхні станції · Версія fixture-00969348",
+            "w": 230.5,
+            "x": 122
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Вилучити всі версії",
+            "w": 230.5,
+            "x": 122
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Летіти: Альпійське високогір’я — пробний гірський світ · Деталі поверхонь станції · Версія fixture-c60fd92e",
+            "w": 230.5,
+            "x": 122
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Вилучити цю версію: Альпійське високогір’я — пробний гірський світ · Деталі поверхонь станції · Версія fixture-c60fd92e",
+            "w": 230.5,
+            "x": 122
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Вилучити всі версії",
+            "w": 230.5,
+            "x": 122
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Летіти: Альпійське високогір’я — пробний гірський світ · Уточнені контури · Версія fixture-a442a077",
+            "w": 230.5,
+            "x": 122
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Вилучити цю версію: Альпійське високогір’я — пробний гірський світ · Уточнені контури · Версія fixture-a442a077",
+            "w": 230.5,
+            "x": 122
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Вилучити всі версії",
+            "w": 230.5,
+            "x": 122
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Летіти: Альпійське високогір’я — пробний гірський світ · Початковий варіант · Версія fixture-8b49b885",
+            "w": 230.5,
+            "x": 122
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Вилучити цю версію: Альпійське високогір’я — пробний гірський світ · Початковий варіант · Версія fixture-8b49b885",
+            "w": 230.5,
+            "x": 122
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Вилучити всі версії",
+            "w": 230.5,
+            "x": 122
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Летіти: Місячна улоговина — тренувальна зона · Версія fixture-1ec74a07",
+            "w": 230.5,
+            "x": 390.5
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Місячна улоговина (2)",
+            "w": 230.5,
+            "x": 390.5
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Летіти: Місто каналів — мости й подвір’я · Версія fixture-89183594",
+            "w": 230.5,
+            "x": 659
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Місто каналів (1)",
+            "w": 230.5,
+            "x": 659
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Летіти: Пустельна експедиція — дослідження рельєфу 16 км · Відкритий пустельний рельєф · Версія fixture-6ecb9197",
+            "w": 230.5,
+            "x": 927.5
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Пустельна експедиція (2)",
+            "w": 230.5,
+            "x": 927.5
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Летіти: Тропічне узбережжя — шість районів польоту · Шість прибережних районів · Версія fixture-dab4be6d",
+            "w": 230.5,
+            "x": 122
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Тропічне узбережжя (3)",
+            "w": 230.5,
+            "x": 122
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Летіти: Залізнична долина — шість районів · Версія fixture-38bddc6a",
+            "w": 230.5,
+            "x": 390.5
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Залізнична долина (2)",
+            "w": 230.5,
+            "x": 390.5
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Летіти: Сади атракціонів — пробний світ 2 км · Початкове дослідження парку · Версія fixture-4800da2f",
+            "w": 230.5,
+            "x": 659
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Сад атракціонів (2)",
+            "w": 230.5,
+            "x": 659
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Летіти: Містечко на схилі — тераси та подвір’я · Тераси та подвір’я · Версія fixture-de1dc472",
+            "w": 230.5,
+            "x": 927.5
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Містечко на схилі (2)",
+            "w": 230.5,
+            "x": 927.5
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Летіти: Простори каньйону — дослідження рельєфу · Версія fixture-d2c3dce6",
+            "w": 230.5,
+            "x": 122
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Світи каньйонів (3)",
+            "w": 230.5,
+            "x": 122
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Летіти: Міські земляні споруди — огляд регіону · Версія fixture-9a7d157d",
+            "w": 230.5,
+            "x": 390.5
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Міські земляні споруди (1)",
+            "w": 230.5,
+            "x": 390.5
+          }
+        ],
+        "families": [
+          {
+            "family": "alpine",
+            "versions": 6
+          },
+          {
+            "family": "lunar",
+            "versions": 2
+          },
+          {
+            "family": "canal",
+            "versions": 1
+          },
+          {
+            "family": "desert",
+            "versions": 2
+          },
+          {
+            "family": "tropical",
+            "versions": 3
+          },
+          {
+            "family": "railway",
+            "versions": 2
+          },
+          {
+            "family": "coaster",
+            "versions": 2
+          },
+          {
+            "family": "hillside",
+            "versions": 2
+          },
+          {
+            "family": "canyon",
+            "versions": 3
+          },
+          {
+            "family": "urban",
+            "versions": 1
+          }
+        ],
+        "language": "uk",
+        "viewport": [
+          1280,
+          800
+        ],
+        "width": 1280
+      }
+    },
+    {
+      "case": "portrait-all-uk",
+      "observation": {
+        "controls": [
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Оновити збережені регіони",
+            "w": 224.515625,
+            "x": 25
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Летіти: Альпійське високогір’я — пробний гірський світ · Початковий варіант · Версія fixture-8b49b885",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Альпійське високогір’я (6)",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Летіти: Альпійське високогір’я — пробний гірський світ · Підхід до станції · Версія fixture-92b7ed6a",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Вилучити цю версію: Альпійське високогір’я — пробний гірський світ · Підхід до станції · Версія fixture-92b7ed6a",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Вилучити всі версії",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Летіти: Альпійське високогір’я — пробний гірський світ · Майданчик між корпусами · Версія fixture-32c5338b",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Вилучити цю версію: Альпійське високогір’я — пробний гірський світ · Майданчик між корпусами · Версія fixture-32c5338b",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Вилучити всі версії",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Летіти: Альпійське високогір’я — пробний гірський світ · Стриманіші поверхні станції · Версія fixture-00969348",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Вилучити цю версію: Альпійське високогір’я — пробний гірський світ · Стриманіші поверхні станції · Версія fixture-00969348",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Вилучити всі версії",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Летіти: Альпійське високогір’я — пробний гірський світ · Деталі поверхонь станції · Версія fixture-c60fd92e",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Вилучити цю версію: Альпійське високогір’я — пробний гірський світ · Деталі поверхонь станції · Версія fixture-c60fd92e",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Вилучити всі версії",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Летіти: Альпійське високогір’я — пробний гірський світ · Уточнені контури · Версія fixture-a442a077",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Вилучити цю версію: Альпійське високогір’я — пробний гірський світ · Уточнені контури · Версія fixture-a442a077",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Вилучити всі версії",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Летіти: Альпійське високогір’я — пробний гірський світ · Початковий варіант · Версія fixture-8b49b885",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Вилучити цю версію: Альпійське високогір’я — пробний гірський світ · Початковий варіант · Версія fixture-8b49b885",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Вилучити всі версії",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Летіти: Місячна улоговина — тренувальна зона · Версія fixture-1ec74a07",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Місячна улоговина (2)",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Летіти: Місто каналів — мости й подвір’я · Версія fixture-89183594",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Місто каналів (1)",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Летіти: Пустельна експедиція — дослідження рельєфу 16 км · Відкритий пустельний рельєф · Версія fixture-6ecb9197",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Пустельна експедиція (2)",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Летіти: Тропічне узбережжя — шість районів польоту · Шість прибережних районів · Версія fixture-dab4be6d",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Тропічне узбережжя (3)",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Летіти: Залізнична долина — шість районів · Версія fixture-38bddc6a",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Залізнична долина (2)",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Летіти: Сади атракціонів — пробний світ 2 км · Початкове дослідження парку · Версія fixture-4800da2f",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Сад атракціонів (2)",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Летіти: Містечко на схилі — тераси та подвір’я · Тераси та подвір’я · Версія fixture-de1dc472",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Містечко на схилі (2)",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Летіти: Простори каньйону — дослідження рельєфу · Версія fixture-d2c3dce6",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Світи каньйонів (3)",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Летіти: Міські земляні споруди — огляд регіону · Версія fixture-9a7d157d",
+            "w": 306,
+            "x": 42
+          },
+          {
+            "disabled": false,
+            "h": 44,
+            "label": "Версії регіону Міські земляні споруди (1)",
+            "w": 306,
+            "x": 42
+          }
+        ],
+        "families": [
+          {
+            "family": "alpine",
+            "versions": 6
+          },
+          {
+            "family": "lunar",
+            "versions": 2
+          },
+          {
+            "family": "canal",
+            "versions": 1
+          },
+          {
+            "family": "desert",
+            "versions": 2
+          },
+          {
+            "family": "tropical",
+            "versions": 3
+          },
+          {
+            "family": "railway",
+            "versions": 2
+          },
+          {
+            "family": "coaster",
+            "versions": 2
+          },
+          {
+            "family": "hillside",
+            "versions": 2
+          },
+          {
+            "family": "canyon",
+            "versions": 3
+          },
+          {
+            "family": "urban",
+            "versions": 1
+          }
+        ],
+        "language": "uk",
+        "viewport": [
+          390,
+          844
+        ],
+        "width": 390
+      }
+    },
+    {
+      "case": "uk-arrow-navigation",
+      "observation": {
+        "sequence": [
+          "alpine-summary ArrowDown -> exact r6 Fly",
+          "exact r6 Fly ArrowDown -> exact r6 Remove review"
+        ],
+        "focus": "Actual DOM focus: · remove · alpine-highlands-study · 92b7ed6acb426a04b007006a72536b8178bd0ad59bba7182637e25fd0d4cf804 · connected · enabled",
+        "scope": "Keyboard events through production menu navigation; no physical controller."
+      }
+    },
+    {
+      "case": "deferred-preserve-repeat-handheld",
+      "result": "FAIL",
+      "observation": {
+        "currentPrimary": "fed1f7d18bfe3163cbb52b8b7ecd174a777b89a45ac962c181bd8ca11b727ea7",
+        "focusReport": "No Library action focused (actual active element: BODY).",
+        "focusTag": "BODY",
+        "phase": "Metadata resolved: another saved edition is now active; exact prior Fly must remain intended unless you moved focus.",
+        "versionsOpen": false,
+        "viewport": [
+          1280,
+          800
+        ]
+      }
+    }
+  ]
+}

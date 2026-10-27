@@ -1,0 +1,9 @@
+{
+  "scope": "Lossless archive of the instrumented diagnostic; not a qualification pass.",
+  "original": "journey-preparation-before.cpuprofile",
+  "originalBytes": 956529,
+  "originalSHA256": "6b17a76e33473d72933047235b1bb62e92f70aafe82ff15efb3229c674a53dbe",
+  "archive": "journey-preparation-before.cpuprofile.gz",
+  "archiveBytes": 107821,
+  "archiveSHA256": "1cdb8cb49942a768a07825436ed8426a4f9c26a33001e142c6626f2ee3e17ab3"
+}

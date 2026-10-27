@@ -5,10 +5,12 @@ import { createAircraftTerrainFrame } from './aircraft-terrain.mjs';
 import { attitude, Q } from './math.mjs';
 import { relativeFlightTilt } from './flight-support.mjs';
 import { validateAircraftChallengeRules } from './aircraft-challenge.mjs';
+import { COMBAT_SHAPE_FORMAT } from './world-collision.mjs';
 
 const axes = ['x', 'y', 'z'];
 const LEGACY_MISSION_MODEL = 'aircraft-course-practice.v1';
 const CURRENT_MISSION_MODEL = 'aircraft-course-practice.v2';
+const LIVE_ACTOR_RULES = 'destructible-subjects.v1';
 const FLOOR_CONTACT_TOLERANCE_METRES = 0.003;
 const copy = (value) => structuredClone(value);
 const point = (value, scale = 1) =>
@@ -141,14 +143,27 @@ export function aircraftMissionMotion(telemetry, supportHeight, missionAdapter =
 }
 
 export function createAircraftCourseSession(
-  { course, mode, configuration, legacy = false, model = CURRENT_MISSION_MODEL },
+  {
+    course,
+    mode,
+    configuration,
+    legacy = false,
+    model = CURRENT_MISSION_MODEL,
+    encounterActors = null,
+    actorRules = null,
+  },
   { createClient = createAdvancedWorkerClient, createMission = createFlight } = {},
 ) {
   required(
     [LEGACY_MISSION_MODEL, CURRENT_MISSION_MODEL].includes(model),
     'Unsupported aircraft mission model',
   );
-  let activeModel = model;
+  required(
+    actorRules === null || (actorRules === LIVE_ACTOR_RULES && !legacy && !encounterActors),
+    'Unsupported aircraft actor rules',
+  );
+  let activeModel = model,
+    activeActorRules = actorRules;
   const aircraft = copy(configuration.advanced.aircraft);
   const challenge =
     configuration.challenge === undefined
@@ -164,10 +179,19 @@ export function createAircraftCourseSession(
     response: copy(configuration.response),
     unscoredPractice: true,
     physicalPractice: true,
+    ...(actorRules ? { actorRules } : {}),
+    ...(encounterActors ? { encounterPhysicsOnly: true } : {}),
     physicalRadius: Math.ceil(aircraft.radius * 1000),
   };
   let mission = createMission(missionOptions);
   const source = mission.course();
+  if (encounterActors) mission.configureEncounterActors(encounterActors);
+  const collisionActors = encounterActors
+    ? encounterActors.map((actor) => ({ ...copy(actor), id: actor.slotId }))
+    : (source.actors ?? []);
+  let acceptedEncounterMotion = null,
+    stagedEncounterActors = encounterActors;
+  const shapeVersioned = Boolean(encounterActors?.some((a) => a.appearance?.archetype));
   const missionAdapterFor = (version) =>
     version === CURRENT_MISSION_MODEL
       ? { format: 'AircraftCourseMission.v2', floorHeightMm: source.bounds.min.y }
@@ -182,7 +206,7 @@ export function createAircraftCourseSession(
   );
   const actorLift = (actor) =>
     ['patrol', 'sentry'].includes(actor.type) ? actor.height / 2 : actor.radius;
-  const descriptors = new Map((source.actors ?? []).map((actor) => [actor.id, actor]));
+  const descriptors = new Map(collisionActors.map((actor) => [actor.id, actor]));
   const actorPoint = (id, p) => point({ ...p, y: p.y + actorLift(descriptors.get(id)) }, 0.001);
   const options = {
     aircraft,
@@ -197,8 +221,9 @@ export function createAircraftCourseSession(
     spawn: point({ ...source.spawn, y: source.spawn.y + supportHeight * 1000 }, 0.001),
     floor: false,
     terrain: { format: 'AdvancedRegionalTerrain.v1' },
+    ...(shapeVersioned ? { dynamicShapeFormat: COMBAT_SHAPE_FORMAT } : {}),
     dynamicColliders: [
-      ...(source.actors ?? []).map((actor) => ({
+      ...collisionActors.map((actor) => ({
         id: actor.id,
         position: actorPoint(actor.id, actor.position),
         radius: actor.radius / 1000,
@@ -232,9 +257,21 @@ export function createAircraftCourseSession(
     checkpointing = null,
     checkpointKind = null,
     telemetry = null,
+    reference = null,
     error = null,
     archiveGeneration = 0,
     sequence = -1;
+  // The reset class covers frozen aircraft/response conditions; terrain is
+  // admitted separately. These diagnostics never enter recordings or identities.
+  const referenceFor = (initialized, next) => {
+    const configurationClass = initialized?.comparison?.comparisonClass,
+      terrainIdentity = next?.terrain?.frameIdentity;
+    return initialized?.comparison?.terrainIdentity === null &&
+      /^[0-9a-f]{16}$/.test(configurationClass) &&
+      /^[0-9a-f]{16}$/.test(terrainIdentity)
+      ? Object.freeze({ configurationClass, terrainIdentity })
+      : null;
+  };
   const archiveEnvelope = (value) => ({
     ...value,
     generation: `${archiveGeneration}:${value.generation}`,
@@ -256,7 +293,8 @@ export function createAircraftCourseSession(
       Object.freeze({ model: version, ...baseIdentity }),
     ]),
   );
-  const identityFor = (version) => identities.get(version);
+  const identityFor = (version, rules = activeActorRules) =>
+    rules ? { ...identities.get(version), actorRules: rules } : identities.get(version);
   function snapshot() {
     return {
       ...mission.snapshot(),
@@ -290,7 +328,10 @@ export function createAircraftCourseSession(
         accepted: true,
       });
       telemetry = committed.telemetry;
-      if (!disposed) ready = true;
+      if (!disposed) {
+        reference = referenceFor(result, telemetry);
+        ready = true;
+      }
       return snapshot();
     })().catch((failure) => {
       error = failure.message;
@@ -304,6 +345,7 @@ export function createAircraftCourseSession(
     if (stepping) return stepping;
     if (checkpointing) return snapshot();
     const motions = mission.preparePhysicalStep?.() ?? [];
+    let uncommittedProposal = null;
     const sample = {
       sequence: ++sequence,
       timestampUs: Math.round((telemetry?.missionTick ?? 0) * 20000),
@@ -313,15 +355,38 @@ export function createAircraftCourseSession(
     };
     stepping = (async () => {
       const actorState = mission.snapshot().actors ?? [];
-      const frameMotions = (source.actors ?? []).map((actor) => {
+      const frameMotions = collisionActors.map((actor) => {
         const live = actorState.find((a) => a.id === actor.id);
         const moving = motions.find((m) => m.id === actor.id);
         const p = live?.position ?? actor.position;
+        const intendedFrom = actorPoint(actor.id, moving?.from ?? p);
+        const accepted = telemetry?.dynamicColliders?.find((item) => item.id === actor.id);
+        if (encounterActors || activeActorRules)
+          required(accepted, 'Missing accepted encounter collider');
+        const staged = stagedEncounterActors?.find((a) => (a.slotId ?? a.id) === actor.id);
+        const spawnId = staged?.spawnId ?? live?.spawnId ?? actor.spawnId ?? actor.id;
+        const relocating =
+          (encounterActors || activeActorRules) &&
+          (axes.some((axis) => Math.abs(accepted.position[axis] - intendedFrom[axis]) >= 0.001) ||
+            (shapeVersioned && accepted.spawnId !== spawnId));
         return {
           id: actor.id,
-          from: actorPoint(actor.id, moving?.from ?? p),
+          from: encounterActors || activeActorRules ? { ...accepted.position } : intendedFrom,
           to: actorPoint(actor.id, moving?.to ?? p),
-          enabled: live?.status === 'active',
+          // A replacement relocates while disabled, then activates at its new
+          // accepted pose on the following interval. Never sweep a live body
+          // between the prior life and a new spawn on the other side of a map.
+          enabled: live?.status === 'active' && !relocating,
+          ...(shapeVersioned
+            ? {
+                shapeDescriptor: {
+                  shape: ['patrol', 'sentry'].includes(actor.type) ? 'cylinder' : 'sphere',
+                  radius: actor.radius / 1000,
+                  height: (actorLift(actor) * 2) / 1000,
+                  spawnId,
+                },
+              }
+            : {}),
         };
       });
       if (tail) {
@@ -338,20 +403,96 @@ export function createAircraftCourseSession(
           });
         }
       }
-      const result = await client.step(sample, frameMotions);
+      let result, proposal, encounterMotion;
+      if (encounterActors || activeActorRules) {
+        proposal = await client.propose(sample, frameMotions);
+        uncommittedProposal = proposal.transaction;
+        required(
+          Array.isArray(proposal.trace) && proposal.trace.length >= 2,
+          'Incomplete aircraft encounter trace',
+        );
+        const trace = proposal.trace.map((row) => {
+          const position = row.position ?? row;
+          required(
+            axes.every((axis) => Number.isFinite(position[axis])),
+            'Invalid aircraft encounter trace',
+          );
+          return {
+            position: {
+              ...rounded(position, 1000),
+              y: Math.round(
+                position.y * 1000 -
+                  (row.supportHeight ?? proposal.telemetry.supportHeight ?? supportHeight) * 1000,
+              ),
+            },
+            velocity: rounded(row.velocity ?? proposal.telemetry.velocity, 1000),
+          };
+        });
+        encounterMotion = {
+          trace,
+          contacts: (proposal.movingContacts ?? proposal.telemetry.contact?.entries ?? [])
+            .filter((hit) => proposal.movingContacts || hit.moving)
+            .map((hit) => {
+              const moving = frameMotions.find((item) => item.id === hit.id),
+                normal = hit.normal;
+              const relative = Math.max(
+                0,
+                ...[telemetry.velocity, proposal.telemetry.velocity].map(
+                  (velocity) =>
+                    -axes.reduce(
+                      (sum, axis) =>
+                        sum +
+                        ((velocity?.[axis] ?? 0) -
+                          (moving ? (moving.to[axis] - moving.from[axis]) * 50 : 0)) *
+                          (normal?.[axis] ?? 0),
+                      0,
+                    ),
+                ),
+              );
+              return {
+                actorId: hit.id,
+                normal,
+                relativeNormalSpeedMmS: Math.round(
+                  (hit.relativeNormalSpeed ?? Math.max(relative, hit.impactSpeed ?? 0)) * 1000,
+                ),
+              };
+            }),
+        };
+        result = await client.commit({ transaction: proposal.transaction, accepted: true });
+        uncommittedProposal = null;
+      } else result = await client.step(sample, frameMotions);
       if (disposed) return snapshot();
       telemetry = result.telemetry;
+      if (encounterActors) acceptedEncounterMotion = encounterMotion;
       // A pause can arrive while the worker owns a mission interval. Commit that
       // accepted interval once, then preserve the host's paused state.
       const paused = mission.snapshot().status !== 'active';
       if (paused) mission.arm();
-      mission.step(input, {
-        motion: aircraftMissionMotion(telemetry, supportHeight, missionAdapterFor(activeModel)),
-      });
+      const motion = aircraftMissionMotion(
+        telemetry,
+        supportHeight,
+        missionAdapterFor(activeModel),
+      );
+      if (activeActorRules)
+        motion.contacts = [
+          ...motion.contacts.filter((hit) => !hit.moving),
+          ...encounterMotion.contacts.map((hit) => ({
+            id: hit.actorId,
+            normal: rounded(hit.normal, Q),
+            moving: true,
+            relativeNormalSpeedMmS: hit.relativeNormalSpeedMmS,
+          })),
+        ];
+      mission.step(input, { motion });
       if (paused) mission.pause();
       return snapshot();
     })()
-      .catch((failure) => {
+      .catch(async (failure) => {
+        if (uncommittedProposal !== null) {
+          try {
+            await client.commit({ transaction: uncommittedProposal, accepted: false });
+          } catch {}
+        }
         mission.cancelPhysicalStep?.();
         error = failure.message;
         mission.pause();
@@ -447,14 +588,25 @@ export function createAircraftCourseSession(
       );
       const { checksum, ...packet } = saved;
       const restoredModel = saved.identity?.model;
+      const restoredActorRules = saved.identity?.actorRules ?? null;
       required(
         saved.format === 'AircraftCourseRecovery.v1' &&
           [LEGACY_MISSION_MODEL, CURRENT_MISSION_MODEL].includes(restoredModel) &&
-          dataIdentity(saved.identity) === dataIdentity(identityFor(restoredModel)) &&
+          (restoredActorRules === null ||
+            (restoredActorRules === LIVE_ACTOR_RULES && !legacy && !encounterActors)) &&
+          dataIdentity(saved.identity) ===
+            dataIdentity(identityFor(restoredModel, restoredActorRules)) &&
           checksum === dataIdentity(packet),
         'Aircraft recovery configuration or checksum differs',
       );
-      const progress = mission.validatePhysicalCheckpoint(saved.mission);
+      const validator = createMission({ ...missionOptions, actorRules: restoredActorRules });
+      let progress;
+      try {
+        if (encounterActors) validator.configureEncounterActors(encounterActors);
+        progress = validator.validatePhysicalCheckpoint(saved.mission);
+      } finally {
+        validator.dispose?.();
+      }
       required(
         Number.isSafeInteger(saved.sequence) &&
           saved.sequence >= -1 &&
@@ -473,9 +625,10 @@ export function createAircraftCourseSession(
         // A recovery resumes its published solver, while every other option
         // still comes from this session. Worker identity checks reject any
         // unrelated aircraft, rates, terrain mode or controller configuration.
-        await candidate.initialize({
+        const initialized = await candidate.initialize({
           ...optionsFor(restoredModel),
           backend: saved.physical?.config?.backend,
+          frequency: saved.physical?.config?.frequency,
         });
         await candidate.restore(saved.physical);
         const restored = await candidate.telemetry();
@@ -485,7 +638,8 @@ export function createAircraftCourseSession(
           supportHeight,
           missionAdapterFor(restoredModel),
         );
-        candidateMission = createMission(missionOptions);
+        candidateMission = createMission({ ...missionOptions, actorRules: restoredActorRules });
+        if (encounterActors) candidateMission.configureEncounterActors(encounterActors);
         if (progress.state.ticks > 0) {
           for (const field of [
             'position',
@@ -525,9 +679,12 @@ export function createAircraftCourseSession(
         candidateMission = null;
         client = candidate;
         activeModel = restoredModel;
+        activeActorRules = restoredActorRules;
+        missionOptions.actorRules = restoredActorRules;
         archiveGeneration++;
         adopted = true;
         telemetry = restored;
+        reference = referenceFor(initialized, restored);
         sequence = saved.sequence;
         error = null;
         previousClient.dispose();
@@ -551,6 +708,24 @@ export function createAircraftCourseSession(
       return identityFor(activeModel);
     },
     snapshot,
+    referenceIdentity: () => (ready && !error && !disposed ? reference : null),
+    ...(encounterActors
+      ? {
+          configureEncounterActors(actors) {
+            required(
+              dataIdentity(actors) === dataIdentity(encounterActors),
+              'Aircraft encounter pool differs',
+            );
+          },
+          stageEncounterActors(proposal) {
+            mission.stageEncounterActors(proposal);
+            stagedEncounterActors = copy(proposal.actors);
+          },
+          encounterMotion: () => copy(acceptedEncounterMotion),
+          encounterCheckpoint: exportRecovery,
+          restoreEncounterCheckpoint: restoreRecovery,
+        }
+      : {}),
     prepare,
     step,
     stepPending: () => Boolean(stepping || checkpointing),
@@ -558,6 +733,7 @@ export function createAircraftCourseSession(
     aircraft: () => copy(aircraft),
     response: () => mission.response(),
     objectiveFeedback: () => mission.objectiveFeedback?.(),
+    defeatHistory: () => mission.defeatHistory?.() ?? [],
     arm() {
       // Background checkpoint reads must not consume the player's Arm click.
       // The step lock still holds motion until the accepted boundary is copied.
@@ -575,6 +751,34 @@ export function createAircraftCourseSession(
     readSealedSegment: (afterIndex) => readArchive(afterIndex),
     finalizeArchive: (afterIndex) => readArchive(afterIndex, true),
     restoreRecovery,
+    supportsLiveActorRules: () => !legacy && !encounterActors,
+    async migrateActorRules() {
+      await stepping;
+      required(
+        ready &&
+          !disposed &&
+          !legacy &&
+          !encounterActors &&
+          !checkpointing &&
+          mission.snapshot().status !== 'active',
+        'Pause before updating live actor rules',
+      );
+      if (activeActorRules === LIVE_ACTOR_RULES) return snapshot();
+      const candidate = createMission({ ...missionOptions, actorRules: LIVE_ACTOR_RULES });
+      try {
+        candidate.adoptLivePractice(mission);
+      } catch (error) {
+        candidate.dispose?.();
+        throw error;
+      }
+      const previous = mission;
+      mission = candidate;
+      activeActorRules = LIVE_ACTOR_RULES;
+      missionOptions.actorRules = LIVE_ACTOR_RULES;
+      archiveGeneration++;
+      previous.dispose?.();
+      return snapshot();
+    },
     async reportPersistence(status) {
       const result = await client.reportPersistence(status);
       if (telemetry) telemetry.recordingStatus = result;

@@ -121,7 +121,8 @@ export async function loadDemoSources({
             }
           }
           if (
-            (!qualified && error.name !== 'ReplayVerificationError') ||
+            (!qualified && error.name !== 'ReplayVerificationError' && error.code !== 'demo-asset-unavailable') ||
+            error.name === 'AbortError' ||
             signal?.aborted ||
             index === candidates.length - 1
           )

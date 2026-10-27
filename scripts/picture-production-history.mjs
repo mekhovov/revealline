@@ -15,7 +15,7 @@ const same = (a, b) => canonicalJSON(a) === canonicalJSON(b);
 const contract = JSON.parse(
   readFileSync(new URL('./picture-production-migration.json', import.meta.url), 'utf8'),
 );
-if (hash(contract) !== '3aac241e0ebebcd9220c6d3de0d4dcb4bc31c14ea7d5c9196ec549a1284e6fea')
+if (hash(contract) !== 'c1c365bd3ddd30809b5a0b568d2c38a6526d2e43d58a880c1bd08fce4a15b7d4')
   throw new Error(
     'Picture migration contract changed; an explicit migration revision is required.',
   );
@@ -25,7 +25,7 @@ const fail = (detail) => {
   throw new Error(`Picture production migration: ${detail}`);
 };
 
-/** Exact candidate-only continuation of the published 335-slot production104.
+/** Exact candidate-only continuation of the 302-slot shared production104 baseline.
  * This is not a general picture wildcard or an artwork approval. The separate
  * generic and historical Team writers remain strict and unchanged. */
 export function retainPictureProductionHistory(desiredSource, priorSource) {
@@ -57,7 +57,7 @@ export function retainPictureProductionHistory(desiredSource, priorSource) {
     fail('the predecessor is neither exact production104 nor its admitted picture successor.');
   if (!installing && prior.revision <= baseline.revision)
     fail('an installed successor must advance the published revision.');
-  if (desired.slots.length !== count) fail('install all 54 pinned picture slots atomically.');
+  if (desired.slots.length !== count) fail('install all pinned picture slots atomically.');
 
   const wanted = new Map(desired.slots.map((slot) => [slot.id, slot])),
     defaults = createDefaultThemeBundle(),

@@ -76,7 +76,7 @@
     content: '☰';
     display: block;
     color: #fff4d4;
-    font: 22px / 1 sans-serif;
+    font: calc(22px * var(--primary-text-scale, 1)) / 1 sans-serif;
   }
   .win-picture-caption {
     position: absolute;
@@ -98,17 +98,18 @@
   }
   .win-picture-mark {
     color: #ffe4a1;
-    font-size: 24px;
+    font-size: calc(24px * var(--primary-text-scale, 1));
     line-height: 1;
   }
   .win-picture-caption strong {
     font-family: var(--fk-font-display);
-    font-size: clamp(30px, 5vw, 58px);
+    font-size: calc(clamp(30px, 5vw, 58px) * var(--primary-text-scale, 1));
     font-weight: 600;
     line-height: 1;
   }
   .win-picture-caption > span:last-child {
-    font: 500 var(--fk-text-secondary, 14px) / 1.5 var(--fk-font-ui);
+    font: 500 calc(var(--fk-text-secondary, 14px) * var(--primary-text-scale, 1)) / 1.5
+      var(--fk-font-ui);
   }
   body[data-win-picture='settled'] .win-picture-caption {
     opacity: 0;
@@ -126,7 +127,7 @@
     border-radius: 999px;
     background: #111c2aeb;
     color: #fff4d4;
-    font: 600 var(--fk-text-body, 16px) / 1.3 var(--fk-font-ui);
+    font: 600 calc(var(--fk-text-body, 16px) * var(--primary-text-scale, 1)) / 1.3 var(--fk-font-ui);
     box-shadow: 0 4px 24px #0004;
     backdrop-filter: blur(12px);
     transition:

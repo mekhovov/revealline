@@ -1,0 +1,112 @@
+TAP version 13
+# Subtest: live whitelist pins actual standard maps, rules and roster while allowing translated names
+ok 1 - live whitelist pins actual standard maps, rules and roster while allowing translated names
+  ---
+  duration_ms: 5.306541
+  ...
+# Subtest: orchard-crossing/immediate: three qualified seeds finish varied no-loss performances with exact recordings
+ok 2 - orchard-crossing/immediate: three qualified seeds finish varied no-loss performances with exact recordings
+  ---
+  duration_ms: 5831.27975
+  ...
+# {"seed":1,"ticks":7425,"status":"won","coverage":0.8272184300341296,"captures":10,"bends":14,"maxPlanningMs":326}
+# {"seed":2,"ticks":8838,"status":"won","coverage":0.685580204778157,"captures":11,"bends":20,"maxPlanningMs":356}
+# {"seed":3,"ticks":5920,"status":"won","coverage":0.6838737201365188,"captures":8,"bends":13,"maxPlanningMs":302}
+# Subtest: orchard-crossing/grid-center: three qualified seeds finish varied no-loss performances with exact recordings
+ok 3 - orchard-crossing/grid-center: three qualified seeds finish varied no-loss performances with exact recordings
+  ---
+  duration_ms: 6235.255209
+  ...
+# {"seed":1,"ticks":7697,"status":"won","coverage":0.6924061433447098,"captures":12,"bends":19,"maxPlanningMs":386}
+# {"seed":2,"ticks":8358,"status":"won","coverage":0.7781569965870307,"captures":12,"bends":19,"maxPlanningMs":381}
+# {"seed":3,"ticks":2647,"status":"won","coverage":0.6992320819112628,"captures":4,"bends":5,"maxPlanningMs":232}
+# Subtest: courtyard-exits/immediate: three qualified seeds finish varied no-loss performances with exact recordings
+ok 4 - courtyard-exits/immediate: three qualified seeds finish varied no-loss performances with exact recordings
+  ---
+  duration_ms: 5114.480416
+  ...
+# {"seed":1,"ticks":6624,"status":"won","coverage":0.7586505190311419,"captures":13,"bends":19,"maxPlanningMs":290}
+# {"seed":2,"ticks":2536,"status":"won","coverage":0.7698961937716263,"captures":3,"bends":4,"maxPlanningMs":113}
+# {"seed":3,"ticks":4857,"status":"won","coverage":0.7629757785467128,"captures":9,"bends":10,"maxPlanningMs":291}
+# Subtest: courtyard-exits/grid-center: three qualified seeds finish varied no-loss performances with exact recordings
+ok 5 - courtyard-exits/grid-center: three qualified seeds finish varied no-loss performances with exact recordings
+  ---
+  duration_ms: 4599.434584
+  ...
+# {"seed":1,"ticks":4325,"status":"won","coverage":0.8858131487889274,"captures":7,"bends":11,"maxPlanningMs":297}
+# {"seed":2,"ticks":2531,"status":"won","coverage":0.7698961937716263,"captures":3,"bends":4,"maxPlanningMs":169}
+# {"seed":3,"ticks":5335,"status":"won","coverage":0.754757785467128,"captures":11,"bends":13,"maxPlanningMs":239}
+# Subtest: planning is deterministic and declines an exposed cut without changing it
+ok 6 - planning is deterministic and declines an exposed cut without changing it
+  ---
+  duration_ms: 228.88525
+  ...
+# Subtest: actual Worker player records frame-independent live inputs, pauses exactly, forks and resets
+ok 7 - actual Worker player records frame-independent live inputs, pauses exactly, forks and resets
+  ---
+  duration_ms: 2352.869
+  ...
+# Subtest: background advancement budget waits before a pending boundary, preserves fractional time and exact replay
+ok 8 - background advancement budget waits before a pending boundary, preserves fractional time and exact replay
+  ---
+  duration_ms: 518.700792
+  ...
+# Subtest: background budget releases a rejected stale result to the unchanged fault boundary
+ok 9 - background budget releases a rejected stale result to the unchanged fault boundary
+  ---
+  duration_ms: 496.766625
+  ...
+# Subtest: background budget never bypasses the existing planning watchdog
+ok 10 - background budget never bypasses the existing planning watchdog
+  ---
+  duration_ms: 817.624458
+  ...
+# Subtest: missing Worker, abort and planning watchdog fail closed and release every worker
+ok 11 - missing Worker, abort and planning watchdog fail closed and release every worker
+  ---
+  duration_ms: 14.873458
+  ...
+# Subtest: future search exhaustion ends only after the current safe macro, never runs an old heading
+ok 12 - future search exhaustion ends only after the current safe macro, never runs an old heading
+  ---
+  duration_ms: 270.421417
+  ...
+# Subtest: a stale future plan remains a fault, not a successful exhaustion handoff
+ok 13 - a stale future plan remains a fault, not a successful exhaustion handoff
+  ---
+  duration_ms: 217.421
+  ...
+# Subtest: live playback crosses the old 60 second cutoff without claiming completion
+ok 14 - live playback crosses the old 60 second cutoff without claiming completion
+  ---
+  duration_ms: 337.9315
+  ...
+# Subtest: full live admission now finishes the formerly exhausted seed and resets before display
+ok 15 - full live admission now finishes the formerly exhausted seed and resets before display
+  ---
+  duration_ms: 3908.516791
+  ...
+# Subtest: standalone planner loads without bootstrapping UI translations and retains validation errors
+ok 16 - standalone planner loads without bootstrapping UI translations and retains validation errors
+  ---
+  duration_ms: 29.635791
+  ...
+# Subtest: lightweight defaults stay identical to the English catalogue
+ok 17 - lightweight defaults stay identical to the English catalogue
+  ---
+  duration_ms: 2.711958
+  ...
+# Subtest: a booted validator follows live Ukrainian/English locale changes
+ok 18 - a booted validator follows live Ukrainian/English locale changes
+  ---
+  duration_ms: 132.667042
+  ...
+1..18
+# tests 18
+# suites 0
+# pass 18
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 31475.913666

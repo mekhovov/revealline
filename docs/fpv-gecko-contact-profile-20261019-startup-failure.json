@@ -1,0 +1,184 @@
+{
+  "format": "FpvGeckoContactProfile.v1",
+  "startedAt": "2026-10-19T03:44:21.162Z",
+  "sourceRevision": "f4323ef2da19a616b927bb77ae989e060ed5b8f5",
+  "sourceTree": "a7688beeceb537432a84ea5c8fe168ca3e950d87",
+  "sources": [
+    {
+      "path": "game/test/helpers/fpv-contact-tape.mjs",
+      "bytes": 6133,
+      "sha256": "7ccaa9efe91304ede99eb0d0cef5305651b6a35025288179f0eda36544fdfa17"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+      "bytes": 4340292,
+      "sha256": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0"
+    },
+    {
+      "path": "docs/evidence/fpv-contact-tape-20261019.json.gz",
+      "bytes": 194878,
+      "sha256": "f39aef217ef6f356339cdd07221eea672a3d3d8a5cc912daf104e2864fc0c7eb"
+    },
+    {
+      "path": "docs/fpv-contact-tape-diagnostic-20261019.json",
+      "bytes": 26314,
+      "sha256": "b7c2125b80091746a4270e72fd10bea486df3a057f8c59f65ca312dc20b83b85"
+    },
+    {
+      "path": "scripts/profile-fpv-gecko-contact.mjs",
+      "bytes": 8854,
+      "sha256": "40688165671fb3cd9e3d6f63a785bf64a8d52d24b396cf8f9106bc48d109a909"
+    }
+  ],
+  "machine": {
+    "architecture": "arm64",
+    "platform": "darwin",
+    "release": "25.6.0",
+    "cpu": "Apple M4 Pro"
+  },
+  "environment": {
+    "MOZ_PROFILER_STARTUP": "1",
+    "MOZ_PROFILER_STARTUP_ENTRIES": "16777216",
+    "MOZ_PROFILER_STARTUP_DURATION": "15",
+    "MOZ_PROFILER_STARTUP_INTERVAL": "1",
+    "MOZ_PROFILER_STARTUP_FEATURES": "js,stackwalk,cpu,processcpu",
+    "MOZ_PROFILER_STARTUP_FILTERS": "GeckoMain,DOM Worker",
+    "MOZ_PROFILER_SHUTDOWN": "/Users/oleksandr.mekhovov/work/my_projects/fpv-firefox-profile-20261019-results-1/gecko-profile.json"
+  },
+  "results": [],
+  "limitations": [
+    "Diagnostic Gecko sampling changes overhead; timings do not qualify flight performance.",
+    "Frozen force tape checks all 1000 post-step world digests and unrounded body states; controller and simulator hosts are absent.",
+    "128 MiB circular buffer per process, maximum 15-second entry age, 1 ms requested interval. Output is retained locally, never uploaded.",
+    "No browser security/JIT preference edits, native storage inspection, user profiles, or production dependency/configuration changes.",
+    "Only the explicitly inventoried replay inputs are pinned; this is not whole-client attestation."
+  ],
+  "node": {
+    "matched": true,
+    "completedSteps": 1000,
+    "firstMismatch": null,
+    "profilerEnabled": false,
+    "bins": [
+      {
+        "fromSubstep": 501,
+        "steps": 100,
+        "worldStepMs": 46.985335000000106
+      },
+      {
+        "fromSubstep": 601,
+        "steps": 100,
+        "worldStepMs": 17.092002999999863
+      },
+      {
+        "fromSubstep": 701,
+        "steps": 100,
+        "worldStepMs": 9.78009400000019
+      },
+      {
+        "fromSubstep": 801,
+        "steps": 100,
+        "worldStepMs": 9.040005999999892
+      },
+      {
+        "fromSubstep": 901,
+        "steps": 100,
+        "worldStepMs": 8.99132800000018
+      },
+      {
+        "fromSubstep": 1001,
+        "steps": 100,
+        "worldStepMs": 8.56691600000056
+      },
+      {
+        "fromSubstep": 1101,
+        "steps": 100,
+        "worldStepMs": 9.502584000000297
+      },
+      {
+        "fromSubstep": 1201,
+        "steps": 100,
+        "worldStepMs": 8.799784999999702
+      },
+      {
+        "fromSubstep": 1301,
+        "steps": 100,
+        "worldStepMs": 9.213452000000018
+      },
+      {
+        "fromSubstep": 1401,
+        "steps": 100,
+        "worldStepMs": 8.879710000000387
+      }
+    ],
+    "worldStepMs": 136.8512130000012,
+    "finalWorldSha256": "d0fb6c91f8bf6ca8b5243c3814ee79fcad8a464469fc2779ae415b6b1a64b279",
+    "finalBody": {
+      "position": {
+        "x": 0.0019756571855396032,
+        "y": 0.02498309500515461,
+        "z": 0.048094723373651505
+      },
+      "rotation": {
+        "x": -0.00002141713775927201,
+        "y": 0.06268098205327988,
+        "z": -0.000002236779664599453,
+        "w": 0.9980337023735046
+      },
+      "velocity": {
+        "x": 7.871065008657752e-7,
+        "y": 7.318126904465316e-7,
+        "z": 1.415202319776654e-7
+      },
+      "angularVelocity": {
+        "x": 0.000007771986020088661,
+        "y": 1.217215270798988e-7,
+        "z": -0.00001836241062846966
+      },
+      "sleeping": false,
+      "enabled": true
+    },
+    "initialContact": {
+      "bodies": 1,
+      "colliders": 11,
+      "activeBodies": 1,
+      "pairs": 5,
+      "manifolds": 10,
+      "contacts": 40
+    },
+    "finalContact": {
+      "bodies": 1,
+      "colliders": 11,
+      "activeBodies": 1,
+      "pairs": 5,
+      "manifolds": 10,
+      "contacts": 40
+    }
+  },
+  "browserInputs": [
+    {
+      "path": "game/test/helpers/fpv-contact-tape.mjs",
+      "bytes": 6133,
+      "sha256": "7ccaa9efe91304ede99eb0d0cef5305651b6a35025288179f0eda36544fdfa17"
+    },
+    {
+      "path": "optional-practice/civilian-fpv/vendor/rapier/rapier.mjs",
+      "bytes": 4340292,
+      "sha256": "02dc6a4e2fffc013bab08fbb44fa68f501d8303615e9afe4c7d89ad4eedda0d0"
+    },
+    {
+      "path": "tape.json",
+      "bytes": 956037,
+      "sha256": "0ed4a7bd07930452322e1eeb38454381214d89e31e2da66698d25657ce9e6ca2"
+    },
+    {
+      "path": "contact.html",
+      "bytes": 788,
+      "sha256": "614f4890fbb13a152445b9bdb52a4061dab071bfeac8547b75a065b8b4807200"
+    }
+  ],
+  "error": "Error: ENOENT: no such file or directory, open '/Users/oleksandr.mekhovov/Library/Caches/ms-playwright/firefox-1553/firefox/Nightly.app/Contents/MacOS/firefox'\n    at async open (node:internal/fs/promises:639:25)\n    at async readFile (node:internal/fs/promises:1246:14)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/fpv-firefox-profile-20261019/scripts/profile-fpv-gecko-contact.mjs:189:18",
+  "ownedBrowserAndServerClosed": true,
+  "profileError": "Error: ENOENT: no such file or directory, stat '/Users/oleksandr.mekhovov/work/my_projects/fpv-firefox-profile-20261019-results-1/gecko-profile.json'\n    at async stat (node:internal/fs/promises:1036:18)\n    at async file:///Users/oleksandr.mekhovov/work/my_projects/fpv-firefox-profile-20261019/scripts/profile-fpv-gecko-contact.mjs:209:16",
+  "sourcesUnchanged": true,
+  "completedAt": "2026-10-19T03:44:21.805Z"
+}

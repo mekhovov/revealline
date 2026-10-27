@@ -416,6 +416,214 @@ async function setup(
 const file = (name = 'Neon sky.mp3', value = silenceBytes) =>
   new File([value], name, { type: 'audio/mpeg' });
 
+test('playback recovery persists through saved-setting feedback and language changes until playback succeeds', async (t) => {
+  t.after(() => setLocale('en', { persist: false }));
+  const master = createAudioMaster({ muted: true, volume: 0.4 });
+  const app = await setup(t, { settings: true, callbacks: { audioMaster: master } });
+  const saved = await app.store.read();
+  Object.assign(app.state, {
+    status: 'error',
+    playing: false,
+    desired: false,
+    error: 'This track could not be played.',
+  });
+  app.panel.update();
+  const recovery = app.node('playback-recovery');
+  assert.equal(recovery.hidden, false);
+  assert.equal(app.node('settings-playback-recovery').hidden, false);
+  app.node('master-volume').focus();
+  app.node('master-volume').value = '0.7';
+  app.node('master-volume').onchange();
+  await app.click('reload');
+  assert.match(app.node('status').textContent, /Saved library loaded/);
+  assert.equal(
+    recovery.hidden,
+    false,
+    'unrelated library success cannot erase the playback failure',
+  );
+  const focus = app.doc.activeElement;
+  for (const locale of ['uk', 'en']) {
+    setLocale(locale, { persist: false });
+    assert.match(
+      app.node('playback-recovery-detail').textContent,
+      locale === 'uk' ? /Продовж|продовжуй/ : /continue without music/,
+    );
+    assert.equal(app.doc.activeElement, focus);
+    assert.equal(recovery.hidden, false);
+  }
+  Object.assign(app.state, { status: 'loading' });
+  app.panel.update();
+  assert.equal(recovery.hidden, false, 'a retry starting is not proof of playback');
+  Object.assign(app.state, { status: 'playing', playing: true, error: null });
+  app.panel.update();
+  assert.equal(recovery.hidden, true);
+  assert.equal(app.node('settings-playback-recovery').hidden, true);
+  assert.deepEqual(await app.store.read(), saved);
+  assert.equal(master.snapshot().muted, true);
+});
+
+test('playback recovery Retry invokes the owner synchronously and restores focus after actual success', async (t) => {
+  const app = await setup(t);
+  Object.assign(app.state, {
+    status: 'error',
+    playing: false,
+    desired: false,
+    error: 'This track could not be played.',
+  });
+  app.panel.update();
+  const retry = app.node('playback-recovery-retry');
+  const recovery = app.node('playback-recovery');
+  let hidden = recovery.hidden;
+  Object.defineProperty(recovery, 'hidden', {
+    get: () => hidden,
+    set(value) {
+      hidden = value;
+      if (value && recovery.contains(app.doc.activeElement)) app.doc.activeElement.blur();
+    },
+  });
+  retry.focus();
+  let finish,
+    calls = 0;
+  app.player.play = () => {
+    calls++;
+    Object.assign(app.state, { status: 'loading', desired: true });
+    return new Promise((resolve) => {
+      finish = resolve;
+    });
+  };
+  const pending = retry.click();
+  assert.equal(calls, 1, 'play must be called before the activation handler returns');
+  assert.equal(app.node('playback-recovery').hidden, false);
+  assert.equal(app.doc.activeElement, retry);
+  assert.equal(retry.getAttribute('aria-disabled'), 'true');
+  await retry.click();
+  assert.equal(calls, 1, 'repeated retry must not replace the pending request');
+  Object.assign(app.state, { status: 'playing', playing: true, error: null });
+  finish(true);
+  await pending;
+  assert.equal(app.node('playback-recovery').hidden, true);
+  assert.equal(app.doc.activeElement, app.node('play'));
+});
+
+test('playback recovery silence is music-only and dismissal permits a later failure', async (t) => {
+  const master = createAudioMaster({ muted: false, volume: 0.4 });
+  const app = await setup(t, { settings: true, callbacks: { audioMaster: master } });
+  const saved = await app.store.read();
+  const failure = {
+    status: 'error',
+    playing: false,
+    desired: true,
+    error: 'This track could not be played.',
+  };
+  Object.assign(app.state, failure);
+  app.panel.update();
+  app.node('playback-recovery-quiet').focus();
+  await app.click('playback-recovery-quiet');
+  assert.equal(app.state.desired, false);
+  assert.deepEqual(
+    app.calls.filter(([name]) => ['pause', 'play', 'select', 'listening'].includes(name)),
+    [['pause']],
+  );
+  assert.equal(app.node('playback-recovery').hidden, true);
+  assert.equal(app.doc.activeElement, app.node('play'));
+  assert.equal(master.snapshot().muted, false);
+  assert.equal(master.snapshot().volume, 0.4);
+  assert.deepEqual(await app.store.read(), saved);
+  Object.assign(app.state, failure);
+  app.panel.update();
+  app.node('volume').focus();
+  await app.click('playback-recovery-dismiss');
+  app.panel.update();
+  assert.equal(
+    app.node('playback-recovery').hidden,
+    true,
+    'dismissed failure must not reappear on a normal update',
+  );
+  assert.equal(
+    app.doc.activeElement,
+    app.node('volume'),
+    'dismissing must not steal unrelated focus',
+  );
+  Object.assign(app.state, { status: 'loading' });
+  app.panel.update();
+  Object.assign(app.state, failure);
+  app.panel.update();
+  assert.equal(
+    app.node('playback-recovery').hidden,
+    false,
+    'a new failed attempt is actionable again',
+  );
+});
+
+test('playback recovery reaches Audio settings while the Music Player is closed and honors session ownership', async (t) => {
+  let played = 0,
+    paused = 0;
+  const app = await setup(t, {
+    open: false,
+    settings: true,
+    callbacks: {
+      musicSession: {
+        play() {
+          played++;
+          return false;
+        },
+        pause() {
+          paused++;
+          app.state.desired = false;
+          app.state.status = 'paused';
+        },
+      },
+    },
+  });
+  Object.assign(app.state, {
+    status: 'error',
+    playing: false,
+    desired: false,
+    error: 'This track could not be played.',
+  });
+  app.panel.update();
+  assert.equal(app.panel.isOpen(), false);
+  assert.equal(app.node('settings-playback-recovery').hidden, false);
+  await app.click('settings-playback-recovery-retry');
+  assert.equal(played, 1);
+  assert.equal(
+    app.node('settings-playback-recovery').hidden,
+    false,
+    'an unsuccessful retry retains the error',
+  );
+  await app.click('settings-playback-recovery-quiet');
+  assert.equal(paused, 1);
+  assert.equal(app.node('settings-playback-recovery').hidden, true);
+  assert.equal(
+    app.calls.some(([name]) => ['play', 'pause'].includes(name)),
+    false,
+  );
+});
+
+test('playback recovery preserves a deliberate focus destination during native hiding', async (t) => {
+  const app = await setup(t);
+  Object.assign(app.state, {
+    status: 'error',
+    playing: false,
+    desired: false,
+    error: 'This track could not be played.',
+  });
+  app.panel.update();
+  const recovery = app.node('playback-recovery');
+  app.node('playback-recovery-dismiss').focus();
+  let hidden = recovery.hidden;
+  Object.defineProperty(recovery, 'hidden', {
+    get: () => hidden,
+    set(value) {
+      hidden = value;
+      if (value) app.node('volume').focus();
+    },
+  });
+  await app.click('playback-recovery-dismiss');
+  assert.equal(recovery.hidden, true);
+  assert.equal(app.doc.activeElement, app.node('volume'));
+});
+
 test('disposing the soundtrack panel stops discovery without publishing recording availability', async (t) => {
   let release;
   const pending = new Promise((resolve) => (release = resolve)),
@@ -2417,7 +2625,10 @@ test('closed Audio settings hydrate styles without a catalogue request until exp
   );
   assert.deepEqual(requests, [], 'Attaching hidden settings cannot request a public feed');
   assert.equal(app.panel.isOpen(), false);
-  assert.equal(app.settingsRoot.children.length, 1);
+  assert.equal(app.settingsRoot.children.length, 2);
+  assert.ok(app.settingsRoot.children[0].contains(app.node('settings-play-styles')));
+  assert.equal(app.settingsRoot.children[1], app.node('settings-playback-recovery'));
+  assert.equal(app.node('settings-playback-recovery').hidden, true);
   assert.match(app.settingsRoot.textContent, /Music styles/);
   assert.match(app.settingsRoot.textContent, /Ukrainian · UA/);
   assert.match(app.settingsRoot.textContent, /ФПВ/);
@@ -5367,4 +5578,285 @@ test('the selected visible Audio owner coalesces focus and click into one demand
     app.calls.some(([name]) => ['remote', 'play', 'volume'].includes(name)),
     false,
   );
+});
+
+test('Settings commits before authoring mounts and later preserves an unrelated editor draft', async (t) => {
+  let imports = 0,
+    wakes = 0;
+  const app = await setup(t, {
+    open: false,
+    settings: true,
+    callbacks: {
+      catalogue: emptyCatalogue,
+      beforeAudio: () => {
+        wakes++;
+      },
+      loadAuthoringView: () => {
+        imports++;
+        return import('../ui/soundtrack-authoring-view.mjs');
+      },
+      onlineCatalogueDownload: {
+        fetch: async () => onlineCatalogueResponse(onlineCatalogueFixture()),
+      },
+    },
+  });
+  const modal = app.panel.element;
+  assert.equal(app.panel.isOpen(), false);
+  assert.equal(imports, 0);
+  assert.equal(app.doc.nodes.has('soundtrack-tracks'), false);
+  assert.equal(app.doc.nodes.has('soundtrack-audition'), false);
+  await settleOnlineCatalogue(
+    () => !app.node('settings-play-styles').disabled,
+    'local settings hydrate without authoring',
+  );
+  const before = await app.store.read();
+  await app.click('settings-styles-none');
+  app.node('settings-style-synth').checked = true;
+  app.node('settings-style-synth').onchange();
+  const playing = app.click('settings-play-styles');
+  assert.equal(wakes, 1, 'Audio activation remains in the original control turn');
+  await playing;
+  const selected = await app.store.read();
+  assert.equal(selected.generation, before.generation + 1);
+  assert.deepEqual(selected.publicStyles, ['synth']);
+  assert.equal(imports, 0);
+  assert.equal(app.doc.nodes.has('soundtrack-audition'), false);
+  await app.panel.open();
+  assert.equal(imports, 1);
+  assert.equal(app.panel.element, modal);
+  const editor = app.node('tracks');
+  await app.click('create-playlist');
+  const draftPlaylist = app.node('playlists').value;
+  assert.equal((await app.store.read()).library.playlists.length, 0);
+  assert.equal(app.panel.close(), true);
+  await app.click('settings-styles-none');
+  app.node('settings-style-fpv').checked = true;
+  app.node('settings-style-fpv').onchange();
+  await app.click('settings-play-styles');
+  const listening = await app.store.read();
+  assert.deepEqual(listening.publicStyles, ['fpv']);
+  assert.equal(
+    listening.library.playlists.length,
+    0,
+    'Settings does not commit unrelated draft edits',
+  );
+  await app.panel.open();
+  assert.equal(app.node('tracks'), editor);
+  assert.equal(imports, 1);
+  assert.equal(app.node('save').disabled, false);
+  await app.click('save');
+  const saved = await app.store.read();
+  assert.equal(saved.generation, listening.generation + 1);
+  assert.equal(saved.library.playlists[0].id, draftPlaylist);
+  assert.deepEqual(saved.publicStyles, ['fpv']);
+});
+
+test('shared Couch owner and modal facade remain usable while authoring import is pending', async (t) => {
+  const { createManagedMediaStore } = await import('../managed-media-store.mjs');
+  const { createCouchMusicLibrary } = await import('../couch/couch-music-library.mjs');
+  const { createCouchMusicSession } = await import('../couch/couch-music-session.mjs');
+  const { createSoundtrackPlayer } = await import('../ui/soundtrack-player.mjs');
+  const { audioHarness } = await import('./helpers/soundtrack-audio.mjs');
+  const memory = memoryIndexedDB();
+  const manager = createManagedMediaStore({
+    indexedDB: memory.indexedDB,
+    storyMedia: true,
+    soundtrackCatalogue: true,
+  });
+  const store = createSoundtrackStore({ managedStore: manager });
+  const audio = audioHarness();
+  let owner,
+    release,
+    imports = 0;
+  const held = new Promise((resolve) => {
+    release = resolve;
+  });
+  t.after(() => release());
+  const player = createSoundtrackPlayer({
+    soundscape: audio.soundscape,
+    audioElement: audio.media,
+    URLImpl: audio.URLImpl,
+    readAsset: (hash) => owner.readAsset(hash),
+    fadeMs: 0,
+  });
+  owner = createCouchMusicLibrary({ managedStore: manager, player });
+  const session = createCouchMusicSession({ player, library: owner, soundscape: audio.soundscape });
+  const initial = await fixture();
+  const app = await setup(t, {
+    initial,
+    store,
+    open: false,
+    callbacks: {
+      player,
+      musicSession: session,
+      adoptLibrary: (value) => owner.adoptVerifiedSnapshot(value),
+      onLibrary: () => player.prepare(),
+      beforeAudio: () => player.wake(),
+      loadAuthoringView: async () => {
+        imports++;
+        await held;
+        return import('../ui/soundtrack-authoring-view.mjs');
+      },
+    },
+  });
+  t.after(() => {
+    session.dispose();
+    player.dispose();
+    owner.close();
+    manager.close();
+    audio.soundscape.dispose();
+  });
+  const modal = app.panel.element;
+  assert(
+    modal.contains(app.node('play')),
+    'The existing host can bind modal input ownership immediately',
+  );
+  assert.equal(app.panel.isOpen(), false);
+  const opening = app.panel.open();
+  assert.equal(app.panel.element, modal);
+  assert.equal(app.panel.isOpen(), true);
+  await settleOnlineCatalogue(
+    () => owner.snapshot().generation === 1 && !app.node('close').disabled,
+    'Couch adoption completes independently of optional authoring',
+  );
+  assert.equal(imports, 1);
+  assert.equal(app.doc.nodes.has('soundtrack-audition'), false);
+  await app.click('play');
+  assert.equal(session.snapshot().transportChoice, 'play');
+  assert.equal(player.snapshot().playing, true);
+  assert.equal(app.panel.close(), true);
+  release();
+  await opening;
+  assert.equal(app.panel.isOpen(), false);
+  assert.equal(app.doc.nodes.has('soundtrack-tracks'), false);
+  await app.panel.open();
+  assert.equal(app.panel.element, modal);
+  assert.equal(imports, 1, 'A fresh visit reuses the loaded module without recreating owners');
+  await app.click('clone-playlist');
+  await app.click('save');
+  assert.equal(owner.snapshot().generation, 2);
+  assert.equal(owner.readAsset(initial.track.asset.sha256).size, initial.blob.size);
+});
+
+test('soundtrack presentation notifies the committed open once and never rejected or repeated opens', async (t) => {
+  let presentations = 0,
+    reject = true,
+    h;
+  h = await setup(t, {
+    open: false,
+    callbacks: {
+      onOpen: () => {
+        if (reject) throw new Error('Settings owner rejected opening');
+      },
+      onPresentationChange: () => {
+        presentations++;
+        assert.equal(h.panel.isOpen(), true);
+        assert.equal(h.doc.activeElement === h.node('close'), true);
+      },
+    },
+  });
+  await assert.rejects(h.panel.open(), /Settings owner rejected opening/);
+  assert.equal(presentations, 0);
+  assert.equal(h.panel.isOpen(), false);
+  reject = false;
+  await h.panel.open();
+  assert.equal(presentations, 1);
+  await h.panel.open();
+  assert.equal(presentations, 1);
+  h.panel.close();
+  assert.equal(presentations, 1);
+  await h.panel.open();
+  assert.equal(presentations, 2);
+  h.panel.dispose();
+  await h.panel.open();
+  assert.equal(presentations, 2);
+});
+
+test('soundtrack presentation retires a transient successful native open before asynchronous reading', async (t) => {
+  let presentations = 0;
+  const h = await setup(t, {
+    open: false,
+    callbacks: {
+      onPresentationChange: () => presentations++,
+    },
+  });
+  const show = h.panel.element.showModal.bind(h.panel.element);
+  h.panel.element.showModal = () => {
+    show();
+    h.panel.element.close();
+  };
+  await h.panel.open();
+  assert.equal(h.panel.isOpen(), false);
+  assert.equal(presentations, 1);
+});
+
+test('soundtrack committed presentation precedes held authoring and retired visits cannot publish', async (t) => {
+  let release,
+    imports = 0,
+    mounts = 0,
+    presentations = 0;
+  const events = [];
+  const held = new Promise((resolve) => {
+    release = resolve;
+  });
+  t.after(() => release());
+  const app = await setup(t, {
+    open: false,
+    callbacks: {
+      onPresentationChange: () => {
+        presentations++;
+        events.push('presentation');
+      },
+      loadAuthoringView: async () => {
+        imports++;
+        events.push('authoring-load');
+        await held;
+        const module = await import('../ui/soundtrack-authoring-view.mjs');
+        return {
+          ...module,
+          createSoundtrackAuthoringView(...args) {
+            mounts++;
+            return module.createSoundtrackAuthoringView(...args);
+          },
+        };
+      },
+    },
+  });
+  const modal = app.panel.element;
+  const first = app.panel.open();
+  assert.equal(app.panel.isOpen(), true);
+  assert.equal(presentations, 1, 'The committed open notifies synchronously');
+  assert.deepEqual(events, ['presentation']);
+  assert.equal(imports, 0, 'Authoring is demanded after the presentation notification');
+  await settleOnlineCatalogue(
+    () => imports === 1 && !app.node('close').disabled,
+    'the original modal owner can close while authoring is held',
+  );
+  assert.deepEqual(events, ['presentation', 'authoring-load']);
+  await app.panel.open();
+  assert.equal(presentations, 1, 'An already-open request is not another presentation');
+  assert.equal(imports, 1, 'An already-open request does not import again');
+  assert.equal(mounts, 0);
+  assert.equal(app.panel.close(), true);
+  const second = app.panel.open();
+  assert.equal(app.panel.isOpen(), true);
+  assert.equal(presentations, 2, 'A fresh committed visit notifies before the old load settles');
+  assert.equal(imports, 1, 'The new visit joins the existing module load');
+  assert.equal(mounts, 0);
+  assert.equal(app.panel.close(), true);
+  const retiredFocus = app.doc.activeElement;
+  release();
+  await Promise.all([first, second]);
+  assert.equal(app.panel.isOpen(), false);
+  assert.equal(mounts, 0, 'Neither retired visit may publish the resolved authoring view');
+  assert.equal(app.doc.nodes.has('soundtrack-tracks'), false);
+  assert.equal(app.doc.nodes.has('soundtrack-audition'), false);
+  assert.equal(app.doc.activeElement === retiredFocus, true, 'Late import cannot move focus');
+  assert.equal(presentations, 2, 'Late import cannot revive a presentation');
+  await app.panel.open();
+  assert.equal(app.panel.element === modal, true);
+  assert.equal(presentations, 3);
+  assert.equal(imports, 1, 'The next explicit visit reuses the resolved module');
+  assert.equal(mounts, 1, 'Only the current explicit visit may mount authoring');
+  assert.equal(app.doc.nodes.has('soundtrack-tracks'), true);
 });

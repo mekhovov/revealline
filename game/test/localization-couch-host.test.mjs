@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { couchPage } from './helpers/couch-host.mjs';
 import { page as teamPage } from './helpers/coop-host.mjs';
+import { Document } from './helpers/couch-dom.mjs';
 import { getLocale, setLocale, t } from '../i18n/index.mjs';
 
 for (const [mode, mount, filename, prefix] of [
@@ -42,6 +43,44 @@ for (const [mode, mount, filename, prefix] of [
     }
   });
 }
+
+test('retired Team navigation translates its owned selection when another document has a conflicting arena', async (context) => {
+  const locale = getLocale();
+  context.after(() => setLocale(locale, { persist: false }));
+  setLocale('en', { persist: false });
+  const f = await teamPage(context);
+  const select = f.$('coop-level');
+  const ownedValue = select.value;
+  const conflictingOption = [...select.querySelectorAll('option')].find(
+    (option) => option.value !== ownedValue,
+  );
+  assert.equal(Boolean(conflictingOption), true, 'The other page has a distinct legal arena.');
+  const retainedContext = f.$('coop-navigation-context');
+  const expected = { en: retainedContext.textContent };
+  setLocale('uk', { persist: false });
+  expected.uk = retainedContext.textContent;
+  assert.notEqual(expected.en, expected.uk);
+  setLocale('en', { persist: false });
+  assert.equal(retainedContext.textContent, expected.en);
+  f.win.emit('pagehide', { persisted: false });
+  const document = Object.getOwnPropertyDescriptor(globalThis, 'document');
+  const replacement = new Document();
+  const conflictingSelect = replacement.createElement('select');
+  conflictingSelect.id = 'coop-level';
+  conflictingSelect.value = conflictingOption.value;
+  replacement.body.append(conflictingSelect);
+  try {
+    globalThis.document = replacement;
+    for (const nextLocale of ['uk', 'en', 'uk']) {
+      assert.doesNotThrow(() => setLocale(nextLocale, { persist: false }));
+      assert.equal(retainedContext.textContent, expected[nextLocale]);
+      assert.equal(select.value, ownedValue);
+      assert.equal(conflictingSelect.value, conflictingOption.value);
+    }
+  } finally {
+    Object.defineProperty(globalThis, 'document', document);
+  }
+});
 
 test('Couch language changes translate the lobby and paused help without changing the match', async (context) => {
   const locale = getLocale();

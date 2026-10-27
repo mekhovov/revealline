@@ -609,7 +609,7 @@ for (const event of ['pageshow', 'visibilitychange'])
     const lesson = await launch(page),
       child = bootChild(lesson.frame);
     page.doc.focused = false;
-    child.fail();
+    await child.fail();
     clock.tick();
     assert.equal(page.doc.activeElement.id, lesson.frame.id);
     if (event === 'pageshow') page.win.emit('pagehide', { persisted: true });
@@ -645,7 +645,7 @@ for (const changed of [
     const lesson = await launch(page),
       child = bootChild(lesson.frame);
     page.doc.focused = false;
-    child.fail();
+    await child.fail();
     clock.tick();
     assert.equal(page.doc.activeElement.id, lesson.frame.id);
     if (changed === 'newer-focus') {

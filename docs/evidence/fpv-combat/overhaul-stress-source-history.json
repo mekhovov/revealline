@@ -1,0 +1,542 @@
+[
+  {
+    "observedAt": "2026-10-20T01:24:35.435Z",
+    "files": {
+      "optional-practice/civilian-fpv/world-app.mjs": {
+        "bytes": 496077,
+        "mtime": "2026-10-20T01:20:38.097Z",
+        "sha256": "8297d797629664f9d378259621dd3be5c0914a85cc818adf5e407d941a0be2d4"
+      },
+      "optional-practice/civilian-fpv/world-reaction-runtime.mjs": {
+        "bytes": 1254687,
+        "mtime": "2026-10-20T01:14:14.101Z",
+        "sha256": "3b3320fba84236f483898a10df052a777cfb6a3b009591b4033452b6f1cf690a"
+      },
+      "optional-practice/civilian-fpv/renderer.mjs": {
+        "bytes": 197726,
+        "mtime": "2026-10-20T01:21:29.408Z",
+        "sha256": "bdb55181d1ab97018f74dc6679058ad457e3a465fce96e71d9a7aac28b7babad"
+      },
+      "optional-practice/civilian-fpv/world-style.css": {
+        "bytes": 121069,
+        "mtime": "2026-10-19T18:16:59.884Z",
+        "sha256": "bc128faaea959f0262c9f2fccec7051ea9fadb6489bb68611aa5572f553f3305"
+      },
+      "optional-practice/civilian-fpv/style.css": {
+        "bytes": 177795,
+        "mtime": "2026-10-20T01:22:09.522Z",
+        "sha256": "f1981fbaa08e2dd6a1efc4135a2da3936b18ad2ac08a53b2b137b5fda4e7e5b8"
+      }
+    }
+  },
+  {
+    "observedAt": "2026-10-20T01:25:35.444Z",
+    "files": {
+      "optional-practice/civilian-fpv/world-app.mjs": {
+        "bytes": 496101,
+        "mtime": "2026-10-20T01:25:15.349Z",
+        "sha256": "996b1079fb65908f6e3a862318427ba226efd944a831d1ea25a20fec2030fd6d"
+      },
+      "optional-practice/civilian-fpv/world-reaction-runtime.mjs": {
+        "bytes": 1254687,
+        "mtime": "2026-10-20T01:14:14.101Z",
+        "sha256": "3b3320fba84236f483898a10df052a777cfb6a3b009591b4033452b6f1cf690a"
+      },
+      "optional-practice/civilian-fpv/renderer.mjs": {
+        "bytes": 198144,
+        "mtime": "2026-10-20T01:25:14.988Z",
+        "sha256": "d6cb4c45e78f3f9055de9f464889fd2e466b9869800f15a9cacde50362be7522"
+      },
+      "optional-practice/civilian-fpv/world-style.css": {
+        "bytes": 121069,
+        "mtime": "2026-10-19T18:16:59.884Z",
+        "sha256": "bc128faaea959f0262c9f2fccec7051ea9fadb6489bb68611aa5572f553f3305"
+      },
+      "optional-practice/civilian-fpv/style.css": {
+        "bytes": 177795,
+        "mtime": "2026-10-20T01:22:09.522Z",
+        "sha256": "f1981fbaa08e2dd6a1efc4135a2da3936b18ad2ac08a53b2b137b5fda4e7e5b8"
+      }
+    }
+  },
+  {
+    "observedAt": "2026-10-20T01:29:05.453Z",
+    "files": {
+      "optional-practice/civilian-fpv/world-app.mjs": {
+        "bytes": 496101,
+        "mtime": "2026-10-20T01:25:15.349Z",
+        "sha256": "996b1079fb65908f6e3a862318427ba226efd944a831d1ea25a20fec2030fd6d"
+      },
+      "optional-practice/civilian-fpv/world-reaction-runtime.mjs": {
+        "bytes": 1254687,
+        "mtime": "2026-10-20T01:14:14.101Z",
+        "sha256": "3b3320fba84236f483898a10df052a777cfb6a3b009591b4033452b6f1cf690a"
+      },
+      "optional-practice/civilian-fpv/renderer.mjs": {
+        "bytes": 198359,
+        "mtime": "2026-10-20T01:28:39.649Z",
+        "sha256": "ce3217c1509e7a9f3ed9d84f95ac98238dbe2e143e955be386c56562a59a21b3"
+      },
+      "optional-practice/civilian-fpv/world-style.css": {
+        "bytes": 121069,
+        "mtime": "2026-10-19T18:16:59.884Z",
+        "sha256": "bc128faaea959f0262c9f2fccec7051ea9fadb6489bb68611aa5572f553f3305"
+      },
+      "optional-practice/civilian-fpv/style.css": {
+        "bytes": 177795,
+        "mtime": "2026-10-20T01:22:09.522Z",
+        "sha256": "f1981fbaa08e2dd6a1efc4135a2da3936b18ad2ac08a53b2b137b5fda4e7e5b8"
+      }
+    }
+  },
+  {
+    "observedAt": "2026-10-20T01:31:05.459Z",
+    "files": {
+      "optional-practice/civilian-fpv/world-app.mjs": {
+        "bytes": 505491,
+        "mtime": "2026-10-20T01:30:56.896Z",
+        "sha256": "6b8d07db1434a6bc192cc881179694f1b9adedd42beef6193fe33767b5237ddd"
+      },
+      "optional-practice/civilian-fpv/world-reaction-runtime.mjs": {
+        "bytes": 1254687,
+        "mtime": "2026-10-20T01:14:14.101Z",
+        "sha256": "3b3320fba84236f483898a10df052a777cfb6a3b009591b4033452b6f1cf690a"
+      },
+      "optional-practice/civilian-fpv/renderer.mjs": {
+        "bytes": 198359,
+        "mtime": "2026-10-20T01:28:39.649Z",
+        "sha256": "ce3217c1509e7a9f3ed9d84f95ac98238dbe2e143e955be386c56562a59a21b3"
+      },
+      "optional-practice/civilian-fpv/world-style.css": {
+        "bytes": 121069,
+        "mtime": "2026-10-19T18:16:59.884Z",
+        "sha256": "bc128faaea959f0262c9f2fccec7051ea9fadb6489bb68611aa5572f553f3305"
+      },
+      "optional-practice/civilian-fpv/style.css": {
+        "bytes": 177795,
+        "mtime": "2026-10-20T01:22:09.522Z",
+        "sha256": "f1981fbaa08e2dd6a1efc4135a2da3936b18ad2ac08a53b2b137b5fda4e7e5b8"
+      }
+    }
+  },
+  {
+    "observedAt": "2026-10-20T01:31:35.461Z",
+    "files": {
+      "optional-practice/civilian-fpv/world-app.mjs": {
+        "bytes": 507027,
+        "mtime": "2026-10-20T01:31:22.345Z",
+        "sha256": "aa13c55a3f55572db5ddd4053ed6b6349c83ffceb6741fac856d3cae20463f74"
+      },
+      "optional-practice/civilian-fpv/world-reaction-runtime.mjs": {
+        "bytes": 1254687,
+        "mtime": "2026-10-20T01:14:14.101Z",
+        "sha256": "3b3320fba84236f483898a10df052a777cfb6a3b009591b4033452b6f1cf690a"
+      },
+      "optional-practice/civilian-fpv/renderer.mjs": {
+        "bytes": 199104,
+        "mtime": "2026-10-20T01:31:16.466Z",
+        "sha256": "c2cf5f6a34bf9fab37d83e7d1bd687e06510036d7500821613fbfa2a453ab66b"
+      },
+      "optional-practice/civilian-fpv/world-style.css": {
+        "bytes": 121069,
+        "mtime": "2026-10-19T18:16:59.884Z",
+        "sha256": "bc128faaea959f0262c9f2fccec7051ea9fadb6489bb68611aa5572f553f3305"
+      },
+      "optional-practice/civilian-fpv/style.css": {
+        "bytes": 177795,
+        "mtime": "2026-10-20T01:22:09.522Z",
+        "sha256": "f1981fbaa08e2dd6a1efc4135a2da3936b18ad2ac08a53b2b137b5fda4e7e5b8"
+      }
+    }
+  },
+  {
+    "observedAt": "2026-10-20T01:32:05.462Z",
+    "files": {
+      "optional-practice/civilian-fpv/world-app.mjs": {
+        "bytes": 507027,
+        "mtime": "2026-10-20T01:31:22.345Z",
+        "sha256": "aa13c55a3f55572db5ddd4053ed6b6349c83ffceb6741fac856d3cae20463f74"
+      },
+      "optional-practice/civilian-fpv/world-reaction-runtime.mjs": {
+        "bytes": 1254687,
+        "mtime": "2026-10-20T01:14:14.101Z",
+        "sha256": "3b3320fba84236f483898a10df052a777cfb6a3b009591b4033452b6f1cf690a"
+      },
+      "optional-practice/civilian-fpv/renderer.mjs": {
+        "bytes": 199143,
+        "mtime": "2026-10-20T01:32:02.081Z",
+        "sha256": "5b3d912bc8c9827971cd205146e33b74397f5909a9c2c220f3ee5f1cf5a97d9f"
+      },
+      "optional-practice/civilian-fpv/world-style.css": {
+        "bytes": 121069,
+        "mtime": "2026-10-19T18:16:59.884Z",
+        "sha256": "bc128faaea959f0262c9f2fccec7051ea9fadb6489bb68611aa5572f553f3305"
+      },
+      "optional-practice/civilian-fpv/style.css": {
+        "bytes": 177795,
+        "mtime": "2026-10-20T01:22:09.522Z",
+        "sha256": "f1981fbaa08e2dd6a1efc4135a2da3936b18ad2ac08a53b2b137b5fda4e7e5b8"
+      }
+    }
+  },
+  {
+    "observedAt": "2026-10-20T01:34:05.464Z",
+    "files": {
+      "optional-practice/civilian-fpv/world-app.mjs": {
+        "bytes": 507027,
+        "mtime": "2026-10-20T01:31:22.345Z",
+        "sha256": "aa13c55a3f55572db5ddd4053ed6b6349c83ffceb6741fac856d3cae20463f74"
+      },
+      "optional-practice/civilian-fpv/world-reaction-runtime.mjs": {
+        "bytes": 1254687,
+        "mtime": "2026-10-20T01:14:14.101Z",
+        "sha256": "3b3320fba84236f483898a10df052a777cfb6a3b009591b4033452b6f1cf690a"
+      },
+      "optional-practice/civilian-fpv/renderer.mjs": {
+        "bytes": 199411,
+        "mtime": "2026-10-20T01:33:40.928Z",
+        "sha256": "e3d7273f8db048c68337d72f742475036092a82e3265984923a210671b9c0428"
+      },
+      "optional-practice/civilian-fpv/world-style.css": {
+        "bytes": 121069,
+        "mtime": "2026-10-19T18:16:59.884Z",
+        "sha256": "bc128faaea959f0262c9f2fccec7051ea9fadb6489bb68611aa5572f553f3305"
+      },
+      "optional-practice/civilian-fpv/style.css": {
+        "bytes": 177795,
+        "mtime": "2026-10-20T01:22:09.522Z",
+        "sha256": "f1981fbaa08e2dd6a1efc4135a2da3936b18ad2ac08a53b2b137b5fda4e7e5b8"
+      }
+    }
+  },
+  {
+    "observedAt": "2026-10-20T01:34:35.466Z",
+    "files": {
+      "optional-practice/civilian-fpv/world-app.mjs": {
+        "bytes": 508424,
+        "mtime": "2026-10-20T01:34:28.937Z",
+        "sha256": "a75ef1e597aafca2b4d86e08a5bc4728d2e6768f03039b08f8d5f172519ffc88"
+      },
+      "optional-practice/civilian-fpv/world-reaction-runtime.mjs": {
+        "bytes": 1254687,
+        "mtime": "2026-10-20T01:14:14.101Z",
+        "sha256": "3b3320fba84236f483898a10df052a777cfb6a3b009591b4033452b6f1cf690a"
+      },
+      "optional-practice/civilian-fpv/renderer.mjs": {
+        "bytes": 199411,
+        "mtime": "2026-10-20T01:33:40.928Z",
+        "sha256": "e3d7273f8db048c68337d72f742475036092a82e3265984923a210671b9c0428"
+      },
+      "optional-practice/civilian-fpv/world-style.css": {
+        "bytes": 121069,
+        "mtime": "2026-10-19T18:16:59.884Z",
+        "sha256": "bc128faaea959f0262c9f2fccec7051ea9fadb6489bb68611aa5572f553f3305"
+      },
+      "optional-practice/civilian-fpv/style.css": {
+        "bytes": 177795,
+        "mtime": "2026-10-20T01:22:09.522Z",
+        "sha256": "f1981fbaa08e2dd6a1efc4135a2da3936b18ad2ac08a53b2b137b5fda4e7e5b8"
+      }
+    }
+  },
+  {
+    "observedAt": "2026-10-20T01:35:05.469Z",
+    "files": {
+      "optional-practice/civilian-fpv/world-app.mjs": {
+        "bytes": 510817,
+        "mtime": "2026-10-20T01:34:56.496Z",
+        "sha256": "fecd5e7e843e8ebf0c90a9f2313162601835985daf1859af6ea780a5e1dbee1f"
+      },
+      "optional-practice/civilian-fpv/world-reaction-runtime.mjs": {
+        "bytes": 1254687,
+        "mtime": "2026-10-20T01:14:14.101Z",
+        "sha256": "3b3320fba84236f483898a10df052a777cfb6a3b009591b4033452b6f1cf690a"
+      },
+      "optional-practice/civilian-fpv/renderer.mjs": {
+        "bytes": 199411,
+        "mtime": "2026-10-20T01:33:40.928Z",
+        "sha256": "e3d7273f8db048c68337d72f742475036092a82e3265984923a210671b9c0428"
+      },
+      "optional-practice/civilian-fpv/world-style.css": {
+        "bytes": 121069,
+        "mtime": "2026-10-19T18:16:59.884Z",
+        "sha256": "bc128faaea959f0262c9f2fccec7051ea9fadb6489bb68611aa5572f553f3305"
+      },
+      "optional-practice/civilian-fpv/style.css": {
+        "bytes": 177795,
+        "mtime": "2026-10-20T01:22:09.522Z",
+        "sha256": "f1981fbaa08e2dd6a1efc4135a2da3936b18ad2ac08a53b2b137b5fda4e7e5b8"
+      }
+    }
+  },
+  {
+    "observedAt": "2026-10-20T01:36:05.471Z",
+    "files": {
+      "optional-practice/civilian-fpv/world-app.mjs": {
+        "bytes": 513078,
+        "mtime": "2026-10-20T01:35:52.606Z",
+        "sha256": "4b1bea9bf5ea97051a6c09301740f8a7d3d7fbf291c0fd180adbff85368d91f7"
+      },
+      "optional-practice/civilian-fpv/world-reaction-runtime.mjs": {
+        "bytes": 1254687,
+        "mtime": "2026-10-20T01:14:14.101Z",
+        "sha256": "3b3320fba84236f483898a10df052a777cfb6a3b009591b4033452b6f1cf690a"
+      },
+      "optional-practice/civilian-fpv/renderer.mjs": {
+        "bytes": 199411,
+        "mtime": "2026-10-20T01:33:40.928Z",
+        "sha256": "e3d7273f8db048c68337d72f742475036092a82e3265984923a210671b9c0428"
+      },
+      "optional-practice/civilian-fpv/world-style.css": {
+        "bytes": 121069,
+        "mtime": "2026-10-19T18:16:59.884Z",
+        "sha256": "bc128faaea959f0262c9f2fccec7051ea9fadb6489bb68611aa5572f553f3305"
+      },
+      "optional-practice/civilian-fpv/style.css": {
+        "bytes": 177795,
+        "mtime": "2026-10-20T01:22:09.522Z",
+        "sha256": "f1981fbaa08e2dd6a1efc4135a2da3936b18ad2ac08a53b2b137b5fda4e7e5b8"
+      }
+    }
+  },
+  {
+    "observedAt": "2026-10-20T01:37:05.474Z",
+    "files": {
+      "optional-practice/civilian-fpv/world-app.mjs": {
+        "bytes": 513133,
+        "mtime": "2026-10-20T01:36:55.873Z",
+        "sha256": "5f47c992421859b417e8f3da612417a2b9578349ee7b595025b33e9045696a84"
+      },
+      "optional-practice/civilian-fpv/world-reaction-runtime.mjs": {
+        "bytes": 1254687,
+        "mtime": "2026-10-20T01:14:14.101Z",
+        "sha256": "3b3320fba84236f483898a10df052a777cfb6a3b009591b4033452b6f1cf690a"
+      },
+      "optional-practice/civilian-fpv/renderer.mjs": {
+        "bytes": 199411,
+        "mtime": "2026-10-20T01:33:40.928Z",
+        "sha256": "e3d7273f8db048c68337d72f742475036092a82e3265984923a210671b9c0428"
+      },
+      "optional-practice/civilian-fpv/world-style.css": {
+        "bytes": 121069,
+        "mtime": "2026-10-19T18:16:59.884Z",
+        "sha256": "bc128faaea959f0262c9f2fccec7051ea9fadb6489bb68611aa5572f553f3305"
+      },
+      "optional-practice/civilian-fpv/style.css": {
+        "bytes": 177795,
+        "mtime": "2026-10-20T01:22:09.522Z",
+        "sha256": "f1981fbaa08e2dd6a1efc4135a2da3936b18ad2ac08a53b2b137b5fda4e7e5b8"
+      }
+    }
+  },
+  {
+    "observedAt": "2026-10-20T01:38:35.479Z",
+    "files": {
+      "optional-practice/civilian-fpv/world-app.mjs": {
+        "bytes": 515214,
+        "mtime": "2026-10-20T01:38:09.002Z",
+        "sha256": "af54c78b0e726555a84843c0d6ff9b5ee2d61f6c31f23973da175b80f4ccb628"
+      },
+      "optional-practice/civilian-fpv/world-reaction-runtime.mjs": {
+        "bytes": 1254687,
+        "mtime": "2026-10-20T01:14:14.101Z",
+        "sha256": "3b3320fba84236f483898a10df052a777cfb6a3b009591b4033452b6f1cf690a"
+      },
+      "optional-practice/civilian-fpv/renderer.mjs": {
+        "bytes": 199411,
+        "mtime": "2026-10-20T01:33:40.928Z",
+        "sha256": "e3d7273f8db048c68337d72f742475036092a82e3265984923a210671b9c0428"
+      },
+      "optional-practice/civilian-fpv/world-style.css": {
+        "bytes": 121069,
+        "mtime": "2026-10-19T18:16:59.884Z",
+        "sha256": "bc128faaea959f0262c9f2fccec7051ea9fadb6489bb68611aa5572f553f3305"
+      },
+      "optional-practice/civilian-fpv/style.css": {
+        "bytes": 177795,
+        "mtime": "2026-10-20T01:22:09.522Z",
+        "sha256": "f1981fbaa08e2dd6a1efc4135a2da3936b18ad2ac08a53b2b137b5fda4e7e5b8"
+      }
+    }
+  },
+  {
+    "observedAt": "2026-10-20T01:39:35.483Z",
+    "files": {
+      "optional-practice/civilian-fpv/world-app.mjs": {
+        "bytes": 515214,
+        "mtime": "2026-10-20T01:38:09.002Z",
+        "sha256": "af54c78b0e726555a84843c0d6ff9b5ee2d61f6c31f23973da175b80f4ccb628"
+      },
+      "optional-practice/civilian-fpv/world-reaction-runtime.mjs": {
+        "bytes": 1266223,
+        "mtime": "2026-10-20T01:39:12.520Z",
+        "sha256": "b39a99f7e98fb82256232d4689714ea77d9a5d5b8bd3e65e2555614f9ef8da2c"
+      },
+      "optional-practice/civilian-fpv/renderer.mjs": {
+        "bytes": 199411,
+        "mtime": "2026-10-20T01:33:40.928Z",
+        "sha256": "e3d7273f8db048c68337d72f742475036092a82e3265984923a210671b9c0428"
+      },
+      "optional-practice/civilian-fpv/world-style.css": {
+        "bytes": 121069,
+        "mtime": "2026-10-19T18:16:59.884Z",
+        "sha256": "bc128faaea959f0262c9f2fccec7051ea9fadb6489bb68611aa5572f553f3305"
+      },
+      "optional-practice/civilian-fpv/style.css": {
+        "bytes": 177795,
+        "mtime": "2026-10-20T01:22:09.522Z",
+        "sha256": "f1981fbaa08e2dd6a1efc4135a2da3936b18ad2ac08a53b2b137b5fda4e7e5b8"
+      }
+    }
+  },
+  {
+    "observedAt": "2026-10-20T01:42:35.493Z",
+    "files": {
+      "optional-practice/civilian-fpv/world-app.mjs": {
+        "bytes": 515337,
+        "mtime": "2026-10-20T01:42:09.002Z",
+        "sha256": "44fb16a3f17e8b973e8a993ca45fad08a3df711c406b873f831cfcd5b0f1467f"
+      },
+      "optional-practice/civilian-fpv/world-reaction-runtime.mjs": {
+        "bytes": 1266223,
+        "mtime": "2026-10-20T01:39:12.520Z",
+        "sha256": "b39a99f7e98fb82256232d4689714ea77d9a5d5b8bd3e65e2555614f9ef8da2c"
+      },
+      "optional-practice/civilian-fpv/renderer.mjs": {
+        "bytes": 199667,
+        "mtime": "2026-10-20T01:42:08.981Z",
+        "sha256": "001c22a1fee8953b4d79a4be15315145d7cd90ca5994fe8ede4872a5c86dfd2c"
+      },
+      "optional-practice/civilian-fpv/world-style.css": {
+        "bytes": 121069,
+        "mtime": "2026-10-19T18:16:59.884Z",
+        "sha256": "bc128faaea959f0262c9f2fccec7051ea9fadb6489bb68611aa5572f553f3305"
+      },
+      "optional-practice/civilian-fpv/style.css": {
+        "bytes": 177795,
+        "mtime": "2026-10-20T01:22:09.522Z",
+        "sha256": "f1981fbaa08e2dd6a1efc4135a2da3936b18ad2ac08a53b2b137b5fda4e7e5b8"
+      }
+    }
+  },
+  {
+    "observedAt": "2026-10-20T01:44:35.493Z",
+    "files": {
+      "optional-practice/civilian-fpv/world-app.mjs": {
+        "bytes": 516485,
+        "mtime": "2026-10-20T01:44:11.781Z",
+        "sha256": "a6a345659df7176e379d710d2ae2d93e55bcf4ebb4d3a28ee665b3cd320678a7"
+      },
+      "optional-practice/civilian-fpv/world-reaction-runtime.mjs": {
+        "bytes": 1273542,
+        "mtime": "2026-10-20T01:44:26.738Z",
+        "sha256": "55b3fd81e22bcf4a68c1bef3165954bee7e4608b523b5dfdab36a21d58eaa8da"
+      },
+      "optional-practice/civilian-fpv/renderer.mjs": {
+        "bytes": 199683,
+        "mtime": "2026-10-20T01:44:11.930Z",
+        "sha256": "fa07c77e3d60bc816d999cbecf71aa71ea4dc1542b1986fd59cf30d630e3dc34"
+      },
+      "optional-practice/civilian-fpv/world-style.css": {
+        "bytes": 121069,
+        "mtime": "2026-10-19T18:16:59.884Z",
+        "sha256": "bc128faaea959f0262c9f2fccec7051ea9fadb6489bb68611aa5572f553f3305"
+      },
+      "optional-practice/civilian-fpv/style.css": {
+        "bytes": 177795,
+        "mtime": "2026-10-20T01:22:09.522Z",
+        "sha256": "f1981fbaa08e2dd6a1efc4135a2da3936b18ad2ac08a53b2b137b5fda4e7e5b8"
+      }
+    }
+  },
+  {
+    "observedAt": "2026-10-20T01:45:35.497Z",
+    "files": {
+      "optional-practice/civilian-fpv/world-app.mjs": {
+        "bytes": 516485,
+        "mtime": "2026-10-20T01:44:11.781Z",
+        "sha256": "a6a345659df7176e379d710d2ae2d93e55bcf4ebb4d3a28ee665b3cd320678a7"
+      },
+      "optional-practice/civilian-fpv/world-reaction-runtime.mjs": {
+        "bytes": 1274840,
+        "mtime": "2026-10-20T01:45:32.707Z",
+        "sha256": "30dafb98438ed4322adddd54e107cc393a063fea2e6fc19404d6cc3e203f3818"
+      },
+      "optional-practice/civilian-fpv/renderer.mjs": {
+        "bytes": 199683,
+        "mtime": "2026-10-20T01:44:11.930Z",
+        "sha256": "fa07c77e3d60bc816d999cbecf71aa71ea4dc1542b1986fd59cf30d630e3dc34"
+      },
+      "optional-practice/civilian-fpv/world-style.css": {
+        "bytes": 121069,
+        "mtime": "2026-10-19T18:16:59.884Z",
+        "sha256": "bc128faaea959f0262c9f2fccec7051ea9fadb6489bb68611aa5572f553f3305"
+      },
+      "optional-practice/civilian-fpv/style.css": {
+        "bytes": 177795,
+        "mtime": "2026-10-20T01:22:09.522Z",
+        "sha256": "f1981fbaa08e2dd6a1efc4135a2da3936b18ad2ac08a53b2b137b5fda4e7e5b8"
+      }
+    }
+  },
+  {
+    "observedAt": "2026-10-20T02:01:05.551Z",
+    "files": {
+      "optional-practice/civilian-fpv/world-app.mjs": {
+        "bytes": 516618,
+        "mtime": "2026-10-20T02:01:04.397Z",
+        "sha256": "ba2f2eced45e9aa4d031f9b1c87aeca3b20f62b717181a926af03bcdc2adc82d"
+      },
+      "optional-practice/civilian-fpv/world-reaction-runtime.mjs": {
+        "bytes": 1274840,
+        "mtime": "2026-10-20T01:45:32.707Z",
+        "sha256": "30dafb98438ed4322adddd54e107cc393a063fea2e6fc19404d6cc3e203f3818"
+      },
+      "optional-practice/civilian-fpv/renderer.mjs": {
+        "bytes": 199927,
+        "mtime": "2026-10-20T02:01:05.039Z",
+        "sha256": "9f8ae55667ba2e80497831e4f95b6c1579b4e7ab7dcc4d3a4f9bd1591eb429b8"
+      },
+      "optional-practice/civilian-fpv/world-style.css": {
+        "bytes": 121069,
+        "mtime": "2026-10-19T18:16:59.884Z",
+        "sha256": "bc128faaea959f0262c9f2fccec7051ea9fadb6489bb68611aa5572f553f3305"
+      },
+      "optional-practice/civilian-fpv/style.css": {
+        "bytes": 177795,
+        "mtime": "2026-10-20T01:22:09.522Z",
+        "sha256": "f1981fbaa08e2dd6a1efc4135a2da3936b18ad2ac08a53b2b137b5fda4e7e5b8"
+      }
+    }
+  },
+  {
+    "observedAt": "2026-10-20T02:01:35.562Z",
+    "files": {
+      "optional-practice/civilian-fpv/world-app.mjs": {
+        "bytes": 516618,
+        "mtime": "2026-10-20T02:01:04.397Z",
+        "sha256": "ba2f2eced45e9aa4d031f9b1c87aeca3b20f62b717181a926af03bcdc2adc82d"
+      },
+      "optional-practice/civilian-fpv/world-reaction-runtime.mjs": {
+        "bytes": 1279381,
+        "mtime": "2026-10-20T02:01:06.496Z",
+        "sha256": "e17be851095081944fa925a11613e2993f2d15e2f68e781f2669404474132fff"
+      },
+      "optional-practice/civilian-fpv/renderer.mjs": {
+        "bytes": 199927,
+        "mtime": "2026-10-20T02:01:05.039Z",
+        "sha256": "9f8ae55667ba2e80497831e4f95b6c1579b4e7ab7dcc4d3a4f9bd1591eb429b8"
+      },
+      "optional-practice/civilian-fpv/world-style.css": {
+        "bytes": 121069,
+        "mtime": "2026-10-19T18:16:59.884Z",
+        "sha256": "bc128faaea959f0262c9f2fccec7051ea9fadb6489bb68611aa5572f553f3305"
+      },
+      "optional-practice/civilian-fpv/style.css": {
+        "bytes": 177795,
+        "mtime": "2026-10-20T01:22:09.522Z",
+        "sha256": "f1981fbaa08e2dd6a1efc4135a2da3936b18ad2ac08a53b2b137b5fda4e7e5b8"
+      }
+    }
+  }
+]

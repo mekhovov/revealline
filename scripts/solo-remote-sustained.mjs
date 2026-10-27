@@ -226,6 +226,28 @@ export const DE332_LIFECYCLE_COHORTS = Object.freeze({
   soak: 'soak-main8b-candidatede332-v1',
   long29: 'long29-main8b-candidatede332-v1',
 });
+const heapRetainerPlan = (plan) => plan?.heapRetainers?.protocol === 'retry797-first-last-v1';
+const HEAP_RETAINER_ADMISSION = Object.freeze({
+  protocol: 'retry797-first-last-v1',
+  captureOrdinals: [1, 20],
+  completedBoundaries: 20,
+  perSnapshotBytes: 33554432,
+  totalHeapBytes: 67108864,
+  chunkBytes: 2097152,
+  maximumChunks: 2048,
+  perPauseDeadlineMs: 10000,
+  scenarioTimeoutMs: 900000,
+  sourceEvidence: {
+    run: 39121699191,
+    artifact: 12142436159,
+    artifactBytes: 1756359,
+    artifactSHA256: '29673e336a542916f752e0232e58470d94e94ff75158bea45e108e94c39b048d',
+    reportBytes: 10522806,
+    reportSHA256: '1c2cb2ea6633ca0375c492b8dafb1a36bdd129e5609880b3e17b1427a7637227',
+    auditGitBlob: '842da9855e1b0dad9de42b3ada1344cf8b8c71ee',
+    auditSHA256: 'f60f216079fade19c2fe79b215d9d0f3ee8330603ee776cf0e6980f36c794bab',
+  },
+});
 export const RUNTIME797_LIFECYCLE_COHORTS = Object.freeze({
   retry: 'retry-main8b-candidate797-v1',
   soak: 'soak-main8b-candidate797-v1',
@@ -553,9 +575,11 @@ const diagnosticComparison = (plan) => plan.release?.status === 'reviewed-diagno
 function validateDiagnosticComparison(release, candidate = source.candidate) {
   assert.equal(
     release.scope,
-    geometricNextPlan(release)
-      ? 'independent-candidate-transition-diagnostics'
-      : 'independent-comparison-diagnostics',
+    heapRetainerPlan(release)
+      ? 'independent-candidate-heap-retainer-diagnostic'
+      : geometricNextPlan(release)
+        ? 'independent-candidate-transition-diagnostics'
+        : 'independent-comparison-diagnostics',
   );
   if (prospectiveLifecyclePlan(release)) {
     assert(Number.isSafeInteger(release.predecessorRun) && release.predecessorRun > 0);
@@ -600,6 +624,13 @@ function comparisonLabels(plan) {
 // Declaration checks only. The common runner must still verify each complete
 // package, V2 ready proof, source tree and CSP before admitting either role.
 function validateSourceCohort(plan, selected) {
+  if (heapRetainerPlan(plan))
+    assert(
+      selected === runtime797LifecycleSource &&
+        runtime797LifecyclePlan(plan) &&
+        plan.phase === 'retry',
+      'Heap-retainer diagnostics require the source797 Retry lifecycle.',
+    );
   if (plan.sourceCohort === undefined) {
     assert.equal(plan.release.sourceCohort, undefined);
     return null;
@@ -624,7 +655,7 @@ function validateSourceCohort(plan, selected) {
       workflow: '.github/workflows/solo-native-package-consumer.yml',
       ref: 'refs/heads/main',
       lane: 'lifecycle',
-      phase: plan.phase,
+      phase: heapRetainerPlan(plan) ? 'retry-heap-retainers' : plan.phase,
     });
   } else if ([de332TimingSource, runtime797TimingSource].includes(selected)) {
     assert.equal(plan.release.status, 'reviewed-and-released');
@@ -719,7 +750,7 @@ function validateSourceCohort(plan, selected) {
     }
     return selected;
   }
-  assert.equal(plan.candidateOnly, undefined);
+  assert.equal(plan.candidateOnly, heapRetainerPlan(plan) ? true : undefined);
   assert.equal(plan.nativeRouteProtocol, undefined);
   const reuse = plan.baseline.reusableArtifact;
   assert.equal(reuse?.format, 'SoloHostedNormalBaselineReuseV2');
@@ -1477,6 +1508,21 @@ export function validateSustainedPlan(plan) {
   if (timingPlan(plan)) return validateTimingPlan(plan);
   assert.equal(plan.format, 'SoloHostedSustainedPlanV1');
   const selected = validateSourceCohort(plan, selectedSustainedSource(plan));
+  if (plan.heapRetainers !== undefined || plan.release.heapRetainers !== undefined) {
+    assert(runtime797LifecyclePlan(plan) && plan.phase === 'retry');
+    assert.deepEqual(plan.heapRetainers, HEAP_RETAINER_ADMISSION);
+    assert.deepEqual(plan.release.heapRetainers, HEAP_RETAINER_ADMISSION);
+    assert.equal(plan.cohort, '797-retry-heap-retainers-v1');
+    assert.equal(plan.candidateOnly, true);
+    assert.equal(plan.engine, 'chromium');
+    assert.equal(plan.repetition, 1);
+    assert.equal(plan.release.scope, 'independent-candidate-heap-retainer-diagnostic');
+    const helper = plan.frozenTools.filter(
+      (ref) => ref.path === 'scripts/solo-qualification-heap-retainers.mjs',
+    );
+    assert.equal(helper.length, 1);
+    assert(Number.isSafeInteger(helper[0].bytes) && helper[0].bytes > 0 && helper[0].bytes < MiB);
+  }
   validateSetupSuccessor(plan, selected);
   if (selected) {
     assert.equal(plan.latestSourceRevision, selected.candidate);
@@ -1534,7 +1580,10 @@ export function validateSustainedPlan(plan) {
     assert.match(ref.sha256, /^[a-f0-9]{64}$/);
   }
   assert.equal(plan.performanceExclusion, diagnosticComparison(plan) || plan.phase === 'retry');
-  const roles = geometricNextPlan(plan) ? ['candidate'] : roleOrder(plan.repetition, plan.phase);
+  const roles =
+    geometricNextPlan(plan) || heapRetainerPlan(plan)
+      ? ['candidate']
+      : roleOrder(plan.repetition, plan.phase);
   assert.deepEqual(
     plan.rows.map((row) => row.source),
     roles,
@@ -1597,6 +1646,7 @@ export function validateSustainedPlan(plan) {
 export function bindSustainedJob(manifest, engine, repetition) {
   assert.equal(manifest.format, 'SoloHostedSustainedManifestV1');
   const plan = structuredClone(manifest);
+  if (heapRetainerPlan(plan)) assert.deepEqual(plan.jobs, [{ engine: 'chromium', repetition: 1 }]);
   delete plan.jobs;
   plan.format = 'SoloHostedSustainedPlanV1';
   plan.engine = engine;
@@ -1605,24 +1655,34 @@ export function bindSustainedJob(manifest, engine, repetition) {
   assert(spec);
   plan.helperTimeoutMs = spec.helperMinutes * 60000;
   plan.performanceExclusion = diagnosticComparison(plan) || plan.phase === 'retry';
-  plan.rows = (geometricNextPlan(plan) ? ['candidate'] : roleOrder(repetition, plan.phase)).map(
-    (role) => ({
-      id: `${plan.phase}-${engine}-r${repetition}-${role}`,
-      kind: plan.phase === 'diagnostics' ? 'diagnostics' : 'lifecycle',
-      engine,
-      source: role,
-      timeoutMs: spec.timeoutMs,
-      performanceExclusion: plan.performanceExclusion,
-    }),
-  );
+  plan.rows = (
+    geometricNextPlan(plan) || heapRetainerPlan(plan)
+      ? ['candidate']
+      : roleOrder(repetition, plan.phase)
+  ).map((role) => ({
+    id: `${plan.phase}-${engine}-r${repetition}-${role}`,
+    kind: plan.phase === 'diagnostics' ? 'diagnostics' : 'lifecycle',
+    engine,
+    source: role,
+    timeoutMs: spec.timeoutMs,
+    performanceExclusion: plan.performanceExclusion,
+  }));
   return validateSustainedPlan(plan);
 }
 
 export function sustainedMatrix(manifest) {
-  const expected = ['chromium', 'webkit'].flatMap((engine) =>
-    [1, 2, 3].map((repetition) => ({ engine, repetition })),
+  const expected = heapRetainerPlan(manifest)
+    ? [{ engine: 'chromium', repetition: 1 }]
+    : ['chromium', 'webkit'].flatMap((engine) =>
+        [1, 2, 3].map((repetition) => ({ engine, repetition })),
+      );
+  assert.deepEqual(
+    manifest.jobs,
+    expected,
+    heapRetainerPlan(manifest)
+      ? 'Exactly one declared candidate heap job'
+      : 'Exactly six declared jobs in one released phase',
   );
-  assert.deepEqual(manifest.jobs, expected, 'Exactly six declared jobs in one released phase');
   return {
     include: expected.map(({ engine, repetition }) => {
       const plan = bindSustainedJob(manifest, engine, repetition),
@@ -1717,7 +1777,12 @@ export function sustainedSnapshotStorage(plan, recipe) {
 export async function prepareSustainedMode(ctx) {
   validateSustainedPlan(ctx.plan);
   await verifyInputs(ctx);
-  if (ctx.plan.phase !== 'diagnostics' && !geometricNextPlan(ctx.plan)) await ctx.ensureBaseline();
+  if (
+    ctx.plan.phase !== 'diagnostics' &&
+    !geometricNextPlan(ctx.plan) &&
+    !heapRetainerPlan(ctx.plan)
+  )
+    await ctx.ensureBaseline();
   assert(ctx.admitted.artifacts.candidate);
   const mode = { cpu: 1, browserVersion: null, calibration: null, recipePath: null };
   if (ctx.plan.phase !== 'diagnostics') {
@@ -1785,9 +1850,11 @@ export async function prepareSustainedMode(ctx) {
       repetition: ctx.plan.repetition,
       cpu: mode.cpu,
       calibration: mode.calibration,
-      scope: geometricNextPlan(ctx.plan)
-        ? 'Candidate-only authored transition/resource diagnostic. No baseline observation, timing comparison, later-layout qualification or physical-device inference.'
-        : 'Paired within this hosted runner only. No historical macOS, physical device, GPU, memory-bandwidth or thermal inference.',
+      scope: heapRetainerPlan(ctx.plan)
+        ? 'Candidate-only paused heap-retainer diagnostic. No baseline observation, timing or all-owner memory qualification.'
+        : geometricNextPlan(ctx.plan)
+          ? 'Candidate-only authored transition/resource diagnostic. No baseline observation, timing comparison, later-layout qualification or physical-device inference.'
+          : 'Paired within this hosted runner only. No historical macOS, physical device, GPU, memory-bandwidth or thermal inference.',
     },
   });
   return mode;
@@ -1844,6 +1911,7 @@ export function sustainedArguments(ctx, row, url, dir) {
       ? ['--viewport=400x850', '--dpr=3', '--mobile-context']
       : []),
     ...(ctx.plan.phase === 'retry' && row.engine === 'chromium' ? ['--memory-profile'] : []),
+    ...(heapRetainerPlan(ctx.plan) ? ['--heap-retainers=retry797-first-last-v1'] : []),
   ];
 }
 
@@ -2452,6 +2520,27 @@ export async function runSustainedRow(ctx, row, dir, tmp) {
                     : lifecycleAssessment
         )(ctx.plan, row, raw, command, ctx.modeState.browserVersion, journalVerification),
       );
+      if (heapRetainerPlan(ctx.plan)) {
+        try {
+          assert.equal(command.status, 'closed');
+          assert.equal(command.exitCode, 0);
+          assert.equal(raw.performanceGateStatus, 'excluded-memory-profiling');
+          const { verifyQualificationHeapRetainerReport } = await import(
+            './solo-qualification-heap-retainers.mjs'
+          );
+          row.heapRetainerEvidence = verifyQualificationHeapRetainerReport(
+            join(dir, 'report.json'),
+            raw.heapRetainers,
+          );
+        } catch (error) {
+          row.heapRetainerEvidence = {
+            status: 'failed',
+            failure: String(error.message).slice(0, 2048),
+          };
+          row.status = 'failed';
+        }
+        row.memoryQualification = 'not-qualified-retainer-review-required';
+      }
       row.browserVersion = raw.environment?.browserVersion;
       assert.equal(typeof row.browserVersion, 'string');
       if (ctx.modeState.browserVersion)

@@ -1,0 +1,145 @@
+TAP version 13
+# Subtest: sparse publication checkouts include the full admitted directory import closure
+ok 1 - sparse publication checkouts include the full admitted directory import closure
+  ---
+  duration_ms: 215.49225
+  ...
+# Subtest: maintainer recipe adds a temporary fourth app, launches, updates, rolls back and retires it without publication
+ok 2 - maintainer recipe adds a temporary fourth app, launches, updates, rolls back and retires it without publication
+  ---
+  duration_ms: 9881.399791
+  ...
+# Subtest: frozen optional CLI builds twice from actual committed inputs and refuses dirty or existing outputs
+ok 3 - frozen optional CLI builds twice from actual committed inputs and refuses dirty or existing outputs
+  ---
+  duration_ms: 9572.991292
+  ...
+# Subtest: main home keeps the static encounter-host dependency needed before any mode can mount
+ok 4 - main home keeps the static encounter-host dependency needed before any mode can mount
+  ---
+  duration_ms: 96.664291
+  ...
+# Subtest: native Overflight source stays in player core while its linked Studio remains optional
+ok 5 - native Overflight source stays in player core while its linked Studio remains optional
+  ---
+  duration_ms: 95.988416
+  ...
+# Subtest: Classic Snake keeps its native chapters, rules, artwork and sound adapters in player core
+ok 6 - Classic Snake keeps its native chapters, rules, artwork and sound adapters in player core
+  ---
+  duration_ms: 105.793791
+  ...
+# Subtest: actual native menu imports and styles remain in each mode offline closure
+ok 7 - actual native menu imports and styles remain in each mode offline closure
+  ---
+  duration_ms: 156.0425
+  ...
+# Subtest: main home keeps the static encounter-host dependency needed before any mode can mount
+ok 8 - main home keeps the static encounter-host dependency needed before any mode can mount
+  ---
+  duration_ms: 50.99475
+  ...
+# Subtest: native Overflight source stays in player core while its linked Studio remains optional
+ok 9 - native Overflight source stays in player core while its linked Studio remains optional
+  ---
+  duration_ms: 63.929125
+  ...
+# Subtest: Classic Snake keeps its native chapters, rules, artwork and sound adapters in player core
+ok 10 - Classic Snake keeps its native chapters, rules, artwork and sound adapters in player core
+  ---
+  duration_ms: 90.514375
+  ...
+# Subtest: Solo startup graph retains boot styles and production assets while mode hosts stay separate
+ok 11 - Solo startup graph retains boot styles and production assets while mode hosts stay separate
+  ---
+  duration_ms: 0.889125
+  ...
+# Subtest: catalogue references never pull selected chapter or soundtrack bytes back into core
+ok 12 - catalogue references never pull selected chapter or soundtrack bytes back into core
+  ---
+  duration_ms: 0.180125
+  ...
+# Subtest: public community entries own their shared loader offline without opting into creator tools or company artwork
+ok 13 - public community entries own their shared loader offline without opting into creator tools or company artwork
+  ---
+  duration_ms: 0.407583
+  ...
+# Subtest: decorative menu rasters and the icon source stay optional without dropping runtime or install icons
+ok 14 - decorative menu rasters and the icon source stay optional without dropping runtime or install icons
+  ---
+  duration_ms: 0.394209
+  ...
+# Subtest: effect bank and metadata stay core while WAV bodies remain an optional hosted pack
+ok 15 - effect bank and metadata stay core while WAV bodies remain an optional hosted pack
+  ---
+  duration_ms: 0.121458
+  ...
+# Subtest: radio redistribution metadata stays core while source recordings remain selectable
+ok 16 - radio redistribution metadata stays core while source recordings remain selectable
+  ---
+  duration_ms: 0.118125
+  ...
+# Subtest: Riy operation keeps its dynamic runtime and authored package graph in offline core
+ok 17 - Riy operation keeps its dynamic runtime and authored package graph in offline core
+  ---
+  duration_ms: 45.324958
+  ...
+# Subtest: six-world release keeps coordinated movement, modular artwork and all five operation imports in the exact player closure
+ok 18 - six-world release keeps coordinated movement, modular artwork and all five operation imports in the exact player closure
+  ---
+  duration_ms: 45.847458
+  ...
+# Subtest: bundled FPV pins final default bytes and has its own bounded cache outside core
+ok 19 - bundled FPV pins final default bytes and has its own bounded cache outside core
+  ---
+  duration_ms: 3416.117083
+  ...
+# Subtest: bundled FPV rejects missing, unadmitted, changed-vendor and oversized dependencies
+ok 20 - bundled FPV rejects missing, unadmitted, changed-vendor and oversized dependencies
+  ---
+  duration_ms: 899.195375
+  ...
+# Subtest: actual FPV application, native notebook and installation launcher close inside admitted runtime/source budgets
+ok 21 - actual FPV application, native notebook and installation launcher close inside admitted runtime/source budgets
+  ---
+  duration_ms: 973.191959
+  ...
+# Subtest: explicit FPV package remains independently reproducible with complete pinned runtime and source closures
+ok 22 - explicit FPV package remains independently reproducible with complete pinned runtime and source closures
+  ---
+  duration_ms: 867.910708
+  ...
+# Subtest: vendor pins are checked before parser exemptions while application fetch and foreign imports stay forbidden
+ok 23 - vendor pins are checked before parser exemptions while application fetch and foreign imports stay forbidden
+  ---
+  duration_ms: 304.205292
+  ...
+# Subtest: rewritten archive hashes cannot replace a reviewed vendor dependency
+ok 24 - rewritten archive hashes cannot replace a reviewed vendor dependency
+  ---
+  duration_ms: 444.092625
+  ...
+# Subtest: package selection rejects unknown, duplicate and empty lists before touching frozen inputs
+ok 25 - package selection rejects unknown, duplicate and empty lists before touching frozen inputs
+  ---
+  duration_ms: 0.533417
+  ...
+# Subtest: source budget includes the final source-inventory member, not only its listed dependencies
+ok 26 - source budget includes the final source-inventory member, not only its listed dependencies
+  ---
+  duration_ms: 390.532709
+  ...
+# Subtest: generic optional worker cleanup owns only its exact package scope
+ok 27 - generic optional worker cleanup owns only its exact package scope
+  ---
+  duration_ms: 0.443417
+  ...
+1..27
+# tests 27
+# suites 0
+# pass 27
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 28253.921791

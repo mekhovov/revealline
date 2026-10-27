@@ -1,0 +1,104 @@
+[
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38848553634/job/116815901607",
+    "name": "release-ready",
+    "state": "SUCCESS",
+    "workflow": "Validate source for continuous main"
+  },
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38848553666/job/116804445443",
+    "name": "feature (local-ux)",
+    "state": "SUCCESS",
+    "workflow": "Industrial feature verification"
+  },
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38848553666/job/116804445513",
+    "name": "feature (rooms)",
+    "state": "SUCCESS",
+    "workflow": "Industrial feature verification"
+  },
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38848553666/job/116804445509",
+    "name": "feature (recordings)",
+    "state": "SUCCESS",
+    "workflow": "Industrial feature verification"
+  },
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38848586249/job/116804547669",
+    "name": "reconcile",
+    "state": "SUCCESS",
+    "workflow": "Fastline exact-head auto-merge"
+  },
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38848553737/job/116804633713",
+    "name": "assemble",
+    "state": "SKIPPED",
+    "workflow": "Assemble full-test release evidence"
+  },
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38848553634/job/116804504229",
+    "name": "focused",
+    "state": "SUCCESS",
+    "workflow": "Validate source for continuous main"
+  },
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38848553634/job/116804505258",
+    "name": "test",
+    "state": "SKIPPED",
+    "workflow": "Validate source for continuous main"
+  },
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38848553634/job/116804506213",
+    "name": "build",
+    "state": "SKIPPED",
+    "workflow": "Validate source for continuous main"
+  },
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38848553634/job/116804445066",
+    "name": "preflight",
+    "state": "SUCCESS",
+    "workflow": "Validate source for continuous main"
+  },
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38848553666/job/116804445290",
+    "name": "feature (creator)",
+    "state": "SUCCESS",
+    "workflow": "Industrial feature verification"
+  },
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38848553666/job/116804445479",
+    "name": "feature (presentation)",
+    "state": "SUCCESS",
+    "workflow": "Industrial feature verification"
+  },
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38848553666/job/116804445399",
+    "name": "feature (gameplay)",
+    "state": "SUCCESS",
+    "workflow": "Industrial feature verification"
+  },
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38848553612/job/116804444801",
+    "name": "optional-practice",
+    "state": "SUCCESS",
+    "workflow": "Company edition candidates"
+  },
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38848553658/job/116804444984",
+    "name": "preview",
+    "state": "SUCCESS",
+    "workflow": "Appearance preview"
+  },
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38848553612/job/116804444964",
+    "name": "candidate",
+    "state": "SUCCESS",
+    "workflow": "Company edition candidates"
+  },
+  {
+    "link": "https://github.com/mekhovov/revealline/actions/runs/38848553737/job/116804445505",
+    "name": "verify",
+    "state": "SUCCESS",
+    "workflow": "Assemble full-test release evidence"
+  }
+]

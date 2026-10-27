@@ -1,0 +1,1117 @@
+{
+  "format": "revealline-demo-availability.v1",
+  "startedAt": "2026-10-15T17:58:38.394Z",
+  "config": {
+    "policies": [
+      "immediate",
+      "grid-center"
+    ],
+    "offline": false,
+    "workers": true,
+    "inventoryOnly": false,
+    "limit": null,
+    "packs": [],
+    "edition": null,
+    "journey": false,
+    "report": "docs/verification/demo-live-recovery-2026-10-15/availability-final.json"
+  },
+  "qualification": "Node real-core preparation and replay verification. Not real hardware, browser scheduling, audio or viewing quality.",
+  "sources": [
+    {
+      "id": "first-signal-left",
+      "levelKey": "first-signal/2/88639f3aab7b6cc1/signal-01",
+      "kind": "replay",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 147,
+      "result": "won",
+      "simulationSeconds": 30.683333333333334,
+      "coverage": 0.4731457800511509,
+      "lives": 3,
+      "elapsedMs": 324
+    },
+    {
+      "id": "first-signal-right",
+      "levelKey": "first-signal/2/88639f3aab7b6cc1/signal-01",
+      "kind": "replay",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 91,
+      "result": "won",
+      "simulationSeconds": 31.908333333333335,
+      "coverage": 0.5070332480818415,
+      "lives": 3,
+      "elapsedMs": 222
+    },
+    {
+      "id": "relay-orchard-loop",
+      "levelKey": "first-signal/2/88639f3aab7b6cc1/signal-02",
+      "kind": "replay",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 62,
+      "result": "won",
+      "simulationSeconds": 45.475,
+      "coverage": 0.6815856777493606,
+      "lives": 3,
+      "elapsedMs": 187
+    },
+    {
+      "id": "relay-orchard-stairs",
+      "levelKey": "first-signal/2/88639f3aab7b6cc1/signal-02",
+      "kind": "replay",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 56,
+      "result": "won",
+      "simulationSeconds": 45.675,
+      "coverage": 0.7148337595907929,
+      "lives": 3,
+      "elapsedMs": 273
+    },
+    {
+      "id": "crosswind-openings",
+      "levelKey": "first-signal/2/88639f3aab7b6cc1/signal-03",
+      "kind": "replay",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 107,
+      "result": "won",
+      "simulationSeconds": 46.7,
+      "coverage": 0.6553708439897699,
+      "lives": 3,
+      "elapsedMs": 283
+    },
+    {
+      "id": "night-patrol-loop",
+      "levelKey": "first-signal/2/88639f3aab7b6cc1/signal-05",
+      "kind": "replay",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 88,
+      "result": "won",
+      "simulationSeconds": 46.68333333333333,
+      "coverage": 0.6918158567774936,
+      "lives": 3,
+      "elapsedMs": 319
+    },
+    {
+      "id": "stone-lanes-detour",
+      "levelKey": "first-signal/2/88639f3aab7b6cc1/signal-04",
+      "kind": "replay",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 46,
+      "result": "won",
+      "simulationSeconds": 25.041666666666668,
+      "coverage": 0.7774151436031331,
+      "lives": 3,
+      "elapsedMs": 126
+    },
+    {
+      "id": "hidden-frequency-search",
+      "levelKey": "first-signal/2/88639f3aab7b6cc1/signal-06",
+      "kind": "replay",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 55,
+      "result": "won",
+      "simulationSeconds": 44.391666666666666,
+      "coverage": 0.8491048593350383,
+      "lives": 3,
+      "elapsedMs": 143
+    },
+    {
+      "id": "the-crossing-windows",
+      "levelKey": "first-signal/2/88639f3aab7b6cc1/signal-07",
+      "kind": "replay",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 94,
+      "result": "won",
+      "simulationSeconds": 34.608333333333334,
+      "coverage": 0.8433503836317136,
+      "lives": 3,
+      "elapsedMs": 205
+    },
+    {
+      "id": "signal-garden-route",
+      "levelKey": "first-signal/2/88639f3aab7b6cc1/signal-09",
+      "kind": "replay",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 61,
+      "result": "won",
+      "simulationSeconds": 47.13333333333333,
+      "coverage": 0.7877237851662404,
+      "lives": 3,
+      "elapsedMs": 152
+    },
+    {
+      "id": "orchard-crossing-circuit",
+      "levelKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8/orchard-crossing",
+      "kind": "replay",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 286,
+      "result": "won",
+      "simulationSeconds": 31.416666666666668,
+      "coverage": 0.8528156996587031,
+      "lives": 3,
+      "elapsedMs": 874
+    },
+    {
+      "id": "courtyard-exits-circuit",
+      "levelKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8/courtyard-exits",
+      "kind": "replay",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 241,
+      "result": "won",
+      "simulationSeconds": 31.975,
+      "coverage": 0.7707612456747405,
+      "lives": 3,
+      "elapsedMs": 656
+    },
+    {
+      "id": "last-light-recovery",
+      "levelKey": "first-signal/2/88639f3aab7b6cc1/signal-08",
+      "kind": "replay",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 139,
+      "result": "lost",
+      "simulationSeconds": 30.075,
+      "coverage": 0.14451612903225808,
+      "lives": 0,
+      "elapsedMs": 284
+    },
+    {
+      "id": "supply-circuit-recovery",
+      "levelKey": "first-signal/2/88639f3aab7b6cc1/signal-10",
+      "kind": "replay",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 82,
+      "result": "lost",
+      "simulationSeconds": 52.96666666666667,
+      "coverage": 0.44501278772378516,
+      "lives": 0,
+      "elapsedMs": 194
+    },
+    {
+      "id": "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-orchard-crossing-1",
+      "levelKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8/orchard-crossing",
+      "kind": "bot",
+      "turnPolicy": "immediate",
+      "status": "failed",
+      "error": {
+        "name": "Error",
+        "code": null,
+        "message": "Autoplay planning deadline reached."
+      },
+      "elapsedMs": 3307
+    },
+    {
+      "id": "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-orchard-crossing-2",
+      "levelKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8/orchard-crossing",
+      "kind": "bot",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 2694,
+      "result": "won",
+      "simulationSeconds": 32.49166666666667,
+      "coverage": 0.7039249146757679,
+      "lives": 3,
+      "elapsedMs": 4428
+    },
+    {
+      "id": "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-orchard-crossing-3",
+      "levelKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8/orchard-crossing",
+      "kind": "bot",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 3013,
+      "result": "won",
+      "simulationSeconds": 43.55833333333333,
+      "coverage": 0.7158703071672355,
+      "lives": 3,
+      "elapsedMs": 4923
+    },
+    {
+      "id": "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-courtyard-exits-1",
+      "levelKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8/courtyard-exits",
+      "kind": "bot",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 3470,
+      "result": "won",
+      "simulationSeconds": 57.458333333333336,
+      "coverage": 0.7772491349480969,
+      "lives": 3,
+      "elapsedMs": 6211
+    },
+    {
+      "id": "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-courtyard-exits-2",
+      "levelKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8/courtyard-exits",
+      "kind": "bot",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 2796,
+      "result": "won",
+      "simulationSeconds": 47.15833333333333,
+      "coverage": 0.759083044982699,
+      "lives": 3,
+      "elapsedMs": 4850
+    },
+    {
+      "id": "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-courtyard-exits-3",
+      "levelKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8/courtyard-exits",
+      "kind": "bot",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 2870,
+      "result": "won",
+      "simulationSeconds": 44.78333333333333,
+      "coverage": 0.7811418685121108,
+      "lives": 3,
+      "elapsedMs": 4968
+    },
+    {
+      "id": "improv-first-signal/2/88639f3aab7b6cc1-signal-11",
+      "levelKey": "first-signal/2/88639f3aab7b6cc1/signal-11",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 622,
+      "result": "won",
+      "simulationSeconds": 20.275,
+      "coverage": 0.7877237851662404,
+      "lives": 2,
+      "elapsedMs": 672
+    },
+    {
+      "id": "improv-first-signal/2/88639f3aab7b6cc1-signal-12",
+      "levelKey": "first-signal/2/88639f3aab7b6cc1/signal-12",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 1424,
+      "result": "lost",
+      "simulationSeconds": 61.516666666666666,
+      "coverage": 0.7301790281329923,
+      "lives": 0,
+      "elapsedMs": 1772
+    },
+    {
+      "id": "improv-fpv-pressure-lines/1/ebb56ffdd9baa8e8-night-crossfire",
+      "levelKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8/night-crossfire",
+      "kind": "improv",
+      "turnPolicy": "immediate",
+      "status": "verified",
+      "preparationMs": 1244,
+      "result": "lost",
+      "simulationSeconds": 15.983333333333333,
+      "coverage": 0.029209621993127148,
+      "lives": 0,
+      "elapsedMs": 1374
+    },
+    {
+      "id": "first-signal-left",
+      "levelKey": "first-signal/2/88639f3aab7b6cc1/signal-01",
+      "kind": "replay",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 45,
+      "result": "won",
+      "simulationSeconds": 30.683333333333334,
+      "coverage": 0.4731457800511509,
+      "lives": 3,
+      "elapsedMs": 108
+    },
+    {
+      "id": "first-signal-right",
+      "levelKey": "first-signal/2/88639f3aab7b6cc1/signal-01",
+      "kind": "replay",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 42,
+      "result": "won",
+      "simulationSeconds": 31.908333333333335,
+      "coverage": 0.5070332480818415,
+      "lives": 3,
+      "elapsedMs": 114
+    },
+    {
+      "id": "relay-orchard-loop",
+      "levelKey": "first-signal/2/88639f3aab7b6cc1/signal-02",
+      "kind": "replay",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 53,
+      "result": "won",
+      "simulationSeconds": 45.475,
+      "coverage": 0.6815856777493606,
+      "lives": 3,
+      "elapsedMs": 149
+    },
+    {
+      "id": "relay-orchard-stairs",
+      "levelKey": "first-signal/2/88639f3aab7b6cc1/signal-02",
+      "kind": "replay",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 55,
+      "result": "won",
+      "simulationSeconds": 45.675,
+      "coverage": 0.7148337595907929,
+      "lives": 3,
+      "elapsedMs": 150
+    },
+    {
+      "id": "crosswind-openings",
+      "levelKey": "first-signal/2/88639f3aab7b6cc1/signal-03",
+      "kind": "replay",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 72,
+      "result": "won",
+      "simulationSeconds": 46.7,
+      "coverage": 0.6553708439897699,
+      "lives": 3,
+      "elapsedMs": 200
+    },
+    {
+      "id": "night-patrol-loop",
+      "levelKey": "first-signal/2/88639f3aab7b6cc1/signal-05",
+      "kind": "replay",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 75,
+      "result": "won",
+      "simulationSeconds": 46.68333333333333,
+      "coverage": 0.6918158567774936,
+      "lives": 3,
+      "elapsedMs": 196
+    },
+    {
+      "id": "stone-lanes-detour",
+      "levelKey": "first-signal/2/88639f3aab7b6cc1/signal-04",
+      "kind": "replay",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 38,
+      "result": "won",
+      "simulationSeconds": 25.041666666666668,
+      "coverage": 0.7774151436031331,
+      "lives": 3,
+      "elapsedMs": 104
+    },
+    {
+      "id": "hidden-frequency-search",
+      "levelKey": "first-signal/2/88639f3aab7b6cc1/signal-06",
+      "kind": "replay",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 56,
+      "result": "won",
+      "simulationSeconds": 44.391666666666666,
+      "coverage": 0.8491048593350383,
+      "lives": 3,
+      "elapsedMs": 147
+    },
+    {
+      "id": "the-crossing-windows",
+      "levelKey": "first-signal/2/88639f3aab7b6cc1/signal-07",
+      "kind": "replay",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 45,
+      "result": "won",
+      "simulationSeconds": 34.608333333333334,
+      "coverage": 0.8433503836317136,
+      "lives": 3,
+      "elapsedMs": 122
+    },
+    {
+      "id": "signal-garden-route",
+      "levelKey": "first-signal/2/88639f3aab7b6cc1/signal-09",
+      "kind": "replay",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 64,
+      "result": "won",
+      "simulationSeconds": 47.13333333333333,
+      "coverage": 0.7877237851662404,
+      "lives": 3,
+      "elapsedMs": 175
+    },
+    {
+      "id": "orchard-crossing-circuit",
+      "levelKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8/orchard-crossing",
+      "kind": "replay",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 184,
+      "result": "won",
+      "simulationSeconds": 31.416666666666668,
+      "coverage": 0.8528156996587031,
+      "lives": 3,
+      "elapsedMs": 469
+    },
+    {
+      "id": "courtyard-exits-circuit",
+      "levelKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8/courtyard-exits",
+      "kind": "replay",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 171,
+      "result": "won",
+      "simulationSeconds": 31.975,
+      "coverage": 0.7707612456747405,
+      "lives": 3,
+      "elapsedMs": 462
+    },
+    {
+      "id": "last-light-recovery",
+      "levelKey": "first-signal/2/88639f3aab7b6cc1/signal-08",
+      "kind": "replay",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 56,
+      "result": "lost",
+      "simulationSeconds": 30.075,
+      "coverage": 0.14451612903225808,
+      "lives": 0,
+      "elapsedMs": 135
+    },
+    {
+      "id": "supply-circuit-recovery",
+      "levelKey": "first-signal/2/88639f3aab7b6cc1/signal-10",
+      "kind": "replay",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 70,
+      "result": "lost",
+      "simulationSeconds": 52.96666666666667,
+      "coverage": 0.44501278772378516,
+      "lives": 0,
+      "elapsedMs": 194
+    },
+    {
+      "id": "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-orchard-crossing-1",
+      "levelKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8/orchard-crossing",
+      "kind": "bot",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 2841,
+      "result": "won",
+      "simulationSeconds": 44.71666666666667,
+      "coverage": 0.7133105802047781,
+      "lives": 3,
+      "elapsedMs": 4926
+    },
+    {
+      "id": "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-orchard-crossing-2",
+      "levelKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8/orchard-crossing",
+      "kind": "bot",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 4933,
+      "result": "won",
+      "simulationSeconds": 42.68333333333333,
+      "coverage": 0.7103242320819113,
+      "lives": 3,
+      "elapsedMs": 7833
+    },
+    {
+      "id": "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-orchard-crossing-3",
+      "levelKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8/orchard-crossing",
+      "kind": "bot",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 2805,
+      "result": "won",
+      "simulationSeconds": 43.59166666666667,
+      "coverage": 0.7047781569965871,
+      "lives": 3,
+      "elapsedMs": 4615
+    },
+    {
+      "id": "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-courtyard-exits-1",
+      "levelKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8/courtyard-exits",
+      "kind": "bot",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 2590,
+      "result": "won",
+      "simulationSeconds": 36.041666666666664,
+      "coverage": 0.8858131487889274,
+      "lives": 3,
+      "elapsedMs": 4226
+    },
+    {
+      "id": "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-courtyard-exits-2",
+      "levelKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8/courtyard-exits",
+      "kind": "bot",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 3055,
+      "result": "won",
+      "simulationSeconds": 52.041666666666664,
+      "coverage": 0.8853806228373703,
+      "lives": 3,
+      "elapsedMs": 5254
+    },
+    {
+      "id": "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-courtyard-exits-3",
+      "levelKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8/courtyard-exits",
+      "kind": "bot",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 3158,
+      "result": "won",
+      "simulationSeconds": 48.891666666666666,
+      "coverage": 0.7508650519031141,
+      "lives": 3,
+      "elapsedMs": 5472
+    },
+    {
+      "id": "improv-first-signal/2/88639f3aab7b6cc1-signal-11",
+      "levelKey": "first-signal/2/88639f3aab7b6cc1/signal-11",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 608,
+      "result": "won",
+      "simulationSeconds": 20.25,
+      "coverage": 0.7877237851662404,
+      "lives": 2,
+      "elapsedMs": 662
+    },
+    {
+      "id": "improv-first-signal/2/88639f3aab7b6cc1-signal-12",
+      "levelKey": "first-signal/2/88639f3aab7b6cc1/signal-12",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 2103,
+      "result": "lost",
+      "simulationSeconds": 84.76666666666667,
+      "coverage": 0.7237851662404092,
+      "lives": 0,
+      "elapsedMs": 2330
+    },
+    {
+      "id": "improv-fpv-pressure-lines/1/ebb56ffdd9baa8e8-night-crossfire",
+      "levelKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8/night-crossfire",
+      "kind": "improv",
+      "turnPolicy": "grid-center",
+      "status": "verified",
+      "preparationMs": 1052,
+      "result": "lost",
+      "simulationSeconds": 15.991666666666667,
+      "coverage": 0.029209621993127148,
+      "lives": 0,
+      "elapsedMs": 1198
+    }
+  ],
+  "sourceHashes": {
+    "game/content/campaign.json": "fd46e787fec3568b8215497a7004b759d45965123ab2e33cd2d654a41aee1718",
+    "game/content/classes.json": "2f776b0dfd099478ffe78465c7b602cd98896206a222a0ed7fd4405a4a643f84",
+    "game/content/packs/fpv-arcade-r5.json": "350d89cf41767668b3734b474e5dd3d1d301bb0b5612e5082c5d233a1a081a74",
+    "scripts/audit-demo-availability.mjs": "7d5b8f05805eb1a82a6e942c1e4a43af6a1aa65055848a2d28945bac44f1ae39",
+    "game/i18n/index.mjs": "29f40a6d92826ced1eb53283ed32e342ac6e95920abbf8d549f2d78e65b48d07",
+    "game/i18n/catalogs.mjs": "4b6b7e84870fa34925d81bb5d4daab2b8542926ca0fe07674eea060b10bd92ea",
+    "game/mastery.mjs": "2794850285f343ac3ea30dabd22bac1e80bc45e6a73734597e364272af9d8504",
+    "game/campaign-contexts.mjs": "0cfbc653dedff1bb47d6f98b498580e06a66e82325e27973b7d5b88eb707e11a",
+    "game/campaign-difficulty.mjs": "d1e7aa765d4dd63b3c7cbae074b2f33f7bd444229353041d37de35c8ae810aa1",
+    "game/data-json-messages.mjs": "d54d36d3467529fd04a8a80e75ec96738b3690c19eed8fa2093ebe3bcca88ea7",
+    "game/data-json.mjs": "1206a031e12ffe1c36be0d7276b5a29dc5517135615942e550c6680c9540b182",
+    "game/demo-audio-feedback.mjs": "3b685ae8bfa0459fbdb72fab80833328c71f151ad0cefe2032c844bb8b0015d9",
+    "game/demo-bot-player.mjs": "40746853959c177c6780e4e94587292677d3fe7649ad0204c25330c5192f01a5",
+    "game/demo-bot-worker.mjs": "135b0c9aefbef402be23fdbd91fd16a3549a30e68d34aabdd6998152a18dc837",
+    "game/demo-bot.mjs": "5548e6a80e6c04ec1476974927dd8d55f0c6c9cb317fb4be6512e503adc521f3",
+    "game/demo-catalog.mjs": "3d295b7154017806f36cd7a0d2980b7e10c8d8f0108cf9ad35d464c926bda307",
+    "game/demo-director.mjs": "7a56e0ea15fcde19d2130262d2ff59637faeaaf505047151a64a5adcf053aa69",
+    "game/demo-experience.mjs": "22fe26aa0e66e9458f5ed2f3322bb9af44312aac84ca27a54e831bc7d01da0da",
+    "game/demo-improv-player.mjs": "bee3ed46cc92ea690dd52c971323e296ab63073b267372598ef39397760413f2",
+    "game/demo-library.mjs": "b41aa582fb958fbdff02548e4f119ca96425892a50ecdf86f332426cc6fea250",
+    "game/demo-loading.mjs": "8b35db9e51774eb606af0904c762b5f206382a633aff7104932236944e5c7353",
+    "game/demo-sources.mjs": "26199603e5199cd7325031a016e68170a7cd16d71fd0b5d479ef07e3edf14154",
+    "game/gameplay-tuning-v1.mjs": "6213bc6c3a67370ea00dea600f2951736fb5aed108cdc4037703f9254503e91b",
+    "game/gameplay-tuning-v2.mjs": "3bfecf33324e2f5c83aca5f86ef183dd7147108be356cd9aa31cb1f1e1a24c5c",
+    "game/gameplay-tuning-v3.mjs": "82dfa8e48511485ee76a670dee689970e7af7b69e73861f0b950b9449fa4f9af",
+    "game/gameplay-tuning.mjs": "6b4123c0668676da01af91393feee274c42faa883e30401f423cb19093d27140",
+    "game/library.mjs": "cda2d2aa7bb3675b6a8991ae0080d0a4f7f15f23e44df973dd2e8d8aca8d152c",
+    "game/replay-actor-context.mjs": "533a9bc90a16a6971ba3268fd7518f999a65ff44362b06205760761b40063062",
+    "game/replay-installed-rules.mjs": "322b4b9f82666337e2551ca457b4de27381e786a58bcb9e4067643086a170652",
+    "game/replay-player.mjs": "8013c240be6914099ba7f38753b784ffaa7ea110c9e6551006e4ae01bd17ba70",
+    "game/replay-presentation.mjs": "c17e564120a5fef399385807e4fc974487b2fce782dfdd61da95dc332f8eead8",
+    "game/replay-proof-store.mjs": "45a33a4c98c8cf5bd9e779f0cab715ab82b33bd01bd3138b01c28dd8be9fd99d",
+    "game/replay.mjs": "c0bfc6842743f931dab1a9612e8799c240c542fcb7f9895ab6f866989ae41a6d",
+    "game/core/abilities.mjs": "bb7cb0df95beb6878878d77cac40b2cb6f2403f74e089db46432659098fb3cde",
+    "game/core/arcade-actions.mjs": "fa88d2371b6a6c889550ab196ac0cfbc5dced9ad8493cda126928f4cd53f2726",
+    "game/core/bonus-opportunity.mjs": "df7a08d3d965a445153881a3423c09b1cbfca5c91231d05570c59e7ef18baa90",
+    "game/core/capture-regions.mjs": "82680114409789d83ad1af09ef18a61cacc8e86ee246d1937c87ecc7c7ecf575",
+    "game/core/capture.mjs": "9ea5eec1db293445c3e93cf809ca08bded13062bbbdfe3ac6b7c1306a3cac731",
+    "game/core/classic-contour.mjs": "39f096ad8a10605031eecf49227c06d77cf5032042325c0053439ed311ce5da8",
+    "game/core/classic-definition.mjs": "a1663a97efb2d04dc2d3e9dc20983740c9be32bc6a84494612b77144892a9270",
+    "game/core/classic-motion.mjs": "23ded4bc7e90cddb838ea08d320b6ac8a6df3755cf12dc362ea10e5d7bcc8c2b",
+    "game/core/classic-state.mjs": "6b8001326238729541bb9515bfa1f92fdb4d18c961f49e7b2a6c68e41a42726f",
+    "game/core/classic-step.mjs": "468441bee309496488e34497dcf673382197694610e596a89828bb0575aa61b6",
+    "game/core/classic-topology.mjs": "c63830a351caa1c45938382d7793aa7ccbc308fac60b5cd477a14fb1962d5131",
+    "game/core/combat-definition.mjs": "41e64dc55ef9bb88f2df6c8116dbd7ea01b0f171f4ae399e2a2593e7427f97d6",
+    "game/core/combat-motion.mjs": "c5b7eb7da31040493b8c2c54ebe0e32a1b845b51b28ead193a4d20c0cc34e28b",
+    "game/core/combat-patrols.mjs": "e7c68452b47910d5ae33fc38eb8c3b5dcbb81303556eede1548b3a635d2be472",
+    "game/core/contacts.mjs": "d8c8294bf7141471a125dc325ab1202e2a705ca62ad7632d89129907c8072df4",
+    "game/core/coverage.mjs": "9bd7899414967a00a5a46c32257fce0961ad2ea15eb91e65f2496aed4793db4b",
+    "game/core/directional-fields.mjs": "b93cf46cd2a845ffa4792410d8d42852afca701dd07ee04a9969fecd417b5f17",
+    "game/core/encounter.mjs": "5543956a0dc81a613c33e1244a6f02621d1c089ec6cade4e34ff1fcc569d279b",
+    "game/core/enemy-pressure.mjs": "e66302eab2bc961c3328f0fc572f21d3ea67ee32132c4d0d8f15c1c08d04a2cb",
+    "game/core/field-course.mjs": "fbd86842f281334088a35e1793c65ba4d323fe64209f81546e47a06f87af0e0d",
+    "game/core/foundations.mjs": "5bba8689aed68d43bafca509fbcb26e0783d96efbb1ed64a07083d3b7a86cd71",
+    "game/core/geometry.mjs": "ad980ff30fef2cb8afd307f2a8dccf0329d1dc996dbd9fa3d13e3d2e9f2ae3d4",
+    "game/core/index.mjs": "d5fead46c41a9651da86003f70417a9d2bbd5a61830c007011b205581b2a3330",
+    "game/core/level.mjs": "4d0b9f171ace4d8ff4c35ae7d50b4fccaabee218605e422c098aa23d2c5c5b5c",
+    "game/core/line-impact.mjs": "e3a11756a9fb7272ad660dbf9a2c175095f89e26f889e3f3edb25865b2b7c5a0",
+    "game/core/movement.mjs": "216e03da20b388c8278be19a9829a8ef642fea30291125b645c5373e5902c261",
+    "game/core/registry.mjs": "ca7e365071ab3c49514343ea7683d8e552d2cd3f9fdbd0f317df64a57c0b7c2c",
+    "game/core/relay-gates.mjs": "6ebaf6d4fbe5b2b53336d048a2e10a876c5f8f796c70b4474927185d55ee9117",
+    "game/core/systems.mjs": "ecfc946dbe6caf9feacab674730b8b1844e2f133c40566069d722206c6e546b6",
+    "game/core/timed-bonuses.mjs": "8a9330bce36416d3f9a3ac74c2876f90756f28995c9bbd38be4a9bc94d0ce0ea",
+    "game/core/versions.mjs": "715a8990f897e7605e3fe045e5c1a064e163ccbbae7a26ba060214443d1b22f2",
+    "game/demo-data/authored-mistake-signal-03.replay.json": "d0baf94ffb72251b7b7fbb9e9fdf0b08fe2d8aa2c4872bdee5f213be8b1cfcb7",
+    "game/demo-data/authored-mistake-signal-06.replay.json": "323af6e8f277c44b1a2ed4c42db057899b6c0bce302de14160a280383266b151",
+    "game/demo-data/authored-mistake-signal-08.replay.json": "f2359fbb9caa704a0442dab579c12966e4284487501f9b035313ae58f3f8a4fb",
+    "game/demo-data/authored-mistake-signal-10.replay.json": "14f389a5ffcadf9f7c0be0fa0918942caa844534792ead34feec5180d23e8d84",
+    "game/demo-data/authored-mistake-signal-11.replay.json": "3b269abc7f53bb41a92db3097d278996f8dfd1f83d3446f0f925ef72f8f290ca",
+    "game/demo-data/authored-mistake-signal-12.replay.json": "83711c9b93d556aa31842b88d06ceda2c37a0bfa44a7636d4f833b0e021601a6",
+    "game/demo-data/catalog.json": "44276f64f2532b4776373f5048d73a821622290c5f44fdd588d1097be41e2a3f",
+    "game/demo-data/ci-variant-provenance.json": "ea97bac94db34ba002805df4bc522890ce76f72d38b992e69f934dc93c3feaaf",
+    "game/demo-data/courtyard-exits-circuit.replay.json": "d170c28d8a97eb1a94d78a996c0e4c230e73c7d95f7669b996e8fca4850c0c3d",
+    "game/demo-data/crosswind-openings.chromium-macos.replay.json": "11dd1280e1f0899947d9697eb20e75c28b27bcc35d102eb4058a81256d18c94f",
+    "game/demo-data/crosswind-openings.replay.json": "a8eb595988bd478a99bec31a4cc5a2c2f53413778a890fe8a7de36c93c841676",
+    "game/demo-data/first-signal-left.chromium-macos.replay.json": "b18d9d343ffca2b7efec6c3ec0266d80ed0603804420f444159e4214533bd11e",
+    "game/demo-data/first-signal-left.replay.json": "900f921146e37324dfefc90f55bfc60c03bd8a2954d53353ecae25df8a55c54a",
+    "game/demo-data/first-signal-right.chromium-macos.replay.json": "c20c847103c652b3cf04f081b17bed8ddb1b0fca4b04e8e29cc72da23cf3849e",
+    "game/demo-data/first-signal-right.node20-linux-x64.replay.json": "36aa993898faef782499daffed7f7d977729b315a1197c5ed6b38df213f44b2b",
+    "game/demo-data/first-signal-right.replay.json": "1670c4dff98ebfb56d4b6a44bac010c3f796d98f16abb4abe71e56a2ec5c8fc7",
+    "game/demo-data/hidden-frequency-search.chromium-macos.replay.json": "56c7600b96686d17e84b5e1292ca848112767a15a6d192d8b11accb0d242f89c",
+    "game/demo-data/hidden-frequency-search.node20-linux-x64.replay.json": "3346eba1031a728b99fb7a0c4be5f41b147378e716f895f46dd02498c319647b",
+    "game/demo-data/hidden-frequency-search.replay.json": "dd5e26c19ad433acf88b926ac1e595fa3f2e1df0d040d1879ca8190f7dd18537",
+    "game/demo-data/last-light-recovery.replay.json": "6039f47e25f5c154e13d63b5423ea8958cc653f2352b14d6ec41fba885f98493",
+    "game/demo-data/night-patrol-loop.chromium-macos.replay.json": "2ac0bb990b4eca72e5854c1d56b59188a3cad2968a5049e8ee77900895410e2d",
+    "game/demo-data/night-patrol-loop.replay.json": "f83e60de8f61ac2a44ba4bdc98228cc72abfdbc8e70fe3843946281a17d632e9",
+    "game/demo-data/orchard-crossing-circuit.node20-linux-x64.replay.json": "40462bcd7d43e23cff65e0e21221998d49febe70eb2a87d8668c56c607720005",
+    "game/demo-data/orchard-crossing-circuit.replay.json": "e3d53e6fbfa01a85772eb19043ca05c7139c4131f0f603f3baee08ba33147411",
+    "game/demo-data/relay-orchard-loop.chromium-macos.replay.json": "58a4196d25f5759260e716d175e78c29c157ef5f366ffe833648bcc7c25f9ebc",
+    "game/demo-data/relay-orchard-loop.replay.json": "d48bab6ab5f1fb1513d8261a8758519f0d9faccd91a0f334946f802260738627",
+    "game/demo-data/relay-orchard-stairs.chromium-macos.replay.json": "605add619e47a1d7762813897ead1368c98048819874b1b84816dce69e2af358",
+    "game/demo-data/relay-orchard-stairs.replay.json": "d145e8462f193a707e8bb3d8059a06fd1b0a407e8141a63101ebcf56b446cfb1",
+    "game/demo-data/signal-garden-route.chromium-macos.replay.json": "8129f40d4713dc8f44c6023d09f2827ba4c98624ad6c88fa723d82f5c96959c1",
+    "game/demo-data/signal-garden-route.replay.json": "a12a33a32a6583ae18680f891af2f4f0304569c024ef474d507041f6ad3e3572",
+    "game/demo-data/stone-lanes-detour.chromium-macos.replay.json": "5081c6c54a80dd43954005a8eef2f79d8fe2019572d3b3328fecab95def25673",
+    "game/demo-data/stone-lanes-detour.replay.json": "137b26ecdac3ea17780a293b961f93c4cb0722f50d5e19b3f6188ccbb8603b99",
+    "game/demo-data/supply-circuit-recovery.node20-linux-x64.replay.json": "ac9d26ff789ff875c39c318c8813f569f158f5f153ca405cd12894c839ac765b",
+    "game/demo-data/supply-circuit-recovery.replay.json": "00f20aede9a668a71bd8038ad22032d4ca57a425ee004e8c608bababd680719c",
+    "game/demo-data/the-crossing-windows.chromium-macos.replay.json": "03fe9a5ea307d82093badf26968a06686605a01832d5ef6048a8fa38c13e9f2f",
+    "game/demo-data/the-crossing-windows.replay.json": "b52aa84d5bcc15a75d998dc40ab91cf8c36dca5e25562873223d86ae33f9982c",
+    "game/demo-data/variant-provenance.json": "701d0c04385779caa7c2660fa30216df9b856738f2da040e02434131e31f39b6"
+  },
+  "contentSHA256": "68fc7bf921f4b8f00e89f238708856d2cb9ba01c5a41114e7a1d15305f59b2ce",
+  "levelCoverage": [
+    {
+      "executionKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-01",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "first-signal-left",
+        "first-signal-right"
+      ],
+      "verifiedSourceIds": [
+        "first-signal-left",
+        "first-signal-right"
+      ]
+    },
+    {
+      "executionKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-02",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "relay-orchard-loop",
+        "relay-orchard-stairs"
+      ],
+      "verifiedSourceIds": [
+        "relay-orchard-loop",
+        "relay-orchard-stairs"
+      ]
+    },
+    {
+      "executionKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-03",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "crosswind-openings"
+      ],
+      "verifiedSourceIds": [
+        "crosswind-openings"
+      ]
+    },
+    {
+      "executionKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-04",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "stone-lanes-detour"
+      ],
+      "verifiedSourceIds": [
+        "stone-lanes-detour"
+      ]
+    },
+    {
+      "executionKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-05",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "night-patrol-loop"
+      ],
+      "verifiedSourceIds": [
+        "night-patrol-loop"
+      ]
+    },
+    {
+      "executionKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-06",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "hidden-frequency-search"
+      ],
+      "verifiedSourceIds": [
+        "hidden-frequency-search"
+      ]
+    },
+    {
+      "executionKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-07",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "the-crossing-windows"
+      ],
+      "verifiedSourceIds": [
+        "the-crossing-windows"
+      ]
+    },
+    {
+      "executionKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-08",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "last-light-recovery"
+      ],
+      "verifiedSourceIds": [
+        "last-light-recovery"
+      ]
+    },
+    {
+      "executionKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-09",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "signal-garden-route"
+      ],
+      "verifiedSourceIds": [
+        "signal-garden-route"
+      ]
+    },
+    {
+      "executionKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-10",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "supply-circuit-recovery"
+      ],
+      "verifiedSourceIds": [
+        "supply-circuit-recovery"
+      ]
+    },
+    {
+      "executionKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-11",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-first-signal/2/88639f3aab7b6cc1-signal-11"
+      ],
+      "verifiedSourceIds": [
+        "improv-first-signal/2/88639f3aab7b6cc1-signal-11"
+      ]
+    },
+    {
+      "executionKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-12",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-first-signal/2/88639f3aab7b6cc1-signal-12"
+      ],
+      "verifiedSourceIds": [
+        "improv-first-signal/2/88639f3aab7b6cc1-signal-12"
+      ]
+    },
+    {
+      "executionKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8",
+      "levelId": "orchard-crossing",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "orchard-crossing-circuit",
+        "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-orchard-crossing-1",
+        "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-orchard-crossing-2",
+        "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-orchard-crossing-3"
+      ],
+      "verifiedSourceIds": [
+        "orchard-crossing-circuit",
+        "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-orchard-crossing-2",
+        "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-orchard-crossing-3"
+      ]
+    },
+    {
+      "executionKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8",
+      "levelId": "courtyard-exits",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "courtyard-exits-circuit",
+        "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-courtyard-exits-1",
+        "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-courtyard-exits-2",
+        "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-courtyard-exits-3"
+      ],
+      "verifiedSourceIds": [
+        "courtyard-exits-circuit",
+        "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-courtyard-exits-1",
+        "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-courtyard-exits-2",
+        "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-courtyard-exits-3"
+      ]
+    },
+    {
+      "executionKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8",
+      "levelId": "night-crossfire",
+      "turnPolicy": "immediate",
+      "sourceIds": [
+        "improv-fpv-pressure-lines/1/ebb56ffdd9baa8e8-night-crossfire"
+      ],
+      "verifiedSourceIds": [
+        "improv-fpv-pressure-lines/1/ebb56ffdd9baa8e8-night-crossfire"
+      ]
+    },
+    {
+      "executionKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-01",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "first-signal-left",
+        "first-signal-right"
+      ],
+      "verifiedSourceIds": [
+        "first-signal-left",
+        "first-signal-right"
+      ]
+    },
+    {
+      "executionKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-02",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "relay-orchard-loop",
+        "relay-orchard-stairs"
+      ],
+      "verifiedSourceIds": [
+        "relay-orchard-loop",
+        "relay-orchard-stairs"
+      ]
+    },
+    {
+      "executionKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-03",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "crosswind-openings"
+      ],
+      "verifiedSourceIds": [
+        "crosswind-openings"
+      ]
+    },
+    {
+      "executionKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-04",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "stone-lanes-detour"
+      ],
+      "verifiedSourceIds": [
+        "stone-lanes-detour"
+      ]
+    },
+    {
+      "executionKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-05",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "night-patrol-loop"
+      ],
+      "verifiedSourceIds": [
+        "night-patrol-loop"
+      ]
+    },
+    {
+      "executionKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-06",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "hidden-frequency-search"
+      ],
+      "verifiedSourceIds": [
+        "hidden-frequency-search"
+      ]
+    },
+    {
+      "executionKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-07",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "the-crossing-windows"
+      ],
+      "verifiedSourceIds": [
+        "the-crossing-windows"
+      ]
+    },
+    {
+      "executionKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-08",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "last-light-recovery"
+      ],
+      "verifiedSourceIds": [
+        "last-light-recovery"
+      ]
+    },
+    {
+      "executionKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-09",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "signal-garden-route"
+      ],
+      "verifiedSourceIds": [
+        "signal-garden-route"
+      ]
+    },
+    {
+      "executionKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-10",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "supply-circuit-recovery"
+      ],
+      "verifiedSourceIds": [
+        "supply-circuit-recovery"
+      ]
+    },
+    {
+      "executionKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-11",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-first-signal/2/88639f3aab7b6cc1-signal-11"
+      ],
+      "verifiedSourceIds": [
+        "improv-first-signal/2/88639f3aab7b6cc1-signal-11"
+      ]
+    },
+    {
+      "executionKey": "first-signal/2/88639f3aab7b6cc1",
+      "levelId": "signal-12",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-first-signal/2/88639f3aab7b6cc1-signal-12"
+      ],
+      "verifiedSourceIds": [
+        "improv-first-signal/2/88639f3aab7b6cc1-signal-12"
+      ]
+    },
+    {
+      "executionKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8",
+      "levelId": "orchard-crossing",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "orchard-crossing-circuit",
+        "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-orchard-crossing-1",
+        "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-orchard-crossing-2",
+        "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-orchard-crossing-3"
+      ],
+      "verifiedSourceIds": [
+        "orchard-crossing-circuit",
+        "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-orchard-crossing-1",
+        "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-orchard-crossing-2",
+        "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-orchard-crossing-3"
+      ]
+    },
+    {
+      "executionKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8",
+      "levelId": "courtyard-exits",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "courtyard-exits-circuit",
+        "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-courtyard-exits-1",
+        "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-courtyard-exits-2",
+        "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-courtyard-exits-3"
+      ],
+      "verifiedSourceIds": [
+        "courtyard-exits-circuit",
+        "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-courtyard-exits-1",
+        "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-courtyard-exits-2",
+        "live-fpv-pressure-lines/1/ebb56ffdd9baa8e8-courtyard-exits-3"
+      ]
+    },
+    {
+      "executionKey": "fpv-pressure-lines/1/ebb56ffdd9baa8e8",
+      "levelId": "night-crossfire",
+      "turnPolicy": "grid-center",
+      "sourceIds": [
+        "improv-fpv-pressure-lines/1/ebb56ffdd9baa8e8-night-crossfire"
+      ],
+      "verifiedSourceIds": [
+        "improv-fpv-pressure-lines/1/ebb56ffdd9baa8e8-night-crossfire"
+      ]
+    }
+  ],
+  "discovery": [
+    {
+      "turnPolicy": "immediate",
+      "elapsedMs": 59,
+      "sources": 23
+    },
+    {
+      "turnPolicy": "grid-center",
+      "elapsedMs": 17,
+      "sources": 23
+    }
+  ],
+  "changedSources": [],
+  "errors": [],
+  "elapsedSeconds": 76.1714985,
+  "cleanup": {
+    "ownersBeforeForcedCleanup": 0,
+    "listeners": 0
+  },
+  "finishedAt": "2026-10-15T17:59:54.566Z",
+  "summary": {
+    "registered": 46,
+    "registeredLevels": 30,
+    "usableLevels": 30,
+    "verified": 45,
+    "failed": 1,
+    "notExercised": 0,
+    "remainingWorkers": 0,
+    "uncoveredLevels": 0
+  },
+  "passed": false
+}

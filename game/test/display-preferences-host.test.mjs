@@ -27,6 +27,13 @@ const sessionKey = 'revealline.suspended.dev.v1';
 const existingEnemyStatsWriter = { [`${ENEMY_STATS_KEY}:writer`]: 'display-host-existing-writer' };
 const raw = (store) => JSON.parse(store.getItem(DISPLAY_PREFERENCES_KEY));
 let sequence = 0;
+// Seed the unrelated statistics writer identity before startup snapshots.
+// Its owner legitimately creates this on first use; display edits must not.
+function displayStorage() {
+  const store = memoryStorage();
+  store.map.set('revealline-enemy-stats.v1:writer', 'display-host-fixture');
+  return store;
+}
 
 test('actual Solo comfort Apply and Undo preserve a paused cut and use its existing profile writer', async (t) => {
   const store = memoryStorage(),
@@ -156,12 +163,29 @@ async function teamPage(t, store, { systemReduced = false } = {}) {
     Object.defineProperty(globalThis, key, { configurable: true, writable: true, value });
   }
   t.after(() => {
-    win.emit('pagehide', { persisted: false });
+    const errors = [];
+    try {
+      win.emit('pagehide', { persisted: false });
+    } catch (error) {
+      errors.push(error);
+    }
     stopStylesheets();
     frames.clear();
-    for (const [key, descriptor] of originals)
-      if (descriptor) Object.defineProperty(globalThis, key, descriptor);
-      else delete globalThis[key];
+    try {
+      doc.documentElement.remove();
+    } catch (error) {
+      errors.push(error);
+    }
+    for (const [key, descriptor] of originals) {
+      try {
+        if (descriptor) Object.defineProperty(globalThis, key, descriptor);
+        else delete globalThis[key];
+      } catch (error) {
+        errors.push(error);
+      }
+    }
+    if (errors.length === 1) throw errors[0];
+    if (errors.length) throw new AggregateError(errors, 'Team fixture retirement failed');
   });
   const install = (key, descriptor) => {
     if (!originals.has(key)) originals.set(key, Object.getOwnPropertyDescriptor(globalThis, key));
@@ -192,6 +216,7 @@ async function teamPage(t, store, { systemReduced = false } = {}) {
   };
   return {
     artwork,
+    pendingFrames: () => frames.size,
     $,
     doc,
     win,
@@ -205,7 +230,7 @@ async function teamPage(t, store, { systemReduced = false } = {}) {
 
 for (const turnPolicy of ['immediate', 'grid-center']) {
   test(`${turnPolicy}: shared display edits preserve the actual paused Solo cut and replay`, async (t) => {
-    const store = memoryStorage();
+    const store = displayStorage();
     saveLibrary(
       store,
       profileKey,
@@ -261,7 +286,7 @@ for (const turnPolicy of ['immediate', 'grid-center']) {
 }
 
 test('Solo to Team to Versus and back restores one display record without Couch profile writes', async (t) => {
-  const store = memoryStorage(existingEnemyStatsWriter);
+  const store = displayStorage();
   saveLibrary(
     store,
     profileKey,
@@ -281,7 +306,7 @@ test('Solo to Team to Versus and back restores one display record without Couch 
       page = await teamPage(t, store);
     assert.equal(store.writes.length, before);
     reflects(page, 'plain', 'large', true);
-    page.$('coop-start').click();
+    await activateHostAction(page.$('coop-start'));
     page.tick(10);
     page.$('coop-pause').click();
     page.tick();
@@ -295,6 +320,12 @@ test('Solo to Team to Versus and back restores one display record without Couch 
     change(page, 'coop-text-face', 'pixel');
     page.tick(120);
     assert.deepEqual(page.geometry(), geometry);
+    assert.ok(labels.length > 0, 'The prepared arena paints its actual labels.');
+    assert.notDeepEqual(
+      page.fonts(),
+      labels.map(({ font }) => font),
+      'Theme font replaces Plain while geometry stays exact.',
+    );
     const numericFont = page.doc.documentElement.style.getPropertyValue('--iw-font-mono');
     assert.ok(numericFont, 'The accepted interface publishes its numeric font.');
     assert.ok(page.fonts().some((font) => font.includes(numericFont)));
@@ -316,6 +347,8 @@ test('Solo to Team to Versus and back restores one display record without Couch 
       );
     }
     assert.equal(page.$('coop-clock').textContent, clock);
+    assert.match(page.$('coop-overlay-title').textContent, /paused/i);
+    assert.equal(page.$('coop-overlay-title').textContent, 'PAUSED');
     assert.equal(page.$('coop-overlay-title').textContent, translate('interface:paused3'));
     assert.equal(page.doc.body.dataset.coopPaused, 'true');
     assert.equal(store.getItem(profileKey), profile);
@@ -376,7 +409,7 @@ test('Solo to Team to Versus and back restores one display record without Couch 
 });
 
 test('Team system reduction preserves a raw false choice and a denied shared save stays session-only', async (t) => {
-  const store = memoryStorage(existingEnemyStatsWriter),
+  const store = displayStorage(),
     initial = { textFace: 'plain', textSize: 'large', reducedEffects: false };
   store.setItem(DISPLAY_PREFERENCES_KEY, JSON.stringify(initial));
   const before = new Map(store.map),
@@ -401,7 +434,7 @@ test('Team system reduction preserves a raw false choice and a denied shared sav
 });
 
 test('Versus controller selects the real display control without replacing or starting the duel', async (t) => {
-  const store = memoryStorage(),
+  const store = displayStorage(),
     pad = {
       index: 0,
       id: 'Display pad',
@@ -434,6 +467,27 @@ test('Versus controller selects the real display control without replacing or st
   assert.deepEqual(page.checkpoint(), before);
 });
 
+for (const mode of ['team', 'versus'])
+  test(`${mode}: incoming extra size remains selected while its presentation uses Large`, async (t) => {
+    const store = displayStorage();
+    const raw = JSON.stringify({
+      textFace: 'plain',
+      textSize: 'extra-large',
+      reducedEffects: false,
+    });
+    store.setItem(DISPLAY_PREFERENCES_KEY, raw);
+    const page =
+      mode === 'team' ? await teamPage(t, store) : await couchPage(t, { storage: store });
+    const prefix = mode === 'team' ? 'coop' : 'race';
+    const size = page.$(`${prefix}-text-size`);
+    assert.equal(size.value, 'extra-large');
+    assert.equal(size.querySelector('[data-text-size-retained]').disabled, true);
+    assert.equal(page.doc.body.dataset.textSize, 'large');
+    assert.equal(store.getItem(DISPLAY_PREFERENCES_KEY), raw);
+    change(page, `${prefix}-text-face`, 'pixel');
+    assert.equal(JSON.parse(store.getItem(DISPLAY_PREFERENCES_KEY)).textSize, 'extra-large');
+  });
+
 for (const mode of ['Team', 'Versus'])
   test(`actual ${mode} comfort preview and Apply/Undo preserve the existing display controls and Solo profile`, async (t) => {
     const store = memoryStorage(),
@@ -462,3 +516,259 @@ for (const mode of ['Team', 'Versus'])
     assert.deepEqual(raw(store), initial);
     assert.equal(store.getItem(profileKey), profile);
   });
+
+// Additive actual-fixture ownership regressions; existing tests above stay unchanged.
+import { BoardPainter } from '../ui/render.mjs';
+
+const retirementGlobalKeys = [
+  'document',
+  'window',
+  'navigator',
+  'indexedDB',
+  'localStorage',
+  'performance',
+  'URL',
+  'Image',
+  'location',
+  'sessionStorage',
+  'matchMedia',
+  'Option',
+  'fetch',
+  'requestAnimationFrame',
+  'cancelAnimationFrame',
+  'createImageBitmap',
+];
+const retirementPainterKeys = [
+  'setLook',
+  'setLevel',
+  'skipCelebration',
+  'startCelebration',
+  'effectsFor',
+  'draw',
+];
+function retirementDescriptors(target, keys) {
+  return new Map(keys.map((key) => [key, Object.getOwnPropertyDescriptor(target, key)]));
+}
+function assertRetirementDescriptors(target, originals) {
+  for (const [key, expected] of originals) {
+    const actual = Object.getOwnPropertyDescriptor(target, key);
+    assert.deepEqual(actual && Object.keys(actual), expected && Object.keys(expected), key);
+    for (const field of Object.keys(expected || {}))
+      assert.strictEqual(actual[field], expected[field], `${key}.${field}`);
+  }
+}
+function restoreRetirementDescriptors(target, originals, errors) {
+  for (const [key, descriptor] of originals) {
+    try {
+      if (descriptor) Object.defineProperty(target, key, descriptor);
+      else assert.equal(Reflect.deleteProperty(target, key), true, key);
+    } catch (error) {
+      errors.push(error);
+    }
+  }
+}
+async function withRetirementPage(create, inspect) {
+  const globals = retirementDescriptors(globalThis, retirementGlobalKeys);
+  const painter = retirementDescriptors(BoardPainter.prototype, retirementPainterKeys);
+  const callbacks = [];
+  let page,
+    root,
+    removeRoot,
+    retired = false,
+    result;
+  const errors = [];
+  const retire = () => {
+    assert.equal(retired, false, 'Invoke the actual registered teardown exactly once');
+    assert.equal(callbacks.length, 1, 'Capture the actual fixture teardown');
+    retired = true;
+    return callbacks[0]();
+  };
+  try {
+    page = await create({ after: (callback) => callbacks.push(callback) });
+    root = page.doc.documentElement;
+    removeRoot = root.remove;
+    result = await inspect(page, retire, globals, painter);
+  } catch (error) {
+    errors.push(error);
+  } finally {
+    // Failure-path protection is not the implementation under test: assertions
+    // above observe the actual teardown before this safety restoration runs.
+    if (!retired && callbacks.length) {
+      root ||= globalThis.document?.documentElement;
+      removeRoot ||= root?.remove;
+      try {
+        retire();
+      } catch (error) {
+        errors.push(error);
+      }
+    }
+    try {
+      removeRoot?.call(root);
+    } catch (error) {
+      errors.push(error);
+    }
+    restoreRetirementDescriptors(globalThis, globals, errors);
+    restoreRetirementDescriptors(BoardPainter.prototype, painter, errors);
+  }
+  if (errors.length === 1) throw errors[0];
+  if (errors.length) throw new AggregateError(errors, 'Retirement regression cleanup failed');
+  return result;
+}
+const retirementFixtures = [
+  ['Versus', (context) => couchPage(context, { storage: memoryStorage() })],
+  ['Team', (context) => teamPage(context, memoryStorage())],
+];
+for (const [name, create] of retirementFixtures) {
+  test(`${name}: retirement detaches only after real pagehide and restores exact owners`, async () => {
+    await withRetirementPage(create, async (page, retire, globals, painter) => {
+      const root = page.doc.documentElement;
+      const child = page.doc.body.children[0];
+      const activeGlobals = retirementDescriptors(globalThis, retirementGlobalKeys);
+      const activePainter = retirementDescriptors(BoardPainter.prototype, retirementPainterKeys);
+      let observed = 0,
+        dispatched = 0;
+      globalThis.requestAnimationFrame(() => dispatched++);
+      page.win.addEventListener('pagehide', (event) => {
+        observed++;
+        assert.equal(event.persisted, false);
+        assert.equal(root.isConnected, true);
+        assert.equal(child.isConnected, true);
+        assertRetirementDescriptors(globalThis, activeGlobals);
+        assertRetirementDescriptors(BoardPainter.prototype, activePainter);
+      });
+      retire();
+      assert.equal(observed, 1);
+      assert.equal(root.isConnected, false);
+      assert.equal(child.isConnected, false);
+      assert.equal(page.pendingFrames(), 0);
+      assert.equal(dispatched, 0);
+      assertRetirementDescriptors(globalThis, globals);
+      assertRetirementDescriptors(BoardPainter.prototype, painter);
+    });
+  });
+  test(`${name}: retirement keeps old locale producers dormant while a live binding refreshes`, async () => {
+    await withRetirementPage(create, async (page, retire) => {
+      // Let the actual application initialize localization under its own fixture
+      // globals before observing it; do not alter original tests' import order.
+      const { getLocale, setLocale, localizedText } = await import('../i18n/index.mjs');
+      const previousLocale = getLocale();
+      const retired = page.doc.createElement('span');
+      page.doc.body.append(retired);
+      const liveDocument = new Document();
+      const live = liveDocument.createElement('span');
+      liveDocument.body.append(live);
+      let retiredCalls = 0,
+        liveCalls = 0;
+      localizedText(retired, () => `${++retiredCalls}:${getLocale()}`);
+      localizedText(live, () => `${++liveCalls}:${getLocale()}`);
+      try {
+        retire();
+        const beforeRetired = retiredCalls,
+          beforeLive = liveCalls;
+        setLocale(previousLocale === 'en' ? 'uk' : 'en', { persist: false });
+        assert.equal(retiredCalls, beforeRetired, 'A retained old producer must not refresh');
+        assert.equal(liveCalls, beforeLive + 1, 'The real refresh must still reach a live binding');
+      } finally {
+        retired.remove();
+        liveDocument.documentElement.remove();
+        setLocale(previousLocale, { persist: false });
+      }
+    });
+  });
+  test(`${name}: retirement preserves a throwing pagehide observer error and still retires owners`, async () => {
+    await withRetirementPage(create, async (page, retire, globals, painter) => {
+      const originalError = new Error('Injected observer failure after application registration');
+      globalThis.requestAnimationFrame(() => assert.fail('Retired fixture frame dispatched'));
+      page.win.addEventListener('pagehide', () => {
+        throw originalError;
+      });
+      assert.throws(retire, (error) => error === originalError);
+      assert.equal(page.doc.documentElement.isConnected, false);
+      assert.equal(page.pendingFrames(), 0);
+      assertRetirementDescriptors(globalThis, globals);
+      assertRetirementDescriptors(BoardPainter.prototype, painter);
+    });
+  });
+  test(`${name}: retirement retains both observer and root-removal failures`, async () => {
+    await withRetirementPage(create, async (page, retire, globals, painter) => {
+      const originalError = new Error('Injected observer failure');
+      const rootError = new Error('Injected root removal failure');
+      const root = page.doc.documentElement,
+        remove = root.remove;
+      page.win.addEventListener('pagehide', () => {
+        throw originalError;
+      });
+      root.remove = () => {
+        throw rootError;
+      };
+      try {
+        assert.throws(
+          retire,
+          (error) =>
+            error instanceof AggregateError &&
+            error.errors.length === 2 &&
+            error.errors[0] === originalError &&
+            error.errors[1] === rootError,
+        );
+        assert.equal(page.pendingFrames(), 0);
+        assertRetirementDescriptors(globalThis, globals);
+        assertRetirementDescriptors(BoardPainter.prototype, painter);
+      } finally {
+        root.remove = remove;
+      }
+    });
+  });
+}
+test('Versus: retirement retains observer and painter-restoration failures without skipping later owners', async () => {
+  await withRetirementPage(retirementFixtures[0][1], async (page, retire, globals, painter) => {
+    const originalError = new Error('Injected observer failure');
+    const restoreError = new Error('Injected painter restoration failure');
+    const activeSetLook = BoardPainter.prototype.setLook;
+    page.win.addEventListener('pagehide', () => {
+      throw originalError;
+    });
+    Object.defineProperty(BoardPainter.prototype, 'setLook', {
+      configurable: true,
+      get: () => activeSetLook,
+      set() {
+        throw restoreError;
+      },
+    });
+    assert.throws(
+      retire,
+      (error) =>
+        error instanceof AggregateError &&
+        error.errors.length === 2 &&
+        error.errors[0] === originalError &&
+        error.errors[1] === restoreError,
+    );
+    assert.equal(page.doc.documentElement.isConnected, false);
+    assert.equal(page.pendingFrames(), 0);
+    assertRetirementDescriptors(globalThis, globals);
+    assertRetirementDescriptors(
+      BoardPainter.prototype,
+      new Map([...painter].filter(([key]) => key !== 'setLook')),
+    );
+  });
+});
+test('Sequential fixture retirement never leaves the previous document as the active owner', async () => {
+  let retiredDocument;
+  for (const [, create] of retirementFixtures) {
+    await withRetirementPage(create, async (page, retire, globals, painter) => {
+      assert.strictEqual(globalThis.document, page.doc);
+      if (retiredDocument) {
+        assert.notStrictEqual(page.doc, retiredDocument);
+        assert.equal(retiredDocument.documentElement.isConnected, false);
+      }
+      retire();
+      assert.equal(
+        page.doc.documentElement.isConnected,
+        false,
+        'Observe actual retirement before the regression harness safety cleanup',
+      );
+      assertRetirementDescriptors(globalThis, globals);
+      assertRetirementDescriptors(BoardPainter.prototype, painter);
+      retiredDocument = page.doc;
+    });
+  }
+});

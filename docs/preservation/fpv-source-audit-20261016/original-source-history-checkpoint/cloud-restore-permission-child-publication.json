@@ -1,0 +1,11 @@
+{
+  "preparedHead": "dc3aa3a536b077db0b20747dc81f2a8d0fbaea1e",
+  "parent": "a181ca981fdf5e87daefe49f2f5d4ddc0150a25e",
+  "tree": "2bb54d06b97accdbd1b8aace9afddc12b160ae86",
+  "branchUpdated": true,
+  "workflowSHA256": "9ab52df4f9bc19f6aa885e8b361f44a860a0fd270217320d4e43ce04bdcbbeb8",
+  "diffPath": "/Volumes/alex/CodexMigrationStaging/fpv-temp/source-preservation-closure-20261016/cloud-restore-permission-child.diff",
+  "workflowPath": "/Volumes/alex/CodexMigrationStaging/fpv-temp/source-preservation-closure-20261016/fpv-source-history-cold-restore-permission-child.yml",
+  "rootExactChildReviewApproved": true,
+  "advancedUTC": "2026-10-16T06:14:03.435840+00:00"
+}

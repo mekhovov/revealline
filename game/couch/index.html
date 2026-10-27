@@ -1,6 +1,7 @@
 <!doctype html>
 <html
   lang="en"
+  data-text-scaling="versus"
   data-build-version="__REVEALLINE_VERSION__"
   data-tool-state="loading"
   data-access-state="locked"
@@ -94,6 +95,7 @@
       href="../ui/art/identity/fpv-line/icon-32.png"
     />
     <link rel="stylesheet" href="../ui/hunt-feedback.css" />
+    <link rel="stylesheet" href="text-scaling.css" />
   </head>
   <body class="field-kit field-kit-support" data-field-kit-page="couch">
     <div data-language-control data-language-launch></div>
@@ -126,9 +128,6 @@
         hidden
         data-i18n-aria-label="interface:missionContinuation"
       >
-        <button id="race-journey-next" type="button" hidden data-i18n="interface:nextMission2">
-          Next mission
-        </button>
         <button id="race-journey-random" type="button" data-i18n="interface:randomLevel">
           Random level
         </button>
@@ -471,6 +470,7 @@
             <h2 id="race-briefing-title"></h2>
             <p id="race-briefing-copy"></p>
           </section>
+          <p id="race-home-recommendation" class="micro-note" hidden></p>
           <div class="race-menu-actions">
             <a
               id="race-coop"
@@ -486,6 +486,9 @@
               data-i18n="interface:startRace"
             >
               Start race
+            </button>
+            <button id="race-journey-next" type="button" hidden data-i18n="interface:nextMission2">
+              Next mission
             </button>
             <button id="race-retry" type="button" hidden data-i18n="interface:couch.retryRace">
               Retry race
@@ -1047,6 +1050,7 @@
                 </p>
               </div>
             </div>
+            <section id="race-support-summary-root"></section>
           </section>
         </section>
         <section
